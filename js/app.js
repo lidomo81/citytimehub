@@ -18,6 +18,19 @@
   const $  = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 
+  /* ---------- Search normalize (Arabic + English friendly) ---------- */
+  // lowercases, unifies common Arabic letter variants and strips diacritics,
+  // so "القاهرة" / "القاهره" / "قاهرة" all match the same way.
+  function norm(s) {
+    return (s ?? "").toString().toLowerCase()
+      .replace(/[إأآا]/g, "ا")
+      .replace(/ى/g, "ي")
+      .replace(/ة/g, "ه")
+      .replace(/[ًٌٍَُِّْـ]/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
   /* ---------- Time-of-day colour ramp (24 anchors, interpolated) ---------- */
   const RAMP = [
     "#0a0f24","#0a0f24","#0c1230","#101a3e","#1c2a5a","#46376f","#8a4f7a","#cf6b43",
@@ -146,8 +159,8 @@
       const href = c.page ? ` href="cities/${c.slug}.html"` : "";
       const cls  = c.page ? "city-card" : "city-card city-card--static";
       return `
-      <${tag} class="${cls}"${href} data-tz="${c.tz}"
-         data-search="${(c.name + " " + c.name_ar + " " + c.country + " " + c.country_ar).toLowerCase()}">
+      <${tag} class="${cls}"${href} data-tz="${c.tz}" data-slug="${c.slug}"
+         data-search="${norm(`${c.name} ${c.name_ar || ""} ${c.country} ${c.country_ar || ""}`)}">
         <div class="city-top">
           <span><span class="city-name">${c.name}</span><br><span class="city-country">${c.country}</span></span>
           <span class="city-daynight" data-daynight>·</span>
@@ -163,18 +176,115 @@
     $("#cityCount").textContent = CITIES.length;
   }
 
+  function injectSearchStyles() {
+    if ($("#cth-search-style")) return;
+    const css = `
+      .search-wrap { position: relative; }
+      .search-suggest {
+        position: absolute; left: 0; right: 0; top: calc(100% + 8px);
+        margin: 0; padding: 6px; list-style: none; z-index: 50;
+        background: #0e1530; border: 1px solid rgba(255,255,255,.14);
+        border-radius: 14px; box-shadow: 0 18px 44px rgba(0,0,0,.5);
+        max-height: 340px; overflow-y: auto; text-align: left;
+      }
+      .search-suggest[hidden] { display: none; }
+      .suggest-item {
+        display: flex; align-items: center; justify-content: space-between; gap: 12px;
+        padding: 10px 12px; border-radius: 10px; cursor: pointer; color: #fff;
+      }
+      .suggest-item:hover, .suggest-item.is-active { background: rgba(255,255,255,.10); }
+      .suggest-name { font-weight: 700; }
+      .suggest-country { opacity: .6; font-size: .85em; white-space: nowrap; }
+      .city-card.is-flash { outline: 2px solid #38bdf8; outline-offset: 3px; }
+    `;
+    const tag = document.createElement("style");
+    tag.id = "cth-search-style";
+    tag.textContent = css;
+    document.head.appendChild(tag);
+  }
+
   function initSearch() {
-    const input = $("#citySearch"), noResults = $("#noResults");
-    input.addEventListener("input", () => {
-      const q = input.value.trim().toLowerCase();
+    injectSearchStyles();
+    const input = $("#citySearch");
+    const noResults = $("#noResults");
+    if (!input) return;
+    const wrap = input.closest(".search-wrap") || input.parentElement;
+
+    const panel = document.createElement("ul");
+    panel.className = "search-suggest";
+    panel.hidden = true;
+    wrap.appendChild(panel);
+
+    // hide/show the grid cards below to match the query
+    function filterGrid(q) {
       let shown = 0;
       $$(".city-card").forEach(card => {
-        const match = !q || card.dataset.search.includes(q);
+        const match = !q || norm(card.dataset.search).includes(q);
         card.style.display = match ? "" : "none";
         if (match) shown++;
       });
-      noResults.hidden = shown !== 0;
+      if (noResults) noResults.hidden = shown !== 0;
+    }
+
+    // live suggestions right under the input
+    function buildSuggest(q) {
+      if (!q) { panel.hidden = true; panel.innerHTML = ""; return; }
+      const matches = CITIES
+        .filter(c => norm(`${c.name} ${c.name_ar || ""} ${c.country} ${c.country_ar || ""}`).includes(q))
+        .slice(0, 8);
+      if (!matches.length) { panel.hidden = true; panel.innerHTML = ""; return; }
+      panel.innerHTML = matches.map(c => `
+        <li class="suggest-item" data-slug="${c.slug}" data-page="${c.page ? 1 : 0}">
+          <span class="suggest-name">${c.name}</span>
+          <span class="suggest-country">${c.country}</span>
+        </li>`).join("");
+      panel.hidden = false;
+    }
+
+    function go(slug) {
+      const c = CITIES.find(x => x.slug === slug);
+      if (!c) return;
+      if (c.page) { location.href = `cities/${c.slug}.html`; return; }
+      panel.hidden = true;
+      input.value = c.name;
+      filterGrid(norm(c.name));
+      const grid = document.getElementById("cities");
+      if (grid) grid.scrollIntoView({ behavior: "smooth", block: "start" });
+      const card = $(`.city-card[data-slug="${slug}"]`);
+      if (card) {
+        card.classList.add("is-flash");
+        setTimeout(() => card.classList.remove("is-flash"), 1600);
+      }
+    }
+
+    input.addEventListener("input", () => {
+      const q = norm(input.value);
+      filterGrid(q);
+      buildSuggest(q);
     });
+
+    // mouse pick
+    panel.addEventListener("mousedown", e => {
+      const li = e.target.closest(".suggest-item");
+      if (li) { e.preventDefault(); go(li.dataset.slug); }
+    });
+
+    // keyboard nav (↑ ↓ Enter Esc)
+    input.addEventListener("keydown", e => {
+      const items = $$(".suggest-item", panel);
+      if (e.key === "Escape") { panel.hidden = true; return; }
+      if (!items.length) return;
+      let idx = items.findIndex(el => el.classList.contains("is-active"));
+      if (e.key === "ArrowDown") { e.preventDefault(); idx = (idx + 1) % items.length; }
+      else if (e.key === "ArrowUp") { e.preventDefault(); idx = (idx - 1 + items.length) % items.length; }
+      else if (e.key === "Enter") { e.preventDefault(); go((items[idx] || items[0]).dataset.slug); return; }
+      else return;
+      items.forEach(el => el.classList.remove("is-active"));
+      if (items[idx]) { items[idx].classList.add("is-active"); items[idx].scrollIntoView({ block: "nearest" }); }
+    });
+
+    // close on outside click
+    document.addEventListener("click", e => { if (!wrap.contains(e.target)) panel.hidden = true; });
   }
 
   /* ---------- Per-second tick ---------- */
