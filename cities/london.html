@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ===== Primary SEO ===== -->
+  <title>Current Time in London, United Kingdom — Local Time, Date &amp; Prayer Times | CityTimeHub</title>
+  <meta name="description" content="Current local time in London, United Kingdom (Europe/London time zone). Live clock, Gregorian and Hijri date, prayer times, sunrise & sunset, day length, UTC offset and coordinates." />
+  <meta name="keywords" content="London time, current time in London, London prayer times, London timezone, United Kingdom local time, Europe/London" />
+  <meta name="theme-color" content="#0B1120" />
+  <link rel="canonical" href="https://citytimehub.pages.dev/cities/london.html" />
+
+  <!-- ===== Open Graph ===== -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="CityTimeHub" />
+  <meta property="og:title" content="Current Time in London, United Kingdom" />
+  <meta property="og:description" content="Live local time in London with Gregorian & Hijri dates, prayer times and sunrise & sunset." />
+  <meta property="og:url" content="https://citytimehub.pages.dev/cities/london.html" />
+  <meta property="og:image" content="https://citytimehub.pages.dev/og-cover.png" />
+
+  <!-- ===== Twitter ===== -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Current Time in London, United Kingdom" />
+  <meta name="twitter:description" content="Live local time in London with prayer times and Hijri date." />
+
+  <!-- ===== Fonts ===== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../css/style.css" />
+
+  <!-- ===== Structured data: Breadcrumb + City ===== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home",   "item": "https://citytimehub.pages.dev/" },
+          { "@type": "ListItem", "position": 2, "name": "Cities", "item": "https://citytimehub.pages.dev/#cities" },
+          { "@type": "ListItem", "position": 3, "name": "London" }
+        ]
+      },
+      {
+        "@type": "City",
+        "name": "London",
+        "alternateName": "لندن",
+        "url": "https://citytimehub.pages.dev/cities/london.html",
+        "containedInPlace": { "@type": "Country", "name": "United Kingdom" },
+        "geo": { "@type": "GeoCoordinates", "latitude": 51.5074, "longitude": -0.1278 }
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  <!-- ===================== HEADER ===================== -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html" aria-label="CityTimeHub home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="16" cy="16" r="12.5"/><path d="M16 9v7l4.6 2.7"/></svg>
+        </span>
+        <span class="brand-text">CityTime<span>Hub</span></span>
+      </a>
+      <nav class="main-nav" aria-label="Primary">
+        <a href="../index.html#cities">Cities</a>
+        <a href="../index.html#reference">World Clock</a>
+        <a href="../index.html#prayer">Prayer Times</a>
+        <a href="../index.html#sun">Sun</a>
+      </nav>
+      <div class="header-right">
+        <span class="header-utc" aria-label="Coordinated Universal Time">
+          <span class="hu-label">UTC</span><span id="headerUtc" class="hu-time" dir="ltr">--:--:--</span>
+        </span>
+        <button id="themeToggle" class="icon-btn" type="button" aria-label="Toggle dark mode" aria-pressed="false">
+          <svg class="ico-moon" viewBox="0 0 24 24" width="19" height="19" fill="currentColor"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>
+          <svg class="ico-sun" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== BREADCRUMB ===================== -->
+  <nav class="container breadcrumb" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="../index.html">Home</a></li>
+      <li class="sep" aria-hidden="true">/</li>
+      <li><a href="../index.html#cities">Cities</a></li>
+      <li class="sep" aria-hidden="true">/</li>
+      <li aria-current="page">London</li>
+    </ol>
+  </nav>
+
+  <main id="top">
+    <!-- ===================== CITY HERO ===================== -->
+    <section class="hero">
+      <div class="container">
+        <div class="sky-panel city-hero" id="cityHero">
+          <div class="sky-stars" aria-hidden="true"></div>
+          <span class="eyebrow">
+            <span class="city-eyebrow-icon" id="dayNightIcon" aria-hidden="true">·</span>
+            <span id="dayNightLabel">Local time</span>
+          </span>
+          <h1 class="city-hero-title">Current time in London</h1>
+          <p class="city-clock" id="cityClock" dir="ltr">--:--:--</p>
+          <p class="city-hero-meta">
+            <span id="cityFullDate" class="mono">—</span>
+            <span>·</span>
+            <span>United Kingdom</span>
+            <span>·</span>
+            <span class="mono">Europe/London</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== QUICK FACTS ===================== -->
+    <section class="section">
+      <div class="container">
+        <header class="section-head">
+          <span class="kicker">01 — Coordinates</span>
+          <h2>London at a glance</h2>
+        </header>
+        <div class="facts-grid">
+          <div class="fact-card"><span class="fact-label">Time zone</span><div class="fact-value">Europe/London</div></div>
+          <div class="fact-card"><span class="fact-label">UTC offset</span><div class="fact-value" id="factOffset">—</div></div>
+          <div class="fact-card"><span class="fact-label">Coordinates</span><div class="fact-value">51.51°N · 0.13°W</div></div>
+          <div class="fact-card"><span class="fact-label">Country</span><div class="fact-value">United Kingdom 🇬🇧</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== DATE + PRAYER ===================== -->
+    <section id="prayer" class="section">
+      <div class="container">
+        <header class="section-head">
+          <span class="kicker">02 — Devotion</span>
+          <h2>Date &amp; prayer times</h2>
+          <p class="muted">Today in London, Gregorian and Hijri.</p>
+        </header>
+        <div class="datebar">
+          <span class="datebar-item"><span class="muted">Gregorian</span> <strong id="gregDate" class="mono">—</strong></span>
+          <span class="datebar-sep" aria-hidden="true"></span>
+          <span class="datebar-item"><span class="muted">Hijri</span> <strong id="hijriDate" class="mono">—</strong></span>
+        </div>
+        <div id="prayerGrid" class="prayer-grid" aria-live="polite">
+          <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
+          <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
+          <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SUN ===================== -->
+    <section id="sun" class="section">
+      <div class="container">
+        <header class="section-head">
+          <span class="kicker">03 — Daylight</span>
+          <h2>Sunrise &amp; sunset</h2>
+          <p class="muted">London, United Kingdom.</p>
+        </header>
+        <div class="sun-grid">
+          <article class="sun-card sun-rise"><span class="sun-ico" aria-hidden="true">☀</span><span class="ref-label">Sunrise</span><strong id="sunriseVal" class="ref-time" dir="ltr">—</strong></article>
+          <article class="sun-card sun-set"><span class="sun-ico" aria-hidden="true">☾</span><span class="ref-label">Sunset</span><strong id="sunsetVal" class="ref-time" dir="ltr">—</strong></article>
+          <article class="sun-card"><span class="sun-ico" aria-hidden="true">⌛</span><span class="ref-label">Day length</span><strong id="dayLength" class="ref-time" dir="ltr">—</strong></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== RELATED ===================== -->
+    <section class="section">
+      <div class="container">
+        <header class="section-head">
+          <span class="kicker">04 — Nearby</span>
+          <h2>Related cities</h2>
+        </header>
+        <div id="relatedGrid" class="city-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="brand-text">CityTime<span>Hub</span></span>
+        <p class="muted small">Current Time Around The World.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="#">About</a><a href="#">Privacy Policy</a><a href="#">Contact</a><a href="#">Terms</a>
+      </nav>
+      <p class="muted small copyright">© <span id="year">2026</span> CityTimeHub · clock computed locally · prayer &amp; Hijri data by AlAdhan · sun data by sunrise-sunset.org</p>
+    </div>
+  </footer>
+
+  <script>window.CITY_SLUG = "london";</script>
+  <script src="../js/city.js" defer></script>
+</body>
+</html>

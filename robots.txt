@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://citytimehub.pages.dev/sitemap.xml
