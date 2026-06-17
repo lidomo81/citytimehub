@@ -341,3 +341,99 @@ svg { display: block; }
   .main-nav a { display: block; padding: 12px 14px; border-radius: 9px; }
   .nav-toggle:checked ~ .main-nav { display: flex; }
 }
+
+/* ===================== Directory search (section landing pages) ===================== */
+.dir-search { position: relative; max-width: 520px; margin: 0 0 14px; }
+.dir-search-ico { position: absolute; inset-inline-start: 15px; top: 50%; transform: translateY(-50%); color: var(--text-2); pointer-events: none; }
+.dir-search-input { width: 100%; font-family: inherit; font-size: 1rem; font-weight: 500; color: var(--text); background: var(--surface); border: 1.5px solid var(--border); border-radius: 12px; padding: 13px 16px 13px 46px; transition: border-color .2s, box-shadow .2s; }
+.dir-search-input::placeholder { color: var(--text-2); }
+.dir-search-input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand) 18%, transparent); }
+#dirCount { margin: 0 0 16px; }
+
+/* ===================== Compare Cities — interactive tool ===================== */
+.compare-form { display: grid; grid-template-columns: 1fr auto 1fr auto; gap: 14px; align-items: end; }
+.cmp-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.cmp-field label { font-size: .82rem; font-weight: 700; color: var(--text-2); }
+.ac { position: relative; }
+.ac-input { width: 100%; font-family: inherit; font-size: 1rem; color: var(--text); background: var(--surface); border: 1.5px solid var(--border); border-radius: 12px; padding: 13px 16px; transition: border-color .2s, box-shadow .2s; }
+.ac-input::placeholder { color: var(--text-2); }
+.ac-input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand) 18%, transparent); }
+.ac-list { position: absolute; z-index: 40; inset-inline: 0; top: calc(100% + 6px); margin: 0; padding: 6px; list-style: none; max-height: 320px; overflow-y: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow); }
+.ac-item { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 11px 12px; border-radius: 9px; cursor: pointer; }
+.ac-item.is-active, .ac-item:hover { background: var(--surface-2); }
+.ac-name { font-weight: 600; color: var(--text); }
+.ac-country { font-size: .82rem; color: var(--text-2); }
+.ac-empty { padding: 12px; color: var(--text-2); font-size: .9rem; }
+
+.swap-btn { display: grid; place-items: center; width: 44px; height: 46px; align-self: end; border: 1.5px solid var(--border); background: var(--surface); color: var(--text-2); border-radius: 12px; cursor: pointer; transition: border-color .2s, color .2s, transform .2s var(--ease); }
+.swap-btn:hover { border-color: var(--brand); color: var(--brand); transform: rotate(180deg); }
+
+.btn-primary { font-family: inherit; font-size: 1rem; font-weight: 700; color: #fff; background: linear-gradient(135deg, var(--brand), var(--accent)); border: none; border-radius: 12px; padding: 14px 22px; cursor: pointer; transition: transform .2s var(--ease), box-shadow .2s, opacity .2s; box-shadow: 0 10px 24px -12px var(--brand); }
+.btn-primary:hover { transform: translateY(-2px); }
+.btn-primary:disabled { opacity: .6; cursor: progress; transform: none; }
+.cmp-btn { align-self: end; height: 46px; }
+
+.cmp-error { margin: 14px 0 0; padding: 12px 16px; border-radius: 11px; background: color-mix(in srgb, #e5484d 12%, var(--surface)); border: 1px solid color-mix(in srgb, #e5484d 35%, var(--border)); color: #c0353a; font-weight: 600; font-size: .92rem; }
+
+.cmp-result { margin-top: 22px; padding: 22px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); animation: cmpIn .35s var(--ease); }
+@keyframes cmpIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.cmp-head h2 { margin: 0 0 4px; font-size: 1.3rem; }
+.cmp-cards { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: center; margin: 20px 0; }
+.cmp-card { display: flex; flex-direction: column; gap: 3px; text-align: center; padding: 20px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 14px; }
+.cmp-city { font-weight: 800; font-size: 1.05rem; }
+.cmp-clock { font-family: var(--mono); font-size: 1.9rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--brand); margin: 4px 0 2px; }
+.cmp-zone { font-size: .78rem; color: var(--text-2); }
+.cmp-diff { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.cmp-diff-val { font-family: var(--mono); font-weight: 800; font-size: 1.2rem; color: var(--text); padding: 8px 12px; border: 1px dashed var(--border); border-radius: 10px; }
+.cmp-facts p { margin: 0 0 10px; color: var(--text); line-height: 1.6; font-size: .95rem; }
+.cmp-facts strong { color: var(--text); }
+.cmp-permalink { margin: 6px 0 0; }
+.cmp-permalink a { color: var(--brand); font-weight: 700; font-size: .92rem; }
+
+.recent { margin-top: 26px; }
+.recent-title { margin: 0 0 12px; font-size: 1rem; }
+.recent-list { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; margin: 0; padding: 0; }
+.recent-chip { font-family: inherit; font-size: .9rem; font-weight: 600; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 9px 16px; cursor: pointer; transition: border-color .2s, color .2s, background .2s; }
+.recent-chip:hover { border-color: var(--brand); color: var(--brand); background: var(--surface-2); }
+
+@media (max-width: 760px) {
+  .compare-form { grid-template-columns: 1fr; }
+  .swap-btn { justify-self: center; width: 46px; transform: rotate(90deg); }
+  .swap-btn:hover { transform: rotate(270deg); }
+  .cmp-btn { width: 100%; }
+  .cmp-cards { grid-template-columns: 1fr; }
+  .cmp-diff { flex-direction: row; gap: 10px; justify-content: center; }
+  .cmp-clock { font-size: 1.7rem; }
+}
+
+/* ===================== Compare page — day/night + meeting planner ===================== */
+.city-daynight { display: flex; align-items: center; gap: 7px; margin: 6px 0 0; font-size: .9rem; font-weight: 600; color: var(--text-2); }
+.dn-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--text-2); flex: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--text-2) 18%, transparent); }
+.dn--morning .dn-dot { background: #f59e0b; box-shadow: 0 0 0 3px #f59e0b30; }
+.dn--afternoon .dn-dot { background: #eab308; box-shadow: 0 0 0 3px #eab30830; }
+.dn--evening .dn-dot { background: #f97316; box-shadow: 0 0 0 3px #f9731630; }
+.dn--night .dn-dot { background: #6366f1; box-shadow: 0 0 0 3px #6366f130; }
+.dn--morning .dn-label, .dn--afternoon .dn-label, .dn--evening .dn-label, .dn--night .dn-label { color: var(--text); }
+.dn-date { font-weight: 500; }
+
+.mp-title { margin: 24px 0 12px; font-size: 1.05rem; }
+.mp { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); }
+.mp-row { display: grid; grid-template-columns: 96px 1fr; align-items: center; gap: 12px; margin-bottom: 8px; }
+.mp-name { font-size: .85rem; font-weight: 700; color: var(--text); text-align: end; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mp-track { display: grid; grid-template-columns: repeat(24, 1fr); gap: 2px; height: 30px; }
+.mp-cell { background: var(--surface-2); border-radius: 3px; }
+.mp-cell.mp-a { background: color-mix(in srgb, var(--brand) 55%, var(--surface)); }
+.mp-cell.mp-b { background: color-mix(in srgb, var(--accent) 55%, var(--surface)); }
+.mp-cell.mp-both { background: #16a34a; }
+.mp-ticks { display: flex; justify-content: space-between; font-size: .68rem; color: var(--text-2); font-family: var(--mono); }
+.mp-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: 14px 0 4px; font-size: .82rem; color: var(--text-2); }
+.mp-key { width: 14px; height: 14px; border-radius: 4px; display: inline-block; }
+.mp-key.mp-a { background: color-mix(in srgb, var(--brand) 55%, var(--surface)); }
+.mp-key.mp-b { background: color-mix(in srgb, var(--accent) 55%, var(--surface)); }
+.mp-key.mp-both { background: #16a34a; }
+
+@media (max-width: 600px) {
+  .mp-row { grid-template-columns: 64px 1fr; gap: 8px; }
+  .mp-name { font-size: .75rem; }
+  .mp-track { height: 26px; gap: 1px; }
+}

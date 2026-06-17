@@ -215,11 +215,13 @@
           <article class="city-card compare-card">
             <div class="city-top"><span class="city-name">Cairo</span><span class="city-country">Egypt 🇪🇬</span></div>
             <p class="city-clock-sm" id="clockA" dir="ltr">--:--:--</p>
+            <p class="city-daynight" id="dnA" aria-live="polite"><span class="dn-dot" aria-hidden="true"></span><span class="dn-label">—</span><span class="dn-date muted small"></span></p>
             <div class="city-foot"><span class="city-coords mono">Africa/Cairo</span><span class="city-offset">UTC+3</span></div>
           </article>
           <article class="city-card compare-card">
             <div class="city-top"><span class="city-name">Johannesburg</span><span class="city-country">South Africa 🇿🇦</span></div>
             <p class="city-clock-sm" id="clockB" dir="ltr">--:--:--</p>
+            <p class="city-daynight" id="dnB" aria-live="polite"><span class="dn-dot" aria-hidden="true"></span><span class="dn-label">—</span><span class="dn-date muted small"></span></p>
             <div class="city-foot"><span class="city-coords mono">Africa/Johannesburg</span><span class="city-offset">UTC+2</span></div>
           </article>
         </div>
@@ -262,6 +264,14 @@
         <p>The best overlap between Cairo and Johannesburg working hours (09:00–17:00) is
          <strong>09:00–16:00 Johannesburg time</strong>
          — that's 10:00–17:00 in Cairo — about 7 hours of shared time.</p>
+        <h3 class="mp-title">Meeting planner</h3>
+        <div class="mp" role="img" aria-label="24-hour meeting planner comparing Cairo and Johannesburg working hours">
+          <div class="mp-row"><span class="mp-name">Cairo</span><div class="mp-track"><span class="mp-cell" title="00:00 Cairo"></span><span class="mp-cell" title="01:00 Cairo"></span><span class="mp-cell" title="02:00 Cairo"></span><span class="mp-cell" title="03:00 Cairo"></span><span class="mp-cell" title="04:00 Cairo"></span><span class="mp-cell" title="05:00 Cairo"></span><span class="mp-cell" title="06:00 Cairo"></span><span class="mp-cell" title="07:00 Cairo"></span><span class="mp-cell" title="08:00 Cairo"></span><span class="mp-cell mp-a" title="09:00 Cairo"></span><span class="mp-cell mp-both" title="10:00 Cairo"></span><span class="mp-cell mp-both" title="11:00 Cairo"></span><span class="mp-cell mp-both" title="12:00 Cairo"></span><span class="mp-cell mp-both" title="13:00 Cairo"></span><span class="mp-cell mp-both" title="14:00 Cairo"></span><span class="mp-cell mp-both" title="15:00 Cairo"></span><span class="mp-cell mp-both" title="16:00 Cairo"></span><span class="mp-cell" title="17:00 Cairo"></span><span class="mp-cell" title="18:00 Cairo"></span><span class="mp-cell" title="19:00 Cairo"></span><span class="mp-cell" title="20:00 Cairo"></span><span class="mp-cell" title="21:00 Cairo"></span><span class="mp-cell" title="22:00 Cairo"></span><span class="mp-cell" title="23:00 Cairo"></span></div></div>
+          <div class="mp-row"><span class="mp-name">Johannesburg</span><div class="mp-track"><span class="mp-cell" title="23:00 Johannesburg"></span><span class="mp-cell" title="00:00 Johannesburg"></span><span class="mp-cell" title="01:00 Johannesburg"></span><span class="mp-cell" title="02:00 Johannesburg"></span><span class="mp-cell" title="03:00 Johannesburg"></span><span class="mp-cell" title="04:00 Johannesburg"></span><span class="mp-cell" title="05:00 Johannesburg"></span><span class="mp-cell" title="06:00 Johannesburg"></span><span class="mp-cell" title="07:00 Johannesburg"></span><span class="mp-cell" title="08:00 Johannesburg"></span><span class="mp-cell mp-both" title="09:00 Johannesburg"></span><span class="mp-cell mp-both" title="10:00 Johannesburg"></span><span class="mp-cell mp-both" title="11:00 Johannesburg"></span><span class="mp-cell mp-both" title="12:00 Johannesburg"></span><span class="mp-cell mp-both" title="13:00 Johannesburg"></span><span class="mp-cell mp-both" title="14:00 Johannesburg"></span><span class="mp-cell mp-both" title="15:00 Johannesburg"></span><span class="mp-cell mp-b" title="16:00 Johannesburg"></span><span class="mp-cell" title="17:00 Johannesburg"></span><span class="mp-cell" title="18:00 Johannesburg"></span><span class="mp-cell" title="19:00 Johannesburg"></span><span class="mp-cell" title="20:00 Johannesburg"></span><span class="mp-cell" title="21:00 Johannesburg"></span><span class="mp-cell" title="22:00 Johannesburg"></span></div></div>
+          <div class="mp-row mp-axis"><span class="mp-name" aria-hidden="true"></span><div class="mp-ticks"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>24:00</span></div></div>
+          <p class="mp-legend"><span class="mp-key mp-a" aria-hidden="true"></span>Cairo 09–17<span class="mp-key mp-b" aria-hidden="true"></span>Johannesburg 09–17<span class="mp-key mp-both" aria-hidden="true"></span>Best meeting window</p>
+          <p class="muted small">Timeline shown in Cairo local time. Green columns are the best times to meet.</p>
+        </div>
       </div>
     </section>
 
@@ -349,12 +359,18 @@
     if(btn){btn.setAttribute("aria-pressed",String(theme==="dark"));
       btn.addEventListener("click",function(){var n=doc.getAttribute("data-theme")==="dark"?"light":"dark";doc.setAttribute("data-theme",n);localStorage.setItem("cth-theme",n);btn.setAttribute("aria-pressed",String(n==="dark"));});}
     function t(tz){return new Intl.DateTimeFormat("en-GB",{timeZone:tz,hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false}).format(new Date());}
+    function daynight(tz){var h=+new Intl.DateTimeFormat("en-GB",{timeZone:tz,hour:"2-digit",hour12:false}).format(new Date());
+      if(h>=5&&h<12)return["morning","Morning"];if(h>=12&&h<17)return["afternoon","Afternoon"];if(h>=17&&h<21)return["evening","Evening"];return["night","Night"];}
+    function dstr(tz){return new Intl.DateTimeFormat("en-GB",{timeZone:tz,weekday:"short",day:"numeric",month:"short"}).format(new Date());}
+    function setDN(el,tz){if(!el)return;var d=daynight(tz);el.className="city-daynight dn--"+d[0];var l=el.querySelector(".dn-label"),dt=el.querySelector(".dn-date");if(l)l.textContent=d[1];if(dt)dt.textContent=" · "+dstr(tz);}
     var TZ={a:"Africa/Cairo",b:"Africa/Johannesburg"};
     var hu=document.getElementById("headerUtc"),ca=document.getElementById("clockA"),cb=document.getElementById("clockB");
+    var dna=document.getElementById("dnA"),dnb=document.getElementById("dnB");
     function tick(){
       if(hu)hu.textContent=t("UTC");
       if(ca)ca.textContent=t(TZ.a);
       if(cb)cb.textContent=t(TZ.b);
+      setDN(dna,TZ.a);setDN(dnb,TZ.b);
     }
     tick();setInterval(tick,1000);
     var y=document.getElementById("year");if(y)y.textContent=new Date().getFullYear();
