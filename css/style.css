@@ -317,3 +317,27 @@ svg { display: block; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
 }
+
+/* ===================== Compare Cities nav + mobile menu + tools card ===================== */
+.site-header { position: relative; }
+.nav-toggle { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.nav-burger { display: none; }
+
+.tool-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--gap); }
+.tool-card { display: flex; gap: 16px; align-items: flex-start; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); text-decoration: none; color: inherit; transition: transform .2s var(--ease), border-color .2s; }
+.tool-card:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--brand) 30%, var(--border)); }
+.tool-ico { flex: none; display: grid; place-items: center; width: 46px; height: 46px; border-radius: 12px; color: #fff; background: linear-gradient(135deg, var(--brand), var(--accent)); }
+.tool-card h3 { margin: 0 0 4px; font-size: 1.05rem; }
+.tool-card p { margin: 0; color: var(--text-2); font-size: .92rem; line-height: 1.5; }
+.tool-cta { display: inline-block; margin-top: 10px; color: var(--brand); font-weight: 700; font-size: .9rem; }
+
+@media (max-width: 760px) {
+  .nav-burger { display: grid; place-items: center; width: 40px; height: 40px; margin-inline-start: auto; border: 1px solid var(--border); background: var(--surface); color: var(--text-2); border-radius: 11px; cursor: pointer; }
+  .main-nav {
+    display: none; position: absolute; top: calc(100% + 6px); inset-inline: 12px; margin: 0;
+    flex-direction: column; gap: 2px; padding: 8px; z-index: 60;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow);
+  }
+  .main-nav a { display: block; padding: 12px 14px; border-radius: 9px; }
+  .nav-toggle:checked ~ .main-nav { display: flex; }
+}
