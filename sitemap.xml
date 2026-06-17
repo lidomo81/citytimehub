@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://citytimehub.pages.dev/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>
-  <url><loc>https://citytimehub.pages.dev/cities/cairo.html</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://citytimehub.pages.dev/cities/riyadh.html</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://citytimehub.pages.dev/cities/dubai.html</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://citytimehub.pages.dev/cities/london.html</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://citytimehub.pages.dev/cities/paris.html</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://citytimehub.pages.dev/cities/new-york.html</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://citytimehub.pages.dev/cities/tokyo.html</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
-</urlset>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>https://www.citytimehub.com/sitemap-static.xml</loc>
+    <lastmod>2026-06-17</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://www.citytimehub.com/sitemap-cities.xml</loc>
+    <lastmod>2026-06-17</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://www.citytimehub.com/sitemap-countries.xml</loc>
+    <lastmod>2026-06-17</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://www.citytimehub.com/sitemap-timezones.xml</loc>
+    <lastmod>2026-06-17</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://www.citytimehub.com/sitemap-comparisons.xml</loc>
+    <lastmod>2026-06-17</lastmod>
+  </sitemap>
+</sitemapindex>
