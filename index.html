@@ -17,11 +17,17 @@
   <meta property="og:description" content="A live day/night meridian of world time. Local clocks, time zones, Hijri dates, prayer times and sunrise & sunset across the globe." />
   <meta property="og:url" content="https://www.citytimehub.com/" />
   <meta property="og:image" content="https://www.citytimehub.com/og-cover.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="CityTimeHub — Current Time Around The World" />
+  <meta property="og:locale" content="en_US" />
 
   <!-- ===== Twitter ===== -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="CityTimeHub — Current Time Around The World" />
   <meta name="twitter:description" content="A live day/night meridian of world time, with prayer times and Hijri dates." />
+  <meta name="twitter:image" content="https://www.citytimehub.com/og-cover.png" />
+  <meta name="twitter:image:alt" content="CityTimeHub — Current Time Around The World" />
 
   <!-- ===== Fonts ===== -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -29,6 +35,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="CityTimeHub" />
 
   <!-- ===== Structured data ===== -->
   <script type="application/ld+json">
@@ -174,6 +184,7 @@
         </header>
         <div id="cityGrid" class="city-grid" aria-live="off"></div>
         <p id="noResults" class="no-results" hidden>No city matches your search.</p>
+        <p class="browse-all"><a href="/cities/" class="browse-all-link">Browse all <span id="browseCount">350</span> cities <span aria-hidden="true">→</span></a></p>
       </div>
     </section>
 
@@ -328,5 +339,6 @@
   </footer>
 
   <script src="js/app.js" defer></script>
+  <script src="/js/pwa.js" defer></script>
 </body>
 </html>

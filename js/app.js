@@ -398,7 +398,7 @@
     catch { $("#cityGrid").innerHTML = `<p class="no-results">Couldn't load city data.</p>`; return; }
 
     buildMeridian();
-    renderCities();
+    renderCities(CITIES.filter(c => c.featured));
     initSearch();
     initPrayerPicker();
     startClock();

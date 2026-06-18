@@ -19,17 +19,25 @@
 <meta property="og:description" content="Live local time in Singapore with Gregorian &amp; Hijri dates, prayer times and sunrise &amp; sunset." />
 <meta property="og:url" content="https://www.citytimehub.com/cities/singapore" />
 <meta property="og:image" content="https://www.citytimehub.com/og-cover.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Current Time in Singapore, Singapore" />
 <meta property="og:locale" content="en_US" />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Current Time in Singapore, Singapore" />
 <meta name="twitter:description" content="Live local time in Singapore with prayer times and Hijri date." />
 <meta name="twitter:image" content="https://www.citytimehub.com/og-cover.png" />
+<meta name="twitter:image:alt" content="Current Time in Singapore, Singapore" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/style.css" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="CityTimeHub" />
 
   <script type="application/ld+json">
 {
@@ -285,8 +293,8 @@
           <p class="muted">Singapore, Singapore.</p>
         </header>
         <div class="sun-grid">
-          <article class="sun-card sun-rise"><span class="sun-ico" aria-hidden="true">☀</span><span class="ref-label">Sunrise</span><strong id="sunriseVal" class="ref-time" dir="ltr">06:59</strong></article>
-          <article class="sun-card sun-set"><span class="sun-ico" aria-hidden="true">☾</span><span class="ref-label">Sunset</span><strong id="sunsetVal" class="ref-time" dir="ltr">19:11</strong></article>
+          <article class="sun-card sun-rise"><span class="sun-ico" aria-hidden="true">☀</span><span class="ref-label">Sunrise</span><strong id="sunriseVal" class="ref-time" dir="ltr">07:00</strong></article>
+          <article class="sun-card sun-set"><span class="sun-ico" aria-hidden="true">☾</span><span class="ref-label">Sunset</span><strong id="sunsetVal" class="ref-time" dir="ltr">19:12</strong></article>
           <article class="sun-card"><span class="sun-ico" aria-hidden="true">⌛</span><span class="ref-label">Day length</span><strong id="dayLength" class="ref-time" dir="ltr">12h 12m</strong></article>
         </div>
       </div>
@@ -392,5 +400,6 @@
 
   <script>window.CITY_SLUG = "singapore";</script>
   <script src="../js/city.js" defer></script>
+  <script src="/js/pwa.js" defer></script>
 </body>
 </html>
