@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/cities/:slug",          "destination": "/cities/:slug.html" },
+    { "source": "/country/:slug",         "destination": "/country/:slug.html" },
+    { "source": "/timezone/:slug",        "destination": "/timezone/:slug.html" },
+    { "source": "/time-difference/:slug", "destination": "/time-difference/:slug.html" }
+  ]
+}
