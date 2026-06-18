@@ -483,3 +483,20 @@ svg { display: block; }
 .pwa-x { flex: none; width: 30px; height: 30px; border: none; background: transparent; color: var(--text-2); font-size: 1.4rem; line-height: 1; cursor: pointer; border-radius: 8px; }
 .pwa-x:hover { background: var(--surface-2); color: var(--text); }
 @media (min-width: 720px) { .pwa-install { left: 20px; transform: translate(0, 160%); } .pwa-install.is-shown { transform: translate(0, 0); } }
+
+/* ===================== My Cities (favorites) ===================== */
+.city-card { position: relative; }
+.fav-star { position: absolute; top: 10px; inset-inline-end: 10px; z-index: 2; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 9px; color: var(--text-2); cursor: pointer; transition: color .18s, background .18s, transform .18s var(--ease); }
+.fav-star:hover { background: var(--surface-2); color: #f5a623; transform: scale(1.08); }
+.fav-star.is-fav { color: #f5a623; }
+.fav-star:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.city-name { padding-inline-end: 30px; }
+#myCities .kicker { color: #f5a623; }
+
+.cth-toast { position: fixed; z-index: 300; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom)); transform: translate(-50%, 140%); background: var(--text); color: var(--surface); font-size: .9rem; font-weight: 600; padding: 12px 20px; border-radius: 11px; box-shadow: 0 14px 36px -10px rgba(0,0,0,.5); opacity: 0; transition: transform .3s var(--ease), opacity .3s; pointer-events: none; max-width: calc(100vw - 32px); }
+.cth-toast.is-shown { transform: translate(-50%, 0); opacity: 1; }
+
+/* ===================== Favorite star inside directory link-list (/cities/) ===================== */
+.link-list li.has-fav:not([hidden]) { display: flex; align-items: center; gap: 8px; }
+.link-list li.has-fav > a { flex: 1 1 auto; min-width: 0; }
+.link-list li.has-fav .fav-star { position: static; flex: none; width: 32px; height: 32px; }

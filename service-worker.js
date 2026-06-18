@@ -5,7 +5,7 @@
    - HTML navigations → network-first, fall back to cache, then to "/"
    Bump CACHE_VERSION to invalidate old caches on the next visit.
    ===================================================================== */
-const CACHE_VERSION = "cth-v1";
+const CACHE_VERSION = "cth-v2";
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 

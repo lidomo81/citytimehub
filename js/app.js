@@ -150,17 +150,33 @@
   }
 
   /* ---------- City grid ---------- */
-  function renderCities(list = CITIES) {
-    $("#cityGrid").innerHTML = list.map(c => {
-      const off = offsetHours(c.tz);
-      const lat = `${Math.abs(c.lat).toFixed(2)}°${c.lat >= 0 ? "N" : "S"}`;
-      const lng = `${Math.abs(c.lng).toFixed(2)}°${c.lng >= 0 ? "E" : "W"}`;
-      const tag  = c.page ? "a" : "div";
-      const href = c.page ? ` href="cities/${c.slug}.html"` : "";
-      const cls  = c.page ? "city-card" : "city-card city-card--static";
-      return `
+  /* ---------- Favorite cities ("My Cities", localStorage) ---------- */
+  const FAV_KEY = "cth-fav-cities";
+  const MAX_FAV = 8;
+  function getFavs() { try { return JSON.parse(localStorage.getItem(FAV_KEY) || "[]"); } catch (e) { return []; } }
+  function setFavs(a) { try { localStorage.setItem(FAV_KEY, JSON.stringify(a.slice(0, MAX_FAV))); } catch (e) {} }
+  function isFav(slug) { return getFavs().includes(slug); }
+  function toggleFav(slug) {
+    let f = getFavs();
+    if (f.includes(slug)) { setFavs(f.filter(s => s !== slug)); return { ok: true }; }
+    if (f.length >= MAX_FAV) return { full: true };
+    f.push(slug); setFavs(f); return { ok: true };
+  }
+  function starBtn(slug) {
+    const on = isFav(slug);
+    return `<span class="fav-star${on ? " is-fav" : ""}" role="button" tabindex="0" data-fav="${slug}" aria-pressed="${on}" aria-label="${on ? "Remove from My Cities" : "Add to My Cities"}" title="${on ? "Remove from My Cities" : "Add to My Cities"}"><svg viewBox="0 0 24 24" width="18" height="18" fill="${on ? "currentColor" : "none"}" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3.6l2.6 5.27 5.82.85-4.21 4.1.99 5.8L12 16.9l-5.2 2.73.99-5.8-4.21-4.1 5.82-.85z"/></svg></span>`;
+  }
+  function cardHtml(c) {
+    const off = offsetHours(c.tz);
+    const lat = `${Math.abs(c.lat).toFixed(2)}°${c.lat >= 0 ? "N" : "S"}`;
+    const lng = `${Math.abs(c.lng).toFixed(2)}°${c.lng >= 0 ? "E" : "W"}`;
+    const tag  = c.page ? "a" : "div";
+    const href = c.page ? ` href="cities/${c.slug}.html"` : "";
+    const cls  = c.page ? "city-card" : "city-card city-card--static";
+    return `
       <${tag} class="${cls}"${href} data-tz="${c.tz}" data-slug="${c.slug}"
          data-search="${norm(`${c.name} ${c.name_ar || ""} ${c.country} ${c.country_ar || ""}`)}">
+        ${starBtn(c.slug)}
         <div class="city-top">
           <span><span class="city-name">${c.name}</span><br><span class="city-country">${c.country}</span></span>
           <span class="city-daynight" data-daynight>·</span>
@@ -172,8 +188,49 @@
           <span class="city-offset">${offsetLabel(off)}</span>
         </div>
       </${tag}>`;
-    }).join("");
+  }
+  function renderCities(list = CITIES) {
+    $("#cityGrid").innerHTML = list.map(cardHtml).join("");
     $("#cityCount").textContent = CITIES.length;
+  }
+  function renderMyCities() {
+    const sec = $("#myCities"), grid = $("#myCitiesGrid");
+    if (!sec || !grid) return;
+    const list = getFavs().map(s => CITIES.find(c => c.slug === s)).filter(Boolean);
+    if (!list.length) { sec.hidden = true; grid.innerHTML = ""; return; }
+    sec.hidden = false;
+    grid.innerHTML = list.map(cardHtml).join("");
+  }
+  function refreshStars() {
+    const favs = getFavs();
+    $$(".fav-star").forEach(s => {
+      const on = favs.includes(s.dataset.fav);
+      s.classList.toggle("is-fav", on);
+      s.setAttribute("aria-pressed", on);
+      s.setAttribute("aria-label", on ? "Remove from My Cities" : "Add to My Cities");
+      s.setAttribute("title", on ? "Remove from My Cities" : "Add to My Cities");
+      const svg = s.querySelector("svg"); if (svg) svg.setAttribute("fill", on ? "currentColor" : "none");
+    });
+  }
+  function toast(msg) {
+    let t = document.getElementById("cthToast");
+    if (!t) { t = document.createElement("div"); t.id = "cthToast"; t.className = "cth-toast"; document.body.appendChild(t); }
+    t.textContent = msg; t.classList.add("is-shown");
+    clearTimeout(t._timer); t._timer = setTimeout(() => t.classList.remove("is-shown"), 2200);
+  }
+  function initFavorites() {
+    document.addEventListener("click", e => {
+      const star = e.target.closest && e.target.closest(".fav-star");
+      if (!star) return;
+      e.preventDefault(); e.stopPropagation();
+      const r = toggleFav(star.dataset.fav);
+      if (r.full) { toast(`You can pin up to ${MAX_FAV} cities.`); return; }
+      refreshStars(); renderMyCities();
+    });
+    document.addEventListener("keydown", e => {
+      const star = e.target.closest && e.target.closest(".fav-star");
+      if (star && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); star.click(); }
+    });
   }
 
   function injectSearchStyles() {
@@ -194,7 +251,11 @@
       }
       .suggest-item:hover, .suggest-item.is-active { background: rgba(255,255,255,.10); }
       .suggest-name { font-weight: 700; }
+      .suggest-meta { display: flex; align-items: center; gap: 4px; }
       .suggest-country { opacity: .6; font-size: .85em; white-space: nowrap; }
+      .suggest-item .fav-star { position: static; width: 30px; height: 30px; color: rgba(255,255,255,.5); flex: none; }
+      .suggest-item .fav-star.is-fav { color: #f5a623; }
+      .suggest-item .fav-star:hover { background: rgba(255,255,255,.12); color: #f5a623; }
       .city-card.is-flash { outline: 2px solid #38bdf8; outline-offset: 3px; }
     `;
     const tag = document.createElement("style");
@@ -217,13 +278,12 @@
 
     // hide/show the grid cards below to match the query
     function filterGrid(q) {
-      let shown = 0;
-      $$(".city-card").forEach(card => {
-        const match = !q || norm(card.dataset.search).includes(q);
-        card.style.display = match ? "" : "none";
-        if (match) shown++;
-      });
-      if (noResults) noResults.hidden = shown !== 0;
+      const list = q
+        ? CITIES.filter(c => norm(`${c.name} ${c.name_ar || ""} ${c.country} ${c.country_ar || ""}`).includes(q))
+        : CITIES.filter(c => c.featured);
+      renderCities(list);
+      refreshStars();
+      if (noResults) noResults.hidden = !q || list.length !== 0;
     }
 
     // live suggestions right under the input
@@ -236,7 +296,10 @@
       panel.innerHTML = matches.map(c => `
         <li class="suggest-item" data-slug="${c.slug}" data-page="${c.page ? 1 : 0}">
           <span class="suggest-name">${c.name}</span>
-          <span class="suggest-country">${c.country}</span>
+          <span class="suggest-meta">
+            <span class="suggest-country">${c.country}</span>
+            ${starBtn(c.slug)}
+          </span>
         </li>`).join("");
       panel.hidden = false;
     }
@@ -250,7 +313,7 @@
       filterGrid(norm(c.name));
       const grid = document.getElementById("cities");
       if (grid) grid.scrollIntoView({ behavior: "smooth", block: "start" });
-      const card = $(`.city-card[data-slug="${slug}"]`);
+      const card = $(`#cityGrid .city-card[data-slug="${slug}"]`);
       if (card) {
         card.classList.add("is-flash");
         setTimeout(() => card.classList.remove("is-flash"), 1600);
@@ -265,6 +328,7 @@
 
     // mouse pick
     panel.addEventListener("mousedown", e => {
+      if (e.target.closest(".fav-star")) { e.preventDefault(); return; } // star toggles via click; keep input focus
       const li = e.target.closest(".suggest-item");
       if (li) { e.preventDefault(); go(li.dataset.slug); }
     });
@@ -399,6 +463,8 @@
 
     buildMeridian();
     renderCities(CITIES.filter(c => c.featured));
+    renderMyCities();
+    initFavorites();
     initSearch();
     initPrayerPicker();
     startClock();
