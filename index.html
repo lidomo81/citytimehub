@@ -8,15 +8,15 @@
   <title>CityTimeHub — Current Time Around The World</title>
   <meta name="description" content="Watch daylight sweep the planet in real time. Live local time, time zones and UTC offsets for cities worldwide, plus Hijri dates, prayer times and sunrise & sunset — all computed in your browser." />
   <meta name="theme-color" content="#0B1120" />
-  <link rel="canonical" href="https://citytimehub.pages.dev/" />
+  <link rel="canonical" href="https://www.citytimehub.com/" />
 
   <!-- ===== Open Graph ===== -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="CityTimeHub" />
   <meta property="og:title" content="CityTimeHub — Current Time Around The World" />
   <meta property="og:description" content="A live day/night meridian of world time. Local clocks, time zones, Hijri dates, prayer times and sunrise & sunset across the globe." />
-  <meta property="og:url" content="https://citytimehub.pages.dev/" />
-  <meta property="og:image" content="https://citytimehub.pages.dev/og-cover.png" />
+  <meta property="og:url" content="https://www.citytimehub.com/" />
+  <meta property="og:image" content="https://www.citytimehub.com/og-cover.png" />
 
   <!-- ===== Twitter ===== -->
   <meta name="twitter:card" content="summary_large_image" />
@@ -35,13 +35,61 @@
   {
     "@context": "https://schema.org",
     "@graph": [
-      { "@type": "Organization", "name": "CityTimeHub", "url": "https://citytimehub.pages.dev/", "slogan": "Current Time Around The World" },
-      { "@type": "WebSite", "name": "CityTimeHub", "url": "https://citytimehub.pages.dev/",
+      { "@type": "Organization", "name": "CityTimeHub", "url": "https://www.citytimehub.com/", "slogan": "Current Time Around The World" },
+      { "@type": "WebSite", "name": "CityTimeHub", "url": "https://www.citytimehub.com/",
         "potentialAction": { "@type": "SearchAction",
-          "target": "https://citytimehub.pages.dev/?q={search_term_string}",
+          "target": "https://www.citytimehub.com/?q={search_term_string}",
           "query-input": "required name=search_term_string" } }
     ]
   }
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How are prayer times determined?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "They are calculated from the sun's position for a given location and date — primarily the angles of twilight for Fajr and Isha, solar noon for Dhuhr, and sunset for Maghrib."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why do prayer times differ between apps or mosques?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Different authorities use different twilight angles and conventions. A few minutes of variation between methods such as MWL, ISNA, or Umm al-Qura is normal and expected."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which calculation method should I choose?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The best choice is the method officially followed in your country or by your local mosque, as it reflects the convention your community relies on."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What causes day and night?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The Earth's rotation on its axis. The half facing the sun has day; the half turned away has night, and the two swap as the planet spins."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why isn't it the same time everywhere on Earth?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because different lines of longitude face the sun at different moments. As the Earth rotates, each region reaches noon and midnight at its own time, which is exactly what time zones reflect."
+      }
+    }
+  ]
+}
   </script>
 </head>
 
@@ -186,6 +234,20 @@
       </div>
     </section>
 
+    <section class="section explainer-section" aria-labelledby="ex-prayer-h">
+      <div class="container container-narrow">
+        <h2 id="ex-prayer-h" class="explainer-title">How Are Prayer Times Calculated?</h2>
+        <div class="prose"><p>Islamic prayer times are derived <strong>astronomically</strong>, from the position of the sun relative to the horizon at a specific location. Fajr and Isha are based on the angle of the sun below the horizon during twilight, Dhuhr begins just after the sun passes its highest point, and Maghrib starts at sunset. Because these depend on latitude, longitude, and the date, prayer times shift slightly every day and differ from one city to another.</p>
+          <p>Different recognized authorities use slightly different <strong>twilight angles</strong>, which is why times can vary by a few minutes between calculation methods. Widely adopted methods include the <strong>Muslim World League (MWL)</strong>, the <strong>Islamic Society of North America (ISNA)</strong>, the <strong>Egyptian General Authority of Survey</strong>, and <strong>Umm al-Qura University</strong> in Makkah. Choosing the method your local community follows gives the most accurate result.</p></div>
+        <div class="faq explainer-faq">
+          <h3 class="explainer-faq-title">Frequently Asked Questions</h3>
+          <details class="faq-item"><summary>How are prayer times determined?</summary><p>They are calculated from the sun's position for a given location and date — primarily the angles of twilight for Fajr and Isha, solar noon for Dhuhr, and sunset for Maghrib.</p></details>
+          <details class="faq-item"><summary>Why do prayer times differ between apps or mosques?</summary><p>Different authorities use different twilight angles and conventions. A few minutes of variation between methods such as MWL, ISNA, or Umm al-Qura is normal and expected.</p></details>
+          <details class="faq-item"><summary>Which calculation method should I choose?</summary><p>The best choice is the method officially followed in your country or by your local mosque, as it reflects the convention your community relies on.</p></details>
+        </div>
+      </div>
+    </section>
+
     <!-- ===================== SUNRISE & SUNSET ===================== -->
     <section id="sun" class="section">
       <div class="container">
@@ -210,6 +272,19 @@
             <span class="ref-label">Day length</span>
             <strong id="dayLength" class="ref-time" dir="ltr">—</strong>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section explainer-section" aria-labelledby="ex-daynight-h">
+      <div class="container container-narrow">
+        <h2 id="ex-daynight-h" class="explainer-title">The Science of Day &amp; Night</h2>
+        <div class="prose"><p>Day and night are created by the Earth's <strong>rotation on its axis</strong>, one full turn roughly every 24 hours. At any moment, half of the planet faces the sun and experiences daylight, while the other half is turned away and in darkness. As the Earth spins from west to east, the line dividing the two — the <strong>terminator</strong> — sweeps continuously across the surface, which is why sunrise arrives in the east before the west.</p>
+          <p>This is also why time itself moves across the globe. Locations along different <strong>lines of longitude</strong> meet the sunrise at different moments, so it is genuinely always morning somewhere and night somewhere else at the same instant. A day-and-night indicator captures this by showing, at a glance, which cities are currently in daylight and which have already turned toward night.</p></div>
+        <div class="faq explainer-faq">
+          <h3 class="explainer-faq-title">Frequently Asked Questions</h3>
+          <details class="faq-item"><summary>What causes day and night?</summary><p>The Earth's rotation on its axis. The half facing the sun has day; the half turned away has night, and the two swap as the planet spins.</p></details>
+          <details class="faq-item"><summary>Why isn't it the same time everywhere on Earth?</summary><p>Because different lines of longitude face the sun at different moments. As the Earth rotates, each region reaches noon and midnight at its own time, which is exactly what time zones reflect.</p></details>
         </div>
       </div>
     </section>
