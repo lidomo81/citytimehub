@@ -500,3 +500,36 @@ svg { display: block; }
 .link-list li.has-fav:not([hidden]) { display: flex; align-items: center; gap: 8px; }
 .link-list li.has-fav > a { flex: 1 1 auto; min-width: 0; }
 .link-list li.has-fav .fav-star { position: static; flex: none; width: 32px; height: 32px; }
+
+/* ===================== Meeting Planner tool ===================== */
+.planner-form { display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-end; }
+.pl-field { display: flex; flex-direction: column; gap: 6px; min-width: 130px; }
+.pl-field.pl-grow { flex: 1 1 200px; }
+.pl-field label { font-size: .82rem; font-weight: 700; color: var(--text-2); }
+.pl-input { font-family: inherit; font-size: .95rem; color: var(--text); background: var(--surface-2); border: 1.5px solid var(--border); border-radius: 10px; padding: 11px 12px; width: 100%; }
+.pl-input:focus { outline: none; border-color: var(--brand); }
+.planner-add { margin-top: 16px; position: relative; max-width: 380px; }
+.planner-add > label { display: block; font-size: .82rem; font-weight: 700; color: var(--text-2); margin-bottom: 6px; }
+.pl-chips { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; padding: 0; }
+.pl-chip { display: inline-flex; align-items: center; gap: 7px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px; padding: 6px 8px 6px 14px; font-size: .9rem; font-weight: 600; }
+.pl-chip-x { border: none; background: transparent; color: var(--text-2); cursor: pointer; font-size: 1.2rem; line-height: 1; width: 22px; height: 22px; border-radius: 50%; }
+.pl-chip-x:hover { background: var(--border); color: var(--text); }
+
+.pl-result { margin-top: 22px; overflow-x: auto; }
+.pl-table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+.pl-table th { text-align: left; font-size: .76rem; text-transform: uppercase; letter-spacing: .04em; color: var(--text-2); padding: 8px 12px; border-bottom: 1.5px solid var(--border); }
+.pl-table td { padding: 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.pl-table tr.pl-home td { background: color-mix(in srgb, var(--brand) 9%, transparent); }
+.pl-c { font-weight: 700; white-space: nowrap; }
+.pl-cc { display: block; font-size: .78rem; font-weight: 500; color: var(--text-2); }
+.pl-t { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pl-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-inline-end: 9px; vertical-align: middle; }
+.pl-ok { background: #2ecc71; } .pl-warn { background: #f5a623; } .pl-bad { background: #5b6b8c; }
+.pl-day { display: inline-block; font-size: .74rem; font-weight: 800; padding: 2px 8px; border-radius: 999px; margin-inline-start: 8px; vertical-align: middle; }
+.pl-day.next { background: rgba(56,132,255,.16); color: #6aa3ff; }
+.pl-day.prev { background: rgba(245,166,35,.16); color: #f0a020; }
+.pl-base { display: inline-block; font-size: .7rem; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; color: var(--brand); margin-inline-start: 8px; }
+.pl-legend { margin-top: 12px; font-size: .82rem; color: var(--text-2); }
+.pl-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.btn-ghost { font-family: inherit; font-weight: 700; font-size: .9rem; color: var(--text); background: var(--surface-2); border: 1.5px solid var(--border); border-radius: 10px; padding: 11px 18px; cursor: pointer; transition: border-color .2s, background .2s; }
+.btn-ghost:hover { border-color: var(--brand); background: var(--surface); }
