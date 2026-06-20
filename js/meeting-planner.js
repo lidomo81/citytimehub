@@ -19,6 +19,33 @@
   const bySlug = new Map();
 
   /* ---------- Timezone math (wall-clock in a tz → exact UTC instant) ---------- */
+  const LANG = (document.documentElement.lang || "en").slice(0, 2) === "ar" ? "ar" : "en";
+  const cN = c => (LANG === "ar" && c && c.name_ar) ? c.name_ar : (c ? c.name : "");
+  const cC = c => (LANG === "ar" && c && c.country_ar) ? c.country_ar : (c ? c.country : "");
+  const T = LANG === "ar" ? {
+    defaultTitle: "حدث",
+    maxCities: "تقدر تضيف حتى 6 مدن.",
+    linkCopied: "تم نسخ الرابط — يفتح عند هذه اللحظة بالضبط لأي شخص.",
+    copyThis: "انسخ هذا الرابط:",
+    loadErr: "تعذّر تحميل قائمة المدن. حدّث الصفحة من فضلك.",
+    thCity: "المدينة", thLocal: "التاريخ والوقت المحلي", base: "الأساس",
+    work: "ضمن ساعات العمل", early: "مبكّر/متأخّر", night: "ليل",
+    day: n => n > 1 ? "أيام" : "يوم",
+    details: names => `خُطّط عبر CityTimeHub. المدن: ${names}.`,
+    remove: n => `إزالة ${n}`,
+  } : {
+    defaultTitle: "Event",
+    maxCities: "You can add up to 6 cities.",
+    linkCopied: T.linkCopied,
+    copyThis: T.copyThis,
+    loadErr: T.loadErr,
+    thCity: "City", thLocal: "Local date & time", base: "base",
+    work: "Working hours", early: "Early/late", night: "Night",
+    day: n => n > 1 ? "days" : "day",
+    details: names => `Planned with CityTimeHub. Cities: ${names}.`,
+    remove: n => `Remove ${n}`,
+  };
+
   function tzOffsetMin(tz, date) {
     const dtf = new Intl.DateTimeFormat("en-US", { timeZone: tz, hour12: false, year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit" });
     const p = {}; dtf.formatToParts(date).forEach(x => { p[x.type] = x.value; });
@@ -44,14 +71,14 @@
     const b = new Date(baseYmd + "T00:00:00Z").getTime();
     return Math.round((a - b) / 86400000);
   }
-  const fmtLocal = tz => new Intl.DateTimeFormat("en-GB", { timeZone: tz, weekday: "short", day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit", hour12: false });
+  const fmtLocal = tz => new Intl.DateTimeFormat(LANG === "ar" ? "ar-EG-u-nu-latn" : "en-GB", { timeZone: tz, weekday: "short", day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit", hour12: false });
   function utcStamp(ms) {
     const d = new Date(ms);
     return `${d.getUTCFullYear()}${pad(d.getUTCMonth() + 1)}${pad(d.getUTCDate())}T${pad(d.getUTCHours())}${pad(d.getUTCMinutes())}${pad(d.getUTCSeconds())}Z`;
   }
 
   /* ---------- State ---------- */
-  const state = { title: "Meeting", date: "", time: "", from: "", dur: 60, cities: [] };
+  const state = { title: "", date: "", time: "", from: "", dur: 60, cities: [] };
 
   function findCity(q) {
     if (!q) return null;
@@ -76,7 +103,7 @@
       items = q ? CITIES.filter(c => c._s.includes(q)).slice(0, 8) : [];
       if (!items.length) { listEl.innerHTML = ""; close(); return; }
       listEl.innerHTML = items.map((c, i) =>
-        `<li class="ac-item${i === active ? " is-active" : ""}" role="option" data-i="${i}"><span>${esc(c.name)}</span><span class="ac-country">${esc(c.country)}</span></li>`).join("");
+        `<li class="ac-item${i === active ? " is-active" : ""}" role="option" data-i="${i}"><span>${esc(cN(c))}</span><span class="ac-country">${esc(cC(c))}</span></li>`).join("");
       listEl.hidden = false; input.setAttribute("aria-expanded", "true");
     }
     function pick(i) {
@@ -101,13 +128,13 @@
     const wrap = $("#plChips"); if (!wrap) return;
     wrap.innerHTML = state.cities.map(slug => {
       const c = bySlug.get(slug); if (!c) return "";
-      return `<li class="pl-chip"><span>${esc(c.name)}</span><button type="button" class="pl-chip-x" data-rm="${esc(slug)}" aria-label="Remove ${esc(c.name)}">&times;</button></li>`;
+      return `<li class="pl-chip"><span>${esc(cN(c))}</span><button type="button" class="pl-chip-x" data-rm="${esc(slug)}" aria-label="${esc(T.remove(cN(c)))}">&times;</button></li>`;
     }).join("");
   }
   function addCity(slug) {
     if (!slug || slug === state.from) return;
     if (state.cities.includes(slug)) return;
-    if (state.cities.length >= 6) { showError("You can add up to 6 cities."); return; }
+    if (state.cities.length >= 6) { showError(T.maxCities); return; }
     clearError(); state.cities.push(slug); renderChips(); compute();
   }
   function removeCity(slug) { state.cities = state.cities.filter(s => s !== slug); renderChips(); compute(); }
@@ -135,16 +162,16 @@
       const when = fmtLocal(c.tz).format(new Date(utc));
       const hour = +new Intl.DateTimeFormat("en-GB", { timeZone: c.tz, hour: "2-digit", hour12: false }).format(new Date(utc));
       const work = hour >= 9 && hour < 17 ? "ok" : (hour >= 7 && hour < 22 ? "warn" : "bad");
-      const badge = delta === 0 ? "" : `<span class="pl-day ${delta > 0 ? "next" : "prev"}">${delta > 0 ? "+" : ""}${delta} day${Math.abs(delta) > 1 ? "s" : ""}</span>`;
-      const dot = `<span class="pl-dot pl-${work}" title="${work === "ok" ? "Working hours" : work === "warn" ? "Early/late" : "Night"}"></span>`;
+      const badge = delta === 0 ? "" : `<span class="pl-day ${delta > 0 ? "next" : "prev"}">${delta > 0 ? "+" : ""}${delta} ${T.day(Math.abs(delta))}</span>`;
+      const dot = `<span class="pl-dot pl-${work}" title="${work === "ok" ? T.work : work === "warn" ? T.early : T.night}"></span>`;
       return `<tr${idx === 0 ? ' class="pl-home"' : ""}>
-        <td class="pl-c">${dot}${esc(c.name)}<span class="pl-cc">${esc(c.country)}</span></td>
-        <td class="pl-t">${esc(when)} ${badge}${idx === 0 ? '<span class="pl-base">base</span>' : ""}</td></tr>`;
+        <td class="pl-c">${dot}${esc(cN(c))}<span class="pl-cc">${esc(cC(c))}</span></td>
+        <td class="pl-t">${esc(when)} ${badge}${idx === 0 ? '<span class="pl-base">${T.base}</span>' : ""}</td></tr>`;
     }).join("");
 
     if (result) {
-      result.innerHTML = `<table class="pl-table"><thead><tr><th>City</th><th>Local date &amp; time</th></tr></thead><tbody>${rows}</tbody></table>
-        <p class="pl-legend"><span class="pl-dot pl-ok"></span> Working hours &nbsp; <span class="pl-dot pl-warn"></span> Early/late &nbsp; <span class="pl-dot pl-bad"></span> Night</p>`;
+      result.innerHTML = `<table class="pl-table"><thead><tr><th>${T.thCity}</th><th>${T.thLocal}</th></tr></thead><tbody>${rows}</tbody></table>
+        <p class="pl-legend"><span class="pl-dot pl-ok"></span> ${T.work} &nbsp; <span class="pl-dot pl-warn"></span> ${T.early} &nbsp; <span class="pl-dot pl-bad"></span> ${T.night}</p>`;
       result.hidden = false;
     }
     if (actions) actions.hidden = false;
@@ -152,11 +179,11 @@
   }
 
   /* ---------- Calendar export ---------- */
-  function eventTitle() { return state.title || "Meeting"; }
+  function eventTitle() { return state.title || T.defaultTitle; }
   function eventDetails() {
     const from = bySlug.get(state.from);
-    const names = [from, ...state.cities.map(s => bySlug.get(s))].filter(Boolean).map(c => c.name).join(", ");
-    return `Planned with CityTimeHub. Cities: ${names}.`;
+    const names = [from, ...state.cities.map(s => bySlug.get(s))].filter(Boolean).map(c => cN(c)).join("، ");
+    return T.details(names);
   }
   function updateGcal(utc) {
     const a = $("#plGcal"); if (!a) return;
@@ -173,7 +200,7 @@
     const end = lastUtc + state.dur * 60000;
     const uid = "cth-" + Date.now() + "@citytimehub.com";
     const ics = [
-      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//CityTimeHub//Meeting Planner//EN", "CALSCALE:GREGORIAN",
+      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//CityTimeHub//Event Planner//EN", "CALSCALE:GREGORIAN",
       "BEGIN:VEVENT", `UID:${uid}`, `DTSTAMP:${utcStamp(Date.now())}`,
       `DTSTART:${utcStamp(lastUtc)}`, `DTEND:${utcStamp(end)}`,
       `SUMMARY:${eventTitle().replace(/[,;\\]/g, m => "\\" + m)}`,
@@ -193,16 +220,16 @@
     if (lastUtc == null) return;
     const p = new URLSearchParams();
     p.set("t", new Date(lastUtc).toISOString());
-    if (state.title && state.title !== "Meeting") p.set("title", state.title);
+    if (state.title && state.title !== T.defaultTitle) p.set("title", state.title);
     p.set("from", state.from);
     if (state.cities.length) p.set("cities", state.cities.join(","));
     history.replaceState(null, "", location.pathname + "?" + p.toString());
   }
   function copyShare() {
     const url = location.href;
-    const done = () => toast("Link copied — opens at this exact moment for anyone.");
-    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done).catch(() => prompt("Copy this link:", url));
-    else prompt("Copy this link:", url);
+    const done = () => toast(T.linkCopied);
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done).catch(() => prompt(T.copyThis, url));
+    else prompt(T.copyThis, url);
   }
   function toast(msg) {
     let t = document.getElementById("cthToast");
@@ -245,7 +272,7 @@
       const data = await res.json();
       CITIES = (data.cities || []).map(c => ({ ...c, _s: norm(c.name + " " + c.country + " " + (c.name_ar || "") + " " + (c.country_ar || "")) }));
       CITIES.forEach(c => bySlug.set(c.slug, c));
-    } catch (e) { showError("Could not load the city list. Please refresh."); return; }
+    } catch (e) { showError(T.loadErr); return; }
 
     const titleI = $("#plTitle"), dateI = $("#plDate"), timeI = $("#plTime"), durI = $("#plDur");
 
@@ -266,7 +293,7 @@
     autocomplete($("#plFrom"), $("#acFrom"), c => { setHome(c); state.cities = state.cities.filter(s => s !== c.slug); renderChips(); compute(); });
     autocomplete($("#plAdd"), $("#acAdd"), c => addCity(c.slug));
 
-    if (titleI) titleI.addEventListener("input", () => { state.title = titleI.value.trim() || "Meeting"; if (lastUtc != null) { updateGcal(lastUtc); updateUrl(); } });
+    if (titleI) titleI.addEventListener("input", () => { state.title = titleI.value.trim() || T.defaultTitle; if (lastUtc != null) { updateGcal(lastUtc); updateUrl(); } });
     if (dateI) dateI.addEventListener("change", () => { state.date = dateI.value; compute(); });
     if (timeI) timeI.addEventListener("change", () => { state.time = timeI.value; compute(); });
     if (durI) durI.addEventListener("change", () => { state.dur = +durI.value || 60; if (lastUtc != null) { updateGcal(lastUtc); } });

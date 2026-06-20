@@ -13,6 +13,7 @@
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 
   let CITIES = [];
+  let HUBS = new Set();
   const bySlug = new Map();
   let sel1 = null, sel2 = null;
   let tickTimer = null;
@@ -59,6 +60,42 @@
   const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
   const slugPair = (a, b) => [a.slug, b.slug].sort().join("-");
 
+  /* ---------- i18n (reads <html lang>) ---------- */
+  const LANG = (document.documentElement.lang || "en").slice(0, 2) === "ar" ? "ar" : "en";
+  const cN = c => (LANG === "ar" && c && c.name_ar) ? c.name_ar : (c ? c.name : "");
+  const cC = c => (LANG === "ar" && c && c.country_ar) ? c.country_ar : (c ? c.country : "");
+  function hoursPhraseAr(x) { x = Math.abs(x); let h = Math.floor(x), m = Math.round((x - h) * 60); if (m === 60) { h++; m = 0; } if (h && m) return h + " ساعة و" + m + " دقيقة"; if (h) return h + " ساعة"; return m + " دقيقة"; }
+  const HP = x => LANG === "ar" ? hoursPhraseAr(x) : hoursPhrase(x);
+  const T = LANG === "ar" ? {
+    noCity: "لا توجد مدينة",
+    errBoth: "اختر مدينتين للمقارنة.", err1: "اختر المدينة الأولى.", err2: "اختر المدينة الثانية.", errSame: "اختر مدينتين مختلفتين.",
+    sameZone: (a, b) => `${a} و${b} في نفس المنطقة الزمنية`,
+    ahead: (x, y, p) => `${x} تتقدّم ${y} بـ${p}`,
+    liveSub: "أوقات محلية حيّة وتداخل ساعات العمل.", diff: "الفرق",
+    ovLabel: "تداخل ساعات العمل.", dstLabel: "التوقيت الصيفي.",
+    dstNeither: "لا تطبّق أي من المدينتين التوقيت الصيفي، فيبقى الفرق ثابتاً طوال العام.",
+    dstBothSame: "تطبّق المدينتان التوقيت الصيفي، فيظل الفرق الحالي ثابتاً عادةً طوال العام.",
+    dstBothDiff: "تطبّق المدينتان التوقيت الصيفي بمواعيد مختلفة، فيتغيّر الفرق في أوقاتٍ معيّنة من العام.",
+    dstOne: (x, y) => `${x} تطبّق التوقيت الصيفي بينما ${y} لا تطبّقه، فيتغيّر الفرق خلال جزءٍ من العام.`,
+    ovOk: (sB, eB, b, sA, eA, a, dur) => `أفضل تداخل لساعات العمل 09:00–17:00 هو <strong>${sB}–${eB} في ${b}</strong> (${sA}–${eA} في ${a}) — حوالي ${dur} من الوقت المشترك.`,
+    ovNo: "ساعات العمل المعتادة 09:00–17:00 لا تتداخل؛ سيحتاج أحد الطرفين لاجتماعٍ مبكّر أو متأخّر.",
+    permalink: (a, b) => `افتح صفحة ${a} ↔ ${b} الكاملة ←`,
+  } : {
+    noCity: "No city found",
+    errBoth: "Please choose two cities to compare.", err1: "Please choose a first city.", err2: "Please choose a second city.", errSame: "Please choose two different cities.",
+    sameZone: (a, b) => `${a} and ${b} are in the same time zone`,
+    ahead: (x, y, p) => `${x} is ${p} ahead of ${y}`,
+    liveSub: "Live local times and working-hours overlap.", diff: "difference",
+    ovLabel: "Working hours overlap.", dstLabel: "Daylight saving.",
+    dstNeither: "Neither city observes daylight saving time, so the difference stays the same all year.",
+    dstBothSame: "Both cities observe daylight saving time, so the current difference is usually maintained year-round.",
+    dstBothDiff: "Both cities observe daylight saving time on different schedules, so the difference changes at certain times of the year.",
+    dstOne: (x, y) => `${x} observes daylight saving time while ${y} does not, so the difference shifts during part of the year.`,
+    ovOk: (sB, eB, b, sA, eA, a, dur) => `The best overlap for 09:00–17:00 working hours is <strong>${sB}–${eB} in ${b}</strong> (${sA}–${eA} in ${a}) — about ${dur} of shared time.`,
+    ovNo: "Standard 09:00–17:00 working hours do not overlap; one side would need an early or late meeting.",
+    permalink: (a, b) => `Open the full ${a} ↔ ${b} page →`,
+  };
+
   /* ---------- recent comparisons (localStorage, last 5) ---------- */
   const LS = "cth-recent-compares";
   const getRecent = () => { try { return JSON.parse(localStorage.getItem(LS) || "[]"); } catch (e) { return []; } };
@@ -96,11 +133,11 @@
       const other = getOther();
       matches = CITIES.filter(c => (!other || c.slug !== other.slug) && c._s.indexOf(q) > -1).slice(0, 8);
       if (!matches.length) {
-        listEl.innerHTML = `<li class="ac-empty">No city found</li>`;
+        listEl.innerHTML = `<li class="ac-empty">${T.noCity}</li>`;
         listEl.hidden = false; active = -1; return;
       }
       listEl.innerHTML = matches.map((c, i) =>
-        `<li role="option" class="ac-item${i === active ? " is-active" : ""}" data-i="${i}"><span class="ac-name">${esc(c.name)}</span><span class="ac-country">${esc(c.country)}</span></li>`).join("");
+        `<li role="option" class="ac-item${i === active ? " is-active" : ""}" data-i="${i}"><span class="ac-name">${esc(cN(c))}</span><span class="ac-country">${esc(cC(c))}</span></li>`).join("");
       listEl.hidden = false;
     }
     function highlight(i) {
@@ -110,7 +147,7 @@
     }
     function choose(i) {
       const c = matches[i]; if (!c) return;
-      setSel(c); input.value = c.name + ", " + c.country; input.dataset.slug = c.slug;
+      setSel(c); input.value = cN(c) + ", " + cC(c); input.dataset.slug = c.slug;
       close(); clearError(); maybeAutoCompare(which);
     }
     input.addEventListener("input", () => { input.dataset.slug = ""; setSel(null); active = -1; paint(); });
@@ -131,10 +168,10 @@
     if (sel1 && sel2 && sel1.slug !== sel2.slug) doCompare();
   }
   function doCompare() {
-    if (!sel1 && !sel2) return showError("Please choose two cities to compare.");
-    if (!sel1) return showError("Please choose a first city.");
-    if (!sel2) return showError("Please choose a second city.");
-    if (sel1.slug === sel2.slug) return showError("Please choose two different cities.");
+    if (!sel1 && !sel2) return showError(T.errBoth);
+    if (!sel1) return showError(T.err1);
+    if (!sel2) return showError(T.err2);
+    if (sel1.slug === sel2.slug) return showError(T.errSame);
     clearError();
     renderResult(sel1, sel2);
     pushRecent(sel1, sel2);
@@ -145,34 +182,32 @@
     const offA = offsetHours(a.tz), offB = offsetHours(b.tz), diff = Math.round((offB - offA) * 10) / 10;
     const dstA = dstInfo(a.tz), dstB = dstInfo(b.tz), ov = overlap(diff);
     const ahead = diff === 0
-      ? `${esc(a.name)} and ${esc(b.name)} are in the same time zone`
-      : (diff > 0 ? `${esc(b.name)} is ${hoursPhrase(diff)} ahead of ${esc(a.name)}`
-                  : `${esc(a.name)} is ${hoursPhrase(diff)} ahead of ${esc(b.name)}`);
+      ? T.sameZone(esc(cN(a)), esc(cN(b)))
+      : (diff > 0 ? T.ahead(esc(cN(b)), esc(cN(a)), HP(diff))
+                  : T.ahead(esc(cN(a)), esc(cN(b)), HP(diff)));
     const dstSentence = (!dstA.observes && !dstB.observes)
-      ? `Neither city observes daylight saving time, so the difference stays the same all year.`
+      ? T.dstNeither
       : (dstA.observes && dstB.observes)
-        ? ((dstB.jan - dstA.jan) !== (dstB.jul - dstA.jul)
-            ? `Both cities observe daylight saving time on different schedules, so the difference changes at certain times of the year.`
-            : `Both cities observe daylight saving time, so the current difference is usually maintained year-round.`)
-        : `${esc(dstA.observes ? a.name : b.name)} observes daylight saving time while ${esc(dstA.observes ? b.name : a.name)} does not, so the difference shifts during part of the year.`;
+        ? ((dstB.jan - dstA.jan) !== (dstB.jul - dstA.jul) ? T.dstBothDiff : T.dstBothSame)
+        : T.dstOne(esc(dstA.observes ? cN(a) : cN(b)), esc(dstA.observes ? cN(b) : cN(a)));
     const overlapHtml = ov.ok
-      ? `The best overlap for 09:00–17:00 working hours is <strong>${hhmm(ov.startB)}–${hhmm(ov.endB)} in ${esc(b.name)}</strong> (${hhmm(ov.startA)}–${hhmm(ov.endA)} in ${esc(a.name)}) — about ${hoursPhrase(ov.dur)} of shared time.`
-      : `Standard 09:00–17:00 working hours do not overlap; one side would need an early or late meeting.`;
+      ? T.ovOk(hhmm(ov.startB), hhmm(ov.endB), esc(cN(b)), hhmm(ov.startA), hhmm(ov.endA), esc(cN(a)), HP(ov.dur))
+      : T.ovNo;
     const staticPair = slugPair(a, b);
 
     const el = $("#cmpResult");
     el.innerHTML = `
-      <div class="cmp-head"><h2>${cap(ahead)}</h2><p class="muted">Live local times and working-hours overlap.</p></div>
+      <div class="cmp-head"><h2>${cap(ahead)}</h2><p class="muted">${T.liveSub}</p></div>
       <div class="cmp-cards">
-        <article class="cmp-card"><span class="cmp-city">${esc(a.name)}</span><span class="muted small">${esc(a.country)}</span><strong class="cmp-clock" id="ctA" dir="ltr">${fmtTime(a.tz)}</strong><span class="cmp-zone mono">${esc(a.tz)} · ${offsetLabel(offA)}</span></article>
-        <div class="cmp-diff"><span class="cmp-diff-val">${diff === 0 ? "0h" : (diff > 0 ? "+" : "\u2212") + hoursPhrase(diff).replace(/ hours?/, "h").replace(/ min/, "m")}</span><span class="muted small">difference</span></div>
-        <article class="cmp-card"><span class="cmp-city">${esc(b.name)}</span><span class="muted small">${esc(b.country)}</span><strong class="cmp-clock" id="ctB" dir="ltr">${fmtTime(b.tz)}</strong><span class="cmp-zone mono">${esc(b.tz)} · ${offsetLabel(offB)}</span></article>
+        <article class="cmp-card"><span class="cmp-city">${esc(cN(a))}</span><span class="muted small">${esc(cC(a))}</span><strong class="cmp-clock" id="ctA" dir="ltr">${fmtTime(a.tz)}</strong><span class="cmp-zone mono">${esc(a.tz)} · ${offsetLabel(offA)}</span></article>
+        <div class="cmp-diff"><span class="cmp-diff-val">${diff === 0 ? "0h" : (diff > 0 ? "+" : "\u2212") + hoursPhrase(diff).replace(/ hours?/, "h").replace(/ min/, "m")}</span><span class="muted small">${T.diff}</span></div>
+        <article class="cmp-card"><span class="cmp-city">${esc(cN(b))}</span><span class="muted small">${esc(cC(b))}</span><strong class="cmp-clock" id="ctB" dir="ltr">${fmtTime(b.tz)}</strong><span class="cmp-zone mono">${esc(b.tz)} · ${offsetLabel(offB)}</span></article>
       </div>
       <div class="cmp-facts">
-        <p><strong>Working hours overlap.</strong> ${overlapHtml}</p>
-        <p><strong>Daylight saving.</strong> ${dstSentence}</p>
+        <p><strong>${T.ovLabel}</strong> ${overlapHtml}</p>
+        <p><strong>${T.dstLabel}</strong> ${dstSentence}</p>
       </div>
-      <p class="cmp-permalink"><a href="/time-difference/${esc(staticPair)}">Open the full ${esc(a.name)} ↔ ${esc(b.name)} page →</a></p>`;
+      ${(HUBS.has(a.slug) && HUBS.has(b.slug)) ? `<p class="cmp-permalink"><a href="/time-difference/${esc(staticPair)}">${T.permalink(esc(cN(a)), esc(cN(b)))}</a></p>` : ""}`;
     el.hidden = false;
     el.scrollIntoView({ behavior: "smooth", block: "nearest" });
 
@@ -199,20 +234,21 @@
   function applyCity(input, which, c) {
     if (!c) return;
     if (which === 1) sel1 = c; else sel2 = c;
-    input.value = c.name + ", " + c.country; input.dataset.slug = c.slug;
+    input.value = cN(c) + ", " + cC(c); input.dataset.slug = c.slug;
   }
 
   /* ---------- boot ---------- */
   async function init() {
     const form = $("#compareForm"); if (!form) return;
     const in1 = $("#city1"), in2 = $("#city2"), btn = $("#compareBtn");
-    btn.disabled = true; btn.dataset.label = btn.textContent; btn.textContent = "Loading…";
+    btn.disabled = true; btn.dataset.label = btn.textContent; btn.textContent = LANG === "ar" ? "جارٍ التحميل…" : "Loading…";
 
     try {
       const res = await fetch("/data/cities.json", { cache: "force-cache" });
       const data = await res.json();
       CITIES = (data.cities || []).map(c => ({ ...c, _s: norm(c.name + " " + c.country + " " + (c.name_ar || "")) }));
       CITIES.forEach(c => bySlug.set(c.slug, c));
+      try { const hr = await fetch("/data/compare-hubs.json", { cache: "force-cache" }); HUBS = new Set(await hr.json()); } catch (e) { HUBS = new Set(); }
     } catch (e) {
       showError("Could not load the city list. Please refresh and try again.");
       btn.textContent = btn.dataset.label; return;

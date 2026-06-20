@@ -147,7 +147,11 @@
       if (!res.ok) throw new Error("timings " + res.status);
       const { data } = await res.json();
       const t = data.timings, g = data.date.gregorian, h = data.date.hijri;
-      const gd = $("#gregDate"); if (gd) gd.textContent = `${g.day} ${LANG === "ar" ? (T.gregMonths[(+g.month.number || 1) - 1] || g.month.en) : g.month.en} ${g.year}`;
+      const gd = $("#gregDate");
+      if (gd) {
+        const gdate = new Date(Date.UTC(+g.year, (+(g.month && g.month.number) || 1) - 1, +g.day));
+        gd.textContent = new Intl.DateTimeFormat(LANG === "ar" ? "ar-EG-u-nu-latn" : "en-GB", { timeZone: "UTC", day: "numeric", month: "long", year: "numeric" }).format(gdate);
+      }
       const hd = $("#hijriDate"); if (hd) hd.textContent = `${h.day} ${LANG === "ar" ? h.month.ar : h.month.en} ${h.year} ${T.ah}`;
       const clean = s => (s || "").split(" ")[0];
       const next = nextPrayer(t);

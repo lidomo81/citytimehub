@@ -130,7 +130,7 @@
         <a href="#cities">Cities</a>
         <a href="#reference">World Clock</a>
         <a href="/time-difference/">Compare Cities</a>
-        <a href="/meeting-planner/">Meeting Planner</a>
+        <a href="/meeting-planner/">Event Planner</a>
         <a href="/guides/">Guides</a>
         <a href="#prayer">Prayer Times</a>
         <a href="#sun">Sun</a>
@@ -179,6 +179,21 @@
             <div class="meridian-axis" id="meridianAxis" aria-hidden="true"></div>
             <figcaption class="sr-only">A horizontal band from UTC minus twelve to UTC plus fourteen, coloured by the current local time at each offset, with featured cities pinned at their position.</figcaption>
           </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== YOUR LOCAL TIME ===================== -->
+    <section id="localTime" class="section lt-section" aria-labelledby="lt-h">
+      <div class="container">
+        <div class="lt-panel">
+          <div id="ltAnalog" class="lt-analog" role="img" aria-label="Analog clock showing your local time"></div>
+          <div class="lt-info">
+            <span class="eyebrow"><span class="live-dot" aria-hidden="true"></span> Your local time</span>
+            <h2 id="lt-h" class="lt-city">—</h2>
+            <strong id="ltTime" class="lt-time" dir="ltr">--:--:--</strong>
+            <p class="lt-meta"><span id="ltDate">—</span> · <span id="ltZone" class="mono">—</span></p>
+          </div>
         </div>
       </div>
     </section>
@@ -356,7 +371,7 @@
         <p class="muted small">Current Time Around The World.</p>
       </div>
       <nav class="footer-nav" aria-label="Footer">
-        <a href="/time-difference/">Time Difference</a><a href="/meeting-planner/">Meeting Planner</a><a href="/guides/">Guides</a><a href="/about/">About</a><a href="/privacy/">Privacy Policy</a><a href="/contact/">Contact</a><a href="/terms/">Terms</a>
+        <a href="/time-difference/">Time Difference</a><a href="/meeting-planner/">Event Planner</a><a href="/guides/">Guides</a><a href="/about/">About</a><a href="/privacy/">Privacy Policy</a><a href="/contact/">Contact</a><a href="/terms/">Terms</a>
       </nav>
       <p class="muted small copyright">© <span id="year">2026</span> CityTimeHub · clocks computed locally · prayer &amp; Hijri data by AlAdhan · sun data by sunrise-sunset.org</p>
     </div>

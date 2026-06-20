@@ -131,7 +131,7 @@
         <a href="#cities">المدن</a>
         <a href="#reference">الساعة العالمية</a>
         <a href="/time-difference/">قارن المدن</a>
-        <a href="/meeting-planner/">منظّم الاجتماعات</a>
+        <a href="/meeting-planner/">مخطّط الأحداث</a>
         <a href="/guides/">أدلّة</a>
         <a href="#prayer">مواقيت الصلاة</a>
         <a href="#sun">الشمس</a>
@@ -180,6 +180,21 @@
             <div class="meridian-axis" id="meridianAxis" aria-hidden="true"></div>
             <figcaption class="sr-only">شريطٌ أفقي من UTC ناقص اثنتي عشرة إلى UTC زائد أربع عشرة، ملوّن حسب الوقت المحلي الحالي عند كل فرق، مع تثبيت المدن المميّزة في مواضعها.</figcaption>
           </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== YOUR LOCAL TIME ===================== -->
+    <section id="localTime" class="section lt-section" aria-labelledby="lt-h">
+      <div class="container">
+        <div class="lt-panel">
+          <div id="ltAnalog" class="lt-analog" role="img" aria-label="ساعة تعرض وقتك المحلي"></div>
+          <div class="lt-info">
+            <span class="eyebrow"><span class="live-dot" aria-hidden="true"></span> وقتك المحلي الآن</span>
+            <h2 id="lt-h" class="lt-city">—</h2>
+            <strong id="ltTime" class="lt-time" dir="ltr">--:--:--</strong>
+            <p class="lt-meta"><span id="ltDate">—</span> · <span id="ltZone" class="mono">—</span></p>
+          </div>
         </div>
       </div>
     </section>
@@ -357,7 +372,7 @@
         <p class="muted small">الوقت الآن حول العالم.</p>
       </div>
       <nav class="footer-nav" aria-label="تذييل الصفحة">
-        <a href="/time-difference/">فرق التوقيت</a><a href="/meeting-planner/">منظّم الاجتماعات</a><a href="/guides/">أدلّة</a><a href="/ar/about/">عن الموقع</a><a href="/ar/privacy/">سياسة الخصوصية</a><a href="/ar/contact/">اتصل بنا</a><a href="/ar/terms/">الشروط</a>
+        <a href="/time-difference/">فرق التوقيت</a><a href="/meeting-planner/">مخطّط الأحداث</a><a href="/guides/">أدلّة</a><a href="/ar/about/">عن الموقع</a><a href="/ar/privacy/">سياسة الخصوصية</a><a href="/ar/contact/">اتصل بنا</a><a href="/ar/terms/">الشروط</a>
       </nav>
       <p class="muted small copyright">© <span id="year">2026</span> CityTimeHub · الحسابات تتم محليًا · بيانات الصلاة والهجري من AlAdhan · بيانات الشمس من sunrise-sunset.org</p>
     </div>

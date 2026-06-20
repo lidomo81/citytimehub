@@ -501,7 +501,7 @@ svg { display: block; }
 .link-list li.has-fav > a { flex: 1 1 auto; min-width: 0; }
 .link-list li.has-fav .fav-star { position: static; flex: none; width: 32px; height: 32px; }
 
-/* ===================== Meeting Planner tool ===================== */
+/* ===================== Event Planner tool ===================== */
 .planner-form { display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-end; }
 .pl-field { display: flex; flex-direction: column; gap: 6px; min-width: 130px; }
 .pl-field.pl-grow { flex: 1 1 200px; }
@@ -574,3 +574,36 @@ html[dir="rtl"] .prose { line-height: 1.95; }
 html[dir="rtl"] .prose h2 { letter-spacing: 0; }
 /* keep the UTC clock and any forced-LTR numerals readable in RTL */
 html[dir="rtl"] .hu-time, html[dir="rtl"] [dir="ltr"] { direction: ltr; unicode-bidi: isolate; }
+
+/* ===================== Your local time — panel + analog clock ===================== */
+.lt-section { padding-top: 14px; }
+.lt-panel {
+  display: flex; align-items: center; gap: clamp(20px, 5vw, 56px);
+  padding: clamp(20px, 4vw, 34px) clamp(20px, 4vw, 40px);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background:
+    radial-gradient(120% 140% at 12% 0%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 60%),
+    var(--bg-soft);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--text) 4%, transparent), 0 18px 50px -34px color-mix(in srgb, var(--brand) 60%, transparent);
+}
+.lt-analog { width: clamp(140px, 34vw, 196px); aspect-ratio: 1; flex: none; }
+.lt-svg { width: 100%; height: 100%; display: block; }
+.lt-info { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.lt-info .eyebrow { margin-bottom: 2px; }
+.lt-city {
+  font-size: clamp(1.5rem, 4.5vw, 2.4rem); font-weight: 800; line-height: 1.08;
+  letter-spacing: -.02em; margin: 0; color: var(--text);
+}
+.lt-time {
+  font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1;
+  font-size: clamp(2.1rem, 7vw, 3.4rem); font-weight: 800; line-height: 1;
+  letter-spacing: .01em; color: var(--text);
+  background: linear-gradient(92deg, var(--brand), var(--accent));
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.lt-meta { color: var(--muted); font-size: .95rem; margin: 2px 0 0; }
+@media (max-width: 620px) {
+  .lt-panel { flex-direction: column; text-align: center; gap: 18px; }
+  .lt-info { align-items: center; }
+}

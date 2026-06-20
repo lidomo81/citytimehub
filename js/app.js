@@ -81,7 +81,7 @@
     const pair = {
       time: new Intl.DateTimeFormat("en-GB", { timeZone: tz, hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false }),
       hm:   new Intl.DateTimeFormat("en-GB", { timeZone: tz, hour: "2-digit", minute: "2-digit", hour12: false }),
-      date: new Intl.DateTimeFormat("en-US", { timeZone: tz, weekday: "short", day: "numeric", month: "short" })
+      date: new Intl.DateTimeFormat(LANG === "ar" ? "ar-EG-u-nu-latn" : "en-US", { timeZone: tz, weekday: "short", day: "numeric", month: "short" })
     };
     fmtCache.set(tz, pair);
     return pair;
@@ -398,6 +398,13 @@
     const loc = formatters(tz);
     $("#localClock").textContent = loc.time.format(now);
     $("#localZone").textContent  = `${tz.replace(/_/g," ")} · ${offsetLabel(offsetHours(tz, now))}`;
+    const ltT = $("#ltTime");
+    if (ltT) {
+      ltT.textContent = loc.time.format(now);
+      const ltD = $("#ltDate"); if (ltD) ltD.textContent = loc.date.format(now);
+      const ltZ = $("#ltZone"); if (ltZ) ltZ.textContent = `${tz.replace(/_/g," ")} · ${offsetLabel(offsetHours(tz, now))}`;
+      ltOffsetMs = offsetHours(tz, now) * 3600000;
+    }
   }
 
   function startClock() {
@@ -456,7 +463,8 @@
       if (!res.ok) throw new Error("timings " + res.status);
       const { data } = await res.json();
       const t = data.timings, g = data.date.gregorian, h = data.date.hijri;
-      $("#gregDate").textContent  = `${g.day} ${g.month.en} ${g.year}`;
+      const g_d = new Date(Date.UTC(+g.year, (+(g.month && g.month.number) || 1) - 1, +g.day));
+      $("#gregDate").textContent  = new Intl.DateTimeFormat(LANG === "ar" ? "ar-EG-u-nu-latn" : "en-GB", { timeZone: "UTC", day: "numeric", month: "long", year: "numeric" }).format(g_d);
       $("#hijriDate").textContent = `${h.day} ${LANG === "ar" ? h.month.ar : h.month.en} ${h.year} ${T.ah}`;
       const clean = s => (s || "").split(" ")[0];
       const next = nextPrayer(t);
@@ -499,6 +507,69 @@
   }
 
   /* ---------- Boot ---------- */
+  /* ---------- Your-local-time panel + Apple-Watch-style analog clock ---------- */
+  let ltTz = "UTC", ltOffsetMs = 0, ltEls = {}, ltRAF = 0;
+  const LT_R = 88, LT_C = 2 * Math.PI * LT_R;
+
+  function buildAnalogSvg() {
+    let ticks = "";
+    for (let i = 0; i < 60; i++) {
+      const major = i % 5 === 0;
+      const a = i * 6 * Math.PI / 180;
+      const r1 = major ? 77 : 83, r2 = 88;
+      const x1 = 100 + r1 * Math.sin(a), y1 = 100 - r1 * Math.cos(a);
+      const x2 = 100 + r2 * Math.sin(a), y2 = 100 - r2 * Math.cos(a);
+      ticks += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="var(--border-2)" stroke-width="${major ? 2.4 : 1}" stroke-linecap="round" opacity="${major ? .9 : .45}"/>`;
+    }
+    return `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="lt-svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="ltGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="var(--brand)"/><stop offset="1" stop-color="var(--accent)"/>
+        </linearGradient>
+        <filter id="ltGlow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="2.1" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <circle cx="100" cy="100" r="95" fill="var(--bg-soft)" stroke="var(--border)" stroke-width="1"/>
+      <circle id="ltRing" cx="100" cy="100" r="${LT_R}" fill="none" stroke="url(#ltGrad)" stroke-width="5" stroke-linecap="round" transform="rotate(-90 100 100)" stroke-dasharray="${LT_C.toFixed(1)}" stroke-dashoffset="${LT_C.toFixed(1)}"/>
+      ${ticks}
+      <line id="ltHour" x1="100" y1="111" x2="100" y2="57" stroke="var(--text)" stroke-width="6.5" stroke-linecap="round"/>
+      <line id="ltMin" x1="100" y1="114" x2="100" y2="35" stroke="var(--text)" stroke-width="4.5" stroke-linecap="round"/>
+      <g id="ltSec" filter="url(#ltGlow)">
+        <line x1="100" y1="120" x2="100" y2="29" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="100" cy="35" r="3.3" fill="var(--accent)"/>
+      </g>
+      <circle cx="100" cy="100" r="5.5" fill="var(--text)"/>
+      <circle cx="100" cy="100" r="2.3" fill="var(--accent)"/>
+    </svg>`;
+  }
+
+  function ltFrame() {
+    if (!ltEls.ring) return;
+    const d = new Date(Date.now() + ltOffsetMs);
+    const h = d.getUTCHours(), m = d.getUTCMinutes(), s = d.getUTCSeconds(), ms = d.getUTCMilliseconds();
+    const secF = s + ms / 1000, minF = m + secF / 60, hF = (h % 12) + minF / 60;
+    ltEls.hour.setAttribute("transform", `rotate(${(hF * 30).toFixed(2)} 100 100)`);
+    ltEls.min.setAttribute("transform", `rotate(${(minF * 6).toFixed(2)} 100 100)`);
+    ltEls.sec.setAttribute("transform", `rotate(${(secF * 6).toFixed(2)} 100 100)`);
+    ltEls.ring.setAttribute("stroke-dashoffset", (LT_C * (1 - secF / 60)).toFixed(1));
+    ltRAF = requestAnimationFrame(ltFrame);
+  }
+
+  function initLocalPanel() {
+    const host = $("#ltAnalog"); if (!host) return;
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
+    ltTz = tz; ltOffsetMs = offsetHours(tz) * 3600000;
+    const matches = CITIES.filter(c => c.tz === tz);
+    const city = matches.find(c => c.featured) || matches[0] || null;
+    const cityName = city ? (LANG === "ar" && city.name_ar ? city.name_ar : city.name)
+                          : tz.split("/").pop().replace(/_/g, " ");
+    const cEl = $("#lt-h"); if (cEl) cEl.textContent = cityName;
+    host.innerHTML = buildAnalogSvg();
+    ltEls = { ring: host.querySelector("#ltRing"), hour: host.querySelector("#ltHour"), min: host.querySelector("#ltMin"), sec: host.querySelector("#ltSec") };
+    cancelAnimationFrame(ltRAF); ltFrame();
+  }
+
   async function init() {
     $("#year").textContent = new Date().getFullYear();
     initTheme();
@@ -508,6 +579,7 @@
     buildMeridian();
     renderCities(CITIES.filter(c => c.featured));
     renderMyCities();
+    initLocalPanel();
     initFavorites();
     initSearch();
     initPrayerPicker();
