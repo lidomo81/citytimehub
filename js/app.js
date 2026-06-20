@@ -7,6 +7,35 @@
 (() => {
   "use strict";
 
+  /* ---------- Language (reads <html lang>) ---------- */
+  const LANG = (document.documentElement.lang || "en").slice(0, 2) === "ar" ? "ar" : "en";
+  const I18N = {
+    en: {
+      addFav: "Add to My Cities", remFav: "Remove from My Cities",
+      next: "Next",
+      pinMax: n => `You can pin up to ${n} cities.`,
+      prayerErr: "Couldn't load prayer times. Check your connection and try again.",
+      cityErr: "Couldn't load city data.",
+      prayers: ["Fajr", "Sunrise", "Dhuhr", "Asr", "Maghrib", "Isha"],
+      ah: "AH", na: "n/a",
+      dayLen: (h, m) => `${h}h ${m}m`,
+    },
+    ar: {
+      addFav: "أضِف إلى مدني", remFav: "أزِل من مدني",
+      next: "التالية",
+      pinMax: n => `يمكنك تثبيت حتى ${n} مدن.`,
+      prayerErr: "تعذّر تحميل مواقيت الصلاة. تحقّق من اتصالك وحاول مرة أخرى.",
+      cityErr: "تعذّر تحميل بيانات المدن.",
+      prayers: ["الفجر", "الشروق", "الظهر", "العصر", "المغرب", "العشاء"],
+      ah: "هـ", na: "غير متاح",
+      dayLen: (h, m) => `${h}h ${m}m`,
+    },
+  };
+  const T = I18N[LANG];
+  const cName = c => (LANG === "ar" && c && c.name_ar) ? c.name_ar : (c ? c.name : "");
+  const cCountry = c => (LANG === "ar" && c && c.country_ar) ? c.country_ar : (c ? c.country : "");
+  const CITY_BASE = LANG === "ar" ? "/ar/cities/" : "/cities/";
+
   /* ---------- State ---------- */
   let CITIES = [];
   const fmtCache = new Map();
@@ -97,7 +126,7 @@
 
   /* ---------- Data ---------- */
   async function loadCities() {
-    const res = await fetch("data/cities.json");
+    const res = await fetch("/data/cities.json");
     if (!res.ok) throw new Error("cities.json " + res.status);
     CITIES = (await res.json()).cities || [];
   }
@@ -115,7 +144,7 @@
       <div class="pin" data-tz="${c.tz}" style="left:${offsetToPct(c.off)}%">
         <div class="pin-stem"></div>
         <div class="pin-card">
-          <div class="pin-city">${c.name}</div>
+          <div class="pin-city">${cName(c)}</div>
           <div class="pin-time" data-time>--:--</div>
         </div>
       </div>`).join("");
@@ -164,21 +193,21 @@
   }
   function starBtn(slug) {
     const on = isFav(slug);
-    return `<span class="fav-star${on ? " is-fav" : ""}" role="button" tabindex="0" data-fav="${slug}" aria-pressed="${on}" aria-label="${on ? "Remove from My Cities" : "Add to My Cities"}" title="${on ? "Remove from My Cities" : "Add to My Cities"}"><svg viewBox="0 0 24 24" width="18" height="18" fill="${on ? "currentColor" : "none"}" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3.6l2.6 5.27 5.82.85-4.21 4.1.99 5.8L12 16.9l-5.2 2.73.99-5.8-4.21-4.1 5.82-.85z"/></svg></span>`;
+    return `<span class="fav-star${on ? " is-fav" : ""}" role="button" tabindex="0" data-fav="${slug}" aria-pressed="${on}" aria-label="${on ? T.remFav : T.addFav}" title="${on ? T.remFav : T.addFav}"><svg viewBox="0 0 24 24" width="18" height="18" fill="${on ? "currentColor" : "none"}" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3.6l2.6 5.27 5.82.85-4.21 4.1.99 5.8L12 16.9l-5.2 2.73.99-5.8-4.21-4.1 5.82-.85z"/></svg></span>`;
   }
   function cardHtml(c) {
     const off = offsetHours(c.tz);
     const lat = `${Math.abs(c.lat).toFixed(2)}°${c.lat >= 0 ? "N" : "S"}`;
     const lng = `${Math.abs(c.lng).toFixed(2)}°${c.lng >= 0 ? "E" : "W"}`;
-    const tag  = c.page ? "a" : "div";
-    const href = c.page ? ` href="cities/${c.slug}.html"` : "";
-    const cls  = c.page ? "city-card" : "city-card city-card--static";
+    const tag  = "a";
+    const href = ` href="${CITY_BASE}${c.slug}.html"`;
+    const cls  = "city-card";
     return `
       <${tag} class="${cls}"${href} data-tz="${c.tz}" data-slug="${c.slug}"
          data-search="${norm(`${c.name} ${c.name_ar || ""} ${c.country} ${c.country_ar || ""}`)}">
         ${starBtn(c.slug)}
         <div class="city-top">
-          <span><span class="city-name">${c.name}</span><br><span class="city-country">${c.country}</span></span>
+          <span><span class="city-name">${cName(c)}</span><br><span class="city-country">${cCountry(c)}</span></span>
           <span class="city-daynight" data-daynight>·</span>
         </div>
         <div class="city-time" data-time>--:--:--</div>
@@ -224,7 +253,7 @@
       if (!star) return;
       e.preventDefault(); e.stopPropagation();
       const r = toggleFav(star.dataset.fav);
-      if (r.full) { toast(`You can pin up to ${MAX_FAV} cities.`); return; }
+      if (r.full) { toast(T.pinMax(MAX_FAV)); return; }
       refreshStars(); renderMyCities();
     });
     document.addEventListener("keydown", e => {
@@ -295,9 +324,9 @@
       if (!matches.length) { panel.hidden = true; panel.innerHTML = ""; return; }
       panel.innerHTML = matches.map(c => `
         <li class="suggest-item" data-slug="${c.slug}" data-page="${c.page ? 1 : 0}">
-          <span class="suggest-name">${c.name}</span>
+          <span class="suggest-name">${cName(c)}</span>
           <span class="suggest-meta">
-            <span class="suggest-country">${c.country}</span>
+            <span class="suggest-country">${cCountry(c)}</span>
             ${starBtn(c.slug)}
           </span>
         </li>`).join("");
@@ -307,17 +336,7 @@
     function go(slug) {
       const c = CITIES.find(x => x.slug === slug);
       if (!c) return;
-      if (c.page) { location.href = `cities/${c.slug}.html`; return; }
-      panel.hidden = true;
-      input.value = c.name;
-      filterGrid(norm(c.name));
-      const grid = document.getElementById("cities");
-      if (grid) grid.scrollIntoView({ behavior: "smooth", block: "start" });
-      const card = $(`#cityGrid .city-card[data-slug="${slug}"]`);
-      if (card) {
-        card.classList.add("is-flash");
-        setTimeout(() => card.classList.remove("is-flash"), 1600);
-      }
+      location.href = `${CITY_BASE}${c.slug}.html`;
     }
 
     input.addEventListener("input", () => {
@@ -391,15 +410,40 @@
   /* ---------- Prayer times + Hijri (AlAdhan) ---------- */
   const PRAYERS = ["Fajr","Sunrise","Dhuhr","Asr","Maghrib","Isha"];
 
-  function initPrayerPicker() {
-    const sel = $("#prayerCity");
-    sel.innerHTML = CITIES.map(c => `<option value="${c.slug}">${c.name}, ${c.country}</option>`).join("");
-    sel.value = "cairo";
-    sel.addEventListener("change", () => {
-      selectedPrayerCity = CITIES.find(c => c.slug === sel.value);
-      loadPrayer(selectedPrayerCity); loadSun(selectedPrayerCity);
+  function attachAutocomplete(input, listEl, onChoose) {
+    let items = [], active = -1;
+    const close = () => { listEl.hidden = true; active = -1; input.setAttribute("aria-expanded", "false"); };
+    function render() {
+      const q = norm(input.value);
+      items = q ? CITIES.filter(c => norm(`${c.name} ${c.name_ar || ""} ${c.country} ${c.country_ar || ""}`).includes(q)).slice(0, 8) : [];
+      if (!items.length) { listEl.innerHTML = ""; close(); return; }
+      listEl.innerHTML = items.map((c, i) => `<li class="ac-item${i === active ? " is-active" : ""}" role="option" data-i="${i}"><span>${cName(c)}</span><span class="ac-country">${cCountry(c)}</span></li>`).join("");
+      listEl.hidden = false; input.setAttribute("aria-expanded", "true");
+    }
+    function pick(i) { const c = items[i]; if (!c) return; onChoose(c); close(); }
+    input.addEventListener("input", render);
+    input.addEventListener("focus", () => { if (input.value) render(); });
+    input.addEventListener("keydown", e => {
+      if (listEl.hidden) return;
+      if (e.key === "ArrowDown") { e.preventDefault(); active = Math.min(active + 1, items.length - 1); render(); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); active = Math.max(active - 1, 0); render(); }
+      else if (e.key === "Enter") { e.preventDefault(); pick(active < 0 ? 0 : active); }
+      else if (e.key === "Escape") { close(); }
     });
+    listEl.addEventListener("mousedown", e => { const li = e.target.closest(".ac-item"); if (li) { e.preventDefault(); pick(+li.dataset.i); } });
+    input.addEventListener("blur", () => setTimeout(close, 150));
+  }
+
+  function initPrayerPicker() {
+    const input = $("#prayerCity"), list = $("#prayerAcList");
     selectedPrayerCity = CITIES.find(c => c.slug === "cairo") || CITIES[0];
+    if (input && selectedPrayerCity) input.value = `${cName(selectedPrayerCity)}, ${cCountry(selectedPrayerCity)}`;
+    if (!input || !list) return;
+    attachAutocomplete(input, list, c => {
+      selectedPrayerCity = c;
+      input.value = `${cName(c)}, ${cCountry(c)}`;
+      loadPrayer(c); loadSun(c);
+    });
   }
 
   async function loadPrayer(city) {
@@ -413,17 +457,17 @@
       const { data } = await res.json();
       const t = data.timings, g = data.date.gregorian, h = data.date.hijri;
       $("#gregDate").textContent  = `${g.day} ${g.month.en} ${g.year}`;
-      $("#hijriDate").textContent = `${h.day} ${h.month.en} ${h.year} AH`;
+      $("#hijriDate").textContent = `${h.day} ${LANG === "ar" ? h.month.ar : h.month.en} ${h.year} ${T.ah}`;
       const clean = s => (s || "").split(" ")[0];
       const next = nextPrayer(t);
-      grid.innerHTML = PRAYERS.map(p => `
+      grid.innerHTML = PRAYERS.map((p, i) => `
         <article class="prayer-card${p === next ? " is-next" : ""}">
-          <div class="prayer-name">${p}</div>
+          <div class="prayer-name">${T.prayers[i]}</div>
           <div class="prayer-time">${clean(t[p])}</div>
-          <span class="prayer-tag">${p === next ? "Next" : ""}</span>
+          <span class="prayer-tag">${p === next ? T.next : ""}</span>
         </article>`).join("");
     } catch {
-      grid.innerHTML = `<p class="no-results" style="grid-column:1/-1">Couldn't load prayer times. Check your connection and try again.</p>`;
+      grid.innerHTML = `<p class="no-results" style="grid-column:1/-1">${T.prayerErr}</p>`;
     }
   }
   function nextPrayer(t) {
@@ -438,7 +482,7 @@
   /* ---------- Sunrise / sunset ---------- */
   async function loadSun(city) {
     if (!city) return;
-    $("#sunCityName").textContent = `${city.name}, ${city.country}`;
+    $("#sunCityName").textContent = `${cName(city)}, ${cCountry(city)}`;
     try {
       const res = await fetch(`https://api.sunrise-sunset.org/json?lat=${city.lat}&lng=${city.lng}&formatted=0`);
       if (!res.ok) throw new Error("sun " + res.status);
@@ -448,9 +492,9 @@
       $("#sunriseVal").textContent = tf.format(new Date(results.sunrise));
       $("#sunsetVal").textContent  = tf.format(new Date(results.sunset));
       const s = results.day_length, hh = Math.floor(s/3600), mm = Math.floor((s%3600)/60);
-      $("#dayLength").textContent = `${hh}h ${String(mm).padStart(2,"0")}m`;
+      $("#dayLength").textContent = T.dayLen(hh, String(mm).padStart(2,"0"));
     } catch {
-      $("#sunriseVal").textContent = "—"; $("#sunsetVal").textContent = "—"; $("#dayLength").textContent = "n/a";
+      $("#sunriseVal").textContent = "—"; $("#sunsetVal").textContent = "—"; $("#dayLength").textContent = T.na;
     }
   }
 
@@ -459,7 +503,7 @@
     $("#year").textContent = new Date().getFullYear();
     initTheme();
     try { await loadCities(); }
-    catch { $("#cityGrid").innerHTML = `<p class="no-results">Couldn't load city data.</p>`; return; }
+    catch { $("#cityGrid").innerHTML = `<p class="no-results">${T.cityErr}</p>`; return; }
 
     buildMeridian();
     renderCities(CITIES.filter(c => c.featured));

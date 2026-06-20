@@ -2,50 +2,78 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.citytimehub.com/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-06-20</lastmod>
   </url>
   <url>
     <loc>https://www.citytimehub.com/cities/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-06-20</lastmod>
   </url>
   <url>
     <loc>https://www.citytimehub.com/country/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-06-20</lastmod>
   </url>
   <url>
     <loc>https://www.citytimehub.com/timezone/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-06-20</lastmod>
   </url>
   <url>
     <loc>https://www.citytimehub.com/time-difference/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-06-20</lastmod>
   </url>
   <url>
     <loc>https://www.citytimehub.com/meeting-planner/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-06-20</lastmod>
   </url>
   <url>
     <loc>https://www.citytimehub.com/guides/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-06-20</lastmod>
+  </url>
+  <url>
+    <loc>https://www.citytimehub.com/ar/cities/</loc>
+    <lastmod>2026-06-20</lastmod>
   </url>
   <url>
     <loc>https://www.citytimehub.com/guides/best-times-to-call-family-from-the-gulf/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-06-20</lastmod>
+  </url>
+  <url>
+    <loc>https://www.citytimehub.com/ar/guides/</loc>
+    <lastmod>2026-06-20</lastmod>
+  </url>
+  <url>
+    <loc>https://www.citytimehub.com/ar/guides/best-times-to-call-family-from-the-gulf/</loc>
+    <lastmod>2026-06-20</lastmod>
   </url>
   <url>
     <loc>https://www.citytimehub.com/about/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-06-20</lastmod>
   </url>
   <url>
     <loc>https://www.citytimehub.com/contact/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-06-20</lastmod>
   </url>
   <url>
     <loc>https://www.citytimehub.com/privacy/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-06-20</lastmod>
   </url>
   <url>
     <loc>https://www.citytimehub.com/terms/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-06-20</lastmod>
+  </url>
+  <url>
+    <loc>https://www.citytimehub.com/ar/about/</loc>
+    <lastmod>2026-06-20</lastmod>
+  </url>
+  <url>
+    <loc>https://www.citytimehub.com/ar/contact/</loc>
+    <lastmod>2026-06-20</lastmod>
+  </url>
+  <url>
+    <loc>https://www.citytimehub.com/ar/privacy/</loc>
+    <lastmod>2026-06-20</lastmod>
+  </url>
+  <url>
+    <loc>https://www.citytimehub.com/ar/terms/</loc>
+    <lastmod>2026-06-20</lastmod>
   </url>
 </urlset>

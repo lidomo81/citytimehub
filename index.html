@@ -9,6 +9,9 @@
   <meta name="description" content="Watch daylight sweep the planet in real time. Live local time, time zones and UTC offsets for cities worldwide, plus Hijri dates, prayer times and sunrise & sunset — all computed in your browser." />
   <meta name="theme-color" content="#0B1120" />
   <link rel="canonical" href="https://www.citytimehub.com/" />
+  <link rel="alternate" hreflang="en" href="https://www.citytimehub.com/" />
+  <link rel="alternate" hreflang="ar" href="https://www.citytimehub.com/ar/" />
+  <link rel="alternate" hreflang="x-default" href="https://www.citytimehub.com/" />
 
   <!-- ===== Open Graph ===== -->
   <meta property="og:type" content="website" />
@@ -134,6 +137,7 @@
       </nav>
 
       <div class="header-right">
+        <a class="lang-switch" href="/ar/" lang="ar" hreflang="ar" aria-label="Language">العربية</a>
         <span class="header-utc" aria-label="Coordinated Universal Time">
           <span class="hu-label">UTC</span>
           <span id="headerUtc" class="hu-time" dir="ltr">--:--:--</span>
@@ -242,10 +246,13 @@
             <h2>Prayer times</h2>
             <p class="muted">Daily timings with Gregorian and Hijri dates.</p>
           </div>
-          <label class="city-picker">
-            <span class="sr-only">Select city for prayer times</span>
-            <select id="prayerCity" aria-label="Select city for prayer times"></select>
-          </label>
+          <div class="city-picker">
+            <label for="prayerCity" class="sr-only">Search a city for prayer times</label>
+            <div class="ac prayer-ac">
+              <input id="prayerCity" class="ac-input" type="text" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="prayerAcList" placeholder="Search a city…" />
+              <ul id="prayerAcList" class="ac-list" role="listbox" hidden></ul>
+            </div>
+          </div>
         </header>
 
         <div class="datebar">

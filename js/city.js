@@ -12,6 +12,31 @@
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
   let CITY = null, CITIES = [];
 
+  /* ---------- Language (reads <html lang>) ---------- */
+  const LANG = (document.documentElement.lang || "en").slice(0, 2) === "ar" ? "ar" : "en";
+  const I18N = {
+    en: {
+      next: "Next",
+      prayerErr: "Couldn't load prayer times. Check your connection and try again.",
+      prayers: ["Fajr", "Sunrise", "Dhuhr", "Asr", "Maghrib", "Isha"],
+      ah: "AH", na: "n/a",
+      dayLen: (h, m) => `${h}h ${m}m`,
+      dayIn: n => `Daytime in ${n}`, nightIn: n => `Night in ${n}`,
+    },
+    ar: {
+      next: "التالية",
+      prayerErr: "تعذّر تحميل مواقيت الصلاة. تحقّق من اتصالك وحاول مرة أخرى.",
+      prayers: ["الفجر", "الشروق", "الظهر", "العصر", "المغرب", "العشاء"],
+      ah: "هـ", na: "غير متاح",
+      dayLen: (h, m) => `${h}h ${m}m`,
+      dayIn: n => `نهارٌ في ${n}`, nightIn: n => `ليلٌ في ${n}`,
+      gregMonths: ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"],
+    },
+  };
+  const T = I18N[LANG];
+  const cName = c => (LANG === "ar" && c && c.name_ar) ? c.name_ar : (c ? c.name : "");
+  const cCountry = c => (LANG === "ar" && c && c.country_ar) ? c.country_ar : (c ? c.country : "");
+
   /* ---------- day/night colour ramp (matches the homepage meridian) ---------- */
   const RAMP = [
     "#0a0f24","#0a0f24","#0c1230","#101a3e","#1c2a5a","#46376f","#8a4f7a","#cf6b43",
@@ -32,7 +57,7 @@
     if (fmtCache.has(tz)) return fmtCache.get(tz);
     const pair = {
       time: new Intl.DateTimeFormat("en-GB", { timeZone: tz, hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false }),
-      date: new Intl.DateTimeFormat("en-US", { timeZone: tz, weekday: "long", day: "numeric", month: "long", year: "numeric" })
+      date: new Intl.DateTimeFormat(LANG === "ar" ? "ar-EG-u-nu-latn" : "en-US", { timeZone: tz, weekday: "long", day: "numeric", month: "long", year: "numeric" })
     };
     fmtCache.set(tz, pair); return pair;
   }
@@ -73,7 +98,7 @@
   /* ---------- data ---------- */
   async function loadCities() {
     if (window.__CITIES__) { CITIES = window.__CITIES__.cities || []; return; }
-    const res = await fetch("../data/cities.json");
+    const res = await fetch("/data/cities.json");
     if (!res.ok) throw new Error("cities.json " + res.status);
     CITIES = (await res.json()).cities || [];
   }
@@ -98,7 +123,7 @@
       hero.style.background = `radial-gradient(120% 150% at 50% -20%, ${c2} 0%, ${c1} 60%, #0a0f24 100%)`;
     }
     const dnl = $("#dayNightLabel");
-    if (dnl) dnl.textContent = day ? `Daytime in ${CITY.name}` : `Night in ${CITY.name}`;
+    if (dnl) dnl.textContent = day ? T.dayIn(cName(CITY)) : T.nightIn(cName(CITY));
     const dni = $("#dayNightIcon"); if (dni) dni.textContent = day ? "☀" : "☾";
 
     // header UTC readout
@@ -122,18 +147,18 @@
       if (!res.ok) throw new Error("timings " + res.status);
       const { data } = await res.json();
       const t = data.timings, g = data.date.gregorian, h = data.date.hijri;
-      const gd = $("#gregDate"); if (gd) gd.textContent = `${g.day} ${g.month.en} ${g.year}`;
-      const hd = $("#hijriDate"); if (hd) hd.textContent = `${h.day} ${h.month.en} ${h.year} AH`;
+      const gd = $("#gregDate"); if (gd) gd.textContent = `${g.day} ${LANG === "ar" ? (T.gregMonths[(+g.month.number || 1) - 1] || g.month.en) : g.month.en} ${g.year}`;
+      const hd = $("#hijriDate"); if (hd) hd.textContent = `${h.day} ${LANG === "ar" ? h.month.ar : h.month.en} ${h.year} ${T.ah}`;
       const clean = s => (s || "").split(" ")[0];
       const next = nextPrayer(t);
-      grid.innerHTML = PRAYERS.map(p => `
+      grid.innerHTML = PRAYERS.map((p, i) => `
         <article class="prayer-card${p === next ? " is-next" : ""}">
-          <div class="prayer-name">${p}</div>
+          <div class="prayer-name">${T.prayers[i]}</div>
           <div class="prayer-time">${clean(t[p])}</div>
-          <span class="prayer-tag">${p === next ? "Next" : ""}</span>
+          <span class="prayer-tag">${p === next ? T.next : ""}</span>
         </article>`).join("");
     } catch {
-      grid.innerHTML = `<p class="no-results" style="grid-column:1/-1">Couldn't load prayer times. Check your connection and try again.</p>`;
+      grid.innerHTML = `<p class="no-results" style="grid-column:1/-1">${T.prayerErr}</p>`;
     }
   }
   function nextPrayer(t) {
@@ -157,9 +182,9 @@
       $("#sunriseVal").textContent = tf.format(new Date(results.sunrise));
       $("#sunsetVal").textContent  = tf.format(new Date(results.sunset));
       const s = results.day_length, hh = Math.floor(s/3600), mm = Math.floor((s%3600)/60);
-      $("#dayLength").textContent = `${hh}h ${String(mm).padStart(2,"0")}m`;
+      $("#dayLength").textContent = T.dayLen(hh, String(mm).padStart(2,"0"));
     } catch {
-      $("#sunriseVal").textContent = "—"; $("#sunsetVal").textContent = "—"; $("#dayLength").textContent = "n/a";
+      $("#sunriseVal").textContent = "—"; $("#sunsetVal").textContent = "—"; $("#dayLength").textContent = T.na;
     }
   }
 
@@ -174,7 +199,7 @@
     grid.innerHTML = related.map(c => `
       <a class="city-card" href="${c.slug}.html" data-tz="${c.tz}">
         <div class="city-top">
-          <span><span class="city-name">${c.name}</span><br><span class="city-country">${c.country}</span></span>
+          <span><span class="city-name">${cName(c)}</span><br><span class="city-country">${cCountry(c)}</span></span>
           <span class="city-daynight" data-daynight>·</span>
         </div>
         <div class="city-time" data-time>--:--:--</div>
