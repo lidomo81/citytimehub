@@ -680,3 +680,27 @@ html[dir="rtl"] .hu-time, html[dir="rtl"] [dir="ltr"] { direction: ltr; unicode-
 .btc-ro-item b.btc-bad { color: var(--muted); background: none; }
 .btc-ro-sep { color: var(--border-2); }
 .btc-cell.is-hovercol { box-shadow: 0 0 0 2px var(--bg), 0 0 0 3px var(--accent); position: relative; z-index: 2; }
+
+/* ===================== Prayer Clock ===================== */
+.pc-form { margin-top: 4px; }
+.pc-inputs { display: flex; flex-wrap: wrap; gap: 16px 24px; }
+.pc-ac { position: relative; flex: 1 1 240px; }
+.pc-sync { margin: 18px 0 0; font-size: 1rem; font-weight: 600; color: var(--text-2); min-height: 24px; }
+.pc-clocks { display: flex; flex-wrap: wrap; gap: clamp(20px, 5vw, 48px); justify-content: center; margin-top: 18px; }
+.pc-slot { flex: 1 1 240px; max-width: 320px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.pc-clock { width: clamp(170px, 42vw, 240px); aspect-ratio: 1; }
+.pc-svg { width: 100%; height: 100%; display: block; }
+.pc-info { margin-top: 14px; }
+.pc-city { font-size: 1.3rem; font-weight: 800; letter-spacing: -.01em; margin: 0; color: var(--text); }
+.pc-now { margin: 4px 0 0; }
+.pc-time { font-size: 1.6rem; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--text); }
+.pc-cc { color: var(--muted); font-size: .9rem; margin-inline-start: 6px; }
+.pc-next { margin: 8px 0 0; font-size: .98rem; color: var(--text-2); }
+.pc-next-k { display: inline-block; font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--brand); margin-inline-end: 4px; }
+.pc-next strong { color: var(--text); }
+.pc-count { color: var(--accent); font-weight: 700; }
+.pc-actions { margin-top: 22px; text-align: center; }
+@media (max-width: 560px) {
+  .pc-clocks { gap: 28px; }
+  .pc-slot { flex-basis: 100%; max-width: 100%; }
+}
