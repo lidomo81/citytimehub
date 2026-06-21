@@ -36,9 +36,9 @@
   } : {
     defaultTitle: "Event",
     maxCities: "You can add up to 6 cities.",
-    linkCopied: T.linkCopied,
-    copyThis: T.copyThis,
-    loadErr: T.loadErr,
+    linkCopied: "Link copied — it opens at this exact moment for everyone.",
+    copyThis: "Copy this link:",
+    loadErr: "Couldn't load the city list. Please refresh the page.",
     thCity: "City", thLocal: "Local date & time", base: "base",
     work: "Working hours", early: "Early/late", night: "Night",
     day: n => n > 1 ? "days" : "day",

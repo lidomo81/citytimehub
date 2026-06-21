@@ -51,7 +51,7 @@
   let CITIES = [];
   const bySlug = new Map();
   const state = { from: "", cities: [], context: "family" };
-  let lastData = null;
+  let lastData = null, pinnedCol = null;
 
   function tzOffsetHours(tz) {
     try {
@@ -150,8 +150,8 @@
     const cityBands = targets.map((t, i) =>
       barRow(cN(t), cC(t), hours.map(h => ({ cls: h.cells[i].cls, hour: h.cells[i].hour, min: h.cells[i].min })), golden.H)).join("");
 
-    // Hour ticks (your time)
-    const ticks = [0, 6, 12, 18].map(h => `<span class="btc-tick" style="inset-inline-start:${(h / 24 * 100).toFixed(2)}%">${esc(fmtMin(h * 60))}</span>`).join("");
+    // Hour ticks (your time) — positioned at the centre of each column
+    const ticks = [0, 6, 12, 18].map(h => `<span class="btc-tick" style="inset-inline-start:${(((h + 0.5) / 24) * 100).toFixed(2)}%">${esc(fmtMin(h * 60))}</span>`).join("");
     const ticksRow = `<div class="btc-row btc-ticksrow"><span class="btc-rowlabel"></span><span class="btc-ticks" dir="ltr">${ticks}</span></div>`;
 
     const legend = `<div class="btc-legend">
@@ -160,7 +160,7 @@
         <span><i class="btc-dot btc-bad"></i> ${esc(T.legendBad)}</span>
       </div>`;
 
-    lastData = data;
+    lastData = data; pinnedCol = null;
     result.hidden = false;
     result.innerHTML = goldenHtml + `<div id="btcReadout" class="btc-readout"></div><div class="btc-grid">${youBand}${cityBands}${ticksRow}</div>` + legend;
     showColumn(golden.H);
@@ -268,9 +268,9 @@
     $("#btcChips").addEventListener("click", e => { const b = e.target.closest("[data-rm]"); if (b) removeCity(b.dataset.rm); });
     const res = $("#btcResult");
     if (res) {
-      res.addEventListener("pointermove", e => { const cell = e.target.closest(".btc-cell[data-col]"); if (cell) showColumn(+cell.dataset.col); });
-      res.addEventListener("click", e => { const cell = e.target.closest(".btc-cell[data-col]"); if (cell) showColumn(+cell.dataset.col); });
-      res.addEventListener("pointerleave", () => { if (lastData && lastData.golden) showColumn(lastData.golden.H); });
+      res.addEventListener("pointermove", e => { if (e.pointerType && e.pointerType !== "mouse") return; const cell = e.target.closest(".btc-cell[data-col]"); if (cell) { pinnedCol = null; showColumn(+cell.dataset.col); } });
+      res.addEventListener("click", e => { const cell = e.target.closest(".btc-cell[data-col]"); if (cell) { pinnedCol = +cell.dataset.col; showColumn(pinnedCol); } });
+      res.addEventListener("pointerleave", e => { if (e.pointerType && e.pointerType !== "mouse") return; if (pinnedCol == null && lastData && lastData.golden) showColumn(lastData.golden.H); });
     }
     document.querySelectorAll("[data-ctx]").forEach(b => b.addEventListener("click", () => setContext(b.dataset.ctx)));
     const sh = $("#btcShare"); if (sh) sh.addEventListener("click", copyShare);
