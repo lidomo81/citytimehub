@@ -152,7 +152,7 @@
 
     // Hour ticks (your time) — positioned at the centre of each column
     const ticks = [0, 6, 12, 18].map(h => `<span class="btc-tick" style="inset-inline-start:${(((h + 0.5) / 24) * 100).toFixed(2)}%">${esc(fmtMin(h * 60))}</span>`).join("");
-    const ticksRow = `<div class="btc-row btc-ticksrow"><span class="btc-rowlabel"></span><span class="btc-ticks" dir="ltr">${ticks}</span></div>`;
+    const ticksRow = `<div class="btc-row btc-ticksrow"><span class="btc-rowlabel"><span class="btc-ticks-lbl">${esc(T.yourTime)}</span></span><span class="btc-ticks" dir="ltr">${ticks}</span></div>`;
 
     const legend = `<div class="btc-legend">
         <span><i class="btc-dot btc-good"></i> ${esc(T.legendGood)}</span>
@@ -162,7 +162,7 @@
 
     lastData = data; pinnedCol = null;
     result.hidden = false;
-    result.innerHTML = goldenHtml + `<div id="btcReadout" class="btc-readout"></div><div class="btc-grid">${youBand}${cityBands}${ticksRow}</div>` + legend;
+    result.innerHTML = goldenHtml + `<div id="btcReadout" class="btc-readout"></div><div class="btc-grid">${ticksRow}${youBand}${cityBands}</div>` + legend;
     showColumn(golden.H);
     if (actions) actions.hidden = false;
     updateUrl();
