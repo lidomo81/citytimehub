@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Branch Hours Widget — CityTimeHub</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bw-bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Naskh Arabic",sans-serif;padding:10px;-webkit-font-smoothing:antialiased}
+:root{--bw-bg:#ffffff;--bw-card:#f6f8fc;--bw-text:#0f172a;--bw-muted:#64748b;--bw-border:#e6ebf3;--bw-border2:#cbd5e1;--bw-face:#ffffff;--bw-open:#0f9d6b;--bw-closed:#94a3b8;--bw-accent:#2563eb}
+[data-theme="dark"]{--bw-bg:#0b1220;--bw-card:#111a2e;--bw-text:#eaf1ff;--bw-muted:#8295b7;--bw-border:#1e2a44;--bw-border2:#2c3b5c;--bw-face:#0f1830;--bw-open:#10b981;--bw-closed:#64748b;--bw-accent:#3b82f6}
+@media (prefers-color-scheme:dark){[data-theme="auto"]{--bw-bg:#0b1220;--bw-card:#111a2e;--bw-text:#eaf1ff;--bw-muted:#8295b7;--bw-border:#1e2a44;--bw-border2:#2c3b5c;--bw-face:#0f1830;--bw-open:#10b981;--bw-closed:#64748b;--bw-accent:#3b82f6}}
+.bw-card{background:var(--bw-card);border:1px solid var(--bw-border);border-radius:16px;padding:16px 18px;color:var(--bw-text);max-width:440px;margin:0 auto}
+.bw-head{font-weight:700;font-size:1.12rem;text-align:center;margin-bottom:2px}
+.bw-svg{width:100%;height:auto;display:block}
+.bw-t{fill:var(--bw-text)}.bw-ts{fill:var(--bw-muted)}.bw-th{fill:var(--bw-text)}
+.bw-list{margin-top:4px;border-top:1px solid var(--bw-border);padding-top:8px}
+.bw-row{display:flex;align-items:center;gap:10px;padding:6px 4px}
+.bw-dot{width:9px;height:9px;border-radius:50%;background:var(--bw-closed);flex:none}
+.bw-row.is-open .bw-dot{background:var(--bw-open)}
+.bw-info{flex:1;min-width:0;display:flex;flex-direction:column}
+.bw-name{font-weight:600;font-size:.96rem}
+.bw-city{font-size:.8rem;color:var(--bw-muted)}
+.bw-right{display:flex;flex-direction:column;align-items:flex-end}
+.bw-time{font-weight:700;font-variant-numeric:tabular-nums;font-size:.98rem}
+.bw-status{font-size:.78rem;color:var(--bw-muted)}
+.bw-row.is-open .bw-status{color:var(--bw-open)}
+.bw-by{display:block;text-align:center;margin-top:10px;font-size:.72rem;color:var(--bw-muted);text-decoration:none}
+.bw-by strong{color:var(--bw-accent);font-weight:700}
+.bw-by:hover strong{text-decoration:underline}
+.bw-empty{text-align:center;color:var(--bw-muted);padding:28px 12px;font-size:.92rem}</style>
+</head>
+<body>
+<div id="bw" role="complementary" aria-label="Branch hours"></div>
+<script src="/js/branches-widget.js" defer></script>
+</body>
+</html>

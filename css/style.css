@@ -723,3 +723,24 @@ html[dir="rtl"] .hu-time, html[dir="rtl"] [dir="ltr"] { direction: ltr; unicode-
 .pc-embed-cta { margin: 18px 0 0; text-align: center; font-size: .96rem; }
 .pc-embed-cta a { color: var(--brand); font-weight: 700; }
 @media (max-width: 760px) { .wb-grid { grid-template-columns: 1fr; } .wb-frame { width: 100%; } }
+
+/* ===================== Our Branches builder ===================== */
+.bb-controls { display: flex; flex-direction: column; gap: 14px; }
+.bb-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.bb-row2 > .pl-field:only-child { grid-column: 1 / -1; }
+.bb-ac { position: relative; }
+.bb-addbox { border: 0.5px solid var(--border); border-radius: var(--radius, 12px); padding: 14px; background: var(--bg-soft); display: flex; flex-direction: column; gap: 12px; }
+.bb-days { display: flex; flex-wrap: wrap; gap: 6px; }
+.bb-day { padding: 6px 10px; font-size: .85rem; border: 0.5px solid var(--border-2); border-radius: 999px; background: var(--surface); color: var(--text-2); cursor: pointer; transition: all .12s; }
+.bb-day:hover { border-color: var(--brand); }
+.bb-day.is-on { background: var(--brand); color: #fff; border-color: var(--brand); }
+.bb-addbtn { align-self: flex-start; }
+.bb-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.bb-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 0.5px solid var(--border); border-radius: 10px; background: var(--surface); }
+.bb-item-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.bb-item-name { font-weight: 700; font-size: .95rem; color: var(--text); }
+.bb-item-sub { font-size: .8rem; color: var(--muted); }
+.bb-del { flex: none; width: 30px; height: 30px; border-radius: 8px; border: 0.5px solid var(--border-2); background: transparent; color: var(--muted); font-size: 1.2rem; line-height: 1; cursor: pointer; }
+.bb-del:hover { color: var(--danger, #e24b4a); border-color: var(--danger, #e24b4a); }
+.bb-empty { padding: 14px; text-align: center; color: var(--muted); font-size: .9rem; border: 0.5px dashed var(--border-2); border-radius: 10px; }
+.bb-frame { height: 580px; }
