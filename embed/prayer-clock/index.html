@@ -8,30 +8,33 @@
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
-body{background:var(--pw-bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Naskh Arabic",sans-serif;padding:10px;-webkit-font-smoothing:antialiased}
-:root{--pw-bg:#ffffff;--pw-card:#f6f8fc;--pw-text:#0f172a;--pw-muted:#64748b;--pw-border:#e6ebf3;--pw-border2:#cbd5e1;--pw-accent:#2563eb;--pw-accent2:#0ea5e9;--pw-green:#10b981}
-[data-theme="dark"]{--pw-bg:#0b1220;--pw-card:#111a2e;--pw-text:#eaf1ff;--pw-muted:#8295b7;--pw-border:#1e2a44;--pw-border2:#2c3b5c;--pw-accent:#3b82f6;--pw-accent2:#38bdf8;--pw-green:#10b981}
-@media (prefers-color-scheme:dark){[data-theme="auto"]{--pw-bg:#0b1220;--pw-card:#111a2e;--pw-text:#eaf1ff;--pw-muted:#8295b7;--pw-border:#1e2a44;--pw-border2:#2c3b5c;--pw-accent:#3b82f6;--pw-accent2:#38bdf8;--pw-green:#10b981}}
-.pw-card{background:var(--pw-card);border:1px solid var(--pw-border);border-radius:16px;padding:16px 18px;color:var(--pw-text);max-width:360px;margin:0 auto}
+body{background:var(--pw-bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Naskh Arabic",sans-serif;padding:8px;-webkit-font-smoothing:antialiased}
+:root{--pw-bg:#ffffff;--pw-card:#f6f8fc;--pw-text:#0f172a;--pw-muted:#64748b;--pw-border:#e6ebf3;--pw-border2:#cbd5e1;--pw-accent:#2563eb;--pw-accent2:#0ea5e9;--pw-green:#10b981;--pw-sun:#f59e0b}
+[data-theme="dark"]{--pw-bg:#0b1220;--pw-card:#111a2e;--pw-text:#eaf1ff;--pw-muted:#8295b7;--pw-border:#1e2a44;--pw-border2:#2c3b5c;--pw-accent:#3b82f6;--pw-accent2:#38bdf8;--pw-green:#10b981;--pw-sun:#fbbf24}
+@media (prefers-color-scheme:dark){[data-theme="auto"]{--pw-bg:#0b1220;--pw-card:#111a2e;--pw-text:#eaf1ff;--pw-muted:#8295b7;--pw-border:#1e2a44;--pw-border2:#2c3b5c;--pw-accent:#3b82f6;--pw-accent2:#38bdf8;--pw-green:#10b981;--pw-sun:#fbbf24}}
+.pw-card{background:var(--pw-card);border:1px solid var(--pw-border);border-radius:16px;padding:14px 16px;color:var(--pw-text);max-width:340px;margin:0 auto}
 .pw-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
 .pw-place{min-width:0}
-.pw-city{font-weight:800;font-size:1.18rem;letter-spacing:-.01em}
+.pw-city{font-weight:800;font-size:1.14rem;letter-spacing:-.01em}
 .pw-country{color:var(--pw-muted);font-size:.8rem;margin-inline-start:6px}
-.pw-clock{font-weight:800;font-size:1.2rem;font-variant-numeric:tabular-nums;white-space:nowrap}
-.pw-mid{display:flex;align-items:center;gap:16px;margin:14px 0 10px}
-.pw-clockwrap{width:96px;flex:none}
+.pw-clock{font-weight:800;font-size:1.16rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pw-mid{display:flex;align-items:center;gap:14px;margin:10px 0 8px}
+.pw-clockwrap{width:84px;flex:none}
 .pw-svg{width:100%;height:auto;display:block}
 .pw-next{display:flex;flex-direction:column;gap:1px;min-width:0}
 .pw-next-k{font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--pw-accent)}
-.pw-next-name{font-size:1.35rem;font-weight:800;line-height:1.1}
+.pw-next-name{font-size:1.3rem;font-weight:800;line-height:1.1}
 .pw-next-time{color:var(--pw-text);font-weight:700;font-variant-numeric:tabular-nums}
 .pw-count{color:var(--pw-muted);font-size:.85rem}
-.pw-list{list-style:none;margin:8px 0 0;padding:10px 0 0;border-top:1px solid var(--pw-border)}
-.pw-row{display:flex;justify-content:space-between;align-items:center;padding:6px 9px;border-radius:9px;font-size:.96rem}
+.pw-list{list-style:none;margin:6px 0 0;padding:8px 0 0;border-top:1px solid var(--pw-border)}
+.pw-row{display:flex;justify-content:space-between;align-items:center;padding:4px 9px;border-radius:8px;font-size:.94rem}
 .pw-row.is-next{background:color-mix(in srgb,var(--pw-accent2) 16%,transparent);font-weight:700}
+.pw-row--sun{font-size:.86rem}
+.pw-row--sun .pw-pname,.pw-row--sun .pw-ptime{color:var(--pw-muted)}
+.pw-sun-ico{color:var(--pw-sun)}
 .pw-pname{color:var(--pw-text)}
 .pw-ptime{font-variant-numeric:tabular-nums;color:var(--pw-text)}
-.pw-by{display:block;text-align:center;margin-top:12px;font-size:.72rem;color:var(--pw-muted);text-decoration:none}
+.pw-by{display:block;text-align:center;margin-top:9px;font-size:.7rem;color:var(--pw-muted);text-decoration:none}
 .pw-by strong{color:var(--pw-accent);font-weight:700}
 .pw-by:hover strong{text-decoration:underline}
 .pw-err{text-align:center;color:var(--pw-muted);font-size:.92rem;padding:24px 12px}

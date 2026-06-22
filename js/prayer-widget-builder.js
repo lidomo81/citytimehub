@@ -25,7 +25,7 @@
   function embedCode() {
     const c = bySlug.get(state.city);
     const title = (state.lang === "ar" ? "مواقيت الصلاة — " : "Prayer times — ") + (c ? (state.lang === "ar" && c.name_ar ? c.name_ar : c.name) : state.city);
-    return `<iframe src="${srcUrl()}" width="360" height="520" style="border:0;border-radius:16px;max-width:100%" title="${esc(title)}" loading="lazy"></iframe>`;
+    return `<iframe src="${srcUrl()}" width="340" height="430" style="border:0;border-radius:16px;max-width:100%" title="${esc(title)}" loading="lazy"></iframe>`;
   }
   function update() {
     const fr = $("#wbFrame"); if (fr && fr.src !== srcUrl()) fr.src = srcUrl();

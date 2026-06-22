@@ -30,11 +30,12 @@
   const T = LANG === "ar"
     ? { next: "القادمة", inT: "بعد", err: "تعذّر تحميل المواقيت", by: "بواسطة", hr: "س", mn: "د", now: "الآن" }
     : { next: "Next", inT: "in", err: "Couldn't load prayer times", by: "Powered by", hr: "h", mn: "m", now: "now" };
+  const SUN = LANG === "ar" ? "الشروق" : "Sunrise";
 
   const hourFmt = new Intl.DateTimeFormat(LANG === "ar" ? "ar-EG-u-nu-latn" : "en-US", { hour: "numeric", minute: "2-digit", hour12: true });
   const fmtHM = (h, m) => hourFmt.format(new Date(2020, 0, 1, ((h % 24) + 24) % 24, m));
 
-  let prayers = [], offMs = 0, ni = 0, els = {};
+  let prayers = [], sunrise = null, offMs = 0, ni = 0, els = {};
   const R_MARK = 70;
 
   function tzOffsetHours(tz) {
@@ -57,10 +58,8 @@
     if (!res.ok) throw new Error("timings");
     const { data } = await res.json();
     const t = data.timings;
-    return PKEYS.map(k => {
-      const [h, m] = (t[k] || "0:0").split(" ")[0].split(":").map(Number);
-      return { key: k, name: PNAME[k], h, m, min: h * 60 + m, angle: ((h % 12) + m / 60) * 30 };
-    });
+    const mk = (k, name) => { const [h, m] = (t[k] || "0:0").split(" ")[0].split(":").map(Number); return { key: k, name, h, m, min: h * 60 + m, angle: ((h % 12) + m / 60) * 30 }; };
+    return { list: PKEYS.map(k => mk(k, PNAME[k])), sun: mk("Sunrise", SUN) };
   }
 
   function clockSvg() {
@@ -75,9 +74,14 @@
         ? `<circle cx="${x}" cy="${y}" r="7.5" fill="none" stroke="var(--pw-accent2)" stroke-width="2" opacity=".5"/><circle cx="${x}" cy="${y}" r="4.4" fill="var(--pw-accent2)"/>`
         : `<circle cx="${x}" cy="${y}" r="2.6" fill="var(--pw-muted)"/>`;
     }).join("");
+    let sunDot = "";
+    if (sunrise) {
+      const a = sunrise.angle * Math.PI / 180, x = (100 + R_MARK * Math.sin(a)).toFixed(1), y = (100 - R_MARK * Math.cos(a)).toFixed(1);
+      sunDot = `<circle cx="${x}" cy="${y}" r="3.2" fill="none" stroke="var(--pw-sun)" stroke-width="1.8"/>`;
+    }
     return `<svg viewBox="0 0 200 200" class="pw-svg" aria-hidden="true">
       <circle cx="100" cy="100" r="95" fill="var(--pw-card)" stroke="var(--pw-border)" stroke-width="1"/>
-      ${ticks}${dots}
+      ${ticks}${dots}${sunDot}
       <line id="pw-h" x1="100" y1="111" x2="100" y2="62" stroke="var(--pw-text)" stroke-width="6" stroke-linecap="round"/>
       <line id="pw-m" x1="100" y1="114" x2="100" y2="42" stroke="var(--pw-text)" stroke-width="4" stroke-linecap="round"/>
       <line id="pw-s" x1="100" y1="118" x2="100" y2="36" stroke="var(--pw-accent2)" stroke-width="1.6" stroke-linecap="round"/>
@@ -88,7 +92,11 @@
   function render(city) {
     offMs = tzOffsetHours(city.tz) * 3600000;
     ni = nextIdx(nowMin());
-    const rows = prayers.map((p, i) => `<li class="pw-row${i === ni ? " is-next" : ""}"><span class="pw-pname">${esc(p.name)}</span><span class="pw-ptime" dir="ltr">${esc(fmtHM(p.h, p.m))}</span></li>`).join("");
+    const rows = [];
+    prayers.forEach((p, i) => {
+      rows.push(`<li class="pw-row${i === ni ? " is-next" : ""}" data-pi="${i}"><span class="pw-pname">${esc(p.name)}</span><span class="pw-ptime" dir="ltr">${esc(fmtHM(p.h, p.m))}</span></li>`);
+      if (i === 0 && sunrise) rows.push(`<li class="pw-row pw-row--sun"><span class="pw-pname"><span class="pw-sun-ico" aria-hidden="true">☀</span> ${esc(sunrise.name)}</span><span class="pw-ptime" dir="ltr">${esc(fmtHM(sunrise.h, sunrise.m))}</span></li>`);
+    });
     $("#pw").innerHTML = `
       <div class="pw-card">
         <div class="pw-top">
@@ -104,7 +112,7 @@
             <span class="pw-count" id="pw-cnt"></span>
           </div>
         </div>
-        <ul class="pw-list">${rows}</ul>
+        <ul class="pw-list">${rows.join("")}</ul>
         <a class="pw-by" href="https://www.citytimehub.com/prayer-clock/?utm_source=widget" target="_blank" rel="noopener">${esc(T.by)} <strong>CityTimeHub</strong></a>
       </div>`;
     els = { h: $("#pw-h"), m: $("#pw-m"), s: $("#pw-s"), now: $("#pw-now"), npn: $("#pw-npn"), npt: $("#pw-npt"), cnt: $("#pw-cnt") };
@@ -130,8 +138,7 @@
     els.h = $("#pw-h"); els.m = $("#pw-m"); els.s = $("#pw-s");
   }
   function rehighlightList() {
-    const items = document.querySelectorAll("#pw .pw-row");
-    items.forEach((li, i) => li.classList.toggle("is-next", i === ni));
+    document.querySelectorAll("#pw .pw-row[data-pi]").forEach(li => li.classList.toggle("is-next", +li.dataset.pi === ni));
   }
   function frame() {
     if (!els.h) return;
@@ -151,7 +158,7 @@
       const cities = (await res.json()).cities || [];
       const city = cities.find(c => c.slug === CITY) || cities.find(c => c.slug === "cairo") || cities[0];
       if (!city) throw new Error("no city");
-      prayers = await fetchPrayers(city);
+      prayers = await fetchPrayers(city).then(r => { sunrise = r.sun; return r.list; });
       render(city);
     } catch (e) {
       host.innerHTML = `<div class="pw-card pw-err">${esc(T.err)} · <a href="https://www.citytimehub.com/prayer-clock/" target="_blank" rel="noopener">CityTimeHub</a></div>`;
