@@ -35,7 +35,7 @@
     if (state.company) u += `&company=${encodeURIComponent(state.company)}`;
     return u;
   }
-  function embedHeight() { return 130 + state.branches.length * 64; }
+  function embedHeight() { return 120 + state.branches.reduce((h, b) => h + (b.t ? 66 : 48), 0); }
   function embedCode() {
     const title = state.company || (state.lang === "ar" ? "فروعنا" : "Our branches");
     return `<iframe src="${buildUrl()}" width="440" height="${embedHeight()}" style="border:0;border-radius:16px;max-width:100%" title="${esc(title)}" loading="lazy"></iframe>`;
@@ -77,7 +77,7 @@
       listEl.innerHTML = items.map((c, i) => `<li class="ac-item${i === active ? " is-active" : ""}" role="option" data-i="${i}"><span>${esc(cN(c))}</span><span class="ac-country">${esc(cC(c))}</span></li>`).join("");
       listEl.hidden = false; input.setAttribute("aria-expanded", "true");
     }
-    function pick(i) { const c = items[i]; if (!c) return; pendingCity = c; input.value = cN(c) + ", " + cC(c); const dial = $("#bbDial"); if (dial && !dial.value.trim()) dial.value = c.dial || ""; close(); $("#bbName").focus(); }
+    function pick(i) { const c = items[i]; if (!c) return; pendingCity = c; input.value = cN(c) + ", " + cC(c); const dial = $("#bbDial"); if (dial) dial.value = c.dial || ""; close(); $("#bbPhone").focus(); }
     input.addEventListener("input", paint);
     input.addEventListener("focus", () => { if (input.value && !pendingCity) paint(); });
     input.addEventListener("keydown", e => {
