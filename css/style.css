@@ -744,3 +744,8 @@ html[dir="rtl"] .hu-time, html[dir="rtl"] [dir="ltr"] { direction: ltr; unicode-
 .bb-del:hover { color: var(--danger, #e24b4a); border-color: var(--danger, #e24b4a); }
 .bb-empty { padding: 14px; text-align: center; color: var(--muted); font-size: .9rem; border: 0.5px dashed var(--border-2); border-radius: 10px; }
 .bb-frame { height: 580px; }
+
+/* Branches builder — phone field */
+.bb-phone { display: grid; grid-template-columns: 90px 1fr; gap: 8px; }
+.bb-dial { text-align: center; }
+.bb-hint { display: block; margin-top: 4px; font-size: .78rem; color: var(--muted); }

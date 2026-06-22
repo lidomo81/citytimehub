@@ -30,12 +30,12 @@
   const daysTxt = d => { if (d.length === 7) return LANG === "ar" ? "كل الأيام" : "Every day"; return d.slice().sort((a, b) => a - b).map(i => DAY[i]).join("، "); };
 
   function buildUrl() {
-    const payload = state.branches.map(b => ({ n: b.n, c: b.c, o: b.o, cl: b.cl, d: b.d }));
+    const payload = state.branches.map(b => ({ n: b.n, c: b.c, o: b.o, cl: b.cl, d: b.d, ...(b.t ? { t: b.t } : {}) }));
     let u = `${ORIGIN}/embed/branches?data=${encodeURIComponent(JSON.stringify(payload))}&lang=${state.lang}&theme=${state.theme}`;
     if (state.company) u += `&company=${encodeURIComponent(state.company)}`;
     return u;
   }
-  function embedHeight() { return 400 + state.branches.length * 46; }
+  function embedHeight() { return 130 + state.branches.length * 64; }
   function embedCode() {
     const title = state.company || (state.lang === "ar" ? "فروعنا" : "Our branches");
     return `<iframe src="${buildUrl()}" width="440" height="${embedHeight()}" style="border:0;border-radius:16px;max-width:100%" title="${esc(title)}" loading="lazy"></iframe>`;
@@ -50,7 +50,7 @@
     if (!state.branches.length) { ul.innerHTML = `<li class="bb-empty">${esc(T.empty)}</li>`; return; }
     ul.innerHTML = state.branches.map((b, i) => {
       const city = bySlug.get(b.c);
-      return `<li class="bb-item"><div class="bb-item-main"><span class="bb-item-name">${esc(b.n)}</span><span class="bb-item-sub">${esc(cN(city))} · ${esc(fmt(b.o))} ${T.to} ${esc(fmt(b.cl))} · ${esc(daysTxt(b.d))}</span></div><button type="button" class="bb-del" data-i="${i}" aria-label="${esc(T.remove)}"><span aria-hidden="true">×</span></button></li>`;
+      return `<li class="bb-item"><div class="bb-item-main"><span class="bb-item-name">${esc(b.n)}</span><span class="bb-item-sub">${esc(cN(city))} · ${esc(fmt(b.o))} ${T.to} ${esc(fmt(b.cl))} · ${esc(daysTxt(b.d))}${b.t ? ` · <span dir="ltr">${esc(b.t)}</span>` : ""}</span></div><button type="button" class="bb-del" data-i="${i}" aria-label="${esc(T.remove)}"><span aria-hidden="true">×</span></button></li>`;
     }).join("");
   }
 
@@ -60,8 +60,10 @@
     const days = [...document.querySelectorAll("#bbDays .bb-day.is-on")].map(b => +b.dataset.day);
     if (!days.length) return;
     const name = ($("#bbName").value || "").trim() || cN(pendingCity);
-    state.branches.push({ n: name, c: pendingCity.slug, o: tm($("#bbOpen").value), cl: tm($("#bbClose").value), d: days });
-    pendingCity = null; $("#bbName").value = ""; $("#bbCity").value = "";
+    const dial = ($("#bbDial").value || "").trim(), num = ($("#bbPhone").value || "").trim();
+    const tel = num ? (dial ? dial + " " + num : num) : "";
+    state.branches.push({ n: name, c: pendingCity.slug, o: tm($("#bbOpen").value), cl: tm($("#bbClose").value), d: days, t: tel });
+    pendingCity = null; $("#bbName").value = ""; $("#bbCity").value = ""; $("#bbPhone").value = ""; $("#bbDial").value = "";
     renderList(); update();
   }
 
@@ -75,7 +77,7 @@
       listEl.innerHTML = items.map((c, i) => `<li class="ac-item${i === active ? " is-active" : ""}" role="option" data-i="${i}"><span>${esc(cN(c))}</span><span class="ac-country">${esc(cC(c))}</span></li>`).join("");
       listEl.hidden = false; input.setAttribute("aria-expanded", "true");
     }
-    function pick(i) { const c = items[i]; if (!c) return; pendingCity = c; input.value = cN(c) + ", " + cC(c); close(); $("#bbName").focus(); }
+    function pick(i) { const c = items[i]; if (!c) return; pendingCity = c; input.value = cN(c) + ", " + cC(c); const dial = $("#bbDial"); if (dial && !dial.value.trim()) dial.value = c.dial || ""; close(); $("#bbName").focus(); }
     input.addEventListener("input", paint);
     input.addEventListener("focus", () => { if (input.value && !pendingCity) paint(); });
     input.addEventListener("keydown", e => {
@@ -114,7 +116,7 @@
     const cp = $("#bbCopy"); if (cp) cp.addEventListener("click", copyCode);
 
     const seed = bySlug.get("cairo");
-    if (seed) state.branches.push({ n: LANG === "ar" ? "المقر الرئيسي" : "Headquarters", c: "cairo", o: 540, cl: 1020, d: [1, 2, 3, 4, 5] });
+    if (seed) state.branches.push({ n: LANG === "ar" ? "المقر الرئيسي" : "Headquarters", c: "cairo", o: 540, cl: 1020, d: [1, 2, 3, 4, 5], t: "+20 2 1234 5678" });
     renderList(); update();
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

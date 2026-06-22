@@ -13,10 +13,11 @@ body{background:var(--bw-bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe
 [data-theme="dark"]{--bw-bg:#0b1220;--bw-card:#111a2e;--bw-text:#eaf1ff;--bw-muted:#8295b7;--bw-border:#1e2a44;--bw-border2:#2c3b5c;--bw-face:#0f1830;--bw-open:#10b981;--bw-closed:#64748b;--bw-accent:#3b82f6}
 @media (prefers-color-scheme:dark){[data-theme="auto"]{--bw-bg:#0b1220;--bw-card:#111a2e;--bw-text:#eaf1ff;--bw-muted:#8295b7;--bw-border:#1e2a44;--bw-border2:#2c3b5c;--bw-face:#0f1830;--bw-open:#10b981;--bw-closed:#64748b;--bw-accent:#3b82f6}}
 .bw-card{background:var(--bw-card);border:1px solid var(--bw-border);border-radius:16px;padding:16px 18px;color:var(--bw-text);max-width:440px;margin:0 auto}
-.bw-head{font-weight:700;font-size:1.12rem;text-align:center;margin-bottom:2px}
-.bw-svg{width:100%;height:auto;display:block}
-.bw-t{fill:var(--bw-text)}.bw-ts{fill:var(--bw-muted)}.bw-th{fill:var(--bw-text)}
-.bw-list{margin-top:4px;border-top:1px solid var(--bw-border);padding-top:8px}
+.bw-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.bw-company{font-weight:700;font-size:1.1rem}
+.bw-count{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;color:var(--bw-muted);white-space:nowrap}
+.bw-count-dot{width:8px;height:8px;border-radius:50%;background:var(--bw-open);flex:none}
+.bw-list{margin-top:0;border-top:1px solid var(--bw-border);padding-top:8px}
 .bw-row{display:flex;align-items:center;gap:10px;padding:6px 4px}
 .bw-dot{width:9px;height:9px;border-radius:50%;background:var(--bw-closed);flex:none}
 .bw-row.is-open .bw-dot{background:var(--bw-open)}
@@ -27,6 +28,9 @@ body{background:var(--bw-bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe
 .bw-time{font-weight:700;font-variant-numeric:tabular-nums;font-size:.98rem}
 .bw-status{font-size:.78rem;color:var(--bw-muted)}
 .bw-row.is-open .bw-status{color:var(--bw-open)}
+.bw-tel{display:inline-flex;align-items:center;gap:5px;margin-top:3px;font-size:.82rem;color:var(--bw-accent);text-decoration:none;font-variant-numeric:tabular-nums}
+.bw-tel:hover{text-decoration:underline}
+.bw-tel-ico{flex:none}
 .bw-by{display:block;text-align:center;margin-top:10px;font-size:.72rem;color:var(--bw-muted);text-decoration:none}
 .bw-by strong{color:var(--bw-accent);font-weight:700}
 .bw-by:hover strong{text-decoration:underline}

@@ -62,80 +62,37 @@
     return { open: false, never: true };
   }
 
-  /* small analog clock for one branch (relative 0..0, caller translates) */
-  function miniClock(p, open) {
-    const R = 30, col = open ? "var(--bw-open)" : "var(--bw-muted)";
-    let ticks = "";
-    for (let i = 0; i < 12; i++) {
-      const a = i * 30 * Math.PI / 180, r1 = i % 3 === 0 ? 22 : 25, r2 = 28;
-      ticks += `<line x1="${(r1 * Math.sin(a)).toFixed(1)}" y1="${(-r1 * Math.cos(a)).toFixed(1)}" x2="${(r2 * Math.sin(a)).toFixed(1)}" y2="${(-r2 * Math.cos(a)).toFixed(1)}" stroke="var(--bw-border2)" stroke-width="${i % 3 === 0 ? 1.6 : 0.8}"/>`;
-    }
-    const hF = (p.h % 12) + p.m / 60, mF = p.m;
-    const hx = 14 * Math.sin(hF * 30 * Math.PI / 180), hy = -14 * Math.cos(hF * 30 * Math.PI / 180);
-    const mx = 21 * Math.sin(mF * 6 * Math.PI / 180), my = -21 * Math.cos(mF * 6 * Math.PI / 180);
-    return `<circle r="${R}" fill="var(--bw-face)" stroke="${col}" stroke-width="2.4"/>${ticks}` +
-      `<line class="bw-hh" x1="0" y1="0" x2="${hx.toFixed(1)}" y2="${hy.toFixed(1)}" stroke="var(--bw-text)" stroke-width="3" stroke-linecap="round"/>` +
-      `<line class="bw-mh" x1="0" y1="0" x2="${mx.toFixed(1)}" y2="${my.toFixed(1)}" stroke="var(--bw-text)" stroke-width="2" stroke-linecap="round"/>` +
-      `<circle r="2.2" fill="${col}"/>`;
-  }
-
   function durTxt(mins) {
     const h = Math.floor(mins / 60), m = mins % 60;
     if (LANG === "ar") return (h ? `${h} س ` : "") + (m ? `${m} د` : (h ? "" : "0 د"));
     return (h ? `${h}h ` : "") + (m ? `${m}m` : (h ? "" : "0m"));
   }
 
+  const PHONE_SVG = `<svg class="bw-tel-ico" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>`;
+
   function render() {
     const host = $("#bw"); if (!host) return;
     if (!BR.length) { host.innerHTML = `<div class="bw-card bw-empty">${esc(T.none)}</div>`; return; }
 
-    const N = BR.length, cx = 340, cy = 215, R = N <= 1 ? 0 : Math.min(150, 70 + N * 9);
-    let nodes = "", openCount = 0;
-    BR.forEach((b, i) => {
-      const p = localParts(b.offMs), st = status(b, p);
-      if (st.open) openCount++;
-      const ang = (i / N) * 2 * Math.PI;
-      const x = cx + R * Math.sin(ang), y = cy - R * Math.cos(ang);
-      nodes += `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)})" data-i="${i}">${miniClock(p, st.open)}` +
-        `<text x="0" y="46" text-anchor="middle" class="bw-t" font-size="12" font-weight="500">${esc(cN(b.city) || b.name)}</text>` +
-        `<text x="0" y="60" text-anchor="middle" class="bw-ts" font-size="11">${esc(fmtMin(p.min))}</text></g>`;
-    });
-    const center = `<g transform="translate(${cx} ${cy})"><circle r="52" fill="var(--bw-face)" stroke="var(--bw-border)" stroke-width="1"/>` +
-      `<text x="0" y="-4" text-anchor="middle" class="bw-th" font-size="22" font-weight="500">${openCount}</text>` +
-      `<text x="0" y="16" text-anchor="middle" class="bw-ts" font-size="11">${esc(LANG === "ar" ? "مفتوح الآن" : "open now")}</text></g>`;
+    const states = BR.map(b => { const p = localParts(b.offMs); return { b, p, st: status(b, p) }; });
+    const openCount = states.filter(s => s.st.open).length;
 
-    const cards = BR.map((b, i) => {
-      const p = localParts(b.offMs), st = status(b, p);
-      return { b, p, st };
-    }).sort((a, x) => (x.st.open ? 1 : 0) - (a.st.open ? 1 : 0)).map(({ b, p, st }) => {
+    const cards = states.slice().sort((a, x) => (x.st.open ? 1 : 0) - (a.st.open ? 1 : 0)).map(({ b, p, st }) => {
       const sub = st.open
         ? `${T.open} · ${T.closesAt} ${fmtMin(st.closeMin)}`
         : st.never ? T.closed : `${T.closed} · ${T.opensAt} ${st.when} ${fmtMin(st.openMin)}`;
       const cls = st.open ? "is-open" : "is-closed";
-      return `<div class="bw-row ${cls}"><span class="bw-dot"></span><div class="bw-info"><span class="bw-name">${esc(b.name)}</span><span class="bw-city">${esc(cN(b.city))}</span></div><div class="bw-right"><span class="bw-time">${esc(fmtMin(p.min))}</span><span class="bw-status">${esc(sub)}</span></div></div>`;
+      const tel = b.t ? `<a class="bw-tel" href="tel:${esc(b.t.replace(/[^\d+]/g, ""))}">${PHONE_SVG}<span dir="ltr">${esc(b.t)}</span></a>` : "";
+      return `<div class="bw-row ${cls}"><span class="bw-dot"></span><div class="bw-info"><span class="bw-name">${esc(b.name)}</span><span class="bw-city">${esc(cN(b.city))}</span>${tel}</div><div class="bw-right"><span class="bw-time" dir="ltr">${esc(fmtMin(p.min))}</span><span class="bw-status">${esc(sub)}</span></div></div>`;
     }).join("");
 
+    const countTxt = LANG === "ar" ? `${openCount} مفتوح الآن` : `${openCount} open now`;
     host.innerHTML = `<div class="bw-card">
-      ${COMPANY ? `<div class="bw-head">${esc(COMPANY)}</div>` : ""}
-      <svg viewBox="0 0 680 470" class="bw-svg" aria-hidden="true">${center}${nodes}</svg>
+      <div class="bw-top">${COMPANY ? `<span class="bw-company">${esc(COMPANY)}</span>` : `<span></span>`}<span class="bw-count"><span class="bw-count-dot"></span>${esc(countTxt)}</span></div>
       <div class="bw-list">${cards}</div>
       <a class="bw-by" href="https://www.citytimehub.com/our-branches/?utm_source=widget" target="_blank" rel="noopener">${esc(T.by)} <strong>CityTimeHub</strong></a>
     </div>`;
-    animate();
-  }
-
-  function animate() {
-    const tick = () => {
-      $("#bw") && document.querySelectorAll("#bw svg g[data-i]").forEach(g => {
-        const b = BR[+g.dataset.i]; if (!b) return;
-        const p = localParts(b.offMs);
-        const hF = (p.h % 12) + p.m / 60;
-        const hh = g.querySelector(".bw-hh"), mh = g.querySelector(".bw-mh");
-        if (hh) { const x = 14 * Math.sin(hF * 30 * Math.PI / 180), y = -14 * Math.cos(hF * 30 * Math.PI / 180); hh.setAttribute("x2", x.toFixed(1)); hh.setAttribute("y2", y.toFixed(1)); }
-        if (mh) { const x = 21 * Math.sin(p.m * 6 * Math.PI / 180), y = -21 * Math.cos(p.m * 6 * Math.PI / 180); mh.setAttribute("x2", x.toFixed(1)); mh.setAttribute("y2", y.toFixed(1)); }
-      });
-    };
-    clearInterval(window.__bwT); window.__bwT = setInterval(tick, 30000);
+    clearInterval(window.__bwT); window.__bwT = setInterval(render, 30000);
   }
 
   function parseData(cities) {
@@ -145,7 +102,7 @@
     BR = raw.slice(0, 12).map(r => {
       const city = bySlug.get(r.c);
       if (!city) return null;
-      return { name: r.n || cN(city), city, tz: city.tz, offMs: tzOffsetHours(city.tz) * 3600000, o: r.o | 0, cl: r.cl | 0, d: Array.isArray(r.d) ? r.d : [0, 1, 2, 3, 4] };
+      return { name: r.n || cN(city), city, tz: city.tz, offMs: tzOffsetHours(city.tz) * 3600000, o: r.o | 0, cl: r.cl | 0, d: Array.isArray(r.d) ? r.d : [0, 1, 2, 3, 4], t: (r.t || "").toString().slice(0, 28) };
     }).filter(Boolean);
   }
 

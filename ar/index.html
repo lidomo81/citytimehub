@@ -213,140 +213,10 @@
       </div>
     </section>
 
-    <!-- ===================== POPULAR CITIES ===================== -->
-    <section id="cities" class="section">
-      <div class="container">
-        <header class="section-head">
-          <span class="kicker">٠١ — إحداثيات</span>
-          <h2>المدن دلوقتي</h2>
-          <p class="muted"><span id="cityCount">0</span> مكان · الوقت والتاريخ والمنطقة وفرق UTC مباشرةً.</p>
-        </header>
-        <div id="cityGrid" class="city-grid" aria-live="off"></div>
-        <p id="noResults" class="no-results" hidden>لا توجد مدينة مطابقة لبحثك.</p>
-        <p class="browse-all"><a href="/ar/cities/" class="browse-all-link">شوف كل الـ<span id="browseCount">350</span> مدينة <span aria-hidden="true">←</span></a></p>
-      </div>
-    </section>
-
-    <!-- ===================== REFERENCE CLOCKS ===================== -->
-    <section id="reference" class="section">
-      <div class="container">
-        <header class="section-head">
-          <span class="kicker">٠٢ — مرجع</span>
-          <h2>ساعات التوقيت العالمي</h2>
-          <p class="muted">الأساس اللي بنقيس عليه كل حاجة.</p>
-        </header>
-        <div class="ref-grid">
-          <article class="ref-card">
-            <span class="ref-label">UTC</span>
-            <strong id="utcClock" class="ref-time" dir="ltr">--:--:--</strong>
-            <span id="utcDate" class="muted mono small">—</span>
-          </article>
-          <article class="ref-card">
-            <span class="ref-label">GMT</span>
-            <strong id="gmtClock" class="ref-time" dir="ltr">--:--:--</strong>
-            <span id="gmtDate" class="muted mono small">—</span>
-          </article>
-          <article class="ref-card ref-card--you">
-            <span class="ref-label">توقيتك المحلي</span>
-            <strong id="localClock" class="ref-time" dir="ltr">--:--:--</strong>
-            <span id="localZone" class="muted mono small">—</span>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== PRAYER TIMES ===================== -->
-    <section id="prayer" class="section">
-      <div class="container">
-        <header class="section-head section-head--row">
-          <div>
-            <span class="kicker">٠٣ — عبادة</span>
-            <h2>مواقيت الصلاة</h2>
-            <p class="muted">مواقيت كل يوم، بالتاريخ الميلادي والهجري.</p>
-          </div>
-          <div class="city-picker">
-            <label for="prayerCity" class="sr-only">ابحث عن مدينة لمواقيت الصلاة</label>
-            <div class="ac prayer-ac">
-              <input id="prayerCity" class="ac-input" type="text" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="prayerAcList" placeholder="ابحث عن مدينة…" />
-              <ul id="prayerAcList" class="ac-list" role="listbox" hidden></ul>
-            </div>
-          </div>
-        </header>
-
-        <div class="datebar">
-          <span class="datebar-item"><span class="muted">ميلادي</span> <strong id="gregDate" class="mono">—</strong></span>
-          <span class="datebar-sep" aria-hidden="true"></span>
-          <span class="datebar-item"><span class="muted">هجري</span> <strong id="hijriDate" class="mono">—</strong></span>
-        </div>
-
-        <div id="prayerGrid" class="prayer-grid" aria-live="polite">
-          <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
-          <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
-          <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section explainer-section" aria-labelledby="ex-prayer-h">
-      <div class="container container-narrow">
-        <h2 id="ex-prayer-h" class="explainer-title">كيف تُحسب مواقيت الصلاة؟</h2>
-        <div class="prose"><p>تُشتق مواقيت الصلاة في الإسلام فلكياً بناءً على موقع الشمس بالنسبة للأفق في موقع جغرافي محدد؛ حيث يُحسب وقتَا الفجر والعشاء اعتماداً على زاوية هبوط الشمس تحت الأفق أثناء الشفق، في حين يبدأ وقت الظهر فور تجاوز الشمس أعلى نقطة لها في السماء (زوال الشمس)، ويبدأ وقت المغرب عند غروبها. ونظراً لأن هذه المواقيت تعتمد على خطوط الطول ودوائر العرض والتاريخ، فإنها تتغير طفيفاً بشكل يومي وتختلف من مدينة إلى أخرى.</p>
-          <p>تعتمد الهيئات الإسلامية المعتمدة زوايا شفق مختلفة قليلاً، وهو السبب في تفاوت المواقيت بفارق دقائق معدودة بين طرق الحساب الفقهية. وتضم هذه الطرق واسعة الانتشار: رابطة العالم الإسلامي، والجمعية الإسلامية لأمريكا الشمالية (إيسنا)، والهيئة المصرية العامة للمساحة، وجامعة أم القرى في مكة المكرمة. لذا، فإن اختيار الطريقة التي تتبعها مجتمعاتكم المحلية يضمن الحصول على النتيجة الأكثر دقة.</p></div>
-        <div class="faq explainer-faq">
-          <h3 class="explainer-faq-title">الأسئلة الشائعة</h3>
-          <details class="faq-item"><summary>كيف تُحدَّد مواقيت الصلاة؟</summary><p>تُحسب هذه المواقيت بناءً على موقع الشمس لتاريخ وموقع جغرافي محددين؛ وتعتمد أساساً على زوايا الشفق لوقتي الفجر والعشاء، ووقت الزوال (الظهيرة الفلكية) لوقت الظهر، وغروب الشمس لوقت المغرب.</p></details>
-          <details class="faq-item"><summary>لماذا تختلف مواقيت الصلاة بين التطبيقات أو المساجد؟</summary><p>تعتمد الهيئات المختلفة زوايا شفق ومعايير متباينة؛ لذا فإن وجود تفاوت بمقدار دقائق معدودة بين طرق الحساب—مثل رابطة العالم الإسلامي (MWL)، أو الجمعية الإسلامية لأمريكا الشمالية (ISNA)، أو أم القرى—هو أمر طبيعي ومتوقع.</p></details>
-          <details class="faq-item"><summary>أي طريقة حساب ينبغي أن أختار؟</summary><p>إن الخيار الأفضل هو اتباع الطريقة المعتمدة رسمياً في بلدك أو في مسجدك المحلي، إذ يعكس ذلك المعيار الفقهي والمواقيت التي يعتمد عليها مجتمعك.</p></details>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== SUNRISE & SUNSET ===================== -->
-    <section id="sun" class="section">
-      <div class="container">
-        <header class="section-head">
-          <span class="kicker">٠٤ — ضوء النهار</span>
-          <h2>الشروق والغروب</h2>
-          <p class="muted" id="sunCityName">—</p>
-        </header>
-        <div class="sun-grid">
-          <article class="sun-card sun-rise">
-            <span class="sun-ico" aria-hidden="true">☀</span>
-            <span class="ref-label">الشروق</span>
-            <strong id="sunriseVal" class="ref-time" dir="ltr">—</strong>
-          </article>
-          <article class="sun-card sun-set">
-            <span class="sun-ico" aria-hidden="true">☾</span>
-            <span class="ref-label">الغروب</span>
-            <strong id="sunsetVal" class="ref-time" dir="ltr">—</strong>
-          </article>
-          <article class="sun-card">
-            <span class="sun-ico" aria-hidden="true">⌛</span>
-            <span class="ref-label">طول النهار</span>
-            <strong id="dayLength" class="ref-time" dir="ltr">—</strong>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section explainer-section" aria-labelledby="ex-daynight-h">
-      <div class="container container-narrow">
-        <h2 id="ex-daynight-h" class="explainer-title">علم الليل والنهار</h2>
-        <div class="prose"><p>ينشأ الليل والنهار نتيجة دوران الأرض حول محورها، حيث تتم دورة كاملة كل 24 ساعة تقريباً. وفي أي لحظة، يواجه نصف الكوكب الشمس ليعيش فترة النهار، بينما يكون النصف الآخر بعيداً عنها ومغموراً في الظلام. ومع دوران الأرض من الغرب إلى الشرق، يتحرك الخط الفاصل بينهما —المعروف بخط الغبش أو الفاصل الشمسي— باستمرار عبر السطح، وهذا هو السبب في أن شروق الشمس يحل في الشرق قبل الغرب.</p>
-          <p>وهذا هو السبب أيضاً في تحرك الوقت نفسه عبر مختلف أرجاء الكوكب؛ فالمواقع الواقعة على خطوط طول مختلفة تستقبل شروق الشمس في لحظات متباينة، لذا فإنه في اللحظة ذاتها، يحل الصباح دائماً في مكان ما بينما يسود الليل في مكان آخر بالفعل. ويجسد مؤشر الليل والنهار هذا المفهوم من خلال عرض المدن التي تقع حالياً في نطاق ضوء النهار وتلك التي تحولت بالفعل نحو الليل، وذلك بلمحة سريعة.</p></div>
-        <div class="faq explainer-faq">
-          <h3 class="explainer-faq-title">الأسئلة الشائعة</h3>
-          <details class="faq-item"><summary>ما الذي يسبّب الليل والنهار؟</summary><p>ينشأ الليل والنهار نتيجة دوران الأرض حول محورها؛ حيث يحظى النصف المواجه للشمس بالنهار، بينما يغرق النصف الآخر البعيد عنها في عتمة الليل، ويتبادل النصفان الأدوار مع استمرار الكوكب في الدوران.</p></details>
-          <details class="faq-item"><summary>لماذا لا يكون الوقت نفسه في كل مكان على الأرض؟</summary><p>ويعود ذلك إلى أن خطوط الطول المختلفة تواجه الشمس في لحظات متباينة؛ فمع دوران الأرض، يحل منتصف النهار ومنتصف الليل في كل منطقة وفقاً لتوقيتها الخاص، وهو تماماً ما تعكسه النطاقات الزمنية.</p></details>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== TOOLS ===================== -->
     <section id="tools" class="section">
       <div class="container">
         <header class="section-head">
-          <span class="kicker">٠٥ — أدوات</span>
+          <span class="kicker">٠١ — أدوات</span>
           <h2>أدوات</h2>
           <p class="muted">أدوات عملية شغّالة على نفس محرّك الوقت المباشر.</p>
         </header>
@@ -396,6 +266,137 @@
         </div>
       </div>
     </section>
+
+    <!-- ===================== POPULAR CITIES ===================== -->
+    <section id="cities" class="section">
+      <div class="container">
+        <header class="section-head">
+          <span class="kicker">٠٢ — إحداثيات</span>
+          <h2>المدن دلوقتي</h2>
+          <p class="muted"><span id="cityCount">0</span> مكان · الوقت والتاريخ والمنطقة وفرق UTC مباشرةً.</p>
+        </header>
+        <div id="cityGrid" class="city-grid" aria-live="off"></div>
+        <p id="noResults" class="no-results" hidden>لا توجد مدينة مطابقة لبحثك.</p>
+        <p class="browse-all"><a href="/ar/cities/" class="browse-all-link">شوف كل الـ<span id="browseCount">350</span> مدينة <span aria-hidden="true">←</span></a></p>
+      </div>
+    </section>
+
+    <!-- ===================== REFERENCE CLOCKS ===================== -->
+    <section id="reference" class="section">
+      <div class="container">
+        <header class="section-head">
+          <span class="kicker">٠٣ — مرجع</span>
+          <h2>ساعات التوقيت العالمي</h2>
+          <p class="muted">الأساس اللي بنقيس عليه كل حاجة.</p>
+        </header>
+        <div class="ref-grid">
+          <article class="ref-card">
+            <span class="ref-label">UTC</span>
+            <strong id="utcClock" class="ref-time" dir="ltr">--:--:--</strong>
+            <span id="utcDate" class="muted mono small">—</span>
+          </article>
+          <article class="ref-card">
+            <span class="ref-label">GMT</span>
+            <strong id="gmtClock" class="ref-time" dir="ltr">--:--:--</strong>
+            <span id="gmtDate" class="muted mono small">—</span>
+          </article>
+          <article class="ref-card ref-card--you">
+            <span class="ref-label">توقيتك المحلي</span>
+            <strong id="localClock" class="ref-time" dir="ltr">--:--:--</strong>
+            <span id="localZone" class="muted mono small">—</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PRAYER TIMES ===================== -->
+    <section id="prayer" class="section">
+      <div class="container">
+        <header class="section-head section-head--row">
+          <div>
+            <span class="kicker">٠٤ — عبادة</span>
+            <h2>مواقيت الصلاة</h2>
+            <p class="muted">مواقيت كل يوم، بالتاريخ الميلادي والهجري.</p>
+          </div>
+          <div class="city-picker">
+            <label for="prayerCity" class="sr-only">ابحث عن مدينة لمواقيت الصلاة</label>
+            <div class="ac prayer-ac">
+              <input id="prayerCity" class="ac-input" type="text" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="prayerAcList" placeholder="ابحث عن مدينة…" />
+              <ul id="prayerAcList" class="ac-list" role="listbox" hidden></ul>
+            </div>
+          </div>
+        </header>
+
+        <div class="datebar">
+          <span class="datebar-item"><span class="muted">ميلادي</span> <strong id="gregDate" class="mono">—</strong></span>
+          <span class="datebar-sep" aria-hidden="true"></span>
+          <span class="datebar-item"><span class="muted">هجري</span> <strong id="hijriDate" class="mono">—</strong></span>
+        </div>
+
+        <div id="prayerGrid" class="prayer-grid" aria-live="polite">
+          <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
+          <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
+          <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section explainer-section" aria-labelledby="ex-prayer-h">
+      <div class="container container-narrow">
+        <h2 id="ex-prayer-h" class="explainer-title">كيف تُحسب مواقيت الصلاة؟</h2>
+        <div class="prose"><p>تُشتق مواقيت الصلاة في الإسلام فلكياً بناءً على موقع الشمس بالنسبة للأفق في موقع جغرافي محدد؛ حيث يُحسب وقتَا الفجر والعشاء اعتماداً على زاوية هبوط الشمس تحت الأفق أثناء الشفق، في حين يبدأ وقت الظهر فور تجاوز الشمس أعلى نقطة لها في السماء (زوال الشمس)، ويبدأ وقت المغرب عند غروبها. ونظراً لأن هذه المواقيت تعتمد على خطوط الطول ودوائر العرض والتاريخ، فإنها تتغير طفيفاً بشكل يومي وتختلف من مدينة إلى أخرى.</p>
+          <p>تعتمد الهيئات الإسلامية المعتمدة زوايا شفق مختلفة قليلاً، وهو السبب في تفاوت المواقيت بفارق دقائق معدودة بين طرق الحساب الفقهية. وتضم هذه الطرق واسعة الانتشار: رابطة العالم الإسلامي، والجمعية الإسلامية لأمريكا الشمالية (إيسنا)، والهيئة المصرية العامة للمساحة، وجامعة أم القرى في مكة المكرمة. لذا، فإن اختيار الطريقة التي تتبعها مجتمعاتكم المحلية يضمن الحصول على النتيجة الأكثر دقة.</p></div>
+        <div class="faq explainer-faq">
+          <h3 class="explainer-faq-title">الأسئلة الشائعة</h3>
+          <details class="faq-item"><summary>كيف تُحدَّد مواقيت الصلاة؟</summary><p>تُحسب هذه المواقيت بناءً على موقع الشمس لتاريخ وموقع جغرافي محددين؛ وتعتمد أساساً على زوايا الشفق لوقتي الفجر والعشاء، ووقت الزوال (الظهيرة الفلكية) لوقت الظهر، وغروب الشمس لوقت المغرب.</p></details>
+          <details class="faq-item"><summary>لماذا تختلف مواقيت الصلاة بين التطبيقات أو المساجد؟</summary><p>تعتمد الهيئات المختلفة زوايا شفق ومعايير متباينة؛ لذا فإن وجود تفاوت بمقدار دقائق معدودة بين طرق الحساب—مثل رابطة العالم الإسلامي (MWL)، أو الجمعية الإسلامية لأمريكا الشمالية (ISNA)، أو أم القرى—هو أمر طبيعي ومتوقع.</p></details>
+          <details class="faq-item"><summary>أي طريقة حساب ينبغي أن أختار؟</summary><p>إن الخيار الأفضل هو اتباع الطريقة المعتمدة رسمياً في بلدك أو في مسجدك المحلي، إذ يعكس ذلك المعيار الفقهي والمواقيت التي يعتمد عليها مجتمعك.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SUNRISE & SUNSET ===================== -->
+    <section id="sun" class="section">
+      <div class="container">
+        <header class="section-head">
+          <span class="kicker">٠٥ — ضوء النهار</span>
+          <h2>الشروق والغروب</h2>
+          <p class="muted" id="sunCityName">—</p>
+        </header>
+        <div class="sun-grid">
+          <article class="sun-card sun-rise">
+            <span class="sun-ico" aria-hidden="true">☀</span>
+            <span class="ref-label">الشروق</span>
+            <strong id="sunriseVal" class="ref-time" dir="ltr">—</strong>
+          </article>
+          <article class="sun-card sun-set">
+            <span class="sun-ico" aria-hidden="true">☾</span>
+            <span class="ref-label">الغروب</span>
+            <strong id="sunsetVal" class="ref-time" dir="ltr">—</strong>
+          </article>
+          <article class="sun-card">
+            <span class="sun-ico" aria-hidden="true">⌛</span>
+            <span class="ref-label">طول النهار</span>
+            <strong id="dayLength" class="ref-time" dir="ltr">—</strong>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section explainer-section" aria-labelledby="ex-daynight-h">
+      <div class="container container-narrow">
+        <h2 id="ex-daynight-h" class="explainer-title">علم الليل والنهار</h2>
+        <div class="prose"><p>ينشأ الليل والنهار نتيجة دوران الأرض حول محورها، حيث تتم دورة كاملة كل 24 ساعة تقريباً. وفي أي لحظة، يواجه نصف الكوكب الشمس ليعيش فترة النهار، بينما يكون النصف الآخر بعيداً عنها ومغموراً في الظلام. ومع دوران الأرض من الغرب إلى الشرق، يتحرك الخط الفاصل بينهما —المعروف بخط الغبش أو الفاصل الشمسي— باستمرار عبر السطح، وهذا هو السبب في أن شروق الشمس يحل في الشرق قبل الغرب.</p>
+          <p>وهذا هو السبب أيضاً في تحرك الوقت نفسه عبر مختلف أرجاء الكوكب؛ فالمواقع الواقعة على خطوط طول مختلفة تستقبل شروق الشمس في لحظات متباينة، لذا فإنه في اللحظة ذاتها، يحل الصباح دائماً في مكان ما بينما يسود الليل في مكان آخر بالفعل. ويجسد مؤشر الليل والنهار هذا المفهوم من خلال عرض المدن التي تقع حالياً في نطاق ضوء النهار وتلك التي تحولت بالفعل نحو الليل، وذلك بلمحة سريعة.</p></div>
+        <div class="faq explainer-faq">
+          <h3 class="explainer-faq-title">الأسئلة الشائعة</h3>
+          <details class="faq-item"><summary>ما الذي يسبّب الليل والنهار؟</summary><p>ينشأ الليل والنهار نتيجة دوران الأرض حول محورها؛ حيث يحظى النصف المواجه للشمس بالنهار، بينما يغرق النصف الآخر البعيد عنها في عتمة الليل، ويتبادل النصفان الأدوار مع استمرار الكوكب في الدوران.</p></details>
+          <details class="faq-item"><summary>لماذا لا يكون الوقت نفسه في كل مكان على الأرض؟</summary><p>ويعود ذلك إلى أن خطوط الطول المختلفة تواجه الشمس في لحظات متباينة؛ فمع دوران الأرض، يحل منتصف النهار ومنتصف الليل في كل منطقة وفقاً لتوقيتها الخاص، وهو تماماً ما تعكسه النطاقات الزمنية.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TOOLS ===================== -->
   </main>
 
   <!-- ===================== FOOTER ===================== -->

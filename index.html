@@ -212,140 +212,10 @@
       </div>
     </section>
 
-    <!-- ===================== POPULAR CITIES ===================== -->
-    <section id="cities" class="section">
-      <div class="container">
-        <header class="section-head">
-          <span class="kicker">01 — Coordinates</span>
-          <h2>Cities, right now</h2>
-          <p class="muted"><span id="cityCount">0</span> places · live time, date, zone and UTC offset.</p>
-        </header>
-        <div id="cityGrid" class="city-grid" aria-live="off"></div>
-        <p id="noResults" class="no-results" hidden>No city matches your search.</p>
-        <p class="browse-all"><a href="/cities/" class="browse-all-link">Browse all <span id="browseCount">350</span> cities <span aria-hidden="true">→</span></a></p>
-      </div>
-    </section>
-
-    <!-- ===================== REFERENCE CLOCKS ===================== -->
-    <section id="reference" class="section">
-      <div class="container">
-        <header class="section-head">
-          <span class="kicker">02 — Reference</span>
-          <h2>Universal clocks</h2>
-          <p class="muted">The anchors everything else is measured against.</p>
-        </header>
-        <div class="ref-grid">
-          <article class="ref-card">
-            <span class="ref-label">UTC</span>
-            <strong id="utcClock" class="ref-time" dir="ltr">--:--:--</strong>
-            <span id="utcDate" class="muted mono small">—</span>
-          </article>
-          <article class="ref-card">
-            <span class="ref-label">GMT</span>
-            <strong id="gmtClock" class="ref-time" dir="ltr">--:--:--</strong>
-            <span id="gmtDate" class="muted mono small">—</span>
-          </article>
-          <article class="ref-card ref-card--you">
-            <span class="ref-label">Your local time</span>
-            <strong id="localClock" class="ref-time" dir="ltr">--:--:--</strong>
-            <span id="localZone" class="muted mono small">—</span>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== PRAYER TIMES ===================== -->
-    <section id="prayer" class="section">
-      <div class="container">
-        <header class="section-head section-head--row">
-          <div>
-            <span class="kicker">03 — Devotion</span>
-            <h2>Prayer times</h2>
-            <p class="muted">Daily timings with Gregorian and Hijri dates.</p>
-          </div>
-          <div class="city-picker">
-            <label for="prayerCity" class="sr-only">Search a city for prayer times</label>
-            <div class="ac prayer-ac">
-              <input id="prayerCity" class="ac-input" type="text" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="prayerAcList" placeholder="Search a city…" />
-              <ul id="prayerAcList" class="ac-list" role="listbox" hidden></ul>
-            </div>
-          </div>
-        </header>
-
-        <div class="datebar">
-          <span class="datebar-item"><span class="muted">Gregorian</span> <strong id="gregDate" class="mono">—</strong></span>
-          <span class="datebar-sep" aria-hidden="true"></span>
-          <span class="datebar-item"><span class="muted">Hijri</span> <strong id="hijriDate" class="mono">—</strong></span>
-        </div>
-
-        <div id="prayerGrid" class="prayer-grid" aria-live="polite">
-          <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
-          <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
-          <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section explainer-section" aria-labelledby="ex-prayer-h">
-      <div class="container container-narrow">
-        <h2 id="ex-prayer-h" class="explainer-title">How Are Prayer Times Calculated?</h2>
-        <div class="prose"><p>Islamic prayer times are derived <strong>astronomically</strong>, from the position of the sun relative to the horizon at a specific location. Fajr and Isha are based on the angle of the sun below the horizon during twilight, Dhuhr begins just after the sun passes its highest point, and Maghrib starts at sunset. Because these depend on latitude, longitude, and the date, prayer times shift slightly every day and differ from one city to another.</p>
-          <p>Different recognized authorities use slightly different <strong>twilight angles</strong>, which is why times can vary by a few minutes between calculation methods. Widely adopted methods include the <strong>Muslim World League (MWL)</strong>, the <strong>Islamic Society of North America (ISNA)</strong>, the <strong>Egyptian General Authority of Survey</strong>, and <strong>Umm al-Qura University</strong> in Makkah. Choosing the method your local community follows gives the most accurate result.</p></div>
-        <div class="faq explainer-faq">
-          <h3 class="explainer-faq-title">Frequently Asked Questions</h3>
-          <details class="faq-item"><summary>How are prayer times determined?</summary><p>They are calculated from the sun's position for a given location and date — primarily the angles of twilight for Fajr and Isha, solar noon for Dhuhr, and sunset for Maghrib.</p></details>
-          <details class="faq-item"><summary>Why do prayer times differ between apps or mosques?</summary><p>Different authorities use different twilight angles and conventions. A few minutes of variation between methods such as MWL, ISNA, or Umm al-Qura is normal and expected.</p></details>
-          <details class="faq-item"><summary>Which calculation method should I choose?</summary><p>The best choice is the method officially followed in your country or by your local mosque, as it reflects the convention your community relies on.</p></details>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== SUNRISE & SUNSET ===================== -->
-    <section id="sun" class="section">
-      <div class="container">
-        <header class="section-head">
-          <span class="kicker">04 — Daylight</span>
-          <h2>Sunrise &amp; sunset</h2>
-          <p class="muted" id="sunCityName">—</p>
-        </header>
-        <div class="sun-grid">
-          <article class="sun-card sun-rise">
-            <span class="sun-ico" aria-hidden="true">☀</span>
-            <span class="ref-label">Sunrise</span>
-            <strong id="sunriseVal" class="ref-time" dir="ltr">—</strong>
-          </article>
-          <article class="sun-card sun-set">
-            <span class="sun-ico" aria-hidden="true">☾</span>
-            <span class="ref-label">Sunset</span>
-            <strong id="sunsetVal" class="ref-time" dir="ltr">—</strong>
-          </article>
-          <article class="sun-card">
-            <span class="sun-ico" aria-hidden="true">⌛</span>
-            <span class="ref-label">Day length</span>
-            <strong id="dayLength" class="ref-time" dir="ltr">—</strong>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section explainer-section" aria-labelledby="ex-daynight-h">
-      <div class="container container-narrow">
-        <h2 id="ex-daynight-h" class="explainer-title">The Science of Day &amp; Night</h2>
-        <div class="prose"><p>Day and night are created by the Earth's <strong>rotation on its axis</strong>, one full turn roughly every 24 hours. At any moment, half of the planet faces the sun and experiences daylight, while the other half is turned away and in darkness. As the Earth spins from west to east, the line dividing the two — the <strong>terminator</strong> — sweeps continuously across the surface, which is why sunrise arrives in the east before the west.</p>
-          <p>This is also why time itself moves across the globe. Locations along different <strong>lines of longitude</strong> meet the sunrise at different moments, so it is genuinely always morning somewhere and night somewhere else at the same instant. A day-and-night indicator captures this by showing, at a glance, which cities are currently in daylight and which have already turned toward night.</p></div>
-        <div class="faq explainer-faq">
-          <h3 class="explainer-faq-title">Frequently Asked Questions</h3>
-          <details class="faq-item"><summary>What causes day and night?</summary><p>The Earth's rotation on its axis. The half facing the sun has day; the half turned away has night, and the two swap as the planet spins.</p></details>
-          <details class="faq-item"><summary>Why isn't it the same time everywhere on Earth?</summary><p>Because different lines of longitude face the sun at different moments. As the Earth rotates, each region reaches noon and midnight at its own time, which is exactly what time zones reflect.</p></details>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== TOOLS ===================== -->
     <section id="tools" class="section">
       <div class="container">
         <header class="section-head">
-          <span class="kicker">05 — Tools</span>
+          <span class="kicker">01 — Tools</span>
           <h2>Tools</h2>
           <p class="muted">Handy utilities built on the same live-time engine.</p>
         </header>
@@ -395,6 +265,137 @@
         </div>
       </div>
     </section>
+
+    <!-- ===================== POPULAR CITIES ===================== -->
+    <section id="cities" class="section">
+      <div class="container">
+        <header class="section-head">
+          <span class="kicker">02 — Coordinates</span>
+          <h2>Cities, right now</h2>
+          <p class="muted"><span id="cityCount">0</span> places · live time, date, zone and UTC offset.</p>
+        </header>
+        <div id="cityGrid" class="city-grid" aria-live="off"></div>
+        <p id="noResults" class="no-results" hidden>No city matches your search.</p>
+        <p class="browse-all"><a href="/cities/" class="browse-all-link">Browse all <span id="browseCount">350</span> cities <span aria-hidden="true">→</span></a></p>
+      </div>
+    </section>
+
+    <!-- ===================== REFERENCE CLOCKS ===================== -->
+    <section id="reference" class="section">
+      <div class="container">
+        <header class="section-head">
+          <span class="kicker">03 — Reference</span>
+          <h2>Universal clocks</h2>
+          <p class="muted">The anchors everything else is measured against.</p>
+        </header>
+        <div class="ref-grid">
+          <article class="ref-card">
+            <span class="ref-label">UTC</span>
+            <strong id="utcClock" class="ref-time" dir="ltr">--:--:--</strong>
+            <span id="utcDate" class="muted mono small">—</span>
+          </article>
+          <article class="ref-card">
+            <span class="ref-label">GMT</span>
+            <strong id="gmtClock" class="ref-time" dir="ltr">--:--:--</strong>
+            <span id="gmtDate" class="muted mono small">—</span>
+          </article>
+          <article class="ref-card ref-card--you">
+            <span class="ref-label">Your local time</span>
+            <strong id="localClock" class="ref-time" dir="ltr">--:--:--</strong>
+            <span id="localZone" class="muted mono small">—</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PRAYER TIMES ===================== -->
+    <section id="prayer" class="section">
+      <div class="container">
+        <header class="section-head section-head--row">
+          <div>
+            <span class="kicker">04 — Devotion</span>
+            <h2>Prayer times</h2>
+            <p class="muted">Daily timings with Gregorian and Hijri dates.</p>
+          </div>
+          <div class="city-picker">
+            <label for="prayerCity" class="sr-only">Search a city for prayer times</label>
+            <div class="ac prayer-ac">
+              <input id="prayerCity" class="ac-input" type="text" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="prayerAcList" placeholder="Search a city…" />
+              <ul id="prayerAcList" class="ac-list" role="listbox" hidden></ul>
+            </div>
+          </div>
+        </header>
+
+        <div class="datebar">
+          <span class="datebar-item"><span class="muted">Gregorian</span> <strong id="gregDate" class="mono">—</strong></span>
+          <span class="datebar-sep" aria-hidden="true"></span>
+          <span class="datebar-item"><span class="muted">Hijri</span> <strong id="hijriDate" class="mono">—</strong></span>
+        </div>
+
+        <div id="prayerGrid" class="prayer-grid" aria-live="polite">
+          <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
+          <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
+          <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section explainer-section" aria-labelledby="ex-prayer-h">
+      <div class="container container-narrow">
+        <h2 id="ex-prayer-h" class="explainer-title">How Are Prayer Times Calculated?</h2>
+        <div class="prose"><p>Islamic prayer times are derived <strong>astronomically</strong>, from the position of the sun relative to the horizon at a specific location. Fajr and Isha are based on the angle of the sun below the horizon during twilight, Dhuhr begins just after the sun passes its highest point, and Maghrib starts at sunset. Because these depend on latitude, longitude, and the date, prayer times shift slightly every day and differ from one city to another.</p>
+          <p>Different recognized authorities use slightly different <strong>twilight angles</strong>, which is why times can vary by a few minutes between calculation methods. Widely adopted methods include the <strong>Muslim World League (MWL)</strong>, the <strong>Islamic Society of North America (ISNA)</strong>, the <strong>Egyptian General Authority of Survey</strong>, and <strong>Umm al-Qura University</strong> in Makkah. Choosing the method your local community follows gives the most accurate result.</p></div>
+        <div class="faq explainer-faq">
+          <h3 class="explainer-faq-title">Frequently Asked Questions</h3>
+          <details class="faq-item"><summary>How are prayer times determined?</summary><p>They are calculated from the sun's position for a given location and date — primarily the angles of twilight for Fajr and Isha, solar noon for Dhuhr, and sunset for Maghrib.</p></details>
+          <details class="faq-item"><summary>Why do prayer times differ between apps or mosques?</summary><p>Different authorities use different twilight angles and conventions. A few minutes of variation between methods such as MWL, ISNA, or Umm al-Qura is normal and expected.</p></details>
+          <details class="faq-item"><summary>Which calculation method should I choose?</summary><p>The best choice is the method officially followed in your country or by your local mosque, as it reflects the convention your community relies on.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SUNRISE & SUNSET ===================== -->
+    <section id="sun" class="section">
+      <div class="container">
+        <header class="section-head">
+          <span class="kicker">05 — Daylight</span>
+          <h2>Sunrise &amp; sunset</h2>
+          <p class="muted" id="sunCityName">—</p>
+        </header>
+        <div class="sun-grid">
+          <article class="sun-card sun-rise">
+            <span class="sun-ico" aria-hidden="true">☀</span>
+            <span class="ref-label">Sunrise</span>
+            <strong id="sunriseVal" class="ref-time" dir="ltr">—</strong>
+          </article>
+          <article class="sun-card sun-set">
+            <span class="sun-ico" aria-hidden="true">☾</span>
+            <span class="ref-label">Sunset</span>
+            <strong id="sunsetVal" class="ref-time" dir="ltr">—</strong>
+          </article>
+          <article class="sun-card">
+            <span class="sun-ico" aria-hidden="true">⌛</span>
+            <span class="ref-label">Day length</span>
+            <strong id="dayLength" class="ref-time" dir="ltr">—</strong>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section explainer-section" aria-labelledby="ex-daynight-h">
+      <div class="container container-narrow">
+        <h2 id="ex-daynight-h" class="explainer-title">The Science of Day &amp; Night</h2>
+        <div class="prose"><p>Day and night are created by the Earth's <strong>rotation on its axis</strong>, one full turn roughly every 24 hours. At any moment, half of the planet faces the sun and experiences daylight, while the other half is turned away and in darkness. As the Earth spins from west to east, the line dividing the two — the <strong>terminator</strong> — sweeps continuously across the surface, which is why sunrise arrives in the east before the west.</p>
+          <p>This is also why time itself moves across the globe. Locations along different <strong>lines of longitude</strong> meet the sunrise at different moments, so it is genuinely always morning somewhere and night somewhere else at the same instant. A day-and-night indicator captures this by showing, at a glance, which cities are currently in daylight and which have already turned toward night.</p></div>
+        <div class="faq explainer-faq">
+          <h3 class="explainer-faq-title">Frequently Asked Questions</h3>
+          <details class="faq-item"><summary>What causes day and night?</summary><p>The Earth's rotation on its axis. The half facing the sun has day; the half turned away has night, and the two swap as the planet spins.</p></details>
+          <details class="faq-item"><summary>Why isn't it the same time everywhere on Earth?</summary><p>Because different lines of longitude face the sun at different moments. As the Earth rotates, each region reaches noon and midnight at its own time, which is exactly what time zones reflect.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TOOLS ===================== -->
   </main>
 
   <!-- ===================== FOOTER ===================== -->
