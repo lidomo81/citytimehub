@@ -11,8 +11,8 @@
   const LANG = (document.documentElement.lang || "en").slice(0, 2) === "ar" ? "ar" : "en";
   const I18N = {
     en: {
-      addFav: "Add to My Cities", remFav: "Remove from My Cities",
-      next: "Next",
+      addFav: "Add to My Cities", remFav: "Remove from My Cities",      next: "Next",
+      addTool: "Add to My Tools", remTool: "Remove from My Tools",
       pinMax: n => `You can pin up to ${n} cities.`,
       prayerErr: "Couldn't load prayer times. Check your connection and try again.",
       cityErr: "Couldn't load city data.",
@@ -22,6 +22,7 @@
     },
     ar: {
       addFav: "أضِف إلى مدني", remFav: "أزِل من مدني",
+      addTool: "أضِف إلى أدواتي", remTool: "أزِل من أدواتي",
       next: "التالية",
       pinMax: n => `يمكنك تثبيت حتى ${n} مدن.`,
       prayerErr: "تعذّر تحميل مواقيت الصلاة. تحقّق من اتصالك وحاول مرة أخرى.",
@@ -260,6 +261,63 @@
       const star = e.target.closest && e.target.closest(".fav-star");
       if (star && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); star.click(); }
     });
+  }
+
+  /* ---------- Favorite tools ("My Tools", localStorage) ---------- */
+  const TFAV_KEY = "cth-fav-tools";
+  const MAX_TFAV = 8;
+  function getToolFavs() { try { return JSON.parse(localStorage.getItem(TFAV_KEY) || "[]"); } catch (e) { return []; } }
+  function setToolFavs(a) { try { localStorage.setItem(TFAV_KEY, JSON.stringify(a.slice(0, MAX_TFAV))); } catch (e) {} }
+  function toggleToolFav(slug) {
+    let f = getToolFavs();
+    if (f.includes(slug)) { setToolFavs(f.filter(s => s !== slug)); return { ok: true }; }
+    f.push(slug); setToolFavs(f); return { ok: true };
+  }
+  function toolStarBtn(slug) {
+    const on = getToolFavs().includes(slug);
+    return `<span class="tool-star${on ? " is-fav" : ""}" role="button" tabindex="0" data-tool-fav="${slug}" aria-pressed="${on}" aria-label="${on ? T.remTool : T.addTool}" title="${on ? T.remTool : T.addTool}"><svg viewBox="0 0 24 24" width="18" height="18" fill="${on ? "currentColor" : "none"}" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3.6l2.6 5.27 5.82.85-4.21 4.1.99 5.8L12 16.9l-5.2 2.73.99-5.8-4.21-4.1 5.82-.85z"/></svg></span>`;
+  }
+  function refreshToolStars() {
+    const favs = getToolFavs();
+    $$(".tool-star").forEach(s => {
+      const on = favs.includes(s.dataset.toolFav);
+      s.classList.toggle("is-fav", on);
+      s.setAttribute("aria-pressed", on);
+      s.setAttribute("aria-label", on ? T.remTool : T.addTool);
+      s.setAttribute("title", on ? T.remTool : T.addTool);
+      const svg = s.querySelector("svg"); if (svg) svg.setAttribute("fill", on ? "currentColor" : "none");
+    });
+  }
+  function renderMyTools() {
+    const sec = $("#myTools"), grid = $("#myToolsGrid"), src = $("#tools");
+    if (!sec || !grid || !src) return;
+    const cards = getToolFavs().map(slug => src.querySelector(`.tool-card[data-tool="${slug}"]`)).filter(Boolean);
+    if (!cards.length) { sec.hidden = true; grid.innerHTML = ""; return; }
+    sec.hidden = false;
+    grid.innerHTML = "";
+    cards.forEach(c => grid.appendChild(c.cloneNode(true)));
+    refreshToolStars();
+  }
+  function initTools() {
+    const src = $("#tools"); if (!src) return;
+    $$(".tool-card", src).forEach(card => {
+      const slug = (card.getAttribute("href") || "").replace(/[^a-z0-9-]/gi, "");
+      if (!slug) return;
+      card.dataset.tool = slug;
+      if (!card.querySelector(".tool-star")) card.insertAdjacentHTML("afterbegin", toolStarBtn(slug));
+    });
+    document.addEventListener("click", e => {
+      const star = e.target.closest && e.target.closest(".tool-star");
+      if (!star) return;
+      e.preventDefault(); e.stopPropagation();
+      toggleToolFav(star.dataset.toolFav);
+      refreshToolStars(); renderMyTools();
+    });
+    document.addEventListener("keydown", e => {
+      const star = e.target.closest && e.target.closest(".tool-star");
+      if (star && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); star.click(); }
+    });
+    renderMyTools();
   }
 
   function injectSearchStyles() {
@@ -581,6 +639,7 @@
     renderMyCities();
     initLocalPanel();
     initFavorites();
+    initTools();
     initSearch();
     initPrayerPicker();
     startClock();

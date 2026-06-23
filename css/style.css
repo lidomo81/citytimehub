@@ -749,3 +749,12 @@ html[dir="rtl"] .hu-time, html[dir="rtl"] [dir="ltr"] { direction: ltr; unicode-
 .bb-phone { display: grid; grid-template-columns: 90px 1fr; gap: 8px; }
 .bb-dial { text-align: center; }
 .bb-hint { display: block; margin-top: 4px; font-size: .78rem; color: var(--muted); }
+
+/* ===================== My Tools (favorite tools) ===================== */
+.tool-card { position: relative; }
+.tool-card h3 { padding-inline-end: 28px; }
+.tool-star { position: absolute; top: 12px; inset-inline-end: 12px; z-index: 2; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 9px; color: var(--text-2); cursor: pointer; transition: color .18s, background .18s, transform .18s var(--ease); }
+.tool-star:hover { background: var(--surface-2); color: #f5a623; transform: scale(1.08); }
+.tool-star.is-fav { color: #f5a623; }
+.tool-star:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+#myTools .kicker { color: #f5a623; }
