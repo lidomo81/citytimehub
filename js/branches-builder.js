@@ -18,8 +18,8 @@
   const cC = c => (LANG === "ar" && c && c.country_ar) ? c.country_ar : (c ? c.country : "");
   const ORIGIN = (location.origin && location.origin.startsWith("http")) ? location.origin : "https://www.citytimehub.com";
   const DAY = LANG === "ar" ? ["أحد", "إثنين", "ثلاثاء", "أربعاء", "خميس", "جمعة", "سبت"] : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const T = LANG === "ar" ? { remove: "حذف", empty: "لسه مضفتش فروع — ضيف فرعك الأول.", max: "الحد الأقصى 12 فرع.", to: "→" }
-                          : { remove: "Remove", empty: "No branches yet — add your first one.", max: "Up to 12 branches.", to: "→" };
+  const T = LANG === "ar" ? { remove: "حذف", empty: "لسه مضفتش فروع — ضيف فرعك الأول.", max: "الحد الأقصى 12 فرع.", to: "→", savedLabel: "محفوظاتك", savedRemove: "إزالة", savedToast: "تم الحفظ في محفوظاتك.", savedAlready: "محفوظ بالفعل.", savedMax: n => `الحد الأقصى ${n} محفوظات.`, branchesN: n => `${n} فروع` }
+                          : { remove: "Remove", empty: "No branches yet — add your first one.", max: "Up to 12 branches.", to: "→", savedLabel: "Your saved", savedRemove: "Remove", savedToast: "Saved to your list.", savedAlready: "Already saved.", savedMax: n => `Up to ${n} saved.`, branchesN: n => `${n} branches` };
 
   let CITIES = [], pendingCity = null;
   const bySlug = new Map();
@@ -91,6 +91,51 @@
     document.addEventListener("click", e => { if (e.target !== input && !listEl.contains(e.target)) close(); });
   }
 
+  function toast(msg) {
+    let t = document.getElementById("cthToast");
+    if (!t) { t = document.createElement("div"); t.id = "cthToast"; t.className = "cth-toast"; document.body.appendChild(t); }
+    t.textContent = msg; t.classList.add("is-shown");
+    clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove("is-shown"), 2200);
+  }
+
+  /* ---------- Saved setups ("Your saved", localStorage) ---------- */
+  const SAVED_KEY = "cth-bb-saved";
+  const MAX_SAVED = 8;
+  function getSaved() { try { return JSON.parse(localStorage.getItem(SAVED_KEY) || "[]"); } catch (e) { return []; } }
+  function setSaved(a) { try { localStorage.setItem(SAVED_KEY, JSON.stringify(a.slice(0, MAX_SAVED))); } catch (e) {} }
+  function cfgKey(c) { return (c.company || "") + "|" + c.lang + "|" + c.theme + "|" + JSON.stringify(c.branches); }
+  function saveConfig() {
+    if (!state.branches.length) return;
+    const cfg = { company: state.company, lang: state.lang, theme: state.theme, branches: state.branches.map(b => ({ ...b, d: (b.d || []).slice() })) };
+    const list = getSaved();
+    if (list.some(p => cfgKey(p) === cfgKey(cfg))) { toast(T.savedAlready); return; }
+    if (list.length >= MAX_SAVED) { toast(T.savedMax(MAX_SAVED)); return; }
+    list.push(cfg); setSaved(list); renderSaved(); toast(T.savedToast);
+  }
+  function removeConfig(idx) { const list = getSaved(); list.splice(idx, 1); setSaved(list); renderSaved(); }
+  function loadConfig(idx) {
+    const cfg = getSaved()[idx]; if (!cfg) return;
+    state.branches = (cfg.branches || []).filter(b => bySlug.get(b.c)).map(b => ({ ...b, d: Array.isArray(b.d) ? b.d.slice() : [1, 2, 3, 4, 5] }));
+    state.company = cfg.company || "";
+    state.lang = cfg.lang === "ar" ? "ar" : "en";
+    state.theme = ["light", "dark", "auto"].includes(cfg.theme) ? cfg.theme : "auto";
+    const comp = $("#bbCompany"); if (comp) comp.value = state.company;
+    const ls = $("#bbLang"); if (ls) ls.value = state.lang;
+    const ts = $("#bbTheme"); if (ts) ts.value = state.theme;
+    renderList(); update(); renderSaved();
+  }
+  function renderSaved() {
+    const box = $("#bbSaved"); if (!box) return;
+    const list = getSaved();
+    if (!list.length) { box.hidden = true; box.innerHTML = ""; return; }
+    box.hidden = false;
+    box.innerHTML = `<span class="saved-label">${esc(T.savedLabel)}</span><div class="saved-chips">` + list.map((c, i) => {
+      const n = (c.branches || []).length;
+      const label = (c.company && c.company.trim()) ? `${c.company} · ${n}` : T.branchesN(n);
+      return `<span class="saved-chip"><button type="button" class="saved-go" data-idx="${i}" title="${esc(label)}">${esc(label)}</button><button type="button" class="saved-x" data-idx="${i}" aria-label="${esc(T.savedRemove)}" title="${esc(T.savedRemove)}">×</button></span>`;
+    }).join("") + `</div>`;
+  }
+
   function copyCode() {
     const btn = $("#bbCopy"), box = $("#bbCode"); if (!box || !box.value) return;
     const done = () => { if (!btn) return; const o = btn.dataset.copy; btn.textContent = btn.dataset.copied; setTimeout(() => { btn.textContent = o; }, 1800); };
@@ -114,9 +159,14 @@
     const ls = $("#bbLang"); if (ls) { ls.value = state.lang; ls.addEventListener("change", () => { state.lang = ls.value === "ar" ? "ar" : "en"; update(); }); }
     const ts = $("#bbTheme"); if (ts) { ts.value = state.theme; ts.addEventListener("change", () => { state.theme = ts.value; update(); }); }
     const cp = $("#bbCopy"); if (cp) cp.addEventListener("click", copyCode);
+    const sv = $("#bbSave"); if (sv) sv.addEventListener("click", saveConfig);
+    const sb = $("#bbSaved");
+    if (sb) sb.addEventListener("click", e => {
+      const go = e.target.closest(".saved-go"); if (go) { loadConfig(+go.dataset.idx); return; }
+      const x = e.target.closest(".saved-x"); if (x) { e.stopPropagation(); removeConfig(+x.dataset.idx); }
+    });
 
-    const seed = bySlug.get("cairo");
-    if (seed) state.branches.push({ n: LANG === "ar" ? "المقر الرئيسي" : "Headquarters", c: "cairo", o: 540, cl: 1020, d: [1, 2, 3, 4, 5], t: "+20 2 1234 5678" });
+    renderSaved();
     renderList(); update();
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

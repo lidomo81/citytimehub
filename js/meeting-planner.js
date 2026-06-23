@@ -33,6 +33,7 @@
     day: n => n > 1 ? "أيام" : "يوم",
     details: names => `خُطّط عبر CityTimeHub. المدن: ${names}.`,
     remove: n => `إزالة ${n}`,
+    savedLabel: "محفوظاتك", savedRemove: "إزالة", savedToast: "تم الحفظ في محفوظاتك.", savedAlready: "محفوظ بالفعل.", savedMax: n => `الحد الأقصى ${n} محفوظات.`,
   } : {
     defaultTitle: "Event",
     maxCities: "You can add up to 6 cities.",
@@ -44,6 +45,7 @@
     day: n => n > 1 ? "days" : "day",
     details: names => `Planned with CityTimeHub. Cities: ${names}.`,
     remove: n => `Remove ${n}`,
+    savedLabel: "Your saved", savedRemove: "Remove", savedToast: "Saved to your list.", savedAlready: "Already saved.", savedMax: n => `Up to ${n} saved.`,
   };
 
   function tzOffsetMin(tz, date) {
@@ -243,6 +245,44 @@
     state.from = c.slug;
     const inp = $("#plFrom"); if (inp) { inp.value = c.name + ", " + c.country; inp.dataset.slug = c.slug; }
   }
+
+  /* ---------- Saved groups ("Your saved", localStorage) ---------- */
+  const SAVED_KEY = "cth-mp-saved";
+  const MAX_SAVED = 8;
+  function getSaved() { try { return JSON.parse(localStorage.getItem(SAVED_KEY) || "[]"); } catch (e) { return []; } }
+  function setSaved(a) { try { localStorage.setItem(SAVED_KEY, JSON.stringify(a.slice(0, MAX_SAVED))); } catch (e) {} }
+  function cfgKey(c) { return c.from + "|" + [...(c.cities || [])].sort().join(",") + "|" + (c.title || "") + "|" + (c.time || "") + "|" + (c.dur || ""); }
+  function saveGroup() {
+    if (!state.from || !state.cities.length) return;
+    const cfg = { title: state.title, from: state.from, dur: state.dur, time: state.time, cities: state.cities.slice() };
+    const list = getSaved();
+    if (list.some(p => cfgKey(p) === cfgKey(cfg))) { toast(T.savedAlready); return; }
+    if (list.length >= MAX_SAVED) { toast(T.savedMax(MAX_SAVED)); return; }
+    list.push(cfg); setSaved(list); renderSaved(); toast(T.savedToast);
+  }
+  function removeGroup(idx) { const list = getSaved(); list.splice(idx, 1); setSaved(list); renderSaved(); }
+  function loadGroup(idx) {
+    const cfg = getSaved()[idx]; if (!cfg) return;
+    const from = bySlug.get(cfg.from); if (from) setHome(from);
+    state.cities = (cfg.cities || []).filter(s => bySlug.get(s) && s !== cfg.from).slice(0, 6);
+    state.title = cfg.title || ""; const ti = $("#plTitle"); if (ti) ti.value = (state.title === T.defaultTitle ? "" : state.title);
+    state.dur = cfg.dur || 60; const du = $("#plDur"); if (du) du.value = String(state.dur);
+    if (cfg.time) { state.time = cfg.time; const tm = $("#plTime"); if (tm) tm.value = state.time; }
+    renderChips(); compute();
+    const r = $("#plResult"); if (r && r.scrollIntoView) r.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+  function renderSaved() {
+    const box = $("#plSaved"); if (!box) return;
+    const list = getSaved().filter(c => bySlug.get(c.from) && (c.cities || []).some(s => bySlug.get(s)));
+    if (!list.length) { box.hidden = true; box.innerHTML = ""; return; }
+    box.hidden = false;
+    box.innerHTML = `<span class="saved-label">${esc(T.savedLabel)}</span><div class="saved-chips">` + list.map((c, i) => {
+      const from = bySlug.get(c.from);
+      const targets = (c.cities || []).map(s => bySlug.get(s)).filter(Boolean).map(cN).join("، ");
+      const label = (c.title && c.title.trim() && c.title !== T.defaultTitle) ? c.title : `${cN(from)} → ${targets}`;
+      return `<span class="saved-chip"><button type="button" class="saved-go" data-idx="${i}" title="${esc(label)}">${esc(label)}</button><button type="button" class="saved-x" data-idx="${i}" aria-label="${esc(T.savedRemove)}" title="${esc(T.savedRemove)}">×</button></span>`;
+    }).join("") + `</div>`;
+  }
   function applyParams() {
     const p = new URLSearchParams(location.search);
     const t = p.get("t"), fromC = findCity(p.get("from"));
@@ -301,6 +341,13 @@
     $("#plChips").addEventListener("click", e => { const b = e.target.closest(".pl-chip-x"); if (b) removeCity(b.dataset.rm); });
     const ics = $("#plIcs"); if (ics) ics.addEventListener("click", downloadIcs);
     const sh = $("#plShare"); if (sh) sh.addEventListener("click", copyShare);
+    const sv = $("#plSave"); if (sv) sv.addEventListener("click", saveGroup);
+    const sb = $("#plSaved");
+    if (sb) sb.addEventListener("click", e => {
+      const go = e.target.closest(".saved-go"); if (go) { loadGroup(+go.dataset.idx); return; }
+      const x = e.target.closest(".saved-x"); if (x) { e.stopPropagation(); removeGroup(+x.dataset.idx); }
+    });
+    renderSaved();
 
     compute();
     if (hadDeepLink) { const r = $("#plResult"); if (r) r.scrollIntoView({ behavior: "smooth", block: "nearest" }); }

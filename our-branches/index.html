@@ -111,6 +111,7 @@
         </header>
         <div class="wb-grid">
           <div class="bb-controls">
+            <div id="bbSaved" class="saved-bar" hidden></div>
             <div class="bb-row2">
               <div class="pl-field"><label for="bbCompany">Company name (optional)</label><input id="bbCompany" class="pl-input" type="text" placeholder="e.g. Our Company" /></div>
             </div>
@@ -139,7 +140,7 @@
           </div>
         </div>
         <div class="wb-code">
-          <div class="wb-code-head"><label for="bbCode">Embed code</label><button id="bbCopy" type="button" class="btn-ghost wb-copy" data-copy="Copy code" data-copied="Copied ✓">Copy code</button></div>
+          <div class="wb-code-head"><label for="bbCode">Embed code</label><button id="bbSave" type="button" class="btn-ghost btc-save bb-save">⭐ Save this setup</button><button id="bbCopy" type="button" class="btn-ghost wb-copy" data-copy="Copy code" data-copied="Copied ✓">Copy code</button></div>
           <textarea id="bbCode" class="wb-codebox" readonly rows="3" dir="ltr"></textarea>
         </div>
       </div>

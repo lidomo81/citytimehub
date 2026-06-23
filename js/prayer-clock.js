@@ -30,6 +30,7 @@
     loading: "جارٍ تحميل المواقيت…", pickBoth: "اختر مدينتك ومدينة أهلك لتبدأ.",
     aheadOf: (a, n) => `${a} تسبق ${n} بـ`, behindOf: (a, n) => `${a} تتأخّر عن ${n} بـ`, sameTz: "المدينتان في نفس التوقيت.",
     nowPraying: (city, p) => `🕌 الآن وقت ${p} عند ${city}.`, hour: "ساعة", min: "دقيقة", hr: "س", mn: "د",
+    savedLabel: "محفوظاتك", remove: "إزالة", savedToast: "تم الحفظ في محفوظاتك.", savedAlready: "محفوظ بالفعل.", savedMax: n => `الحد الأقصى ${n} محفوظات.`,
   } : {
     you: "Your city", family: "Family's city", youPh: "e.g. Toronto", familyPh: "e.g. Cairo",
     next: "Next prayer", inT: "in", err: "Couldn't load prayer times. Check your connection.",
@@ -37,6 +38,7 @@
     loading: "Loading prayer times…", pickBoth: "Pick your city and your family's city to begin.",
     aheadOf: (a, n) => `${a} is ahead of ${n} by`, behindOf: (a, n) => `${a} is behind ${n} by`, sameTz: "Both cities share the same time.",
     nowPraying: (city, p) => `🕌 It's ${p} time now in ${city}.`, hour: "hour", min: "min", hr: "h", mn: "m",
+    savedLabel: "Your saved", remove: "Remove", savedToast: "Saved to your list.", savedAlready: "Already saved.", savedMax: n => `Up to ${n} saved.`,
   };
 
   const hourFmt = new Intl.DateTimeFormat(LANG === "ar" ? "ar-EG-u-nu-latn" : "en-US", { hour: "numeric", minute: "2-digit", hour12: true });
@@ -257,6 +259,39 @@
     clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove("is-shown"), 2400);
   }
 
+  /* ---------- Saved pairs ("Your saved", localStorage) ---------- */
+  const SAVED_KEY = "cth-pc-saved";
+  const MAX_SAVED = 8;
+  function getSaved() { try { return JSON.parse(localStorage.getItem(SAVED_KEY) || "[]"); } catch (e) { return []; } }
+  function setSaved(a) { try { localStorage.setItem(SAVED_KEY, JSON.stringify(a.slice(0, MAX_SAVED))); } catch (e) {} }
+  function savePair() {
+    if (!state.you || !state.family) return;
+    const list = getSaved();
+    if (list.some(p => p.y === state.you && p.f === state.family)) { toast(T.savedAlready); return; }
+    if (list.length >= MAX_SAVED) { toast(T.savedMax(MAX_SAVED)); return; }
+    list.push({ y: state.you, f: state.family });
+    setSaved(list); renderSaved(); toast(T.savedToast);
+  }
+  function removePair(y, f) { setSaved(getSaved().filter(p => !(p.y === y && p.f === f))); renderSaved(); }
+  function loadPair(y, f) {
+    const cy = bySlug.get(y), cf = bySlug.get(f);
+    if (cy) { state.you = cy.slug; const i = $("#pcYou"); if (i) i.value = cN(cy) + ", " + cC(cy); }
+    if (cf) { state.family = cf.slug; const i = $("#pcFamily"); if (i) i.value = cN(cf) + ", " + cC(cf); }
+    loadAndRender();
+    const sec = $("#pcClocks"); if (sec && sec.scrollIntoView) sec.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+  function renderSaved() {
+    const box = $("#pcSaved"); if (!box) return;
+    const list = getSaved().filter(p => bySlug.get(p.y) && bySlug.get(p.f));
+    if (!list.length) { box.hidden = true; box.innerHTML = ""; return; }
+    box.hidden = false;
+    box.innerHTML = `<span class="saved-label">${esc(T.savedLabel)}</span><div class="saved-chips">` + list.map(p => {
+      const cy = bySlug.get(p.y), cf = bySlug.get(p.f);
+      const label = `${cN(cy)} ↔ ${cN(cf)}`;
+      return `<span class="saved-chip"><button type="button" class="saved-go" data-y="${esc(p.y)}" data-f="${esc(p.f)}">${esc(label)}</button><button type="button" class="saved-x" data-y="${esc(p.y)}" data-f="${esc(p.f)}" aria-label="${esc(T.remove)}" title="${esc(T.remove)}">×</button></span>`;
+    }).join("") + `</div>`;
+  }
+
   function setCity(role, c) {
     state[role] = c.slug;
     const inp = $(role === "you" ? "#pcYou" : "#pcFamily");
@@ -281,9 +316,16 @@
     autocomplete($("#pcYou"), $("#pcYouAc"), c => setCity("you", c));
     autocomplete($("#pcFamily"), $("#pcFamilyAc"), c => setCity("family", c));
     const sh = $("#pcShare"); if (sh) sh.addEventListener("click", copyShare);
+    const sv = $("#pcSave"); if (sv) sv.addEventListener("click", savePair);
+    const box = $("#pcSaved");
+    if (box) box.addEventListener("click", e => {
+      const go = e.target.closest(".saved-go"); if (go) { loadPair(go.dataset.y, go.dataset.f); return; }
+      const x = e.target.closest(".saved-x"); if (x) { e.stopPropagation(); removePair(x.dataset.y, x.dataset.f); }
+    });
 
     applyParams();
     if (!state.you) { const c = bySlug.get(guessHome()); if (c) { state.you = c.slug; $("#pcYou").value = cN(c) + ", " + cC(c); } }
+    renderSaved();
 
     requestAnimationFrame(frame);
     setInterval(() => { for (const r of Object.keys(slots)) updateSlotText(r); renderSync(); }, 1000);

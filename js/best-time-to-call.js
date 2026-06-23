@@ -32,6 +32,7 @@
     legendGood: "وقت مثالي", legendOk: "مقبول", legendBad: "وقت نوم",
     ctxFamily: "مكالمة عائلية", ctxWork: "اجتماع شغل",
     remove: n => `إزالة ${n}`, linkCopied: "تم نسخ الرابط — يفتح بنفس الإعداد لأي شخص.",
+    savedLabel: "محفوظاتك", savedRemove: "إزالة", savedToast: "تم الحفظ في محفوظاتك.", savedAlready: "محفوظ بالفعل.", savedMax: n => `الحد الأقصى ${n} محفوظات.`,
     copyThis: "انسخ هذا الرابط:",
   } : {
     you: "You", noCity: "No city found", maxCities: "You can add up to 6 cities.",
@@ -42,6 +43,7 @@
     legendGood: "Ideal", legendOk: "Borderline", legendBad: "Asleep",
     ctxFamily: "Family call", ctxWork: "Work meeting",
     remove: n => `Remove ${n}`, linkCopied: "Link copied — opens with the same setup for anyone.",
+    savedLabel: "Your saved", savedRemove: "Remove", savedToast: "Saved to your list.", savedAlready: "Already saved.", savedMax: n => `Up to ${n} saved.`,
     copyThis: "Copy this link:",
   };
 
@@ -184,6 +186,42 @@
   }
   function removeCity(slug) { state.cities = state.cities.filter(s => s !== slug); renderChips(); render(); }
 
+  /* ---------- Saved groups ("Your saved", localStorage) ---------- */
+  const SAVED_KEY = "cth-btc-saved";
+  const MAX_SAVED = 8;
+  function getSaved() { try { return JSON.parse(localStorage.getItem(SAVED_KEY) || "[]"); } catch (e) { return []; } }
+  function setSaved(a) { try { localStorage.setItem(SAVED_KEY, JSON.stringify(a.slice(0, MAX_SAVED))); } catch (e) {} }
+  function cfgKey(c) { return c.f + "|" + [...(c.c || [])].sort().join(",") + "|" + c.x; }
+  function saveGroup() {
+    if (!state.from || !state.cities.length) return;
+    const cfg = { f: state.from, c: state.cities.slice(), x: state.context };
+    const list = getSaved();
+    if (list.some(p => cfgKey(p) === cfgKey(cfg))) { toast(T.savedAlready); return; }
+    if (list.length >= MAX_SAVED) { toast(T.savedMax(MAX_SAVED)); return; }
+    list.push(cfg); setSaved(list); renderSaved(); toast(T.savedToast);
+  }
+  function removeGroup(idx) { const list = getSaved(); list.splice(idx, 1); setSaved(list); renderSaved(); }
+  function loadGroup(idx) {
+    const cfg = getSaved()[idx]; if (!cfg) return;
+    const from = bySlug.get(cfg.f); if (from) setFrom(from);
+    state.cities = (cfg.c || []).filter(s => bySlug.get(s) && s !== cfg.f).slice(0, MAX_CITIES);
+    if (cfg.x && CONTEXTS[cfg.x]) state.context = cfg.x;
+    setContext(state.context); renderChips(); render();
+    const r = $("#btcResult"); if (r && r.scrollIntoView) r.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+  function renderSaved() {
+    const box = $("#btcSaved"); if (!box) return;
+    const list = getSaved().filter(c => bySlug.get(c.f) && (c.c || []).some(s => bySlug.get(s)));
+    if (!list.length) { box.hidden = true; box.innerHTML = ""; return; }
+    box.hidden = false;
+    box.innerHTML = `<span class="saved-label">${esc(T.savedLabel)}</span><div class="saved-chips">` + list.map((c, i) => {
+      const from = bySlug.get(c.f);
+      const targets = (c.c || []).map(s => bySlug.get(s)).filter(Boolean).map(cN).join("، ");
+      const label = `${cN(from)} → ${targets}`;
+      return `<span class="saved-chip"><button type="button" class="saved-go" data-idx="${i}" title="${esc(label)}">${esc(label)}</button><button type="button" class="saved-x" data-idx="${i}" aria-label="${esc(T.savedRemove)}" title="${esc(T.savedRemove)}">×</button></span>`;
+    }).join("") + `</div>`;
+  }
+
   /* ---------- Autocomplete ---------- */
   function autocomplete(input, listEl, onChoose) {
     let items = [], active = -1;
@@ -274,11 +312,18 @@
     }
     document.querySelectorAll("[data-ctx]").forEach(b => b.addEventListener("click", () => setContext(b.dataset.ctx)));
     const sh = $("#btcShare"); if (sh) sh.addEventListener("click", copyShare);
+    const sv = $("#btcSave"); if (sv) sv.addEventListener("click", saveGroup);
+    const sb = $("#btcSaved");
+    if (sb) sb.addEventListener("click", e => {
+      const go = e.target.closest(".saved-go"); if (go) { loadGroup(+go.dataset.idx); return; }
+      const x = e.target.closest(".saved-x"); if (x) { e.stopPropagation(); removeGroup(+x.dataset.idx); }
+    });
 
     applyParams();
     if (!state.from) { const hs = guessHomeSlug(); const c = bySlug.get(hs); if (c) setFrom(c); }
     setContext(state.context);
     renderChips();
+    renderSaved();
     render();
     if (location.search) { const r = $("#btcResult"); if (r) r.scrollIntoView({ behavior: "smooth", block: "nearest" }); }
   }

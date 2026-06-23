@@ -80,6 +80,7 @@
     ovOk: (sB, eB, b, sA, eA, a, dur) => `أفضل تداخل لساعات العمل 09:00–17:00 هو <strong>${sB}–${eB} في ${b}</strong> (${sA}–${eA} في ${a}) — حوالي ${dur} من الوقت المشترك.`,
     ovNo: "ساعات العمل المعتادة 09:00–17:00 لا تتداخل؛ سيحتاج أحد الطرفين لاجتماعٍ مبكّر أو متأخّر.",
     permalink: (a, b) => `افتح صفحة ${a} ↔ ${b} الكاملة ←`,
+    savedLabel: "محفوظاتك", savedRemove: "إزالة", savedToast: "تم الحفظ في محفوظاتك.", savedAlready: "محفوظ بالفعل.", savedMax: n => `الحد الأقصى ${n} محفوظات.`,
   } : {
     noCity: "No city found",
     errBoth: "Please choose two cities to compare.", err1: "Please choose a first city.", err2: "Please choose a second city.", errSame: "Please choose two different cities.",
@@ -94,6 +95,7 @@
     ovOk: (sB, eB, b, sA, eA, a, dur) => `The best overlap for 09:00–17:00 working hours is <strong>${sB}–${eB} in ${b}</strong> (${sA}–${eA} in ${a}) — about ${dur} of shared time.`,
     ovNo: "Standard 09:00–17:00 working hours do not overlap; one side would need an early or late meeting.",
     permalink: (a, b) => `Open the full ${a} ↔ ${b} page →`,
+    savedLabel: "Your saved", savedRemove: "Remove", savedToast: "Saved to your list.", savedAlready: "Already saved.", savedMax: n => `Up to ${n} saved.`,
   };
 
   /* ---------- recent comparisons (localStorage, last 5) ---------- */
@@ -176,6 +178,39 @@
     renderResult(sel1, sel2);
     pushRecent(sel1, sel2);
     updateUrl(sel1, sel2);
+    const a = $("#cmpActions"); if (a) a.hidden = false;
+  }
+
+  /* ---------- Saved comparisons ("Your saved", localStorage) ---------- */
+  const SLS = "cth-cmp-saved";
+  const MAX_SAVED = 8;
+  const getSaved = () => { try { return JSON.parse(localStorage.getItem(SLS) || "[]"); } catch (e) { return []; } };
+  const setSaved = a => { try { localStorage.setItem(SLS, JSON.stringify(a.slice(0, MAX_SAVED))); } catch (e) {} };
+  function saveCompare() {
+    if (!sel1 || !sel2 || sel1.slug === sel2.slug) return;
+    const key = slugPair(sel1, sel2), list = getSaved();
+    if (list.some(x => x.p === key)) { toast(T.savedAlready); return; }
+    if (list.length >= MAX_SAVED) { toast(T.savedMax(MAX_SAVED)); return; }
+    list.unshift({ p: key, a: sel1.slug, b: sel2.slug, la: sel1.name, lb: sel2.name });
+    setSaved(list); renderSaved(); toast(T.savedToast);
+  }
+  function removeSaved(key) { setSaved(getSaved().filter(x => x.p !== key)); renderSaved(); }
+  function renderSaved() {
+    const box = $("#cmpSaved"); if (!box) return;
+    const list = getSaved().filter(x => bySlug.get(x.a) && bySlug.get(x.b));
+    if (!list.length) { box.hidden = true; box.innerHTML = ""; return; }
+    box.hidden = false;
+    box.innerHTML = `<span class="saved-label">${esc(T.savedLabel)}</span><div class="saved-chips">` + list.map(x => {
+      const a = bySlug.get(x.a), b = bySlug.get(x.b), label = `${cN(a)} \u2194 ${cN(b)}`;
+      return `<span class="saved-chip"><button type="button" class="saved-go" data-a="${esc(x.a)}" data-b="${esc(x.b)}" title="${esc(label)}">${esc(label)}</button><button type="button" class="saved-x" data-key="${esc(x.p)}" aria-label="${esc(T.savedRemove)}" title="${esc(T.savedRemove)}">×</button></span>`;
+    }).join("") + `</div>`;
+  }
+
+  function toast(msg) {
+    let t = document.getElementById("cthToast");
+    if (!t) { t = document.createElement("div"); t.id = "cthToast"; t.className = "cth-toast"; document.body.appendChild(t); }
+    t.textContent = msg; t.classList.add("is-shown");
+    clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove("is-shown"), 2200);
   }
 
   function renderResult(a, b) {
@@ -275,6 +310,15 @@
       if (a && b) { applyCity(in1, 1, a); applyCity(in2, 2, b); doCompare(); window.scrollTo({ top: 0, behavior: "smooth" }); }
     });
     renderRecent();
+
+    const svBtn = $("#cmpSave"); if (svBtn) svBtn.addEventListener("click", saveCompare);
+    const svBox = $("#cmpSaved");
+    if (svBox) svBox.addEventListener("click", e => {
+      const go = e.target.closest(".saved-go");
+      if (go) { const a = bySlug.get(go.dataset.a), b = bySlug.get(go.dataset.b); if (a && b) { applyCity(in1, 1, a); applyCity(in2, 2, b); doCompare(); window.scrollTo({ top: 0, behavior: "smooth" }); } return; }
+      const x = e.target.closest(".saved-x"); if (x) { e.stopPropagation(); removeSaved(x.dataset.key); }
+    });
+    renderSaved();
 
     // deep link: /time-difference/?city1=cairo&city2=london
     const params = new URLSearchParams(location.search);
