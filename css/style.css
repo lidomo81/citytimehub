@@ -167,6 +167,63 @@ svg { display: block; }
   .hero-globe .hg-svg { max-width: 420px; }
 }
 
+/* ===================== Unified city panel (time + prayer + sun) ===================== */
+.cp-toolbar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
+.cp-ac { position: relative; flex: 1 1 340px; min-width: 230px; display: flex; align-items: center; }
+.cp-search-ico { position: absolute; inset-inline-start: 15px; color: var(--muted); pointer-events: none; }
+.cp-ac .ac-input { width: 100%; padding-block: 13px; padding-inline: 44px 16px; border-radius: 13px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font: inherit; font-size: 1rem; transition: border-color .18s, box-shadow .18s; }
+.cp-ac .ac-input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px rgba(37,99,235,.18); }
+.cp-ac .ac-list { position: absolute; inset-inline: 0; top: calc(100% + 6px); z-index: 30; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 18px 40px -18px rgba(0,0,0,.7); max-height: 320px; overflow: auto; }
+.cp-btn { display: inline-flex; align-items: center; gap: 7px; padding: 11px 15px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font: inherit; font-weight: 600; font-size: .92rem; cursor: pointer; transition: color .18s, border-color .18s, background .18s, transform .18s var(--ease); }
+.cp-btn:hover { transform: translateY(-1px); border-color: var(--border-2); }
+.cp-btn:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.cp-save.is-fav { color: #f5a623; border-color: rgba(245,166,35,.5); background: rgba(245,166,35,.10); }
+.cp-home { color: var(--text-2); }
+
+.cp-grid { display: grid; grid-template-columns: minmax(270px, .95fr) 1.3fr; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; box-shadow: 0 24px 60px -40px rgba(0,0,0,.7); }
+.cp-clock { display: flex; align-items: center; gap: 22px; padding: 28px 26px; background: radial-gradient(120% 120% at 0% 0%, rgba(37,99,235,.10), transparent 60%); }
+.cp-clock .lt-analog { width: 128px; height: 128px; flex: none; }
+.cp-clock-info { min-width: 0; }
+.cp-clock-info .lt-city { margin: 6px 0 2px; }
+.cp-devotion { padding: 24px 26px; border-inline-start: 1px solid var(--border); }
+.cp-dev-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px 18px; flex-wrap: wrap; margin-bottom: 14px; }
+.cp-dev-title { font-size: 1.05rem; font-weight: 700; }
+.cp-devotion .datebar { margin: 0; }
+.cp-devotion .prayer-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.cp-sun { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
+.cp-sun .sun-card { margin: 0; }
+@media (max-width: 860px) {
+  .cp-grid { grid-template-columns: 1fr; }
+  .cp-devotion { border-inline-start: none; border-top: 1px solid var(--border); }
+  .cp-clock { justify-content: center; text-align: center; flex-direction: column; }
+}
+@media (max-width: 480px) {
+  .cp-devotion .prayer-grid { grid-template-columns: repeat(2, 1fr); }
+  .cp-sun { grid-template-columns: 1fr; }
+}
+
+/* ===================== Explore-cities card ===================== */
+#citiesCta .explore-card { position: relative; display: flex; align-items: center; gap: 22px; padding: 26px 30px; border-radius: 20px; overflow: hidden; text-decoration: none; color: var(--text); border: 1px solid var(--border); background: linear-gradient(135deg, rgba(37,99,235,.16), rgba(37,99,235,.04)); transition: transform .22s var(--ease), border-color .22s, box-shadow .22s; }
+#citiesCta .explore-card:hover { transform: translateY(-3px); border-color: rgba(37,99,235,.55); box-shadow: 0 26px 60px -30px rgba(37,99,235,.65); }
+.explore-glow { position: absolute; inset: 0; background: radial-gradient(460px 200px at 10% -10%, rgba(96,165,250,.26), transparent 70%); pointer-events: none; }
+.explore-ico { position: relative; flex: none; width: 66px; height: 66px; display: grid; place-items: center; border-radius: 17px; background: linear-gradient(135deg, var(--brand), #60a5fa); color: #fff; box-shadow: 0 12px 26px -8px rgba(37,99,235,.75); }
+.explore-body { position: relative; flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 5px; }
+.explore-title { font-size: clamp(1.25rem, 2.6vw, 1.7rem); font-weight: 800; letter-spacing: -.01em; line-height: 1.15; }
+.explore-sub { color: var(--muted); font-size: .96rem; }
+.explore-cta { position: relative; flex: none; display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--brand); white-space: nowrap; }
+.explore-arrow { transition: transform .2s var(--ease); }
+#citiesCta .explore-card:hover .explore-arrow { transform: translateX(5px); }
+[dir="rtl"] #citiesCta .explore-card:hover .explore-arrow { transform: translateX(-5px); }
+@media (max-width: 680px) {
+  #citiesCta .explore-card { flex-wrap: wrap; gap: 16px; }
+  .explore-cta { width: 100%; }
+}
+
+/* ===================== Featured cities grid (on /cities/) ===================== */
+.cf-wrap { margin-bottom: 26px; }
+.cf-title { font-size: .95rem; font-weight: 700; color: var(--text-2); margin: 0 0 12px; }
+.cf-grid { margin-bottom: 0; }
+
 /* ============ 5. SECTIONS ============ */
 .section { padding-block: clamp(36px, 6vw, 64px); }
 .section-head { margin-bottom: 24px; }

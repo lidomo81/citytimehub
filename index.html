@@ -127,15 +127,14 @@
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </label>
       <nav class="main-nav" aria-label="Primary">
-        <a href="#cities">Cities</a>
+        <a href="/cities/">Cities</a>
         <a href="#reference">World Clock</a>
         <a href="/time-difference/">Compare Cities</a>
         <a href="/meeting-planner/">Event Planner</a>
         <a href="/best-time-to-call/">Best Time to Call</a>
         <a href="/prayer-clock/">Prayer Clock</a>
         <a href="/guides/">Guides</a>
-        <a href="#prayer">Prayer Times</a>
-        <a href="#sun">Sun</a>
+        <a href="#cityPanel">Prayer Times</a>
       </nav>
 
       <div class="header-right">
@@ -169,11 +168,6 @@
             <div class="hero-copy">
             <h1 class="hero-title">It’s always now —<br><span>somewhere.</span></h1>
             <p class="hero-desc">Watch daylight sweep the planet. Real local time for every major city, time zones and UTC offsets — computed right in your browser, no clock API.</p>
-
-            <div class="search-wrap" role="search">
-              <svg class="search-ico" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-              <input id="citySearch" class="search-input" type="search" placeholder="Search a city — Cairo, Tokyo, القاهرة…" aria-label="Search cities" autocomplete="off" />
-            </div>
             </div>
             <div class="hero-globe" id="heroGlobe" aria-hidden="true"></div>
           </div>
@@ -182,31 +176,61 @@
     </section>
 
     <!-- ===================== YOUR LOCAL TIME ===================== -->
-    <section id="localTime" class="section lt-section" aria-labelledby="lt-h">
+    <!-- ===================== CITY PANEL (time + prayer + sun) ===================== -->
+    <section id="cityPanel" class="section cp-section" aria-labelledby="cp-h">
       <div class="container">
-        <div class="lt-panel">
-          <div id="ltAnalog" class="lt-analog" role="img" aria-label="Analog clock showing your local time"></div>
-          <div class="lt-info">
-            <span class="eyebrow"><span class="live-dot" aria-hidden="true"></span> Your local time</span>
-            <h2 id="lt-h" class="lt-city">—</h2>
-            <strong id="ltTime" class="lt-time" dir="ltr">--:--:--</strong>
-            <p class="lt-meta"><span id="ltDate">—</span> · <span id="ltZone" class="mono">—</span></p>
+        <div class="cp-toolbar">
+          <div class="ac cp-ac">
+            <svg class="cp-search-ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            <input id="cpSearch" class="ac-input" type="text" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="cpAcList" placeholder="See any city — Cairo, Tokyo, London…" aria-label="Search a city to view its time, prayer times and sunrise" />
+            <ul id="cpAcList" class="ac-list" role="listbox" hidden></ul>
+          </div>
+          <button id="cpSave" type="button" class="cp-btn cp-save" aria-pressed="false">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.6l2.6 5.27 5.82.85-4.21 4.1.99 5.8L12 16.9l-5.2 2.73.99-5.8-4.21-4.1 5.82-.85z"/></svg>
+            <span class="cp-save-txt">Save</span>
+          </button>
+          <button id="cpHome" type="button" class="cp-btn cp-home" hidden>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14L4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-1"/></svg>
+            <span>My city</span>
+          </button>
+        </div>
+
+        <div class="cp-grid">
+          <div class="cp-clock">
+            <div id="ltAnalog" class="lt-analog" role="img" aria-label="Analog clock"></div>
+            <div class="cp-clock-info">
+              <span class="eyebrow"><span class="live-dot" aria-hidden="true"></span> <span id="cpEyebrow">Your local time</span></span>
+              <h2 id="cp-h"><span id="lt-h" class="lt-city">—</span></h2>
+              <strong id="ltTime" class="lt-time" dir="ltr">--:--:--</strong>
+              <p class="lt-meta"><span id="ltDate">—</span> · <span id="ltZone" class="mono">—</span></p>
+            </div>
+          </div>
+
+          <div class="cp-devotion">
+            <div class="cp-dev-head">
+              <h3 class="cp-dev-title">Prayer times</h3>
+              <div class="datebar">
+                <span class="datebar-item"><span class="muted">Gregorian</span> <strong id="gregDate" class="mono">—</strong></span>
+                <span class="datebar-sep" aria-hidden="true"></span>
+                <span class="datebar-item"><span class="muted">Hijri</span> <strong id="hijriDate" class="mono">—</strong></span>
+              </div>
+            </div>
+            <div id="prayerGrid" class="prayer-grid" aria-live="polite">
+              <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
+              <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
+              <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
+            </div>
+            <div class="cp-sun">
+              <span class="sr-only" id="sunCityName">—</span>
+              <article class="sun-card sun-rise"><span class="sun-ico" aria-hidden="true">☀</span><span class="ref-label">Sunrise</span><strong id="sunriseVal" class="ref-time" dir="ltr">—</strong></article>
+              <article class="sun-card sun-set"><span class="sun-ico" aria-hidden="true">☾</span><span class="ref-label">Sunset</span><strong id="sunsetVal" class="ref-time" dir="ltr">—</strong></article>
+              <article class="sun-card"><span class="sun-ico" aria-hidden="true">⌛</span><span class="ref-label">Day length</span><strong id="dayLength" class="ref-time" dir="ltr">—</strong></article>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ===================== MY CITIES (favorites) ===================== -->
-    <section id="myCities" class="section" hidden>
-      <div class="container">
-        <header class="section-head">
-          <span class="kicker">★ — Your cities</span>
-          <h2>My Cities</h2>
-          <p class="muted">Your pinned cities, live. Tap the star on any city to add or remove it.</p>
-        </header>
-        <div id="myCitiesGrid" class="city-grid"></div>
-      </div>
-    </section>
 
     <section id="tools" class="section">
       <div class="container">
@@ -261,18 +285,34 @@
         </div>
       </div>
     </section>
-
-    <!-- ===================== POPULAR CITIES ===================== -->
-    <section id="cities" class="section">
+    <!-- ===================== MY CITIES (favorites) ===================== -->
+    <section id="myCities" class="section" hidden>
       <div class="container">
         <header class="section-head">
-          <span class="kicker">02 — Coordinates</span>
-          <h2>Cities, right now</h2>
-          <p class="muted"><span id="cityCount">0</span> places · live time, date, zone and UTC offset.</p>
+          <span class="kicker">★ — Your cities</span>
+          <h2>My Cities</h2>
+          <p class="muted">Your pinned cities, live. Tap the star on any city to add or remove it.</p>
         </header>
-        <div id="cityGrid" class="city-grid" aria-live="off"></div>
-        <p id="noResults" class="no-results" hidden>No city matches your search.</p>
-        <p class="browse-all"><a href="/cities/" class="browse-all-link">Browse all <span id="browseCount">350</span> cities <span aria-hidden="true">→</span></a></p>
+        <div id="myCitiesGrid" class="city-grid"></div>
+      </div>
+    </section>
+
+    <!-- ===================== POPULAR CITIES ===================== -->
+    <!-- ===================== CITIES (explore card → /cities/) ===================== -->
+    <section id="citiesCta" class="section">
+      <div class="container">
+        <a href="/cities/" class="explore-card" aria-label="Explore all cities">
+          <span class="explore-glow" aria-hidden="true"></span>
+          <span class="explore-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19"/><path d="M12 2.5a14.5 14.5 0 0 1 0 19 14.5 14.5 0 0 1 0-19"/></svg>
+          </span>
+          <span class="explore-body">
+            <span class="kicker">02 — Directory</span>
+            <span class="explore-title">Explore <span id="browseCount">350</span> cities worldwide</span>
+            <span class="explore-sub">Live local time, time zones, sunrise &amp; prayer times for every major city.</span>
+          </span>
+          <span class="explore-cta">Browse all cities <span class="explore-arrow" aria-hidden="true">→</span></span>
+        </a>
       </div>
     </section>
 
@@ -305,37 +345,9 @@
     </section>
 
     <!-- ===================== PRAYER TIMES ===================== -->
-    <section id="prayer" class="section">
-      <div class="container">
-        <header class="section-head section-head--row">
-          <div>
-            <span class="kicker">04 — Devotion</span>
-            <h2>Prayer times</h2>
-            <p class="muted">Daily timings with Gregorian and Hijri dates.</p>
-          </div>
-          <div class="city-picker">
-            <label for="prayerCity" class="sr-only">Search a city for prayer times</label>
-            <div class="ac prayer-ac">
-              <input id="prayerCity" class="ac-input" type="text" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="prayerAcList" placeholder="Search a city…" />
-              <ul id="prayerAcList" class="ac-list" role="listbox" hidden></ul>
-            </div>
-          </div>
-        </header>
 
-        <div class="datebar">
-          <span class="datebar-item"><span class="muted">Gregorian</span> <strong id="gregDate" class="mono">—</strong></span>
-          <span class="datebar-sep" aria-hidden="true"></span>
-          <span class="datebar-item"><span class="muted">Hijri</span> <strong id="hijriDate" class="mono">—</strong></span>
-        </div>
 
-        <div id="prayerGrid" class="prayer-grid" aria-live="polite">
-          <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
-          <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
-          <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
-        </div>
-      </div>
-    </section>
-
+    <!-- ===================== TOOLS ===================== -->
     <section class="section explainer-section" aria-labelledby="ex-prayer-h">
       <div class="container container-narrow">
         <h2 id="ex-prayer-h" class="explainer-title">How Are Prayer Times Calculated?</h2>
@@ -349,35 +361,6 @@
         </div>
       </div>
     </section>
-
-    <!-- ===================== SUNRISE & SUNSET ===================== -->
-    <section id="sun" class="section">
-      <div class="container">
-        <header class="section-head">
-          <span class="kicker">05 — Daylight</span>
-          <h2>Sunrise &amp; sunset</h2>
-          <p class="muted" id="sunCityName">—</p>
-        </header>
-        <div class="sun-grid">
-          <article class="sun-card sun-rise">
-            <span class="sun-ico" aria-hidden="true">☀</span>
-            <span class="ref-label">Sunrise</span>
-            <strong id="sunriseVal" class="ref-time" dir="ltr">—</strong>
-          </article>
-          <article class="sun-card sun-set">
-            <span class="sun-ico" aria-hidden="true">☾</span>
-            <span class="ref-label">Sunset</span>
-            <strong id="sunsetVal" class="ref-time" dir="ltr">—</strong>
-          </article>
-          <article class="sun-card">
-            <span class="sun-ico" aria-hidden="true">⌛</span>
-            <span class="ref-label">Day length</span>
-            <strong id="dayLength" class="ref-time" dir="ltr">—</strong>
-          </article>
-        </div>
-      </div>
-    </section>
-
     <section class="section explainer-section" aria-labelledby="ex-daynight-h">
       <div class="container container-narrow">
         <h2 id="ex-daynight-h" class="explainer-title">The Science of Day &amp; Night</h2>
@@ -390,8 +373,6 @@
         </div>
       </div>
     </section>
-
-    <!-- ===================== TOOLS ===================== -->
   </main>
 
   <!-- ===================== FOOTER ===================== -->

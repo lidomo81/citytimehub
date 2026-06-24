@@ -18,6 +18,8 @@
       prayers: ["Fajr", "Sunrise", "Dhuhr", "Asr", "Maghrib", "Isha"],
       ah: "AH", na: "n/a",
       dayLen: (h, m) => `${h}h ${m}m`,
+      localEyebrow: "Your local time", save: "Save", saved: "Saved",
+      savedToast: "Saved to My Cities.", removedToast: "Removed from My Cities.", favFull: n => `You can save up to ${n} cities.`,
     },
     ar: {
       addFav: "أضِف إلى مدني", remFav: "أزِل من مدني",
@@ -28,6 +30,8 @@
       prayers: ["الفجر", "الشروق", "الظهر", "العصر", "المغرب", "العشاء"],
       ah: "هـ", na: "غير متاح",
       dayLen: (h, m) => `${h}h ${m}m`,
+      localEyebrow: "وقتك المحلي", save: "احفظ", saved: "محفوظة",
+      savedToast: "تم الحفظ في مدني.", removedToast: "تمت الإزالة من مدني.", favFull: n => `تقدر تحفظ حتى ${n} مدن.`,
     },
   };
   const T = I18N[LANG];
@@ -38,7 +42,7 @@
   /* ---------- State ---------- */
   let CITIES = [];
   const fmtCache = new Map();
-  let selectedPrayerCity = null;
+  let currentCity = null, homeCity = null;
 
 
   const $  = (s, c = document) => c.querySelector(s);
@@ -161,8 +165,9 @@
       </${tag}>`;
   }
   function renderCities(list = CITIES) {
-    $("#cityGrid").innerHTML = list.map(cardHtml).join("");
-    $("#cityCount").textContent = CITIES.length;
+    const grid = $("#cityGrid"); if (!grid) return;
+    grid.innerHTML = list.map(cardHtml).join("");
+    const cc = $("#cityCount"); if (cc) cc.textContent = CITIES.length;
   }
   function renderMyCities() {
     const sec = $("#myCities"), grid = $("#myCitiesGrid");
@@ -342,10 +347,12 @@
     $("#localZone").textContent  = `${tz.replace(/_/g," ")} · ${offsetLabel(offsetHours(tz, now))}`;
     const ltT = $("#ltTime");
     if (ltT) {
-      ltT.textContent = loc.time.format(now);
-      const ltD = $("#ltDate"); if (ltD) ltD.textContent = loc.date.format(now);
-      const ltZ = $("#ltZone"); if (ltZ) ltZ.textContent = `${tz.replace(/_/g," ")} · ${offsetLabel(offsetHours(tz, now))}`;
-      ltOffsetMs = offsetHours(tz, now) * 3600000;
+      const ctz = (currentCity && currentCity.tz) || tz;
+      const cloc = formatters(ctz);
+      ltT.textContent = cloc.time.format(now);
+      const ltD = $("#ltDate"); if (ltD) ltD.textContent = cloc.date.format(now);
+      const ltZ = $("#ltZone"); if (ltZ) ltZ.textContent = `${ctz.replace(/_/g," ")} · ${offsetLabel(offsetHours(ctz, now))}`;
+      ltOffsetMs = offsetHours(ctz, now) * 3600000;
     }
   }
 
@@ -382,16 +389,56 @@
     input.addEventListener("blur", () => setTimeout(close, 150));
   }
 
-  function initPrayerPicker() {
-    const input = $("#prayerCity"), list = $("#prayerAcList");
-    selectedPrayerCity = CITIES.find(c => c.slug === "cairo") || CITIES[0];
-    if (input && selectedPrayerCity) input.value = `${cName(selectedPrayerCity)}, ${cCountry(selectedPrayerCity)}`;
-    if (!input || !list) return;
-    attachAutocomplete(input, list, c => {
-      selectedPrayerCity = c;
-      input.value = `${cName(c)}, ${cCountry(c)}`;
-      loadPrayer(c); loadSun(c);
+  /* ---------- Unified city panel (time + prayer + sun, searchable) ---------- */
+  function setCity(city, isHome) {
+    if (!city) return;
+    currentCity = city;
+    if (isHome) homeCity = city;
+    ltTz = city.tz; ltOffsetMs = offsetHours(city.tz) * 3600000;
+    const nm = cName(city);
+    const cEl = $("#lt-h"); if (cEl) cEl.textContent = nm;
+    const eb = $("#cpEyebrow"); if (eb) eb.textContent = isHome ? T.localEyebrow : `${nm}، ${cCountry(city)}`;
+    const hb = $("#cpHome"); if (hb) hb.hidden = !!isHome;
+    const inp = $("#cpSearch"); if (inp && document.activeElement !== inp) inp.value = isHome ? "" : `${nm}, ${cCountry(city)}`;
+    updateSaveStar();
+    tick();
+    loadPrayer(city); loadSun(city);
+  }
+  function updateSaveStar() {
+    const b = $("#cpSave"); if (!b || !currentCity) return;
+    const on = isFav(currentCity.slug);
+    b.classList.toggle("is-fav", on);
+    b.setAttribute("aria-pressed", on ? "true" : "false");
+    b.setAttribute("title", on ? T.remFav : T.addFav);
+    const t = b.querySelector(".cp-save-txt"); if (t) t.textContent = on ? T.saved : T.save;
+  }
+  function initCityPanel() {
+    const host = $("#ltAnalog");
+    if (host) {
+      host.innerHTML = buildAnalogSvg();
+      ltEls = { ring: host.querySelector("#ltRing"), hour: host.querySelector("#ltHour"), min: host.querySelector("#ltMin"), sec: host.querySelector("#ltSec") };
+      cancelAnimationFrame(ltRAF); ltFrame();
+    }
+    // Detect the visitor's home city from their time zone (fallback Cairo)
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
+    const matches = CITIES.filter(c => c.tz === tz);
+    const home = matches.find(c => c.featured) || matches[0] || CITIES.find(c => c.slug === "cairo") || CITIES[0];
+    setCity(home, true);
+
+    const inp = $("#cpSearch"), list = $("#cpAcList");
+    if (inp && list) attachAutocomplete(inp, list, c => setCity(c, false));
+
+    const sv = $("#cpSave");
+    if (sv) sv.addEventListener("click", () => {
+      if (!currentCity) return;
+      const r = toggleFav(currentCity.slug);
+      if (r.full) { toast(T.favFull(MAX_FAV)); return; }
+      const nowFav = isFav(currentCity.slug);
+      updateSaveStar(); renderMyCities(); refreshStars();
+      toast(nowFav ? T.savedToast : T.removedToast);
     });
+    const hm = $("#cpHome");
+    if (hm) hm.addEventListener("click", () => { if (homeCity) setCity(homeCity, true); });
   }
 
   async function loadPrayer(city) {
@@ -497,38 +544,30 @@
     ltRAF = requestAnimationFrame(ltFrame);
   }
 
-  function initLocalPanel() {
-    const host = $("#ltAnalog"); if (!host) return;
-    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
-    ltTz = tz; ltOffsetMs = offsetHours(tz) * 3600000;
-    const matches = CITIES.filter(c => c.tz === tz);
-    const city = matches.find(c => c.featured) || matches[0] || null;
-    const cityName = city ? (LANG === "ar" && city.name_ar ? city.name_ar : city.name)
-                          : tz.split("/").pop().replace(/_/g, " ");
-    const cEl = $("#lt-h"); if (cEl) cEl.textContent = cityName;
-    host.innerHTML = buildAnalogSvg();
-    ltEls = { ring: host.querySelector("#ltRing"), hour: host.querySelector("#ltHour"), min: host.querySelector("#ltMin"), sec: host.querySelector("#ltSec") };
-    cancelAnimationFrame(ltRAF); ltFrame();
-  }
-
   async function init() {
     $("#year").textContent = new Date().getFullYear();
     initTheme();
     try { await loadCities(); }
-    catch { $("#cityGrid").innerHTML = `<p class="no-results">${T.cityErr}</p>`; return; }
+    catch { const g = $("#cityGrid"); if (g) g.innerHTML = `<p class="no-results">${T.cityErr}</p>`; return; }
 
-    renderCities(CITIES.filter(c => c.featured));
+    const bc = $("#browseCount"); if (bc) bc.textContent = CITIES.length;
+    renderCities(CITIES.filter(c => c.featured));   // no-op when there is no #cityGrid (homepage)
     renderMyCities();
-    initLocalPanel();
     initFavorites();
-    initSearch();
-    initPrayerPicker();
+    initSearch();                                   // no-op when there is no #citySearch (homepage)
+    initCityPanel();
     startClock();
-    loadPrayer(selectedPrayerCity);
-    loadSun(selectedPrayerCity);
 
     const q = new URLSearchParams(location.search).get("q");
-    if (q) { const s = $("#citySearch"); s.value = q; s.dispatchEvent(new Event("input")); }
+    if (q) {
+      const inp = $("#citySearch");
+      if (inp) { inp.value = q; inp.dispatchEvent(new Event("input")); }
+      else {
+        const nq = norm(q);
+        const hit = CITIES.find(c => norm(`${c.name} ${c.name_ar || ""} ${c.country} ${c.country_ar || ""}`).includes(nq));
+        if (hit) setCity(hit, false);
+      }
+    }
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

@@ -128,15 +128,14 @@
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </label>
       <nav class="main-nav" aria-label="التنقّل الرئيسي">
-        <a href="#cities">المدن</a>
+        <a href="/ar/cities/">المدن</a>
         <a href="#reference">الساعة العالمية</a>
         <a href="/time-difference/">قارن المدن</a>
         <a href="/meeting-planner/">مخطّط الأحداث</a>
         <a href="/best-time-to-call/">أفضل وقت للاتصال</a>
         <a href="/prayer-clock/">ساعة الصلاة</a>
         <a href="/guides/">أدلّة</a>
-        <a href="#prayer">مواقيت الصلاة</a>
-        <a href="#sun">الشمس</a>
+        <a href="#cityPanel">مواقيت الصلاة</a>
       </nav>
 
       <div class="header-right">
@@ -170,11 +169,6 @@
             <div class="hero-copy">
             <h1 class="hero-title">دائماً <span>’الآن‘</span>..<br>في بقعةٍ ما من العالم.</h1>
             <p class="hero-desc">تابِع النهار وهو بيلفّ حوالين الكوكب. وقت كل مدينة كبيرة، ومناطقها الزمنية وفروق UTC — كله بيتحسب جوّه متصفّحك على طول.</p>
-
-            <div class="search-wrap" role="search">
-              <svg class="search-ico" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-              <input id="citySearch" class="search-input" type="search" placeholder="دوّر على مدينة — القاهرة، طوكيو، دبي…" aria-label="ابحث عن المدن" autocomplete="off" />
-            </div>
             </div>
             <div class="hero-globe" id="heroGlobe" aria-hidden="true"></div>
           </div>
@@ -183,31 +177,61 @@
     </section>
 
     <!-- ===================== YOUR LOCAL TIME ===================== -->
-    <section id="localTime" class="section lt-section" aria-labelledby="lt-h">
+    <!-- ===================== CITY PANEL (وقت + صلاة + شمس) ===================== -->
+    <section id="cityPanel" class="section cp-section" aria-labelledby="cp-h">
       <div class="container">
-        <div class="lt-panel">
-          <div id="ltAnalog" class="lt-analog" role="img" aria-label="ساعة تعرض وقتك المحلي"></div>
-          <div class="lt-info">
-            <span class="eyebrow"><span class="live-dot" aria-hidden="true"></span> وقتك المحلي الآن</span>
-            <h2 id="lt-h" class="lt-city">—</h2>
-            <strong id="ltTime" class="lt-time" dir="ltr">--:--:--</strong>
-            <p class="lt-meta"><span id="ltDate">—</span> · <span id="ltZone" class="mono">—</span></p>
+        <div class="cp-toolbar">
+          <div class="ac cp-ac">
+            <svg class="cp-search-ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            <input id="cpSearch" class="ac-input" type="text" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="cpAcList" placeholder="شوف أي مدينة — القاهرة، طوكيو، لندن…" aria-label="ابحث عن مدينة لعرض وقتها ومواقيت صلاتها وشروقها" />
+            <ul id="cpAcList" class="ac-list" role="listbox" hidden></ul>
+          </div>
+          <button id="cpSave" type="button" class="cp-btn cp-save" aria-pressed="false">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.6l2.6 5.27 5.82.85-4.21 4.1.99 5.8L12 16.9l-5.2 2.73.99-5.8-4.21-4.1 5.82-.85z"/></svg>
+            <span class="cp-save-txt">احفظ</span>
+          </button>
+          <button id="cpHome" type="button" class="cp-btn cp-home" hidden>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14l5-5-5-5"/><path d="M20 9H9a5 5 0 0 0 0 10h1"/></svg>
+            <span>مدينتي</span>
+          </button>
+        </div>
+
+        <div class="cp-grid">
+          <div class="cp-clock">
+            <div id="ltAnalog" class="lt-analog" role="img" aria-label="ساعة عقارب"></div>
+            <div class="cp-clock-info">
+              <span class="eyebrow"><span class="live-dot" aria-hidden="true"></span> <span id="cpEyebrow">وقتك المحلي</span></span>
+              <h2 id="cp-h"><span id="lt-h" class="lt-city">—</span></h2>
+              <strong id="ltTime" class="lt-time" dir="ltr">--:--:--</strong>
+              <p class="lt-meta"><span id="ltDate">—</span> · <span id="ltZone" class="mono">—</span></p>
+            </div>
+          </div>
+
+          <div class="cp-devotion">
+            <div class="cp-dev-head">
+              <h3 class="cp-dev-title">مواقيت الصلاة</h3>
+              <div class="datebar">
+                <span class="datebar-item"><span class="muted">ميلادي</span> <strong id="gregDate" class="mono">—</strong></span>
+                <span class="datebar-sep" aria-hidden="true"></span>
+                <span class="datebar-item"><span class="muted">هجري</span> <strong id="hijriDate" class="mono">—</strong></span>
+              </div>
+            </div>
+            <div id="prayerGrid" class="prayer-grid" aria-live="polite">
+              <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
+              <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
+              <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
+            </div>
+            <div class="cp-sun">
+              <span class="sr-only" id="sunCityName">—</span>
+              <article class="sun-card sun-rise"><span class="sun-ico" aria-hidden="true">☀</span><span class="ref-label">الشروق</span><strong id="sunriseVal" class="ref-time" dir="ltr">—</strong></article>
+              <article class="sun-card sun-set"><span class="sun-ico" aria-hidden="true">☾</span><span class="ref-label">الغروب</span><strong id="sunsetVal" class="ref-time" dir="ltr">—</strong></article>
+              <article class="sun-card"><span class="sun-ico" aria-hidden="true">⌛</span><span class="ref-label">طول النهار</span><strong id="dayLength" class="ref-time" dir="ltr">—</strong></article>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ===================== MY CITIES ===================== -->
-    <section id="myCities" class="section" hidden>
-      <div class="container">
-        <header class="section-head">
-          <span class="kicker">★ — مدنك</span>
-          <h2>مدني</h2>
-          <p class="muted">المدن اللي ثبّتّها، مباشر. دوس النجمة على أي مدينة تضيفها أو تشيلها.</p>
-        </header>
-        <div id="myCitiesGrid" class="city-grid"></div>
-      </div>
-    </section>
 
     <section id="tools" class="section">
       <div class="container">
@@ -262,18 +286,34 @@
         </div>
       </div>
     </section>
-
-    <!-- ===================== POPULAR CITIES ===================== -->
-    <section id="cities" class="section">
+    <!-- ===================== MY CITIES ===================== -->
+    <section id="myCities" class="section" hidden>
       <div class="container">
         <header class="section-head">
-          <span class="kicker">٠٢ — إحداثيات</span>
-          <h2>المدن دلوقتي</h2>
-          <p class="muted"><span id="cityCount">0</span> مكان · الوقت والتاريخ والمنطقة وفرق UTC مباشرةً.</p>
+          <span class="kicker">★ — مدنك</span>
+          <h2>مدني</h2>
+          <p class="muted">المدن اللي ثبّتّها، مباشر. دوس النجمة على أي مدينة تضيفها أو تشيلها.</p>
         </header>
-        <div id="cityGrid" class="city-grid" aria-live="off"></div>
-        <p id="noResults" class="no-results" hidden>لا توجد مدينة مطابقة لبحثك.</p>
-        <p class="browse-all"><a href="/ar/cities/" class="browse-all-link">شوف كل الـ<span id="browseCount">350</span> مدينة <span aria-hidden="true">←</span></a></p>
+        <div id="myCitiesGrid" class="city-grid"></div>
+      </div>
+    </section>
+
+    <!-- ===================== POPULAR CITIES ===================== -->
+    <!-- ===================== المدن (كارت استكشف → /ar/cities/) ===================== -->
+    <section id="citiesCta" class="section">
+      <div class="container">
+        <a href="/ar/cities/" class="explore-card" aria-label="استكشف كل المدن">
+          <span class="explore-glow" aria-hidden="true"></span>
+          <span class="explore-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19"/><path d="M12 2.5a14.5 14.5 0 0 1 0 19 14.5 14.5 0 0 1 0-19"/></svg>
+          </span>
+          <span class="explore-body">
+            <span class="kicker">٠٢ — دليل</span>
+            <span class="explore-title">استكشف <span id="browseCount">350</span> مدينة حول العالم</span>
+            <span class="explore-sub">وقت محلي حيّ · مناطق زمنية · شروق · مواقيت صلاة لكل مدينة كبيرة.</span>
+          </span>
+          <span class="explore-cta">تصفّح كل المدن <span class="explore-arrow" aria-hidden="true">←</span></span>
+        </a>
       </div>
     </section>
 
@@ -306,37 +346,9 @@
     </section>
 
     <!-- ===================== PRAYER TIMES ===================== -->
-    <section id="prayer" class="section">
-      <div class="container">
-        <header class="section-head section-head--row">
-          <div>
-            <span class="kicker">٠٤ — عبادة</span>
-            <h2>مواقيت الصلاة</h2>
-            <p class="muted">مواقيت كل يوم، بالتاريخ الميلادي والهجري.</p>
-          </div>
-          <div class="city-picker">
-            <label for="prayerCity" class="sr-only">ابحث عن مدينة لمواقيت الصلاة</label>
-            <div class="ac prayer-ac">
-              <input id="prayerCity" class="ac-input" type="text" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="prayerAcList" placeholder="ابحث عن مدينة…" />
-              <ul id="prayerAcList" class="ac-list" role="listbox" hidden></ul>
-            </div>
-          </div>
-        </header>
 
-        <div class="datebar">
-          <span class="datebar-item"><span class="muted">ميلادي</span> <strong id="gregDate" class="mono">—</strong></span>
-          <span class="datebar-sep" aria-hidden="true"></span>
-          <span class="datebar-item"><span class="muted">هجري</span> <strong id="hijriDate" class="mono">—</strong></span>
-        </div>
 
-        <div id="prayerGrid" class="prayer-grid" aria-live="polite">
-          <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
-          <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
-          <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
-        </div>
-      </div>
-    </section>
-
+    <!-- ===================== TOOLS ===================== -->
     <section class="section explainer-section" aria-labelledby="ex-prayer-h">
       <div class="container container-narrow">
         <h2 id="ex-prayer-h" class="explainer-title">كيف تُحسب مواقيت الصلاة؟</h2>
@@ -350,35 +362,6 @@
         </div>
       </div>
     </section>
-
-    <!-- ===================== SUNRISE & SUNSET ===================== -->
-    <section id="sun" class="section">
-      <div class="container">
-        <header class="section-head">
-          <span class="kicker">٠٥ — ضوء النهار</span>
-          <h2>الشروق والغروب</h2>
-          <p class="muted" id="sunCityName">—</p>
-        </header>
-        <div class="sun-grid">
-          <article class="sun-card sun-rise">
-            <span class="sun-ico" aria-hidden="true">☀</span>
-            <span class="ref-label">الشروق</span>
-            <strong id="sunriseVal" class="ref-time" dir="ltr">—</strong>
-          </article>
-          <article class="sun-card sun-set">
-            <span class="sun-ico" aria-hidden="true">☾</span>
-            <span class="ref-label">الغروب</span>
-            <strong id="sunsetVal" class="ref-time" dir="ltr">—</strong>
-          </article>
-          <article class="sun-card">
-            <span class="sun-ico" aria-hidden="true">⌛</span>
-            <span class="ref-label">طول النهار</span>
-            <strong id="dayLength" class="ref-time" dir="ltr">—</strong>
-          </article>
-        </div>
-      </div>
-    </section>
-
     <section class="section explainer-section" aria-labelledby="ex-daynight-h">
       <div class="container container-narrow">
         <h2 id="ex-daynight-h" class="explainer-title">علم الليل والنهار</h2>
@@ -391,8 +374,6 @@
         </div>
       </div>
     </section>
-
-    <!-- ===================== TOOLS ===================== -->
   </main>
 
   <!-- ===================== FOOTER ===================== -->
