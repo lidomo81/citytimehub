@@ -1,6 +1,6 @@
 /* =====================================================================
    CityTimeHub — style.css  (The Meridian)
-   1. Tokens   2. Base   3. Header   4. Hero sky-panel + meridian
+   1. Tokens   2. Base   3. Header   4. Hero sky-panel + globe
    5. Sections / kickers   6. City grid   7. Reference clocks
    8. Prayer   9. Sun   10. Footer   11. Skeleton/motion   12. Responsive
    ===================================================================== */
@@ -153,40 +153,19 @@ svg { display: block; }
 .search-input:focus { outline: none; border-color: var(--accent); background: rgba(8, 14, 30, .75); box-shadow: 0 0 0 4px rgba(56, 189, 248, .18); }
 
 /* ---- The Meridian band ---- */
-.meridian { position: relative; margin: clamp(32px, 5vw, 52px) 0 8px; height: 132px; }
-.meridian-band {
-  position: absolute; inset-inline: 0; top: 8px; height: 84px; border-radius: 14px;
-  background: #16224a;                       /* replaced live by JS gradient */
-  border: 1px solid rgba(255,255,255,.08);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 12px 30px -16px rgba(0,0,0,.7);
-  overflow: hidden;
+/* ===================== Hero layout: copy + live globe ===================== */
+.hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(16px, 3vw, 40px); align-items: center; margin-top: clamp(20px, 3vw, 34px); }
+.hero-copy { min-width: 0; }
+.hero-globe { display: flex; justify-content: center; align-items: center; min-width: 0; }
+.hero-globe .hg-svg { width: 100%; max-width: 560px; height: auto; filter: drop-shadow(0 24px 60px rgba(20,44,96,.45)); animation: hg-rise 1.3s cubic-bezier(.2,.7,.2,1) both; }
+.hero-globe .hg-lbl { fill: #fff; font-size: 13px; font-weight: 600; paint-order: stroke; stroke: rgba(3,8,20,.92); stroke-width: 3.4px; stroke-linejoin: round; }
+@keyframes hg-rise { from { opacity: 0; transform: translateY(20px) scale(.95); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .hero-globe .hg-svg { animation: none; } }
+@media (max-width: 880px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-globe { order: 2; margin-top: 6px; }
+  .hero-globe .hg-svg { max-width: 420px; }
 }
-.meridian-band::after {  /* soft horizon sheen */
-  content: ""; position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(255,255,255,.10), transparent 38%, rgba(0,0,0,.18));
-  pointer-events: none;
-}
-.meridian-sun {
-  position: absolute; top: 2px; width: 22px; height: 22px; border-radius: 50%;
-  transform: translateX(-50%);
-  background: radial-gradient(circle, #fff 0%, #ffe39a 45%, rgba(255,196,90,.0) 72%);
-  box-shadow: 0 0 22px 8px rgba(255, 211, 125, .55);
-  transition: left 1s linear; z-index: 3; pointer-events: none;
-}
-.meridian-pins { position: absolute; inset-inline: 0; top: 8px; height: 84px; z-index: 4; }
-.pin { position: absolute; top: 0; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 4px; }
-.pin-stem { width: 2px; height: 84px; background: linear-gradient(180deg, rgba(255,255,255,.0), rgba(255,255,255,.55)); }
-.pin-card {
-  position: absolute; top: 50%; transform: translate(-50%, -50%); white-space: nowrap;
-  background: rgba(7, 12, 26, .72); border: 1px solid rgba(170, 195, 240, .28);
-  border-radius: 9px; padding: 5px 9px; backdrop-filter: blur(4px);
-  box-shadow: 0 8px 20px -10px rgba(0,0,0,.8); text-align: center;
-}
-.pin-city { font-size: .68rem; font-weight: 700; color: #eaf1ff; }
-.pin-time { font-family: var(--mono); font-size: .82rem; font-weight: 600; color: #ffd27d; font-variant-numeric: tabular-nums; }
-.meridian-axis { position: absolute; inset-inline: 0; bottom: 0; height: 18px; }
-.axis-tick { position: absolute; transform: translateX(-50%); font-family: var(--mono); font-size: .62rem; color: var(--sky-muted); }
-.axis-tick::before { content: ""; position: absolute; top: -8px; left: 50%; width: 1px; height: 6px; background: rgba(170,195,240,.3); }
 
 /* ============ 5. SECTIONS ============ */
 .section { padding-block: clamp(36px, 6vw, 64px); }
@@ -270,8 +249,6 @@ svg { display: block; }
 @media (max-width: 980px) { .prayer-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 760px) {
   .ref-grid, .sun-grid { grid-template-columns: 1fr; }
-  .meridian { height: 116px; }
-  .pin-city { display: none; }            /* keep pins readable on small screens */
 }
 @media (max-width: 540px) {
   .prayer-grid { grid-template-columns: repeat(2, 1fr); }
@@ -607,7 +584,7 @@ html[dir="rtl"] .hu-time, html[dir="rtl"] [dir="ltr"] { direction: ltr; unicode-
   .lt-info { align-items: center; }
 }
 
-/* Lean hero for directory / tool / index pages (no meridian to fill the panel) */
+/* Lean hero for directory / tool / index pages (no globe to fill the panel) */
 .sky-panel--lean { padding: clamp(22px, 3.4vw, 38px) clamp(24px, 4.4vw, 48px); }
 .sky-panel--lean .hero-title { font-size: clamp(1.9rem, 5vw, 3.1rem); }
 .sky-panel--lean .hero-desc { margin: 14px 0 0; max-width: 680px; }

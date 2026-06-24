@@ -17,7 +17,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="CityTimeHub" />
   <meta property="og:title" content="CityTimeHub — Current Time Around The World" />
-  <meta property="og:description" content="A live day/night meridian of world time. Local clocks, time zones, Hijri dates, prayer times and sunrise & sunset across the globe." />
+  <meta property="og:description" content="A live day/night globe of world time. Local clocks, time zones, Hijri dates, prayer times and sunrise & sunset across the globe." />
   <meta property="og:url" content="https://www.citytimehub.com/" />
   <meta property="og:image" content="https://www.citytimehub.com/og-cover.png" />
   <meta property="og:image:width" content="1200" />
@@ -28,7 +28,7 @@
   <!-- ===== Twitter ===== -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="CityTimeHub — Current Time Around The World" />
-  <meta name="twitter:description" content="A live day/night meridian of world time, with prayer times and Hijri dates." />
+  <meta name="twitter:description" content="A live day/night globe of world time, with prayer times and Hijri dates." />
   <meta name="twitter:image" content="https://www.citytimehub.com/og-cover.png" />
   <meta name="twitter:image:alt" content="CityTimeHub — Current Time Around The World" />
 
@@ -165,22 +165,18 @@
             <span class="daylight-stat"><strong id="daylightCount">—</strong> cities in daylight now</span>
           </div>
 
-          <h1 class="hero-title">It’s always now —<br><span>somewhere.</span></h1>
-          <p class="hero-desc">Watch daylight sweep the planet. Real local time for every major city, time zones and UTC offsets — computed right in your browser, no clock API.</p>
+          <div class="hero-grid">
+            <div class="hero-copy">
+            <h1 class="hero-title">It’s always now —<br><span>somewhere.</span></h1>
+            <p class="hero-desc">Watch daylight sweep the planet. Real local time for every major city, time zones and UTC offsets — computed right in your browser, no clock API.</p>
 
-          <div class="search-wrap" role="search">
-            <svg class="search-ico" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-            <input id="citySearch" class="search-input" type="search" placeholder="Search a city — Cairo, Tokyo, القاهرة…" aria-label="Search cities" autocomplete="off" />
+            <div class="search-wrap" role="search">
+              <svg class="search-ico" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+              <input id="citySearch" class="search-input" type="search" placeholder="Search a city — Cairo, Tokyo, القاهرة…" aria-label="Search cities" autocomplete="off" />
+            </div>
+            </div>
+            <div class="hero-globe" id="heroGlobe" aria-hidden="true"></div>
           </div>
-
-          <!-- The Meridian band -->
-          <figure class="meridian" aria-label="Day and night across world time zones, updating live">
-            <div class="meridian-band" id="meridianBand" aria-hidden="true"></div>
-            <div class="meridian-sun" id="meridianSun" aria-hidden="true" title="Local solar noon"></div>
-            <div class="meridian-pins" id="meridianPins"></div>
-            <div class="meridian-axis" id="meridianAxis" aria-hidden="true"></div>
-            <figcaption class="sr-only">A horizontal band from UTC minus twelve to UTC plus fourteen, coloured by the current local time at each offset, with featured cities pinned at their position.</figcaption>
-          </figure>
         </div>
       </div>
     </section>
@@ -413,6 +409,7 @@
   </footer>
 
   <script src="js/app.js" defer></script>
+  <script src="/js/hero-globe.js" defer></script>
   <script src="/js/pwa.js" defer></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 /* =====================================================================
-   CityTimeHub — app.js  (The Meridian edition)
-   Live clocks via Intl.DateTimeFormat (no clock API), a live day/night
-   meridian of world time, city grid + search, reference clocks,
+   CityTimeHub — app.js  (Globe edition)
+   Live clocks via Intl.DateTimeFormat (no clock API), the live day/night
+   globe in the hero, city grid + search, reference clocks,
    prayer times + Hijri date (AlAdhan), sunrise/sunset (sunrise-sunset.org).
    ===================================================================== */
 (() => {
@@ -39,9 +39,7 @@
   let CITIES = [];
   const fmtCache = new Map();
   let selectedPrayerCity = null;
-  let meridianCities = [];          // de-duplicated featured cities for pins
 
-  const OFF_MIN = -12, OFF_MAX = 14, OFF_SPAN = OFF_MAX - OFF_MIN;  // band range
 
   const $  = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
@@ -66,13 +64,6 @@
     "#b89a78","#e0a35a","#e0824a","#b85a5e","#5e3f74","#23204a","#121634","#0c1130"
   ];
   const hex2rgb = h => [parseInt(h.slice(1,3),16), parseInt(h.slice(3,5),16), parseInt(h.slice(5,7),16)];
-  function rampColor(hour) {                 // hour: float 0..24
-    const h = ((hour % 24) + 24) % 24;
-    const i = Math.floor(h), f = h - i;
-    const a = hex2rgb(RAMP[i]), b = hex2rgb(RAMP[(i + 1) % 24]);
-    const m = a.map((v, k) => Math.round(v + (b[k] - v) * f));
-    return `rgb(${m[0]},${m[1]},${m[2]})`;
-  }
 
   /* ---------- Formatters (one per timezone, reused) ---------- */
   function formatters(tz) {
@@ -101,7 +92,6 @@
     const a = Math.abs(off), h = Math.floor(a), mm = Math.round((a - h) * 60);
     return `UTC${sign}${h}${mm ? ":" + String(mm).padStart(2, "0") : ""}`;
   }
-  const offsetToPct = off => ((off - OFF_MIN) / OFF_SPAN) * 100;
   // local hour (float) at a given offset, right now
   function localHourAt(off, now) {
     const utcH = now.getUTCHours() + now.getUTCMinutes() / 60 + now.getUTCSeconds() / 3600;
@@ -128,53 +118,6 @@
     const res = await fetch("/data/cities.json");
     if (!res.ok) throw new Error("cities.json " + res.status);
     CITIES = (await res.json()).cities || [];
-  }
-
-  /* ---------- The Meridian: pins, axis, band, sun ---------- */
-  function buildMeridian() {
-    // featured cities de-duplicated by integer offset → clean spread of pins
-    const seen = new Set();
-    meridianCities = CITIES.filter(c => c.featured)
-      .map(c => ({ ...c, off: offsetHours(c.tz) }))
-      .sort((a, b) => a.off - b.off)
-      .filter(c => { const k = Math.round(c.off); if (seen.has(k)) return false; seen.add(k); return true; });
-
-    $("#meridianPins").innerHTML = meridianCities.map(c => `
-      <div class="pin" data-tz="${c.tz}" style="left:${offsetToPct(c.off)}%">
-        <div class="pin-stem"></div>
-        <div class="pin-card">
-          <div class="pin-city">${cName(c)}</div>
-          <div class="pin-time" data-time>--:--</div>
-        </div>
-      </div>`).join("");
-
-    // axis ticks every 3 hours
-    let ticks = "";
-    for (let o = -9; o <= 12; o += 3) {
-      ticks += `<span class="axis-tick" style="left:${offsetToPct(o)}%">${offsetLabel(o)}</span>`;
-    }
-    $("#meridianAxis").innerHTML = ticks;
-    updateMeridian();
-  }
-
-  // Recompute the live band gradient, sun position and daylight count.
-  function updateMeridian() {
-    const now = new Date();
-    const stops = [];
-    for (let o = OFF_MIN; o <= OFF_MAX; o++) {
-      stops.push(`${rampColor(localHourAt(o, now))} ${offsetToPct(o).toFixed(1)}%`);
-    }
-    $("#meridianBand").style.background = `linear-gradient(90deg, ${stops.join(", ")})`;
-
-    // solar noon sits where local hour == 12  →  offset = 12 - utcH
-    const utcH = now.getUTCHours() + now.getUTCMinutes() / 60;
-    let sunOff = 12 - utcH;
-    while (sunOff > OFF_MAX) sunOff -= 24;
-    while (sunOff < OFF_MIN) sunOff += 24;
-    $("#meridianSun").style.left = `${offsetToPct(sunOff)}%`;
-
-    const lit = meridianCities.filter(c => isDay(localHourAt(c.off, now))).length;
-    $("#daylightCount").textContent = lit;
   }
 
   /* ---------- City grid ---------- */
@@ -407,10 +350,9 @@
   }
 
   function startClock() {
-    tick(); updateMeridian();
+    tick();
     const delay = 1000 - (Date.now() % 1000);
     setTimeout(() => { tick(); setInterval(tick, 1000); }, delay);
-    setInterval(updateMeridian, 60000);     // band drifts slowly; refresh each minute
   }
 
   /* ---------- Prayer times + Hijri (AlAdhan) ---------- */
@@ -575,7 +517,6 @@
     try { await loadCities(); }
     catch { $("#cityGrid").innerHTML = `<p class="no-results">${T.cityErr}</p>`; return; }
 
-    buildMeridian();
     renderCities(CITIES.filter(c => c.featured));
     renderMyCities();
     initLocalPanel();

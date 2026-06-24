@@ -166,22 +166,18 @@
             <span class="daylight-stat"><strong id="daylightCount">—</strong> مدينة في النهار دلوقتي</span>
           </div>
 
-          <h1 class="hero-title">دائماً <span>’الآن‘</span>..<br>في بقعةٍ ما من العالم.</h1>
-          <p class="hero-desc">تابِع النهار وهو بيلفّ حوالين الكوكب. وقت كل مدينة كبيرة، ومناطقها الزمنية وفروق UTC — كله بيتحسب جوّه متصفّحك على طول.</p>
+          <div class="hero-grid">
+            <div class="hero-copy">
+            <h1 class="hero-title">دائماً <span>’الآن‘</span>..<br>في بقعةٍ ما من العالم.</h1>
+            <p class="hero-desc">تابِع النهار وهو بيلفّ حوالين الكوكب. وقت كل مدينة كبيرة، ومناطقها الزمنية وفروق UTC — كله بيتحسب جوّه متصفّحك على طول.</p>
 
-          <div class="search-wrap" role="search">
-            <svg class="search-ico" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-            <input id="citySearch" class="search-input" type="search" placeholder="دوّر على مدينة — القاهرة، طوكيو، دبي…" aria-label="ابحث عن المدن" autocomplete="off" />
+            <div class="search-wrap" role="search">
+              <svg class="search-ico" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+              <input id="citySearch" class="search-input" type="search" placeholder="دوّر على مدينة — القاهرة، طوكيو، دبي…" aria-label="ابحث عن المدن" autocomplete="off" />
+            </div>
+            </div>
+            <div class="hero-globe" id="heroGlobe" aria-hidden="true"></div>
           </div>
-
-          <!-- The Meridian band -->
-          <figure class="meridian" aria-label="الليل والنهار عبر المناطق الزمنية، يتحدّث مباشرةً">
-            <div class="meridian-band" id="meridianBand" aria-hidden="true"></div>
-            <div class="meridian-sun" id="meridianSun" aria-hidden="true" title="الظهيرة الشمسية المحلية"></div>
-            <div class="meridian-pins" id="meridianPins"></div>
-            <div class="meridian-axis" id="meridianAxis" aria-hidden="true"></div>
-            <figcaption class="sr-only">شريطٌ أفقي من UTC ناقص اثنتي عشرة إلى UTC زائد أربع عشرة، ملوّن حسب الوقت المحلي الحالي عند كل فرق، مع تثبيت المدن المميّزة في مواضعها.</figcaption>
-          </figure>
         </div>
       </div>
     </section>
@@ -414,6 +410,7 @@
   </footer>
 
   <script src="/js/app.js" defer></script>
+  <script src="/js/hero-globe.js" defer></script>
   <script src="/js/pwa.js" defer></script>
 </body>
 </html>
