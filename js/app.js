@@ -442,6 +442,23 @@
     });
     const hm = $("#cpHome");
     if (hm) hm.addEventListener("click", () => { if (homeCity) setCity(homeCity, true); });
+
+    const inst = $("#cpInstall");
+    if (inst) {
+      const syncInstall = () => { inst.hidden = !(window.CTH_PWA && window.CTH_PWA.canInstall()); };
+      document.addEventListener("cth-installable", syncInstall);
+      document.addEventListener("cth-pwa-ready", syncInstall);
+      document.addEventListener("cth-installed", () => { inst.hidden = true; });
+      syncInstall();
+      inst.addEventListener("click", async () => {
+        if (!currentCity || !window.CTH_PWA) return;
+        const nm = LANG === "ar" ? `مواقيت ${cName(currentCity)}` : `${cName(currentCity)} prayer times`;
+        const startUrl = (LANG === "ar" ? "/ar/?city=" : "/?city=") + currentCity.slug;
+        const r = await window.CTH_PWA.install({ name: nm, shortName: cName(currentCity), startUrl, lang: LANG, dir: LANG === "ar" ? "rtl" : "ltr" });
+        if (r === "unavailable") toast(LANG === "ar" ? "التثبيت غير متاح في متصفحك الآن." : "Install isn't available in this browser yet.");
+        else if (r === "installed") toast(LANG === "ar" ? "التطبيق مثبّت بالفعل." : "Already installed.");
+      });
+    }
   }
 
   async function loadPrayer(city) {
@@ -575,7 +592,13 @@
     initCityPanel();
     startClock();
 
-    const q = new URLSearchParams(location.search).get("q");
+    const params = new URLSearchParams(location.search);
+    const cityParam = params.get("city");
+    if (cityParam) {
+      const c = CITIES.find(x => x.slug === cityParam);
+      if (c) setCity(c, true);          // installed "Cairo prayer times" icon opens focused on Cairo
+    }
+    const q = params.get("q");
     if (q) {
       const inp = $("#citySearch");
       if (inp) { inp.value = q; inp.dispatchEvent(new Event("input")); }

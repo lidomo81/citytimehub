@@ -21,12 +21,24 @@
   const bySlug = new Map();
   const state = { city: "cairo", lang: LANG, theme: "auto" };
 
+  let previewHeight = 430;
   const srcUrl = () => `${ORIGIN}/embed/prayer-clock?city=${encodeURIComponent(state.city)}&lang=${state.lang}&theme=${state.theme}`;
   function embedCode() {
     const c = bySlug.get(state.city);
     const title = (state.lang === "ar" ? "مواقيت الصلاة — " : "Prayer times — ") + (c ? (state.lang === "ar" && c.name_ar ? c.name_ar : c.name) : state.city);
-    return `<iframe src="${srcUrl()}" width="340" height="430" style="border:0;border-radius:16px;max-width:100%" title="${esc(title)}" loading="lazy"></iframe>`;
+    return `<iframe src="${srcUrl()}" width="340" height="${previewHeight}" style="border:0;border-radius:16px;max-width:100%" title="${esc(title)}" loading="lazy"></iframe>`;
   }
+  // The embedded widget reports its real content height → fit the preview snugly
+  // and bake the exact height into the copy-paste embed code (no empty space).
+  window.addEventListener("message", (e) => {
+    if (e.origin !== ORIGIN && e.origin !== location.origin) return;
+    const d = e.data;
+    if (d && d.cthWidget === "height" && d.height > 120 && d.height < 1400) {
+      previewHeight = Math.round(d.height);
+      const fr = $("#wbFrame"); if (fr) fr.style.height = previewHeight + "px";
+      const box = $("#wbCode"); if (box) box.value = embedCode();
+    }
+  });
   function update() {
     const fr = $("#wbFrame"); if (fr && fr.src !== srcUrl()) fr.src = srcUrl();
     const box = $("#wbCode"); if (box) box.value = embedCode();

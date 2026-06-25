@@ -120,6 +120,7 @@
     tickText();
     requestAnimationFrame(frame);
     setInterval(tickText, 1000);
+    if (typeof postHeight === "function") { postHeight(); setTimeout(postHeight, 200); }
   }
 
   function tickText() {
@@ -167,4 +168,20 @@
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
+
+  /* Tell a parent page (e.g. the builder preview) our real content height,
+     so the iframe can fit snugly with no empty space. */
+  function postHeight() {
+    try {
+      const h = Math.max(
+        document.documentElement.scrollHeight,
+        document.body.scrollHeight
+      );
+      if (h && window.parent && window.parent !== window) {
+        window.parent.postMessage({ cthWidget: "height", height: h }, "*");
+      }
+    } catch (e) {}
+  }
+  window.addEventListener("load", () => { postHeight(); setTimeout(postHeight, 300); });
+  window.addEventListener("resize", postHeight);
 })();

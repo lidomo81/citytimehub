@@ -12,6 +12,13 @@
   "lang": "en",
   "dir": "ltr",
   "categories": ["utilities", "productivity", "travel"],
+  "shortcuts": [
+    { "name": "Prayer times", "short_name": "Prayer", "url": "/?city=cairo&utm_source=pwa", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Prayer Clock", "short_name": "Prayer Clock", "url": "/prayer-clock/?utm_source=pwa", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Compare time zones", "short_name": "Compare", "url": "/time-difference/?utm_source=pwa", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Meeting planner", "short_name": "Planner", "url": "/meeting-planner/?utm_source=pwa", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Best time to call", "short_name": "Best time", "url": "/best-time-to-call/?utm_source=pwa", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] }
+  ],
   "icons": [
     { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
