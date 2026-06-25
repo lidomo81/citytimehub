@@ -107,12 +107,13 @@
              : `<circle cx="${x}" cy="${y}" r="2.7" fill="var(--muted)"/>`) + `</g>`;
     }).join("");
     return `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="pc-svg" aria-hidden="true">
-      <circle cx="100" cy="100" r="95" fill="var(--bg-soft)" stroke="var(--border)" stroke-width="1"/>
+      <rect x="7" y="7" width="186" height="186" rx="30" fill="var(--bg-soft)" stroke="var(--border)" stroke-width="1.5"/>
+      <rect x="15" y="15" width="170" height="170" rx="24" fill="var(--surface)" stroke="var(--border-2)" stroke-width="1" opacity=".55"/>
       ${ticks}${dots}
-      <line id="${id}-h" x1="100" y1="111" x2="100" y2="60" stroke="var(--text)" stroke-width="6" stroke-linecap="round"/>
-      <line id="${id}-m" x1="100" y1="114" x2="100" y2="40" stroke="var(--text)" stroke-width="4" stroke-linecap="round"/>
-      <line id="${id}-s" x1="100" y1="118" x2="100" y2="34" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round"/>
-      <circle cx="100" cy="100" r="5" fill="var(--text)"/><circle cx="100" cy="100" r="2.1" fill="var(--accent)"/>
+      <polygon id="${id}-h" points="100,45 104.5,99 100,114 95.5,99" fill="var(--text)"/>
+      <polygon id="${id}-m" points="100,29 104,98 100,117 96,98" fill="var(--text)"/>
+      <line id="${id}-s" x1="100" y1="116" x2="100" y2="27" stroke="var(--brand)" stroke-width="1.6" stroke-linecap="round"/>
+      <circle cx="100" cy="100" r="5" fill="var(--text)"/><circle cx="100" cy="100" r="2.1" fill="var(--brand)"/>
     </svg>`;
   }
 

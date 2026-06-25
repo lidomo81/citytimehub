@@ -181,17 +181,28 @@ svg { display: block; }
 .cp-home { color: var(--text-2); }
 
 .cp-grid { display: grid; grid-template-columns: minmax(270px, .95fr) 1.3fr; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; box-shadow: 0 24px 60px -40px rgba(0,0,0,.7); }
-.cp-clock { display: flex; align-items: center; gap: 22px; padding: 28px 26px; background: radial-gradient(120% 120% at 0% 0%, rgba(37,99,235,.10), transparent 60%); }
-.cp-clock .lt-analog { width: 128px; height: 128px; flex: none; }
+.cp-clock { display: flex; align-items: center; justify-content: center; gap: 22px; padding: 28px 26px; background: radial-gradient(120% 120% at 0% 0%, rgba(37,99,235,.10), transparent 60%); }
+.cp-clock .lt-analog { width: 176px; height: 176px; flex: none; }
+.lt-num { font-family: var(--font, system-ui, -apple-system, "Segoe UI", sans-serif); font-size: 20px; font-weight: 600; fill: var(--text); }
+.lt-svg .lt-nums text { font-variant-numeric: tabular-nums; }
 .cp-clock-info { min-width: 0; }
 .cp-clock-info .lt-city { margin: 6px 0 2px; }
+.cp-next { display: inline-flex; align-items: center; gap: 7px; margin-top: 12px; padding: 7px 12px; border-radius: 10px; background: rgba(245,166,35,.10); border: 1px solid rgba(245,166,35,.28); color: var(--text); font-size: .9rem; }
+.cp-next strong { color: #f5a623; font-weight: 700; }
+.cp-next .cp-next-in { color: var(--text-2); }
+.cp-next-dot { width: 7px; height: 7px; border-radius: 50%; background: #f5a623; flex: none; box-shadow: 0 0 0 0 rgba(245,166,35,.5); animation: cp-pulse 2.4s infinite; }
+@keyframes cp-pulse { 70% { box-shadow: 0 0 0 6px rgba(245,166,35,0); } 100% { box-shadow: 0 0 0 0 rgba(245,166,35,0); } }
+@media (prefers-reduced-motion: reduce) { .cp-next-dot { animation: none; } }
 .cp-devotion { padding: 24px 26px; border-inline-start: 1px solid var(--border); }
 .cp-dev-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px 18px; flex-wrap: wrap; margin-bottom: 14px; }
 .cp-dev-title { font-size: 1.05rem; font-weight: 700; }
 .cp-devotion .datebar { margin: 0; }
 .cp-devotion .prayer-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
 .cp-sun { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
-.cp-sun .sun-card { margin: 0; }
+.cp-sun .sun-card { margin: 0; padding: 14px 10px; }
+.cp-sun .ref-time { font-size: 1.35rem; margin: 5px 0 0; white-space: nowrap; }
+.cp-sun .ref-label { font-size: .6rem; letter-spacing: .1em; }
+.cp-sun .sun-ico { font-size: 1.15rem; }
 @media (max-width: 860px) {
   .cp-grid { grid-template-columns: 1fr; }
   .cp-devotion { border-inline-start: none; border-top: 1px solid var(--border); }

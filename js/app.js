@@ -19,6 +19,7 @@
       ah: "AH", na: "n/a",
       dayLen: (h, m) => `${h}h ${m}m`,
       localEyebrow: "Your local time", save: "Save", saved: "Saved",
+      inHM: (h, m) => h ? `in ${h}h ${m}m` : `in ${m}m`, tomorrow: "tomorrow",
       savedToast: "Saved to My Cities.", removedToast: "Removed from My Cities.", favFull: n => `You can save up to ${n} cities.`,
     },
     ar: {
@@ -31,6 +32,7 @@
       ah: "هـ", na: "غير متاح",
       dayLen: (h, m) => `${h}h ${m}m`,
       localEyebrow: "وقتك المحلي", save: "احفظ", saved: "محفوظة",
+      inHM: (h, m) => h ? `بعد ${h} س ${m} د` : `بعد ${m} د`, tomorrow: "غدًا",
       savedToast: "تم الحفظ في مدني.", removedToast: "تمت الإزالة من مدني.", favFull: n => `تقدر تحفظ حتى ${n} مدن.`,
     },
   };
@@ -42,7 +44,7 @@
   /* ---------- State ---------- */
   let CITIES = [];
   const fmtCache = new Map();
-  let currentCity = null, homeCity = null;
+  let currentCity = null, homeCity = null, prayerState = null;
 
 
   const $  = (s, c = document) => c.querySelector(s);
@@ -360,6 +362,7 @@
     tick();
     const delay = 1000 - (Date.now() % 1000);
     setTimeout(() => { tick(); setInterval(tick, 1000); }, delay);
+    setInterval(updateNextLine, 30000);
   }
 
   /* ---------- Prayer times + Hijri (AlAdhan) ---------- */
@@ -416,7 +419,7 @@
     const host = $("#ltAnalog");
     if (host) {
       host.innerHTML = buildAnalogSvg();
-      ltEls = { ring: host.querySelector("#ltRing"), hour: host.querySelector("#ltHour"), min: host.querySelector("#ltMin"), sec: host.querySelector("#ltSec") };
+      ltEls = { hour: host.querySelector("#ltHour"), min: host.querySelector("#ltMin"), sec: host.querySelector("#ltSec") };
       cancelAnimationFrame(ltRAF); ltFrame();
     }
     // Detect the visitor's home city from their time zone (fallback Cairo)
@@ -455,22 +458,46 @@
       $("#gregDate").textContent  = new Intl.DateTimeFormat(LANG === "ar" ? "ar-EG-u-nu-latn" : "en-GB", { timeZone: "UTC", day: "numeric", month: "long", year: "numeric" }).format(g_d);
       $("#hijriDate").textContent = `${h.day} ${LANG === "ar" ? h.month.ar : h.month.en} ${h.year} ${T.ah}`;
       const clean = s => (s || "").split(" ")[0];
-      const next = nextPrayer(t);
+      const next = nextPrayer(t, city);
+      prayerState = { city, timings: {} };
+      PRAYERS.forEach(p => prayerState.timings[p] = clean(t[p]));
       grid.innerHTML = PRAYERS.map((p, i) => `
         <article class="prayer-card${p === next ? " is-next" : ""}">
           <div class="prayer-name">${T.prayers[i]}</div>
           <div class="prayer-time">${clean(t[p])}</div>
           <span class="prayer-tag">${p === next ? T.next : ""}</span>
         </article>`).join("");
+      updateNextLine();
     } catch {
       grid.innerHTML = `<p class="no-results" style="grid-column:1/-1">${T.prayerErr}</p>`;
     }
   }
-  function nextPrayer(t) {
-    const now = new Date(), mins = now.getHours()*60 + now.getMinutes();
+  function updateNextLine() {
+    const el = $("#cpNext"); if (!el) return;
+    if (!prayerState || !prayerState.city) { el.hidden = true; return; }
+    const off = offsetHours(prayerState.city.tz) * 3600000;
+    const d = new Date(Date.now() + off);
+    const nowMin = d.getUTCHours() * 60 + d.getUTCMinutes();
+    let idx = -1, nextMin = 0;
+    for (let i = 0; i < PRAYERS.length; i++) {
+      const [hh, mm] = (prayerState.timings[PRAYERS[i]] || "0:0").split(":");
+      const pm = (+hh) * 60 + (+mm);
+      if (pm > nowMin) { idx = i; nextMin = pm; break; }
+    }
+    let tomorrow = false;
+    if (idx < 0) { idx = 0; const [hh, mm] = (prayerState.timings.Fajr || "0:0").split(":"); nextMin = (+hh) * 60 + (+mm) + 1440; tomorrow = true; }
+    const diff = nextMin - nowMin, dh = Math.floor(diff / 60), dm = diff % 60;
+    el.hidden = false;
+    el.innerHTML = `<span class="cp-next-dot" aria-hidden="true"></span>${T.next}: <strong>${T.prayers[idx]}${tomorrow ? " " + T.tomorrow : ""}</strong> · <span class="mono">${prayerState.timings[PRAYERS[idx]]}</span> <span class="cp-next-in">${T.inHM(dh, dm)}</span>`;
+  }
+
+  function nextPrayer(t, city) {
+    const off = city ? offsetHours(city.tz) * 3600000 : 0;
+    const d = new Date(Date.now() + off);
+    const mins = d.getUTCHours() * 60 + d.getUTCMinutes();
     for (const p of PRAYERS) {
       const [hh, mm] = (t[p] || "").split(" ")[0].split(":");
-      if ((+hh)*60 + (+mm) > mins) return p;
+      if ((+hh) * 60 + (+mm) > mins) return p;
     }
     return "Fajr";
   }
@@ -497,50 +524,40 @@
   /* ---------- Boot ---------- */
   /* ---------- Your-local-time panel + Apple-Watch-style analog clock ---------- */
   let ltTz = "UTC", ltOffsetMs = 0, ltEls = {}, ltRAF = 0;
-  const LT_R = 88, LT_C = 2 * Math.PI * LT_R;
 
   function buildAnalogSvg() {
-    let ticks = "";
+    let ticks = "", nums = "";
     for (let i = 0; i < 60; i++) {
       const major = i % 5 === 0;
       const a = i * 6 * Math.PI / 180;
-      const r1 = major ? 77 : 83, r2 = 88;
-      const x1 = 100 + r1 * Math.sin(a), y1 = 100 - r1 * Math.cos(a);
-      const x2 = 100 + r2 * Math.sin(a), y2 = 100 - r2 * Math.cos(a);
-      ticks += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="var(--border-2)" stroke-width="${major ? 2.4 : 1}" stroke-linecap="round" opacity="${major ? .9 : .45}"/>`;
+      const r1 = major ? 75 : 80, r2 = 84;
+      ticks += `<line x1="${(100 + r1 * Math.sin(a)).toFixed(1)}" y1="${(100 - r1 * Math.cos(a)).toFixed(1)}" x2="${(100 + r2 * Math.sin(a)).toFixed(1)}" y2="${(100 - r2 * Math.cos(a)).toFixed(1)}" stroke="var(--border-2)" stroke-width="${major ? 2 : 1}" stroke-linecap="round" opacity="${major ? .85 : .4}"/>`;
+    }
+    for (let n = 1; n <= 12; n++) {
+      const a = n * 30 * Math.PI / 180, R = 60;
+      nums += `<text x="${(100 + R * Math.sin(a)).toFixed(1)}" y="${(100 - R * Math.cos(a) + 7).toFixed(1)}" text-anchor="middle" class="lt-num">${n}</text>`;
     }
     return `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="lt-svg" aria-hidden="true">
-      <defs>
-        <linearGradient id="ltGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="var(--brand)"/><stop offset="1" stop-color="var(--accent)"/>
-        </linearGradient>
-        <filter id="ltGlow" x="-60%" y="-60%" width="220%" height="220%">
-          <feGaussianBlur stdDeviation="2.1" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-      </defs>
-      <circle cx="100" cy="100" r="95" fill="var(--bg-soft)" stroke="var(--border)" stroke-width="1"/>
-      <circle id="ltRing" cx="100" cy="100" r="${LT_R}" fill="none" stroke="url(#ltGrad)" stroke-width="5" stroke-linecap="round" transform="rotate(-90 100 100)" stroke-dasharray="${LT_C.toFixed(1)}" stroke-dashoffset="${LT_C.toFixed(1)}"/>
+      <rect x="7" y="7" width="186" height="186" rx="30" fill="var(--bg-soft)" stroke="var(--border)" stroke-width="1.5"/>
+      <rect x="15" y="15" width="170" height="170" rx="24" fill="var(--surface)" stroke="var(--border-2)" stroke-width="1" opacity=".55"/>
       ${ticks}
-      <line id="ltHour" x1="100" y1="111" x2="100" y2="57" stroke="var(--text)" stroke-width="6.5" stroke-linecap="round"/>
-      <line id="ltMin" x1="100" y1="114" x2="100" y2="35" stroke="var(--text)" stroke-width="4.5" stroke-linecap="round"/>
-      <g id="ltSec" filter="url(#ltGlow)">
-        <line x1="100" y1="120" x2="100" y2="29" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
-        <circle cx="100" cy="35" r="3.3" fill="var(--accent)"/>
-      </g>
-      <circle cx="100" cy="100" r="5.5" fill="var(--text)"/>
-      <circle cx="100" cy="100" r="2.3" fill="var(--accent)"/>
+      <g class="lt-nums">${nums}</g>
+      <polygon id="ltHour" points="100,45 104.5,99 100,114 95.5,99" fill="var(--text)"/>
+      <polygon id="ltMin" points="100,29 104,98 100,117 96,98" fill="var(--text)"/>
+      <line id="ltSec" x1="100" y1="116" x2="100" y2="27" stroke="var(--brand)" stroke-width="1.8" stroke-linecap="round"/>
+      <circle cx="100" cy="100" r="5" fill="var(--text)"/>
+      <circle cx="100" cy="100" r="2.3" fill="var(--brand)"/>
     </svg>`;
   }
 
   function ltFrame() {
-    if (!ltEls.ring) return;
+    if (!ltEls.hour) return;
     const d = new Date(Date.now() + ltOffsetMs);
     const h = d.getUTCHours(), m = d.getUTCMinutes(), s = d.getUTCSeconds(), ms = d.getUTCMilliseconds();
     const secF = s + ms / 1000, minF = m + secF / 60, hF = (h % 12) + minF / 60;
     ltEls.hour.setAttribute("transform", `rotate(${(hF * 30).toFixed(2)} 100 100)`);
     ltEls.min.setAttribute("transform", `rotate(${(minF * 6).toFixed(2)} 100 100)`);
     ltEls.sec.setAttribute("transform", `rotate(${(secF * 6).toFixed(2)} 100 100)`);
-    ltEls.ring.setAttribute("stroke-dashoffset", (LT_C * (1 - secF / 60)).toFixed(1));
     ltRAF = requestAnimationFrame(ltFrame);
   }
 

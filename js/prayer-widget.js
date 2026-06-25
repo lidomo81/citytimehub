@@ -80,11 +80,12 @@
       sunDot = `<circle cx="${x}" cy="${y}" r="3.2" fill="none" stroke="var(--pw-sun)" stroke-width="1.8"/>`;
     }
     return `<svg viewBox="0 0 200 200" class="pw-svg" aria-hidden="true">
-      <circle cx="100" cy="100" r="95" fill="var(--pw-card)" stroke="var(--pw-border)" stroke-width="1"/>
+      <rect x="7" y="7" width="186" height="186" rx="30" fill="var(--pw-card)" stroke="var(--pw-border)" stroke-width="1.5"/>
+      <rect x="15" y="15" width="170" height="170" rx="24" fill="var(--pw-card2, var(--pw-card))" stroke="var(--pw-border2)" stroke-width="1" opacity=".55"/>
       ${ticks}${dots}${sunDot}
-      <line id="pw-h" x1="100" y1="111" x2="100" y2="62" stroke="var(--pw-text)" stroke-width="6" stroke-linecap="round"/>
-      <line id="pw-m" x1="100" y1="114" x2="100" y2="42" stroke="var(--pw-text)" stroke-width="4" stroke-linecap="round"/>
-      <line id="pw-s" x1="100" y1="118" x2="100" y2="36" stroke="var(--pw-accent2)" stroke-width="1.6" stroke-linecap="round"/>
+      <polygon id="pw-h" points="100,45 104.5,99 100,114 95.5,99" fill="var(--pw-text)"/>
+      <polygon id="pw-m" points="100,29 104,98 100,117 96,98" fill="var(--pw-text)"/>
+      <line id="pw-s" x1="100" y1="116" x2="100" y2="27" stroke="var(--pw-accent2)" stroke-width="1.6" stroke-linecap="round"/>
       <circle cx="100" cy="100" r="5" fill="var(--pw-text)"/><circle cx="100" cy="100" r="2.1" fill="var(--pw-accent2)"/>
     </svg>`;
   }
