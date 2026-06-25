@@ -445,18 +445,15 @@
 
     const inst = $("#cpInstall");
     if (inst) {
-      const syncInstall = () => { inst.hidden = !(window.CTH_PWA && window.CTH_PWA.canInstall()); };
-      document.addEventListener("cth-installable", syncInstall);
+      const syncInstall = () => {
+        // In an installed app already → no need to show install
+        inst.hidden = !!(window.CTH_PWA && window.CTH_PWA.inStandalone);
+      };
       document.addEventListener("cth-pwa-ready", syncInstall);
-      document.addEventListener("cth-installed", () => { inst.hidden = true; });
       syncInstall();
-      inst.addEventListener("click", async () => {
-        if (!currentCity || !window.CTH_PWA) return;
-        const nm = LANG === "ar" ? `مواقيت ${cName(currentCity)}` : `${cName(currentCity)} prayer times`;
-        const startUrl = (LANG === "ar" ? "/ar/?city=" : "/?city=") + currentCity.slug;
-        const r = await window.CTH_PWA.install({ name: nm, shortName: cName(currentCity), startUrl, lang: LANG, dir: LANG === "ar" ? "rtl" : "ltr" });
-        if (r === "unavailable") toast(LANG === "ar" ? "التثبيت غير متاح في متصفحك الآن." : "Install isn't available in this browser yet.");
-        else if (r === "installed") toast(LANG === "ar" ? "التطبيق مثبّت بالفعل." : "Already installed.");
+      inst.addEventListener("click", () => {
+        if (!currentCity) return;
+        location.href = (LANG === "ar" ? "/ar" : "") + "/app/" + currentCity.slug + "/";
       });
     }
   }

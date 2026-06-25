@@ -85,16 +85,8 @@
     opts = opts || {};
     if (inStandalone) return "installed";
     if (isIOS) { showIosSheet(opts); return "ios"; }
-
-    if (opts.name && opts.startUrl && swapManifest(opts)) {
-      const fresh = await waitForPrompt(1600);
-      const p = fresh || deferred;
-      if (!p) return "unavailable";
-      p.prompt();
-      try { await p.userChoice; } catch (e) {}
-      deferred = null;
-      return "prompted";
-    }
+    // Standard install: uses THIS page's own <link rel="manifest"> (each tool /
+    // bridge page ships its own manifest with the right name + start_url).
     if (!deferred) return "unavailable";
     deferred.prompt();
     try { await deferred.userChoice; } catch (e) {}

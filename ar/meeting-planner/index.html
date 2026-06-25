@@ -32,7 +32,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/style.css" />
-  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="manifest" href="/ar/m/meeting-planner.webmanifest" />
   <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="CityTimeHub" />
@@ -41,6 +41,14 @@
 </head>
 
 <body>
+<script>(function(){try{var p=new URLSearchParams(location.search);var s=(matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true;if(p.get('app')==='1'||s){document.documentElement.classList.add('app-mode');}}catch(e){}})();</script>
+  <div class="app-bar" role="banner">
+    <a class="app-bar-back" href="/ar/" aria-label="الرئيسية">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+    </a>
+    <span class="app-bar-title">مخطّط الأحداث</span>
+    <span class="app-bar-spacer" aria-hidden="true"></span>
+  </div>
   <header class="site-header" role="banner">
     <div class="container header-inner">
       <a class="brand" href="/ar/" aria-label="الصفحة الرئيسية لـ CityTimeHub">

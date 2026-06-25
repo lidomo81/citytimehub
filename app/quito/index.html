@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Quito prayer times</title>
+<meta name="robots" content="noindex,follow">
+<link rel="manifest" href="/app/quito.webmanifest">
+<link rel="icon" href="/icons/favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<meta name="theme-color" content="#0B1120">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Quito prayer times">
+<style>
+:root{--brand:#2563EB;--bg:#070b16;--surface:#111a30;--surface-2:#0c1426;--text:#eaf1ff;--text-2:#c3d0ea;--muted:#8295b7;--border:#1e2a44}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{background:radial-gradient(130% 120% at 50% 0%,#0e1630,#070b16 60%);color:var(--text);font-family:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center}
+.ic{max-width:380px;width:100%}
+.ic img{width:84px;height:84px;border-radius:20px;box-shadow:0 18px 40px -16px rgba(0,0,0,.7);margin-bottom:18px}
+.ic h1{font-size:1.5rem;font-weight:800;letter-spacing:-.02em;margin:0 0 8px}
+.ic p{color:var(--text-2);font-size:1rem;line-height:1.6;margin:0 0 22px}
+.go{display:block;width:100%;padding:15px;border:none;border-radius:14px;background:linear-gradient(180deg,#3b82f6,#2563EB);color:#fff;font:inherit;font-weight:700;font-size:1.05rem;cursor:pointer;box-shadow:0 14px 30px -12px rgba(37,99,235,.7)}
+.go:hover{filter:brightness(1.05)}
+.open{display:inline-block;margin-top:16px;color:var(--text-2);font-size:.95rem;text-decoration:none;border-bottom:1px solid var(--border);padding-bottom:2px}
+.ios{margin-top:18px;color:var(--muted);font-size:.9rem;line-height:1.6}
+</style>
+</head>
+<body>
+<main class="ic">
+  <img src="/icons/icon-192.png" alt="" width="84" height="84">
+  <h1>Quito prayer times</h1>
+  <p>Install to open Quito's prayer times instantly.</p>
+  <button class="go" id="go" type="button">Install app</button>
+  <a class="open" href="/?city=quito&app=1">Open in browser</a>
+  <p class="ios" id="ios" hidden>On iPhone: Share → “Add to Home Screen”.</p>
+</main>
+<script>
+(function(){
+  var appUrl="/?city=quito&app=1";
+  var standalone=(matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true;
+  if(standalone){location.replace(appUrl);return;}
+  var isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent)&&!window.MSStream;
+  var df=null,go=document.getElementById('go'),ios=document.getElementById('ios');
+  if(isIOS){ios.hidden=false;}
+  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();df=e;});
+  window.addEventListener('appinstalled',function(){location.replace(appUrl);});
+  go.addEventListener('click',function(){
+    if(df){df.prompt();df.userChoice.finally(function(){df=null;});}
+    else if(isIOS){ios.hidden=false;}
+    else{location.href=appUrl;}
+  });
+})();
+</script>
+</body>
+</html>

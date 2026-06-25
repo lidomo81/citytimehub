@@ -182,6 +182,55 @@ svg { display: block; }
 .cp-install { color: var(--brand); border-color: rgba(37,99,235,.45); background: rgba(37,99,235,.08); }
 .cp-install:hover { background: rgba(37,99,235,.14); }
 .tool-install { margin-top: 18px; }
+
+/* ===== App mode (installed PWA / ?app=1): show just the tool ===== */
+.app-bar { display: none; }
+html.app-mode .site-header,
+html.app-mode .breadcrumb,
+html.app-mode .site-footer,
+html.app-mode .tool-install,
+html.app-mode .explainer-section,
+html.app-mode [aria-labelledby="dir-h"],
+html.app-mode .hero .eyebrow { display: none !important; }
+
+html.app-mode .app-bar {
+  display: flex; align-items: center; gap: 10px;
+  position: sticky; top: 0; z-index: 50;
+  padding: 10px 14px; min-height: 52px;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+.app-bar-back {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px; flex: none; border-radius: 11px;
+  color: var(--text); background: var(--surface-2); border: 1px solid var(--border);
+  text-decoration: none;
+}
+.app-bar-back:hover { background: var(--bg-soft); }
+.app-bar-title { font-weight: 700; font-size: 1.02rem; color: var(--text); }
+.app-bar-spacer { width: 38px; flex: none; }
+
+/* tighten the hero on mobile app mode so the tool is front-and-center */
+html.app-mode .hero { padding: 14px 0 4px; }
+html.app-mode .hero .sky-panel { padding: 16px 18px; }
+html.app-mode .hero-title { font-size: clamp(1.5rem, 6vw, 2rem); }
+html.app-mode .hero-desc { font-size: .95rem; }
+html.app-mode main, html.app-mode #top { padding-top: 0; }
+@media (max-width: 720px) {
+  html.app-mode .hero .sky-panel { padding: 14px 14px; border-radius: 14px; }
+  html.app-mode .hero-desc { display: none; }
+}
+
+/* Home in app mode: show only the city panel */
+html.app-mode .hero,
+html.app-mode #tools,
+html.app-mode #myCities,
+html.app-mode #citiesCta,
+html.app-mode #reference { display: none !important; }
+.app-bar--home .app-bar-title { flex: 1; text-align: center; }
+html.app-mode #cityPanel { padding-top: 16px; }
+html.app-mode .cp-section .container { padding-top: 0; }
 /* iOS add-to-home-screen hint */
 .cth-ios { position: fixed; inset: 0; z-index: 120; display: flex; align-items: flex-end; justify-content: center; background: rgba(3,7,18,.55); padding: 16px; }
 .cth-ios-card { position: relative; width: 100%; max-width: 420px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px 20px; box-shadow: 0 24px 60px -24px rgba(0,0,0,.8); }
