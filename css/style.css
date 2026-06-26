@@ -76,9 +76,9 @@ svg { display: block; }
 .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--text); font-weight: 800; }
 .brand-mark {
   display: grid; place-items: center; width: 36px; height: 36px; border-radius: 11px; color: #fff;
-  background: linear-gradient(135deg, var(--brand), var(--accent));
-  box-shadow: 0 8px 20px -8px var(--brand);
+  overflow: hidden; box-shadow: 0 8px 20px -8px var(--brand);
 }
+.brand-mark img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .brand-text { font-size: 1.14rem; letter-spacing: -.03em; }
 .brand-text span { color: var(--brand); }
 .main-nav { display: flex; gap: 2px; margin-inline-start: auto; flex-wrap: nowrap; }
@@ -229,8 +229,14 @@ html.app-mode #myCities,
 html.app-mode #citiesCta,
 html.app-mode #reference { display: none !important; }
 .app-bar--home .app-bar-title { flex: 1; text-align: center; }
-html.app-mode #cityPanel { padding-top: 16px; }
-html.app-mode .cp-section .container { padding-top: 0; }
+.app-bar-site { color: var(--text-2); }
+/* center the panel in the app window so there's no big empty gap */
+html.app-mode #top { display: flex; flex-direction: column; justify-content: center; min-height: calc(100vh - 54px); }
+html.app-mode #cityPanel { padding-top: 8px; padding-bottom: 8px; width: 100%; }
+@media (max-width: 720px) {
+  html.app-mode #top { justify-content: flex-start; min-height: 0; }
+  html.app-mode #cityPanel { padding-top: 14px; }
+}
 /* iOS add-to-home-screen hint */
 .cth-ios { position: fixed; inset: 0; z-index: 120; display: flex; align-items: flex-end; justify-content: center; background: rgba(3,7,18,.55); padding: 16px; }
 .cth-ios-card { position: relative; width: 100%; max-width: 420px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px 20px; box-shadow: 0 24px 60px -24px rgba(0,0,0,.8); }

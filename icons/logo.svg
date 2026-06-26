@@ -1,0 +1,48 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#16356b"/>
+      <stop offset="0.5" stop-color="#3a2f6b"/>
+      <stop offset="1" stop-color="#7a3357"/>
+    </linearGradient>
+    <linearGradient id="moon" x1="0.1" y1="0" x2="0.9" y2="1">
+      <stop offset="0" stop-color="#fff1cf"/>
+      <stop offset="0.55" stop-color="#ffd486"/>
+      <stop offset="1" stop-color="#ff9f43"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="50%" cy="46%" r="55%">
+      <stop offset="0" stop-color="#ffd486" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#ffd486" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="116" fill="url(#sky)"/>
+
+  <g fill="#ffffff">
+    <circle cx="120" cy="120" r="2.6" opacity="0.85"/>
+    <circle cx="404" cy="150" r="3.4" opacity="0.95"/>
+    <circle cx="150" cy="392" r="2.2" opacity="0.8"/>
+    <circle cx="396" cy="372" r="2.6" opacity="0.85"/>
+    <circle cx="96" cy="250" r="1.8" opacity="0.7"/>
+    <circle cx="360" cy="96" r="1.8" opacity="0.7"/>
+  </g>
+
+  <circle cx="262" cy="246" r="185" fill="url(#halo)"/>
+
+  <!-- crescent -->
+  <path d="M286 96 a160 160 0 1 0 92 290 a126 126 0 1 1 -92 -290 Z" fill="url(#moon)"/>
+
+  <!-- quarter ticks (cream, subtle) -->
+  <g stroke="#ffe8b0" stroke-width="6" stroke-linecap="round" opacity="0.45">
+    <line x1="256" y1="150" x2="256" y2="168"/>
+    <line x1="256" y1="346" x2="256" y2="328"/>
+    <line x1="160" y1="248" x2="178" y2="248"/>
+    <line x1="352" y1="248" x2="334" y2="248"/>
+  </g>
+
+  <!-- clock hands (cream, visible on the dark face) -->
+  <line x1="256" y1="248" x2="256" y2="176" stroke="#fff4da" stroke-width="13" stroke-linecap="round"/>
+  <line x1="256" y1="248" x2="314" y2="278" stroke="#ffd486" stroke-width="13" stroke-linecap="round"/>
+  <circle cx="256" cy="248" r="12" fill="#fff4da"/>
+  <circle cx="256" cy="248" r="5" fill="#ff9f43"/>
+</svg>
