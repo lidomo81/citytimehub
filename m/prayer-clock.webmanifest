@@ -3,7 +3,7 @@
   "short_name": "Prayer Clock",
   "description": "Prayer Clock",
   "start_url": "/prayer-clock/?app=1",
-  "scope": "/",
+  "scope": "/prayer-clock/",
   "id": "/prayer-clock/?app=1",
   "display": "standalone",
   "orientation": "portrait-primary",

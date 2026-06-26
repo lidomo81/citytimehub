@@ -3,7 +3,7 @@
   "short_name": "Event Planne",
   "description": "Event Planner",
   "start_url": "/meeting-planner/?app=1",
-  "scope": "/",
+  "scope": "/meeting-planner/",
   "id": "/meeting-planner/?app=1",
   "display": "standalone",
   "orientation": "portrait-primary",

@@ -3,7 +3,7 @@
   "short_name": "Best Time to",
   "description": "Best Time to Call",
   "start_url": "/best-time-to-call/?app=1",
-  "scope": "/",
+  "scope": "/best-time-to-call/",
   "id": "/best-time-to-call/?app=1",
   "display": "standalone",
   "orientation": "portrait-primary",

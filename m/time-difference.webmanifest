@@ -3,7 +3,7 @@
   "short_name": "Compare Citi",
   "description": "Compare Cities",
   "start_url": "/time-difference/?app=1",
-  "scope": "/",
+  "scope": "/time-difference/",
   "id": "/time-difference/?app=1",
   "display": "standalone",
   "orientation": "portrait-primary",

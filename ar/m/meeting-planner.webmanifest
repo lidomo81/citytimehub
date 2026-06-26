@@ -3,7 +3,7 @@
   "short_name": "مخطّط الأحدا",
   "description": "مخطّط الأحداث",
   "start_url": "/ar/meeting-planner/?app=1",
-  "scope": "/",
+  "scope": "/ar/meeting-planner/",
   "id": "/ar/meeting-planner/?app=1",
   "display": "standalone",
   "orientation": "portrait-primary",

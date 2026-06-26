@@ -3,7 +3,7 @@
   "short_name": "Our Branches",
   "description": "Our Branches",
   "start_url": "/our-branches/?app=1",
-  "scope": "/",
+  "scope": "/our-branches/",
   "id": "/our-branches/?app=1",
   "display": "standalone",
   "orientation": "portrait-primary",

@@ -3,7 +3,7 @@
   "short_name": "أفضل وقت للا",
   "description": "أفضل وقت للاتصال",
   "start_url": "/ar/best-time-to-call/?app=1",
-  "scope": "/",
+  "scope": "/ar/best-time-to-call/",
   "id": "/ar/best-time-to-call/?app=1",
   "display": "standalone",
   "orientation": "portrait-primary",

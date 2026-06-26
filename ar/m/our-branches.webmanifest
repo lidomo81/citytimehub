@@ -3,7 +3,7 @@
   "short_name": "فروعنا",
   "description": "فروعنا",
   "start_url": "/ar/our-branches/?app=1",
-  "scope": "/",
+  "scope": "/ar/our-branches/",
   "id": "/ar/our-branches/?app=1",
   "display": "standalone",
   "orientation": "portrait-primary",

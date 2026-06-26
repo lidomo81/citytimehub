@@ -3,7 +3,7 @@
   "short_name": "ساعة الصلاة",
   "description": "ساعة الصلاة",
   "start_url": "/ar/prayer-clock/?app=1",
-  "scope": "/",
+  "scope": "/ar/prayer-clock/",
   "id": "/ar/prayer-clock/?app=1",
   "display": "standalone",
   "orientation": "portrait-primary",

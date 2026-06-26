@@ -3,7 +3,7 @@
   "short_name": "فرق التوقيت",
   "description": "فرق التوقيت",
   "start_url": "/ar/time-difference/?app=1",
-  "scope": "/",
+  "scope": "/ar/time-difference/",
   "id": "/ar/time-difference/?app=1",
   "display": "standalone",
   "orientation": "portrait-primary",
