@@ -229,7 +229,9 @@ html.app-mode #myCities,
 html.app-mode #citiesCta,
 html.app-mode #reference { display: none !important; }
 .app-bar--home .app-bar-title { flex: 1; text-align: center; }
-.app-bar-site { color: var(--text-2); }
+.app-bar-site { display: inline-flex; align-items: center; gap: 7px; padding: 8px 13px; border-radius: 11px; color: var(--text-2); background: var(--surface-2); border: 1px solid var(--border); text-decoration: none; font-weight: 600; font-size: .88rem; white-space: nowrap; }
+.app-bar-site:hover { background: var(--bg-soft); color: var(--text); }
+.app-bar-site svg { flex: none; }
 /* center the panel in the app window so there's no big empty gap */
 html.app-mode #top { display: flex; flex-direction: column; justify-content: center; min-height: calc(100vh - 54px); }
 html.app-mode #cityPanel { padding-top: 8px; padding-bottom: 8px; width: 100%; }
