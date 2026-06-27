@@ -626,9 +626,11 @@
 
     const params = new URLSearchParams(location.search);
     const cityParam = params.get("city");
-    if (cityParam) {
+    // Only honor the URL's city when the user hasn't pinned their own default,
+    // so an installed app's start_url (/?city=…) never overrides a saved choice.
+    if (cityParam && !getHomeSlug()) {
       const c = CITIES.find(x => x.slug === cityParam);
-      if (c) setCity(c);          // installed "Cairo prayer times" icon opens focused on Cairo
+      if (c) setCity(c);
     }
     const q = params.get("q");
     if (q) {
