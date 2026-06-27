@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت القصيم",
-  "short_name": "القصيم",
-  "description": "مواقيت القصيم",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=al-qassim&app=1",
   "scope": "/",
   "id": "/ar/?city=al-qassim&app=1",

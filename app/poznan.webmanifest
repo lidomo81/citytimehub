@@ -1,7 +1,7 @@
 {
-  "name": "Poznan prayer times",
-  "short_name": "Poznan",
-  "description": "Poznan prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=poznan&app=1",
   "scope": "/",
   "id": "/?city=poznan&app=1",

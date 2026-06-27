@@ -1,7 +1,7 @@
 {
-  "name": "Bologna prayer times",
-  "short_name": "Bologna",
-  "description": "Bologna prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=bologna&app=1",
   "scope": "/",
   "id": "/?city=bologna&app=1",

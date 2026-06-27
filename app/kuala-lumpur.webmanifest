@@ -1,7 +1,7 @@
 {
-  "name": "Kuala Lumpur prayer times",
-  "short_name": "Kuala Lumpur",
-  "description": "Kuala Lumpur prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=kuala-lumpur&app=1",
   "scope": "/",
   "id": "/?city=kuala-lumpur&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت سنغافورة",
-  "short_name": "سنغافورة",
-  "description": "مواقيت سنغافورة",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=singapore&app=1",
   "scope": "/",
   "id": "/ar/?city=singapore&app=1",

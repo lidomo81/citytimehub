@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت الفجيرة",
-  "short_name": "الفجيرة",
-  "description": "مواقيت الفجيرة",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=fujairah&app=1",
   "scope": "/",
   "id": "/ar/?city=fujairah&app=1",

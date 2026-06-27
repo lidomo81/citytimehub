@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت ليدز",
-  "short_name": "ليدز",
-  "description": "مواقيت ليدز",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=leeds&app=1",
   "scope": "/",
   "id": "/ar/?city=leeds&app=1",

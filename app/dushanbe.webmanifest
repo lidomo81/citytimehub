@@ -1,7 +1,7 @@
 {
-  "name": "Dushanbe prayer times",
-  "short_name": "Dushanbe",
-  "description": "Dushanbe prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=dushanbe&app=1",
   "scope": "/",
   "id": "/?city=dushanbe&app=1",

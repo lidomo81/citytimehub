@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت الدمام",
-  "short_name": "الدمام",
-  "description": "مواقيت الدمام",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=dammam&app=1",
   "scope": "/",
   "id": "/ar/?city=dammam&app=1",

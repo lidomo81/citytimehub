@@ -1,7 +1,7 @@
 {
-  "name": "Kassala prayer times",
-  "short_name": "Kassala",
-  "description": "Kassala prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=kassala&app=1",
   "scope": "/",
   "id": "/?city=kassala&app=1",

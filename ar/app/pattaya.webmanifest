@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت باتايا",
-  "short_name": "باتايا",
-  "description": "مواقيت باتايا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=pattaya&app=1",
   "scope": "/",
   "id": "/ar/?city=pattaya&app=1",

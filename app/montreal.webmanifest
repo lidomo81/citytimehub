@@ -1,7 +1,7 @@
 {
-  "name": "Montreal prayer times",
-  "short_name": "Montreal",
-  "description": "Montreal prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=montreal&app=1",
   "scope": "/",
   "id": "/?city=montreal&app=1",

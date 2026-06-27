@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت إزمير",
-  "short_name": "إزمير",
-  "description": "مواقيت إزمير",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=izmir&app=1",
   "scope": "/",
   "id": "/ar/?city=izmir&app=1",

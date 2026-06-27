@@ -1,7 +1,7 @@
 {
-  "name": "Mazar-i-Sharif prayer times",
-  "short_name": "Mazar-i-Shar",
-  "description": "Mazar-i-Sharif prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=mazar-i-sharif&app=1",
   "scope": "/",
   "id": "/?city=mazar-i-sharif&app=1",

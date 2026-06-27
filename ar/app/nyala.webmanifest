@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت نيالا",
-  "short_name": "نيالا",
-  "description": "مواقيت نيالا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=nyala&app=1",
   "scope": "/",
   "id": "/ar/?city=nyala&app=1",

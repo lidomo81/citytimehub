@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت الدوحة",
-  "short_name": "الدوحة",
-  "description": "مواقيت الدوحة",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=doha&app=1",
   "scope": "/",
   "id": "/ar/?city=doha&app=1",

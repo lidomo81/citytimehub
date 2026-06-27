@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت باراماريبو",
-  "short_name": "باراماريبو",
-  "description": "مواقيت باراماريبو",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=paramaribo&app=1",
   "scope": "/",
   "id": "/ar/?city=paramaribo&app=1",

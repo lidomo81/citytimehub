@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت لايبزغ",
-  "short_name": "لايبزغ",
-  "description": "مواقيت لايبزغ",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=leipzig&app=1",
   "scope": "/",
   "id": "/ar/?city=leipzig&app=1",

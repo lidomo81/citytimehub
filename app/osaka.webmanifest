@@ -1,7 +1,7 @@
 {
-  "name": "Osaka prayer times",
-  "short_name": "Osaka",
-  "description": "Osaka prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=osaka&app=1",
   "scope": "/",
   "id": "/?city=osaka&app=1",

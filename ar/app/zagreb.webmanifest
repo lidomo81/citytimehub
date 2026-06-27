@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت زغرب",
-  "short_name": "زغرب",
-  "description": "مواقيت زغرب",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=zagreb&app=1",
   "scope": "/",
   "id": "/ar/?city=zagreb&app=1",

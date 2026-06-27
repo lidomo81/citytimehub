@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت كيغالي",
-  "short_name": "كيغالي",
-  "description": "مواقيت كيغالي",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=kigali&app=1",
   "scope": "/",
   "id": "/ar/?city=kigali&app=1",

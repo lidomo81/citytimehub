@@ -1,7 +1,7 @@
 {
-  "name": "Philadelphia prayer times",
-  "short_name": "Philadelphia",
-  "description": "Philadelphia prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=philadelphia&app=1",
   "scope": "/",
   "id": "/?city=philadelphia&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت كركوك",
-  "short_name": "كركوك",
-  "description": "مواقيت كركوك",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=kirkuk&app=1",
   "scope": "/",
   "id": "/ar/?city=kirkuk&app=1",

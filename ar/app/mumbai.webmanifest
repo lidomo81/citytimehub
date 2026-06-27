@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت مومباي",
-  "short_name": "مومباي",
-  "description": "مواقيت مومباي",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=mumbai&app=1",
   "scope": "/",
   "id": "/ar/?city=mumbai&app=1",

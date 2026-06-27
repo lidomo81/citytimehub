@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت كوماسي",
-  "short_name": "كوماسي",
-  "description": "مواقيت كوماسي",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=kumasi&app=1",
   "scope": "/",
   "id": "/ar/?city=kumasi&app=1",

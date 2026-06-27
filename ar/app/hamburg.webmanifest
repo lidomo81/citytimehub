@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت هامبورغ",
-  "short_name": "هامبورغ",
-  "description": "مواقيت هامبورغ",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=hamburg&app=1",
   "scope": "/",
   "id": "/ar/?city=hamburg&app=1",

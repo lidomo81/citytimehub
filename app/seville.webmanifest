@@ -1,7 +1,7 @@
 {
-  "name": "Seville prayer times",
-  "short_name": "Seville",
-  "description": "Seville prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=seville&app=1",
   "scope": "/",
   "id": "/?city=seville&app=1",

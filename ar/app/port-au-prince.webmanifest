@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت بورت أو برنس",
-  "short_name": "بورت أو برنس",
-  "description": "مواقيت بورت أو برنس",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=port-au-prince&app=1",
   "scope": "/",
   "id": "/ar/?city=port-au-prince&app=1",

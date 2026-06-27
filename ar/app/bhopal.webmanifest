@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت بوبال",
-  "short_name": "بوبال",
-  "description": "مواقيت بوبال",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=bhopal&app=1",
   "scope": "/",
   "id": "/ar/?city=bhopal&app=1",

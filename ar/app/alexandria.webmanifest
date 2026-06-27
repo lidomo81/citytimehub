@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت الإسكندرية",
-  "short_name": "الإسكندرية",
-  "description": "مواقيت الإسكندرية",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=alexandria&app=1",
   "scope": "/",
   "id": "/ar/?city=alexandria&app=1",

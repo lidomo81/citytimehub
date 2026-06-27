@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت روما",
-  "short_name": "روما",
-  "description": "مواقيت روما",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=rome&app=1",
   "scope": "/",
   "id": "/ar/?city=rome&app=1",

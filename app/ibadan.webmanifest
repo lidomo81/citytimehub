@@ -1,7 +1,7 @@
 {
-  "name": "Ibadan prayer times",
-  "short_name": "Ibadan",
-  "description": "Ibadan prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=ibadan&app=1",
   "scope": "/",
   "id": "/?city=ibadan&app=1",

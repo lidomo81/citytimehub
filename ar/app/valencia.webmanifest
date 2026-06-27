@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت بلنسية",
-  "short_name": "بلنسية",
-  "description": "مواقيت بلنسية",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=valencia&app=1",
   "scope": "/",
   "id": "/ar/?city=valencia&app=1",

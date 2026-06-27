@@ -1,7 +1,7 @@
 {
-  "name": "Sarajevo prayer times",
-  "short_name": "Sarajevo",
-  "description": "Sarajevo prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=sarajevo&app=1",
   "scope": "/",
   "id": "/?city=sarajevo&app=1",

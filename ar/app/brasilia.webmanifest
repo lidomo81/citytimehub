@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت برازيليا",
-  "short_name": "برازيليا",
-  "description": "مواقيت برازيليا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=brasilia&app=1",
   "scope": "/",
   "id": "/ar/?city=brasilia&app=1",

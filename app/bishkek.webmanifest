@@ -1,7 +1,7 @@
 {
-  "name": "Bishkek prayer times",
-  "short_name": "Bishkek",
-  "description": "Bishkek prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=bishkek&app=1",
   "scope": "/",
   "id": "/?city=bishkek&app=1",

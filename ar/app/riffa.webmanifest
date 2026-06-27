@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت الرفاع",
-  "short_name": "الرفاع",
-  "description": "مواقيت الرفاع",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=riffa&app=1",
   "scope": "/",
   "id": "/ar/?city=riffa&app=1",

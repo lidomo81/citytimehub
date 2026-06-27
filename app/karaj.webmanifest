@@ -1,7 +1,7 @@
 {
-  "name": "Karaj prayer times",
-  "short_name": "Karaj",
-  "description": "Karaj prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=karaj&app=1",
   "scope": "/",
   "id": "/?city=karaj&app=1",

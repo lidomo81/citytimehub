@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت بورصة",
-  "short_name": "بورصة",
-  "description": "مواقيت بورصة",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=bursa&app=1",
   "scope": "/",
   "id": "/ar/?city=bursa&app=1",

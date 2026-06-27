@@ -1,7 +1,7 @@
 {
-  "name": "Astana prayer times",
-  "short_name": "Astana",
-  "description": "Astana prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=astana&app=1",
   "scope": "/",
   "id": "/?city=astana&app=1",

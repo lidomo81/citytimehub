@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت بهاولبور",
-  "short_name": "بهاولبور",
-  "description": "مواقيت بهاولبور",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=bahawalpur&app=1",
   "scope": "/",
   "id": "/ar/?city=bahawalpur&app=1",

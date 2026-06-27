@@ -1,7 +1,7 @@
 {
-  "name": "Budapest prayer times",
-  "short_name": "Budapest",
-  "description": "Budapest prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=budapest&app=1",
   "scope": "/",
   "id": "/?city=budapest&app=1",

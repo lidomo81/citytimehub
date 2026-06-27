@@ -1,7 +1,7 @@
 {
-  "name": "Minya prayer times",
-  "short_name": "Minya",
-  "description": "Minya prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=minya&app=1",
   "scope": "/",
   "id": "/?city=minya&app=1",

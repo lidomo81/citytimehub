@@ -1,7 +1,7 @@
 {
-  "name": "Al Khobar prayer times",
-  "short_name": "Al Khobar",
-  "description": "Al Khobar prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=al-khobar&app=1",
   "scope": "/",
   "id": "/?city=al-khobar&app=1",

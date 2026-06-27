@@ -1,7 +1,7 @@
 {
-  "name": "New Orleans prayer times",
-  "short_name": "New Orleans",
-  "description": "New Orleans prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=new-orleans&app=1",
   "scope": "/",
   "id": "/?city=new-orleans&app=1",

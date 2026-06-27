@@ -1,7 +1,7 @@
 {
-  "name": "Vilnius prayer times",
-  "short_name": "Vilnius",
-  "description": "Vilnius prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=vilnius&app=1",
   "scope": "/",
   "id": "/?city=vilnius&app=1",

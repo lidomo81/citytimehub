@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت حماة",
-  "short_name": "حماة",
-  "description": "مواقيت حماة",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=hama&app=1",
   "scope": "/",
   "id": "/ar/?city=hama&app=1",

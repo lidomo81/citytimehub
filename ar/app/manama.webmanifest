@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت المنامة",
-  "short_name": "المنامة",
-  "description": "مواقيت المنامة",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=manama&app=1",
   "scope": "/",
   "id": "/ar/?city=manama&app=1",

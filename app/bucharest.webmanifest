@@ -1,7 +1,7 @@
 {
-  "name": "Bucharest prayer times",
-  "short_name": "Bucharest",
-  "description": "Bucharest prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=bucharest&app=1",
   "scope": "/",
   "id": "/?city=bucharest&app=1",

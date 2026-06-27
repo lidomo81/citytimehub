@@ -1,7 +1,7 @@
 {
-  "name": "Canberra prayer times",
-  "short_name": "Canberra",
-  "description": "Canberra prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=canberra&app=1",
   "scope": "/",
   "id": "/?city=canberra&app=1",

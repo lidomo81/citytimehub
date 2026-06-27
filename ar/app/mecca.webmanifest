@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت مكة المكرمة",
-  "short_name": "مكة المكرمة",
-  "description": "مواقيت مكة المكرمة",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=mecca&app=1",
   "scope": "/",
   "id": "/ar/?city=mecca&app=1",

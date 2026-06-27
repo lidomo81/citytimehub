@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت جايبور",
-  "short_name": "جايبور",
-  "description": "مواقيت جايبور",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=jaipur&app=1",
   "scope": "/",
   "id": "/ar/?city=jaipur&app=1",

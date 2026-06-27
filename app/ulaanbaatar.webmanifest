@@ -1,7 +1,7 @@
 {
-  "name": "Ulaanbaatar prayer times",
-  "short_name": "Ulaanbaatar",
-  "description": "Ulaanbaatar prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=ulaanbaatar&app=1",
   "scope": "/",
   "id": "/?city=ulaanbaatar&app=1",

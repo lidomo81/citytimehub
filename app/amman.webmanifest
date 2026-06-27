@@ -1,7 +1,7 @@
 {
-  "name": "Amman prayer times",
-  "short_name": "Amman",
-  "description": "Amman prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=amman&app=1",
   "scope": "/",
   "id": "/?city=amman&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت باتنة",
-  "short_name": "باتنة",
-  "description": "مواقيت باتنة",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=batna&app=1",
   "scope": "/",
   "id": "/ar/?city=batna&app=1",

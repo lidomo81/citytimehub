@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت نوفوسيبيرسك",
-  "short_name": "نوفوسيبيرسك",
-  "description": "مواقيت نوفوسيبيرسك",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=novosibirsk&app=1",
   "scope": "/",
   "id": "/ar/?city=novosibirsk&app=1",

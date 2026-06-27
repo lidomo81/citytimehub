@@ -1,7 +1,7 @@
 {
-  "name": "Asmara prayer times",
-  "short_name": "Asmara",
-  "description": "Asmara prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=asmara&app=1",
   "scope": "/",
   "id": "/?city=asmara&app=1",

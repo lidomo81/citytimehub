@@ -1,7 +1,7 @@
 {
-  "name": "Mashhad prayer times",
-  "short_name": "Mashhad",
-  "description": "Mashhad prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=mashhad&app=1",
   "scope": "/",
   "id": "/?city=mashhad&app=1",

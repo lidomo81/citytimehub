@@ -1,7 +1,7 @@
 {
-  "name": "Irbid prayer times",
-  "short_name": "Irbid",
-  "description": "Irbid prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=irbid&app=1",
   "scope": "/",
   "id": "/?city=irbid&app=1",

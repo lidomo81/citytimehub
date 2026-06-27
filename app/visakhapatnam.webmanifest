@@ -1,7 +1,7 @@
 {
-  "name": "Visakhapatnam prayer times",
-  "short_name": "Visakhapatna",
-  "description": "Visakhapatnam prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=visakhapatnam&app=1",
   "scope": "/",
   "id": "/?city=visakhapatnam&app=1",

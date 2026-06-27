@@ -1,7 +1,7 @@
 {
-  "name": "Thimphu prayer times",
-  "short_name": "Thimphu",
-  "description": "Thimphu prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=thimphu&app=1",
   "scope": "/",
   "id": "/?city=thimphu&app=1",

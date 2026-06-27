@@ -1,7 +1,7 @@
 {
-  "name": "Toulouse prayer times",
-  "short_name": "Toulouse",
-  "description": "Toulouse prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=toulouse&app=1",
   "scope": "/",
   "id": "/?city=toulouse&app=1",

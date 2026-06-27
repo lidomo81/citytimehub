@@ -1,7 +1,7 @@
 {
-  "name": "Muharraq prayer times",
-  "short_name": "Muharraq",
-  "description": "Muharraq prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=muharraq&app=1",
   "scope": "/",
   "id": "/?city=muharraq&app=1",

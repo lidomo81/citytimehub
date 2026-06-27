@@ -1,7 +1,7 @@
 {
-  "name": "Fukuoka prayer times",
-  "short_name": "Fukuoka",
-  "description": "Fukuoka prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=fukuoka&app=1",
   "scope": "/",
   "id": "/?city=fukuoka&app=1",

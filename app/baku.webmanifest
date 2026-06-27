@@ -1,7 +1,7 @@
 {
-  "name": "Baku prayer times",
-  "short_name": "Baku",
-  "description": "Baku prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=baku&app=1",
   "scope": "/",
   "id": "/?city=baku&app=1",

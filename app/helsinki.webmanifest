@@ -1,7 +1,7 @@
 {
-  "name": "Helsinki prayer times",
-  "short_name": "Helsinki",
-  "description": "Helsinki prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=helsinki&app=1",
   "scope": "/",
   "id": "/?city=helsinki&app=1",

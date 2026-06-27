@@ -1,7 +1,7 @@
 {
-  "name": "Kandy prayer times",
-  "short_name": "Kandy",
-  "description": "Kandy prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=kandy&app=1",
   "scope": "/",
   "id": "/?city=kandy&app=1",

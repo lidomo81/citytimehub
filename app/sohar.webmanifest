@@ -1,7 +1,7 @@
 {
-  "name": "Sohar prayer times",
-  "short_name": "Sohar",
-  "description": "Sohar prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=sohar&app=1",
   "scope": "/",
   "id": "/?city=sohar&app=1",

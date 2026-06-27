@@ -1,7 +1,7 @@
 {
-  "name": "Ahmedabad prayer times",
-  "short_name": "Ahmedabad",
-  "description": "Ahmedabad prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=ahmedabad&app=1",
   "scope": "/",
   "id": "/?city=ahmedabad&app=1",

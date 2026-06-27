@@ -1,7 +1,7 @@
 {
-  "name": "Qena prayer times",
-  "short_name": "Qena",
-  "description": "Qena prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=qena&app=1",
   "scope": "/",
   "id": "/?city=qena&app=1",

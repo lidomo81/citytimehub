@@ -1,7 +1,7 @@
 {
-  "name": "Davao prayer times",
-  "short_name": "Davao",
-  "description": "Davao prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=davao&app=1",
   "scope": "/",
   "id": "/?city=davao&app=1",

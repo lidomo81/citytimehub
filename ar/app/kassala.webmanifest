@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت كسلا",
-  "short_name": "كسلا",
-  "description": "مواقيت كسلا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=kassala&app=1",
   "scope": "/",
   "id": "/ar/?city=kassala&app=1",

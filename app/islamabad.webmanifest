@@ -1,7 +1,7 @@
 {
-  "name": "Islamabad prayer times",
-  "short_name": "Islamabad",
-  "description": "Islamabad prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=islamabad&app=1",
   "scope": "/",
   "id": "/?city=islamabad&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت دبلن",
-  "short_name": "دبلن",
-  "description": "مواقيت دبلن",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=dublin&app=1",
   "scope": "/",
   "id": "/ar/?city=dublin&app=1",

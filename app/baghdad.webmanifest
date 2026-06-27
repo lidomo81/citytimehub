@@ -1,7 +1,7 @@
 {
-  "name": "Baghdad prayer times",
-  "short_name": "Baghdad",
-  "description": "Baghdad prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=baghdad&app=1",
   "scope": "/",
   "id": "/?city=baghdad&app=1",

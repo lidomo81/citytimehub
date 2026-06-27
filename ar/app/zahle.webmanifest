@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت زحلة",
-  "short_name": "زحلة",
-  "description": "مواقيت زحلة",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=zahle&app=1",
   "scope": "/",
   "id": "/ar/?city=zahle&app=1",

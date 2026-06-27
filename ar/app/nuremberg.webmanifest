@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت نورنبرغ",
-  "short_name": "نورنبرغ",
-  "description": "مواقيت نورنبرغ",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=nuremberg&app=1",
   "scope": "/",
   "id": "/ar/?city=nuremberg&app=1",

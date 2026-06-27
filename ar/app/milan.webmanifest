@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت ميلانو",
-  "short_name": "ميلانو",
-  "description": "مواقيت ميلانو",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=milan&app=1",
   "scope": "/",
   "id": "/ar/?city=milan&app=1",

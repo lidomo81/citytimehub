@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت جاكرتا",
-  "short_name": "جاكرتا",
-  "description": "مواقيت جاكرتا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=jakarta&app=1",
   "scope": "/",
   "id": "/ar/?city=jakarta&app=1",

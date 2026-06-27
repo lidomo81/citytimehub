@@ -1,7 +1,7 @@
 {
-  "name": "Antananarivo prayer times",
-  "short_name": "Antananarivo",
-  "description": "Antananarivo prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=antananarivo&app=1",
   "scope": "/",
   "id": "/?city=antananarivo&app=1",

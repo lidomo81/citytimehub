@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت كاتانيا",
-  "short_name": "كاتانيا",
-  "description": "مواقيت كاتانيا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=catania&app=1",
   "scope": "/",
   "id": "/ar/?city=catania&app=1",

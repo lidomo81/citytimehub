@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت أبها",
-  "short_name": "أبها",
-  "description": "مواقيت أبها",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=abha&app=1",
   "scope": "/",
   "id": "/ar/?city=abha&app=1",

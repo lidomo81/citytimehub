@@ -1,7 +1,7 @@
 {
-  "name": "Quetta prayer times",
-  "short_name": "Quetta",
-  "description": "Quetta prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=quetta&app=1",
   "scope": "/",
   "id": "/?city=quetta&app=1",

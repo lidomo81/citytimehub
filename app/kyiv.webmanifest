@@ -1,7 +1,7 @@
 {
-  "name": "Kyiv prayer times",
-  "short_name": "Kyiv",
-  "description": "Kyiv prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=kyiv&app=1",
   "scope": "/",
   "id": "/?city=kyiv&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت جدة",
-  "short_name": "جدة",
-  "description": "مواقيت جدة",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=jeddah&app=1",
   "scope": "/",
   "id": "/ar/?city=jeddah&app=1",

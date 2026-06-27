@@ -1,7 +1,7 @@
 {
-  "name": "São Paulo prayer times",
-  "short_name": "São Paulo",
-  "description": "São Paulo prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=sao-paulo&app=1",
   "scope": "/",
   "id": "/?city=sao-paulo&app=1",

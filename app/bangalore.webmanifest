@@ -1,7 +1,7 @@
 {
-  "name": "Bangalore prayer times",
-  "short_name": "Bangalore",
-  "description": "Bangalore prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=bangalore&app=1",
   "scope": "/",
   "id": "/?city=bangalore&app=1",

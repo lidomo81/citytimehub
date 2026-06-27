@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت الشارقة",
-  "short_name": "الشارقة",
-  "description": "مواقيت الشارقة",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=sharjah&app=1",
   "scope": "/",
   "id": "/ar/?city=sharjah&app=1",

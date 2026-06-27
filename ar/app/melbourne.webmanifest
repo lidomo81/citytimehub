@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت ملبورن",
-  "short_name": "ملبورن",
-  "description": "مواقيت ملبورن",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=melbourne&app=1",
   "scope": "/",
   "id": "/ar/?city=melbourne&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت بوزنان",
-  "short_name": "بوزنان",
-  "description": "مواقيت بوزنان",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=poznan&app=1",
   "scope": "/",
   "id": "/ar/?city=poznan&app=1",

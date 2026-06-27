@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت طنطا",
-  "short_name": "طنطا",
-  "description": "مواقيت طنطا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=tanta&app=1",
   "scope": "/",
   "id": "/ar/?city=tanta&app=1",

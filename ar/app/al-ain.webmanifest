@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت العين",
-  "short_name": "العين",
-  "description": "مواقيت العين",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=al-ain&app=1",
   "scope": "/",
   "id": "/ar/?city=al-ain&app=1",

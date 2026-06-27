@@ -1,7 +1,7 @@
 {
-  "name": "Taif prayer times",
-  "short_name": "Taif",
-  "description": "Taif prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=taif&app=1",
   "scope": "/",
   "id": "/?city=taif&app=1",

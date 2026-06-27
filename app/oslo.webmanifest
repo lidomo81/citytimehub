@@ -1,7 +1,7 @@
 {
-  "name": "Oslo prayer times",
-  "short_name": "Oslo",
-  "description": "Oslo prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=oslo&app=1",
   "scope": "/",
   "id": "/?city=oslo&app=1",

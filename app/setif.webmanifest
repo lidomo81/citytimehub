@@ -1,7 +1,7 @@
 {
-  "name": "Setif prayer times",
-  "short_name": "Setif",
-  "description": "Setif prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=setif&app=1",
   "scope": "/",
   "id": "/?city=setif&app=1",

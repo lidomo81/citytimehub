@@ -1,7 +1,7 @@
 {
-  "name": "Conakry prayer times",
-  "short_name": "Conakry",
-  "description": "Conakry prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=conakry&app=1",
   "scope": "/",
   "id": "/?city=conakry&app=1",

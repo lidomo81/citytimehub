@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت سكوبيه",
-  "short_name": "سكوبيه",
-  "description": "مواقيت سكوبيه",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=skopje&app=1",
   "scope": "/",
   "id": "/ar/?city=skopje&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Sidon prayer times",
-  "short_name": "Sidon",
-  "description": "Sidon prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=sidon&app=1",
   "scope": "/",
   "id": "/?city=sidon&app=1",

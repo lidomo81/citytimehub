@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت ديترويت",
-  "short_name": "ديترويت",
-  "description": "مواقيت ديترويت",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=detroit&app=1",
   "scope": "/",
   "id": "/ar/?city=detroit&app=1",

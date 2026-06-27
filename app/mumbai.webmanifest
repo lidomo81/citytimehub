@@ -1,7 +1,7 @@
 {
-  "name": "Mumbai prayer times",
-  "short_name": "Mumbai",
-  "description": "Mumbai prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=mumbai&app=1",
   "scope": "/",
   "id": "/?city=mumbai&app=1",

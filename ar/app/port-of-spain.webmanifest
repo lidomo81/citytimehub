@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت بورت أوف سبين",
-  "short_name": "بورت أوف سبي",
-  "description": "مواقيت بورت أوف سبين",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=port-of-spain&app=1",
   "scope": "/",
   "id": "/ar/?city=port-of-spain&app=1",

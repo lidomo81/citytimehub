@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت مكسيكو سيتي",
-  "short_name": "مكسيكو سيتي",
-  "description": "مواقيت مكسيكو سيتي",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=mexico-city&app=1",
   "scope": "/",
   "id": "/ar/?city=mexico-city&app=1",

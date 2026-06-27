@@ -1,7 +1,7 @@
 {
-  "name": "Nantes prayer times",
-  "short_name": "Nantes",
-  "description": "Nantes prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=nantes&app=1",
   "scope": "/",
   "id": "/?city=nantes&app=1",

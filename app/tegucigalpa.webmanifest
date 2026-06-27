@@ -1,7 +1,7 @@
 {
-  "name": "Tegucigalpa prayer times",
-  "short_name": "Tegucigalpa",
-  "description": "Tegucigalpa prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=tegucigalpa&app=1",
   "scope": "/",
   "id": "/?city=tegucigalpa&app=1",

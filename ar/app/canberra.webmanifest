@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت كانبرا",
-  "short_name": "كانبرا",
-  "description": "مواقيت كانبرا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=canberra&app=1",
   "scope": "/",
   "id": "/ar/?city=canberra&app=1",

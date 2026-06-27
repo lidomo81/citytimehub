@@ -1,7 +1,7 @@
 {
-  "name": "Daegu prayer times",
-  "short_name": "Daegu",
-  "description": "Daegu prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=daegu&app=1",
   "scope": "/",
   "id": "/?city=daegu&app=1",

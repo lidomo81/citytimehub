@@ -1,7 +1,7 @@
 {
-  "name": "Lille prayer times",
-  "short_name": "Lille",
-  "description": "Lille prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=lille&app=1",
   "scope": "/",
   "id": "/?city=lille&app=1",

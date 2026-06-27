@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت لاهاي",
-  "short_name": "لاهاي",
-  "description": "مواقيت لاهاي",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=the-hague&app=1",
   "scope": "/",
   "id": "/ar/?city=the-hague&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Ho Chi Minh City prayer times",
-  "short_name": "Ho Chi Minh ",
-  "description": "Ho Chi Minh City prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=ho-chi-minh-city&app=1",
   "scope": "/",
   "id": "/?city=ho-chi-minh-city&app=1",

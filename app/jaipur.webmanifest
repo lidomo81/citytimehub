@@ -1,7 +1,7 @@
 {
-  "name": "Jaipur prayer times",
-  "short_name": "Jaipur",
-  "description": "Jaipur prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=jaipur&app=1",
   "scope": "/",
   "id": "/?city=jaipur&app=1",

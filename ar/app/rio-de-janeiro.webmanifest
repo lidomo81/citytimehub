@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت ريو دي جانيرو",
-  "short_name": "ريو دي جانير",
-  "description": "مواقيت ريو دي جانيرو",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=rio-de-janeiro&app=1",
   "scope": "/",
   "id": "/ar/?city=rio-de-janeiro&app=1",

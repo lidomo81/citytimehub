@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت كيب تاون",
-  "short_name": "كيب تاون",
-  "description": "مواقيت كيب تاون",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=cape-town&app=1",
   "scope": "/",
   "id": "/ar/?city=cape-town&app=1",

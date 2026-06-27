@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت سيدني",
-  "short_name": "سيدني",
-  "description": "مواقيت سيدني",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=sydney&app=1",
   "scope": "/",
   "id": "/ar/?city=sydney&app=1",

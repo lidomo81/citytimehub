@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت شيمكنت",
-  "short_name": "شيمكنت",
-  "description": "مواقيت شيمكنت",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=shymkent&app=1",
   "scope": "/",
   "id": "/ar/?city=shymkent&app=1",

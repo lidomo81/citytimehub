@@ -1,7 +1,7 @@
 {
-  "name": "Moscow prayer times",
-  "short_name": "Moscow",
-  "description": "Moscow prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=moscow&app=1",
   "scope": "/",
   "id": "/?city=moscow&app=1",

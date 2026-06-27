@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت الفيوم",
-  "short_name": "الفيوم",
-  "description": "مواقيت الفيوم",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=fayoum&app=1",
   "scope": "/",
   "id": "/ar/?city=fayoum&app=1",

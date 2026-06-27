@@ -1,7 +1,7 @@
 {
-  "name": "Phoenix prayer times",
-  "short_name": "Phoenix",
-  "description": "Phoenix prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=phoenix&app=1",
   "scope": "/",
   "id": "/?city=phoenix&app=1",

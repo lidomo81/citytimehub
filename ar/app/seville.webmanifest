@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت إشبيلية",
-  "short_name": "إشبيلية",
-  "description": "مواقيت إشبيلية",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=seville&app=1",
   "scope": "/",
   "id": "/ar/?city=seville&app=1",

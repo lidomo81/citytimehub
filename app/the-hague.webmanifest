@@ -1,7 +1,7 @@
 {
-  "name": "The Hague prayer times",
-  "short_name": "The Hague",
-  "description": "The Hague prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=the-hague&app=1",
   "scope": "/",
   "id": "/?city=the-hague&app=1",

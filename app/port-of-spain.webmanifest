@@ -1,7 +1,7 @@
 {
-  "name": "Port of Spain prayer times",
-  "short_name": "Port of Spai",
-  "description": "Port of Spain prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=port-of-spain&app=1",
   "scope": "/",
   "id": "/?city=port-of-spain&app=1",

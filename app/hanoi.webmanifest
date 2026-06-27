@@ -1,7 +1,7 @@
 {
-  "name": "Hanoi prayer times",
-  "short_name": "Hanoi",
-  "description": "Hanoi prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=hanoi&app=1",
   "scope": "/",
   "id": "/?city=hanoi&app=1",

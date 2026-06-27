@@ -1,7 +1,7 @@
 {
-  "name": "Hyderabad prayer times",
-  "short_name": "Hyderabad",
-  "description": "Hyderabad prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=hyderabad&app=1",
   "scope": "/",
   "id": "/?city=hyderabad&app=1",

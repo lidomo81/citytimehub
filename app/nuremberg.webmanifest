@@ -1,7 +1,7 @@
 {
-  "name": "Nuremberg prayer times",
-  "short_name": "Nuremberg",
-  "description": "Nuremberg prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=nuremberg&app=1",
   "scope": "/",
   "id": "/?city=nuremberg&app=1",

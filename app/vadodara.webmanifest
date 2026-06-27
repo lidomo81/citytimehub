@@ -1,7 +1,7 @@
 {
-  "name": "Vadodara prayer times",
-  "short_name": "Vadodara",
-  "description": "Vadodara prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=vadodara&app=1",
   "scope": "/",
   "id": "/?city=vadodara&app=1",

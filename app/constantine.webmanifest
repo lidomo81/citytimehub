@@ -1,7 +1,7 @@
 {
-  "name": "Constantine prayer times",
-  "short_name": "Constantine",
-  "description": "Constantine prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=constantine&app=1",
   "scope": "/",
   "id": "/?city=constantine&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت تشنغدو",
-  "short_name": "تشنغدو",
-  "description": "مواقيت تشنغدو",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=chengdu&app=1",
   "scope": "/",
   "id": "/ar/?city=chengdu&app=1",

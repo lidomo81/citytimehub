@@ -1,7 +1,7 @@
 {
-  "name": "Khamis Mushait prayer times",
-  "short_name": "Khamis Musha",
-  "description": "Khamis Mushait prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=khamis-mushait&app=1",
   "scope": "/",
   "id": "/?city=khamis-mushait&app=1",

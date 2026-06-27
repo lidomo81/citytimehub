@@ -1,7 +1,7 @@
 {
-  "name": "Jeddah prayer times",
-  "short_name": "Jeddah",
-  "description": "Jeddah prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=jeddah&app=1",
   "scope": "/",
   "id": "/?city=jeddah&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت أسيوط",
-  "short_name": "أسيوط",
-  "description": "مواقيت أسيوط",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=asyut&app=1",
   "scope": "/",
   "id": "/ar/?city=asyut&app=1",

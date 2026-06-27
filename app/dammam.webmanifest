@@ -1,7 +1,7 @@
 {
-  "name": "Dammam prayer times",
-  "short_name": "Dammam",
-  "description": "Dammam prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=dammam&app=1",
   "scope": "/",
   "id": "/?city=dammam&app=1",

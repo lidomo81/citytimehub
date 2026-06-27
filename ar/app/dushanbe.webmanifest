@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت دوشنبه",
-  "short_name": "دوشنبه",
-  "description": "مواقيت دوشنبه",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=dushanbe&app=1",
   "scope": "/",
   "id": "/ar/?city=dushanbe&app=1",

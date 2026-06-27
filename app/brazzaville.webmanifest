@@ -1,7 +1,7 @@
 {
-  "name": "Brazzaville prayer times",
-  "short_name": "Brazzaville",
-  "description": "Brazzaville prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=brazzaville&app=1",
   "scope": "/",
   "id": "/?city=brazzaville&app=1",

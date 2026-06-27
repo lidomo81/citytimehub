@@ -1,7 +1,7 @@
 {
-  "name": "Zanzibar prayer times",
-  "short_name": "Zanzibar",
-  "description": "Zanzibar prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=zanzibar&app=1",
   "scope": "/",
   "id": "/?city=zanzibar&app=1",

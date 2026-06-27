@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت نجران",
-  "short_name": "نجران",
-  "description": "مواقيت نجران",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=najran&app=1",
   "scope": "/",
   "id": "/ar/?city=najran&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Bristol prayer times",
-  "short_name": "Bristol",
-  "description": "Bristol prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=bristol&app=1",
   "scope": "/",
   "id": "/?city=bristol&app=1",

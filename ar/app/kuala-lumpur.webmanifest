@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت كوالالمبور",
-  "short_name": "كوالالمبور",
-  "description": "مواقيت كوالالمبور",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=kuala-lumpur&app=1",
   "scope": "/",
   "id": "/ar/?city=kuala-lumpur&app=1",

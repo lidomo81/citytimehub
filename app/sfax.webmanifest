@@ -1,7 +1,7 @@
 {
-  "name": "Sfax prayer times",
-  "short_name": "Sfax",
-  "description": "Sfax prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=sfax&app=1",
   "scope": "/",
   "id": "/?city=sfax&app=1",

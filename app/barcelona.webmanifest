@@ -1,7 +1,7 @@
 {
-  "name": "Barcelona prayer times",
-  "short_name": "Barcelona",
-  "description": "Barcelona prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=barcelona&app=1",
   "scope": "/",
   "id": "/?city=barcelona&app=1",

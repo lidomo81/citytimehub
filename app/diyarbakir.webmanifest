@@ -1,7 +1,7 @@
 {
-  "name": "Diyarbakir prayer times",
-  "short_name": "Diyarbakir",
-  "description": "Diyarbakir prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=diyarbakir&app=1",
   "scope": "/",
   "id": "/?city=diyarbakir&app=1",

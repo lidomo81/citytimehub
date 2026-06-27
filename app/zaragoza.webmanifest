@@ -1,7 +1,7 @@
 {
-  "name": "Zaragoza prayer times",
-  "short_name": "Zaragoza",
-  "description": "Zaragoza prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=zaragoza&app=1",
   "scope": "/",
   "id": "/?city=zaragoza&app=1",

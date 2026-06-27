@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت مينيابوليس",
-  "short_name": "مينيابوليس",
-  "description": "مواقيت مينيابوليس",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=minneapolis&app=1",
   "scope": "/",
   "id": "/ar/?city=minneapolis&app=1",

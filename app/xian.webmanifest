@@ -1,7 +1,7 @@
 {
-  "name": "Xi'an prayer times",
-  "short_name": "Xi'an",
-  "description": "Xi'an prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=xian&app=1",
   "scope": "/",
   "id": "/?city=xian&app=1",

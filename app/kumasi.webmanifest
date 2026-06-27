@@ -1,7 +1,7 @@
 {
-  "name": "Kumasi prayer times",
-  "short_name": "Kumasi",
-  "description": "Kumasi prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=kumasi&app=1",
   "scope": "/",
   "id": "/?city=kumasi&app=1",

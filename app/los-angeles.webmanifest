@@ -1,7 +1,7 @@
 {
-  "name": "Los Angeles prayer times",
-  "short_name": "Los Angeles",
-  "description": "Los Angeles prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=los-angeles&app=1",
   "scope": "/",
   "id": "/?city=los-angeles&app=1",

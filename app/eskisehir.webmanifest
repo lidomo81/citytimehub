@@ -1,7 +1,7 @@
 {
-  "name": "Eskisehir prayer times",
-  "short_name": "Eskisehir",
-  "description": "Eskisehir prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=eskisehir&app=1",
   "scope": "/",
   "id": "/?city=eskisehir&app=1",

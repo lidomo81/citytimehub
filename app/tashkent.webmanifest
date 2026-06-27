@@ -1,7 +1,7 @@
 {
-  "name": "Tashkent prayer times",
-  "short_name": "Tashkent",
-  "description": "Tashkent prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=tashkent&app=1",
   "scope": "/",
   "id": "/?city=tashkent&app=1",

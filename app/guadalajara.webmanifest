@@ -1,7 +1,7 @@
 {
-  "name": "Guadalajara prayer times",
-  "short_name": "Guadalajara",
-  "description": "Guadalajara prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=guadalajara&app=1",
   "scope": "/",
   "id": "/?city=guadalajara&app=1",

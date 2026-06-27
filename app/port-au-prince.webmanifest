@@ -1,7 +1,7 @@
 {
-  "name": "Port-au-Prince prayer times",
-  "short_name": "Port-au-Prin",
-  "description": "Port-au-Prince prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=port-au-prince&app=1",
   "scope": "/",
   "id": "/?city=port-au-prince&app=1",

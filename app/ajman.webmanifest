@@ -1,7 +1,7 @@
 {
-  "name": "Ajman prayer times",
-  "short_name": "Ajman",
-  "description": "Ajman prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=ajman&app=1",
   "scope": "/",
   "id": "/?city=ajman&app=1",

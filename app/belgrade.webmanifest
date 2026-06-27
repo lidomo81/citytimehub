@@ -1,7 +1,7 @@
 {
-  "name": "Belgrade prayer times",
-  "short_name": "Belgrade",
-  "description": "Belgrade prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=belgrade&app=1",
   "scope": "/",
   "id": "/?city=belgrade&app=1",

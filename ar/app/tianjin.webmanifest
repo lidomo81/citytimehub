@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت تيانجين",
-  "short_name": "تيانجين",
-  "description": "مواقيت تيانجين",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=tianjin&app=1",
   "scope": "/",
   "id": "/ar/?city=tianjin&app=1",

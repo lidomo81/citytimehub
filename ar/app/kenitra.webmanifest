@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت القنيطرة",
-  "short_name": "القنيطرة",
-  "description": "مواقيت القنيطرة",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=kenitra&app=1",
   "scope": "/",
   "id": "/ar/?city=kenitra&app=1",

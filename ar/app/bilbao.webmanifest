@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت بلباو",
-  "short_name": "بلباو",
-  "description": "مواقيت بلباو",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=bilbao&app=1",
   "scope": "/",
   "id": "/ar/?city=bilbao&app=1",

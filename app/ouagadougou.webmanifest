@@ -1,7 +1,7 @@
 {
-  "name": "Ouagadougou prayer times",
-  "short_name": "Ouagadougou",
-  "description": "Ouagadougou prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=ouagadougou&app=1",
   "scope": "/",
   "id": "/?city=ouagadougou&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Haiphong prayer times",
-  "short_name": "Haiphong",
-  "description": "Haiphong prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=haiphong&app=1",
   "scope": "/",
   "id": "/?city=haiphong&app=1",

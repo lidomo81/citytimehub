@@ -1,7 +1,7 @@
 {
-  "name": "Samsun prayer times",
-  "short_name": "Samsun",
-  "description": "Samsun prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=samsun&app=1",
   "scope": "/",
   "id": "/?city=samsun&app=1",

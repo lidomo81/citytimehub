@@ -1,7 +1,7 @@
 {
-  "name": "Agra prayer times",
-  "short_name": "Agra",
-  "description": "Agra prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=agra&app=1",
   "scope": "/",
   "id": "/?city=agra&app=1",

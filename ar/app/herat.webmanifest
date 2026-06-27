@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت هرات",
-  "short_name": "هرات",
-  "description": "مواقيت هرات",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=herat&app=1",
   "scope": "/",
   "id": "/ar/?city=herat&app=1",

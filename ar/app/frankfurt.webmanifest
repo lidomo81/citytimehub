@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت فرانكفورت",
-  "short_name": "فرانكفورت",
-  "description": "مواقيت فرانكفورت",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=frankfurt&app=1",
   "scope": "/",
   "id": "/ar/?city=frankfurt&app=1",

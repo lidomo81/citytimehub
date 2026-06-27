@@ -1,7 +1,7 @@
 {
-  "name": "Riga prayer times",
-  "short_name": "Riga",
-  "description": "Riga prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=riga&app=1",
   "scope": "/",
   "id": "/?city=riga&app=1",

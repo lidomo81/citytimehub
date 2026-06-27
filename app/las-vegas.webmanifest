@@ -1,7 +1,7 @@
 {
-  "name": "Las Vegas prayer times",
-  "short_name": "Las Vegas",
-  "description": "Las Vegas prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=las-vegas&app=1",
   "scope": "/",
   "id": "/?city=las-vegas&app=1",

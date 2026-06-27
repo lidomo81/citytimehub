@@ -1,7 +1,7 @@
 {
-  "name": "George Town prayer times",
-  "short_name": "George Town",
-  "description": "George Town prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=penang&app=1",
   "scope": "/",
   "id": "/?city=penang&app=1",

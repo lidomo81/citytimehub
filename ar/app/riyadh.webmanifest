@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت الرياض",
-  "short_name": "الرياض",
-  "description": "مواقيت الرياض",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=riyadh&app=1",
   "scope": "/",
   "id": "/ar/?city=riyadh&app=1",

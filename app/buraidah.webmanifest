@@ -1,7 +1,7 @@
 {
-  "name": "Buraidah prayer times",
-  "short_name": "Buraidah",
-  "description": "Buraidah prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=buraidah&app=1",
   "scope": "/",
   "id": "/?city=buraidah&app=1",

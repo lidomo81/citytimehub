@@ -1,7 +1,7 @@
 {
-  "name": "Utrecht prayer times",
-  "short_name": "Utrecht",
-  "description": "Utrecht prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=utrecht&app=1",
   "scope": "/",
   "id": "/?city=utrecht&app=1",

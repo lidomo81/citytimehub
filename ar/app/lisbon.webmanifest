@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت لشبونة",
-  "short_name": "لشبونة",
-  "description": "مواقيت لشبونة",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=lisbon&app=1",
   "scope": "/",
   "id": "/ar/?city=lisbon&app=1",

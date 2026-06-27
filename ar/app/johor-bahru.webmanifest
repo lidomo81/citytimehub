@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت جوهور بهرو",
-  "short_name": "جوهور بهرو",
-  "description": "مواقيت جوهور بهرو",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=johor-bahru&app=1",
   "scope": "/",
   "id": "/ar/?city=johor-bahru&app=1",

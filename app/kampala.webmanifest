@@ -1,7 +1,7 @@
 {
-  "name": "Kampala prayer times",
-  "short_name": "Kampala",
-  "description": "Kampala prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=kampala&app=1",
   "scope": "/",
   "id": "/?city=kampala&app=1",

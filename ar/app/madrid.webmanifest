@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت مدريد",
-  "short_name": "مدريد",
-  "description": "مواقيت مدريد",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=madrid&app=1",
   "scope": "/",
   "id": "/ar/?city=madrid&app=1",

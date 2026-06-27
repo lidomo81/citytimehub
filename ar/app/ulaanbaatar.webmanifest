@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت أولان باتور",
-  "short_name": "أولان باتور",
-  "description": "مواقيت أولان باتور",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=ulaanbaatar&app=1",
   "scope": "/",
   "id": "/ar/?city=ulaanbaatar&app=1",

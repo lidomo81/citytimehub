@@ -1,7 +1,7 @@
 {
-  "name": "Douala prayer times",
-  "short_name": "Douala",
-  "description": "Douala prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=douala&app=1",
   "scope": "/",
   "id": "/?city=douala&app=1",

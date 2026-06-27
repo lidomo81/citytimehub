@@ -1,7 +1,7 @@
 {
-  "name": "Yaoundé prayer times",
-  "short_name": "Yaoundé",
-  "description": "Yaoundé prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=yaounde&app=1",
   "scope": "/",
   "id": "/?city=yaounde&app=1",

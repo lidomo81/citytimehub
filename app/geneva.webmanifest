@@ -1,7 +1,7 @@
 {
-  "name": "Geneva prayer times",
-  "short_name": "Geneva",
-  "description": "Geneva prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=geneva&app=1",
   "scope": "/",
   "id": "/?city=geneva&app=1",

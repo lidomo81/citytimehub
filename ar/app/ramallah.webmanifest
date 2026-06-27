@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت رام الله",
-  "short_name": "رام الله",
-  "description": "مواقيت رام الله",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=ramallah&app=1",
   "scope": "/",
   "id": "/ar/?city=ramallah&app=1",

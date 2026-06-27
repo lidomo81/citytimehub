@@ -1,7 +1,7 @@
 {
-  "name": "Havana prayer times",
-  "short_name": "Havana",
-  "description": "Havana prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=havana&app=1",
   "scope": "/",
   "id": "/?city=havana&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Tripoli prayer times",
-  "short_name": "Tripoli",
-  "description": "Tripoli prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=tripoli-ly&app=1",
   "scope": "/",
   "id": "/?city=tripoli-ly&app=1",

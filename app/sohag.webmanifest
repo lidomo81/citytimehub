@@ -1,7 +1,7 @@
 {
-  "name": "Sohag prayer times",
-  "short_name": "Sohag",
-  "description": "Sohag prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=sohag&app=1",
   "scope": "/",
   "id": "/?city=sohag&app=1",

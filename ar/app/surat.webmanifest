@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت سورات",
-  "short_name": "سورات",
-  "description": "مواقيت سورات",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=surat&app=1",
   "scope": "/",
   "id": "/ar/?city=surat&app=1",

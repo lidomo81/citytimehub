@@ -1,7 +1,7 @@
 {
-  "name": "Bangkok prayer times",
-  "short_name": "Bangkok",
-  "description": "Bangkok prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=bangkok&app=1",
   "scope": "/",
   "id": "/?city=bangkok&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Medan prayer times",
-  "short_name": "Medan",
-  "description": "Medan prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=medan&app=1",
   "scope": "/",
   "id": "/?city=medan&app=1",

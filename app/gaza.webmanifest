@@ -1,7 +1,7 @@
 {
-  "name": "Gaza prayer times",
-  "short_name": "Gaza",
-  "description": "Gaza prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=gaza&app=1",
   "scope": "/",
   "id": "/?city=gaza&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت تايبيه",
-  "short_name": "تايبيه",
-  "description": "مواقيت تايبيه",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=taipei&app=1",
   "scope": "/",
   "id": "/ar/?city=taipei&app=1",

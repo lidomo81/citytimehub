@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت نانجينغ",
-  "short_name": "نانجينغ",
-  "description": "مواقيت نانجينغ",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=nanjing&app=1",
   "scope": "/",
   "id": "/ar/?city=nanjing&app=1",

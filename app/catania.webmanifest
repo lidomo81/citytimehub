@@ -1,7 +1,7 @@
 {
-  "name": "Catania prayer times",
-  "short_name": "Catania",
-  "description": "Catania prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=catania&app=1",
   "scope": "/",
   "id": "/?city=catania&app=1",

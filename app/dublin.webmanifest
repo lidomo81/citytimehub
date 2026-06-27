@@ -1,7 +1,7 @@
 {
-  "name": "Dublin prayer times",
-  "short_name": "Dublin",
-  "description": "Dublin prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=dublin&app=1",
   "scope": "/",
   "id": "/?city=dublin&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Paris prayer times",
-  "short_name": "Paris",
-  "description": "Paris prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=paris&app=1",
   "scope": "/",
   "id": "/?city=paris&app=1",

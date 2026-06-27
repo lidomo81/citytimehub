@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت فيلادلفيا",
-  "short_name": "فيلادلفيا",
-  "description": "مواقيت فيلادلفيا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=philadelphia&app=1",
   "scope": "/",
   "id": "/ar/?city=philadelphia&app=1",

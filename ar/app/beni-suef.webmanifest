@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت بني سويف",
-  "short_name": "بني سويف",
-  "description": "مواقيت بني سويف",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=beni-suef&app=1",
   "scope": "/",
   "id": "/ar/?city=beni-suef&app=1",

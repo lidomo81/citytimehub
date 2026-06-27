@@ -1,7 +1,7 @@
 {
-  "name": "Dodoma prayer times",
-  "short_name": "Dodoma",
-  "description": "Dodoma prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=dodoma&app=1",
   "scope": "/",
   "id": "/?city=dodoma&app=1",

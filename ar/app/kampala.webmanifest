@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت كمبالا",
-  "short_name": "كمبالا",
-  "description": "مواقيت كمبالا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=kampala&app=1",
   "scope": "/",
   "id": "/ar/?city=kampala&app=1",

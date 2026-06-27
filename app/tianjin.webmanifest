@@ -1,7 +1,7 @@
 {
-  "name": "Tianjin prayer times",
-  "short_name": "Tianjin",
-  "description": "Tianjin prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=tianjin&app=1",
   "scope": "/",
   "id": "/?city=tianjin&app=1",

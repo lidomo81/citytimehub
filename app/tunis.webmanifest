@@ -1,7 +1,7 @@
 {
-  "name": "Tunis prayer times",
-  "short_name": "Tunis",
-  "description": "Tunis prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=tunis&app=1",
   "scope": "/",
   "id": "/?city=tunis&app=1",

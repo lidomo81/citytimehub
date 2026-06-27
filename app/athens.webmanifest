@@ -1,7 +1,7 @@
 {
-  "name": "Athens prayer times",
-  "short_name": "Athens",
-  "description": "Athens prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=athens&app=1",
   "scope": "/",
   "id": "/?city=athens&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Al Ain prayer times",
-  "short_name": "Al Ain",
-  "description": "Al Ain prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=al-ain&app=1",
   "scope": "/",
   "id": "/?city=al-ain&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت شيان",
-  "short_name": "شيان",
-  "description": "مواقيت شيان",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=xian&app=1",
   "scope": "/",
   "id": "/ar/?city=xian&app=1",

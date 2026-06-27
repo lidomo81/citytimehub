@@ -1,7 +1,7 @@
 {
-  "name": "Riffa prayer times",
-  "short_name": "Riffa",
-  "description": "Riffa prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=riffa&app=1",
   "scope": "/",
   "id": "/?city=riffa&app=1",

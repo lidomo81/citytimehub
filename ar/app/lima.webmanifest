@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت ليما",
-  "short_name": "ليما",
-  "description": "مواقيت ليما",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=lima&app=1",
   "scope": "/",
   "id": "/ar/?city=lima&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت سان أنطونيو",
-  "short_name": "سان أنطونيو",
-  "description": "مواقيت سان أنطونيو",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=san-antonio&app=1",
   "scope": "/",
   "id": "/ar/?city=san-antonio&app=1",

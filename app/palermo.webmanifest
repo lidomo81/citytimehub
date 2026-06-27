@@ -1,7 +1,7 @@
 {
-  "name": "Palermo prayer times",
-  "short_name": "Palermo",
-  "description": "Palermo prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=palermo&app=1",
   "scope": "/",
   "id": "/?city=palermo&app=1",

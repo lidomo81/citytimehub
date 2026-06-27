@@ -1,7 +1,7 @@
 {
-  "name": "Benghazi prayer times",
-  "short_name": "Benghazi",
-  "description": "Benghazi prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=benghazi&app=1",
   "scope": "/",
   "id": "/?city=benghazi&app=1",

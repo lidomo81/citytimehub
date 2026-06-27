@@ -1,7 +1,7 @@
 {
-  "name": "Berlin prayer times",
-  "short_name": "Berlin",
-  "description": "Berlin prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=berlin&app=1",
   "scope": "/",
   "id": "/?city=berlin&app=1",

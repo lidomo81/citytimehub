@@ -1,7 +1,7 @@
 {
-  "name": "Fayoum prayer times",
-  "short_name": "Fayoum",
-  "description": "Fayoum prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=fayoum&app=1",
   "scope": "/",
   "id": "/?city=fayoum&app=1",

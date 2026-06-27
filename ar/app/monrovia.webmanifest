@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت مونروفيا",
-  "short_name": "مونروفيا",
-  "description": "مواقيت مونروفيا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=monrovia&app=1",
   "scope": "/",
   "id": "/ar/?city=monrovia&app=1",

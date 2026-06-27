@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت أوسلو",
-  "short_name": "أوسلو",
-  "description": "مواقيت أوسلو",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=oslo&app=1",
   "scope": "/",
   "id": "/ar/?city=oslo&app=1",

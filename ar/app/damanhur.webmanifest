@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت دمنهور",
-  "short_name": "دمنهور",
-  "description": "مواقيت دمنهور",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=damanhur&app=1",
   "scope": "/",
   "id": "/ar/?city=damanhur&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت باريس",
-  "short_name": "باريس",
-  "description": "مواقيت باريس",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=paris&app=1",
   "scope": "/",
   "id": "/ar/?city=paris&app=1",

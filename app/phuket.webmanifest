@@ -1,7 +1,7 @@
 {
-  "name": "Phuket prayer times",
-  "short_name": "Phuket",
-  "description": "Phuket prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=phuket&app=1",
   "scope": "/",
   "id": "/?city=phuket&app=1",

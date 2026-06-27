@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت خولنا",
-  "short_name": "خولنا",
-  "description": "مواقيت خولنا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=khulna&app=1",
   "scope": "/",
   "id": "/ar/?city=khulna&app=1",

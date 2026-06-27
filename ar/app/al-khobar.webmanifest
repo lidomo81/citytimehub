@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت الخبر",
-  "short_name": "الخبر",
-  "description": "مواقيت الخبر",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=al-khobar&app=1",
   "scope": "/",
   "id": "/ar/?city=al-khobar&app=1",

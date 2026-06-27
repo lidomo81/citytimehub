@@ -1,7 +1,7 @@
 {
-  "name": "Tabriz prayer times",
-  "short_name": "Tabriz",
-  "description": "Tabriz prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=tabriz&app=1",
   "scope": "/",
   "id": "/?city=tabriz&app=1",

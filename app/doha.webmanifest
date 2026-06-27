@@ -1,7 +1,7 @@
 {
-  "name": "Doha prayer times",
-  "short_name": "Doha",
-  "description": "Doha prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=doha&app=1",
   "scope": "/",
   "id": "/?city=doha&app=1",

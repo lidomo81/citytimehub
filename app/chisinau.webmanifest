@@ -1,7 +1,7 @@
 {
-  "name": "Chișinău prayer times",
-  "short_name": "Chișinău",
-  "description": "Chișinău prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=chisinau&app=1",
   "scope": "/",
   "id": "/?city=chisinau&app=1",

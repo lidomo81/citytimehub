@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت دا نانغ",
-  "short_name": "دا نانغ",
-  "description": "مواقيت دا نانغ",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=da-nang&app=1",
   "scope": "/",
   "id": "/ar/?city=da-nang&app=1",

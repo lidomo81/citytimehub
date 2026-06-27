@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت غواياكيل",
-  "short_name": "غواياكيل",
-  "description": "مواقيت غواياكيل",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=guayaquil&app=1",
   "scope": "/",
   "id": "/ar/?city=guayaquil&app=1",

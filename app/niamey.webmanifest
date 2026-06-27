@@ -1,7 +1,7 @@
 {
-  "name": "Niamey prayer times",
-  "short_name": "Niamey",
-  "description": "Niamey prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=niamey&app=1",
   "scope": "/",
   "id": "/?city=niamey&app=1",

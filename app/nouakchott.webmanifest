@@ -1,7 +1,7 @@
 {
-  "name": "Nouakchott prayer times",
-  "short_name": "Nouakchott",
-  "description": "Nouakchott prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=nouakchott&app=1",
   "scope": "/",
   "id": "/?city=nouakchott&app=1",

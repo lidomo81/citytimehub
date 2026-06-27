@@ -1,7 +1,7 @@
 {
-  "name": "Karachi prayer times",
-  "short_name": "Karachi",
-  "description": "Karachi prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=karachi&app=1",
   "scope": "/",
   "id": "/?city=karachi&app=1",

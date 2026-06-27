@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت غانجا",
-  "short_name": "غانجا",
-  "description": "مواقيت غانجا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=ganja&app=1",
   "scope": "/",
   "id": "/ar/?city=ganja&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Surabaya prayer times",
-  "short_name": "Surabaya",
-  "description": "Surabaya prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=surabaya&app=1",
   "scope": "/",
   "id": "/?city=surabaya&app=1",

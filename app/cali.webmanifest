@@ -1,7 +1,7 @@
 {
-  "name": "Cali prayer times",
-  "short_name": "Cali",
-  "description": "Cali prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=cali&app=1",
   "scope": "/",
   "id": "/?city=cali&app=1",

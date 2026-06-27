@@ -1,7 +1,7 @@
 {
-  "name": "Najran prayer times",
-  "short_name": "Najran",
-  "description": "Najran prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=najran&app=1",
   "scope": "/",
   "id": "/?city=najran&app=1",

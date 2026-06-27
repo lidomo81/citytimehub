@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت ياوندي",
-  "short_name": "ياوندي",
-  "description": "مواقيت ياوندي",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=yaounde&app=1",
   "scope": "/",
   "id": "/ar/?city=yaounde&app=1",

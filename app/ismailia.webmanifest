@@ -1,7 +1,7 @@
 {
-  "name": "Ismailia prayer times",
-  "short_name": "Ismailia",
-  "description": "Ismailia prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=ismailia&app=1",
   "scope": "/",
   "id": "/?city=ismailia&app=1",

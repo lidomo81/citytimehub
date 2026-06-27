@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت فلورنسا",
-  "short_name": "فلورنسا",
-  "description": "مواقيت فلورنسا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=florence&app=1",
   "scope": "/",
   "id": "/ar/?city=florence&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت غوادالاخارا",
-  "short_name": "غوادالاخارا",
-  "description": "مواقيت غوادالاخارا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=guadalajara&app=1",
   "scope": "/",
   "id": "/ar/?city=guadalajara&app=1",

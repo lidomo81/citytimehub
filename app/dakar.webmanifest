@@ -1,7 +1,7 @@
 {
-  "name": "Dakar prayer times",
-  "short_name": "Dakar",
-  "description": "Dakar prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=dakar&app=1",
   "scope": "/",
   "id": "/?city=dakar&app=1",

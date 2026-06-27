@@ -1,7 +1,7 @@
 {
-  "name": "Hargeisa prayer times",
-  "short_name": "Hargeisa",
-  "description": "Hargeisa prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=hargeisa&app=1",
   "scope": "/",
   "id": "/?city=hargeisa&app=1",

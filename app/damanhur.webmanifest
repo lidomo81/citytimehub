@@ -1,7 +1,7 @@
 {
-  "name": "Damanhur prayer times",
-  "short_name": "Damanhur",
-  "description": "Damanhur prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=damanhur&app=1",
   "scope": "/",
   "id": "/?city=damanhur&app=1",

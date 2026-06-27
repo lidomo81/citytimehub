@@ -1,7 +1,7 @@
 {
-  "name": "Chongqing prayer times",
-  "short_name": "Chongqing",
-  "description": "Chongqing prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=chongqing&app=1",
   "scope": "/",
   "id": "/?city=chongqing&app=1",

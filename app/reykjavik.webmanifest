@@ -1,7 +1,7 @@
 {
-  "name": "Reykjavík prayer times",
-  "short_name": "Reykjavík",
-  "description": "Reykjavík prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=reykjavik&app=1",
   "scope": "/",
   "id": "/?city=reykjavik&app=1",

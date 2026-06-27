@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت إدنبرة",
-  "short_name": "إدنبرة",
-  "description": "مواقيت إدنبرة",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=edinburgh&app=1",
   "scope": "/",
   "id": "/ar/?city=edinburgh&app=1",

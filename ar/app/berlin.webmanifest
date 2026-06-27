@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت برلين",
-  "short_name": "برلين",
-  "description": "مواقيت برلين",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=berlin&app=1",
   "scope": "/",
   "id": "/ar/?city=berlin&app=1",

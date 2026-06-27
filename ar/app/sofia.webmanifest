@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت صوفيا",
-  "short_name": "صوفيا",
-  "description": "مواقيت صوفيا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=sofia&app=1",
   "scope": "/",
   "id": "/ar/?city=sofia&app=1",

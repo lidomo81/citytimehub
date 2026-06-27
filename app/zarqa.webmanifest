@@ -1,7 +1,7 @@
 {
-  "name": "Zarqa prayer times",
-  "short_name": "Zarqa",
-  "description": "Zarqa prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=zarqa&app=1",
   "scope": "/",
   "id": "/?city=zarqa&app=1",

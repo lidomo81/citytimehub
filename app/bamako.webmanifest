@@ -1,7 +1,7 @@
 {
-  "name": "Bamako prayer times",
-  "short_name": "Bamako",
-  "description": "Bamako prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=bamako&app=1",
   "scope": "/",
   "id": "/?city=bamako&app=1",

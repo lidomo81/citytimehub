@@ -1,7 +1,7 @@
 {
-  "name": "Kigali prayer times",
-  "short_name": "Kigali",
-  "description": "Kigali prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=kigali&app=1",
   "scope": "/",
   "id": "/?city=kigali&app=1",

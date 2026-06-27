@@ -1,7 +1,7 @@
 {
-  "name": "Touba prayer times",
-  "short_name": "Touba",
-  "description": "Touba prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=touba&app=1",
   "scope": "/",
   "id": "/?city=touba&app=1",

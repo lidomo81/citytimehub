@@ -1,7 +1,7 @@
 {
-  "name": "Coimbatore prayer times",
-  "short_name": "Coimbatore",
-  "description": "Coimbatore prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=coimbatore&app=1",
   "scope": "/",
   "id": "/?city=coimbatore&app=1",

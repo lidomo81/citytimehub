@@ -1,7 +1,7 @@
 {
-  "name": "Sharm El Sheikh prayer times",
-  "short_name": "Sharm El She",
-  "description": "Sharm El Sheikh prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=sharm-el-sheikh&app=1",
   "scope": "/",
   "id": "/?city=sharm-el-sheikh&app=1",

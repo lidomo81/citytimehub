@@ -1,7 +1,7 @@
 {
-  "name": "Sousse prayer times",
-  "short_name": "Sousse",
-  "description": "Sousse prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=sousse&app=1",
   "scope": "/",
   "id": "/?city=sousse&app=1",

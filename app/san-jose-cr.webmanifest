@@ -1,7 +1,7 @@
 {
-  "name": "San José prayer times",
-  "short_name": "San José",
-  "description": "San José prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=san-jose-cr&app=1",
   "scope": "/",
   "id": "/?city=san-jose-cr&app=1",

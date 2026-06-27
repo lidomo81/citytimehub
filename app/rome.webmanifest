@@ -1,7 +1,7 @@
 {
-  "name": "Rome prayer times",
-  "short_name": "Rome",
-  "description": "Rome prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=rome&app=1",
   "scope": "/",
   "id": "/?city=rome&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Sialkot prayer times",
-  "short_name": "Sialkot",
-  "description": "Sialkot prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=sialkot&app=1",
   "scope": "/",
   "id": "/?city=sialkot&app=1",

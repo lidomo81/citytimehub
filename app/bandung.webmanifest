@@ -1,7 +1,7 @@
 {
-  "name": "Bandung prayer times",
-  "short_name": "Bandung",
-  "description": "Bandung prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=bandung&app=1",
   "scope": "/",
   "id": "/?city=bandung&app=1",

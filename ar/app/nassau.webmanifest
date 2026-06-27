@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت ناساو",
-  "short_name": "ناساو",
-  "description": "مواقيت ناساو",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=nassau&app=1",
   "scope": "/",
   "id": "/ar/?city=nassau&app=1",

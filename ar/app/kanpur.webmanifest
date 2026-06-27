@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت كانبور",
-  "short_name": "كانبور",
-  "description": "مواقيت كانبور",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=kanpur&app=1",
   "scope": "/",
   "id": "/ar/?city=kanpur&app=1",

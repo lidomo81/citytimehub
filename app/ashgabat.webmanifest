@@ -1,7 +1,7 @@
 {
-  "name": "Ashgabat prayer times",
-  "short_name": "Ashgabat",
-  "description": "Ashgabat prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=ashgabat&app=1",
   "scope": "/",
   "id": "/?city=ashgabat&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Medellín prayer times",
-  "short_name": "Medellín",
-  "description": "Medellín prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=medellin&app=1",
   "scope": "/",
   "id": "/?city=medellin&app=1",

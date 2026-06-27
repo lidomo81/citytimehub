@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت تورنتو",
-  "short_name": "تورنتو",
-  "description": "مواقيت تورنتو",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=toronto&app=1",
   "scope": "/",
   "id": "/ar/?city=toronto&app=1",

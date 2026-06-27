@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت فريتاون",
-  "short_name": "فريتاون",
-  "description": "مواقيت فريتاون",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=freetown&app=1",
   "scope": "/",
   "id": "/ar/?city=freetown&app=1",

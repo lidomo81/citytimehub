@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت القاهرة",
-  "short_name": "القاهرة",
-  "description": "مواقيت القاهرة",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=cairo&app=1",
   "scope": "/",
   "id": "/ar/?city=cairo&app=1",

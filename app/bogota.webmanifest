@@ -1,7 +1,7 @@
 {
-  "name": "Bogotá prayer times",
-  "short_name": "Bogotá",
-  "description": "Bogotá prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=bogota&app=1",
   "scope": "/",
   "id": "/?city=bogota&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Aqaba prayer times",
-  "short_name": "Aqaba",
-  "description": "Aqaba prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=aqaba&app=1",
   "scope": "/",
   "id": "/?city=aqaba&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Kolkata prayer times",
-  "short_name": "Kolkata",
-  "description": "Kolkata prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=kolkata&app=1",
   "scope": "/",
   "id": "/?city=kolkata&app=1",

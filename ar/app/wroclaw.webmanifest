@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت فروتسواف",
-  "short_name": "فروتسواف",
-  "description": "مواقيت فروتسواف",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=wroclaw&app=1",
   "scope": "/",
   "id": "/ar/?city=wroclaw&app=1",

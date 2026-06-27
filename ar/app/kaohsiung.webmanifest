@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت كاوشيونغ",
-  "short_name": "كاوشيونغ",
-  "description": "مواقيت كاوشيونغ",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=kaohsiung&app=1",
   "scope": "/",
   "id": "/ar/?city=kaohsiung&app=1",

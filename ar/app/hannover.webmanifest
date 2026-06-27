@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت هانوفر",
-  "short_name": "هانوفر",
-  "description": "مواقيت هانوفر",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=hannover&app=1",
   "scope": "/",
   "id": "/ar/?city=hannover&app=1",

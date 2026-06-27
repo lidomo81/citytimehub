@@ -1,7 +1,7 @@
 {
-  "name": "Kuwait City prayer times",
-  "short_name": "Kuwait City",
-  "description": "Kuwait City prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=kuwait-city&app=1",
   "scope": "/",
   "id": "/?city=kuwait-city&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Beirut prayer times",
-  "short_name": "Beirut",
-  "description": "Beirut prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=beirut&app=1",
   "scope": "/",
   "id": "/?city=beirut&app=1",

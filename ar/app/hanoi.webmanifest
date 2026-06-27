@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت هانوي",
-  "short_name": "هانوي",
-  "description": "مواقيت هانوي",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=hanoi&app=1",
   "scope": "/",
   "id": "/ar/?city=hanoi&app=1",

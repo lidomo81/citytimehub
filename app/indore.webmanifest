@@ -1,7 +1,7 @@
 {
-  "name": "Indore prayer times",
-  "short_name": "Indore",
-  "description": "Indore prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=indore&app=1",
   "scope": "/",
   "id": "/?city=indore&app=1",

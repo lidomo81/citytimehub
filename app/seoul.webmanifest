@@ -1,7 +1,7 @@
 {
-  "name": "Seoul prayer times",
-  "short_name": "Seoul",
-  "description": "Seoul prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=seoul&app=1",
   "scope": "/",
   "id": "/?city=seoul&app=1",

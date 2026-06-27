@@ -1,7 +1,7 @@
 {
-  "name": "N'Djamena prayer times",
-  "short_name": "N'Djamena",
-  "description": "N'Djamena prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=ndjamena&app=1",
   "scope": "/",
   "id": "/?city=ndjamena&app=1",

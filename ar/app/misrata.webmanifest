@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت مصراتة",
-  "short_name": "مصراتة",
-  "description": "مواقيت مصراتة",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=misrata&app=1",
   "scope": "/",
   "id": "/ar/?city=misrata&app=1",

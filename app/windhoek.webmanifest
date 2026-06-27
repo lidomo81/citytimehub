@@ -1,7 +1,7 @@
 {
-  "name": "Windhoek prayer times",
-  "short_name": "Windhoek",
-  "description": "Windhoek prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=windhoek&app=1",
   "scope": "/",
   "id": "/?city=windhoek&app=1",

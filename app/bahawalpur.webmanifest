@@ -1,7 +1,7 @@
 {
-  "name": "Bahawalpur prayer times",
-  "short_name": "Bahawalpur",
-  "description": "Bahawalpur prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=bahawalpur&app=1",
   "scope": "/",
   "id": "/?city=bahawalpur&app=1",

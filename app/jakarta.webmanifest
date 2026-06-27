@@ -1,7 +1,7 @@
 {
-  "name": "Jakarta prayer times",
-  "short_name": "Jakarta",
-  "description": "Jakarta prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=jakarta&app=1",
   "scope": "/",
   "id": "/?city=jakarta&app=1",

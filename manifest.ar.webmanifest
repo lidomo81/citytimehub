@@ -1,0 +1,26 @@
+{
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت صلاة دقيقة لـ 500 مدينة، وساعة حيّة، واتجاه القبلة، وجدول مواقيت الشهر، ومقارنة التوقيت ومخطّط أحداث — سريع ومجاني ويعمل بدون نت.",
+  "start_url": "/ar/?utm_source=pwa",
+  "scope": "/",
+  "id": "/ar/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0B1120",
+  "theme_color": "#0B1120",
+  "lang": "ar",
+  "dir": "rtl",
+  "categories": ["utilities", "productivity", "lifestyle"],
+  "shortcuts": [
+    { "name": "ساعة الصلاة", "short_name": "ساعة الصلاة", "url": "/ar/prayer-clock/?utm_source=pwa", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "اتجاه القبلة", "short_name": "القبلة", "url": "/ar/qibla/?utm_source=pwa", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "مواقيت الشهر", "short_name": "مواقيت الشهر", "url": "/ar/monthly/?utm_source=pwa", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "فرق التوقيت", "short_name": "فرق التوقيت", "url": "/ar/time-difference/?utm_source=pwa", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] }
+  ],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

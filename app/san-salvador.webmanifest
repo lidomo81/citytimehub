@@ -1,7 +1,7 @@
 {
-  "name": "San Salvador prayer times",
-  "short_name": "San Salvador",
-  "description": "San Salvador prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=san-salvador&app=1",
   "scope": "/",
   "id": "/?city=san-salvador&app=1",

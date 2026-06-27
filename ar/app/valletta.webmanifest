@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت فاليتا",
-  "short_name": "فاليتا",
-  "description": "مواقيت فاليتا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=valletta&app=1",
   "scope": "/",
   "id": "/ar/?city=valletta&app=1",

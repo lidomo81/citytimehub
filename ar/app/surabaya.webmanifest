@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت سورابايا",
-  "short_name": "سورابايا",
-  "description": "مواقيت سورابايا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=surabaya&app=1",
   "scope": "/",
   "id": "/ar/?city=surabaya&app=1",

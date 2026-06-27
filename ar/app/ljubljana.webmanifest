@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت ليوبليانا",
-  "short_name": "ليوبليانا",
-  "description": "مواقيت ليوبليانا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=ljubljana&app=1",
   "scope": "/",
   "id": "/ar/?city=ljubljana&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Sulaymaniyah prayer times",
-  "short_name": "Sulaymaniyah",
-  "description": "Sulaymaniyah prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=sulaymaniyah&app=1",
   "scope": "/",
   "id": "/?city=sulaymaniyah&app=1",

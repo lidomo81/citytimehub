@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت فيينا",
-  "short_name": "فيينا",
-  "description": "مواقيت فيينا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=vienna&app=1",
   "scope": "/",
   "id": "/ar/?city=vienna&app=1",

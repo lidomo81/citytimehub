@@ -1,7 +1,7 @@
 {
-  "name": "Samarkand prayer times",
-  "short_name": "Samarkand",
-  "description": "Samarkand prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=samarkand&app=1",
   "scope": "/",
   "id": "/?city=samarkand&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت الجزائر",
-  "short_name": "الجزائر",
-  "description": "مواقيت الجزائر",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=algiers&app=1",
   "scope": "/",
   "id": "/ar/?city=algiers&app=1",

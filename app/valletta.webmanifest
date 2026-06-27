@@ -1,7 +1,7 @@
 {
-  "name": "Valletta prayer times",
-  "short_name": "Valletta",
-  "description": "Valletta prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=valletta&app=1",
   "scope": "/",
   "id": "/?city=valletta&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت سطيف",
-  "short_name": "سطيف",
-  "description": "مواقيت سطيف",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=setif&app=1",
   "scope": "/",
   "id": "/ar/?city=setif&app=1",

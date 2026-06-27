@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت جورجتاون",
-  "short_name": "جورجتاون",
-  "description": "مواقيت جورجتاون",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=georgetown-gy&app=1",
   "scope": "/",
   "id": "/ar/?city=georgetown-gy&app=1",

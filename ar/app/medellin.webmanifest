@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت ميديلين",
-  "short_name": "ميديلين",
-  "description": "مواقيت ميديلين",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=medellin&app=1",
   "scope": "/",
   "id": "/ar/?city=medellin&app=1",

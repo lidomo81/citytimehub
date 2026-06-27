@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت فيينتيان",
-  "short_name": "فيينتيان",
-  "description": "مواقيت فيينتيان",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=vientiane&app=1",
   "scope": "/",
   "id": "/ar/?city=vientiane&app=1",

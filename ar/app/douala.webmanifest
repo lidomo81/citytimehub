@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت دوالا",
-  "short_name": "دوالا",
-  "description": "مواقيت دوالا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=douala&app=1",
   "scope": "/",
   "id": "/ar/?city=douala&app=1",

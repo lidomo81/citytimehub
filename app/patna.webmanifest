@@ -1,7 +1,7 @@
 {
-  "name": "Patna prayer times",
-  "short_name": "Patna",
-  "description": "Patna prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=patna&app=1",
   "scope": "/",
   "id": "/?city=patna&app=1",

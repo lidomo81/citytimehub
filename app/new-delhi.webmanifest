@@ -1,7 +1,7 @@
 {
-  "name": "New Delhi prayer times",
-  "short_name": "New Delhi",
-  "description": "New Delhi prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=new-delhi&app=1",
   "scope": "/",
   "id": "/?city=new-delhi&app=1",

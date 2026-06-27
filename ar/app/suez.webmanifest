@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت السويس",
-  "short_name": "السويس",
-  "description": "مواقيت السويس",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=suez&app=1",
   "scope": "/",
   "id": "/ar/?city=suez&app=1",

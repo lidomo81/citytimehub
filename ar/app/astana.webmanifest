@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت أستانا",
-  "short_name": "أستانا",
-  "description": "مواقيت أستانا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=astana&app=1",
   "scope": "/",
   "id": "/ar/?city=astana&app=1",

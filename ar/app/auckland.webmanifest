@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت أوكلاند",
-  "short_name": "أوكلاند",
-  "description": "مواقيت أوكلاند",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=auckland&app=1",
   "scope": "/",
   "id": "/ar/?city=auckland&app=1",

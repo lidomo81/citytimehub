@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت بلغراد",
-  "short_name": "بلغراد",
-  "description": "مواقيت بلغراد",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=belgrade&app=1",
   "scope": "/",
   "id": "/ar/?city=belgrade&app=1",

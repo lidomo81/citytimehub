@@ -1,7 +1,7 @@
 {
-  "name": "Nablus prayer times",
-  "short_name": "Nablus",
-  "description": "Nablus prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=nablus&app=1",
   "scope": "/",
   "id": "/?city=nablus&app=1",

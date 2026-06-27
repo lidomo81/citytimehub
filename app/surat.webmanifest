@@ -1,7 +1,7 @@
 {
-  "name": "Surat prayer times",
-  "short_name": "Surat",
-  "description": "Surat prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=surat&app=1",
   "scope": "/",
   "id": "/?city=surat&app=1",

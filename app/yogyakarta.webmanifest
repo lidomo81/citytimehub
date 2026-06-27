@@ -1,7 +1,7 @@
 {
-  "name": "Yogyakarta prayer times",
-  "short_name": "Yogyakarta",
-  "description": "Yogyakarta prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=yogyakarta&app=1",
   "scope": "/",
   "id": "/?city=yogyakarta&app=1",

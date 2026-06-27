@@ -1,7 +1,7 @@
 {
-  "name": "Juba prayer times",
-  "short_name": "Juba",
-  "description": "Juba prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=juba&app=1",
   "scope": "/",
   "id": "/?city=juba&app=1",

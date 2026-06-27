@@ -1,7 +1,7 @@
 {
-  "name": "Leeds prayer times",
-  "short_name": "Leeds",
-  "description": "Leeds prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=leeds&app=1",
   "scope": "/",
   "id": "/?city=leeds&app=1",

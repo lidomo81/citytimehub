@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت لاغوس",
-  "short_name": "لاغوس",
-  "description": "مواقيت لاغوس",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=lagos&app=1",
   "scope": "/",
   "id": "/ar/?city=lagos&app=1",

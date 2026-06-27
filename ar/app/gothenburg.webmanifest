@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت غوتنبرغ",
-  "short_name": "غوتنبرغ",
-  "description": "مواقيت غوتنبرغ",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=gothenburg&app=1",
   "scope": "/",
   "id": "/ar/?city=gothenburg&app=1",

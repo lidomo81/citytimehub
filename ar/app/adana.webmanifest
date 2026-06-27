@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت أضنة",
-  "short_name": "أضنة",
-  "description": "مواقيت أضنة",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=adana&app=1",
   "scope": "/",
   "id": "/ar/?city=adana&app=1",

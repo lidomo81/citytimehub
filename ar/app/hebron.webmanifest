@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت الخليل",
-  "short_name": "الخليل",
-  "description": "مواقيت الخليل",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=hebron&app=1",
   "scope": "/",
   "id": "/ar/?city=hebron&app=1",

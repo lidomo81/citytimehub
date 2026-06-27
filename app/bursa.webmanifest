@@ -1,7 +1,7 @@
 {
-  "name": "Bursa prayer times",
-  "short_name": "Bursa",
-  "description": "Bursa prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=bursa&app=1",
   "scope": "/",
   "id": "/?city=bursa&app=1",

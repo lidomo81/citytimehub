@@ -1,7 +1,7 @@
 {
-  "name": "Dalian prayer times",
-  "short_name": "Dalian",
-  "description": "Dalian prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=dalian&app=1",
   "scope": "/",
   "id": "/?city=dalian&app=1",

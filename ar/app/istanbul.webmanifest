@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت إسطنبول",
-  "short_name": "إسطنبول",
-  "description": "مواقيت إسطنبول",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=istanbul&app=1",
   "scope": "/",
   "id": "/ar/?city=istanbul&app=1",

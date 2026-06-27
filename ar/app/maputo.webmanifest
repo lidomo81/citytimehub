@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت مابوتو",
-  "short_name": "مابوتو",
-  "description": "مواقيت مابوتو",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=maputo&app=1",
   "scope": "/",
   "id": "/ar/?city=maputo&app=1",

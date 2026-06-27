@@ -1,7 +1,7 @@
 {
-  "name": "Qingdao prayer times",
-  "short_name": "Qingdao",
-  "description": "Qingdao prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=qingdao&app=1",
   "scope": "/",
   "id": "/?city=qingdao&app=1",

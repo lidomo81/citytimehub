@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت تشونغتشينغ",
-  "short_name": "تشونغتشينغ",
-  "description": "مواقيت تشونغتشينغ",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=chongqing&app=1",
   "scope": "/",
   "id": "/ar/?city=chongqing&app=1",

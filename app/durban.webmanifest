@@ -1,7 +1,7 @@
 {
-  "name": "Durban prayer times",
-  "short_name": "Durban",
-  "description": "Durban prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=durban&app=1",
   "scope": "/",
   "id": "/?city=durban&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Thessaloniki prayer times",
-  "short_name": "Thessaloniki",
-  "description": "Thessaloniki prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=thessaloniki&app=1",
   "scope": "/",
   "id": "/?city=thessaloniki&app=1",

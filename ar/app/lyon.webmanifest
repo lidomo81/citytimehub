@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت ليون",
-  "short_name": "ليون",
-  "description": "مواقيت ليون",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=lyon&app=1",
   "scope": "/",
   "id": "/ar/?city=lyon&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت أحمد آباد",
-  "short_name": "أحمد آباد",
-  "description": "مواقيت أحمد آباد",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=ahmedabad&app=1",
   "scope": "/",
   "id": "/ar/?city=ahmedabad&app=1",

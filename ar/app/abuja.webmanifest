@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت أبوجا",
-  "short_name": "أبوجا",
-  "description": "مواقيت أبوجا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=abuja&app=1",
   "scope": "/",
   "id": "/ar/?city=abuja&app=1",

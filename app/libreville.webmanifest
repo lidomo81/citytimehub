@@ -1,7 +1,7 @@
 {
-  "name": "Libreville prayer times",
-  "short_name": "Libreville",
-  "description": "Libreville prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=libreville&app=1",
   "scope": "/",
   "id": "/?city=libreville&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Almaty prayer times",
-  "short_name": "Almaty",
-  "description": "Almaty prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=almaty&app=1",
   "scope": "/",
   "id": "/?city=almaty&app=1",

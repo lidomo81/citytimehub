@@ -1,7 +1,7 @@
 {
-  "name": "San Diego prayer times",
-  "short_name": "San Diego",
-  "description": "San Diego prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=san-diego&app=1",
   "scope": "/",
   "id": "/?city=san-diego&app=1",

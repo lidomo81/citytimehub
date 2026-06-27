@@ -1,7 +1,7 @@
 {
-  "name": "Kaohsiung prayer times",
-  "short_name": "Kaohsiung",
-  "description": "Kaohsiung prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=kaohsiung&app=1",
   "scope": "/",
   "id": "/?city=kaohsiung&app=1",

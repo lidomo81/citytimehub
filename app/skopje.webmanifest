@@ -1,7 +1,7 @@
 {
-  "name": "Skopje prayer times",
-  "short_name": "Skopje",
-  "description": "Skopje prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=skopje&app=1",
   "scope": "/",
   "id": "/?city=skopje&app=1",

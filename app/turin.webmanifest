@@ -1,7 +1,7 @@
 {
-  "name": "Turin prayer times",
-  "short_name": "Turin",
-  "description": "Turin prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=turin&app=1",
   "scope": "/",
   "id": "/?city=turin&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Fez prayer times",
-  "short_name": "Fez",
-  "description": "Fez prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=fez&app=1",
   "scope": "/",
   "id": "/?city=fez&app=1",

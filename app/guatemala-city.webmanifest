@@ -1,7 +1,7 @@
 {
-  "name": "Guatemala City prayer times",
-  "short_name": "Guatemala Ci",
-  "description": "Guatemala City prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=guatemala-city&app=1",
   "scope": "/",
   "id": "/?city=guatemala-city&app=1",

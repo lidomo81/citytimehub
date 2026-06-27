@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت واشنطن",
-  "short_name": "واشنطن",
-  "description": "مواقيت واشنطن",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=washington&app=1",
   "scope": "/",
   "id": "/ar/?city=washington&app=1",

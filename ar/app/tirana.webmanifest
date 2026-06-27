@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت تيرانا",
-  "short_name": "تيرانا",
-  "description": "مواقيت تيرانا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=tirana&app=1",
   "scope": "/",
   "id": "/ar/?city=tirana&app=1",

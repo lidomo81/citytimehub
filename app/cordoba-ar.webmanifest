@@ -1,7 +1,7 @@
 {
-  "name": "Córdoba prayer times",
-  "short_name": "Córdoba",
-  "description": "Córdoba prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=cordoba-ar&app=1",
   "scope": "/",
   "id": "/?city=cordoba-ar&app=1",

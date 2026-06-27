@@ -1,7 +1,7 @@
 {
-  "name": "Hawalli prayer times",
-  "short_name": "Hawalli",
-  "description": "Hawalli prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=hawalli&app=1",
   "scope": "/",
   "id": "/?city=hawalli&app=1",

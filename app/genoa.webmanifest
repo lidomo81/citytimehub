@@ -1,7 +1,7 @@
 {
-  "name": "Genoa prayer times",
-  "short_name": "Genoa",
-  "description": "Genoa prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=genoa&app=1",
   "scope": "/",
   "id": "/?city=genoa&app=1",

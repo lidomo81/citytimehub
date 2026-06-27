@@ -1,7 +1,7 @@
 {
-  "name": "Malé prayer times",
-  "short_name": "Malé",
-  "description": "Malé prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=male&app=1",
   "scope": "/",
   "id": "/?city=male&app=1",

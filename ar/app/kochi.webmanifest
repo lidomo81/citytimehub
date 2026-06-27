@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت كوتشي",
-  "short_name": "كوتشي",
-  "description": "مواقيت كوتشي",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=kochi&app=1",
   "scope": "/",
   "id": "/ar/?city=kochi&app=1",

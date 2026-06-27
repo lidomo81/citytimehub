@@ -1,7 +1,7 @@
 {
-  "name": "Sharjah prayer times",
-  "short_name": "Sharjah",
-  "description": "Sharjah prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=sharjah&app=1",
   "scope": "/",
   "id": "/?city=sharjah&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت فيشاكاباتنام",
-  "short_name": "فيشاكاباتنام",
-  "description": "مواقيت فيشاكاباتنام",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=visakhapatnam&app=1",
   "scope": "/",
   "id": "/ar/?city=visakhapatnam&app=1",

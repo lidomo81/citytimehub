@@ -1,7 +1,7 @@
 {
-  "name": "Sapporo prayer times",
-  "short_name": "Sapporo",
-  "description": "Sapporo prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=sapporo&app=1",
   "scope": "/",
   "id": "/?city=sapporo&app=1",

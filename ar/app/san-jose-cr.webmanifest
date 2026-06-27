@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت سان خوسيه",
-  "short_name": "سان خوسيه",
-  "description": "مواقيت سان خوسيه",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=san-jose-cr&app=1",
   "scope": "/",
   "id": "/ar/?city=san-jose-cr&app=1",

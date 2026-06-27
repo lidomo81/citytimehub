@@ -1,7 +1,7 @@
 {
-  "name": "Hama prayer times",
-  "short_name": "Hama",
-  "description": "Hama prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=hama&app=1",
   "scope": "/",
   "id": "/?city=hama&app=1",

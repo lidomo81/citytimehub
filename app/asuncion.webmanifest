@@ -1,7 +1,7 @@
 {
-  "name": "Asunción prayer times",
-  "short_name": "Asunción",
-  "description": "Asunción prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=asuncion&app=1",
   "scope": "/",
   "id": "/?city=asuncion&app=1",

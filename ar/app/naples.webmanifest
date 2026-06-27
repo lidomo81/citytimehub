@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت نابولي",
-  "short_name": "نابولي",
-  "description": "مواقيت نابولي",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=naples&app=1",
   "scope": "/",
   "id": "/ar/?city=naples&app=1",

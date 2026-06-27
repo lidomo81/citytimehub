@@ -1,7 +1,7 @@
 {
-  "name": "San Antonio prayer times",
-  "short_name": "San Antonio",
-  "description": "San Antonio prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=san-antonio&app=1",
   "scope": "/",
   "id": "/?city=san-antonio&app=1",

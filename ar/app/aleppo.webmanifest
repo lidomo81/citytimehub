@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت حلب",
-  "short_name": "حلب",
-  "description": "مواقيت حلب",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=aleppo&app=1",
   "scope": "/",
   "id": "/ar/?city=aleppo&app=1",

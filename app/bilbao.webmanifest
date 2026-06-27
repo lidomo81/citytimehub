@@ -1,7 +1,7 @@
 {
-  "name": "Bilbao prayer times",
-  "short_name": "Bilbao",
-  "description": "Bilbao prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=bilbao&app=1",
   "scope": "/",
   "id": "/?city=bilbao&app=1",

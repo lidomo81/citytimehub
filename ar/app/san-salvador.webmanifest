@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت سان سلفادور",
-  "short_name": "سان سلفادور",
-  "description": "مواقيت سان سلفادور",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=san-salvador&app=1",
   "scope": "/",
   "id": "/ar/?city=san-salvador&app=1",

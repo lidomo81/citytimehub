@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت شنيانغ",
-  "short_name": "شنيانغ",
-  "description": "مواقيت شنيانغ",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=shenyang&app=1",
   "scope": "/",
   "id": "/ar/?city=shenyang&app=1",

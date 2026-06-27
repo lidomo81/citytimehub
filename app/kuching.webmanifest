@@ -1,7 +1,7 @@
 {
-  "name": "Kuching prayer times",
-  "short_name": "Kuching",
-  "description": "Kuching prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=kuching&app=1",
   "scope": "/",
   "id": "/?city=kuching&app=1",

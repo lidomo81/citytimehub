@@ -1,7 +1,7 @@
 {
-  "name": "Port Said prayer times",
-  "short_name": "Port Said",
-  "description": "Port Said prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=port-said&app=1",
   "scope": "/",
   "id": "/?city=port-said&app=1",

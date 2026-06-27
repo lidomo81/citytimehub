@@ -1,7 +1,7 @@
 {
-  "name": "Yanbu prayer times",
-  "short_name": "Yanbu",
-  "description": "Yanbu prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=yanbu&app=1",
   "scope": "/",
   "id": "/?city=yanbu&app=1",

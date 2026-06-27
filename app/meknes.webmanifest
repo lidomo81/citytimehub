@@ -1,7 +1,7 @@
 {
-  "name": "Meknes prayer times",
-  "short_name": "Meknes",
-  "description": "Meknes prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=meknes&app=1",
   "scope": "/",
   "id": "/?city=meknes&app=1",

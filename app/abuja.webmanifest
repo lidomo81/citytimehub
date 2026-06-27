@@ -1,7 +1,7 @@
 {
-  "name": "Abuja prayer times",
-  "short_name": "Abuja",
-  "description": "Abuja prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=abuja&app=1",
   "scope": "/",
   "id": "/?city=abuja&app=1",

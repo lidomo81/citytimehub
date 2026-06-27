@@ -1,7 +1,7 @@
 {
-  "name": "Suez prayer times",
-  "short_name": "Suez",
-  "description": "Suez prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=suez&app=1",
   "scope": "/",
   "id": "/?city=suez&app=1",

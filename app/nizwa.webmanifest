@@ -1,7 +1,7 @@
 {
-  "name": "Nizwa prayer times",
-  "short_name": "Nizwa",
-  "description": "Nizwa prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=nizwa&app=1",
   "scope": "/",
   "id": "/?city=nizwa&app=1",

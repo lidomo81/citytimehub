@@ -1,7 +1,7 @@
 {
-  "name": "Beni Suef prayer times",
-  "short_name": "Beni Suef",
-  "description": "Beni Suef prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=beni-suef&app=1",
   "scope": "/",
   "id": "/?city=beni-suef&app=1",

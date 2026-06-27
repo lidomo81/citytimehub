@@ -1,7 +1,7 @@
 {
-  "name": "Gothenburg prayer times",
-  "short_name": "Gothenburg",
-  "description": "Gothenburg prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=gothenburg&app=1",
   "scope": "/",
   "id": "/?city=gothenburg&app=1",

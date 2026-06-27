@@ -1,7 +1,7 @@
 {
-  "name": "Lagos prayer times",
-  "short_name": "Lagos",
-  "description": "Lagos prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=lagos&app=1",
   "scope": "/",
   "id": "/?city=lagos&app=1",

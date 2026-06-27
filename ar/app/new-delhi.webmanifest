@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت نيودلهي",
-  "short_name": "نيودلهي",
-  "description": "مواقيت نيودلهي",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=new-delhi&app=1",
   "scope": "/",
   "id": "/ar/?city=new-delhi&app=1",

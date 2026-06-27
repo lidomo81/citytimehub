@@ -1,7 +1,7 @@
 {
-  "name": "Santo Domingo prayer times",
-  "short_name": "Santo Doming",
-  "description": "Santo Domingo prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=santo-domingo&app=1",
   "scope": "/",
   "id": "/?city=santo-domingo&app=1",

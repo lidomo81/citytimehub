@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت ريغا",
-  "short_name": "ريغا",
-  "description": "مواقيت ريغا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=riga&app=1",
   "scope": "/",
   "id": "/ar/?city=riga&app=1",

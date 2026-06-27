@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت أكرا",
-  "short_name": "أكرا",
-  "description": "مواقيت أكرا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=accra&app=1",
   "scope": "/",
   "id": "/ar/?city=accra&app=1",

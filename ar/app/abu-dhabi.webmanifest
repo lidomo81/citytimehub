@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت أبو ظبي",
-  "short_name": "أبو ظبي",
-  "description": "مواقيت أبو ظبي",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=abu-dhabi&app=1",
   "scope": "/",
   "id": "/ar/?city=abu-dhabi&app=1",

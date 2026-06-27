@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت المنيا",
-  "short_name": "المنيا",
-  "description": "مواقيت المنيا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=minya&app=1",
   "scope": "/",
   "id": "/ar/?city=minya&app=1",

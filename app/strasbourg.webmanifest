@@ -1,7 +1,7 @@
 {
-  "name": "Strasbourg prayer times",
-  "short_name": "Strasbourg",
-  "description": "Strasbourg prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=strasbourg&app=1",
   "scope": "/",
   "id": "/?city=strasbourg&app=1",

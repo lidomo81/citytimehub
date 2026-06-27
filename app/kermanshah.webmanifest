@@ -1,7 +1,7 @@
 {
-  "name": "Kermanshah prayer times",
-  "short_name": "Kermanshah",
-  "description": "Kermanshah prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=kermanshah&app=1",
   "scope": "/",
   "id": "/?city=kermanshah&app=1",

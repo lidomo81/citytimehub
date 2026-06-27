@@ -1,7 +1,7 @@
 {
-  "name": "La Paz prayer times",
-  "short_name": "La Paz",
-  "description": "La Paz prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=la-paz&app=1",
   "scope": "/",
   "id": "/?city=la-paz&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Guayaquil prayer times",
-  "short_name": "Guayaquil",
-  "description": "Guayaquil prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=guayaquil&app=1",
   "scope": "/",
   "id": "/?city=guayaquil&app=1",

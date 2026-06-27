@@ -1,7 +1,7 @@
 {
-  "name": "New York prayer times",
-  "short_name": "New York",
-  "description": "New York prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=new-york&app=1",
   "scope": "/",
   "id": "/?city=new-york&app=1",

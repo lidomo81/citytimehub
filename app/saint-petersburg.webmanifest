@@ -1,7 +1,7 @@
 {
-  "name": "Saint Petersburg prayer times",
-  "short_name": "Saint Peters",
-  "description": "Saint Petersburg prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=saint-petersburg&app=1",
   "scope": "/",
   "id": "/?city=saint-petersburg&app=1",

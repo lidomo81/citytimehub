@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت كالي",
-  "short_name": "كالي",
-  "description": "مواقيت كالي",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=cali&app=1",
   "scope": "/",
   "id": "/ar/?city=cali&app=1",

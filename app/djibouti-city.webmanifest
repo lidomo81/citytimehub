@@ -1,7 +1,7 @@
 {
-  "name": "Djibouti prayer times",
-  "short_name": "Djibouti",
-  "description": "Djibouti prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=djibouti-city&app=1",
   "scope": "/",
   "id": "/?city=djibouti-city&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Dar es Salaam prayer times",
-  "short_name": "Dar es Salaa",
-  "description": "Dar es Salaam prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=dar-es-salaam&app=1",
   "scope": "/",
   "id": "/?city=dar-es-salaam&app=1",

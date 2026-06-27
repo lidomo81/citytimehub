@@ -1,7 +1,7 @@
 {
-  "name": "Shymkent prayer times",
-  "short_name": "Shymkent",
-  "description": "Shymkent prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=shymkent&app=1",
   "scope": "/",
   "id": "/?city=shymkent&app=1",

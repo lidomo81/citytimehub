@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت واغادوغو",
-  "short_name": "واغادوغو",
-  "description": "مواقيت واغادوغو",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=ouagadougou&app=1",
   "scope": "/",
   "id": "/ar/?city=ouagadougou&app=1",

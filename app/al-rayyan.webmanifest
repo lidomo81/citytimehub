@@ -1,7 +1,7 @@
 {
-  "name": "Al Rayyan prayer times",
-  "short_name": "Al Rayyan",
-  "description": "Al Rayyan prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=al-rayyan&app=1",
   "scope": "/",
   "id": "/?city=al-rayyan&app=1",

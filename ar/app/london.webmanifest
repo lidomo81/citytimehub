@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت لندن",
-  "short_name": "لندن",
-  "description": "مواقيت لندن",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=london&app=1",
   "scope": "/",
   "id": "/ar/?city=london&app=1",

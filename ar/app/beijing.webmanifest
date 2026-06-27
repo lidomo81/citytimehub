@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت بكين",
-  "short_name": "بكين",
-  "description": "مواقيت بكين",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=beijing&app=1",
   "scope": "/",
   "id": "/ar/?city=beijing&app=1",

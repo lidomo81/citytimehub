@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت صفاقس",
-  "short_name": "صفاقس",
-  "description": "مواقيت صفاقس",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=sfax&app=1",
   "scope": "/",
   "id": "/ar/?city=sfax&app=1",

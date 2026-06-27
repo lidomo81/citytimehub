@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت نانت",
-  "short_name": "نانت",
-  "description": "مواقيت نانت",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=nantes&app=1",
   "scope": "/",
   "id": "/ar/?city=nantes&app=1",

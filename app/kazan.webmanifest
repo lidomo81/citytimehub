@@ -1,7 +1,7 @@
 {
-  "name": "Kazan prayer times",
-  "short_name": "Kazan",
-  "description": "Kazan prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=kazan&app=1",
   "scope": "/",
   "id": "/?city=kazan&app=1",

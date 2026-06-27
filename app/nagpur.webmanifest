@@ -1,7 +1,7 @@
 {
-  "name": "Nagpur prayer times",
-  "short_name": "Nagpur",
-  "description": "Nagpur prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=nagpur&app=1",
   "scope": "/",
   "id": "/?city=nagpur&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت شيانغ ماي",
-  "short_name": "شيانغ ماي",
-  "description": "مواقيت شيانغ ماي",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=chiang-mai&app=1",
   "scope": "/",
   "id": "/ar/?city=chiang-mai&app=1",

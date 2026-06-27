@@ -1,7 +1,7 @@
 {
-  "name": "Gaborone prayer times",
-  "short_name": "Gaborone",
-  "description": "Gaborone prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=gaborone&app=1",
   "scope": "/",
   "id": "/?city=gaborone&app=1",

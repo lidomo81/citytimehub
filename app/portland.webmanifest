@@ -1,7 +1,7 @@
 {
-  "name": "Portland prayer times",
-  "short_name": "Portland",
-  "description": "Portland prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=portland&app=1",
   "scope": "/",
   "id": "/?city=portland&app=1",

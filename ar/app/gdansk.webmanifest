@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت غدانسك",
-  "short_name": "غدانسك",
-  "description": "مواقيت غدانسك",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=gdansk&app=1",
   "scope": "/",
   "id": "/ar/?city=gdansk&app=1",

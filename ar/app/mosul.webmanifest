@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت الموصل",
-  "short_name": "الموصل",
-  "description": "مواقيت الموصل",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=mosul&app=1",
   "scope": "/",
   "id": "/ar/?city=mosul&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Tirana prayer times",
-  "short_name": "Tirana",
-  "description": "Tirana prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=tirana&app=1",
   "scope": "/",
   "id": "/?city=tirana&app=1",

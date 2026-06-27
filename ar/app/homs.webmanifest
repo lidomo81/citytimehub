@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت حمص",
-  "short_name": "حمص",
-  "description": "مواقيت حمص",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=homs&app=1",
   "scope": "/",
   "id": "/ar/?city=homs&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Zurich prayer times",
-  "short_name": "Zurich",
-  "description": "Zurich prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=zurich&app=1",
   "scope": "/",
   "id": "/?city=zurich&app=1",

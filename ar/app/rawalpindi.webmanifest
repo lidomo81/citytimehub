@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت روالبندي",
-  "short_name": "روالبندي",
-  "description": "مواقيت روالبندي",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=rawalpindi&app=1",
   "scope": "/",
   "id": "/ar/?city=rawalpindi&app=1",

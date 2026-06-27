@@ -1,7 +1,7 @@
 {
-  "name": "Boston prayer times",
-  "short_name": "Boston",
-  "description": "Boston prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=boston&app=1",
   "scope": "/",
   "id": "/?city=boston&app=1",

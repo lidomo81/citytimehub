@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت نيقوسيا",
-  "short_name": "نيقوسيا",
-  "description": "مواقيت نيقوسيا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=nicosia&app=1",
   "scope": "/",
   "id": "/ar/?city=nicosia&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت أوتاوا",
-  "short_name": "أوتاوا",
-  "description": "مواقيت أوتاوا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=ottawa&app=1",
   "scope": "/",
   "id": "/ar/?city=ottawa&app=1",

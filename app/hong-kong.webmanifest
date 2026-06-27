@@ -1,7 +1,7 @@
 {
-  "name": "Hong Kong prayer times",
-  "short_name": "Hong Kong",
-  "description": "Hong Kong prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=hong-kong&app=1",
   "scope": "/",
   "id": "/?city=hong-kong&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Riyadh prayer times",
-  "short_name": "Riyadh",
-  "description": "Riyadh prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=riyadh&app=1",
   "scope": "/",
   "id": "/?city=riyadh&app=1",

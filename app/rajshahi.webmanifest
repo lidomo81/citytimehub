@@ -1,7 +1,7 @@
 {
-  "name": "Rajshahi prayer times",
-  "short_name": "Rajshahi",
-  "description": "Rajshahi prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=rajshahi&app=1",
   "scope": "/",
   "id": "/?city=rajshahi&app=1",

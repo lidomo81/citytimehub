@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت حيدر آباد",
-  "short_name": "حيدر آباد",
-  "description": "مواقيت حيدر آباد",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=hyderabad&app=1",
   "scope": "/",
   "id": "/ar/?city=hyderabad&app=1",

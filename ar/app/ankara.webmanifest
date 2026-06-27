@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت أنقرة",
-  "short_name": "أنقرة",
-  "description": "مواقيت أنقرة",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=ankara&app=1",
   "scope": "/",
   "id": "/ar/?city=ankara&app=1",

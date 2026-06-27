@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت كوتونو",
-  "short_name": "كوتونو",
-  "description": "مواقيت كوتونو",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=cotonou&app=1",
   "scope": "/",
   "id": "/ar/?city=cotonou&app=1",

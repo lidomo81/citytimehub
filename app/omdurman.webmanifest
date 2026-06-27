@@ -1,7 +1,7 @@
 {
-  "name": "Omdurman prayer times",
-  "short_name": "Omdurman",
-  "description": "Omdurman prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=omdurman&app=1",
   "scope": "/",
   "id": "/?city=omdurman&app=1",

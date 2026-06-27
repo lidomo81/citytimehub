@@ -1,7 +1,7 @@
 {
-  "name": "Nairobi prayer times",
-  "short_name": "Nairobi",
-  "description": "Nairobi prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=nairobi&app=1",
   "scope": "/",
   "id": "/?city=nairobi&app=1",

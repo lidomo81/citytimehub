@@ -1,7 +1,7 @@
 {
-  "name": "Suzhou prayer times",
-  "short_name": "Suzhou",
-  "description": "Suzhou prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=suzhou&app=1",
   "scope": "/",
   "id": "/?city=suzhou&app=1",

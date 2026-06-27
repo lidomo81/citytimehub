@@ -1,7 +1,7 @@
 {
-  "name": "Chennai prayer times",
-  "short_name": "Chennai",
-  "description": "Chennai prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=chennai&app=1",
   "scope": "/",
   "id": "/?city=chennai&app=1",

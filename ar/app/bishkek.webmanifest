@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت بيشكيك",
-  "short_name": "بيشكيك",
-  "description": "مواقيت بيشكيك",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=bishkek&app=1",
   "scope": "/",
   "id": "/ar/?city=bishkek&app=1",

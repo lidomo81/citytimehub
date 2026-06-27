@@ -1,7 +1,7 @@
 {
-  "name": "Kinshasa prayer times",
-  "short_name": "Kinshasa",
-  "description": "Kinshasa prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=kinshasa&app=1",
   "scope": "/",
   "id": "/?city=kinshasa&app=1",

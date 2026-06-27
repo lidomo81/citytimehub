@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت هلسنكي",
-  "short_name": "هلسنكي",
-  "description": "مواقيت هلسنكي",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=helsinki&app=1",
   "scope": "/",
   "id": "/ar/?city=helsinki&app=1",

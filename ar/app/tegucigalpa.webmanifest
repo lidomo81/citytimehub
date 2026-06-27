@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت تيغوسيغالبا",
-  "short_name": "تيغوسيغالبا",
-  "description": "مواقيت تيغوسيغالبا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=tegucigalpa&app=1",
   "scope": "/",
   "id": "/ar/?city=tegucigalpa&app=1",

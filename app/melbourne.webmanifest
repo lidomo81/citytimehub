@@ -1,7 +1,7 @@
 {
-  "name": "Melbourne prayer times",
-  "short_name": "Melbourne",
-  "description": "Melbourne prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=melbourne&app=1",
   "scope": "/",
   "id": "/?city=melbourne&app=1",

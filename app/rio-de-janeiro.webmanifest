@@ -1,7 +1,7 @@
 {
-  "name": "Rio de Janeiro prayer times",
-  "short_name": "Rio de Janei",
-  "description": "Rio de Janeiro prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=rio-de-janeiro&app=1",
   "scope": "/",
   "id": "/?city=rio-de-janeiro&app=1",

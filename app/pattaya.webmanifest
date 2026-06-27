@@ -1,7 +1,7 @@
 {
-  "name": "Pattaya prayer times",
-  "short_name": "Pattaya",
-  "description": "Pattaya prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=pattaya&app=1",
   "scope": "/",
   "id": "/?city=pattaya&app=1",

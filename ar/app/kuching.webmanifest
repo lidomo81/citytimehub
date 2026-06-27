@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت كوتشينغ",
-  "short_name": "كوتشينغ",
-  "description": "مواقيت كوتشينغ",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=kuching&app=1",
   "scope": "/",
   "id": "/ar/?city=kuching&app=1",

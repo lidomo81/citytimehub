@@ -1,7 +1,7 @@
 {
-  "name": "Valencia prayer times",
-  "short_name": "Valencia",
-  "description": "Valencia prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=valencia&app=1",
   "scope": "/",
   "id": "/?city=valencia&app=1",

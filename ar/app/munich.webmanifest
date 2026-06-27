@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت ميونخ",
-  "short_name": "ميونخ",
-  "description": "مواقيت ميونخ",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=munich&app=1",
   "scope": "/",
   "id": "/ar/?city=munich&app=1",

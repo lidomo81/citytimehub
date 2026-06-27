@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت كينشاسا",
-  "short_name": "كينشاسا",
-  "description": "مواقيت كينشاسا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=kinshasa&app=1",
   "scope": "/",
   "id": "/ar/?city=kinshasa&app=1",

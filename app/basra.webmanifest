@@ -1,7 +1,7 @@
 {
-  "name": "Basra prayer times",
-  "short_name": "Basra",
-  "description": "Basra prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=basra&app=1",
   "scope": "/",
   "id": "/?city=basra&app=1",

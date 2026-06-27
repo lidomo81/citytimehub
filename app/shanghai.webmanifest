@@ -1,7 +1,7 @@
 {
-  "name": "Shanghai prayer times",
-  "short_name": "Shanghai",
-  "description": "Shanghai prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=shanghai&app=1",
   "scope": "/",
   "id": "/?city=shanghai&app=1",

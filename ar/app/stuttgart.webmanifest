@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت شتوتغارت",
-  "short_name": "شتوتغارت",
-  "description": "مواقيت شتوتغارت",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=stuttgart&app=1",
   "scope": "/",
   "id": "/ar/?city=stuttgart&app=1",

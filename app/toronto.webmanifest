@@ -1,7 +1,7 @@
 {
-  "name": "Toronto prayer times",
-  "short_name": "Toronto",
-  "description": "Toronto prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=toronto&app=1",
   "scope": "/",
   "id": "/?city=toronto&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت أم درمان",
-  "short_name": "أم درمان",
-  "description": "مواقيت أم درمان",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=omdurman&app=1",
   "scope": "/",
   "id": "/ar/?city=omdurman&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Cardiff prayer times",
-  "short_name": "Cardiff",
-  "description": "Cardiff prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=cardiff&app=1",
   "scope": "/",
   "id": "/?city=cardiff&app=1",

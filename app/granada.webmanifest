@@ -1,7 +1,7 @@
 {
-  "name": "Granada prayer times",
-  "short_name": "Granada",
-  "description": "Granada prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=granada&app=1",
   "scope": "/",
   "id": "/?city=granada&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Florence prayer times",
-  "short_name": "Florence",
-  "description": "Florence prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=florence&app=1",
   "scope": "/",
   "id": "/?city=florence&app=1",

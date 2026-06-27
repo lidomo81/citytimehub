@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت سلا",
-  "short_name": "سلا",
-  "description": "مواقيت سلا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=sale&app=1",
   "scope": "/",
   "id": "/ar/?city=sale&app=1",

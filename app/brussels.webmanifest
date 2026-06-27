@@ -1,7 +1,7 @@
 {
-  "name": "Brussels prayer times",
-  "short_name": "Brussels",
-  "description": "Brussels prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=brussels&app=1",
   "scope": "/",
   "id": "/?city=brussels&app=1",

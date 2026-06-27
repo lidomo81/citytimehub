@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت كاندي",
-  "short_name": "كاندي",
-  "description": "مواقيت كاندي",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=kandy&app=1",
   "scope": "/",
   "id": "/ar/?city=kandy&app=1",

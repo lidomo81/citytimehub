@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت ماكاسار",
-  "short_name": "ماكاسار",
-  "description": "مواقيت ماكاسار",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=makassar&app=1",
   "scope": "/",
   "id": "/ar/?city=makassar&app=1",

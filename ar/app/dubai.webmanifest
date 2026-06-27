@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت دبي",
-  "short_name": "دبي",
-  "description": "مواقيت دبي",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=dubai&app=1",
   "scope": "/",
   "id": "/ar/?city=dubai&app=1",

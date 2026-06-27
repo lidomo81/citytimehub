@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت الإسماعيلية",
-  "short_name": "الإسماعيلية",
-  "description": "مواقيت الإسماعيلية",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=ismailia&app=1",
   "scope": "/",
   "id": "/ar/?city=ismailia&app=1",

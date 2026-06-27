@@ -1,7 +1,7 @@
 {
-  "name": "Ganja prayer times",
-  "short_name": "Ganja",
-  "description": "Ganja prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=ganja&app=1",
   "scope": "/",
   "id": "/?city=ganja&app=1",

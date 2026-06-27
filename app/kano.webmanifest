@@ -1,7 +1,7 @@
 {
-  "name": "Kano prayer times",
-  "short_name": "Kano",
-  "description": "Kano prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=kano&app=1",
   "scope": "/",
   "id": "/?city=kano&app=1",

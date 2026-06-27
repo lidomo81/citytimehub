@@ -1,7 +1,7 @@
 {
-  "name": "Herat prayer times",
-  "short_name": "Herat",
-  "description": "Herat prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=herat&app=1",
   "scope": "/",
   "id": "/?city=herat&app=1",

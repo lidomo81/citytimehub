@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت ستوكهولم",
-  "short_name": "ستوكهولم",
-  "description": "مواقيت ستوكهولم",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=stockholm&app=1",
   "scope": "/",
   "id": "/ar/?city=stockholm&app=1",

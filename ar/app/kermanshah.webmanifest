@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت كرمانشاه",
-  "short_name": "كرمانشاه",
-  "description": "مواقيت كرمانشاه",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=kermanshah&app=1",
   "scope": "/",
   "id": "/ar/?city=kermanshah&app=1",

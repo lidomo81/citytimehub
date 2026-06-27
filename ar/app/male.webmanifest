@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت ماليه",
-  "short_name": "ماليه",
-  "description": "مواقيت ماليه",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=male&app=1",
   "scope": "/",
   "id": "/ar/?city=male&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت إيبوه",
-  "short_name": "إيبوه",
-  "description": "مواقيت إيبوه",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=ipoh&app=1",
   "scope": "/",
   "id": "/ar/?city=ipoh&app=1",

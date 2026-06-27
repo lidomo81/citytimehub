@@ -1,7 +1,7 @@
 {
-  "name": "Monterrey prayer times",
-  "short_name": "Monterrey",
-  "description": "Monterrey prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=monterrey&app=1",
   "scope": "/",
   "id": "/?city=monterrey&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Mersin prayer times",
-  "short_name": "Mersin",
-  "description": "Mersin prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=mersin&app=1",
   "scope": "/",
   "id": "/?city=mersin&app=1",

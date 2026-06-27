@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت بودغوريتسا",
-  "short_name": "بودغوريتسا",
-  "description": "مواقيت بودغوريتسا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=podgorica&app=1",
   "scope": "/",
   "id": "/ar/?city=podgorica&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت الدار البيضاء",
-  "short_name": "الدار البيضا",
-  "description": "مواقيت الدار البيضاء",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=casablanca&app=1",
   "scope": "/",
   "id": "/ar/?city=casablanca&app=1",

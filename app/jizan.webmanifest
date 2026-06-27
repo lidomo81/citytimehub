@@ -1,7 +1,7 @@
 {
-  "name": "Jizan prayer times",
-  "short_name": "Jizan",
-  "description": "Jizan prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=jizan&app=1",
   "scope": "/",
   "id": "/?city=jizan&app=1",

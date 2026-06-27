@@ -1,7 +1,7 @@
 {
-  "name": "Montevideo prayer times",
-  "short_name": "Montevideo",
-  "description": "Montevideo prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=montevideo&app=1",
   "scope": "/",
   "id": "/?city=montevideo&app=1",

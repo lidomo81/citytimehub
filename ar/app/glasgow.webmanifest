@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت غلاسكو",
-  "short_name": "غلاسكو",
-  "description": "مواقيت غلاسكو",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=glasgow&app=1",
   "scope": "/",
   "id": "/ar/?city=glasgow&app=1",

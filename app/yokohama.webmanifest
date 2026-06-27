@@ -1,7 +1,7 @@
 {
-  "name": "Yokohama prayer times",
-  "short_name": "Yokohama",
-  "description": "Yokohama prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=yokohama&app=1",
   "scope": "/",
   "id": "/?city=yokohama&app=1",

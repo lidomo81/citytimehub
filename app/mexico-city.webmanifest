@@ -1,7 +1,7 @@
 {
-  "name": "Mexico City prayer times",
-  "short_name": "Mexico City",
-  "description": "Mexico City prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=mexico-city&app=1",
   "scope": "/",
   "id": "/?city=mexico-city&app=1",

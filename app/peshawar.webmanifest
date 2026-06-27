@@ -1,7 +1,7 @@
 {
-  "name": "Peshawar prayer times",
-  "short_name": "Peshawar",
-  "description": "Peshawar prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=peshawar&app=1",
   "scope": "/",
   "id": "/?city=peshawar&app=1",

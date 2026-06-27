@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت سوفا",
-  "short_name": "سوفا",
-  "description": "مواقيت سوفا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=suva&app=1",
   "scope": "/",
   "id": "/ar/?city=suva&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت سوسة",
-  "short_name": "سوسة",
-  "description": "مواقيت سوسة",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=sousse&app=1",
   "scope": "/",
   "id": "/ar/?city=sousse&app=1",

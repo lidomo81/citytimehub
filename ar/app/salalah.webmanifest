@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت صلالة",
-  "short_name": "صلالة",
-  "description": "مواقيت صلالة",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=salalah&app=1",
   "scope": "/",
   "id": "/ar/?city=salalah&app=1",

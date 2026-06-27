@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت دار السلام",
-  "short_name": "دار السلام",
-  "description": "مواقيت دار السلام",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=dar-es-salaam&app=1",
   "scope": "/",
   "id": "/ar/?city=dar-es-salaam&app=1",

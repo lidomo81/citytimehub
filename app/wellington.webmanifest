@@ -1,7 +1,7 @@
 {
-  "name": "Wellington prayer times",
-  "short_name": "Wellington",
-  "description": "Wellington prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=wellington&app=1",
   "scope": "/",
   "id": "/?city=wellington&app=1",

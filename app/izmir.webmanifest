@@ -1,7 +1,7 @@
 {
-  "name": "Izmir prayer times",
-  "short_name": "Izmir",
-  "description": "Izmir prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=izmir&app=1",
   "scope": "/",
   "id": "/?city=izmir&app=1",

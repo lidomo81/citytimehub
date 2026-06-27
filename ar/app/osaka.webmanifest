@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت أوساكا",
-  "short_name": "أوساكا",
-  "description": "مواقيت أوساكا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=osaka&app=1",
   "scope": "/",
   "id": "/ar/?city=osaka&app=1",

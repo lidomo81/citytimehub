@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت الحديدة",
-  "short_name": "الحديدة",
-  "description": "مواقيت الحديدة",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=hodeidah&app=1",
   "scope": "/",
   "id": "/ar/?city=hodeidah&app=1",

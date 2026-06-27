@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت هانغتشو",
-  "short_name": "هانغتشو",
-  "description": "مواقيت هانغتشو",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=hangzhou&app=1",
   "scope": "/",
   "id": "/ar/?city=hangzhou&app=1",

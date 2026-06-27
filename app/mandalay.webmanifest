@@ -1,7 +1,7 @@
 {
-  "name": "Mandalay prayer times",
-  "short_name": "Mandalay",
-  "description": "Mandalay prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=mandalay&app=1",
   "scope": "/",
   "id": "/?city=mandalay&app=1",

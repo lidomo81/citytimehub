@@ -1,7 +1,7 @@
 {
-  "name": "Makassar prayer times",
-  "short_name": "Makassar",
-  "description": "Makassar prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=makassar&app=1",
   "scope": "/",
   "id": "/?city=makassar&app=1",

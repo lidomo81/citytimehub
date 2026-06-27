@@ -1,7 +1,7 @@
 {
-  "name": "Venice prayer times",
-  "short_name": "Venice",
-  "description": "Venice prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=venice&app=1",
   "scope": "/",
   "id": "/?city=venice&app=1",

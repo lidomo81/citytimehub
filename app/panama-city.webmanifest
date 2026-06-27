@@ -1,7 +1,7 @@
 {
-  "name": "Panama City prayer times",
-  "short_name": "Panama City",
-  "description": "Panama City prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=panama-city&app=1",
   "scope": "/",
   "id": "/?city=panama-city&app=1",

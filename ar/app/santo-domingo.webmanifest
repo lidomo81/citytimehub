@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت سانتو دومينغو",
-  "short_name": "سانتو دومينغ",
-  "description": "مواقيت سانتو دومينغو",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=santo-domingo&app=1",
   "scope": "/",
   "id": "/ar/?city=santo-domingo&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت الزاوية",
-  "short_name": "الزاوية",
-  "description": "مواقيت الزاوية",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=zawiya&app=1",
   "scope": "/",
   "id": "/ar/?city=zawiya&app=1",

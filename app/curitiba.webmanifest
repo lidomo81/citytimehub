@@ -1,7 +1,7 @@
 {
-  "name": "Curitiba prayer times",
-  "short_name": "Curitiba",
-  "description": "Curitiba prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=curitiba&app=1",
   "scope": "/",
   "id": "/?city=curitiba&app=1",

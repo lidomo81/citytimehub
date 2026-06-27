@@ -1,7 +1,7 @@
 {
-  "name": "Lusaka prayer times",
-  "short_name": "Lusaka",
-  "description": "Lusaka prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=lusaka&app=1",
   "scope": "/",
   "id": "/?city=lusaka&app=1",

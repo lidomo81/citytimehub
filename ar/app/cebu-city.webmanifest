@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت سيبو",
-  "short_name": "سيبو",
-  "description": "مواقيت سيبو",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=cebu-city&app=1",
   "scope": "/",
   "id": "/ar/?city=cebu-city&app=1",

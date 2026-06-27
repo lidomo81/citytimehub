@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت الرباط",
-  "short_name": "الرباط",
-  "description": "مواقيت الرباط",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=rabat&app=1",
   "scope": "/",
   "id": "/ar/?city=rabat&app=1",

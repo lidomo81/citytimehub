@@ -1,7 +1,7 @@
 {
-  "name": "Sale prayer times",
-  "short_name": "Sale",
-  "description": "Sale prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=sale&app=1",
   "scope": "/",
   "id": "/?city=sale&app=1",

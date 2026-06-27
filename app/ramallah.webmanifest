@@ -1,7 +1,7 @@
 {
-  "name": "Ramallah prayer times",
-  "short_name": "Ramallah",
-  "description": "Ramallah prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=ramallah&app=1",
   "scope": "/",
   "id": "/?city=ramallah&app=1",

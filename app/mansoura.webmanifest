@@ -1,7 +1,7 @@
 {
-  "name": "Mansoura prayer times",
-  "short_name": "Mansoura",
-  "description": "Mansoura prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=mansoura&app=1",
   "scope": "/",
   "id": "/?city=mansoura&app=1",

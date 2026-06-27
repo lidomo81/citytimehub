@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت براغ",
-  "short_name": "براغ",
-  "description": "مواقيت براغ",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=prague&app=1",
   "scope": "/",
   "id": "/ar/?city=prague&app=1",

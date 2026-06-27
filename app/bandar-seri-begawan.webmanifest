@@ -1,7 +1,7 @@
 {
-  "name": "Bandar Seri Begawan prayer times",
-  "short_name": "Bandar Seri ",
-  "description": "Bandar Seri Begawan prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=bandar-seri-begawan&app=1",
   "scope": "/",
   "id": "/?city=bandar-seri-begawan&app=1",

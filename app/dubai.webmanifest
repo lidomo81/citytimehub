@@ -1,7 +1,7 @@
 {
-  "name": "Dubai prayer times",
-  "short_name": "Dubai",
-  "description": "Dubai prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=dubai&app=1",
   "scope": "/",
   "id": "/?city=dubai&app=1",

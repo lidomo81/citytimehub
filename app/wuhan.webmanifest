@@ -1,7 +1,7 @@
 {
-  "name": "Wuhan prayer times",
-  "short_name": "Wuhan",
-  "description": "Wuhan prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=wuhan&app=1",
   "scope": "/",
   "id": "/?city=wuhan&app=1",

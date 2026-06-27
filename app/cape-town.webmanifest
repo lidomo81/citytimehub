@@ -1,7 +1,7 @@
 {
-  "name": "Cape Town prayer times",
-  "short_name": "Cape Town",
-  "description": "Cape Town prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=cape-town&app=1",
   "scope": "/",
   "id": "/?city=cape-town&app=1",

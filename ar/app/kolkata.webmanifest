@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت كولكاتا",
-  "short_name": "كولكاتا",
-  "description": "مواقيت كولكاتا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=kolkata&app=1",
   "scope": "/",
   "id": "/ar/?city=kolkata&app=1",

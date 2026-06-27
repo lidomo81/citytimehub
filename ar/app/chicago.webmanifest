@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت شيكاغو",
-  "short_name": "شيكاغو",
-  "description": "مواقيت شيكاغو",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=chicago&app=1",
   "scope": "/",
   "id": "/ar/?city=chicago&app=1",

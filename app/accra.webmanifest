@@ -1,7 +1,7 @@
 {
-  "name": "Accra prayer times",
-  "short_name": "Accra",
-  "description": "Accra prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=accra&app=1",
   "scope": "/",
   "id": "/?city=accra&app=1",

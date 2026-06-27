@@ -1,7 +1,7 @@
 {
-  "name": "Rawalpindi prayer times",
-  "short_name": "Rawalpindi",
-  "description": "Rawalpindi prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=rawalpindi&app=1",
   "scope": "/",
   "id": "/?city=rawalpindi&app=1",

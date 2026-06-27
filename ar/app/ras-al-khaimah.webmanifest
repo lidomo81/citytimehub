@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت رأس الخيمة",
-  "short_name": "رأس الخيمة",
-  "description": "مواقيت رأس الخيمة",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=ras-al-khaimah&app=1",
   "scope": "/",
   "id": "/ar/?city=ras-al-khaimah&app=1",

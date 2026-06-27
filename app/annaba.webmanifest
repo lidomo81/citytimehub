@@ -1,7 +1,7 @@
 {
-  "name": "Annaba prayer times",
-  "short_name": "Annaba",
-  "description": "Annaba prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=annaba&app=1",
   "scope": "/",
   "id": "/?city=annaba&app=1",

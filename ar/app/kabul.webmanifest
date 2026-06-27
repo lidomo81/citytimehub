@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت كابول",
-  "short_name": "كابول",
-  "description": "مواقيت كابول",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=kabul&app=1",
   "scope": "/",
   "id": "/ar/?city=kabul&app=1",

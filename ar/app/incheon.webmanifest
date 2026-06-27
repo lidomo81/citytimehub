@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت إنتشون",
-  "short_name": "إنتشون",
-  "description": "مواقيت إنتشون",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=incheon&app=1",
   "scope": "/",
   "id": "/ar/?city=incheon&app=1",

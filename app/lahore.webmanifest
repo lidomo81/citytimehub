@@ -1,7 +1,7 @@
 {
-  "name": "Lahore prayer times",
-  "short_name": "Lahore",
-  "description": "Lahore prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=lahore&app=1",
   "scope": "/",
   "id": "/?city=lahore&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت مانشستر",
-  "short_name": "مانشستر",
-  "description": "مواقيت مانشستر",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=manchester&app=1",
   "scope": "/",
   "id": "/ar/?city=manchester&app=1",

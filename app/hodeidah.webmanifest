@@ -1,7 +1,7 @@
 {
-  "name": "Hodeidah prayer times",
-  "short_name": "Hodeidah",
-  "description": "Hodeidah prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=hodeidah&app=1",
   "scope": "/",
   "id": "/?city=hodeidah&app=1",

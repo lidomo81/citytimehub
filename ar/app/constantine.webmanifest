@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت قسنطينة",
-  "short_name": "قسنطينة",
-  "description": "مواقيت قسنطينة",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=constantine&app=1",
   "scope": "/",
   "id": "/ar/?city=constantine&app=1",

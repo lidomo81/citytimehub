@@ -1,7 +1,7 @@
 {
-  "name": "Tokyo prayer times",
-  "short_name": "Tokyo",
-  "description": "Tokyo prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=tokyo&app=1",
   "scope": "/",
   "id": "/?city=tokyo&app=1",

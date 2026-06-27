@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت باكو",
-  "short_name": "باكو",
-  "description": "مواقيت باكو",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=baku&app=1",
   "scope": "/",
   "id": "/ar/?city=baku&app=1",

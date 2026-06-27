@@ -1,7 +1,7 @@
 {
-  "name": "Al Qassim prayer times",
-  "short_name": "Al Qassim",
-  "description": "Al Qassim prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=al-qassim&app=1",
   "scope": "/",
   "id": "/?city=al-qassim&app=1",

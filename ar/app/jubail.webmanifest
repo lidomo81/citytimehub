@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت الجبيل",
-  "short_name": "الجبيل",
-  "description": "مواقيت الجبيل",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=jubail&app=1",
   "scope": "/",
   "id": "/ar/?city=jubail&app=1",

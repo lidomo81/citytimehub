@@ -1,7 +1,7 @@
 {
-  "name": "Istanbul prayer times",
-  "short_name": "Istanbul",
-  "description": "Istanbul prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=istanbul&app=1",
   "scope": "/",
   "id": "/?city=istanbul&app=1",

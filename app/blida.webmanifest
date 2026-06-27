@@ -1,7 +1,7 @@
 {
-  "name": "Blida prayer times",
-  "short_name": "Blida",
-  "description": "Blida prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=blida&app=1",
   "scope": "/",
   "id": "/?city=blida&app=1",

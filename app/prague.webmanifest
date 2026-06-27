@@ -1,7 +1,7 @@
 {
-  "name": "Prague prayer times",
-  "short_name": "Prague",
-  "description": "Prague prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=prague&app=1",
   "scope": "/",
   "id": "/?city=prague&app=1",

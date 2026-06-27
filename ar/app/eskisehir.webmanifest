@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت إسكي شهر",
-  "short_name": "إسكي شهر",
-  "description": "مواقيت إسكي شهر",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=eskisehir&app=1",
   "scope": "/",
   "id": "/ar/?city=eskisehir&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت كوتا كينابالو",
-  "short_name": "كوتا كينابال",
-  "description": "مواقيت كوتا كينابالو",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=kota-kinabalu&app=1",
   "scope": "/",
   "id": "/ar/?city=kota-kinabalu&app=1",

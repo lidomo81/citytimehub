@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت برمنغهام",
-  "short_name": "برمنغهام",
-  "description": "مواقيت برمنغهام",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=birmingham&app=1",
   "scope": "/",
   "id": "/ar/?city=birmingham&app=1",

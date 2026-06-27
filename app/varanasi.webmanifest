@@ -1,7 +1,7 @@
 {
-  "name": "Varanasi prayer times",
-  "short_name": "Varanasi",
-  "description": "Varanasi prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=varanasi&app=1",
   "scope": "/",
   "id": "/?city=varanasi&app=1",

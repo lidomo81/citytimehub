@@ -1,7 +1,7 @@
 {
-  "name": "Khulna prayer times",
-  "short_name": "Khulna",
-  "description": "Khulna prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=khulna&app=1",
   "scope": "/",
   "id": "/?city=khulna&app=1",

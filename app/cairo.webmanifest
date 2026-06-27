@@ -1,7 +1,7 @@
 {
-  "name": "Cairo prayer times",
-  "short_name": "Cairo",
-  "description": "Cairo prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=cairo&app=1",
   "scope": "/",
   "id": "/?city=cairo&app=1",

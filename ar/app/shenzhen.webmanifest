@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت شنجن",
-  "short_name": "شنجن",
-  "description": "مواقيت شنجن",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=shenzhen&app=1",
   "scope": "/",
   "id": "/ar/?city=shenzhen&app=1",

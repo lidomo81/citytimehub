@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت عدن",
-  "short_name": "عدن",
-  "description": "مواقيت عدن",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=aden&app=1",
   "scope": "/",
   "id": "/ar/?city=aden&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Manama prayer times",
-  "short_name": "Manama",
-  "description": "Manama prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=manama&app=1",
   "scope": "/",
   "id": "/?city=manama&app=1",

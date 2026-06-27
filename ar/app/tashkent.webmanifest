@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت طشقند",
-  "short_name": "طشقند",
-  "description": "مواقيت طشقند",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=tashkent&app=1",
   "scope": "/",
   "id": "/ar/?city=tashkent&app=1",

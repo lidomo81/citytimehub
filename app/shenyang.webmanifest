@@ -1,7 +1,7 @@
 {
-  "name": "Shenyang prayer times",
-  "short_name": "Shenyang",
-  "description": "Shenyang prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=shenyang&app=1",
   "scope": "/",
   "id": "/?city=shenyang&app=1",

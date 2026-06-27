@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت كولومبو",
-  "short_name": "كولومبو",
-  "description": "مواقيت كولومبو",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=colombo&app=1",
   "scope": "/",
   "id": "/ar/?city=colombo&app=1",

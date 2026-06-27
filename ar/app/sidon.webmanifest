@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت صيدا",
-  "short_name": "صيدا",
-  "description": "مواقيت صيدا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=sidon&app=1",
   "scope": "/",
   "id": "/ar/?city=sidon&app=1",

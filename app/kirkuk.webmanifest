@@ -1,7 +1,7 @@
 {
-  "name": "Kirkuk prayer times",
-  "short_name": "Kirkuk",
-  "description": "Kirkuk prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=kirkuk&app=1",
   "scope": "/",
   "id": "/?city=kirkuk&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Pretoria prayer times",
-  "short_name": "Pretoria",
-  "description": "Pretoria prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=pretoria&app=1",
   "scope": "/",
   "id": "/?city=pretoria&app=1",

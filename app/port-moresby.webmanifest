@@ -1,7 +1,7 @@
 {
-  "name": "Port Moresby prayer times",
-  "short_name": "Port Moresby",
-  "description": "Port Moresby prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=port-moresby&app=1",
   "scope": "/",
   "id": "/?city=port-moresby&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت إب",
-  "short_name": "إب",
-  "description": "مواقيت إب",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=ibb&app=1",
   "scope": "/",
   "id": "/ar/?city=ibb&app=1",

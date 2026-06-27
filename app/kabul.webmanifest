@@ -1,7 +1,7 @@
 {
-  "name": "Kabul prayer times",
-  "short_name": "Kabul",
-  "description": "Kabul prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=kabul&app=1",
   "scope": "/",
   "id": "/?city=kabul&app=1",

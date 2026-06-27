@@ -1,7 +1,7 @@
 {
-  "name": "Vienna prayer times",
-  "short_name": "Vienna",
-  "description": "Vienna prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=vienna&app=1",
   "scope": "/",
   "id": "/?city=vienna&app=1",

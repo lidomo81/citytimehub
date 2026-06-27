@@ -1,7 +1,7 @@
 {
-  "name": "Austin prayer times",
-  "short_name": "Austin",
-  "description": "Austin prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=austin&app=1",
   "scope": "/",
   "id": "/?city=austin&app=1",

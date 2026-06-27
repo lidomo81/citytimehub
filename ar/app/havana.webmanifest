@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت هافانا",
-  "short_name": "هافانا",
-  "description": "مواقيت هافانا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=havana&app=1",
   "scope": "/",
   "id": "/ar/?city=havana&app=1",

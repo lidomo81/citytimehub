@@ -1,7 +1,7 @@
 {
-  "name": "Port Sudan prayer times",
-  "short_name": "Port Sudan",
-  "description": "Port Sudan prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=port-sudan&app=1",
   "scope": "/",
   "id": "/?city=port-sudan&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت بيرث",
-  "short_name": "بيرث",
-  "description": "مواقيت بيرث",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=perth&app=1",
   "scope": "/",
   "id": "/ar/?city=perth&app=1",

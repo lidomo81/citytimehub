@@ -1,7 +1,7 @@
 {
-  "name": "Fes prayer times",
-  "short_name": "Fes",
-  "description": "Fes prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=fes&app=1",
   "scope": "/",
   "id": "/?city=fes&app=1",

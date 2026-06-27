@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت أبيدجان",
-  "short_name": "أبيدجان",
-  "description": "مواقيت أبيدجان",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=abidjan&app=1",
   "scope": "/",
   "id": "/ar/?city=abidjan&app=1",

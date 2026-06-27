@@ -1,7 +1,7 @@
 {
-  "name": "Shenzhen prayer times",
-  "short_name": "Shenzhen",
-  "description": "Shenzhen prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=shenzhen&app=1",
   "scope": "/",
   "id": "/?city=shenzhen&app=1",

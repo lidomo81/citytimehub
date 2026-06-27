@@ -1,7 +1,7 @@
 {
-  "name": "Novosibirsk prayer times",
-  "short_name": "Novosibirsk",
-  "description": "Novosibirsk prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=novosibirsk&app=1",
   "scope": "/",
   "id": "/?city=novosibirsk&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت عجمان",
-  "short_name": "عجمان",
-  "description": "مواقيت عجمان",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=ajman&app=1",
   "scope": "/",
   "id": "/ar/?city=ajman&app=1",

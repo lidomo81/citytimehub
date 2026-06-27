@@ -1,7 +1,7 @@
 {
-  "name": "Multan prayer times",
-  "short_name": "Multan",
-  "description": "Multan prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=multan&app=1",
   "scope": "/",
   "id": "/?city=multan&app=1",

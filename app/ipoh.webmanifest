@@ -1,7 +1,7 @@
 {
-  "name": "Ipoh prayer times",
-  "short_name": "Ipoh",
-  "description": "Ipoh prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=ipoh&app=1",
   "scope": "/",
   "id": "/?city=ipoh&app=1",

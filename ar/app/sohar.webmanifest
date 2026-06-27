@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت صحار",
-  "short_name": "صحار",
-  "description": "مواقيت صحار",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=sohar&app=1",
   "scope": "/",
   "id": "/ar/?city=sohar&app=1",

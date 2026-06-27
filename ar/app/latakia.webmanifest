@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت اللاذقية",
-  "short_name": "اللاذقية",
-  "description": "مواقيت اللاذقية",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=latakia&app=1",
   "scope": "/",
   "id": "/ar/?city=latakia&app=1",

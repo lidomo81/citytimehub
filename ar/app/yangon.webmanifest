@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت يانغون",
-  "short_name": "يانغون",
-  "description": "مواقيت يانغون",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=yangon&app=1",
   "scope": "/",
   "id": "/ar/?city=yangon&app=1",

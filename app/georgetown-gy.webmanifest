@@ -1,7 +1,7 @@
 {
-  "name": "Georgetown prayer times",
-  "short_name": "Georgetown",
-  "description": "Georgetown prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=georgetown-gy&app=1",
   "scope": "/",
   "id": "/?city=georgetown-gy&app=1",

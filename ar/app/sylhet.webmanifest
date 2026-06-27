@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت سيلهيت",
-  "short_name": "سيلهيت",
-  "description": "مواقيت سيلهيت",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=sylhet&app=1",
   "scope": "/",
   "id": "/ar/?city=sylhet&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت بورتو",
-  "short_name": "بورتو",
-  "description": "مواقيت بورتو",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=porto&app=1",
   "scope": "/",
   "id": "/ar/?city=porto&app=1",

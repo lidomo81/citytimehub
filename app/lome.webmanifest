@@ -1,7 +1,7 @@
 {
-  "name": "Lomé prayer times",
-  "short_name": "Lomé",
-  "description": "Lomé prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=lome&app=1",
   "scope": "/",
   "id": "/?city=lome&app=1",

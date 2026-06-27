@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت غولد كوست",
-  "short_name": "غولد كوست",
-  "description": "مواقيت غولد كوست",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=gold-coast&app=1",
   "scope": "/",
   "id": "/ar/?city=gold-coast&app=1",

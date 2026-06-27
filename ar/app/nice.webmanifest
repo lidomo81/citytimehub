@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت نيس",
-  "short_name": "نيس",
-  "description": "مواقيت نيس",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=nice&app=1",
   "scope": "/",
   "id": "/ar/?city=nice&app=1",

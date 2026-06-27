@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت سابورو",
-  "short_name": "سابورو",
-  "description": "مواقيت سابورو",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=sapporo&app=1",
   "scope": "/",
   "id": "/ar/?city=sapporo&app=1",

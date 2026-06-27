@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت صنعاء",
-  "short_name": "صنعاء",
-  "description": "مواقيت صنعاء",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=sanaa&app=1",
   "scope": "/",
   "id": "/ar/?city=sanaa&app=1",

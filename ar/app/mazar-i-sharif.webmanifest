@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت مزار شريف",
-  "short_name": "مزار شريف",
-  "description": "مواقيت مزار شريف",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=mazar-i-sharif&app=1",
   "scope": "/",
   "id": "/ar/?city=mazar-i-sharif&app=1",

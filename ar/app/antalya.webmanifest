@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت أنطاليا",
-  "short_name": "أنطاليا",
-  "description": "مواقيت أنطاليا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=antalya&app=1",
   "scope": "/",
   "id": "/ar/?city=antalya&app=1",

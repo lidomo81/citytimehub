@@ -1,7 +1,7 @@
 {
-  "name": "Honolulu prayer times",
-  "short_name": "Honolulu",
-  "description": "Honolulu prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=honolulu&app=1",
   "scope": "/",
   "id": "/?city=honolulu&app=1",

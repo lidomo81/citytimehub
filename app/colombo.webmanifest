@@ -1,7 +1,7 @@
 {
-  "name": "Colombo prayer times",
-  "short_name": "Colombo",
-  "description": "Colombo prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=colombo&app=1",
   "scope": "/",
   "id": "/?city=colombo&app=1",

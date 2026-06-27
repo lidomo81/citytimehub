@@ -1,7 +1,7 @@
 {
-  "name": "Rotterdam prayer times",
-  "short_name": "Rotterdam",
-  "description": "Rotterdam prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=rotterdam&app=1",
   "scope": "/",
   "id": "/?city=rotterdam&app=1",

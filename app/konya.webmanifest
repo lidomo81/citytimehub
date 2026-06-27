@@ -1,7 +1,7 @@
 {
-  "name": "Konya prayer times",
-  "short_name": "Konya",
-  "description": "Konya prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=konya&app=1",
   "scope": "/",
   "id": "/?city=konya&app=1",

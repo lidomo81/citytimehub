@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت بنغازي",
-  "short_name": "بنغازي",
-  "description": "مواقيت بنغازي",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=benghazi&app=1",
   "scope": "/",
   "id": "/ar/?city=benghazi&app=1",

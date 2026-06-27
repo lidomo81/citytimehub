@@ -1,7 +1,7 @@
 {
-  "name": "Cebu City prayer times",
-  "short_name": "Cebu City",
-  "description": "Cebu City prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=cebu-city&app=1",
   "scope": "/",
   "id": "/?city=cebu-city&app=1",

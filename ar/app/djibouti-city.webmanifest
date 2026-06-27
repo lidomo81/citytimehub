@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت جيبوتي",
-  "short_name": "جيبوتي",
-  "description": "مواقيت جيبوتي",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=djibouti-city&app=1",
   "scope": "/",
   "id": "/ar/?city=djibouti-city&app=1",

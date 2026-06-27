@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت الطائف",
-  "short_name": "الطائف",
-  "description": "مواقيت الطائف",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=taif&app=1",
   "scope": "/",
   "id": "/ar/?city=taif&app=1",

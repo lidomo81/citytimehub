@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت أديس أبابا",
-  "short_name": "أديس أبابا",
-  "description": "مواقيت أديس أبابا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=addis-ababa&app=1",
   "scope": "/",
   "id": "/ar/?city=addis-ababa&app=1",

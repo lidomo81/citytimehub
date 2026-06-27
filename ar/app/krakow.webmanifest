@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت كراكوف",
-  "short_name": "كراكوف",
-  "description": "مواقيت كراكوف",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=krakow&app=1",
   "scope": "/",
   "id": "/ar/?city=krakow&app=1",

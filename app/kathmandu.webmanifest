@@ -1,7 +1,7 @@
 {
-  "name": "Kathmandu prayer times",
-  "short_name": "Kathmandu",
-  "description": "Kathmandu prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=kathmandu&app=1",
   "scope": "/",
   "id": "/?city=kathmandu&app=1",

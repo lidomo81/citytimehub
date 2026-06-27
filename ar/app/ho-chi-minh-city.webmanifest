@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت هوشي منه",
-  "short_name": "هوشي منه",
-  "description": "مواقيت هوشي منه",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=ho-chi-minh-city&app=1",
   "scope": "/",
   "id": "/ar/?city=ho-chi-minh-city&app=1",

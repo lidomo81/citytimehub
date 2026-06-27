@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت سراييفو",
-  "short_name": "سراييفو",
-  "description": "مواقيت سراييفو",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=sarajevo&app=1",
   "scope": "/",
   "id": "/ar/?city=sarajevo&app=1",

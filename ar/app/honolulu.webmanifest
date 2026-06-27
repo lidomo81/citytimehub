@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت هونولولو",
-  "short_name": "هونولولو",
-  "description": "مواقيت هونولولو",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=honolulu&app=1",
   "scope": "/",
   "id": "/ar/?city=honolulu&app=1",

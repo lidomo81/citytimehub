@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت إسلام آباد",
-  "short_name": "إسلام آباد",
-  "description": "مواقيت إسلام آباد",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=islamabad&app=1",
   "scope": "/",
   "id": "/ar/?city=islamabad&app=1",

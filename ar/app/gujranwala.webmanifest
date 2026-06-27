@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت غوجرانوالا",
-  "short_name": "غوجرانوالا",
-  "description": "مواقيت غوجرانوالا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=gujranwala&app=1",
   "scope": "/",
   "id": "/ar/?city=gujranwala&app=1",

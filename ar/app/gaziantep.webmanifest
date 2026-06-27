@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت غازي عنتاب",
-  "short_name": "غازي عنتاب",
-  "description": "مواقيت غازي عنتاب",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=gaziantep&app=1",
   "scope": "/",
   "id": "/ar/?city=gaziantep&app=1",

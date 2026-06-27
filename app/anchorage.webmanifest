@@ -1,7 +1,7 @@
 {
-  "name": "Anchorage prayer times",
-  "short_name": "Anchorage",
-  "description": "Anchorage prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=anchorage&app=1",
   "scope": "/",
   "id": "/?city=anchorage&app=1",

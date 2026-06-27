@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت تبريز",
-  "short_name": "تبريز",
-  "description": "مواقيت تبريز",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=tabriz&app=1",
   "scope": "/",
   "id": "/ar/?city=tabriz&app=1",

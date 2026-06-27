@@ -1,7 +1,7 @@
 {
-  "name": "Warsaw prayer times",
-  "short_name": "Warsaw",
-  "description": "Warsaw prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=warsaw&app=1",
   "scope": "/",
   "id": "/?city=warsaw&app=1",

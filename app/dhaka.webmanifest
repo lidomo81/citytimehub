@@ -1,7 +1,7 @@
 {
-  "name": "Dhaka prayer times",
-  "short_name": "Dhaka",
-  "description": "Dhaka prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=dhaka&app=1",
   "scope": "/",
   "id": "/?city=dhaka&app=1",

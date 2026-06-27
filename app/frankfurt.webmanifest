@@ -1,7 +1,7 @@
 {
-  "name": "Frankfurt prayer times",
-  "short_name": "Frankfurt",
-  "description": "Frankfurt prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=frankfurt&app=1",
   "scope": "/",
   "id": "/?city=frankfurt&app=1",

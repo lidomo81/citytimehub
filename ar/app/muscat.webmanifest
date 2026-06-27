@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت مسقط",
-  "short_name": "مسقط",
-  "description": "مواقيت مسقط",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=muscat&app=1",
   "scope": "/",
   "id": "/ar/?city=muscat&app=1",

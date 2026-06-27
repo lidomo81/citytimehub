@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت يوكوهاما",
-  "short_name": "يوكوهاما",
-  "description": "مواقيت يوكوهاما",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=yokohama&app=1",
   "scope": "/",
   "id": "/ar/?city=yokohama&app=1",

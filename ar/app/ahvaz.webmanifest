@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت الأهواز",
-  "short_name": "الأهواز",
-  "description": "مواقيت الأهواز",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=ahvaz&app=1",
   "scope": "/",
   "id": "/ar/?city=ahvaz&app=1",

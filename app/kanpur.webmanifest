@@ -1,7 +1,7 @@
 {
-  "name": "Kanpur prayer times",
-  "short_name": "Kanpur",
-  "description": "Kanpur prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=kanpur&app=1",
   "scope": "/",
   "id": "/?city=kanpur&app=1",

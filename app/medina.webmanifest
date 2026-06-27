@@ -1,7 +1,7 @@
 {
-  "name": "Medina prayer times",
-  "short_name": "Medina",
-  "description": "Medina prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=medina&app=1",
   "scope": "/",
   "id": "/?city=medina&app=1",

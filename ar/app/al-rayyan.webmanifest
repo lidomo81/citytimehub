@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت الريان",
-  "short_name": "الريان",
-  "description": "مواقيت الريان",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=al-rayyan&app=1",
   "scope": "/",
   "id": "/ar/?city=al-rayyan&app=1",

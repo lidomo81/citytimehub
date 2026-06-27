@@ -1,7 +1,7 @@
 {
-  "name": "Hamburg prayer times",
-  "short_name": "Hamburg",
-  "description": "Hamburg prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=hamburg&app=1",
   "scope": "/",
   "id": "/?city=hamburg&app=1",

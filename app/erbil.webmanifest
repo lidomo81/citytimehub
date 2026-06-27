@@ -1,7 +1,7 @@
 {
-  "name": "Erbil prayer times",
-  "short_name": "Erbil",
-  "description": "Erbil prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=erbil&app=1",
   "scope": "/",
   "id": "/?city=erbil&app=1",

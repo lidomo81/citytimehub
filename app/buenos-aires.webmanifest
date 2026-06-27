@@ -1,7 +1,7 @@
 {
-  "name": "Buenos Aires prayer times",
-  "short_name": "Buenos Aires",
-  "description": "Buenos Aires prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=buenos-aires&app=1",
   "scope": "/",
   "id": "/?city=buenos-aires&app=1",

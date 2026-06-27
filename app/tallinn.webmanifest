@@ -1,7 +1,7 @@
 {
-  "name": "Tallinn prayer times",
-  "short_name": "Tallinn",
-  "description": "Tallinn prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=tallinn&app=1",
   "scope": "/",
   "id": "/?city=tallinn&app=1",

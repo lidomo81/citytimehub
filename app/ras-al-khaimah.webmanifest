@@ -1,7 +1,7 @@
 {
-  "name": "Ras Al Khaimah prayer times",
-  "short_name": "Ras Al Khaim",
-  "description": "Ras Al Khaimah prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=ras-al-khaimah&app=1",
   "scope": "/",
   "id": "/?city=ras-al-khaimah&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Palembang prayer times",
-  "short_name": "Palembang",
-  "description": "Palembang prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=palembang&app=1",
   "scope": "/",
   "id": "/?city=palembang&app=1",

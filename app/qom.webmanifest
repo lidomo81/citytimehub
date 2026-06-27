@@ -1,7 +1,7 @@
 {
-  "name": "Qom prayer times",
-  "short_name": "Qom",
-  "description": "Qom prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=qom&app=1",
   "scope": "/",
   "id": "/?city=qom&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Gdansk prayer times",
-  "short_name": "Gdansk",
-  "description": "Gdansk prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=gdansk&app=1",
   "scope": "/",
   "id": "/?city=gdansk&app=1",

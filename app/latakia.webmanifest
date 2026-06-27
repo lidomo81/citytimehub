@@ -1,7 +1,7 @@
 {
-  "name": "Latakia prayer times",
-  "short_name": "Latakia",
-  "description": "Latakia prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=latakia&app=1",
   "scope": "/",
   "id": "/?city=latakia&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Copenhagen prayer times",
-  "short_name": "Copenhagen",
-  "description": "Copenhagen prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=copenhagen&app=1",
   "scope": "/",
   "id": "/?city=copenhagen&app=1",

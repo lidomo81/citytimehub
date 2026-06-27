@@ -1,7 +1,7 @@
 {
-  "name": "Da Nang prayer times",
-  "short_name": "Da Nang",
-  "description": "Da Nang prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=da-nang&app=1",
   "scope": "/",
   "id": "/?city=da-nang&app=1",

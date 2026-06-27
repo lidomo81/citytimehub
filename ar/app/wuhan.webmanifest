@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت ووهان",
-  "short_name": "ووهان",
-  "description": "مواقيت ووهان",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=wuhan&app=1",
   "scope": "/",
   "id": "/ar/?city=wuhan&app=1",

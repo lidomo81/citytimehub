@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت دافاو",
-  "short_name": "دافاو",
-  "description": "مواقيت دافاو",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=davao&app=1",
   "scope": "/",
   "id": "/ar/?city=davao&app=1",

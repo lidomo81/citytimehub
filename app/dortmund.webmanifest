@@ -1,7 +1,7 @@
 {
-  "name": "Dortmund prayer times",
-  "short_name": "Dortmund",
-  "description": "Dortmund prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=dortmund&app=1",
   "scope": "/",
   "id": "/?city=dortmund&app=1",

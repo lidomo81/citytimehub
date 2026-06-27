@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت طرابزون",
-  "short_name": "طرابزون",
-  "description": "مواقيت طرابزون",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=trabzon&app=1",
   "scope": "/",
   "id": "/ar/?city=trabzon&app=1",

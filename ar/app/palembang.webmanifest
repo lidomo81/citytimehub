@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت باليمبانغ",
-  "short_name": "باليمبانغ",
-  "description": "مواقيت باليمبانغ",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=palembang&app=1",
   "scope": "/",
   "id": "/ar/?city=palembang&app=1",

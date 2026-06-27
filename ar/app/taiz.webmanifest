@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت تعز",
-  "short_name": "تعز",
-  "description": "مواقيت تعز",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=taiz&app=1",
   "scope": "/",
   "id": "/ar/?city=taiz&app=1",

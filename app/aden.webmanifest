@@ -1,7 +1,7 @@
 {
-  "name": "Aden prayer times",
-  "short_name": "Aden",
-  "description": "Aden prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=aden&app=1",
   "scope": "/",
   "id": "/?city=aden&app=1",

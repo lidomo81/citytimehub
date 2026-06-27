@@ -1,7 +1,7 @@
 {
-  "name": "Gold Coast prayer times",
-  "short_name": "Gold Coast",
-  "description": "Gold Coast prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=gold-coast&app=1",
   "scope": "/",
   "id": "/?city=gold-coast&app=1",

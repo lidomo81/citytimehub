@@ -1,7 +1,7 @@
 {
-  "name": "Adana prayer times",
-  "short_name": "Adana",
-  "description": "Adana prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=adana&app=1",
   "scope": "/",
   "id": "/?city=adana&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Kingston prayer times",
-  "short_name": "Kingston",
-  "description": "Kingston prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=kingston&app=1",
   "scope": "/",
   "id": "/?city=kingston&app=1",

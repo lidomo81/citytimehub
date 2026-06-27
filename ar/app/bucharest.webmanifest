@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت بوخارست",
-  "short_name": "بوخارست",
-  "description": "مواقيت بوخارست",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=bucharest&app=1",
   "scope": "/",
   "id": "/ar/?city=bucharest&app=1",

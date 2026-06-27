@@ -1,7 +1,7 @@
 {
-  "name": "Kraków prayer times",
-  "short_name": "Kraków",
-  "description": "Kraków prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=krakow&app=1",
   "scope": "/",
   "id": "/?city=krakow&app=1",

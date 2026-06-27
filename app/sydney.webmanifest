@@ -1,7 +1,7 @@
 {
-  "name": "Sydney prayer times",
-  "short_name": "Sydney",
-  "description": "Sydney prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=sydney&app=1",
   "scope": "/",
   "id": "/?city=sydney&app=1",

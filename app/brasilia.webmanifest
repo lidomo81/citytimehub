@@ -1,7 +1,7 @@
 {
-  "name": "Brasília prayer times",
-  "short_name": "Brasília",
-  "description": "Brasília prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=brasilia&app=1",
   "scope": "/",
   "id": "/?city=brasilia&app=1",

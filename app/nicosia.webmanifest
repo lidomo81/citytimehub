@@ -1,7 +1,7 @@
 {
-  "name": "Nicosia prayer times",
-  "short_name": "Nicosia",
-  "description": "Nicosia prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=nicosia&app=1",
   "scope": "/",
   "id": "/?city=nicosia&app=1",

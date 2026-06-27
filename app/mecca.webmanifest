@@ -1,7 +1,7 @@
 {
-  "name": "Mecca prayer times",
-  "short_name": "Mecca",
-  "description": "Mecca prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=mecca&app=1",
   "scope": "/",
   "id": "/?city=mecca&app=1",

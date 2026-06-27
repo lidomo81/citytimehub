@@ -1,7 +1,7 @@
 {
-  "name": "Murcia prayer times",
-  "short_name": "Murcia",
-  "description": "Murcia prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=murcia&app=1",
   "scope": "/",
   "id": "/?city=murcia&app=1",

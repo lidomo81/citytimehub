@@ -1,7 +1,7 @@
 {
-  "name": "Salvador prayer times",
-  "short_name": "Salvador",
-  "description": "Salvador prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=salvador-br&app=1",
   "scope": "/",
   "id": "/?city=salvador-br&app=1",

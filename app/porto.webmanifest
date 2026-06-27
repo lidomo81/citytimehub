@@ -1,7 +1,7 @@
 {
-  "name": "Porto prayer times",
-  "short_name": "Porto",
-  "description": "Porto prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=porto&app=1",
   "scope": "/",
   "id": "/?city=porto&app=1",

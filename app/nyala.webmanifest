@@ -1,7 +1,7 @@
 {
-  "name": "Nyala prayer times",
-  "short_name": "Nyala",
-  "description": "Nyala prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=nyala&app=1",
   "scope": "/",
   "id": "/?city=nyala&app=1",

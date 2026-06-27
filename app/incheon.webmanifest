@@ -1,7 +1,7 @@
 {
-  "name": "Incheon prayer times",
-  "short_name": "Incheon",
-  "description": "Incheon prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=incheon&app=1",
   "scope": "/",
   "id": "/?city=incheon&app=1",

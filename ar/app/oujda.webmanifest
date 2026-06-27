@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت وجدة",
-  "short_name": "وجدة",
-  "description": "مواقيت وجدة",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=oujda&app=1",
   "scope": "/",
   "id": "/ar/?city=oujda&app=1",

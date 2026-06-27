@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت بوسطن",
-  "short_name": "بوسطن",
-  "description": "مواقيت بوسطن",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=boston&app=1",
   "scope": "/",
   "id": "/ar/?city=boston&app=1",

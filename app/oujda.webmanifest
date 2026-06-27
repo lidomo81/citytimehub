@@ -1,7 +1,7 @@
 {
-  "name": "Oujda prayer times",
-  "short_name": "Oujda",
-  "description": "Oujda prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=oujda&app=1",
   "scope": "/",
   "id": "/?city=oujda&app=1",

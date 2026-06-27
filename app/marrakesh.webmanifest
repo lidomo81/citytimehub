@@ -1,7 +1,7 @@
 {
-  "name": "Marrakesh prayer times",
-  "short_name": "Marrakesh",
-  "description": "Marrakesh prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=marrakesh&app=1",
   "scope": "/",
   "id": "/?city=marrakesh&app=1",

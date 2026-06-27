@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت كييف",
-  "short_name": "كييف",
-  "description": "مواقيت كييف",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=kyiv&app=1",
   "scope": "/",
   "id": "/ar/?city=kyiv&app=1",

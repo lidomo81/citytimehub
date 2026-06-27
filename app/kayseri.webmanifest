@@ -1,7 +1,7 @@
 {
-  "name": "Kayseri prayer times",
-  "short_name": "Kayseri",
-  "description": "Kayseri prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=kayseri&app=1",
   "scope": "/",
   "id": "/?city=kayseri&app=1",

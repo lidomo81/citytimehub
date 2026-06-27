@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت جنوة",
-  "short_name": "جنوة",
-  "description": "مواقيت جنوة",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=genoa&app=1",
   "scope": "/",
   "id": "/ar/?city=genoa&app=1",

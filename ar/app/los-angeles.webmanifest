@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت لوس أنجلوس",
-  "short_name": "لوس أنجلوس",
-  "description": "مواقيت لوس أنجلوس",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=los-angeles&app=1",
   "scope": "/",
   "id": "/ar/?city=los-angeles&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Chittagong prayer times",
-  "short_name": "Chittagong",
-  "description": "Chittagong prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=chittagong&app=1",
   "scope": "/",
   "id": "/?city=chittagong&app=1",

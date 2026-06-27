@@ -1,7 +1,7 @@
 {
-  "name": "Zawiya prayer times",
-  "short_name": "Zawiya",
-  "description": "Zawiya prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=zawiya&app=1",
   "scope": "/",
   "id": "/?city=zawiya&app=1",

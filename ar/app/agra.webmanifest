@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت أغرا",
-  "short_name": "أغرا",
-  "description": "مواقيت أغرا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=agra&app=1",
   "scope": "/",
   "id": "/ar/?city=agra&app=1",

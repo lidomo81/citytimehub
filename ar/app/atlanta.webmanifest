@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت أتلانتا",
-  "short_name": "أتلانتا",
-  "description": "مواقيت أتلانتا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=atlanta&app=1",
   "scope": "/",
   "id": "/ar/?city=atlanta&app=1",

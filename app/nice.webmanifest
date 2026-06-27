@@ -1,7 +1,7 @@
 {
-  "name": "Nice prayer times",
-  "short_name": "Nice",
-  "description": "Nice prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=nice&app=1",
   "scope": "/",
   "id": "/?city=nice&app=1",

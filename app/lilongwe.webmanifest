@@ -1,7 +1,7 @@
 {
-  "name": "Lilongwe prayer times",
-  "short_name": "Lilongwe",
-  "description": "Lilongwe prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=lilongwe&app=1",
   "scope": "/",
   "id": "/?city=lilongwe&app=1",

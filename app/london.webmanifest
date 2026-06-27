@@ -1,7 +1,7 @@
 {
-  "name": "London prayer times",
-  "short_name": "London",
-  "description": "London prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=london&app=1",
   "scope": "/",
   "id": "/?city=london&app=1",

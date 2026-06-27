@@ -1,7 +1,7 @@
 {
-  "name": "Ljubljana prayer times",
-  "short_name": "Ljubljana",
-  "description": "Ljubljana prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=ljubljana&app=1",
   "scope": "/",
   "id": "/?city=ljubljana&app=1",

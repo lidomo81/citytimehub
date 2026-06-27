@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت شنغهاي",
-  "short_name": "شنغهاي",
-  "description": "مواقيت شنغهاي",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=shanghai&app=1",
   "scope": "/",
   "id": "/ar/?city=shanghai&app=1",

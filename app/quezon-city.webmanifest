@@ -1,7 +1,7 @@
 {
-  "name": "Quezon City prayer times",
-  "short_name": "Quezon City",
-  "description": "Quezon City prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=quezon-city&app=1",
   "scope": "/",
   "id": "/?city=quezon-city&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت إندور",
-  "short_name": "إندور",
-  "description": "مواقيت إندور",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=indore&app=1",
   "scope": "/",
   "id": "/ar/?city=indore&app=1",

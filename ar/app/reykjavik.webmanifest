@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت ريكيافيك",
-  "short_name": "ريكيافيك",
-  "description": "مواقيت ريكيافيك",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=reykjavik&app=1",
   "scope": "/",
   "id": "/ar/?city=reykjavik&app=1",

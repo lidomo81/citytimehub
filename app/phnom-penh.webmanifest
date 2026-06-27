@@ -1,7 +1,7 @@
 {
-  "name": "Phnom Penh prayer times",
-  "short_name": "Phnom Penh",
-  "description": "Phnom Penh prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=phnom-penh&app=1",
   "scope": "/",
   "id": "/?city=phnom-penh&app=1",

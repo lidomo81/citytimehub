@@ -1,7 +1,7 @@
 {
-  "name": "Muscat prayer times",
-  "short_name": "Muscat",
-  "description": "Muscat prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=muscat&app=1",
   "scope": "/",
   "id": "/?city=muscat&app=1",

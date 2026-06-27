@@ -1,7 +1,7 @@
 {
-  "name": "Dresden prayer times",
-  "short_name": "Dresden",
-  "description": "Dresden prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=dresden&app=1",
   "scope": "/",
   "id": "/?city=dresden&app=1",

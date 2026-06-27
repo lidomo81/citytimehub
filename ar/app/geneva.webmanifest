@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت جنيف",
-  "short_name": "جنيف",
-  "description": "مواقيت جنيف",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=geneva&app=1",
   "scope": "/",
   "id": "/ar/?city=geneva&app=1",

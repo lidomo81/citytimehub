@@ -1,7 +1,7 @@
 {
-  "name": "Jubail prayer times",
-  "short_name": "Jubail",
-  "description": "Jubail prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=jubail&app=1",
   "scope": "/",
   "id": "/?city=jubail&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Busan prayer times",
-  "short_name": "Busan",
-  "description": "Busan prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=busan&app=1",
   "scope": "/",
   "id": "/?city=busan&app=1",

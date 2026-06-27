@@ -1,7 +1,7 @@
 {
-  "name": "Marseille prayer times",
-  "short_name": "Marseille",
-  "description": "Marseille prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=marseille&app=1",
   "scope": "/",
   "id": "/?city=marseille&app=1",

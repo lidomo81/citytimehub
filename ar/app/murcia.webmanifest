@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت مرسية",
-  "short_name": "مرسية",
-  "description": "مواقيت مرسية",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=murcia&app=1",
   "scope": "/",
   "id": "/ar/?city=murcia&app=1",

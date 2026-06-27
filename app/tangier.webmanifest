@@ -1,7 +1,7 @@
 {
-  "name": "Tangier prayer times",
-  "short_name": "Tangier",
-  "description": "Tangier prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=tangier&app=1",
   "scope": "/",
   "id": "/?city=tangier&app=1",

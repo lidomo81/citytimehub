@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت غرناطة",
-  "short_name": "غرناطة",
-  "description": "مواقيت غرناطة",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=granada&app=1",
   "scope": "/",
   "id": "/ar/?city=granada&app=1",

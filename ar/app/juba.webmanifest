@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت جوبا",
-  "short_name": "جوبا",
-  "description": "مواقيت جوبا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=juba&app=1",
   "scope": "/",
   "id": "/ar/?city=juba&app=1",

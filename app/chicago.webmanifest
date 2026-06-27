@@ -1,7 +1,7 @@
 {
-  "name": "Chicago prayer times",
-  "short_name": "Chicago",
-  "description": "Chicago prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=chicago&app=1",
   "scope": "/",
   "id": "/?city=chicago&app=1",

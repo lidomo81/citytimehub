@@ -1,7 +1,7 @@
 {
-  "name": "Mogadishu prayer times",
-  "short_name": "Mogadishu",
-  "description": "Mogadishu prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=mogadishu&app=1",
   "scope": "/",
   "id": "/?city=mogadishu&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Banjul prayer times",
-  "short_name": "Banjul",
-  "description": "Banjul prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=banjul&app=1",
   "scope": "/",
   "id": "/?city=banjul&app=1",

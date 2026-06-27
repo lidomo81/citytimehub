@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت طهران",
-  "short_name": "طهران",
-  "description": "مواقيت طهران",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=tehran&app=1",
   "scope": "/",
   "id": "/ar/?city=tehran&app=1",

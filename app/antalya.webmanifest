@@ -1,7 +1,7 @@
 {
-  "name": "Antalya prayer times",
-  "short_name": "Antalya",
-  "description": "Antalya prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=antalya&app=1",
   "scope": "/",
   "id": "/?city=antalya&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت كيزون",
-  "short_name": "كيزون",
-  "description": "مواقيت كيزون",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=quezon-city&app=1",
   "scope": "/",
   "id": "/ar/?city=quezon-city&app=1",

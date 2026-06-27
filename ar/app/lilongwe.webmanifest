@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت ليلونغوي",
-  "short_name": "ليلونغوي",
-  "description": "مواقيت ليلونغوي",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=lilongwe&app=1",
   "scope": "/",
   "id": "/ar/?city=lilongwe&app=1",

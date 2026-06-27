@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت دريسدن",
-  "short_name": "دريسدن",
-  "description": "مواقيت دريسدن",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=dresden&app=1",
   "scope": "/",
   "id": "/ar/?city=dresden&app=1",

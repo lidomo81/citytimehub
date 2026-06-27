@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت المنصورة",
-  "short_name": "المنصورة",
-  "description": "مواقيت المنصورة",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=mansoura&app=1",
   "scope": "/",
   "id": "/ar/?city=mansoura&app=1",

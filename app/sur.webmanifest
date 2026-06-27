@@ -1,7 +1,7 @@
 {
-  "name": "Sur prayer times",
-  "short_name": "Sur",
-  "description": "Sur prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=sur&app=1",
   "scope": "/",
   "id": "/?city=sur&app=1",

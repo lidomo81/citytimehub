@@ -1,7 +1,7 @@
 {
-  "name": "Fortaleza prayer times",
-  "short_name": "Fortaleza",
-  "description": "Fortaleza prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=fortaleza&app=1",
   "scope": "/",
   "id": "/?city=fortaleza&app=1",

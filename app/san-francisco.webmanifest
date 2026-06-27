@@ -1,7 +1,7 @@
 {
-  "name": "San Francisco prayer times",
-  "short_name": "San Francisc",
-  "description": "San Francisco prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=san-francisco&app=1",
   "scope": "/",
   "id": "/?city=san-francisco&app=1",

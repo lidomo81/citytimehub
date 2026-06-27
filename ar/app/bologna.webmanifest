@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت بولونيا",
-  "short_name": "بولونيا",
-  "description": "مواقيت بولونيا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=bologna&app=1",
   "scope": "/",
   "id": "/ar/?city=bologna&app=1",

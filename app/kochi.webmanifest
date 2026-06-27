@@ -1,7 +1,7 @@
 {
-  "name": "Kochi prayer times",
-  "short_name": "Kochi",
-  "description": "Kochi prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=kochi&app=1",
   "scope": "/",
   "id": "/?city=kochi&app=1",

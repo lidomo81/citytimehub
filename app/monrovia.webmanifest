@@ -1,7 +1,7 @@
 {
-  "name": "Monrovia prayer times",
-  "short_name": "Monrovia",
-  "description": "Monrovia prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=monrovia&app=1",
   "scope": "/",
   "id": "/?city=monrovia&app=1",

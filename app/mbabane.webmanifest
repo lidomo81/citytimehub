@@ -1,7 +1,7 @@
 {
-  "name": "Mbabane prayer times",
-  "short_name": "Mbabane",
-  "description": "Mbabane prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=mbabane&app=1",
   "scope": "/",
   "id": "/?city=mbabane&app=1",

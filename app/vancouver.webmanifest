@@ -1,7 +1,7 @@
 {
-  "name": "Vancouver prayer times",
-  "short_name": "Vancouver",
-  "description": "Vancouver prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=vancouver&app=1",
   "scope": "/",
   "id": "/?city=vancouver&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Lisbon prayer times",
-  "short_name": "Lisbon",
-  "description": "Lisbon prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=lisbon&app=1",
   "scope": "/",
   "id": "/?city=lisbon&app=1",

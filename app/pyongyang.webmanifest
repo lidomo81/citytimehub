@@ -1,7 +1,7 @@
 {
-  "name": "Pyongyang prayer times",
-  "short_name": "Pyongyang",
-  "description": "Pyongyang prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=pyongyang&app=1",
   "scope": "/",
   "id": "/?city=pyongyang&app=1",

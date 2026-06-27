@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت عشق آباد",
-  "short_name": "عشق آباد",
-  "description": "مواقيت عشق آباد",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=ashgabat&app=1",
   "scope": "/",
   "id": "/ar/?city=ashgabat&app=1",

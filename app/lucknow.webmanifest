@@ -1,7 +1,7 @@
 {
-  "name": "Lucknow prayer times",
-  "short_name": "Lucknow",
-  "description": "Lucknow prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=lucknow&app=1",
   "scope": "/",
   "id": "/?city=lucknow&app=1",

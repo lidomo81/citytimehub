@@ -1,7 +1,7 @@
 {
-  "name": "Salalah prayer times",
-  "short_name": "Salalah",
-  "description": "Salalah prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=salalah&app=1",
   "scope": "/",
   "id": "/?city=salalah&app=1",

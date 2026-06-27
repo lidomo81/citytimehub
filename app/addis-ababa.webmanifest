@@ -1,7 +1,7 @@
 {
-  "name": "Addis Ababa prayer times",
-  "short_name": "Addis Ababa",
-  "description": "Addis Ababa prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=addis-ababa&app=1",
   "scope": "/",
   "id": "/?city=addis-ababa&app=1",

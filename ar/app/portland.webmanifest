@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت بورتلاند",
-  "short_name": "بورتلاند",
-  "description": "مواقيت بورتلاند",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=portland&app=1",
   "scope": "/",
   "id": "/ar/?city=portland&app=1",

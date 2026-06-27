@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت فينيكس",
-  "short_name": "فينيكس",
-  "description": "مواقيت فينيكس",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=phoenix&app=1",
   "scope": "/",
   "id": "/ar/?city=phoenix&app=1",

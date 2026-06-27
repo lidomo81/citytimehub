@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت لوكسمبورغ",
-  "short_name": "لوكسمبورغ",
-  "description": "مواقيت لوكسمبورغ",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=luxembourg-city&app=1",
   "scope": "/",
   "id": "/ar/?city=luxembourg-city&app=1",

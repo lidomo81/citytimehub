@@ -1,7 +1,7 @@
 {
-  "name": "Minneapolis prayer times",
-  "short_name": "Minneapolis",
-  "description": "Minneapolis prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=minneapolis&app=1",
   "scope": "/",
   "id": "/?city=minneapolis&app=1",

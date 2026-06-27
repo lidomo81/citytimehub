@@ -1,7 +1,7 @@
 {
-  "name": "Nanjing prayer times",
-  "short_name": "Nanjing",
-  "description": "Nanjing prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=nanjing&app=1",
   "scope": "/",
   "id": "/?city=nanjing&app=1",

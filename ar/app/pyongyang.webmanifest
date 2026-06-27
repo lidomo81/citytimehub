@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت بيونغ يانغ",
-  "short_name": "بيونغ يانغ",
-  "description": "مواقيت بيونغ يانغ",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=pyongyang&app=1",
   "scope": "/",
   "id": "/ar/?city=pyongyang&app=1",

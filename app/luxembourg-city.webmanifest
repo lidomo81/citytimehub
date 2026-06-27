@@ -1,7 +1,7 @@
 {
-  "name": "Luxembourg prayer times",
-  "short_name": "Luxembourg",
-  "description": "Luxembourg prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=luxembourg-city&app=1",
   "scope": "/",
   "id": "/?city=luxembourg-city&app=1",

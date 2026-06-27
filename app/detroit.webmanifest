@@ -1,7 +1,7 @@
 {
-  "name": "Detroit prayer times",
-  "short_name": "Detroit",
-  "description": "Detroit prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=detroit&app=1",
   "scope": "/",
   "id": "/?city=detroit&app=1",

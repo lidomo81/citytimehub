@@ -1,7 +1,7 @@
 {
-  "name": "Fujairah prayer times",
-  "short_name": "Fujairah",
-  "description": "Fujairah prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=fujairah&app=1",
   "scope": "/",
   "id": "/?city=fujairah&app=1",

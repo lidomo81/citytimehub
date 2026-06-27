@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت كويمباتور",
-  "short_name": "كويمباتور",
-  "description": "مواقيت كويمباتور",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=coimbatore&app=1",
   "scope": "/",
   "id": "/ar/?city=coimbatore&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت إبادان",
-  "short_name": "إبادان",
-  "description": "مواقيت إبادان",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=ibadan&app=1",
   "scope": "/",
   "id": "/ar/?city=ibadan&app=1",

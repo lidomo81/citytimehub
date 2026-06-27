@@ -1,7 +1,7 @@
 {
-  "name": "Santiago prayer times",
-  "short_name": "Santiago",
-  "description": "Santiago prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=santiago&app=1",
   "scope": "/",
   "id": "/?city=santiago&app=1",

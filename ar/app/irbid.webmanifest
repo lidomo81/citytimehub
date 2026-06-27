@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت إربد",
-  "short_name": "إربد",
-  "description": "مواقيت إربد",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=irbid&app=1",
   "scope": "/",
   "id": "/ar/?city=irbid&app=1",

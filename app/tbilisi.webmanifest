@@ -1,7 +1,7 @@
 {
-  "name": "Tbilisi prayer times",
-  "short_name": "Tbilisi",
-  "description": "Tbilisi prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=tbilisi&app=1",
   "scope": "/",
   "id": "/?city=tbilisi&app=1",

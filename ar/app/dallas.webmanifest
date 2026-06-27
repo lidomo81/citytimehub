@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت دالاس",
-  "short_name": "دالاس",
-  "description": "مواقيت دالاس",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=dallas&app=1",
   "scope": "/",
   "id": "/ar/?city=dallas&app=1",

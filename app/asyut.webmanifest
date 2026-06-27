@@ -1,7 +1,7 @@
 {
-  "name": "Asyut prayer times",
-  "short_name": "Asyut",
-  "description": "Asyut prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=asyut&app=1",
   "scope": "/",
   "id": "/?city=asyut&app=1",

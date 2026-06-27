@@ -1,7 +1,7 @@
 {
-  "name": "Bordeaux prayer times",
-  "short_name": "Bordeaux",
-  "description": "Bordeaux prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=bordeaux&app=1",
   "scope": "/",
   "id": "/?city=bordeaux&app=1",

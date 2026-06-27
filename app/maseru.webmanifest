@@ -1,7 +1,7 @@
 {
-  "name": "Maseru prayer times",
-  "short_name": "Maseru",
-  "description": "Maseru prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=maseru&app=1",
   "scope": "/",
   "id": "/?city=maseru&app=1",

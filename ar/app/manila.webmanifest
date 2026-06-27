@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت مانيلا",
-  "short_name": "مانيلا",
-  "description": "مواقيت مانيلا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=manila&app=1",
   "scope": "/",
   "id": "/ar/?city=manila&app=1",

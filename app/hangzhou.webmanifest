@@ -1,7 +1,7 @@
 {
-  "name": "Hangzhou prayer times",
-  "short_name": "Hangzhou",
-  "description": "Hangzhou prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=hangzhou&app=1",
   "scope": "/",
   "id": "/?city=hangzhou&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت مونتريال",
-  "short_name": "مونتريال",
-  "description": "مواقيت مونتريال",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=montreal&app=1",
   "scope": "/",
   "id": "/ar/?city=montreal&app=1",

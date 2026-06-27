@@ -1,7 +1,7 @@
 {
-  "name": "Munich prayer times",
-  "short_name": "Munich",
-  "description": "Munich prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=munich&app=1",
   "scope": "/",
   "id": "/?city=munich&app=1",

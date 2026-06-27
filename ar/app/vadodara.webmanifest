@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت فادودارا",
-  "short_name": "فادودارا",
-  "description": "مواقيت فادودارا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=vadodara&app=1",
   "scope": "/",
   "id": "/ar/?city=vadodara&app=1",

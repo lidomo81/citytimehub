@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت مرسيليا",
-  "short_name": "مرسيليا",
-  "description": "مواقيت مرسيليا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=marseille&app=1",
   "scope": "/",
   "id": "/ar/?city=marseille&app=1",

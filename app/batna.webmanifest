@@ -1,7 +1,7 @@
 {
-  "name": "Batna prayer times",
-  "short_name": "Batna",
-  "description": "Batna prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=batna&app=1",
   "scope": "/",
   "id": "/?city=batna&app=1",

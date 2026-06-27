@@ -1,7 +1,7 @@
 {
-  "name": "Bern prayer times",
-  "short_name": "Bern",
-  "description": "Bern prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=bern&app=1",
   "scope": "/",
   "id": "/?city=bern&app=1",

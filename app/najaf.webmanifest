@@ -1,7 +1,7 @@
 {
-  "name": "Najaf prayer times",
-  "short_name": "Najaf",
-  "description": "Najaf prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=najaf&app=1",
   "scope": "/",
   "id": "/?city=najaf&app=1",

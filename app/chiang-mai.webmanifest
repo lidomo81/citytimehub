@@ -1,7 +1,7 @@
 {
-  "name": "Chiang Mai prayer times",
-  "short_name": "Chiang Mai",
-  "description": "Chiang Mai prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=chiang-mai&app=1",
   "scope": "/",
   "id": "/?city=chiang-mai&app=1",

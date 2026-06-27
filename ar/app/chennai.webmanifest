@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت تشيناي",
-  "short_name": "تشيناي",
-  "description": "مواقيت تشيناي",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=chennai&app=1",
   "scope": "/",
   "id": "/ar/?city=chennai&app=1",

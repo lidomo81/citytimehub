@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت سانت بطرسبرغ",
-  "short_name": "سانت بطرسبرغ",
-  "description": "مواقيت سانت بطرسبرغ",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=saint-petersburg&app=1",
   "scope": "/",
   "id": "/ar/?city=saint-petersburg&app=1",

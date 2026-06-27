@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت نجامينا",
-  "short_name": "نجامينا",
-  "description": "مواقيت نجامينا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=ndjamena&app=1",
   "scope": "/",
   "id": "/ar/?city=ndjamena&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت تبليسي",
-  "short_name": "تبليسي",
-  "description": "مواقيت تبليسي",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=tbilisi&app=1",
   "scope": "/",
   "id": "/ar/?city=tbilisi&app=1",

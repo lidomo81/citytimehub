@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت حولّي",
-  "short_name": "حولّي",
-  "description": "مواقيت حولّي",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=hawalli&app=1",
   "scope": "/",
   "id": "/ar/?city=hawalli&app=1",

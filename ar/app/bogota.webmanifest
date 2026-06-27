@@ -1,7 +1,7 @@
 {
-  "name": "مواقيت بوغوتا",
-  "short_name": "بوغوتا",
-  "description": "مواقيت بوغوتا",
+  "name": "مواقيت الفلاح",
+  "short_name": "مواقيت الفلاح",
+  "description": "مواقيت الفلاح",
   "start_url": "/ar/?city=bogota&app=1",
   "scope": "/",
   "id": "/ar/?city=bogota&app=1",

@@ -1,7 +1,7 @@
 {
-  "name": "Khartoum prayer times",
-  "short_name": "Khartoum",
-  "description": "Khartoum prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=khartoum&app=1",
   "scope": "/",
   "id": "/?city=khartoum&app=1",

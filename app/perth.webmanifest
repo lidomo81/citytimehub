@@ -1,7 +1,7 @@
 {
-  "name": "Perth prayer times",
-  "short_name": "Perth",
-  "description": "Perth prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=perth&app=1",
   "scope": "/",
   "id": "/?city=perth&app=1",

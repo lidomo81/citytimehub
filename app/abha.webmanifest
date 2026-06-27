@@ -1,7 +1,7 @@
 {
-  "name": "Abha prayer times",
-  "short_name": "Abha",
-  "description": "Abha prayer times",
+  "name": "Prayer Times",
+  "short_name": "Prayer Times",
+  "description": "Prayer Times",
   "start_url": "/?city=abha&app=1",
   "scope": "/",
   "id": "/?city=abha&app=1",
