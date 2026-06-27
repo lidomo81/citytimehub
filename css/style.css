@@ -952,3 +952,30 @@ html[dir="rtl"] .section-head .kicker {
   text-transform: none !important;
 }
 html[dir="rtl"] .kicker { font-family: var(--font); }
+
+/* ---------- Help / welcome guide ---------- */
+.help-fab { position: fixed; bottom: 18px; inset-inline-end: 18px; z-index: 60; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--border-2, #2a3550); background: var(--surface-2); color: var(--accent); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 10px 26px -10px #000; transition: transform .15s, border-color .2s, color .2s; }
+.help-fab:hover { transform: translateY(-2px); border-color: var(--brand); color: var(--brand); }
+html.app-mode .help-fab { bottom: 14px; }
+.help-overlay { position: fixed; inset: 0; z-index: 200; display: flex; align-items: center; justify-content: center; padding: 18px; }
+.help-overlay[hidden] { display: none; }
+.help-backdrop { position: absolute; inset: 0; background: rgba(4, 8, 18, .72); backdrop-filter: blur(3px); }
+.help-sheet { position: relative; width: min(440px, 100%); max-height: 86vh; overflow-y: auto; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 22px; padding: 24px 22px 22px; box-shadow: 0 30px 80px -30px #000; animation: helpIn .22s ease-out; }
+@keyframes helpIn { from { opacity: 0; transform: translateY(14px) scale(.98); } to { opacity: 1; transform: none; } }
+.help-x { position: absolute; top: 12px; inset-inline-end: 14px; width: 34px; height: 34px; border: none; background: var(--surface-2); color: var(--text-2); border-radius: 10px; font-size: 1.5rem; line-height: 1; cursor: pointer; }
+.help-x:hover { color: var(--text); }
+.help-title { margin: 0 0 4px; font-size: 1.3rem; color: var(--text); }
+.help-sub { margin: 0 0 16px; color: var(--text-2); font-size: .95rem; }
+.help-list { list-style: none; margin: 0 0 18px; padding: 0; display: flex; flex-direction: column; gap: 13px; }
+.help-list li { display: flex; gap: 12px; align-items: flex-start; }
+.help-ic { flex: none; width: 34px; height: 34px; border-radius: 10px; background: var(--surface-2); display: flex; align-items: center; justify-content: center; font-size: 1.15rem; }
+.help-list strong { display: block; font-size: .98rem; color: var(--text); margin-bottom: 1px; font-weight: 800; }
+.help-list span { color: var(--text-2); font-size: .9rem; line-height: 1.45; }
+.help-done { width: 100%; padding: 13px; border: none; border-radius: 14px; background: linear-gradient(180deg, #3b82f6, var(--brand)); color: #fff; font: inherit; font-weight: 700; font-size: 1rem; cursor: pointer; }
+.help-done:hover { filter: brightness(1.06); }
+html[dir="rtl"] .help-list strong { letter-spacing: 0; }
+
+/* ---------- Quote / verse styling inside guide articles ---------- */
+.prose blockquote { margin: 22px 0; padding: 16px 20px; border-inline-start: 3px solid var(--brand); background: var(--surface-2); border-radius: 0 14px 14px 0; color: var(--text); font-size: 1.12rem; line-height: 2; }
+html[dir="rtl"] .prose blockquote { border-radius: 14px 0 0 14px; }
+.prose blockquote cite { display: block; margin-top: 8px; font-size: .86rem; font-style: normal; font-weight: 700; color: var(--brand); letter-spacing: 0; }

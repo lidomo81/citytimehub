@@ -317,6 +317,22 @@
               <span class="tool-cta">Open the prayer clock →</span>
             </span>
           </a>
+          <a class="tool-card" href="/qibla/">
+            <span class="tool-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2.1 5-5 2.1 2.1-5z"/></svg></span>
+            <span>
+              <h3>Qibla Direction Finder</h3>
+              <p>Find the exact Qibla direction from your location with a live compass, the bearing in degrees, and the distance to Mecca.</p>
+              <span class="tool-cta">Find the Qibla →</span>
+            </span>
+          </a>
+          <a class="tool-card" href="/monthly/">
+            <span class="tool-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2v4M16 2v4"/><path d="M7 13h2M11 13h2M15 13h2M7 17h2M11 17h2"/></svg></span>
+            <span>
+              <h3>Monthly Prayer Times</h3>
+              <p>A full-month prayer timetable for any city, with the Hijri date for each day. Print it or save it — works offline once loaded.</p>
+              <span class="tool-cta">Open the monthly timetable →</span>
+            </span>
+          </a>
           <a class="tool-card" href="/our-branches/">
             <span class="tool-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18"/><path d="M12 3a14 14 0 0 0 0 18"/></svg></span>
             <span>
@@ -426,11 +442,38 @@
         <p class="muted small">Current Time Around The World.</p>
       </div>
       <nav class="footer-nav" aria-label="Footer">
-        <a href="/time-difference/">Time Difference</a><a href="/meeting-planner/">Event Planner</a><a href="/guides/">Guides</a><a href="/about/">About</a><a href="/privacy/">Privacy Policy</a><a href="/contact/">Contact</a><a href="/terms/">Terms</a>
+        <a href="/time-difference/">Time Difference</a><a href="/prayer-clock/">Prayer Clock</a><a href="/qibla/">Qibla</a><a href="/monthly/">Monthly times</a><a href="/meeting-planner/">Event Planner</a><a href="/guides/">Guides</a><a href="/about/">About</a><a href="/privacy/">Privacy Policy</a><a href="/contact/">Contact</a><a href="/terms/">Terms</a>
       </nav>
       <p class="muted small copyright">© <span id="year">2026</span> CityTimeHub · clocks computed locally · prayer &amp; Hijri data by AlAdhan · sun data by sunrise-sunset.org</p>
     </div>
   </footer>
+
+  <button type="button" id="helpBtn" class="help-fab" aria-label="How this works" title="How this works">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 1 1 4.5 2.6c-.8.5-1.6 1-1.6 2.1"/><circle cx="12" cy="17.5" r=".6" fill="currentColor"/></svg>
+  </button>
+
+  <div id="helpOverlay" class="help-overlay" role="dialog" aria-modal="true" aria-labelledby="helpTitle" hidden>
+    <div class="help-backdrop" data-help-close></div>
+    <div class="help-sheet">
+      <button type="button" class="help-x" data-help-close aria-label="Close">×</button>
+      <h2 id="helpTitle" class="help-title">Welcome to CityTimeHub 🌙</h2>
+      <p class="help-sub">A quick guide to what everything does.</p>
+      <ul class="help-list">
+        <li><span class="help-ic">🕐</span><div><strong>Live clock &amp; prayer times</strong><span>Your city's time now, today's five prayers, sunrise &amp; sunset.</span></div></li>
+        <li><span class="help-ic">🔍</span><div><strong>Search</strong><span>Find any of 500 cities and see its times instantly.</span></div></li>
+        <li><span class="help-ic">⭐</span><div><strong>Save</strong><span>Pin a city as your default — it stays shown every time you open the app.</span></div></li>
+        <li><span class="help-ic">🏠</span><div><strong>My city</strong><span>Jump back to your detected local city.</span></div></li>
+        <li><span class="help-ic">⇄</span><div><strong>Compare</strong><span>The time difference between two cities.</span></div></li>
+        <li><span class="help-ic">📅</span><div><strong>Planner</strong><span>Plan an event across several time zones.</span></div></li>
+        <li><span class="help-ic">📞</span><div><strong>Best time</strong><span>The best hours to call someone abroad.</span></div></li>
+        <li><span class="help-ic">🕌</span><div><strong>Prayer clock</strong><span>A live countdown to the next prayer.</span></div></li>
+        <li><span class="help-ic">🧭</span><div><strong>Qibla</strong><span>The direction of the Kaaba from your location.</span></div></li>
+        <li><span class="help-ic">🗓️</span><div><strong>Monthly</strong><span>A full-month prayer timetable you can print.</span></div></li>
+        <li><span class="help-ic">📲</span><div><strong>Install &amp; offline</strong><span>Add it to your home screen; it works offline after the first load.</span></div></li>
+      </ul>
+      <button type="button" class="help-done" data-help-close>Got it</button>
+    </div>
+  </div>
 
   <script src="js/app.js" defer></script>
   <script src="/js/hero-globe.js" defer></script>

@@ -397,16 +397,19 @@
   }
 
   /* ---------- Unified city panel (time + prayer + sun, searchable) ---------- */
-  function setCity(city, isHome) {
+  function setCity(city) {
     if (!city) return;
     currentCity = city;
-    if (isHome) homeCity = city;
     ltTz = city.tz; ltOffsetMs = offsetHours(city.tz) * 3600000;
     const nm = cName(city);
     const cEl = $("#lt-h"); if (cEl) cEl.textContent = nm;
-    const eb = $("#cpEyebrow"); if (eb) eb.textContent = isHome ? ((detectedHome && city.slug === detectedHome.slug) ? T.localEyebrow : T.homeEyebrow) : `${nm}، ${cCountry(city)}`;
-    const hb = $("#cpHome"); if (hb) hb.hidden = !!isHome;
-    const inp = $("#cpSearch"); if (inp && document.activeElement !== inp) inp.value = isHome ? "" : `${nm}, ${cCountry(city)}`;
+    const onLocal = !!(detectedHome && city.slug === detectedHome.slug);
+    const homeSlug = getHomeSlug();
+    const onDefault = !!(homeSlug && city.slug === homeSlug);
+    const eb = $("#cpEyebrow"); if (eb) eb.textContent = onLocal ? T.localEyebrow : (onDefault ? T.homeEyebrow : `${nm}، ${cCountry(city)}`);
+    // "My city" returns to the detected local city — show it whenever we're NOT already on local
+    const hb = $("#cpHome"); if (hb) hb.hidden = onLocal;
+    const inp = $("#cpSearch"); if (inp && document.activeElement !== inp) inp.value = (onLocal || onDefault) ? "" : `${nm}, ${cCountry(city)}`;
     updateSaveStar();
     tick();
     loadPrayer(city); loadSun(city);
@@ -434,10 +437,10 @@
     const saved = savedSlug ? CITIES.find(c => c.slug === savedSlug) : null;
     detectedHome = detected;
     const home = saved || detected;
-    setCity(home, true);
+    setCity(home);
 
     const inp = $("#cpSearch"), list = $("#cpAcList");
-    if (inp && list) attachAutocomplete(inp, list, c => setCity(c, false));
+    if (inp && list) attachAutocomplete(inp, list, c => setCity(c));
 
     const sv = $("#cpSave");
     if (sv) sv.addEventListener("click", () => {
@@ -446,22 +449,16 @@
       const r = toggleFav(slug);
       if (r.full) { toast(T.favFull(MAX_FAV)); return; }
       const nowFav = isFav(slug);
-      if (nowFav) {
-        // Save = favorite + make it the default city shown in the panel
-        setHomeSlug(slug);
-        setCity(currentCity, true);
-      } else {
-        // Unsaved: if it was the default, revert to the detected local city
-        if (getHomeSlug() === slug) {
-          clearHomeSlug();
-          if (detectedHome) setCity(detectedHome, true);
-        }
-      }
-      updateSaveStar(); renderMyCities(); refreshStars();
+      // Save = favorite + pin this city as the panel's default (stays until changed).
+      // Unsaving the current default reverts the default to the detected local city.
+      if (nowFav) setHomeSlug(slug);
+      else if (getHomeSlug() === slug) clearHomeSlug();
+      setCity(currentCity); // re-render: keeps showing this city; "My city" stays available
+      renderMyCities(); refreshStars();
       toast(nowFav ? T.savedToast : T.removedToast);
     });
     const hm = $("#cpHome");
-    if (hm) hm.addEventListener("click", () => { const h = homeCity || detectedHome; if (h) setCity(h, true); });
+    if (hm) hm.addEventListener("click", () => { if (detectedHome) setCity(detectedHome); });
 
     const inst = $("#cpInstall");
     if (inst) {
@@ -624,13 +621,14 @@
     initFavorites();
     initSearch();                                   // no-op when there is no #citySearch (homepage)
     initCityPanel();
+    initHelp();
     startClock();
 
     const params = new URLSearchParams(location.search);
     const cityParam = params.get("city");
     if (cityParam) {
       const c = CITIES.find(x => x.slug === cityParam);
-      if (c) setCity(c, true);          // installed "Cairo prayer times" icon opens focused on Cairo
+      if (c) setCity(c);          // installed "Cairo prayer times" icon opens focused on Cairo
     }
     const q = params.get("q");
     if (q) {
@@ -639,9 +637,25 @@
       else {
         const nq = norm(q);
         const hit = CITIES.find(c => norm(`${c.name} ${c.name_ar || ""} ${c.country} ${c.country_ar || ""}`).includes(nq));
-        if (hit) setCity(hit, false);
+        if (hit) setCity(hit);
       }
     }
+  }
+
+  // ---- Help / welcome guide (first-run + reopen via "?") ----
+  function initHelp() {
+    const overlay = document.getElementById("helpOverlay");
+    const btn = document.getElementById("helpBtn");
+    if (!overlay || !btn) return;
+    const HELP_KEY = "cth-help-seen";
+    const open = () => { overlay.hidden = false; document.body.style.overflow = "hidden"; };
+    const close = () => { overlay.hidden = true; document.body.style.overflow = ""; try { localStorage.setItem(HELP_KEY, "1"); } catch (e) {} };
+    btn.addEventListener("click", open);
+    overlay.querySelectorAll("[data-help-close]").forEach(el => el.addEventListener("click", close));
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && !overlay.hidden) close(); });
+    let seen = false;
+    try { seen = localStorage.getItem(HELP_KEY) === "1"; } catch (e) {}
+    if (!seen) setTimeout(open, 600); // show once on first visit
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

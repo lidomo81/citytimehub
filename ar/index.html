@@ -318,6 +318,22 @@
               <span class="tool-cta">افتح ساعة الصلاة ←</span>
             </span>
           </a>
+          <a class="tool-card" href="/ar/qibla/">
+            <span class="tool-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2.1 5-5 2.1 2.1-5z"/></svg></span>
+            <span>
+              <h3>اتجاه القبلة</h3>
+              <p>حدّد اتجاه القبلة من موقعك ببوصلة حيّة، مع زاوية القبلة بالدرجات والمسافة إلى مكة.</p>
+              <span class="tool-cta">حدّد القبلة ←</span>
+            </span>
+          </a>
+          <a class="tool-card" href="/ar/monthly/">
+            <span class="tool-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2v4M16 2v4"/><path d="M7 13h2M11 13h2M15 13h2M7 17h2M11 17h2"/></svg></span>
+            <span>
+              <h3>مواقيت الشهر</h3>
+              <p>جدول مواقيت الصلاة لشهر كامل لأي مدينة، مع التاريخ الهجري لكل يوم. اطبعه أو احفظه — ويعمل بدون نت بعد التحميل.</p>
+              <span class="tool-cta">افتح جدول الشهر ←</span>
+            </span>
+          </a>
           <a class="tool-card" href="/our-branches/">
             <span class="tool-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18"/><path d="M12 3a14 14 0 0 0 0 18"/></svg></span>
             <span>
@@ -427,11 +443,38 @@
         <p class="muted small">الوقت الآن حول العالم.</p>
       </div>
       <nav class="footer-nav" aria-label="تذييل الصفحة">
-        <a href="/ar/time-difference/">فرق التوقيت</a><a href="/ar/meeting-planner/">مخطّط الأحداث</a><a href="/ar/guides/">أدلّة</a><a href="/ar/about/">عن الموقع</a><a href="/ar/privacy/">سياسة الخصوصية</a><a href="/ar/contact/">اتصل بنا</a><a href="/ar/terms/">الشروط</a>
+        <a href="/ar/time-difference/">فرق التوقيت</a><a href="/ar/prayer-clock/">ساعة الصلاة</a><a href="/ar/qibla/">القبلة</a><a href="/ar/monthly/">مواقيت الشهر</a><a href="/ar/meeting-planner/">مخطّط الأحداث</a><a href="/ar/guides/">أدلّة</a><a href="/ar/about/">عن الموقع</a><a href="/ar/privacy/">سياسة الخصوصية</a><a href="/ar/contact/">اتصل بنا</a><a href="/ar/terms/">الشروط</a>
       </nav>
       <p class="muted small copyright">© <span id="year">2026</span> CityTimeHub · الحسابات تتم محليًا · بيانات الصلاة والهجري من AlAdhan · بيانات الشمس من sunrise-sunset.org</p>
     </div>
   </footer>
+
+  <button type="button" id="helpBtn" class="help-fab" aria-label="شرح الأزرار" title="شرح الأزرار">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 1 1 4.5 2.6c-.8.5-1.6 1-1.6 2.1"/><circle cx="12" cy="17.5" r=".6" fill="currentColor"/></svg>
+  </button>
+
+  <div id="helpOverlay" class="help-overlay" role="dialog" aria-modal="true" aria-labelledby="helpTitle" hidden>
+    <div class="help-backdrop" data-help-close></div>
+    <div class="help-sheet">
+      <button type="button" class="help-x" data-help-close aria-label="إغلاق">×</button>
+      <h2 id="helpTitle" class="help-title">أهلاً بك في CityTimeHub 🌙</h2>
+      <p class="help-sub">دليل سريع لوظيفة كل زر.</p>
+      <ul class="help-list">
+        <li><span class="help-ic">🕐</span><div><strong>الساعة والمواقيت</strong><span>وقت مدينتك الآن، صلوات اليوم الخمس، الشروق والغروب.</span></div></li>
+        <li><span class="help-ic">🔍</span><div><strong>البحث</strong><span>دوّر على أي مدينة من 500 مدينة وشوف مواقيتها فورًا.</span></div></li>
+        <li><span class="help-ic">⭐</span><div><strong>احفظ</strong><span>ثبّت المدينة كافتراضية — تفضل معروضة كل ما تفتح التطبيق.</span></div></li>
+        <li><span class="help-ic">🏠</span><div><strong>مدينتي</strong><span>رجوع سريع لمدينتك المحلية المكتشفة.</span></div></li>
+        <li><span class="help-ic">⇄</span><div><strong>فرق التوقيت</strong><span>الفرق الزمني بين مدينتين.</span></div></li>
+        <li><span class="help-ic">📅</span><div><strong>مخطّط الأحداث</strong><span>خطّط لحدث عبر عدة مناطق زمنية.</span></div></li>
+        <li><span class="help-ic">📞</span><div><strong>أفضل وقت للاتصال</strong><span>أنسب ساعات للاتصال بمن في الخارج.</span></div></li>
+        <li><span class="help-ic">🕌</span><div><strong>ساعة الصلاة</strong><span>عدّاد حيّ للصلاة القادمة.</span></div></li>
+        <li><span class="help-ic">🧭</span><div><strong>القبلة</strong><span>اتجاه الكعبة من موقعك.</span></div></li>
+        <li><span class="help-ic">🗓️</span><div><strong>مواقيت الشهر</strong><span>جدول مواقيت لشهر كامل قابل للطباعة.</span></div></li>
+        <li><span class="help-ic">📲</span><div><strong>التثبيت والأوفلاين</strong><span>ثبّته على شاشتك؛ يعمل بدون نت بعد أول فتح.</span></div></li>
+      </ul>
+      <button type="button" class="help-done" data-help-close>فهمت</button>
+    </div>
+  </div>
 
   <script src="/js/app.js" defer></script>
   <script src="/js/hero-globe.js" defer></script>
