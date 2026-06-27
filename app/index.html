@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Install the app…</title>
+<meta name="robots" content="noindex,follow">
+<link rel="icon" href="/icons/favicon-64.png" sizes="64x64" type="image/png">
+<style>
+:root{--bg:#070b16;--text:#eaf1ff;--muted:#8fa3c8;--brand:#2563EB}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{background:radial-gradient(130% 120% at 50% 0%,#0e1630,#070b16 60%);color:var(--text);font-family:"Inter",system-ui,-apple-system,sans-serif;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px}
+.b{max-width:340px}
+.b img{width:76px;height:76px;border-radius:18px;margin-bottom:16px}
+.b p{color:var(--muted);font-size:1rem;margin:0 0 18px}
+.sp{width:30px;height:30px;border-radius:50%;border:3px solid #1e2a44;border-top-color:var(--brand);margin:0 auto;animation:s 0.8s linear infinite}
+@keyframes s{to{transform:rotate(360deg)}}
+.b a{color:var(--brand);font-size:.92rem;display:inline-block;margin-top:16px}
+</style>
+</head>
+<body>
+<main class="b">
+  <img src="/icons/icon-192.png" alt="" width="76" height="76">
+  <p>Preparing your city's app…</p>
+  <div class="sp" role="status" aria-label="Preparing your city's app…"></div>
+  <a href="/app/cairo/" id="fb">Continue</a>
+</main>
+<script>
+(function(){
+  var MAP={"Africa/Cairo":"cairo","Asia/Riyadh":"riyadh","Asia/Dubai":"dubai","Asia/Kuwait":"kuwait-city","Asia/Qatar":"doha","Asia/Muscat":"muscat","Asia/Amman":"amman","Asia/Beirut":"beirut","Asia/Baghdad":"baghdad","Europe/Istanbul":"istanbul","Europe/London":"london","Europe/Paris":"paris","Europe/Berlin":"berlin","Europe/Rome":"rome","Europe/Madrid":"madrid","Europe/Moscow":"moscow","America/New_York":"new-york","America/Toronto":"toronto","America/Mexico_City":"mexico-city","Asia/Tokyo":"tokyo","Asia/Seoul":"seoul","Asia/Shanghai":"beijing","Asia/Singapore":"singapore","Australia/Sydney":"sydney","Asia/Bahrain":"manama","Asia/Aden":"sanaa","Asia/Damascus":"damascus","Asia/Hebron":"jerusalem","Asia/Tehran":"tehran","Africa/Tripoli":"tripoli-ly","Africa/Tunis":"tunis","Africa/Algiers":"algiers","Africa/Casablanca":"casablanca","Africa/Khartoum":"khartoum","Africa/Nouakchott":"nouakchott","Africa/Lagos":"lagos","Africa/Nairobi":"nairobi","Africa/Addis_Ababa":"addis-ababa","Africa/Johannesburg":"johannesburg","Africa/Accra":"accra","Africa/Dakar":"dakar","Africa/Abidjan":"abidjan","Africa/Dar_es_Salaam":"dar-es-salaam","Africa/Kampala":"kampala","Africa/Douala":"douala","Africa/Luanda":"luanda","Africa/Kinshasa":"kinshasa","Africa/Brazzaville":"brazzaville","Africa/Harare":"harare","Africa/Lusaka":"lusaka","Africa/Maputo":"maputo","Africa/Kigali":"kigali","Africa/Bamako":"bamako","Africa/Niamey":"niamey","Africa/Ouagadougou":"ouagadougou","Indian/Antananarivo":"antananarivo","Africa/Mogadishu":"mogadishu","Africa/Djibouti":"djibouti-city","Africa/Gaborone":"gaborone","Africa/Windhoek":"windhoek","Europe/Dublin":"dublin","Europe/Lisbon":"lisbon","Europe/Amsterdam":"amsterdam","Europe/Brussels":"brussels","Europe/Zurich":"zurich","Europe/Vienna":"vienna","Europe/Athens":"athens","Europe/Warsaw":"warsaw","Europe/Prague":"prague","Europe/Budapest":"budapest","Europe/Bucharest":"bucharest","Europe/Sofia":"sofia","Europe/Stockholm":"stockholm","Europe/Oslo":"oslo","Europe/Copenhagen":"copenhagen","Europe/Helsinki":"helsinki","Europe/Kyiv":"kyiv","Europe/Belgrade":"belgrade","Europe/Zagreb":"zagreb","Asia/Novosibirsk":"novosibirsk","Asia/Pyongyang":"pyongyang","Asia/Hong_Kong":"hong-kong","Asia/Taipei":"taipei","Asia/Kolkata":"new-delhi","Asia/Karachi":"karachi","Asia/Dhaka":"dhaka","Asia/Colombo":"colombo","Asia/Kathmandu":"kathmandu","Asia/Kabul":"kabul","Asia/Jakarta":"jakarta","Asia/Kuala_Lumpur":"kuala-lumpur","Asia/Bangkok":"bangkok","Asia/Ho_Chi_Minh":"hanoi","Asia/Manila":"manila","Asia/Yangon":"yangon","Asia/Phnom_Penh":"phnom-penh","Asia/Almaty":"almaty","Asia/Tashkent":"tashkent","Asia/Baku":"baku","Asia/Tbilisi":"tbilisi","Asia/Yerevan":"yerevan","Asia/Ulaanbaatar":"ulaanbaatar","Asia/Bishkek":"bishkek","Asia/Dushanbe":"dushanbe","Asia/Ashgabat":"ashgabat","America/Los_Angeles":"los-angeles","America/Chicago":"chicago","America/Phoenix":"phoenix","America/Denver":"denver","America/Vancouver":"vancouver","America/Edmonton":"calgary","America/Monterrey":"monterrey","America/Havana":"havana","America/Guatemala":"guatemala-city","America/Panama":"panama-city","America/Costa_Rica":"san-jose-cr","America/Santo_Domingo":"santo-domingo","America/Jamaica":"kingston","America/Sao_Paulo":"sao-paulo","America/Argentina/Buenos_Aires":"buenos-aires","America/Bogota":"bogota","America/Santiago":"santiago","America/Lima":"lima","America/Caracas":"caracas","America/Guayaquil":"quito","America/La_Paz":"la-paz","America/Montevideo":"montevideo","America/Asuncion":"asuncion","Australia/Melbourne":"melbourne","Australia/Brisbane":"brisbane","Australia/Perth":"perth","Australia/Adelaide":"adelaide","Pacific/Auckland":"auckland","Pacific/Fiji":"suva","America/Detroit":"detroit","Pacific/Honolulu":"honolulu","America/Anchorage":"anchorage","Atlantic/Reykjavik":"reykjavik","Europe/Vilnius":"vilnius","Europe/Riga":"riga","Europe/Tallinn":"tallinn","Europe/Bratislava":"bratislava","Europe/Ljubljana":"ljubljana","Europe/Luxembourg":"luxembourg-city","Europe/Malta":"valletta","Asia/Nicosia":"nicosia","Europe/Chisinau":"chisinau","Europe/Minsk":"minsk","Europe/Sarajevo":"sarajevo","Europe/Skopje":"skopje","Europe/Tirane":"tirana","Europe/Podgorica":"podgorica","Africa/Lome":"lome","Africa/Porto-Novo":"cotonou","Africa/Blantyre":"lilongwe","Africa/Mbabane":"mbabane","Africa/Maseru":"maseru","Africa/Ndjamena":"ndjamena","Africa/Libreville":"libreville","Africa/Conakry":"conakry","Africa/Freetown":"freetown","Africa/Monrovia":"monrovia","Africa/Banjul":"banjul","Africa/Asmara":"asmara","Africa/Juba":"juba","Africa/Bujumbura":"bujumbura","Asia/Makassar":"makassar","Asia/Vientiane":"vientiane","Asia/Brunei":"bandar-seri-begawan","Indian/Maldives":"male","Asia/Thimphu":"thimphu","Asia/Samarkand":"samarkand","America/Tegucigalpa":"tegucigalpa","America/Managua":"managua","America/El_Salvador":"san-salvador","America/Port-au-Prince":"port-au-prince","America/Nassau":"nassau","America/Port_of_Spain":"port-of-spain","America/Guyana":"georgetown-gy","America/Paramaribo":"paramaribo","America/Bahia":"salvador-br","America/Fortaleza":"fortaleza","America/Argentina/Cordoba":"cordoba-ar","Pacific/Port_Moresby":"port-moresby","Asia/Kuching":"kota-kinabalu"}, FB="cairo", BASE="";
+  var slug=FB;
+  try{
+    var tz=Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if(tz&&MAP[tz]){slug=MAP[tz];}
+  }catch(e){}
+  var url=BASE+"/app/"+slug+"/";
+  var fb=document.getElementById('fb'); if(fb) fb.href=url;
+  location.replace(url);
+})();
+</script>
+</body>
+</html>

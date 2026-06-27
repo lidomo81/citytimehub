@@ -18,7 +18,7 @@
       prayers: ["Fajr", "Sunrise", "Dhuhr", "Asr", "Maghrib", "Isha"],
       ah: "AH", na: "n/a",
       dayLen: (h, m) => `${h}h ${m}m`,
-      localEyebrow: "Your local time", save: "Save", saved: "Saved",
+      localEyebrow: "Your local time", homeEyebrow: "Your city", save: "Save", saved: "Saved",
       inHM: (h, m) => h ? `in ${h}h ${m}m` : `in ${m}m`, tomorrow: "tomorrow",
       savedToast: "Saved to My Cities.", removedToast: "Removed from My Cities.", favFull: n => `You can save up to ${n} cities.`,
     },
@@ -31,7 +31,7 @@
       prayers: ["الفجر", "الشروق", "الظهر", "العصر", "المغرب", "العشاء"],
       ah: "هـ", na: "غير متاح",
       dayLen: (h, m) => `${h}h ${m}m`,
-      localEyebrow: "وقتك المحلي", save: "احفظ", saved: "محفوظة",
+      localEyebrow: "وقتك المحلي", homeEyebrow: "مدينتك", save: "احفظ", saved: "محفوظة",
       inHM: (h, m) => h ? `بعد ${h} س ${m} د` : `بعد ${m} د`, tomorrow: "غدًا",
       savedToast: "تم الحفظ في مدني.", removedToast: "تمت الإزالة من مدني.", favFull: n => `تقدر تحفظ حتى ${n} مدن.`,
     },
@@ -44,7 +44,7 @@
   /* ---------- State ---------- */
   let CITIES = [];
   const fmtCache = new Map();
-  let currentCity = null, homeCity = null, prayerState = null;
+  let currentCity = null, homeCity = null, detectedHome = null, prayerState = null;
 
 
   const $  = (s, c = document) => c.querySelector(s);
@@ -129,7 +129,11 @@
   /* ---------- City grid ---------- */
   /* ---------- Favorite cities ("My Cities", localStorage) ---------- */
   const FAV_KEY = "cth-fav-cities";
+  const HOME_KEY = "cth-home-city";
   const MAX_FAV = 8;
+  function getHomeSlug() { try { return localStorage.getItem(HOME_KEY) || null; } catch (e) { return null; } }
+  function setHomeSlug(slug) { try { localStorage.setItem(HOME_KEY, slug); } catch (e) {} }
+  function clearHomeSlug() { try { localStorage.removeItem(HOME_KEY); } catch (e) {} }
   function getFavs() { try { return JSON.parse(localStorage.getItem(FAV_KEY) || "[]"); } catch (e) { return []; } }
   function setFavs(a) { try { localStorage.setItem(FAV_KEY, JSON.stringify(a.slice(0, MAX_FAV))); } catch (e) {} }
   function isFav(slug) { return getFavs().includes(slug); }
@@ -400,7 +404,7 @@
     ltTz = city.tz; ltOffsetMs = offsetHours(city.tz) * 3600000;
     const nm = cName(city);
     const cEl = $("#lt-h"); if (cEl) cEl.textContent = nm;
-    const eb = $("#cpEyebrow"); if (eb) eb.textContent = isHome ? T.localEyebrow : `${nm}، ${cCountry(city)}`;
+    const eb = $("#cpEyebrow"); if (eb) eb.textContent = isHome ? ((detectedHome && city.slug === detectedHome.slug) ? T.localEyebrow : T.homeEyebrow) : `${nm}، ${cCountry(city)}`;
     const hb = $("#cpHome"); if (hb) hb.hidden = !!isHome;
     const inp = $("#cpSearch"); if (inp && document.activeElement !== inp) inp.value = isHome ? "" : `${nm}, ${cCountry(city)}`;
     updateSaveStar();
@@ -422,10 +426,14 @@
       ltEls = { hour: host.querySelector("#ltHour"), min: host.querySelector("#ltMin"), sec: host.querySelector("#ltSec") };
       cancelAnimationFrame(ltRAF); ltFrame();
     }
-    // Detect the visitor's home city from their time zone (fallback Cairo)
+    // Preferred default city (saved via "Save") wins; else detect from time zone (fallback Cairo)
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
     const matches = CITIES.filter(c => c.tz === tz);
-    const home = matches.find(c => c.featured) || matches[0] || CITIES.find(c => c.slug === "cairo") || CITIES[0];
+    const detected = matches.find(c => c.featured) || matches[0] || CITIES.find(c => c.slug === "cairo") || CITIES[0];
+    const savedSlug = getHomeSlug();
+    const saved = savedSlug ? CITIES.find(c => c.slug === savedSlug) : null;
+    detectedHome = detected;
+    const home = saved || detected;
     setCity(home, true);
 
     const inp = $("#cpSearch"), list = $("#cpAcList");
@@ -434,14 +442,26 @@
     const sv = $("#cpSave");
     if (sv) sv.addEventListener("click", () => {
       if (!currentCity) return;
-      const r = toggleFav(currentCity.slug);
+      const slug = currentCity.slug;
+      const r = toggleFav(slug);
       if (r.full) { toast(T.favFull(MAX_FAV)); return; }
-      const nowFav = isFav(currentCity.slug);
+      const nowFav = isFav(slug);
+      if (nowFav) {
+        // Save = favorite + make it the default city shown in the panel
+        setHomeSlug(slug);
+        setCity(currentCity, true);
+      } else {
+        // Unsaved: if it was the default, revert to the detected local city
+        if (getHomeSlug() === slug) {
+          clearHomeSlug();
+          if (detectedHome) setCity(detectedHome, true);
+        }
+      }
       updateSaveStar(); renderMyCities(); refreshStars();
       toast(nowFav ? T.savedToast : T.removedToast);
     });
     const hm = $("#cpHome");
-    if (hm) hm.addEventListener("click", () => { if (homeCity) setCity(homeCity, true); });
+    if (hm) hm.addEventListener("click", () => { const h = homeCity || detectedHome; if (h) setCity(h, true); });
 
     const inst = $("#cpInstall");
     if (inst) {
@@ -463,10 +483,8 @@
     const grid = $("#prayerGrid"), today = new Date();
     const ds = `${String(today.getDate()).padStart(2,"0")}-${String(today.getMonth()+1).padStart(2,"0")}-${today.getFullYear()}`;
     const url = `https://api.aladhan.com/v1/timings/${ds}?latitude=${city.lat}&longitude=${city.lng}&method=${city.method ?? 3}`;
-    try {
-      const res = await fetch(url);
-      if (!res.ok) throw new Error("timings " + res.status);
-      const { data } = await res.json();
+    const PKEY = "cth-prayer:" + city.slug;
+    const render = (data, stale) => {
       const t = data.timings, g = data.date.gregorian, h = data.date.hijri;
       const g_d = new Date(Date.UTC(+g.year, (+(g.month && g.month.number) || 1) - 1, +g.day));
       $("#gregDate").textContent  = new Intl.DateTimeFormat(LANG === "ar" ? "ar-EG-u-nu-latn" : "en-GB", { timeZone: "UTC", day: "numeric", month: "long", year: "numeric" }).format(g_d);
@@ -482,8 +500,19 @@
           <span class="prayer-tag">${p === next ? T.next : ""}</span>
         </article>`).join("");
       updateNextLine();
+    };
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error("timings " + res.status);
+      const { data } = await res.json();
+      render(data, false);
+      try { localStorage.setItem(PKEY, JSON.stringify({ ds, data })); } catch (e) {}
     } catch {
-      grid.innerHTML = `<p class="no-results" style="grid-column:1/-1">${T.prayerErr}</p>`;
+      // Offline / failed → show the last saved times for this city if we have them
+      let cached = null;
+      try { cached = JSON.parse(localStorage.getItem(PKEY) || "null"); } catch (e) {}
+      if (cached && cached.data) { render(cached.data, true); }
+      else { grid.innerHTML = `<p class="no-results" style="grid-column:1/-1">${T.prayerErr}</p>`; }
     }
   }
   function updateNextLine() {
@@ -520,18 +549,26 @@
   async function loadSun(city) {
     if (!city) return;
     $("#sunCityName").textContent = `${cName(city)}, ${cCountry(city)}`;
-    try {
-      const res = await fetch(`https://api.sunrise-sunset.org/json?lat=${city.lat}&lng=${city.lng}&formatted=0`);
-      if (!res.ok) throw new Error("sun " + res.status);
-      const { results, status } = await res.json();
-      if (status !== "OK") throw new Error(status);
+    const SKEY = "cth-sun:" + city.slug;
+    const render = (results) => {
       const tf = new Intl.DateTimeFormat("en-GB", { timeZone: city.tz, hour: "2-digit", minute: "2-digit", hour12: false });
       $("#sunriseVal").textContent = tf.format(new Date(results.sunrise));
       $("#sunsetVal").textContent  = tf.format(new Date(results.sunset));
       const s = results.day_length, hh = Math.floor(s/3600), mm = Math.floor((s%3600)/60);
       $("#dayLength").textContent = T.dayLen(hh, String(mm).padStart(2,"0"));
+    };
+    try {
+      const res = await fetch(`https://api.sunrise-sunset.org/json?lat=${city.lat}&lng=${city.lng}&formatted=0`);
+      if (!res.ok) throw new Error("sun " + res.status);
+      const { results, status } = await res.json();
+      if (status !== "OK") throw new Error(status);
+      render(results);
+      try { localStorage.setItem(SKEY, JSON.stringify(results)); } catch (e) {}
     } catch {
-      $("#sunriseVal").textContent = "—"; $("#sunsetVal").textContent = "—"; $("#dayLength").textContent = T.na;
+      let cached = null;
+      try { cached = JSON.parse(localStorage.getItem(SKEY) || "null"); } catch (e) {}
+      if (cached) { render(cached); }
+      else { $("#sunriseVal").textContent = "—"; $("#sunsetVal").textContent = "—"; $("#dayLength").textContent = T.na; }
     }
   }
 

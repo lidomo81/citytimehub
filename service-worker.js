@@ -1,21 +1,31 @@
 /* =====================================================================
    CityTimeHub — service-worker.js
-   Lightweight, safe caching for fast repeat visits and basic offline.
-   - App shell (CSS/JS/icons/fonts) → stale-while-revalidate
-   - HTML navigations → network-first, fall back to cache, then to "/"
+   Real offline support:
+   - Precache the full app shell (both homepages, CSS, all JS, data, icons)
+     so the app opens fully styled with data even with no network.
+   - Same-origin assets → stale-while-revalidate.
+   - Prayer-times / sunrise-sunset APIs → network-first, fall back to the
+     last cached response so today's times still show offline.
+   - HTML navigations → network-first, fall back to the cached homepage
+     (language-aware), so installed city apps open offline.
    Bump CACHE_VERSION to invalidate old caches on the next visit.
    ===================================================================== */
-const CACHE_VERSION = "cth-v2";
+const CACHE_VERSION = "cth-v3";
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
+const API_CACHE = `${CACHE_VERSION}-api`;
 
 const SHELL = [
-  "/",
+  "/", "/ar/",
   "/css/style.css",
-  "/js/app.js",
-  "/js/city.js",
+  "/js/app.js", "/js/city.js", "/js/compare-tool.js", "/js/meeting-planner.js",
+  "/js/best-time-to-call.js", "/js/prayer-clock.js", "/js/prayer-widget.js",
+  "/js/prayer-widget-builder.js", "/js/branches-builder.js", "/js/branches-widget.js",
+  "/js/hero-globe.js", "/js/pwa.js", "/js/qibla.js", "/js/monthly.js",
+  "/data/cities.json", "/data/compare-hubs.json", "/data/globe-frames.json",
   "/manifest.webmanifest",
-  "/icons/icon-192.png",
+  "/icons/icon-192.png", "/icons/icon-512.png", "/icons/icon-maskable-512.png",
+  "/icons/apple-touch-icon.png", "/icons/favicon-64.png", "/icons/logo.svg",
 ];
 
 self.addEventListener("install", (event) => {
@@ -47,11 +57,13 @@ function staleWhileRevalidate(req) {
   );
 }
 
-function networkFirst(req) {
-  return caches.open(RUNTIME_CACHE).then((cache) =>
+// APIs (prayer times, sunrise/sunset): try network, cache good responses,
+// fall back to the last cached response when offline.
+function apiNetworkFirst(req) {
+  return caches.open(API_CACHE).then((cache) =>
     fetch(req)
       .then((res) => { if (res && res.ok) cache.put(req, res.clone()); return res; })
-      .catch(() => cache.match(req).then((c) => c || caches.match("/")))
+      .catch(() => cache.match(req))
   );
 }
 
@@ -62,15 +74,35 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(req.url);
   const sameOrigin = url.origin === self.location.origin;
 
-  // HTML navigations → network-first (always try fresh, fall back offline)
-  if (req.mode === "navigate") {
-    event.respondWith(networkFirst(req));
+  // Prayer-times / sun APIs (cross-origin) → network-first with cache fallback
+  if (url.hostname.includes("aladhan.com") || url.hostname.includes("sunrise-sunset.org")) {
+    event.respondWith(apiNetworkFirst(req));
     return;
   }
 
-  // Static assets (same-origin css/js/img + Google fonts) → stale-while-revalidate
-  const isAsset = /\.(css|js|png|jpg|jpeg|svg|webp|ico|woff2?)$/i.test(url.pathname);
-  if (isAsset || url.hostname.includes("fonts.g")) {
+  // HTML navigations → network-first, offline fall back to cached homepage (by language)
+  if (req.mode === "navigate") {
+    event.respondWith(
+      fetch(req)
+        .then((res) => {
+          if (res && res.ok && sameOrigin) {
+            const copy = res.clone();
+            caches.open(RUNTIME_CACHE).then((c) => c.put(req, copy));
+          }
+          return res;
+        })
+        .catch(() =>
+          caches.match(req).then((c) =>
+            c || caches.match(url.pathname.startsWith("/ar") ? "/ar/" : "/")
+          )
+        )
+    );
+    return;
+  }
+
+  // Same-origin static assets + data → stale-while-revalidate
+  const isAsset = /\.(css|js|json|png|jpg|jpeg|svg|webp|ico|woff2?)$/i.test(url.pathname);
+  if ((sameOrigin && isAsset) || url.hostname.includes("fonts.g")) {
     event.respondWith(staleWhileRevalidate(req));
   }
 });
