@@ -231,7 +231,7 @@ html.app-mode #reference { display: none !important; }
 .app-bar--home .app-bar-title { flex: 1; text-align: center; }
 /* quick tools bar — visible only inside the installed app */
 .app-tools { display: none; }
-html.app-mode .app-tools { display: block; width: min(960px, 92%); margin: 14px auto 0; }
+html.app-mode .app-tools { display: block; width: min(960px, 92%); margin: 14px auto 96px; }
 .app-tools-label { display: block; font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 4px 9px; }
 .app-tools-row { display: flex; gap: 9px; overflow-x: auto; overflow-y: visible; padding: 6px 2px 8px; -webkit-overflow-scrolling: touch; scrollbar-width: none; scroll-padding: 8px; }
 .app-tools-row::-webkit-scrollbar { display: none; }
