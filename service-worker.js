@@ -10,7 +10,7 @@
      (language-aware), so installed city apps open offline.
    Bump CACHE_VERSION to invalidate old caches on the next visit.
    ===================================================================== */
-const CACHE_VERSION = "cth-v3";
+const CACHE_VERSION = "cth-v5";
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 const API_CACHE = `${CACHE_VERSION}-api`;
@@ -21,7 +21,7 @@ const SHELL = [
   "/js/app.js", "/js/city.js", "/js/compare-tool.js", "/js/meeting-planner.js",
   "/js/best-time-to-call.js", "/js/prayer-clock.js", "/js/prayer-widget.js",
   "/js/prayer-widget-builder.js", "/js/branches-builder.js", "/js/branches-widget.js",
-  "/js/hero-globe.js", "/js/pwa.js", "/js/qibla.js", "/js/monthly.js",
+  "/js/hero-globe.js", "/js/pwa.js", "/js/qibla.js", "/js/monthly.js", "/js/azkar.js", "/js/prayer-azkar.js",
   "/data/cities.json", "/data/compare-hubs.json", "/data/globe-frames.json",
   "/manifest.webmanifest",
   "/icons/icon-192.png", "/icons/icon-512.png", "/icons/icon-maskable-512.png",
