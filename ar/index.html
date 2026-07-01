@@ -172,7 +172,7 @@
           <div class="hero-grid">
             <div class="hero-copy">
             <h1 class="hero-title">دائماً <span>’الآن‘</span>..<br>في بقعةٍ ما من العالم.</h1>
-            <p class="hero-desc">تابِع النهار وهو بيلفّ حوالين الكوكب. وقت كل مدينة كبيرة، ومناطقها الزمنية وفروق UTC — كله بيتحسب جوّه متصفّحك على طول.</p>
+            <p class="hero-desc">تابع الوقت ومواقيت الصلاة وفروق التوقيت في جميع أنحاء العالم لحظة بلحظة.</p>
             </div>
             <div class="hero-globe" id="heroGlobe" aria-hidden="true"></div>
           </div>
@@ -187,7 +187,7 @@
         <div class="cp-toolbar">
           <div class="ac cp-ac">
             <svg class="cp-search-ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-            <input id="cpSearch" class="ac-input" type="text" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="cpAcList" placeholder="شوف أي مدينة — القاهرة، طوكيو، لندن…" aria-label="ابحث عن مدينة لعرض وقتها ومواقيت صلاتها وشروقها" />
+            <input id="cpSearch" class="ac-input" type="text" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="cpAcList" placeholder="ابحث باسم المدينة" aria-label="ابحث عن مدينة لعرض وقتها ومواقيت صلاتها وشروقها" />
             <ul id="cpAcList" class="ac-list" role="listbox" hidden></ul>
           </div>
           <button id="cpSave" type="button" class="cp-btn cp-save" aria-pressed="false">
@@ -445,18 +445,6 @@
           <details class="faq-item"><summary>كيف تُحدَّد مواقيت الصلاة؟</summary><p>تُحسب هذه المواقيت بناءً على موقع الشمس لتاريخ وموقع جغرافي محددين؛ وتعتمد أساساً على زوايا الشفق لوقتي الفجر والعشاء، ووقت الزوال (الظهيرة الفلكية) لوقت الظهر، وغروب الشمس لوقت المغرب.</p></details>
           <details class="faq-item"><summary>لماذا تختلف مواقيت الصلاة بين التطبيقات أو المساجد؟</summary><p>تعتمد الهيئات المختلفة زوايا شفق ومعايير متباينة؛ لذا فإن وجود تفاوت بمقدار دقائق معدودة بين طرق الحساب—مثل رابطة العالم الإسلامي (MWL)، أو الجمعية الإسلامية لأمريكا الشمالية (ISNA)، أو أم القرى—هو أمر طبيعي ومتوقع.</p></details>
           <details class="faq-item"><summary>أي طريقة حساب ينبغي أن أختار؟</summary><p>إن الخيار الأفضل هو اتباع الطريقة المعتمدة رسمياً في بلدك أو في مسجدك المحلي، إذ يعكس ذلك المعيار الفقهي والمواقيت التي يعتمد عليها مجتمعك.</p></details>
-        </div>
-      </div>
-    </section>
-    <section class="section explainer-section" aria-labelledby="ex-daynight-h">
-      <div class="container container-narrow">
-        <h2 id="ex-daynight-h" class="explainer-title">علم الليل والنهار</h2>
-        <div class="prose"><p>ينشأ الليل والنهار نتيجة دوران الأرض حول محورها، حيث تتم دورة كاملة كل 24 ساعة تقريباً. وفي أي لحظة، يواجه نصف الكوكب الشمس ليعيش فترة النهار، بينما يكون النصف الآخر بعيداً عنها ومغموراً في الظلام. ومع دوران الأرض من الغرب إلى الشرق، يتحرك الخط الفاصل بينهما —المعروف بخط الغبش أو الفاصل الشمسي— باستمرار عبر السطح، وهذا هو السبب في أن شروق الشمس يحل في الشرق قبل الغرب.</p>
-          <p>وهذا هو السبب أيضاً في تحرك الوقت نفسه عبر مختلف أرجاء الكوكب؛ فالمواقع الواقعة على خطوط طول مختلفة تستقبل شروق الشمس في لحظات متباينة، لذا فإنه في اللحظة ذاتها، يحل الصباح دائماً في مكان ما بينما يسود الليل في مكان آخر بالفعل. ويجسد مؤشر الليل والنهار هذا المفهوم من خلال عرض المدن التي تقع حالياً في نطاق ضوء النهار وتلك التي تحولت بالفعل نحو الليل، وذلك بلمحة سريعة.</p></div>
-        <div class="faq explainer-faq">
-          <h3 class="explainer-faq-title">الأسئلة الشائعة</h3>
-          <details class="faq-item"><summary>ما الذي يسبّب الليل والنهار؟</summary><p>ينشأ الليل والنهار نتيجة دوران الأرض حول محورها؛ حيث يحظى النصف المواجه للشمس بالنهار، بينما يغرق النصف الآخر البعيد عنها في عتمة الليل، ويتبادل النصفان الأدوار مع استمرار الكوكب في الدوران.</p></details>
-          <details class="faq-item"><summary>لماذا لا يكون الوقت نفسه في كل مكان على الأرض؟</summary><p>ويعود ذلك إلى أن خطوط الطول المختلفة تواجه الشمس في لحظات متباينة؛ فمع دوران الأرض، يحل منتصف النهار ومنتصف الليل في كل منطقة وفقاً لتوقيتها الخاص، وهو تماماً ما تعكسه النطاقات الزمنية.</p></details>
         </div>
       </div>
     </section>

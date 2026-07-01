@@ -171,7 +171,7 @@
           <div class="hero-grid">
             <div class="hero-copy">
             <h1 class="hero-title">It’s always now —<br><span>somewhere.</span></h1>
-            <p class="hero-desc">Watch daylight sweep the planet. Real local time for every major city, time zones and UTC offsets — computed right in your browser, no clock API.</p>
+            <p class="hero-desc">Follow the time, prayer times and time differences across the world, moment by moment.</p>
             </div>
             <div class="hero-globe" id="heroGlobe" aria-hidden="true"></div>
           </div>
@@ -186,7 +186,7 @@
         <div class="cp-toolbar">
           <div class="ac cp-ac">
             <svg class="cp-search-ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-            <input id="cpSearch" class="ac-input" type="text" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="cpAcList" placeholder="See any city — Cairo, Tokyo, London…" aria-label="Search a city to view its time, prayer times and sunrise" />
+            <input id="cpSearch" class="ac-input" type="text" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="cpAcList" placeholder="Search by city name" aria-label="Search a city to view its time, prayer times and sunrise" />
             <ul id="cpAcList" class="ac-list" role="listbox" hidden></ul>
           </div>
           <button id="cpSave" type="button" class="cp-btn cp-save" aria-pressed="false">
@@ -444,18 +444,6 @@
           <details class="faq-item"><summary>How are prayer times determined?</summary><p>They are calculated from the sun's position for a given location and date — primarily the angles of twilight for Fajr and Isha, solar noon for Dhuhr, and sunset for Maghrib.</p></details>
           <details class="faq-item"><summary>Why do prayer times differ between apps or mosques?</summary><p>Different authorities use different twilight angles and conventions. A few minutes of variation between methods such as MWL, ISNA, or Umm al-Qura is normal and expected.</p></details>
           <details class="faq-item"><summary>Which calculation method should I choose?</summary><p>The best choice is the method officially followed in your country or by your local mosque, as it reflects the convention your community relies on.</p></details>
-        </div>
-      </div>
-    </section>
-    <section class="section explainer-section" aria-labelledby="ex-daynight-h">
-      <div class="container container-narrow">
-        <h2 id="ex-daynight-h" class="explainer-title">The Science of Day &amp; Night</h2>
-        <div class="prose"><p>Day and night are created by the Earth's <strong>rotation on its axis</strong>, one full turn roughly every 24 hours. At any moment, half of the planet faces the sun and experiences daylight, while the other half is turned away and in darkness. As the Earth spins from west to east, the line dividing the two — the <strong>terminator</strong> — sweeps continuously across the surface, which is why sunrise arrives in the east before the west.</p>
-          <p>This is also why time itself moves across the globe. Locations along different <strong>lines of longitude</strong> meet the sunrise at different moments, so it is genuinely always morning somewhere and night somewhere else at the same instant. A day-and-night indicator captures this by showing, at a glance, which cities are currently in daylight and which have already turned toward night.</p></div>
-        <div class="faq explainer-faq">
-          <h3 class="explainer-faq-title">Frequently Asked Questions</h3>
-          <details class="faq-item"><summary>What causes day and night?</summary><p>The Earth's rotation on its axis. The half facing the sun has day; the half turned away has night, and the two swap as the planet spins.</p></details>
-          <details class="faq-item"><summary>Why isn't it the same time everywhere on Earth?</summary><p>Because different lines of longitude face the sun at different moments. As the Earth rotates, each region reaches noon and midnight at its own time, which is exactly what time zones reflect.</p></details>
         </div>
       </div>
     </section>
