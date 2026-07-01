@@ -148,5 +148,31 @@
   if (document.readyState !== "loading") wireButtons();
   else document.addEventListener("DOMContentLoaded", wireButtons);
 
+  /* ----- In-app mode: the tools grid is the primary launcher, so the header
+     menu (☰) is repurposed to hold only the secondary/legal links.
+     Links are cloned from the footer so they match the page language. ----- */
+  function applyAppNav() {
+    var inApp = document.documentElement.classList.contains("app-mode")
+      || /CityTimeHubApp/i.test(navigator.userAgent || "")
+      || inStandalone
+      || new URLSearchParams(location.search).get("app") === "1";
+    if (!inApp) return;
+    document.documentElement.classList.add("app-mode");
+    var nav = document.querySelector(".main-nav");
+    if (!nav) return;
+    var wanted = ["about", "privacy", "contact", "terms"];
+    var links = [];
+    wanted.forEach(function (w) {
+      var a = document.querySelector('.site-footer a[href*="/' + w + '"]');
+      if (a) links.push(a.cloneNode(true));
+    });
+    if (links.length) {
+      nav.innerHTML = "";
+      links.forEach(function (l) { nav.appendChild(l); });
+    }
+  }
+  if (document.readyState !== "loading") applyAppNav();
+  else document.addEventListener("DOMContentLoaded", applyAppNav);
+
   document.dispatchEvent(new CustomEvent("cth-pwa-ready"));
 })();

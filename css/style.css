@@ -185,16 +185,15 @@ svg { display: block; }
 
 /* ===== App mode (installed PWA / ?app=1): show just the tool ===== */
 .app-bar { display: none; }
-html.app-mode .site-header,
 html.app-mode .breadcrumb,
-html.app-mode .site-footer,
 html.app-mode .tool-install,
 html.app-mode .explainer-section,
 html.app-mode [aria-labelledby="dir-h"],
 html.app-mode .hero .eyebrow { display: none !important; }
 
 html.app-mode .app-bar {
-  display: flex; align-items: center; gap: 10px;
+  display: none !important;
+  align-items: center; gap: 10px;
   position: sticky; top: 0; z-index: 50;
   padding: 10px 14px; min-height: 52px;
   background: color-mix(in srgb, var(--surface) 92%, transparent);
@@ -231,10 +230,10 @@ html.app-mode #reference { display: none !important; }
 .app-bar--home .app-bar-title { flex: 1; text-align: center; }
 /* quick tools bar — visible only inside the installed app */
 .app-tools { display: none; }
-html.app-mode .app-tools { display: block; width: min(960px, 92%); margin: 14px auto 96px; }
+html.app-mode .app-tools { display: block; width: min(960px, 92%); margin: 14px auto 22px; }
 .app-tools-label { display: block; font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 4px 9px; }
-.app-tools-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 9px; padding: 6px 2px 8px; justify-content: center; }
-.app-tool { min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 7px; padding: 13px 8px; border-radius: 15px; background: var(--surface); border: 1px solid var(--border); color: var(--text-2); text-decoration: none; font-size: .78rem; font-weight: 600; text-align: center; transition: border-color .2s, color .2s, background .2s, box-shadow .2s; }
+.app-tools-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(68px, 1fr)); gap: 7px; padding: 6px 2px 8px; justify-content: center; }
+.app-tool { min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 10px 6px; border-radius: 13px; background: var(--surface); border: 1px solid var(--border); color: var(--text-2); text-decoration: none; font-size: .72rem; font-weight: 600; text-align: center; transition: border-color .2s, color .2s, background .2s, box-shadow .2s; }
 .app-tool svg { color: var(--brand); }
 .app-tool:hover, .app-tool:active, .app-tool:focus-visible { border-color: var(--brand); color: var(--text); background: var(--surface-2); box-shadow: 0 6px 18px -8px var(--brand); outline: none; }
 .app-tool--site svg { color: var(--accent); }
