@@ -174,5 +174,43 @@
   if (document.readyState !== "loading") applyAppNav();
   else document.addEventListener("DOMContentLoaded", applyAppNav);
 
+  /* ----- Universal Share button in the header. Uses the native share sheet
+     (WhatsApp / Telegram / etc.) so a visitor can pass the page to family and
+     friends in one tap — free word-of-mouth growth, in the site and the app. ----- */
+  function siteShareCopy(text) {
+    try { var ta = document.createElement("textarea"); ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta); ta.focus(); ta.select(); document.execCommand("copy"); document.body.removeChild(ta); } catch (e) {}
+  }
+  function siteShareToast(msg) {
+    var t = document.getElementById("cthShareToast");
+    if (!t) { t = document.createElement("div"); t.id = "cthShareToast"; t.style.cssText = "position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#111a30;color:#eaf1ff;border:1px solid #1e2a44;padding:10px 16px;border-radius:12px;font-size:14px;z-index:9999;opacity:0;transition:opacity .2s;box-shadow:0 12px 34px -12px rgba(0,0,0,.6)"; document.body.appendChild(t); }
+    t.textContent = msg; t.style.opacity = "1"; clearTimeout(t._h); t._h = setTimeout(function () { t.style.opacity = "0"; }, 1800);
+  }
+  function insertShareButton() {
+    var host = document.querySelector(".header-right");
+    if (!host || document.getElementById("siteShareBtn")) return;
+    var ar = (document.documentElement.getAttribute("lang") || "").indexOf("ar") === 0;
+    var btn = document.createElement("button");
+    btn.id = "siteShareBtn";
+    btn.type = "button";
+    btn.className = "icon-btn site-share-btn";
+    btn.setAttribute("aria-label", ar ? "مشاركة" : "Share");
+    btn.title = ar ? "مشاركة الصفحة" : "Share this page";
+    btn.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>';
+    btn.addEventListener("click", function () {
+      var canon = document.querySelector('link[rel="canonical"]');
+      var url = (canon && canon.href) || location.href;
+      var title = (document.title || "CityTimeHub").replace(/\s*[|—-]\s*CityTimeHub.*$/i, "").trim() || "CityTimeHub";
+      if (navigator.share) {
+        navigator.share({ title: title, text: title, url: url }).catch(function () {});
+      } else if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function () { siteShareToast(ar ? "تم نسخ الرابط ✓" : "Link copied ✓"); }, function () { siteShareCopy(url); siteShareToast(ar ? "تم نسخ الرابط ✓" : "Link copied ✓"); });
+      } else { siteShareCopy(url); siteShareToast(ar ? "تم نسخ الرابط ✓" : "Link copied ✓"); }
+    });
+    var theme = host.querySelector("#themeToggle");
+    if (theme) host.insertBefore(btn, theme); else host.appendChild(btn);
+  }
+  if (document.readyState !== "loading") insertShareButton();
+  else document.addEventListener("DOMContentLoaded", insertShareButton);
+
   document.dispatchEvent(new CustomEvent("cth-pwa-ready"));
 })();
