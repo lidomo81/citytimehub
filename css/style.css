@@ -226,6 +226,7 @@ html.app-mode .hero,
 html.app-mode #tools,
 html.app-mode #myCities,
 html.app-mode #citiesCta,
+html.app-mode #reflections,
 html.app-mode #reference { display: none !important; }
 .app-bar--home .app-bar-title { flex: 1; text-align: center; }
 /* quick tools bar — visible only inside the installed app */
