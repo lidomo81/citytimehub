@@ -257,7 +257,7 @@ html.app-mode #cityPanel { padding-top: 8px; padding-bottom: 8px; width: 100%; }
 
 .cp-grid { display: grid; grid-template-columns: minmax(270px, .95fr) 1.3fr; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; box-shadow: 0 24px 60px -40px rgba(0,0,0,.7); }
 .cp-clock { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 14px; padding: 30px 26px; background: radial-gradient(120% 120% at 50% 0%, rgba(37,99,235,.10), transparent 62%); }
-.cp-clock .lt-analog { width: 182px; height: 182px; flex: none; }
+.cp-clock .lt-analog { width: 208px; height: 208px; flex: none; }
 .lt-num { font-family: var(--font, system-ui, -apple-system, "Segoe UI", sans-serif); font-size: 20px; font-weight: 600; fill: var(--text); }
 .lt-svg .lt-nums text { font-variant-numeric: tabular-nums; }
 .cp-clock-info { min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 2px; }
@@ -720,8 +720,8 @@ html[dir="rtl"] .hu-time, html[dir="rtl"] [dir="ltr"] { direction: ltr; unicode-
 }
 .lt-time {
   font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1;
-  font-size: clamp(2.1rem, 7vw, 3.4rem); font-weight: 800; line-height: 1;
-  letter-spacing: .01em; color: var(--text);
+  font-size: clamp(2.7rem, 9vw, 4.6rem); font-weight: 900; line-height: 1;
+  letter-spacing: .005em; color: var(--text);
   background: linear-gradient(92deg, var(--brand), var(--accent));
   -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
 }
