@@ -188,7 +188,6 @@ svg { display: block; }
 html.app-mode .breadcrumb,
 html.app-mode .tool-install,
 html.app-mode .explainer-section,
-html.app-mode [aria-labelledby="dir-h"],
 html.app-mode .hero .eyebrow { display: none !important; }
 
 html.app-mode .app-bar {
