@@ -1,0 +1,8 @@
+# IDE / editor project files (local, not part of the site)
+.idea/
+*.iml
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
