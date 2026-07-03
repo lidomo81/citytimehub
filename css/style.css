@@ -231,11 +231,13 @@ html.app-mode #reference { display: none !important; }
 .app-bar--home .app-bar-title { flex: 1; text-align: center; }
 /* quick tools bar — visible only inside the installed app */
 .app-tools { display: none; }
+html.app-mode .nav-burger, html.app-mode .main-nav { display: none !important; }
 html.app-mode .app-tools { display: block; width: min(960px, 92%); margin: 14px auto 22px; }
 .app-tools-label { display: block; font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 4px 9px; }
-.app-tools-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(68px, 1fr)); gap: 7px; padding: 6px 2px 8px; justify-content: center; }
-.app-tool { min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 10px 6px; border-radius: 13px; background: var(--surface); border: 1px solid var(--border); color: var(--text-2); text-decoration: none; font-size: .72rem; font-weight: 600; text-align: center; transition: border-color .2s, color .2s, background .2s, box-shadow .2s; }
-.app-tool svg { color: var(--brand); }
+.app-tools-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); gap: 10px; padding: 6px 2px 8px; justify-content: center; }
+.app-tool { min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 9px; padding: 14px 8px; border-radius: 16px; background: var(--surface); border: 1px solid var(--border); color: var(--text); text-decoration: none; font-size: .74rem; font-weight: 600; text-align: center; transition: transform .15s ease, border-color .2s, background .2s, box-shadow .2s; }
+.app-tool:hover, .app-tool:active { border-color: color-mix(in srgb, var(--brand) 55%, var(--border)); transform: translateY(-1px); box-shadow: 0 12px 26px -16px rgba(37,99,235,.55); }
+.app-tool svg { color: var(--brand); width: 22px; height: 22px; padding: 9px; box-sizing: content-box; border-radius: 13px; background: color-mix(in srgb, var(--brand) 14%, transparent); }
 .app-tool:hover, .app-tool:active, .app-tool:focus-visible { border-color: var(--brand); color: var(--text); background: var(--surface-2); box-shadow: 0 6px 18px -8px var(--brand); outline: none; }
 .app-tool--site svg { color: var(--accent); }
 @media (max-width: 720px) {
@@ -1068,6 +1070,6 @@ html.app-mode .app-tools { margin-bottom: calc(96px + env(safe-area-inset-bottom
 
 /* Larger, comfier touch targets in the in-app quick tools on phones */
 @media (max-width: 520px) {
-  html.app-mode .app-tool { min-block-size: 64px; padding: 10px 12px; }
+  html.app-mode .app-tool { min-block-size: 74px; padding: 14px 10px; }
   .prayer-azkar { inset-block-start: 7px; inset-inline-end: 7px; }
 }
