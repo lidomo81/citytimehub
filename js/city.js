@@ -161,6 +161,8 @@
           <div class="prayer-time">${clean(t[p])}</div>
           <span class="prayer-tag">${p === next ? T.next : ""}</span>
         </article>`).join("");
+      // Keep the Sunrise/Sunset section consistent with the prayer times (same AlAdhan source)
+      if (t.Sunrise && t.Sunset) fillSun(clean(t.Sunrise), clean(t.Sunset));
     } catch {
       grid.innerHTML = `<p class="no-results" style="grid-column:1/-1">${T.prayerErr}</p>`;
     }
@@ -174,23 +176,21 @@
     return "Fajr";
   }
 
-  /* ---------- sunrise / sunset ---------- */
-  async function loadSun() {
-    const rise = $("#sunriseVal"); if (!rise) return;
-    try {
-      const res = await fetch(`https://api.sunrise-sunset.org/json?lat=${CITY.lat}&lng=${CITY.lng}&formatted=0`);
-      if (!res.ok) throw new Error("sun " + res.status);
-      const { results, status } = await res.json();
-      if (status !== "OK") throw new Error(status);
-      const tf = new Intl.DateTimeFormat("en-GB", { timeZone: CITY.tz, hour: "2-digit", minute: "2-digit", hour12: false });
-      $("#sunriseVal").textContent = tf.format(new Date(results.sunrise));
-      $("#sunsetVal").textContent  = tf.format(new Date(results.sunset));
-      const s = results.day_length, hh = Math.floor(s/3600), mm = Math.floor((s%3600)/60);
-      $("#dayLength").textContent = T.dayLen(hh, String(mm).padStart(2,"0"));
-    } catch {
-      $("#sunriseVal").textContent = "—"; $("#sunsetVal").textContent = "—"; $("#dayLength").textContent = T.na;
+  /* ---------- sunrise / sunset ----------
+     Filled from the same AlAdhan timings as the prayer times (fillSun) so the two
+     sections always agree to the minute. */
+  function fillSun(sunrise, sunset) {
+    const sv = $("#sunriseVal"), tv = $("#sunsetVal"), dv = $("#dayLength");
+    if (sv) sv.textContent = sunrise;
+    if (tv) tv.textContent = sunset;
+    if (dv) {
+      const toMin = s => { const a = (s || "").split(":"); return (+a[0]) * 60 + (+a[1]); };
+      let diff = toMin(sunset) - toMin(sunrise);
+      if (diff < 0) diff += 1440;
+      dv.textContent = T.dayLen(Math.floor(diff / 60), String(diff % 60).padStart(2, "0"));
     }
   }
+  async function loadSun() { /* sun values now come from loadPrayer (AlAdhan) */ }
 
   /* ---------- related cities ---------- */
   function renderRelated() {

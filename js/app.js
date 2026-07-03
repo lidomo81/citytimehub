@@ -2,7 +2,7 @@
    CityTimeHub — app.js  (Globe edition)
    Live clocks via Intl.DateTimeFormat (no clock API), the live day/night
    globe in the hero, city grid + search, reference clocks,
-   prayer times + Hijri date (AlAdhan), sunrise/sunset (sunrise-sunset.org).
+   prayer times, Hijri date and sunrise/sunset (AlAdhan).
    ===================================================================== */
 (() => {
   "use strict";
@@ -497,6 +497,8 @@
           <span class="prayer-tag">${p === next ? T.next : ""}</span>
         </article>`).join("");
       updateNextLine();
+      // Keep the Sunrise/Sunset section consistent with the prayer times (same AlAdhan source)
+      if (t.Sunrise && t.Sunset) fillSun(clean(t.Sunrise), clean(t.Sunset));
     };
     try {
       const res = await fetch(url);
@@ -542,31 +544,24 @@
     return "Fajr";
   }
 
-  /* ---------- Sunrise / sunset ---------- */
+  /* ---------- Sunrise / sunset ----------
+     Values come from the same AlAdhan data as the prayer times (see fillSun,
+     called from loadPrayer) so the two sections always agree to the minute. */
+  function fillSun(sunrise, sunset) {
+    const sv = $("#sunriseVal"), tv = $("#sunsetVal"), dv = $("#dayLength");
+    if (sv) sv.textContent = sunrise;
+    if (tv) tv.textContent = sunset;
+    if (dv) {
+      const toMin = s => { const a = (s || "").split(":"); return (+a[0]) * 60 + (+a[1]); };
+      let diff = toMin(sunset) - toMin(sunrise);
+      if (diff < 0) diff += 1440;
+      dv.textContent = T.dayLen(Math.floor(diff / 60), String(diff % 60).padStart(2, "0"));
+    }
+  }
   async function loadSun(city) {
     if (!city) return;
     $("#sunCityName").textContent = `${cName(city)}, ${cCountry(city)}`;
-    const SKEY = "cth-sun:" + city.slug;
-    const render = (results) => {
-      const tf = new Intl.DateTimeFormat("en-GB", { timeZone: city.tz, hour: "2-digit", minute: "2-digit", hour12: false });
-      $("#sunriseVal").textContent = tf.format(new Date(results.sunrise));
-      $("#sunsetVal").textContent  = tf.format(new Date(results.sunset));
-      const s = results.day_length, hh = Math.floor(s/3600), mm = Math.floor((s%3600)/60);
-      $("#dayLength").textContent = T.dayLen(hh, String(mm).padStart(2,"0"));
-    };
-    try {
-      const res = await fetch(`https://api.sunrise-sunset.org/json?lat=${city.lat}&lng=${city.lng}&formatted=0`);
-      if (!res.ok) throw new Error("sun " + res.status);
-      const { results, status } = await res.json();
-      if (status !== "OK") throw new Error(status);
-      render(results);
-      try { localStorage.setItem(SKEY, JSON.stringify(results)); } catch (e) {}
-    } catch {
-      let cached = null;
-      try { cached = JSON.parse(localStorage.getItem(SKEY) || "null"); } catch (e) {}
-      if (cached) { render(cached); }
-      else { $("#sunriseVal").textContent = "—"; $("#sunsetVal").textContent = "—"; $("#dayLength").textContent = T.na; }
-    }
+    // Sunrise / sunset / day-length are filled from the prayer data in loadPrayer.
   }
 
   /* ---------- Boot ---------- */
