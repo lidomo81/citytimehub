@@ -467,6 +467,16 @@ html.app-mode #cityPanel { padding-top: 8px; padding-bottom: 8px; width: 100%; }
   .nav-toggle:checked ~ .main-nav { display: flex; }
 }
 
+/* Tighten the header on small phones so every control (incl. the theme toggle) fits */
+@media (max-width: 480px) {
+  .header-inner { gap: 8px; }
+  .brand-text { font-size: 1rem; }
+  .header-right { gap: 8px; }
+  .icon-btn { width: 36px; height: 36px; }
+  .nav-burger { width: 36px; height: 36px; }
+  .lang-switch { padding: 6px 11px; font-size: .82rem; }
+}
+
 /* ===================== Directory search (section landing pages) ===================== */
 .dir-search { position: relative; max-width: 520px; margin: 0 0 14px; }
 .dir-search-ico { position: absolute; inset-inline-start: 15px; top: 50%; transform: translateY(-50%); color: var(--text-2); pointer-events: none; }
