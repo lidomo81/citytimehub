@@ -168,7 +168,7 @@
       const dot = `<span class="pl-dot pl-${work}" title="${work === "ok" ? T.work : work === "warn" ? T.early : T.night}"></span>`;
       return `<tr${idx === 0 ? ' class="pl-home"' : ""}>
         <td class="pl-c">${dot}${esc(cN(c))}<span class="pl-cc">${esc(cC(c))}</span></td>
-        <td class="pl-t">${esc(when)} ${badge}${idx === 0 ? '<span class="pl-base">${T.base}</span>' : ""}</td></tr>`;
+        <td class="pl-t">${esc(when)} ${badge}${idx === 0 ? `<span class="pl-base">${T.base}</span>` : ""}</td></tr>`;
     }).join("");
 
     if (result) {
