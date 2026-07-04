@@ -212,5 +212,87 @@
   if (document.readyState !== "loading") insertShareButton();
   else document.addEventListener("DOMContentLoaded", insertShareButton);
 
+  /* ----- Prayer-city picker: a worldwide, site-styled city search opened by
+     the Android app via window.cthPrayerPicker(). The chosen city is handed
+     back through the AndroidApp.onCityPicked bridge. Data: OpenStreetMap
+     (Nominatim) so every city on earth is searchable, in Arabic or English. ----- */
+  var CTH_METHOD = { eg: 5, sa: 4, ae: 8, kw: 9, qa: 10, bh: 4, om: 8, jo: 3, ly: 5, sd: 5, pk: 1, in: 1, bd: 1, us: 2, ca: 2, tr: 13, id: 20, my: 3, sg: 3, gb: 3, fr: 12 };
+  function cthEsc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function cthPickCity(x) {
+    var a = x.address || {};
+    var name = a.city || a.town || a.village || a.municipality || a.suburb || a.county || a.state || String(x.display_name || "").split(",")[0].trim();
+    var country = [a.state, a.country].filter(Boolean).join("، ".length ? ", " : ", ");
+    if (!country) country = String(x.display_name || "").split(",").slice(-1)[0].trim();
+    var cc = String(a.country_code || "").toLowerCase();
+    return { name: name, country: country, lat: parseFloat(x.lat), lng: parseFloat(x.lon), method: CTH_METHOD[cc] || 3 };
+  }
+  function openPrayerPicker() {
+    if (document.getElementById("cthPick")) return;
+    var ar = (document.documentElement.getAttribute("lang") || "en").slice(0, 2) === "ar";
+    var wrap = document.createElement("div");
+    wrap.id = "cthPick";
+    wrap.className = "help-overlay";
+    wrap.setAttribute("dir", ar ? "rtl" : "ltr");
+    wrap.innerHTML =
+      '<div class="help-backdrop"></div>' +
+      '<div class="help-sheet" style="max-width:min(460px,100%)">' +
+        '<button type="button" class="help-x" aria-label="' + (ar ? "إغلاق" : "Close") + '">&times;</button>' +
+        '<h3 class="help-title">' + (ar ? "اختر مدينتك" : "Choose your city") + "</h3>" +
+        '<p class="help-sub">' + (ar ? "للتذكير بمواقيت الصلاة" : "For prayer-time reminders") + "</p>" +
+        '<input id="cthPickInput" class="ac-input" type="text" autocomplete="off" placeholder="' + (ar ? "ابحث باسم المدينة" : "Search by city name") + '" style="width:100%">' +
+        '<ul class="search-suggest" id="cthPickList" style="position:static;margin-top:10px;max-height:44vh;overflow:auto;box-shadow:none"></ul>' +
+        '<p style="margin:10px 2px 0;font-size:.72rem;opacity:.55">' + (ar ? "نتائج البحث من OpenStreetMap" : "Search by OpenStreetMap") + "</p>" +
+      "</div>";
+    document.body.appendChild(wrap);
+    try { if (window.AndroidApp && AndroidApp.setPullToRefresh) AndroidApp.setPullToRefresh(false); } catch (e) {}
+    var input = wrap.querySelector("#cthPickInput");
+    var list = wrap.querySelector("#cthPickList");
+    function close() { try { if (window.AndroidApp && AndroidApp.setPullToRefresh) AndroidApp.setPullToRefresh(true); } catch (e) {} wrap.remove(); }
+    wrap.querySelector(".help-x").addEventListener("click", close);
+    wrap.querySelector(".help-backdrop").addEventListener("click", close);
+    var timer = null, seq = 0;
+    function render(items) {
+      if (!items.length) { list.innerHTML = '<li class="suggest-item" style="cursor:default;opacity:.6">' + (ar ? "لا نتائج" : "No results") + "</li>"; list._items = []; return; }
+      list.innerHTML = items.map(function (c, i) {
+        return '<li class="suggest-item" data-i="' + i + '"><span class="suggest-name">' + cthEsc(c.name) + '</span><span class="suggest-meta"><span class="suggest-country">' + cthEsc(c.country) + "</span></span></li>";
+      }).join("");
+      list._items = items;
+    }
+    function doSearch(q) {
+      var my = ++seq;
+      var lang = ar ? "ar" : "en";
+      fetch("https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=8&accept-language=" + lang + "&q=" + encodeURIComponent(q))
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          if (my !== seq) return;
+          var seen = {}, items = [];
+          (d || []).forEach(function (x) {
+            var c = cthPickCity(x);
+            if (!c.name || isNaN(c.lat)) return;
+            var k = c.name + "|" + c.country;
+            if (seen[k]) return; seen[k] = 1; items.push(c);
+          });
+          render(items);
+        })
+        .catch(function () {});
+    }
+    input.addEventListener("input", function () {
+      var q = input.value.trim();
+      clearTimeout(timer);
+      if (q.length < 3) { list.innerHTML = ""; return; }
+      timer = setTimeout(function () { doSearch(q); }, 450);
+    });
+    list.addEventListener("click", function (e) {
+      var li = e.target.closest(".suggest-item");
+      if (!li || li.dataset.i == null) return;
+      var c = (list._items || [])[+li.dataset.i];
+      if (!c) return;
+      try { if (window.AndroidApp && AndroidApp.onCityPicked) AndroidApp.onCityPicked(JSON.stringify(c)); } catch (e) {}
+      close();
+    });
+    setTimeout(function () { try { input.focus(); } catch (e) {} }, 60);
+  }
+  window.cthPrayerPicker = openPrayerPicker;
+
   document.dispatchEvent(new CustomEvent("cth-pwa-ready"));
 })();
