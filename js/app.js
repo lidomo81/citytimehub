@@ -382,7 +382,7 @@
       listEl.innerHTML = items.map((c, i) => `<li class="ac-item${i === active ? " is-active" : ""}" role="option" data-i="${i}"><span>${cName(c)}</span><span class="ac-country">${cCountry(c)}</span></li>`).join("");
       listEl.hidden = false; input.setAttribute("aria-expanded", "true");
     }
-    function pick(i) { const c = items[i]; if (!c) return; onChoose(c); close(); }
+    function pick(i) { const c = items[i]; if (!c) return; input.blur(); onChoose(c); close(); }
     input.addEventListener("input", render);
     input.addEventListener("focus", () => { if (input.value) render(); });
     input.addEventListener("keydown", e => {
