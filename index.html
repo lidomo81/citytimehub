@@ -213,11 +213,19 @@
               <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
               <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
             </div>
-            <div class="cp-sun">
-              <span class="sr-only" id="sunCityName">—</span>
-              <article class="sun-card sun-rise"><span class="sun-ico" aria-hidden="true">☀</span><span class="ref-label">Sunrise</span><strong id="sunriseVal" class="ref-time" dir="ltr">—</strong></article>
-              <article class="sun-card sun-set"><span class="sun-ico" aria-hidden="true">☾</span><span class="ref-label">Sunset</span><strong id="sunsetVal" class="ref-time" dir="ltr">—</strong></article>
-              <article class="sun-card"><span class="sun-ico" aria-hidden="true">⌛</span><span class="ref-label">Day length</span><strong id="dayLength" class="ref-time" dir="ltr">—</strong></article>
+            <div id="cityPulse" class="city-pulse" hidden aria-live="polite">
+              <div class="city-pulse-head">
+                <span class="city-pulse-wx" id="cityPulseWx" aria-hidden="true">🌤️</span>
+                <div class="city-pulse-body">
+                  <span class="city-pulse-kicker" id="cityPulseKicker">City pulse</span>
+                  <p class="city-pulse-title" id="cityPulseTitle"></p>
+                  <p class="city-pulse-line" id="cityPulseLine">Reading the sky…</p>
+                </div>
+              </div>
+              <div class="city-pulse-chips">
+                <span class="city-pulse-chip" id="cityPulseTemp" hidden></span>
+                <span class="city-pulse-chip" id="cityPulseDayLen" hidden></span>
+              </div>
             </div>
           </div>
         </div>
@@ -504,6 +512,7 @@
     </div>
   </div>
 
+  <script src="js/city-pulse.js" defer></script>
   <script src="js/app.js" defer></script>
   <script src="/js/hero-globe.js" defer></script>
   <script src="/js/pwa.js" defer></script>

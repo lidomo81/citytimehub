@@ -155,14 +155,16 @@
       const hd = $("#hijriDate"); if (hd) hd.textContent = `${h.day} ${LANG === "ar" ? h.month.ar : h.month.en} ${h.year} ${T.ah}`;
       const clean = s => (s || "").split(" ")[0];
       const next = nextPrayer(t);
+      const timings = {};
+      PRAYERS.forEach(p => { timings[p] = clean(t[p]); });
       grid.innerHTML = PRAYERS.map((p, i) => `
         <article class="prayer-card${p === next ? " is-next" : ""}">
           <div class="prayer-name">${T.prayers[i]}</div>
           <div class="prayer-time">${clean(t[p])}</div>
           <span class="prayer-tag">${p === next ? T.next : ""}</span>
         </article>`).join("");
-      // Keep the Sunrise/Sunset section consistent with the prayer times (same AlAdhan source)
       if (t.Sunrise && t.Sunset) fillSun(clean(t.Sunrise), clean(t.Sunset));
+      refreshCityPulse(timings);
     } catch {
       grid.innerHTML = `<p class="no-results" style="grid-column:1/-1">${T.prayerErr}</p>`;
     }
@@ -176,21 +178,40 @@
     return "Fajr";
   }
 
-  /* ---------- sunrise / sunset ----------
-     Filled from the same AlAdhan timings as the prayer times (fillSun) so the two
-     sections always agree to the minute. */
+  /* ---------- day length + city pulse ---------- */
+  function dayLengthFromSun(sunrise, sunset) {
+    const toMin = s => { const a = (s || "").split(":"); return (+a[0]) * 60 + (+a[1]); };
+    let diff = toMin(sunset) - toMin(sunrise);
+    if (diff < 0) diff += 1440;
+    return T.dayLen(Math.floor(diff / 60), String(diff % 60).padStart(2, "0"));
+  }
   function fillSun(sunrise, sunset) {
-    const sv = $("#sunriseVal"), tv = $("#sunsetVal"), dv = $("#dayLength");
-    if (sv) sv.textContent = sunrise;
-    if (tv) tv.textContent = sunset;
-    if (dv) {
-      const toMin = s => { const a = (s || "").split(":"); return (+a[0]) * 60 + (+a[1]); };
-      let diff = toMin(sunset) - toMin(sunrise);
-      if (diff < 0) diff += 1440;
-      dv.textContent = T.dayLen(Math.floor(diff / 60), String(diff % 60).padStart(2, "0"));
+    return dayLengthFromSun(sunrise, sunset);
+  }
+  function refreshCityPulse(timings) {
+    if (!CITY) return;
+    const boot = () => {
+      if (!window.CthCityPulse) return;
+      const sunrise = timings.Sunrise;
+      const sunset = timings.Sunset || timings.Maghrib;
+      window.CthCityPulse.refresh(CITY, {
+        mode: "city",
+        timings,
+        sunrise,
+        sunset,
+        dayLen: sunrise && sunset ? dayLengthFromSun(sunrise, sunset) : null,
+      });
+    };
+    if (window.CthCityPulse) boot();
+    else {
+      const s = document.createElement("script");
+      s.src = "/js/city-pulse.js";
+      s.defer = true;
+      s.onload = boot;
+      document.head.appendChild(s);
     }
   }
-  async function loadSun() { /* sun values now come from loadPrayer (AlAdhan) */ }
+  async function loadSun() { /* filled from loadPrayer */ }
 
   /* ---------- related cities ---------- */
   function renderRelated() {

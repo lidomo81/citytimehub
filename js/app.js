@@ -497,8 +497,8 @@
           <span class="prayer-tag">${p === next ? T.next : ""}</span>
         </article>`).join("");
       updateNextLine();
-      // Keep the Sunrise/Sunset section consistent with the prayer times (same AlAdhan source)
       if (t.Sunrise && t.Sunset) fillSun(clean(t.Sunrise), clean(t.Sunset));
+      refreshCityPulse(city, prayerState.timings);
     };
     try {
       const res = await fetch(url);
@@ -544,24 +544,31 @@
     return "Fajr";
   }
 
-  /* ---------- Sunrise / sunset ----------
-     Values come from the same AlAdhan data as the prayer times (see fillSun,
-     called from loadPrayer) so the two sections always agree to the minute. */
+  /* ---------- Day length + city pulse (sunrise/sunset live in prayer grid) ---------- */
+  function dayLengthFromSun(sunrise, sunset) {
+    const toMin = s => { const a = (s || "").split(":"); return (+a[0]) * 60 + (+a[1]); };
+    let diff = toMin(sunset) - toMin(sunrise);
+    if (diff < 0) diff += 1440;
+    return T.dayLen(Math.floor(diff / 60), String(diff % 60).padStart(2, "0"));
+  }
   function fillSun(sunrise, sunset) {
-    const sv = $("#sunriseVal"), tv = $("#sunsetVal"), dv = $("#dayLength");
-    if (sv) sv.textContent = sunrise;
-    if (tv) tv.textContent = sunset;
-    if (dv) {
-      const toMin = s => { const a = (s || "").split(":"); return (+a[0]) * 60 + (+a[1]); };
-      let diff = toMin(sunset) - toMin(sunrise);
-      if (diff < 0) diff += 1440;
-      dv.textContent = T.dayLen(Math.floor(diff / 60), String(diff % 60).padStart(2, "0"));
-    }
+    return dayLengthFromSun(sunrise, sunset);
+  }
+  function refreshCityPulse(city, timings) {
+    if (!city || !window.CthCityPulse) return;
+    const sunrise = timings && timings.Sunrise;
+    const sunset = timings && (timings.Sunset || timings.Maghrib);
+    window.CthCityPulse.refresh(city, {
+      mode: "home",
+      timings: timings || {},
+      sunrise,
+      sunset,
+      dayLen: sunrise && sunset ? dayLengthFromSun(sunrise, sunset) : null,
+    });
   }
   async function loadSun(city) {
     if (!city) return;
-    $("#sunCityName").textContent = `${cName(city)}, ${cCountry(city)}`;
-    // Sunrise / sunset / day-length are filled from the prayer data in loadPrayer.
+    /* day length + pulse are filled from prayer data in loadPrayer */
   }
 
   /* ---------- Boot ---------- */

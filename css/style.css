@@ -283,6 +283,32 @@ html.app-mode #cityPanel { padding-top: 8px; padding-bottom: 8px; width: 100%; }
 .cp-sun .ref-time { font-size: 1.35rem; margin: 5px 0 0; white-space: nowrap; }
 .cp-sun .ref-label { font-size: .6rem; letter-spacing: .1em; }
 .cp-sun .sun-ico { font-size: 1.15rem; }
+
+/* ===== City pulse (weather + atmosphere line) ===== */
+.city-pulse {
+  margin-top: 14px; padding: 14px 14px 12px; border-radius: 16px;
+  border: 1px solid color-mix(in srgb, var(--brand) 32%, var(--border));
+  background: linear-gradient(135deg, color-mix(in srgb, var(--brand) 9%, var(--surface)), var(--surface));
+  box-shadow: 0 14px 34px -22px color-mix(in srgb, var(--brand) 45%, transparent);
+}
+.city-pulse-head { display: flex; align-items: flex-start; gap: 12px; }
+.city-pulse-wx { font-size: 1.55rem; line-height: 1; flex: none; margin-top: 2px; }
+.city-pulse-body { min-width: 0; flex: 1; }
+.city-pulse-kicker {
+  display: block; font-size: .64rem; font-weight: 800; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--brand); margin-bottom: 2px;
+}
+.city-pulse-title { margin: 0 0 4px; font-size: .82rem; font-weight: 700; color: var(--text-2); }
+.city-pulse-line { margin: 0; font-size: .96rem; font-weight: 600; line-height: 1.55; color: var(--text); }
+.city-pulse-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+.city-pulse-chip {
+  display: inline-flex; align-items: center; gap: 5px; padding: 5px 11px; border-radius: 999px;
+  background: var(--surface-2); border: 1px solid var(--border);
+  font-size: .78rem; font-weight: 700; font-variant-numeric: tabular-nums; direction: ltr;
+}
+#cityPulseSection .city-pulse { margin-top: 0; }
+html.app-mode .city-pulse { margin-top: 10px; }
+
 @media (max-width: 860px) {
   .cp-grid { grid-template-columns: 1fr; }
   .cp-devotion { border-inline-start: none; border-top: 1px solid var(--border); }
