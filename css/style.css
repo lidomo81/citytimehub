@@ -309,6 +309,29 @@ html.app-mode #cityPanel { padding-top: 8px; padding-bottom: 8px; width: 100%; }
 #cityPulseSection .city-pulse { margin-top: 0; }
 html.app-mode .city-pulse { margin-top: 10px; }
 
+/* ===== Upcoming Islamic occasions (matches the city-pulse card) ===== */
+.occasions {
+  margin-top: 12px; padding: 14px 14px 12px; border-radius: 16px;
+  border: 1px solid color-mix(in srgb, var(--brand) 32%, var(--border));
+  background: linear-gradient(135deg, color-mix(in srgb, var(--brand) 9%, var(--surface)), var(--surface));
+  box-shadow: 0 14px 34px -22px color-mix(in srgb, var(--brand) 45%, transparent);
+}
+.occasions-kicker {
+  display: block; font-size: .64rem; font-weight: 800; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--brand); margin-bottom: 9px;
+}
+.occasions-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.occ-item { display: flex; align-items: flex-start; gap: 10px; }
+.occ-em { font-size: 1.2rem; line-height: 1.2; flex: none; }
+.occ-main { min-width: 0; display: flex; flex-direction: column; }
+.occ-name { font-size: .95rem; font-weight: 800; color: var(--text); }
+.occ-when { font-size: .8rem; font-weight: 600; color: var(--text-2); line-height: 1.5; }
+.occasions-note {
+  margin: 11px 0 0; padding-top: 9px; border-top: 1px solid var(--border);
+  font-size: .72rem; font-weight: 500; color: var(--text-2); opacity: .85;
+}
+html.app-mode .occasions { margin-top: 10px; }
+
 @media (max-width: 860px) {
   .cp-grid { grid-template-columns: 1fr; }
   .cp-devotion { border-inline-start: none; border-top: 1px solid var(--border); }
