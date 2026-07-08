@@ -7,6 +7,7 @@
   "use strict";
 
   const CACHE_MS = 15 * 60 * 1000;
+  let countdownTimer = null;
   const PRAYER_ORDER = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
   const PRAYER_LABEL = {
     en: { Fajr: "Fajr", Dhuhr: "Dhuhr", Asr: "Asr", Maghrib: "Maghrib", Isha: "Isha" },
@@ -18,6 +19,9 @@
       kicker: "City pulse",
       title: n => `${n} now`,
       dayLen: "Day length",
+      tempLabel: "Temperature",
+      nextPrayer: "Next prayer",
+      inLabel: "in",
       temp: t => `${Math.round(t)}°C`,
       loading: "Reading the sky…",
       err: "Weather unavailable right now.",
@@ -33,6 +37,9 @@
       kicker: "نبض المدينة",
       title: n => `${n} الآن`,
       dayLen: "طول النهار",
+      tempLabel: "درجة الحرارة",
+      nextPrayer: "الصلاة القادمة",
+      inLabel: "بعد",
       temp: t => `${Math.round(t)}°م`,
       loading: "نجهّز نبض المدينة…",
       err: "تعذّر قراءة الطقس الآن.",
@@ -110,6 +117,36 @@
     return { prayer: "Fajr", minutes: (+hh) * 60 + (+mm) + 1440 - nowMin };
   }
 
+  function nextPrayerCountdown(timings, tz) {
+    if (!timings || !tz) return null;
+    const off = offsetHours(tz) * 3600000;
+    const d = new Date(Date.now() + off);
+    const nowSec = d.getUTCHours() * 3600 + d.getUTCMinutes() * 60 + d.getUTCSeconds();
+    for (const p of PRAYER_ORDER) {
+      const raw = (timings[p] || "").split(" ")[0];
+      if (!raw) continue;
+      const [hh, mm] = raw.split(":");
+      if (hh == null || mm == null) continue;
+      const ps = (+hh) * 3600 + (+mm) * 60;
+      if (ps > nowSec) return { prayer: p, seconds: ps - nowSec };
+    }
+    const raw = (timings.Fajr || "").split(" ")[0];
+    if (!raw) return null;
+    const [hh, mm] = raw.split(":");
+    if (hh == null || mm == null) return null;
+    const ps = (+hh) * 3600 + (+mm) * 60;
+    return { prayer: "Fajr", seconds: ps + 86400 - nowSec };
+  }
+
+  function fmtCountdown(sec) {
+    if (sec < 0) sec = 0;
+    const h = Math.floor(sec / 3600);
+    const m = Math.floor((sec % 3600) / 60);
+    const s = sec % 60;
+    const pad = n => String(n).padStart(2, "0");
+    return h > 0 ? `${h}:${pad(m)}:${pad(s)}` : `${m}:${pad(s)}`;
+  }
+
   function dayPartPhrase(localHour, L) {
     const t = I18N[L];
     if (localHour >= 5 && localHour < 11) return t.morning;
@@ -139,16 +176,6 @@
     return L === "ar"
       ? `${weatherPart}، ${prayerPart}`
       : `${weatherPart.charAt(0).toUpperCase() + weatherPart.slice(1)}, ${prayerPart}`;
-  }
-
-  function dayLengthText(sunrise, sunset, dayLenFn) {
-    if (dayLenFn) return dayLenFn;
-    if (!sunrise || !sunset) return "—";
-    const toMin = s => { const a = (s || "").split(":"); return (+a[0]) * 60 + (+a[1]); };
-    let diff = toMin(sunset) - toMin(sunrise);
-    if (diff < 0) diff += 1440;
-    const h = Math.floor(diff / 60), m = String(diff % 60).padStart(2, "0");
-    return lang() === "ar" ? `${h}h ${m}m` : `${h}h ${m}m`;
   }
 
   async function fetchWeather(city) {
@@ -186,7 +213,7 @@
         </div>
         <div class="city-pulse-chips">
           <span class="city-pulse-chip" id="cityPulseTemp" hidden></span>
-          <span class="city-pulse-chip" id="cityPulseDayLen" hidden></span>
+          <span class="city-pulse-chip" id="cityPulseNext" hidden></span>
         </div>
       </div>`;
   }
@@ -231,15 +258,16 @@
     return document.getElementById("cityPulse");
   }
 
-  function renderPulse(root, city, line, weather, dayLen) {
+  function renderPulse(root, city, line, weather, prayerCtx) {
     const L = lang();
     const t = I18N[L];
+    const labels = PRAYER_LABEL[L];
     root.hidden = false;
     const wx = document.getElementById("cityPulseWx");
     const title = document.getElementById("cityPulseTitle");
     const lineEl = document.getElementById("cityPulseLine");
     const tempChip = document.getElementById("cityPulseTemp");
-    const dayChip = document.getElementById("cityPulseDayLen");
+    const nextChip = document.getElementById("cityPulseNext");
     const kicker = document.getElementById("cityPulseKicker");
 
     if (kicker) kicker.textContent = t.kicker;
@@ -248,12 +276,26 @@
     if (lineEl) lineEl.textContent = line;
     if (tempChip && weather && weather.temp != null) {
       tempChip.hidden = false;
-      tempChip.textContent = t.temp(weather.temp);
+      tempChip.textContent = `🌡️ ${t.temp(weather.temp)}`;
+      tempChip.setAttribute("aria-label", `${t.tempLabel}: ${t.temp(weather.temp)}`);
     }
-    if (dayChip && dayLen && dayLen !== "—") {
-      dayChip.hidden = false;
-      dayChip.textContent = `⌛ ${dayLen}`;
-      dayChip.setAttribute("aria-label", `${t.dayLen}: ${dayLen}`);
+
+    if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
+    const timings = prayerCtx && prayerCtx.timings;
+    const tz = prayerCtx && prayerCtx.tz;
+    if (nextChip && timings && Object.keys(timings).length && tz) {
+      const tick = () => {
+        const info = nextPrayerCountdown(timings, tz);
+        if (!info) { nextChip.hidden = true; return; }
+        const name = labels[info.prayer] || info.prayer;
+        nextChip.hidden = false;
+        nextChip.textContent = `🕌 ${name} ${t.inLabel} ${fmtCountdown(info.seconds)}`;
+        nextChip.setAttribute("aria-label", `${t.nextPrayer}: ${name}`);
+      };
+      tick();
+      countdownTimer = setInterval(tick, 1000);
+    } else if (nextChip) {
+      nextChip.hidden = true;
     }
   }
 
@@ -270,22 +312,20 @@
     if (lineEl) lineEl.textContent = t.loading;
 
     const timings = opts.timings || {};
-    const sunrise = timings.Sunrise || opts.sunrise;
-    const sunset = timings.Sunset || timings.Maghrib || opts.sunset;
-    const dayLen = opts.dayLen || dayLengthText(sunrise, sunset);
     const prayerInfo = nextPrayerInfo(timings, city.tz);
+    const prayerCtx = { timings, tz: city.tz };
 
     try {
       const weather = await fetchWeather(city);
       const line = buildLine(weather, prayerInfo, city.tz, L);
-      renderPulse(root, city, line, weather, dayLen);
+      renderPulse(root, city, line, weather, prayerCtx);
     } catch (e) {
       const fallback = prayerInfo
         ? (L === "ar"
           ? `${dayPartPhrase(((new Date().getUTCHours() + offsetHours(city.tz)) % 24 + 24) % 24, L)}، ${I18N[L].soon(PRAYER_LABEL[L][prayerInfo.prayer])}`
           : `${dayPartPhrase(((new Date().getUTCHours() + offsetHours(city.tz)) % 24 + 24) % 24, L)}, ${I18N[L].soon(PRAYER_LABEL[L][prayerInfo.prayer])}`)
         : t.err;
-      renderPulse(root, city, fallback, { code: 0, isDay: true, temp: null }, dayLen);
+      renderPulse(root, city, fallback, { code: 0, isDay: true, temp: null }, prayerCtx);
     }
   }
 
