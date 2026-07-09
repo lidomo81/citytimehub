@@ -213,7 +213,6 @@
         </div>
         <div class="city-pulse-chips">
           <span class="city-pulse-chip" id="cityPulseTemp" hidden></span>
-          <span class="city-pulse-chip" id="cityPulseNext" hidden></span>
         </div>
       </div>`;
   }
@@ -267,7 +266,6 @@
     const title = document.getElementById("cityPulseTitle");
     const lineEl = document.getElementById("cityPulseLine");
     const tempChip = document.getElementById("cityPulseTemp");
-    const nextChip = document.getElementById("cityPulseNext");
     const kicker = document.getElementById("cityPulseKicker");
 
     if (kicker) kicker.textContent = t.kicker;
@@ -276,26 +274,8 @@
     if (lineEl) lineEl.textContent = line;
     if (tempChip && weather && weather.temp != null) {
       tempChip.hidden = false;
-      tempChip.textContent = `🌡️ ${t.temp(weather.temp)}`;
+      tempChip.textContent = `🌡️ ${t.tempLabel} ${t.temp(weather.temp)}`;
       tempChip.setAttribute("aria-label", `${t.tempLabel}: ${t.temp(weather.temp)}`);
-    }
-
-    if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
-    const timings = prayerCtx && prayerCtx.timings;
-    const tz = prayerCtx && prayerCtx.tz;
-    if (nextChip && timings && Object.keys(timings).length && tz) {
-      const tick = () => {
-        const info = nextPrayerCountdown(timings, tz);
-        if (!info) { nextChip.hidden = true; return; }
-        const name = labels[info.prayer] || info.prayer;
-        nextChip.hidden = false;
-        nextChip.textContent = `🕌 ${name} ${t.inLabel} ${fmtCountdown(info.seconds)}`;
-        nextChip.setAttribute("aria-label", `${t.nextPrayer}: ${name}`);
-      };
-      tick();
-      countdownTimer = setInterval(tick, 1000);
-    } else if (nextChip) {
-      nextChip.hidden = true;
     }
   }
 
