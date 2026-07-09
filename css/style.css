@@ -239,6 +239,24 @@ html.app-mode .app-tools { display: block; width: min(960px, 92%); margin: 14px 
 .app-tool svg { color: var(--brand); width: 22px; height: 22px; padding: 9px; box-sizing: content-box; border-radius: 13px; background: color-mix(in srgb, var(--brand) 14%, transparent); }
 .app-tool:hover, .app-tool:active, .app-tool:focus-visible { border-color: var(--brand); color: var(--text); background: var(--surface-2); box-shadow: 0 6px 18px -8px var(--brand); outline: none; }
 .app-tool--site svg { color: var(--accent); }
+/* Press feedback: gently shrink the card on tap for a tactile feel. */
+.app-tool:active { transform: scale(.95); transition: transform .1s ease; }
+
+/* ===== Reflection of the day (top of the app tools) ===== */
+.daily-reflection {
+  margin: 0 4px 16px; padding: 15px 16px 13px; border-radius: 16px;
+  border: 1px solid color-mix(in srgb, var(--brand) 32%, var(--border));
+  background: linear-gradient(135deg, color-mix(in srgb, var(--brand) 10%, var(--surface)), var(--surface));
+  box-shadow: 0 14px 34px -22px color-mix(in srgb, var(--brand) 45%, transparent);
+}
+.dr-kicker {
+  display: block; font-size: .64rem; font-weight: 800; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--brand); margin-bottom: 8px;
+}
+.dr-text { margin: 0; font-size: 1.02rem; font-weight: 700; line-height: 1.85; color: var(--text); }
+.dr-src { margin: 9px 0 0; padding-top: 8px; border-top: 1px solid var(--border);
+  font-size: .74rem; font-weight: 600; color: var(--text-2); }
+
 @media (max-width: 720px) {
   html.app-mode .app-tools { margin-top: 12px; }
   .app-tool { min-width: 80px; padding: 12px 10px; font-size: .75rem; }
