@@ -257,6 +257,14 @@ html.app-mode .app-tools { display: block; width: min(960px, 92%); margin: 14px 
 .dr-src { margin: 9px 0 0; padding-top: 8px; border-top: 1px solid var(--border);
   font-size: .74rem; font-weight: 600; color: var(--text-2); }
 
+/* ===== App tools — category groups ===== */
+.app-tools-group { margin-bottom: 4px; }
+.app-tools-cat {
+  display: block; font-size: .72rem; font-weight: 800; letter-spacing: .04em;
+  color: var(--text-2); margin: 16px 4px 9px;
+}
+.app-tools-group:first-of-type .app-tools-cat { margin-top: 2px; }
+
 @media (max-width: 720px) {
   html.app-mode .app-tools { margin-top: 12px; }
   .app-tool { min-width: 80px; padding: 12px 10px; font-size: .75rem; }
