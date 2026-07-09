@@ -565,6 +565,7 @@
       sunset,
       dayLen: sunrise && sunset ? dayLengthFromSun(sunrise, sunset) : null,
     });
+    if (window.CthPrayerInsights) window.CthPrayerInsights.refresh(city, timings || {});
   }
   async function loadSun(city) {
     if (!city) return;

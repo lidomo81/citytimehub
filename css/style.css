@@ -332,6 +332,38 @@ html.app-mode .city-pulse { margin-top: 10px; }
 }
 html.app-mode .occasions { margin-top: 10px; }
 
+/* ===== Prayer insights (matches the city-pulse card) ===== */
+.prayer-insights {
+  margin-top: 12px; padding: 14px 14px 12px; border-radius: 16px;
+  border: 1px solid color-mix(in srgb, var(--brand) 32%, var(--border));
+  background: linear-gradient(135deg, color-mix(in srgb, var(--brand) 9%, var(--surface)), var(--surface));
+  box-shadow: 0 14px 34px -22px color-mix(in srgb, var(--brand) 45%, transparent);
+}
+.pi-kicker {
+  display: block; font-size: .64rem; font-weight: 800; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--brand); margin-bottom: 6px;
+}
+.pi-headline {
+  margin: 0 0 10px; font-size: 1.06rem; font-weight: 800; color: var(--text);
+  font-variant-numeric: tabular-nums; direction: ltr; text-align: start;
+}
+.pi-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.pi-chip {
+  display: inline-flex; align-items: center; gap: 5px; padding: 5px 11px; border-radius: 999px;
+  background: var(--surface-2); border: 1px solid var(--border);
+  font-size: .78rem; font-weight: 700; font-variant-numeric: tabular-nums;
+}
+.pi-chip.is-warn {
+  background: color-mix(in srgb, #e0a53a 16%, var(--surface));
+  border-color: color-mix(in srgb, #e0a53a 45%, var(--border));
+  color: color-mix(in srgb, #a76b12 70%, var(--text));
+}
+.pi-note {
+  margin: 11px 0 0; padding-top: 9px; border-top: 1px solid var(--border);
+  font-size: .72rem; font-weight: 500; color: var(--text-2); opacity: .85;
+}
+html.app-mode .prayer-insights { margin-top: 10px; }
+
 @media (max-width: 860px) {
   .cp-grid { grid-template-columns: 1fr; }
   .cp-devotion { border-inline-start: none; border-top: 1px solid var(--border); }
