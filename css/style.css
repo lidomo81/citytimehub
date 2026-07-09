@@ -364,6 +364,16 @@ html.app-mode .occasions { margin-top: 10px; }
 }
 html.app-mode .prayer-insights { margin-top: 10px; }
 
+/* ===== In-article table of contents box ===== */
+.guide-toc {
+  margin: 0 0 26px; padding: 15px 18px; border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--brand) 26%, var(--border));
+  background: color-mix(in srgb, var(--brand) 6%, var(--surface));
+}
+.guide-toc-title { margin: 0 0 8px; font-size: .95rem; font-weight: 800; color: var(--text); }
+.guide-toc ul { margin: 0; padding-inline-start: 1.15em; }
+.guide-toc li { margin: 4px 0; font-weight: 600; color: var(--text-2); line-height: 1.6; }
+
 @media (max-width: 860px) {
   .cp-grid { grid-template-columns: 1fr; }
   .cp-devotion { border-inline-start: none; border-top: 1px solid var(--border); }
