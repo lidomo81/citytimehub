@@ -400,6 +400,14 @@ html.app-mode .prayer-insights { margin-top: 10px; }
 .guide-toc ul { margin: 0; padding-inline-start: 1.15em; }
 .guide-toc li { margin: 4px 0; font-weight: 600; color: var(--text-2); line-height: 1.6; }
 
+/* Highlighted literary line inside an article (pull quote). */
+.guide-body .pull-quote {
+  margin: 24px 0; padding: 4px 0 4px 18px;
+  border-inline-start: 3px solid var(--brand);
+  font-size: 1.24rem; font-weight: 800; line-height: 1.75;
+  color: color-mix(in srgb, var(--brand) 26%, var(--text));
+}
+
 @media (max-width: 860px) {
   .cp-grid { grid-template-columns: 1fr; }
   .cp-devotion { border-inline-start: none; border-top: 1px solid var(--border); }
