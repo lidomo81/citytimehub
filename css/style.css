@@ -286,7 +286,7 @@ html.app-mode #cityPanel { padding-top: 8px; padding-bottom: 8px; width: 100%; }
 .cp-clock { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 14px; padding: 30px 26px; background: radial-gradient(120% 120% at 50% 0%, rgba(37,99,235,.10), transparent 62%); }
 .cp-clock-mid { display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; min-width: 0; }
 .cp-clock .lt-analog { width: 208px; height: 208px; flex: none; }
-.lt-num { font-family: var(--font, system-ui, -apple-system, "Segoe UI", sans-serif); font-size: 20px; font-weight: 600; fill: var(--text); }
+.lt-num { font-family: var(--font, system-ui, -apple-system, "Segoe UI", sans-serif); font-size: 12.5px; font-weight: 600; fill: var(--text); opacity: .88; }
 .lt-svg .lt-nums text { font-variant-numeric: tabular-nums; }
 .cp-clock-info { min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 2px; }
 .cp-clock-info .lt-city { margin: 0; }
@@ -324,7 +324,7 @@ html.app-mode #cityPanel { padding-top: 8px; padding-bottom: 8px; width: 100%; }
     aspect-ratio: 1;
     flex: none;
   }
-  html:not(.app-mode) .cp-clock .lt-num { font-size: 28px; }
+  html:not(.app-mode) .cp-clock .lt-num { font-size: 15px; opacity: .9; }
   html:not(.app-mode) .cp-clock-info { gap: 4px; }
   html:not(.app-mode) .cp-clock .lt-city { font-size: clamp(1.65rem, 2.4vw, 2.15rem); }
   html:not(.app-mode) .cp-clock .lt-time { font-size: clamp(3rem, 4vw, 3.85rem); }

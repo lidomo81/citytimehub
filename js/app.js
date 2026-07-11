@@ -573,7 +573,7 @@
   }
 
   /* ---------- Boot ---------- */
-  /* ---------- Your-local-time panel + analog clock (tapered pilot-style hands) ---------- */
+  /* ---------- Your-local-time panel + analog clock ---------- */
   let ltTz = "UTC", ltOffsetMs = 0, ltEls = {}, ltRAF = 0;
 
   function buildAnalogSvg() {
@@ -581,12 +581,12 @@
     for (let i = 0; i < 60; i++) {
       const major = i % 5 === 0;
       const a = i * 6 * Math.PI / 180;
-      const r1 = major ? 75 : 80, r2 = 84;
-      ticks += `<line x1="${(100 + r1 * Math.sin(a)).toFixed(1)}" y1="${(100 - r1 * Math.cos(a)).toFixed(1)}" x2="${(100 + r2 * Math.sin(a)).toFixed(1)}" y2="${(100 - r2 * Math.cos(a)).toFixed(1)}" stroke="var(--border-2)" stroke-width="${major ? 2 : 1}" stroke-linecap="round" opacity="${major ? .85 : .4}"/>`;
+      const r1 = major ? 76 : 81, r2 = major ? 86 : 84;
+      ticks += `<line x1="${(100 + r1 * Math.sin(a)).toFixed(1)}" y1="${(100 - r1 * Math.cos(a)).toFixed(1)}" x2="${(100 + r2 * Math.sin(a)).toFixed(1)}" y2="${(100 - r2 * Math.cos(a)).toFixed(1)}" stroke="var(--border-2)" stroke-width="${major ? 1.8 : 0.85}" stroke-linecap="round" opacity="${major ? .9 : .35}"/>`;
     }
     for (let n = 1; n <= 12; n++) {
-      const a = n * 30 * Math.PI / 180, R = 60;
-      nums += `<text x="${(100 + R * Math.sin(a)).toFixed(1)}" y="${(100 - R * Math.cos(a) + 7).toFixed(1)}" text-anchor="middle" class="lt-num">${n}</text>`;
+      const a = n * 30 * Math.PI / 180, R = 65;
+      nums += `<text x="${(100 + R * Math.sin(a)).toFixed(1)}" y="${(100 - R * Math.cos(a)).toFixed(1)}" text-anchor="middle" dominant-baseline="central" class="lt-num">${n}</text>`;
     }
     return `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="lt-svg" aria-hidden="true">
       <rect x="7" y="7" width="186" height="186" rx="30" fill="var(--bg-soft)" stroke="var(--border)" stroke-width="1.5"/>
@@ -594,17 +594,17 @@
       ${ticks}
       <g class="lt-nums">${nums}</g>
       <g id="ltHour" class="lt-hand-hour">
-        <path d="M100 104 C96.2 104 93.8 99 93.2 86 L92.6 69 C92.6 57 95.8 50 100 47 C104.2 50 107.4 57 107.4 69 L106.8 86 C106.2 99 103.8 104 100 104 Z" fill="var(--text)"/>
+        <path d="M100 103 C95.4 103 93.2 98.2 93 84 L93.2 68.5 C93.5 57.5 96.2 51.5 100 49.5 C103.8 51.5 106.5 57.5 106.8 68.5 L107 84 C106.8 98.2 104.6 103 100 103 Z" fill="var(--text)"/>
       </g>
       <g id="ltMin" class="lt-hand-min">
-        <path d="M100 116 C98 116 97 108 96.8 84 L96.6 57 C96.6 43 98.2 35 100 32 C101.8 35 103.4 43 103.4 57 L103.2 84 C103 108 102 116 100 116 Z" fill="var(--text)"/>
+        <path d="M100 115 C98.7 115 98.1 106.5 98 83 L97.8 57.5 C97.8 42.5 98.8 35 100 32.5 C101.2 35 102.2 42.5 102.2 57.5 L102 83 C101.9 106.5 101.3 115 100 115 Z" fill="var(--text)" fill-opacity=".92"/>
       </g>
       <g id="ltSec" class="lt-hand-sec">
-        <line x1="100" y1="121" x2="100" y2="26" stroke="var(--brand)" stroke-width="1.15" stroke-linecap="round"/>
-        <circle cx="100" cy="123.5" r="2.2" fill="none" stroke="var(--brand)" stroke-width="1.15"/>
+        <line x1="100" y1="118" x2="100" y2="28" stroke="var(--brand)" stroke-width="1" stroke-linecap="round"/>
+        <circle cx="100" cy="120.5" r="1.55" fill="var(--brand)"/>
       </g>
-      <circle cx="100" cy="100" r="4.5" fill="var(--text)"/>
-      <circle cx="100" cy="100" r="1.8" fill="var(--brand)"/>
+      <circle cx="100" cy="100" r="3.8" fill="var(--text)"/>
+      <circle cx="100" cy="100" r="1.5" fill="var(--brand)"/>
     </svg>`;
   }
 
