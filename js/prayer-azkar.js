@@ -147,7 +147,7 @@
       const hint = document.createElement("span");
       hint.className = "prayer-azkar-hint";
       hint.setAttribute("aria-hidden", "true");
-      hint.textContent = "📿";
+      hint.innerHTML = '<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><circle cx="12" cy="4.2" r="1.35"/><circle cx="17.5" cy="6.5" r="1.35"/><circle cx="19.8" cy="12" r="1.35"/><circle cx="17.5" cy="17.5" r="1.35"/><circle cx="12" cy="19.8" r="1.35"/><circle cx="6.5" cy="17.5" r="1.35"/><circle cx="4.2" cy="12" r="1.35"/><circle cx="6.5" cy="6.5" r="1.35"/></svg>';
       card.appendChild(hint);
       const open = () => openSheet(name);
       card.addEventListener("click", open);

@@ -1209,7 +1209,7 @@ html[dir="rtl"] .prayer-azkar-tx { letter-spacing: 0; }
 
 /* Whole prayer tile is tappable → opens the post-prayer adhkar sheet */
 .prayer-card.is-tappable { cursor: pointer; }
-.prayer-azkar-hint { position: absolute; inset-block-start: 10px; inset-inline-start: 10px; font-size: .95rem; line-height: 1; opacity: .45; pointer-events: none; transition: opacity .2s; }
+.prayer-azkar-hint { position: absolute; inset-block-start: 10px; inset-inline-start: 10px; display: inline-flex; line-height: 0; color: var(--brand); opacity: .55; pointer-events: none; transition: opacity .2s; }
 .prayer-card.is-tappable:hover .prayer-azkar-hint { opacity: .8; }
 .prayer-card.has-azkar-due .prayer-azkar-hint { opacity: 1; animation: azPulse 2s ease-out infinite; }
 @media (prefers-reduced-motion: reduce) { .prayer-card.has-azkar-due .prayer-azkar-hint { animation: none; } }
