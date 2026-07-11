@@ -310,16 +310,21 @@ html.app-mode #cityPanel { padding-top: 8px; padding-bottom: 8px; width: 100%; }
     min-height: 100%;
     padding: 26px 26px 22px;
   }
-  html:not(.app-mode) .cp-clock > .eyebrow { flex: none; margin-bottom: 6px; }
   html:not(.app-mode) .cp-clock-mid {
     flex: 1 1 auto;
     justify-content: center;
-    gap: 18px;
+    gap: 16px;
     min-height: 0;
-    padding-block: 10px 6px;
+    padding-block: 8px 4px;
   }
-  html:not(.app-mode) .cp-clock .lt-analog { width: 244px; height: 244px; }
-  html:not(.app-mode) .cp-clock .lt-num { font-size: 23px; }
+  html:not(.app-mode) .cp-clock-mid > .eyebrow { flex: none; margin: 0 0 2px; }
+  html:not(.app-mode) .cp-clock .lt-analog {
+    width: min(100%, 292px);
+    height: auto;
+    aspect-ratio: 1;
+    flex: none;
+  }
+  html:not(.app-mode) .cp-clock .lt-num { font-size: 28px; }
   html:not(.app-mode) .cp-clock-info { gap: 4px; }
   html:not(.app-mode) .cp-clock .lt-city { font-size: clamp(1.65rem, 2.4vw, 2.15rem); }
   html:not(.app-mode) .cp-clock .lt-time { font-size: clamp(3rem, 4vw, 3.85rem); }
