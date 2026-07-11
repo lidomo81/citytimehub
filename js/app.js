@@ -594,17 +594,19 @@
       ${ticks}
       <g class="lt-nums">${nums}</g>
       <g id="ltHour" class="lt-hand-hour">
-        <path d="M100 103 C95.4 103 93.2 98.2 93 84 L93.2 68.5 C93.5 57.5 96.2 51.5 100 49.5 C103.8 51.5 106.5 57.5 106.8 68.5 L107 84 C106.8 98.2 104.6 103 100 103 Z" fill="var(--text)"/>
+        <rect x="96" y="52" width="8" height="58" rx="4" fill="#c6a24b" stroke="#9c7c2e" stroke-width=".5"/>
+        <rect x="98.2" y="56" width="3.6" height="42" rx="1.8" fill="#f3ecda"/>
       </g>
       <g id="ltMin" class="lt-hand-min">
-        <path d="M100 115 C98.7 115 98.1 106.5 98 83 L97.8 57.5 C97.8 42.5 98.8 35 100 32.5 C101.2 35 102.2 42.5 102.2 57.5 L102 83 C101.9 106.5 101.3 115 100 115 Z" fill="var(--text)" fill-opacity=".92"/>
+        <rect x="97" y="32" width="6" height="80" rx="3" fill="#c6a24b" stroke="#9c7c2e" stroke-width=".5"/>
+        <rect x="98.6" y="36" width="2.8" height="60" rx="1.4" fill="#f3ecda"/>
       </g>
       <g id="ltSec" class="lt-hand-sec">
-        <line x1="100" y1="118" x2="100" y2="28" stroke="var(--brand)" stroke-width="1" stroke-linecap="round"/>
-        <circle cx="100" cy="120.5" r="1.55" fill="var(--brand)"/>
+        <line x1="100" y1="116" x2="100" y2="26" stroke="#c6a24b" stroke-width="1.1" stroke-linecap="round"/>
+        <circle cx="100" cy="113" r="3" fill="none" stroke="#c6a24b" stroke-width="1.1"/>
       </g>
-      <circle cx="100" cy="100" r="3.8" fill="var(--text)"/>
-      <circle cx="100" cy="100" r="1.5" fill="var(--brand)"/>
+      <circle cx="100" cy="100" r="4.3" fill="#c6a24b" stroke="#9c7c2e" stroke-width=".5"/>
+      <circle cx="100" cy="100" r="1.6" fill="#6f571b"/>
     </svg>`;
   }
 
