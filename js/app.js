@@ -573,7 +573,7 @@
   }
 
   /* ---------- Boot ---------- */
-  /* ---------- Your-local-time panel + Apple-Watch-style analog clock ---------- */
+  /* ---------- Your-local-time panel + cathedral pilot-style analog clock ---------- */
   let ltTz = "UTC", ltOffsetMs = 0, ltEls = {}, ltRAF = 0;
 
   function buildAnalogSvg() {
@@ -593,11 +593,22 @@
       <rect x="15" y="15" width="170" height="170" rx="24" fill="var(--surface)" stroke="var(--border-2)" stroke-width="1" opacity=".55"/>
       ${ticks}
       <g class="lt-nums">${nums}</g>
-      <polygon id="ltHour" class="lt-hand-hour" points="100,56 108.5,98 100,106 91.5,98" fill="var(--text)"/>
-      <polygon id="ltMin" class="lt-hand-min" points="100,22 102,96 100,118 98,96" fill="var(--text)" opacity=".92"/>
-      <line id="ltSec" x1="100" y1="116" x2="100" y2="27" stroke="var(--brand)" stroke-width="1.8" stroke-linecap="round"/>
-      <circle cx="100" cy="100" r="5" fill="var(--text)"/>
-      <circle cx="100" cy="100" r="2.3" fill="var(--brand)"/>
+      <g id="ltHour" class="lt-hand-hour">
+        <path d="M100 106 L90 106 L87.5 92 L85 75 L87 63 L91.5 54 L100 49 L108.5 54 L113 63 L115 75 L112.5 92 L110 106 Z" fill="var(--text)"/>
+        <path d="M100 55 L95.5 66 L100 79 L104.5 66 Z" fill="var(--surface)"/>
+        <path d="M100 55 V79" stroke="var(--text)" stroke-width="1.1" stroke-opacity=".28"/>
+      </g>
+      <g id="ltMin" class="lt-hand-min">
+        <path d="M100 118 L97.8 118 L97.2 93 L96.8 72 L96.5 56 L97.2 44 L98.6 37 L100 34.5 L101.4 37 L102.8 44 L103.5 56 L103.2 72 L102.8 93 L102.2 118 Z" fill="var(--text)"/>
+        <path d="M100 38 L98.2 46.5 L100 61 L101.8 46.5 Z" fill="var(--surface)"/>
+        <path d="M100 38 V61" stroke="var(--text)" stroke-width=".85" stroke-opacity=".26"/>
+      </g>
+      <g id="ltSec" class="lt-hand-sec">
+        <line x1="100" y1="123" x2="100" y2="22" stroke="var(--brand)" stroke-width="1.35" stroke-linecap="round"/>
+        <circle cx="100" cy="125" r="3" fill="var(--brand)"/>
+      </g>
+      <circle cx="100" cy="100" r="5.5" fill="var(--text)"/>
+      <circle cx="100" cy="100" r="2.4" fill="var(--brand)"/>
     </svg>`;
   }
 
