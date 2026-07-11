@@ -491,7 +491,7 @@
       prayerState = { city, timings: {} };
       PRAYERS.forEach(p => prayerState.timings[p] = clean(t[p]));
       grid.innerHTML = PRAYERS.map((p, i) => `
-        <article class="prayer-card${p === next ? " is-next" : ""}">
+        <article class="prayer-card${p === next ? " is-next" : ""}" data-p="${p}">
           <div class="prayer-name">${T.prayers[i]}</div>
           <div class="prayer-time">${clean(t[p])}</div>
           <span class="prayer-tag">${p === next ? T.next : ""}</span>

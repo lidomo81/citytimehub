@@ -521,9 +521,24 @@ html.app-mode .prayer-insights { margin-top: 10px; }
 .prayer-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--gap); }
 .prayer-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 40px 12px 18px; box-shadow: var(--shadow); text-align: center; animation: rise .4s var(--ease) both; transition: transform .22s var(--ease), border-color .22s; }
 .prayer-card:hover { transform: translateY(-3px); border-color: var(--border-2); }
-.prayer-card.is-next { border-color: var(--brand); background: color-mix(in srgb, var(--brand) 9%, var(--surface)); box-shadow: var(--shadow-lg); }
+.prayer-card.is-next { --pc: var(--brand); border-color: var(--pc); background: color-mix(in srgb, var(--pc) 9%, var(--surface)); box-shadow: 0 16px 34px -18px color-mix(in srgb, var(--pc) 55%, transparent); }
+/* The next prayer glows gently in a colour that suits its time of day. */
+.prayer-card.is-next[data-p="Fajr"]    { --pc: #38bdf8; }
+.prayer-card.is-next[data-p="Sunrise"] { --pc: #fbbf24; }
+.prayer-card.is-next[data-p="Dhuhr"]   { --pc: #2563eb; }
+.prayer-card.is-next[data-p="Asr"]     { --pc: #0ea5e9; }
+.prayer-card.is-next[data-p="Maghrib"] { --pc: #f59e0b; }
+.prayer-card.is-next[data-p="Isha"]    { --pc: #6366f1; }
 .prayer-name { font-weight: 700; font-size: .92rem; color: var(--text-2); }
-.prayer-card.is-next .prayer-name { color: var(--brand); }
+.prayer-card.is-next .prayer-name { color: var(--pc); }
+.prayer-card.is-next .prayer-tag { color: var(--pc); }
+/* Subtle depth on the dark background — barely felt, but richer. */
+[data-theme="dark"] body {
+  background:
+    radial-gradient(1100px 620px at 50% -8%, #14203a 0%, rgba(20,32,58,0) 62%),
+    linear-gradient(180deg, #0c1424 0%, #090e1b 55%, #070b16 100%);
+  background-attachment: fixed;
+}
 .prayer-time { font-family: var(--mono); font-size: 1.3rem; font-weight: 700; font-variant-numeric: tabular-nums; margin-top: 6px; }
 .prayer-tag { display: block; margin-top: 6px; font-size: .64rem; font-weight: 800; color: var(--brand); text-transform: uppercase; letter-spacing: .1em; min-height: 13px; }
 
