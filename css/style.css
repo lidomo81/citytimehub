@@ -1207,6 +1207,25 @@ html[dir="rtl"] .prayer-azkar-tx { letter-spacing: 0; }
 .prayer-card.has-azkar-due { border-color: color-mix(in srgb, #ffd486 60%, var(--border)); }
 @media (prefers-reduced-motion: reduce) { .prayer-azkar.is-due { animation: none; } }
 
+/* Whole prayer tile is tappable → opens the post-prayer adhkar sheet */
+.prayer-card.is-tappable { cursor: pointer; }
+.prayer-azkar-hint { position: absolute; inset-block-start: 10px; inset-inline-start: 10px; font-size: .95rem; line-height: 1; opacity: .45; pointer-events: none; transition: opacity .2s; }
+.prayer-card.is-tappable:hover .prayer-azkar-hint { opacity: .8; }
+.prayer-card.has-azkar-due .prayer-azkar-hint { opacity: 1; animation: azPulse 2s ease-out infinite; }
+@media (prefers-reduced-motion: reduce) { .prayer-card.has-azkar-due .prayer-azkar-hint { animation: none; } }
+
+/* Post-prayer sheet: misbaha header + prayer info */
+.pa-hero { text-align: center; padding: 4px 0 16px; }
+.pa-hero-icon { font-size: 2.5rem; line-height: 1; }
+.pa-hero-title { margin-top: 7px; font-size: .68rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--brand); }
+.pa-hero-sub { margin-top: 5px; font-size: 1.12rem; font-weight: 800; color: var(--text); }
+.pa-info { padding: 15px 16px; border-radius: 14px; border: 1px solid var(--border); background: var(--surface-2); margin-bottom: 18px; }
+.pa-desc { margin: 0 0 13px; font-size: .95rem; line-height: 1.85; color: var(--text); }
+.pa-facts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.pa-facts li { font-size: .9rem; line-height: 1.65; color: var(--text-2); }
+.pa-fk { font-weight: 800; color: var(--text); }
+.pa-sec-label { display: block; font-size: .66rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0 2px 12px; }
+
 /* sheet */
 .az-sheet-overlay { position: fixed; inset: 0; z-index: 1200; display: flex; align-items: flex-end; justify-content: center; background: rgba(4, 8, 18, .72); backdrop-filter: blur(3px); padding: 0; }
 .az-sheet-overlay[hidden] { display: none !important; }
