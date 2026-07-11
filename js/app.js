@@ -593,8 +593,8 @@
       <rect x="15" y="15" width="170" height="170" rx="24" fill="var(--surface)" stroke="var(--border-2)" stroke-width="1" opacity=".55"/>
       ${ticks}
       <g class="lt-nums">${nums}</g>
-      <polygon id="ltHour" points="100,45 104.5,99 100,114 95.5,99" fill="var(--text)"/>
-      <polygon id="ltMin" points="100,29 104,98 100,117 96,98" fill="var(--text)"/>
+      <polygon id="ltHour" class="lt-hand-hour" points="100,56 108.5,98 100,106 91.5,98" fill="var(--text)"/>
+      <polygon id="ltMin" class="lt-hand-min" points="100,22 102,96 100,118 98,96" fill="var(--text)" opacity=".92"/>
       <line id="ltSec" x1="100" y1="116" x2="100" y2="27" stroke="var(--brand)" stroke-width="1.8" stroke-linecap="round"/>
       <circle cx="100" cy="100" r="5" fill="var(--text)"/>
       <circle cx="100" cy="100" r="2.3" fill="var(--brand)"/>
