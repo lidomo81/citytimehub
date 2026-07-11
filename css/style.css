@@ -284,6 +284,7 @@ html.app-mode #cityPanel { padding-top: 8px; padding-bottom: 8px; width: 100%; }
 
 .cp-grid { display: grid; grid-template-columns: minmax(270px, .95fr) 1.3fr; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; box-shadow: 0 24px 60px -40px rgba(0,0,0,.7); }
 .cp-clock { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 14px; padding: 30px 26px; background: radial-gradient(120% 120% at 50% 0%, rgba(37,99,235,.10), transparent 62%); }
+.cp-clock-mid { display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; min-width: 0; }
 .cp-clock .lt-analog { width: 208px; height: 208px; flex: none; }
 .lt-num { font-family: var(--font, system-ui, -apple-system, "Segoe UI", sans-serif); font-size: 20px; font-weight: 600; fill: var(--text); }
 .lt-svg .lt-nums text { font-variant-numeric: tabular-nums; }
@@ -299,6 +300,32 @@ html.app-mode #cityPanel { padding-top: 8px; padding-bottom: 8px; width: 100%; }
 .cp-next-dot { width: 7px; height: 7px; border-radius: 50%; background: #f5a623; flex: none; box-shadow: 0 0 0 0 rgba(245,166,35,.5); animation: cp-pulse 2.4s infinite; }
 @keyframes cp-pulse { 70% { box-shadow: 0 0 0 6px rgba(245,166,35,0); } 100% { box-shadow: 0 0 0 0 rgba(245,166,35,0); } }
 @media (prefers-reduced-motion: reduce) { .cp-next-dot { animation: none; } }
+
+/* Desktop homepage clock — fill the column height (site only, not app / mobile) */
+@media (min-width: 861px) {
+  html:not(.app-mode) .cp-grid { align-items: stretch; }
+  html:not(.app-mode) .cp-clock {
+    justify-content: space-between;
+    gap: 0;
+    min-height: 100%;
+    padding: 26px 26px 22px;
+  }
+  html:not(.app-mode) .cp-clock > .eyebrow { flex: none; margin-bottom: 6px; }
+  html:not(.app-mode) .cp-clock-mid {
+    flex: 1 1 auto;
+    justify-content: center;
+    gap: 18px;
+    min-height: 0;
+    padding-block: 10px 6px;
+  }
+  html:not(.app-mode) .cp-clock .lt-analog { width: 244px; height: 244px; }
+  html:not(.app-mode) .cp-clock .lt-num { font-size: 23px; }
+  html:not(.app-mode) .cp-clock-info { gap: 4px; }
+  html:not(.app-mode) .cp-clock .lt-city { font-size: clamp(1.65rem, 2.4vw, 2.15rem); }
+  html:not(.app-mode) .cp-clock .lt-time { font-size: clamp(3rem, 4vw, 3.85rem); }
+  html:not(.app-mode) .cp-next { flex: none; margin-top: 0; }
+}
+
 .cp-devotion { padding: 24px 26px; border-inline-start: 1px solid var(--border); }
 .cp-dev-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px 18px; flex-wrap: wrap; margin-bottom: 14px; }
 .cp-dev-title { font-size: 1.05rem; font-weight: 700; }
