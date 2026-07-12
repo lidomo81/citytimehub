@@ -885,6 +885,22 @@ html.app-mode .prayer-insights { margin-top: 10px; }
   .guide-card--featured h3 { font-size: 1.28rem; }
 }
 
+/* ===== Stats band — a non-card row that breaks the grid ===== */
+.stats-band { padding-block: 6px; }
+.stats-row { list-style: none; margin: 0; padding: 24px 12px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+  border-radius: var(--radius); border: 1px solid var(--border);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--brand) 7%, var(--surface)), var(--surface)); text-align: center; }
+.stats-row li { display: flex; flex-direction: column; gap: 7px; align-items: center; justify-content: center; }
+.stats-row li + li { border-inline-start: 1px solid var(--border); }
+.stat-num { font-size: 2.1rem; font-weight: 900; color: var(--brand); line-height: 1; font-variant-numeric: tabular-nums; }
+.stat-label { font-size: .82rem; font-weight: 600; color: var(--text-2); line-height: 1.4; }
+@media (max-width: 640px) {
+  .stats-row { grid-template-columns: 1fr 1fr; gap: 24px 12px; padding: 22px 10px; }
+  .stats-row li + li { border-inline-start: none; }
+  .stats-row li:nth-child(even) { border-inline-start: 1px solid var(--border); }
+  .stat-num { font-size: 1.8rem; }
+}
+
 /* ===================== Prayer city search (autocomplete) ===================== */
 .city-picker { min-width: 240px; max-width: 340px; width: 100%; }
 .prayer-ac { width: 100%; }
