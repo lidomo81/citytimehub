@@ -228,7 +228,7 @@ html.app-mode #reflections,
 html.app-mode #reference { display: none !important; }
 /* Favorite cities: hidden when empty (the [hidden] attribute); in the app it
    shows as a compact labelled row, like the quick-tools rows. */
-html.app-mode #myCities:not([hidden]) { display: block; padding: 2px 0 0; }
+html.app-mode #myCities:not([hidden]) { display: block; padding: 0; }
 html.app-mode #myCities .section-head { display: none; }
 html.app-mode #myCities .container { width: min(960px, 92%); margin-inline: auto; padding-inline: 0; }
 .app-bar--home .app-bar-title { flex: 1; text-align: center; }
@@ -678,7 +678,7 @@ html.app-mode .prayer-insights { margin-top: 10px; }
 
 /* ===== My favorite cities — clickable name chips (site + app) ===== */
 .fav-app-label { display: none; }
-html.app-mode .fav-app-label { display: block; font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 4px 9px; }
+html.app-mode .fav-app-label { display: block; font-size: .72rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--text-2); margin: 16px 4px 9px; }
 html[dir="rtl"] .fav-app-label { letter-spacing: 0; }
 .fav-chips { display: flex; flex-wrap: wrap; gap: 10px; }
 .fav-chip {
@@ -1320,7 +1320,10 @@ a, button { touch-action: manipulation; }
 
 /* Respect the notch / home indicator in app-mode */
 html.app-mode .app-header, html.app-mode .hero { padding-inline: max(0px, env(safe-area-inset-left)) max(0px, env(safe-area-inset-right)); }
-html.app-mode .app-tools { margin-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
+/* Bottom clearance for the app's banner goes on the scroll container so it sits
+   AFTER the last row (tools, or favorites) instead of becoming a gap between. */
+html.app-mode #top { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
+html.app-mode .app-tools { margin-bottom: 0; }
 .help-fab { bottom: max(14px, env(safe-area-inset-bottom, 0px)); inset-inline-end: max(14px, env(safe-area-inset-right, 0px)); }
 
 /* Stunning, subtle staggered entrance for prayer tiles */
