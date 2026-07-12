@@ -63,6 +63,37 @@
       .trim();
   }
 
+  /* ---------- Worldwide city search (OpenStreetMap / Nominatim) ----------
+     Used as a fallback in the homepage search so cities outside the curated
+     500 still get a live clock + prayer times. The timezone is not returned
+     here; it is resolved later from the AlAdhan response (data.meta.timezone).
+     A per-country default calculation method mirrors the app's picker. */
+  const WORLD_METHOD = { eg: 5, sa: 4, ae: 8, kw: 9, qa: 10, bh: 4, om: 8, jo: 3, ly: 5, sd: 5, pk: 1, in: 1, bd: 1, us: 2, ca: 2, tr: 13, id: 20, my: 3, sg: 3, gb: 3, fr: 12 };
+  function worldCityFrom(x) {
+    const a = x.address || {};
+    const name = a.city || a.town || a.village || a.municipality || a.suburb || a.county || a.state || String(x.display_name || "").split(",")[0].trim();
+    let country = [a.state, a.country].filter(Boolean).join(", ");
+    if (!country) country = String(x.display_name || "").split(",").slice(-1)[0].trim();
+    const cc = String(a.country_code || "").toLowerCase();
+    const lat = parseFloat(x.lat), lng = parseFloat(x.lon);
+    return { name, country, lat, lng, method: WORLD_METHOD[cc] || 3, world: true, slug: "w:" + lat.toFixed(4) + "," + lng.toFixed(4) };
+  }
+  function worldSearch(q) {
+    const lang = LANG === "ar" ? "ar" : "en";
+    return fetch("https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=8&accept-language=" + lang + "&q=" + encodeURIComponent(q))
+      .then(r => r.ok ? r.json() : [])
+      .then(d => {
+        const seen = {}, out = [];
+        (d || []).forEach(x => {
+          const c = worldCityFrom(x);
+          if (!c.name || isNaN(c.lat) || isNaN(c.lng)) return;
+          const k = norm(c.name + "|" + c.country);
+          if (seen[k]) return; seen[k] = 1; out.push(c);
+        });
+        return out;
+      });
+  }
+
   /* ---------- Time-of-day colour ramp (24 anchors, interpolated) ---------- */
   const RAMP = [
     "#0a0f24","#0a0f24","#0c1230","#101a3e","#1c2a5a","#46376f","#8a4f7a","#cf6b43",
@@ -353,12 +384,20 @@
     $("#localZone").textContent  = `${tz.replace(/_/g," ")} · ${offsetLabel(offsetHours(tz, now))}`;
     const ltT = $("#ltTime");
     if (ltT) {
-      const ctz = (currentCity && currentCity.tz) || tz;
-      const cloc = formatters(ctz);
-      ltT.textContent = cloc.time.format(now);
-      const ltD = $("#ltDate"); if (ltD) ltD.textContent = cloc.date.format(now);
-      const ltZ = $("#ltZone"); if (ltZ) ltZ.textContent = `${ctz.replace(/_/g," ")} · ${offsetLabel(offsetHours(ctz, now))}`;
-      ltOffsetMs = offsetHours(ctz, now) * 3600000;
+      if (currentCity && currentCity.world && !currentCity.tz) {
+        // Worldwide city: still resolving its timezone — show a placeholder
+        // rather than the wrong (browser) time for a split second.
+        ltT.textContent = "—:—:—";
+        const ltD = $("#ltDate"); if (ltD) ltD.textContent = "…";
+        const ltZ = $("#ltZone"); if (ltZ) ltZ.textContent = "…";
+      } else {
+        const ctz = (currentCity && currentCity.tz) || tz;
+        const cloc = formatters(ctz);
+        ltT.textContent = cloc.time.format(now);
+        const ltD = $("#ltDate"); if (ltD) ltD.textContent = cloc.date.format(now);
+        const ltZ = $("#ltZone"); if (ltZ) ltZ.textContent = `${ctz.replace(/_/g," ")} · ${offsetLabel(offsetHours(ctz, now))}`;
+        ltOffsetMs = offsetHours(ctz, now) * 3600000;
+      }
     }
   }
 
@@ -372,27 +411,57 @@
   /* ---------- Prayer times + Hijri (AlAdhan) ---------- */
   const PRAYERS = ["Fajr","Sunrise","Dhuhr","Asr","Maghrib","Isha"];
 
-  function attachAutocomplete(input, listEl, onChoose) {
-    let items = [], active = -1;
+  function attachAutocomplete(input, listEl, onChoose, opts) {
+    opts = opts || {};
+    let localItems = [], worldItems = [], items = [], active = -1;
+    let wseq = 0, wtimer = null;
     const close = () => { listEl.hidden = true; active = -1; input.setAttribute("aria-expanded", "false"); };
+    const liHtml = (c, i) => `<li class="ac-item${i === active ? " is-active" : ""}" role="option" data-i="${i}"><span>${cName(c)}</span><span class="ac-country">${cCountry(c)}</span></li>`;
+    function paint() {
+      items = localItems.concat(worldItems);
+      if (!items.length) { listEl.innerHTML = ""; close(); return; }
+      let html = localItems.map((c, i) => liHtml(c, i)).join("");
+      if (worldItems.length) {
+        html += `<li class="ac-sep" aria-hidden="true">${LANG === "ar" ? "بقية مدن العالم" : "Worldwide"}</li>`;
+        html += worldItems.map((c, k) => liHtml(c, localItems.length + k)).join("");
+      }
+      listEl.innerHTML = html;
+      listEl.hidden = false; input.setAttribute("aria-expanded", "true");
+    }
     function render() {
       const q = norm(input.value);
-      items = q ? CITIES.filter(c => norm(`${c.name} ${c.name_ar || ""} ${c.country} ${c.country_ar || ""}`).includes(q)).slice(0, 8) : [];
-      if (!items.length) { listEl.innerHTML = ""; close(); return; }
-      listEl.innerHTML = items.map((c, i) => `<li class="ac-item${i === active ? " is-active" : ""}" role="option" data-i="${i}"><span>${cName(c)}</span><span class="ac-country">${cCountry(c)}</span></li>`).join("");
-      listEl.hidden = false; input.setAttribute("aria-expanded", "true");
+      localItems = q ? CITIES.filter(c => norm(`${c.name} ${c.name_ar || ""} ${c.country} ${c.country_ar || ""}`).includes(q)).slice(0, 8) : [];
+      worldItems = [];
+      active = -1;
+      paint();
+      if (opts.worldwide) scheduleWorld(input.value.trim(), q);
+    }
+    function scheduleWorld(raw, qnorm) {
+      clearTimeout(wtimer);
+      // Only reach out to the network when the curated list is thin — keeps the
+      // OpenStreetMap load low and the common case instant/offline.
+      if (raw.length < 3 || localItems.length >= 6) return;
+      wtimer = setTimeout(() => {
+        const my = ++wseq;
+        worldSearch(raw).then(list => {
+          if (my !== wseq || norm(input.value) !== qnorm) return; // stale response
+          const localKeys = new Set(localItems.map(c => norm(cName(c) + "|" + cCountry(c))));
+          worldItems = list.filter(c => !localKeys.has(norm(c.name + "|" + c.country))).slice(0, 6);
+          paint();
+        }).catch(() => {});
+      }, 450);
     }
     function pick(i) { const c = items[i]; if (!c) return; input.blur(); onChoose(c); close(); }
     input.addEventListener("input", render);
     input.addEventListener("focus", () => { if (input.value) render(); });
     input.addEventListener("keydown", e => {
       if (listEl.hidden) return;
-      if (e.key === "ArrowDown") { e.preventDefault(); active = Math.min(active + 1, items.length - 1); render(); }
-      else if (e.key === "ArrowUp") { e.preventDefault(); active = Math.max(active - 1, 0); render(); }
+      if (e.key === "ArrowDown") { e.preventDefault(); active = Math.min(active + 1, items.length - 1); paint(); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); active = Math.max(active - 1, 0); paint(); }
       else if (e.key === "Enter") { e.preventDefault(); pick(active < 0 ? 0 : active); }
       else if (e.key === "Escape") { close(); }
     });
-    listEl.addEventListener("mousedown", e => { const li = e.target.closest(".ac-item"); if (li) { e.preventDefault(); pick(+li.dataset.i); } });
+    listEl.addEventListener("mousedown", e => { const li = e.target.closest(".ac-item"); if (li && li.dataset.i != null) { e.preventDefault(); pick(+li.dataset.i); } });
     input.addEventListener("blur", () => setTimeout(close, 150));
   }
 
@@ -400,7 +469,10 @@
   function setCity(city) {
     if (!city) return;
     currentCity = city;
-    ltTz = city.tz; ltOffsetMs = offsetHours(city.tz) * 3600000;
+    // Curated cities carry their own tz; a worldwide city has none yet — its tz
+    // is resolved from the AlAdhan response inside loadPrayer, then the clock
+    // refreshes. Until then we leave the previous offset untouched.
+    if (city.tz) { ltTz = city.tz; ltOffsetMs = offsetHours(city.tz) * 3600000; }
     const nm = cName(city);
     const cEl = $("#lt-h"); if (cEl) cEl.textContent = nm;
     const onLocal = !!(detectedHome && city.slug === detectedHome.slug);
@@ -409,6 +481,9 @@
     const eb = $("#cpEyebrow"); if (eb) eb.textContent = onLocal ? T.localEyebrow : (onDefault ? T.homeEyebrow : `${nm}، ${cCountry(city)}`);
     // "My city" returns to the detected local city — show it whenever we're NOT already on local
     const hb = $("#cpHome"); if (hb) hb.hidden = onLocal;
+    // Saving a worldwide city isn't wired up yet (step 2) — hide the star for now
+    // so nothing half-persists; curated cities keep the save button.
+    const sb = $("#cpSave"); if (sb) sb.hidden = !!city.world;
     const inp = $("#cpSearch"); if (inp && document.activeElement !== inp) inp.value = (onLocal || onDefault) ? "" : `${nm}, ${cCountry(city)}`;
     updateSaveStar();
     tick();
@@ -440,7 +515,7 @@
     setCity(home);
 
     const inp = $("#cpSearch"), list = $("#cpAcList");
-    if (inp && list) attachAutocomplete(inp, list, c => setCity(c));
+    if (inp && list) attachAutocomplete(inp, list, c => setCity(c), { worldwide: true });
 
     const sv = $("#cpSave");
     if (sv) sv.addEventListener("click", () => {
@@ -469,7 +544,7 @@
       document.addEventListener("cth-pwa-ready", syncInstall);
       syncInstall();
       inst.addEventListener("click", () => {
-        if (!currentCity) return;
+        if (!currentCity || currentCity.world) return;
         location.href = (LANG === "ar" ? "/ar" : "") + "/app/" + currentCity.slug + "/";
       });
     }
@@ -482,6 +557,16 @@
     const url = `https://api.aladhan.com/v1/timings/${ds}?latitude=${city.lat}&longitude=${city.lng}&method=${city.method ?? 3}`;
     const PKEY = "cth-prayer:" + city.slug;
     const render = (data, stale) => {
+      // Worldwide cities arrive without a timezone; AlAdhan returns it in meta.
+      // Resolve it before anything that needs it (next-prayer, the live clock).
+      if (!city.tz && data.meta && data.meta.timezone) {
+        city.tz = data.meta.timezone;
+        if (currentCity === city) {
+          ltTz = city.tz;
+          ltOffsetMs = offsetHours(city.tz) * 3600000;
+          tick();
+        }
+      }
       const t = data.timings, g = data.date.gregorian, h = data.date.hijri;
       const g_d = new Date(Date.UTC(+g.year, (+(g.month && g.month.number) || 1) - 1, +g.day));
       $("#gregDate").textContent  = new Intl.DateTimeFormat(LANG === "ar" ? "ar-EG-u-nu-latn" : "en-GB", { timeZone: "UTC", day: "numeric", month: "long", year: "numeric" }).format(g_d);

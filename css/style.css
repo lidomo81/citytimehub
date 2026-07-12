@@ -670,6 +670,7 @@ html.app-mode .prayer-insights { margin-top: 10px; }
 .ac-name { font-weight: 600; color: var(--text); }
 .ac-country { font-size: .82rem; color: var(--text-2); }
 .ac-empty { padding: 12px; color: var(--text-2); font-size: .9rem; }
+.ac-sep { padding: 8px 12px 4px; margin-top: 4px; border-top: 1px solid var(--border); font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--text-2); opacity: .7; pointer-events: none; }
 
 .swap-btn { display: grid; place-items: center; width: 44px; height: 46px; align-self: end; border: 1.5px solid var(--border); background: var(--surface); color: var(--text-2); border-radius: 12px; cursor: pointer; transition: border-color .2s, color .2s, transform .2s var(--ease); }
 .swap-btn:hover { border-color: var(--brand); color: var(--brand); transform: rotate(180deg); }
