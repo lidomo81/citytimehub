@@ -26,6 +26,10 @@
       todayWord: "Today", dayDone: "Today complete ✓", streakNew: "🌙 You completed today's prayers — may they be accepted!",
       dua: "اللَّهُمَّ أَعِنَّا عَلَى ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ",
       duaTr: "O Allah, help us to remember You, thank You, and worship You well.",
+      recover: name => `You missed ${name} — pray it now and complete your day 🤍`,
+      recoverMany: "Some prayers passed — make them up to complete your day 🤍",
+      weekTitle: "Last 7 days", statsTitle: "Your adherence", currentStreak: "Current streak", bestStreak: "Best streak",
+      legendFull: "Complete", legendPart: "Partial", legendNone: "Missed", statsClose: "Close", statsHint: "Tap for details",
     },
     ar: {
       addFav: "أضِف إلى مدني", remFav: "أزِل من مدني",
@@ -45,6 +49,10 @@
       todayWord: "اليوم", dayDone: "اكتمل اليوم ✓", streakNew: "🌙 أتممتَ صلوات يومك — تقبّل الله!",
       dua: "اللَّهُمَّ أَعِنَّا عَلَى ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ",
       duaTr: "",
+      recover: name => `صلاة ${name} فاتت وقتها.. تداركها الآن وأكمل يومك 🤍`,
+      recoverMany: "صلوات فاتت أوقاتها.. تداركها لتُكمل يومك 🤍",
+      weekTitle: "آخر ٧ أيام", statsTitle: "التزامك", currentStreak: "سلسلتك الحالية", bestStreak: "أطول سلسلة",
+      legendFull: "مكتمل", legendPart: "جزئي", legendNone: "فائت", statsClose: "إغلاق", statsHint: "اضغط للتفاصيل",
     },
   };
   const T = I18N[LANG];
@@ -724,6 +732,26 @@
     return n;
   }
 
+  const prayerLabel = p => T.prayers[PRAYERS.indexOf(p)] || p;
+  // Obligatory prayers whose time window has passed today without being marked done.
+  // Windows end at: Fajr→Sunrise, Dhuhr→Asr, Asr→Maghrib, Maghrib→Isha (Isha runs till dawn).
+  function missedFard() {
+    if (!prayerState || !prayerState.city || !prayerState.timings) return [];
+    const tz = prayerState.city.tz; if (!tz) return [];
+    const t = prayerState.timings;
+    const toMin = s => { const a = (s || "").split(":"); return (+a[0]) * 60 + (+a[1]); };
+    const d = new Date(Date.now() + offsetHours(tz) * 3600000);
+    const nowMin = d.getUTCHours() * 60 + d.getUTCMinutes();
+    const w = wGetDay(wDateStr(new Date()));
+    const ends = { Fajr: t.Sunrise, Dhuhr: t.Asr, Asr: t.Maghrib, Maghrib: t.Isha };
+    const missed = [];
+    ["Fajr", "Dhuhr", "Asr", "Maghrib"].forEach(p => {
+      const end = ends[p];
+      if (end && nowMin >= toMin(end) && !(w[p] && w[p].f)) missed.push(p);
+    });
+    return missed;
+  }
+
   let streakFirstRender = true, streakCelebrateT = 0, completeCelebratedFor = null;
   function renderStreak(el) {
     const today = wDateStr(new Date());
@@ -734,6 +762,7 @@
     el.hidden = false;
 
     if (justCompleted) {
+      el.classList.remove("cp-recover");
       el.innerHTML = `<span class="cp-streak-main cp-streak-new">${T.streakNew}</span>`;
       el.classList.add("cp-celebrate");
       clearTimeout(streakCelebrateT);
@@ -742,12 +771,25 @@
       return;
     }
 
-    const streak = wStreak();
-    const main = streak > 0 ? `<span class="cp-flame" aria-hidden="true">🌙</span>${T.streakDays(streak)}` : T.streakStart;
     let pips = "";
     for (let k = 0; k < 5; k++) pips += `<i class="cp-pip${k < prog ? " on" : ""}"></i>`;
     const sub = complete ? T.dayDone : `${T.todayWord} ${prog}/5`;
-    el.innerHTML = `<span class="cp-streak-main">${main}</span><span class="cp-streak-sub">${sub}<span class="cp-pips" aria-hidden="true">${pips}</span></span>`;
+    const subHtml = `<span class="cp-streak-sub">${sub}<span class="cp-pips" aria-hidden="true">${pips}</span></span>`;
+
+    // Recovery: a gentle, blame-free nudge to make up a prayer whose window passed.
+    const missed = missedFard();
+    if (missed.length) {
+      const msg = missed.length === 1 ? T.recover(prayerLabel(missed[0])) : T.recoverMany;
+      el.classList.add("cp-recover");
+      el.innerHTML = `<span class="cp-streak-main cp-recover-main">${msg}</span>${subHtml}`;
+      streakFirstRender = false;
+      return;
+    }
+    el.classList.remove("cp-recover");
+
+    const streak = wStreak();
+    const main = streak > 0 ? `<span class="cp-flame" aria-hidden="true">🌙</span>${T.streakDays(streak)}` : T.streakStart;
+    el.innerHTML = `<span class="cp-streak-main">${main}</span>${subHtml}`;
     streakFirstRender = false;
   }
 
@@ -762,12 +804,86 @@
     return d;
   }
 
+  /* ---------- 7-day strip + details panel ---------- */
+  const dayStatus = ds => { const c = wFardCount(ds); return c === 5 ? "full" : c > 0 ? "part" : "none"; };
+  const addDays = (base, n) => { const d = new Date(base); d.setDate(d.getDate() + n); return d; };
+
+  function ensureWeekEl() {
+    let wk = $("#cpWeek"); if (wk) return wk;
+    const box = $("#cpNext"); if (!box || !box.parentNode) return null;
+    wk = document.createElement("button");
+    wk.id = "cpWeek"; wk.type = "button"; wk.className = "cp-week"; wk.hidden = true;
+    wk.setAttribute("aria-label", T.statsTitle + " — " + T.statsHint);
+    box.parentNode.insertBefore(wk, box.nextSibling);
+    wk.addEventListener("click", openStatsPanel);
+    return wk;
+  }
+  function renderWeek() {
+    const wk = ensureWeekEl(); if (!wk) return;
+    const now = new Date();
+    let cells = "";
+    for (let i = 6; i >= 0; i--) {
+      const st = dayStatus(wDateStr(addDays(now, -i)));
+      cells += `<i class="cp-wk-pip cp-wk-${st}${i === 0 ? " is-today" : ""}"></i>`;
+    }
+    wk.innerHTML = `<span class="cp-wk-label">${T.weekTitle}</span><span class="cp-wk-row">${cells}</span>`;
+    wk.hidden = false;
+  }
+  function hideWeek() { const wk = $("#cpWeek"); if (wk) wk.hidden = true; }
+
+  function bestStreak(daysBack = 120) {
+    let best = 0, run = 0;
+    const now = new Date();
+    for (let i = daysBack; i >= 0; i--) {
+      if (wDayComplete(wDateStr(addDays(now, -i)))) { run++; if (run > best) best = run; }
+      else run = 0;
+    }
+    return best;
+  }
+
+  let statsOverlay = null;
+  function openStatsPanel() {
+    if (!statsOverlay) {
+      statsOverlay = document.createElement("div");
+      statsOverlay.className = "cp-stats-overlay"; statsOverlay.hidden = true;
+      statsOverlay.innerHTML = `<div class="cp-stats" role="dialog" aria-modal="true" aria-label="${T.statsTitle}">
+        <div class="cp-stats-head"><strong>${T.statsTitle}</strong><button class="cp-stats-close" type="button" aria-label="${T.statsClose}">✕</button></div>
+        <div class="cp-stats-nums"></div>
+        <div class="cp-stats-grid"></div>
+        <div class="cp-stats-legend">
+          <span><i class="cp-wk-pip cp-wk-full"></i>${T.legendFull}</span>
+          <span><i class="cp-wk-pip cp-wk-part"></i>${T.legendPart}</span>
+          <span><i class="cp-wk-pip cp-wk-none"></i>${T.legendNone}</span>
+        </div></div>`;
+      document.body.appendChild(statsOverlay);
+      const close = () => { statsOverlay.hidden = true; document.body.style.overflow = ""; };
+      statsOverlay.addEventListener("click", e => { if (e.target === statsOverlay) close(); });
+      statsOverlay.querySelector(".cp-stats-close").addEventListener("click", close);
+      document.addEventListener("keydown", e => { if (e.key === "Escape" && !statsOverlay.hidden) close(); });
+    }
+    // numbers
+    statsOverlay.querySelector(".cp-stats-nums").innerHTML =
+      `<div class="cp-stat"><b>${wStreak()}</b><span>${T.currentStreak}</span></div>` +
+      `<div class="cp-stat"><b>${bestStreak()}</b><span>${T.bestStreak}</span></div>`;
+    // last 14 days grid (oldest → today)
+    const now = new Date();
+    const wdFmt = new Intl.DateTimeFormat(LANG === "ar" ? "ar-EG-u-nu-latn" : "en-US", { weekday: "short" });
+    let grid = "";
+    for (let i = 13; i >= 0; i--) {
+      const d = addDays(now, -i), ds = wDateStr(d), c = wFardCount(ds), st = dayStatus(ds);
+      grid += `<div class="cp-stats-day${i === 0 ? " is-today" : ""}"><span class="cp-sd-wd">${wdFmt.format(d)}</span><i class="cp-wk-pip cp-wk-${st}"></i><span class="cp-sd-n">${c}/5</span></div>`;
+    }
+    statsOverlay.querySelector(".cp-stats-grid").innerHTML = grid;
+    statsOverlay.hidden = false;
+    document.body.style.overflow = "hidden";
+  }
+
   // The box under the clock: your city → streak; another city → next-prayer line.
   function updateStatusBox() {
     const el = $("#cpNext"); if (!el) return;
     const dua = ensureDuaEl();
-    if (currentMine) { if (dua) dua.hidden = false; el.classList.add("cp-streak"); renderStreak(el); }
-    else { if (dua) dua.hidden = true; el.classList.remove("cp-streak", "cp-celebrate"); updateNextLine(); }
+    if (currentMine) { if (dua) dua.hidden = false; el.classList.add("cp-streak"); renderStreak(el); renderWeek(); }
+    else { if (dua) dua.hidden = true; el.classList.remove("cp-streak", "cp-celebrate", "cp-recover"); hideWeek(); updateNextLine(); }
   }
 
   function nextPrayer(t, city) {
