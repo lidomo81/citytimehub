@@ -1020,12 +1020,35 @@
     const HELP_KEY = "cth-help-seen";
     const open = () => { overlay.hidden = false; document.body.style.overflow = "hidden"; };
     const close = () => { overlay.hidden = true; document.body.style.overflow = ""; try { localStorage.setItem(HELP_KEY, "1"); } catch (e) {} };
-    btn.addEventListener("click", open);
+    // Let the tour reopen the full feature list from its last step.
+    window.__cthOpenHelpSheet = open;
     overlay.querySelectorAll("[data-help-close]").forEach(el => el.addEventListener("click", close));
     document.addEventListener("keydown", e => { if (e.key === "Escape" && !overlay.hidden) close(); });
-    let seen = false;
-    try { seen = localStorage.getItem(HELP_KEY) === "1"; } catch (e) {}
-    if (!seen) setTimeout(open, 600); // show once on first visit
+
+    const appMode = document.documentElement.classList.contains("app-mode");
+    const tour = window.CthTour;
+    // On the site, the "?" button launches the interactive tour; the app keeps the
+    // static feature list for now (its own tour is a later phase).
+    if (tour && !appMode) {
+      btn.addEventListener("click", () => tour.start());
+      if (!tour.seen()) whenReady(() => tour.start());
+    } else {
+      btn.addEventListener("click", open);
+      let seen = false;
+      try { seen = localStorage.getItem(HELP_KEY) === "1"; } catch (e) {}
+      if (!seen) setTimeout(open, 600); // show once on first visit
+    }
+  }
+
+  // Start the tour once the prayer cards have rendered (or after a safety timeout).
+  function whenReady(fn) {
+    let tries = 0;
+    const tick = () => {
+      const grid = document.getElementById("prayerGrid");
+      if ((grid && grid.querySelector(".prayer-card")) || tries > 40) { setTimeout(fn, 500); return; }
+      tries++; setTimeout(tick, 200);
+    };
+    tick();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

@@ -1263,6 +1263,35 @@ html.app-mode .help-fab { bottom: 14px; opacity: .72; transition: opacity .2s, t
 html.app-mode .help-fab:hover, html.app-mode .help-fab:active, html.app-mode .help-fab:focus { opacity: 1; }
 /* the install button is pointless inside an already-installed app */
 html.app-mode .cp-install { display: none !important; }
+
+/* ---- Guided tour (homepage onboarding) ---- */
+.cth-tour { position: fixed; inset: 0; z-index: 2147483000; display: none; }
+.cth-tour.is-active { display: block; }
+.cth-tour-mask { position: fixed; inset: 0; background: transparent; }
+.cth-tour-spot { position: fixed; top: 0; left: 0; width: 0; height: 0; border-radius: 18px;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand) 55%, transparent), 0 0 0 9999px rgba(2, 6, 23, .72);
+  pointer-events: none; transition: top .3s ease, left .3s ease, width .3s ease, height .3s ease; }
+.cth-tour.is-center .cth-tour-mask { background: rgba(2, 6, 23, .72); }
+.cth-tour-pop { position: fixed; width: min(330px, calc(100vw - 24px)); box-sizing: border-box;
+  padding: 18px 18px 15px; border-radius: 16px; border: 1px solid var(--border-2, #2a3550);
+  background: var(--surface); box-shadow: 0 24px 60px -18px rgba(0, 0, 0, .6); transition: top .28s ease, left .28s ease; }
+.cth-tour-close { position: absolute; inset-block-start: 10px; inset-inline-end: 12px; width: 26px; height: 26px; border: 0; border-radius: 50%;
+  background: transparent; color: var(--muted); font-size: 1rem; cursor: pointer; line-height: 1; }
+.cth-tour-close:hover { color: var(--text); }
+.cth-tour-title { margin: 0 26px 8px 0; font-size: 1.06rem; font-weight: 800; color: var(--text); }
+.cth-tour:dir(rtl) .cth-tour-title { margin: 0 0 8px 26px; }
+.cth-tour-body { margin: 0 0 15px; font-size: .92rem; line-height: 1.75; color: var(--text-2); }
+.cth-tour-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.cth-tour-count { font-size: .72rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.cth-tour-btns { display: flex; gap: 8px; }
+.cth-tour-b { border: 1px solid var(--border-2, #2a3550); background: var(--surface-2); color: var(--text);
+  font-size: .84rem; font-weight: 700; padding: 7px 14px; border-radius: 9px; cursor: pointer; transition: border-color .15s, background .15s; }
+.cth-tour-b:hover { border-color: var(--brand); }
+.cth-tour-primary { background: var(--brand); border-color: var(--brand); color: #fff; }
+.cth-tour-primary:hover { filter: brightness(1.05); border-color: var(--brand); }
+/* Note: the page must stay scrollable while the tour runs so it can bring
+   below-the-fold targets into view; the spotlight follows via a scroll listener. */
+@media (prefers-reduced-motion: reduce) { .cth-tour-spot, .cth-tour-pop { transition: none; } }
 .help-overlay { position: fixed; inset: 0; z-index: 200; display: flex; align-items: center; justify-content: center; padding: 18px; }
 .help-overlay[hidden] { display: none; }
 .help-backdrop { position: absolute; inset: 0; background: rgba(4, 8, 18, .72); backdrop-filter: blur(3px); }
