@@ -15,9 +15,16 @@
   const lang = document.documentElement.lang === "ar" ? "ar" : "en";
   const T = lang === "ar"
     ? { title: "أذكار ما بعد الصلاة", aria: "افتح أذكار ما بعد الصلاة ومعلومات الصلاة", close: "إغلاق",
-        fTime: "يبدأ وقتها:", fFard: "فرضها:", fSunnah: "السنة الراتبة:", sec: "الأذكار المأثورة" }
+        fTime: "يبدأ وقتها:", fFard: "فرضها:", fSunnah: "السنة الراتبة:", sec: "الأذكار المأثورة",
+        trackTitle: "سجِّل التزامك", trackHint: "لمدينتك — يظهر إنجازك على البطاقة",
+        tFard: "صلّيت الفرض", tSunnah: "صلّيت السنة", tAzkar: "قلت الأذكار", celebrate: "تقبّل الله" }
     : { title: "Post-Prayer Adhkar", aria: "Open post-prayer adhkar and prayer info", close: "Close",
-        fTime: "Its time:", fFard: "Obligatory:", fSunnah: "Regular sunnah:", sec: "The adhkar" };
+        fTime: "Its time:", fFard: "Obligatory:", fSunnah: "Regular sunnah:", sec: "The adhkar",
+        trackTitle: "Log your adherence", trackHint: "For your city — shown on the card",
+        tFard: "Prayed the fard", tSunnah: "Prayed the sunnah", tAzkar: "Said the adhkar", celebrate: "Accepted" };
+
+  // Asr has no confirmed regular sunnah → no sunnah tracker for it.
+  const HAS_SUNNAH = { Fajr: true, Dhuhr: true, Asr: false, Maghrib: true, Isha: true };
 
   // A short, human piece about each obligatory prayer (Sunrise excluded).
   const INFO = {
@@ -56,6 +63,28 @@
   const isRead = name => { try { return localStorage.getItem(readKey(name)) === "1"; } catch (e) { return false; } };
   const markRead = name => { try { localStorage.setItem(readKey(name), "1"); } catch (e) {} };
 
+  /* ---- worship tracking (fard / sunnah / azkar), one record per day ----
+     State is global per day (you pray once a day), but the trackers and the
+     card badges only show for the user's own city (local/saved). */
+  const worshipKey = () => `cth-worship:${todayStr()}`;
+  function getWorship() { try { return JSON.parse(localStorage.getItem(worshipKey()) || "{}") || {}; } catch (e) { return {}; } }
+  function setWorship(o) { try { localStorage.setItem(worshipKey(), JSON.stringify(o)); } catch (e) {} }
+  function wState(name) { const w = getWorship()[name] || {}; return { fard: !!w.f, sunnah: !!w.s, azkar: !!w.a }; }
+  const KIND_KEY = { fard: "f", sunnah: "s", azkar: "a" };
+  function wToggle(name, kind) {
+    const w = getWorship(), cur = w[name] || {}, k = KIND_KEY[kind];
+    if (!k) return;
+    cur[k] = !cur[k]; w[name] = cur; setWorship(w);
+    try { window.dispatchEvent(new CustomEvent("cth-worship")); } catch (e) {}
+  }
+
+  // Is the shown city the user's own city (saved favorite / home / detected local)?
+  function favSlugs() { try { return (JSON.parse(localStorage.getItem("cth-fav-cities") || "[]") || []).map(e => e && e.slug).filter(Boolean); } catch (e) { return []; } }
+  function homeSlug() { try { return localStorage.getItem("cth-home-city"); } catch (e) { return null; } }
+  function computeMine(slug) { if (!slug) return false; return favSlugs().indexOf(slug) > -1 || homeSlug() === slug; }
+  // On city pages we know the slug up front; the homepage tells us via an event.
+  let ctxMine = computeMine(window.CITY_SLUG || null);
+
   // ---- sheet (built once) ----
   let sheet, sheetBody, sheetTitle;
   const SKELETON = `
@@ -85,10 +114,30 @@
     document.body.appendChild(sheet);
     sheetBody = sheet.querySelector("#prayerAzkarTool");
     sheetTitle = sheet.querySelector(".pa-head-title");
-    const close = () => { sheet.hidden = true; document.documentElement.style.overflow = ""; };
+    const close = () => { sheet.hidden = true; document.documentElement.style.overflow = ""; decorate(); };
     sheet.addEventListener("click", e => { if (e.target === sheet) close(); });
     sheet.querySelector(".az-sheet-close").addEventListener("click", close);
     document.addEventListener("keydown", e => { if (e.key === "Escape" && !sheet.hidden) close(); });
+  }
+
+  function trackBtn(name, kind) {
+    const done = wState(name)[kind];
+    const label = kind === "fard" ? T.tFard : kind === "sunnah" ? T.tSunnah : T.tAzkar;
+    return `<button type="button" class="pw-toggle pw-${kind}${done ? " is-done" : ""}" data-pw="${kind}" data-p="${name}" aria-pressed="${done ? "true" : "false"}"><span class="pw-check" aria-hidden="true">✓</span><span class="pw-tx">${label}</span></button>`;
+  }
+
+  function trackerHtml(prayerName) {
+    if (!ctxMine || !INFO[prayerName]) return "";
+    const hasS = HAS_SUNNAH[prayerName];
+    return `
+      <div class="pw-tracker">
+        <div class="pw-tracker-head"><span class="pw-tracker-title">${T.trackTitle}</span><span class="pw-tracker-hint">${T.trackHint}</span></div>
+        <div class="pw-tracker-btns">
+          ${trackBtn(prayerName, "fard")}
+          ${hasS ? trackBtn(prayerName, "sunnah") : ""}
+          ${trackBtn(prayerName, "azkar")}
+        </div>
+      </div>`;
   }
 
   function heroInfoHtml(prayerName) {
@@ -109,6 +158,7 @@
           <li>🌿 <span class="pa-fk">${T.fSunnah}</span> ${x.sunnah}</li>
         </ul>
       </div>
+      ${trackerHtml(prayerName)}
       <span class="pa-sec-label">${T.sec}</span>`;
   }
 
@@ -119,9 +169,33 @@
     sheetBody.innerHTML = heroInfoHtml(prayerName) + '<div class="pa-reader">' + SKELETON + "</div>";
     const storeKey = `cth-azkar:prayer:${prayerName || "x"}`;
     window.CTHAzkar.mount(sheetBody.querySelector(".pa-reader"), items, { lang, storeKey, daily: true });
+    if (prayerName) {
+      sheetBody.querySelectorAll(".pw-toggle").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const kind = btn.dataset.pw;
+          wToggle(prayerName, kind);
+          const done = wState(prayerName)[kind];
+          btn.classList.toggle("is-done", done);
+          btn.setAttribute("aria-pressed", done ? "true" : "false");
+          if (done) { btn.classList.remove("pw-bump"); void btn.offsetWidth; btn.classList.add("pw-bump"); }
+        });
+      });
+    }
     if (prayerName) { markRead(prayerName); decorate(); }
     sheet.hidden = false;
     document.documentElement.style.overflow = "hidden";
+  }
+
+  const reduceMotion = () => { try { return matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) { return false; } };
+  // A gentle one-shot celebration when a prayer is fully completed.
+  function celebrate(card) {
+    if (reduceMotion()) return;
+    card.classList.remove("pw-shine"); void card.offsetWidth; card.classList.add("pw-shine");
+    setTimeout(() => card.classList.remove("pw-shine"), 1200);
+    const w = document.createElement("span");
+    w.className = "pw-word"; w.textContent = T.celebrate; w.setAttribute("aria-hidden", "true");
+    card.appendChild(w);
+    setTimeout(() => w.remove(), 2300);
   }
 
   // ---- make the prayer tiles tappable + show the "due" glow ----
@@ -138,6 +212,49 @@
       const name = ORDER[i];
       if (name === "Sunrise" || !INFO[name]) { card.classList.remove("has-azkar-due"); return; }
       card.classList.toggle("has-azkar-due", i === currentIdx && !isRead(name));
+      // Achievement seal (my-city only): a tri-colour ring that fills as you complete
+      // fard / sunnah / azkar, crowned with a check — and a star + celebration once full.
+      let seal = card.querySelector(".pw-seal");
+      const sheetOpen = !!(sheet && !sheet.hidden);
+      if (ctxMine) {
+        const st = wState(name), hasS = HAS_SUNNAH[name];
+        const total = hasS ? 3 : 2;
+        const doneCount = (st.fard ? 1 : 0) + (hasS && st.sunnah ? 1 : 0) + (st.azkar ? 1 : 0);
+        const full = doneCount === total && st.fard;
+        if (doneCount > 0) {
+          if (!seal) { seal = document.createElement("span"); seal.className = "pw-seal"; seal.setAttribute("aria-hidden", "true"); seal.innerHTML = '<span class="pw-seal-core"></span>'; card.appendChild(seal); }
+          const segs = [st.fard ? "var(--pw-fard)" : "var(--pw-faint)"];
+          if (hasS) segs.push(st.sunnah ? "var(--pw-sunnah)" : "var(--pw-faint)");
+          segs.push(st.azkar ? "var(--pw-azkar)" : "var(--pw-faint)");
+          const step = 100 / segs.length;
+          const stops = segs.map((c, k) => `${c} ${(k * step).toFixed(2)}% ${((k + 1) * step).toFixed(2)}%`).join(",");
+          seal.style.setProperty("--pw-ring", `conic-gradient(${stops})`);
+          seal.classList.toggle("is-full", full);
+          seal.querySelector(".pw-seal-core").textContent = full ? "★" : "✓";
+          card.classList.add("pw-done");
+          card.classList.toggle("pw-full", full);
+        } else {
+          if (seal) { seal.remove(); seal = null; }
+          card.classList.remove("pw-done", "pw-full");
+        }
+        // Celebrate a newly reached achievement — but only while the sheet is closed,
+        // so the pop/shine is actually seen on the card (not hidden behind the sheet).
+        if (!sheetOpen) {
+          // On first sight of a card (page load / grid rebuild) just record a baseline,
+          // so saved progress is shown calmly without replaying the celebration.
+          const seen = card.dataset.pwCount !== undefined;
+          const prev = seen ? +card.dataset.pwCount : doneCount;
+          if (seen && seal && doneCount > prev && !reduceMotion()) {
+            seal.classList.remove("pw-pop"); void seal.offsetWidth; seal.classList.add("pw-pop");
+            if (full) celebrate(card);
+          }
+          card.dataset.pwCount = String(doneCount);
+        }
+      } else if (seal) {
+        seal.remove();
+        card.classList.remove("pw-done", "pw-full");
+        delete card.dataset.pwCount;
+      }
       if (card.dataset.paWired) return;
       card.dataset.paWired = "1";
       card.classList.add("is-tappable");
@@ -154,6 +271,14 @@
       card.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
     });
   }
+
+  // The homepage panel switches cities → it tells us the slug + whether it's ours.
+  window.addEventListener("cth-city", e => {
+    ctxMine = !!(e.detail && e.detail.mine);
+    decorate();
+  });
+  // A tracker toggled anywhere → refresh the card badges.
+  window.addEventListener("cth-worship", () => decorate());
 
   const grid = document.getElementById("prayerGrid");
   if (grid) {

@@ -305,6 +305,25 @@ html.app-mode #cityPanel { padding-top: 8px; padding-bottom: 8px; width: 100%; }
 @keyframes cp-pulse { 70% { box-shadow: 0 0 0 6px rgba(245,166,35,0); } 100% { box-shadow: 0 0 0 0 rgba(245,166,35,0); } }
 @media (prefers-reduced-motion: reduce) { .cp-next-dot { animation: none; } }
 
+/* Supplication above the streak box */
+.cp-dua { margin: 6px 0 2px; text-align: center; max-inline-size: 34ch; font-size: 1rem; line-height: 1.95; font-weight: 600; color: color-mix(in srgb, #f5a623 52%, var(--text)); }
+.cp-dua[hidden] { display: none; }
+.cp-dua-tr { display: block; margin-top: 3px; font-size: .72rem; font-weight: 400; font-style: italic; color: var(--text-2); line-height: 1.5; }
+
+/* Streak variant of the status box (shown for the user's own city) */
+.cp-next.cp-streak { flex-direction: column; align-items: center; gap: 3px; white-space: normal; text-align: center; padding: 8px 16px; background: linear-gradient(180deg, rgba(245,166,35,.14), rgba(240,110,40,.10)); border-color: rgba(245,166,35,.34); }
+.cp-streak-main { display: inline-flex; align-items: center; gap: 6px; font-weight: 800; color: var(--text); font-size: .92rem; }
+.cp-flame { font-size: 1rem; line-height: 1; filter: drop-shadow(0 0 6px rgba(245,200,120,.55)); }
+.cp-streak-sub { display: inline-flex; align-items: center; gap: 8px; font-size: .74rem; color: var(--text-2); }
+.cp-pips { display: inline-flex; gap: 4px; }
+.cp-pip { width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid var(--border-2); background: transparent; opacity: .5; transition: background .25s, border-color .25s, box-shadow .25s, opacity .25s; }
+.cp-pip.on { opacity: 1; background: var(--pw-fard, #22c55e); border-color: var(--pw-fard, #22c55e); box-shadow: 0 0 0 2px color-mix(in srgb, var(--pw-fard, #22c55e) 22%, transparent); }
+.cp-streak-new { color: #f5a623; animation: cpStreakPulse .6s ease-out; }
+.cp-next.cp-celebrate { animation: cpBoxPulse 2.4s ease-out; }
+@keyframes cpStreakPulse { 0% { transform: scale(.8); opacity: .3; } 55% { transform: scale(1.08); } 100% { transform: scale(1); opacity: 1; } }
+@keyframes cpBoxPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(245,166,35,0); } 30% { box-shadow: 0 0 0 6px rgba(245,166,35,.18); } }
+@media (prefers-reduced-motion: reduce) { .cp-streak-new, .cp-next.cp-celebrate { animation: none; } }
+
 /* Desktop homepage clock — fill the column height (site only, not app / mobile) */
 @media (min-width: 861px) {
   html:not(.app-mode) .cp-grid { align-items: stretch; }
@@ -1291,6 +1310,54 @@ html[dir="rtl"] .prayer-azkar-tx { letter-spacing: 0; }
 .pa-facts li { font-size: .9rem; line-height: 1.65; color: var(--text-2); }
 .pa-fk { font-weight: 800; color: var(--text); }
 .pa-sec-label { display: block; font-size: .66rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0 2px 12px; }
+
+/* ---- Worship tracking: colours shared by sheet trackers + card seal ---- */
+:root { --pw-fard: #22c55e; --pw-sunnah: #f5a623; --pw-azkar: #8b5cf6; --pw-faint: color-mix(in srgb, var(--border-2) 55%, transparent); }
+
+/* Sheet trackers ("I prayed" toggles), shown only for the user's own city */
+.pw-tracker { margin: 0 0 18px; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--border); background: var(--surface-2); }
+.pw-tracker-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 11px; }
+.pw-tracker-title { font-size: .82rem; font-weight: 800; color: var(--text); }
+.pw-tracker-hint { font-size: .68rem; color: var(--muted); }
+.pw-tracker-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+.pw-toggle { display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px; border-radius: 999px; border: 1px solid var(--border-2); background: var(--surface); color: var(--text-2); font: inherit; font-size: .82rem; font-weight: 700; cursor: pointer; line-height: 1; -webkit-tap-highlight-color: transparent; transition: background .18s, color .18s, border-color .18s, transform .08s; }
+.pw-toggle:hover { color: var(--text); border-color: var(--border-2); }
+.pw-toggle:active { transform: scale(.95); }
+.pw-toggle .pw-check { display: inline-flex; width: 15px; height: 15px; align-items: center; justify-content: center; border-radius: 50%; border: 1.6px solid currentColor; font-size: .62rem; font-weight: 900; opacity: .5; transition: opacity .18s, background .18s; }
+.pw-toggle.is-done { color: #fff; border-color: transparent; }
+.pw-toggle.is-done .pw-check { opacity: 1; border-color: rgba(255,255,255,.85); background: rgba(255,255,255,.16); }
+.pw-toggle.pw-fard.is-done   { background: var(--pw-fard); }
+.pw-toggle.pw-sunnah.is-done { background: var(--pw-sunnah); color: #3a2600; }
+.pw-toggle.pw-sunnah.is-done .pw-check { border-color: rgba(58,38,0,.55); background: rgba(58,38,0,.12); }
+.pw-toggle.pw-azkar.is-done  { background: var(--pw-azkar); }
+
+.pw-toggle.pw-bump { animation: pwBump .32s cubic-bezier(.2,.8,.2,1); }
+@keyframes pwBump { 0% { transform: scale(1); } 45% { transform: scale(1.12); } 100% { transform: scale(1); } }
+
+/* Card achievement seal: a tri-colour ring (fard / sunnah / azkar) with a check,
+   crowned with a star and a warm glow once the prayer is fully completed. */
+.pw-seal { position: absolute; inset-block-start: 9px; inset-inline-end: 9px; width: 25px; height: 25px; border-radius: 50%; padding: 3px; background: var(--pw-ring, var(--border-2)); display: inline-flex; box-shadow: 0 2px 7px rgba(0,0,0,.2); pointer-events: none; z-index: 2; }
+.pw-seal-core { flex: 1; border-radius: 50%; background: var(--surface); display: grid; place-items: center; font-size: .68rem; font-weight: 900; line-height: 1; color: var(--pw-fard); }
+.pw-seal.is-full { box-shadow: 0 0 0 2px color-mix(in srgb, var(--pw-sunnah) 40%, transparent), 0 5px 16px -3px color-mix(in srgb, var(--pw-sunnah) 65%, transparent); }
+.pw-seal.is-full .pw-seal-core { color: var(--pw-sunnah); }
+.pw-seal.pw-pop { animation: pwPop .5s cubic-bezier(.2,.8,.2,1); }
+@keyframes pwPop { 0% { transform: scale(.3); opacity: .2; } 55% { transform: scale(1.25); } 100% { transform: scale(1); opacity: 1; } }
+
+/* card glow states */
+.prayer-card.pw-done { border-color: color-mix(in srgb, var(--pw-fard) 42%, var(--border)); }
+.prayer-card.pw-full { border-color: color-mix(in srgb, var(--pw-sunnah) 60%, var(--border)); box-shadow: 0 16px 34px -18px color-mix(in srgb, var(--pw-sunnah) 65%, transparent); }
+
+/* full-completion shimmer sweep + floating "Accepted" word */
+.prayer-card.pw-full::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; background: linear-gradient(115deg, transparent 32%, color-mix(in srgb, var(--pw-sunnah) 34%, transparent) 50%, transparent 68%); background-size: 250% 100%; opacity: 0; }
+.prayer-card.pw-full.pw-shine::after { animation: pwShine 1.1s ease-out; }
+@keyframes pwShine { 0% { opacity: 0; background-position: 120% 0; } 20% { opacity: 1; } 100% { opacity: 0; background-position: -40% 0; } }
+.pw-word { position: absolute; inset-block-start: 3px; inset-inline: 0; text-align: center; font-size: .74rem; font-weight: 800; color: var(--pw-sunnah); pointer-events: none; z-index: 3; text-shadow: 0 1px 7px color-mix(in srgb, var(--pw-sunnah) 45%, transparent); animation: pwWord 2.3s ease-out forwards; }
+@keyframes pwWord { 0% { opacity: 0; transform: translateY(7px) scale(.9); } 15% { opacity: 1; transform: translateY(-2px) scale(1); } 70% { opacity: 1; transform: translateY(-9px); } 100% { opacity: 0; transform: translateY(-17px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .pw-toggle.pw-bump, .pw-seal.pw-pop, .prayer-card.pw-full.pw-shine::after { animation: none !important; }
+  .pw-word { display: none; }
+}
 
 /* sheet */
 .az-sheet-overlay { position: fixed; inset: 0; z-index: 1200; display: flex; align-items: flex-end; justify-content: center; background: rgba(4, 8, 18, .72); backdrop-filter: blur(3px); padding: 0; }

@@ -22,6 +22,10 @@
       inHM: (h, m) => h ? `in ${h}h ${m}m` : `in ${m}m`, tomorrow: "tomorrow",
       savedToast: "Saved to My Cities.", removedToast: "Removed from My Cities.", favFull: n => `You can save up to ${n} cities.`,
       myFav: "My favorite cities",
+      streakDays: n => `You kept your prayers: ${n} day${n === 1 ? "" : "s"}`, streakStart: "Begin your journey today 🌱",
+      todayWord: "Today", dayDone: "Today complete ✓", streakNew: "🌙 You completed today's prayers — may they be accepted!",
+      dua: "اللَّهُمَّ أَعِنَّا عَلَى ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ",
+      duaTr: "O Allah, help us to remember You, thank You, and worship You well.",
     },
     ar: {
       addFav: "أضِف إلى مدني", remFav: "أزِل من مدني",
@@ -36,6 +40,11 @@
       inHM: (h, m) => h ? `بعد ${h} س ${m} د` : `بعد ${m} د`, tomorrow: "غدًا",
       savedToast: "تم الحفظ في مدني.", removedToast: "تمت الإزالة من مدني.", favFull: n => `تقدر تحفظ حتى ${n} مدن.`,
       myFav: "مدني المفضلة",
+      streakDays: n => `حافظتَ على صلاتك: ${n} ${n === 1 ? "يوم" : n === 2 ? "يومان" : (n >= 3 && n <= 10) ? "أيام" : "يومًا"}`,
+      streakStart: "ابدأ رحلتك اليوم 🌱",
+      todayWord: "اليوم", dayDone: "اكتمل اليوم ✓", streakNew: "🌙 أتممتَ صلوات يومك — تقبّل الله!",
+      dua: "اللَّهُمَّ أَعِنَّا عَلَى ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ",
+      duaTr: "",
     },
   };
   const T = I18N[LANG];
@@ -47,6 +56,7 @@
   let CITIES = [];
   const fmtCache = new Map();
   let currentCity = null, homeCity = null, detectedHome = null, prayerState = null;
+  let currentMine = false;
 
 
   const $  = (s, c = document) => c.querySelector(s);
@@ -484,7 +494,8 @@
     tick();
     const delay = 1000 - (Date.now() % 1000);
     setTimeout(() => { tick(); setInterval(tick, 1000); }, delay);
-    setInterval(updateNextLine, 30000);
+    setInterval(updateStatusBox, 30000);
+    window.addEventListener("cth-worship", updateStatusBox);
   }
 
   /* ---------- Prayer times + Hijri (AlAdhan) ---------- */
@@ -562,6 +573,12 @@
     const hb = $("#cpHome"); if (hb) hb.hidden = onLocal;
     const inp = $("#cpSearch"); if (inp && document.activeElement !== inp) inp.value = (onLocal || onDefault) ? "" : `${nm}, ${cCountry(city)}`;
     updateSaveStar();
+    // Tell the worship tracker whether this is the user's own city (local/saved).
+    currentMine = onLocal || onDefault || isFav(city.slug);
+    try {
+      window.dispatchEvent(new CustomEvent("cth-city", { detail: { slug: city.slug, mine: currentMine } }));
+    } catch (e) {}
+    updateStatusBox();
     tick();
     loadPrayer(city); loadSun(city);
   }
@@ -657,7 +674,7 @@
           <div class="prayer-time">${clean(t[p])}</div>
           <span class="prayer-tag">${p === next ? T.next : ""}</span>
         </article>`).join("");
-      updateNextLine();
+      updateStatusBox();
       if (t.Sunrise && t.Sunset) fillSun(clean(t.Sunrise), clean(t.Sunset));
       refreshCityPulse(city, prayerState.timings);
     };
@@ -692,6 +709,65 @@
     const diff = nextMin - nowMin, dh = Math.floor(diff / 60), dm = diff % 60;
     el.hidden = false;
     el.innerHTML = `<span class="cp-next-dot" aria-hidden="true"></span>${T.next}: <strong>${T.prayers[idx]}${tomorrow ? " " + T.tomorrow : ""}</strong> · <span class="mono">${prayerState.timings[PRAYERS[idx]]}</span> <span class="cp-next-in">${T.inHM(dh, dm)}</span>`;
+  }
+
+  /* ---------- Prayer streak (reads the same worship record the sheet writes) ---------- */
+  const OBLIG = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
+  const wDateStr = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  function wGetDay(ds) { try { return JSON.parse(localStorage.getItem("cth-worship:" + ds) || "{}") || {}; } catch (e) { return {}; } }
+  function wFardCount(ds) { const w = wGetDay(ds); return OBLIG.reduce((n, p) => n + (w[p] && w[p].f ? 1 : 0), 0); }
+  const wDayComplete = ds => wFardCount(ds) === 5;
+  function wStreak() {
+    let n = 0, d = new Date();
+    if (!wDayComplete(wDateStr(d))) d.setDate(d.getDate() - 1); // today still in progress → count up to yesterday
+    while (wDayComplete(wDateStr(d))) { n++; d.setDate(d.getDate() - 1); }
+    return n;
+  }
+
+  let streakFirstRender = true, streakCelebrateT = 0, completeCelebratedFor = null;
+  function renderStreak(el) {
+    const today = wDateStr(new Date());
+    const prog = wFardCount(today);
+    const complete = prog === 5;
+    const justCompleted = complete && !streakFirstRender && completeCelebratedFor !== today;
+    if (complete) completeCelebratedFor = today;
+    el.hidden = false;
+
+    if (justCompleted) {
+      el.innerHTML = `<span class="cp-streak-main cp-streak-new">${T.streakNew}</span>`;
+      el.classList.add("cp-celebrate");
+      clearTimeout(streakCelebrateT);
+      streakCelebrateT = setTimeout(() => { el.classList.remove("cp-celebrate"); updateStatusBox(); }, 2600);
+      streakFirstRender = false;
+      return;
+    }
+
+    const streak = wStreak();
+    const main = streak > 0 ? `<span class="cp-flame" aria-hidden="true">🌙</span>${T.streakDays(streak)}` : T.streakStart;
+    let pips = "";
+    for (let k = 0; k < 5; k++) pips += `<i class="cp-pip${k < prog ? " on" : ""}"></i>`;
+    const sub = complete ? T.dayDone : `${T.todayWord} ${prog}/5`;
+    el.innerHTML = `<span class="cp-streak-main">${main}</span><span class="cp-streak-sub">${sub}<span class="cp-pips" aria-hidden="true">${pips}</span></span>`;
+    streakFirstRender = false;
+  }
+
+  // A gentle supplication that crowns the streak box (shown for your own city).
+  function ensureDuaEl() {
+    let d = $("#cpDua"); if (d) return d;
+    const box = $("#cpNext"); if (!box || !box.parentNode) return null;
+    d = document.createElement("p");
+    d.id = "cpDua"; d.className = "cp-dua"; d.hidden = true; d.setAttribute("dir", "rtl");
+    d.innerHTML = `<span class="cp-dua-ar">${T.dua}</span>` + (LANG === "ar" || !T.duaTr ? "" : `<span class="cp-dua-tr" dir="ltr">${T.duaTr}</span>`);
+    box.parentNode.insertBefore(d, box);
+    return d;
+  }
+
+  // The box under the clock: your city → streak; another city → next-prayer line.
+  function updateStatusBox() {
+    const el = $("#cpNext"); if (!el) return;
+    const dua = ensureDuaEl();
+    if (currentMine) { if (dua) dua.hidden = false; el.classList.add("cp-streak"); renderStreak(el); }
+    else { if (dua) dua.hidden = true; el.classList.remove("cp-streak", "cp-celebrate"); updateNextLine(); }
   }
 
   function nextPrayer(t, city) {
