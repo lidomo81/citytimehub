@@ -1347,6 +1347,15 @@ html[dir="rtl"] .prayer-azkar-tx { letter-spacing: 0; }
 .pa-fk { font-weight: 800; color: var(--text); }
 .pa-sec-label { display: block; font-size: .66rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0 2px 12px; }
 
+/* "Virtue of this prayer" — an authentic hadith, gently set apart (shown for every city) */
+.pa-fadl { position: relative; margin: 0 0 18px; padding: 18px 20px; border-radius: 14px; text-align: center;
+  border: 1px solid color-mix(in srgb, var(--brand) 26%, var(--border));
+  background: linear-gradient(180deg, color-mix(in srgb, var(--brand) 8%, var(--surface-2)), var(--surface-2)); }
+.pa-fadl-label { display: block; font-size: .68rem; font-weight: 800; letter-spacing: .08em; color: var(--brand); margin-bottom: 9px; }
+.pa-fadl-text { margin: 0 0 8px; font-size: 1.04rem; line-height: 1.95; font-weight: 700; color: var(--text); }
+.pa-fadl-src { display: inline-block; font-size: .72rem; color: var(--muted); }
+.pa-fadl-src::before { content: "— "; }
+
 /* ---- Worship tracking: colours shared by sheet trackers + card seal ---- */
 :root { --pw-fard: #22c55e; --pw-sunnah: #f5a623; --pw-azkar: #8b5cf6; --pw-faint: color-mix(in srgb, var(--border-2) 55%, transparent); }
 

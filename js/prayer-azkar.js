@@ -17,11 +17,13 @@
     ? { title: "أذكار ما بعد الصلاة", aria: "افتح أذكار ما بعد الصلاة ومعلومات الصلاة", close: "إغلاق",
         fTime: "يبدأ وقتها:", fFard: "فرضها:", fSunnah: "السنة الراتبة:", sec: "الأذكار المأثورة",
         trackTitle: "سجِّل التزامك", trackHint: "لمدينتك — يظهر إنجازك على البطاقة",
-        tFard: "صلّيت الفرض", tSunnah: "صلّيت السنة", tAzkar: "قلت الأذكار", celebrate: "تقبّل الله" }
+        tFard: "صلّيت الفرض", tSunnah: "صلّيت السنة", tAzkar: "قلت الأذكار",
+        celebrate: ["تقبّل الله 🤍", "أحسنتَ 🌙", "نورٌ على نور ✨", "بُوركتَ ❤️"] }
     : { title: "Post-Prayer Adhkar", aria: "Open post-prayer adhkar and prayer info", close: "Close",
         fTime: "Its time:", fFard: "Obligatory:", fSunnah: "Regular sunnah:", sec: "The adhkar",
         trackTitle: "Log your adherence", trackHint: "For your city — shown on the card",
-        tFard: "Prayed the fard", tSunnah: "Prayed the sunnah", tAzkar: "Said the adhkar", celebrate: "Accepted" };
+        tFard: "Prayed the fard", tSunnah: "Prayed the sunnah", tAzkar: "Said the adhkar",
+        celebrate: ["Accepted 🤍", "Well done 🌙", "Light upon light ✨", "Blessed ❤️"] };
 
   // Asr has no confirmed regular sunnah → no sunnah tracker for it.
   const HAS_SUNNAH = { Fajr: true, Dhuhr: true, Asr: false, Maghrib: true, Isha: true };
@@ -47,6 +49,32 @@
     Isha: {
       ar: { emoji: "🌙", name: "صلاة العشاء", desc: "عندما يهدأ كل شيء، تأتي العشاء لتكون آخر لقاء مع الله في يومك. وبعدها يبدأ وقت الوتر وقيام الليل، لتبقى أبواب الخير مفتوحة لمن أراد أن يختم يومه بالقرب من ربه.", time: "من غياب الشفق الأحمر حتى طلوع الفجر، والأفضل أداؤها قبل منتصف الليل لمن تيسّر له.", fard: "أربع ركعات.", sunnah: "ركعتان بعد الفرض." },
       en: { emoji: "🌙", name: "Isha Prayer", desc: "When everything grows still, Isha comes as the last meeting with Allah in your day. After it begins the time of Witr and the night prayer, so the doors of good stay open for whoever wishes to seal his day close to his Lord.", time: "From the disappearance of the red twilight until dawn; it is better to pray it before midnight for whoever is able.", fard: "Four rak'ahs.", sunnah: "Two rak'ahs after the obligatory." },
+    },
+  };
+
+  // Authentic virtue (fadl) of each prayer — Sahihayn only. Fajr, Asr and Isha have
+  // a prayer-specific hadith; Dhuhr and Maghrib have none in al-Bukhari/Muslim, so the
+  // label is honest that it is the virtue of the five daily prayers, not that one alone.
+  const FADL = {
+    Fajr: {
+      ar: { label: "فضل صلاة الفجر", text: "رَكْعَتَا الْفَجْرِ خَيْرٌ مِنَ الدُّنْيَا وَمَا فِيهَا", src: "رواه مسلم" },
+      en: { label: "The virtue of Fajr", text: "The two rak'ahs of Fajr are better than the world and all that is in it.", src: "Muslim" },
+    },
+    Dhuhr: {
+      ar: { label: "فضل المحافظة على الصلاة", text: "مَثَلُ الصَّلَوَاتِ الْخَمْسِ كَمَثَلِ نَهَرٍ جَارٍ غَمْرٍ عَلَى بَابِ أَحَدِكُمْ، يَغْتَسِلُ مِنْهُ كُلَّ يَوْمٍ خَمْسًا", src: "رواه مسلم" },
+      en: { label: "The virtue of guarding the prayers", text: "The five daily prayers are like a flowing river at the door of one of you, in which he bathes five times a day.", src: "Muslim" },
+    },
+    Asr: {
+      ar: { label: "فضل صلاة العصر", text: "مَنْ صَلَّى الْبَرْدَيْنِ دَخَلَ الْجَنَّةَ", src: "متفق عليه" },
+      en: { label: "The virtue of Asr", text: "Whoever prays the two cool prayers (Fajr and Asr) will enter Paradise.", src: "Agreed upon" },
+    },
+    Maghrib: {
+      ar: { label: "فضل الصلوات الخمس", text: "الصَّلَوَاتُ الْخَمْسُ… كَفَّارَةٌ لِمَا بَيْنَهُنَّ مَا اجْتُنِبَتِ الْكَبَائِرُ", src: "رواه مسلم" },
+      en: { label: "The virtue of the five prayers", text: "The five daily prayers are an expiation for what is between them, so long as major sins are avoided.", src: "Muslim" },
+    },
+    Isha: {
+      ar: { label: "فضل صلاة العشاء", text: "مَنْ صَلَّى الْعِشَاءَ فِي جَمَاعَةٍ فَكَأَنَّمَا قَامَ نِصْفَ اللَّيْلِ", src: "رواه مسلم" },
+      en: { label: "The virtue of Isha", text: "Whoever prays Isha in congregation, it is as though he prayed half the night.", src: "Muslim" },
     },
   };
 
@@ -158,8 +186,23 @@
           <li>🌿 <span class="pa-fk">${T.fSunnah}</span> ${x.sunnah}</li>
         </ul>
       </div>
+      ${fadlHtml(prayerName)}
       ${trackerHtml(prayerName)}
       <span class="pa-sec-label">${T.sec}</span>`;
+  }
+
+  // A gentle, authentic "virtue of this prayer" note (shown for every city).
+  function fadlHtml(prayerName) {
+    const f = FADL[prayerName];
+    if (!f) return "";
+    const x = f[lang] || f.en;
+    const q = lang === "ar" ? ["«", "»"] : ["“", "”"];
+    return `
+      <div class="pa-fadl">
+        <span class="pa-fadl-label">${x.label}</span>
+        <p class="pa-fadl-text">${q[0]}${x.text}${q[1]}</p>
+        <span class="pa-fadl-src">${x.src}</span>
+      </div>`;
   }
 
   function openSheet(prayerName) {
@@ -193,7 +236,8 @@
     card.classList.remove("pw-shine"); void card.offsetWidth; card.classList.add("pw-shine");
     setTimeout(() => card.classList.remove("pw-shine"), 1200);
     const w = document.createElement("span");
-    w.className = "pw-word"; w.textContent = T.celebrate; w.setAttribute("aria-hidden", "true");
+    const lines = Array.isArray(T.celebrate) ? T.celebrate : [T.celebrate];
+    w.className = "pw-word"; w.textContent = lines[Math.floor(Math.random() * lines.length)]; w.setAttribute("aria-hidden", "true");
     card.appendChild(w);
     setTimeout(() => w.remove(), 2300);
   }
@@ -264,6 +308,7 @@
       const hint = document.createElement("span");
       hint.className = "prayer-azkar-hint";
       hint.setAttribute("aria-hidden", "true");
+      hint.title = T.title; // whisper the misbaha's meaning on hover: "أذكار ما بعد الصلاة"
       hint.innerHTML = '<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><circle cx="12" cy="4.2" r="1.35"/><circle cx="17.5" cy="6.5" r="1.35"/><circle cx="19.8" cy="12" r="1.35"/><circle cx="17.5" cy="17.5" r="1.35"/><circle cx="12" cy="19.8" r="1.35"/><circle cx="6.5" cy="17.5" r="1.35"/><circle cx="4.2" cy="12" r="1.35"/><circle cx="6.5" cy="6.5" r="1.35"/></svg>';
       card.appendChild(hint);
       const open = () => openSheet(name);
