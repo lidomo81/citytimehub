@@ -30,6 +30,7 @@
       recoverMany: "Some prayers passed — make them up to complete your day 🤍",
       weekTitle: "Last 7 days", statsTitle: "Your adherence", currentStreak: "Current streak", bestStreak: "Best streak",
       legendFull: "Complete", legendPart: "Partial", legendNone: "Missed", statsClose: "Close", statsHint: "Tap for details",
+      streakNote: "This counter is only to encourage you to keep your prayers — not to collect any data. Everything stays on your device. Be honest with Allah and with yourself 🤍",
     },
     ar: {
       addFav: "أضِف إلى مدني", remFav: "أزِل من مدني",
@@ -53,6 +54,7 @@
       recoverMany: "صلوات فاتت أوقاتها.. تداركها لتُكمل يومك 🤍",
       weekTitle: "آخر ٧ أيام", statsTitle: "التزامك", currentStreak: "سلسلتك الحالية", bestStreak: "أطول سلسلة",
       legendFull: "مكتمل", legendPart: "جزئي", legendNone: "فائت", statsClose: "إغلاق", statsHint: "اضغط للتفاصيل",
+      streakNote: "هذا العدّاد وسيلة لتحفيزك على المحافظة على صلاتك، وليس لجمع أي معلومات — بياناتك محفوظة على جهازك وحده. فاجعلها صدقًا مع الله ومع نفسك 🤍",
     },
   };
   const T = I18N[LANG];
@@ -854,7 +856,8 @@
           <span><i class="cp-wk-pip cp-wk-full"></i>${T.legendFull}</span>
           <span><i class="cp-wk-pip cp-wk-part"></i>${T.legendPart}</span>
           <span><i class="cp-wk-pip cp-wk-none"></i>${T.legendNone}</span>
-        </div></div>`;
+        </div>
+        <p class="cp-stats-note">${T.streakNote}</p></div>`;
       document.body.appendChild(statsOverlay);
       const close = () => { statsOverlay.hidden = true; document.body.style.overflow = ""; };
       statsOverlay.addEventListener("click", e => { if (e.target === statsOverlay) close(); });

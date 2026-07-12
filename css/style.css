@@ -358,6 +358,7 @@ html.app-mode #cityPanel { padding-top: 8px; padding-bottom: 8px; width: 100%; }
 .cp-sd-n { font-size: .6rem; color: var(--text-2); font-variant-numeric: tabular-nums; }
 .cp-stats-legend { display: flex; justify-content: center; gap: 16px; font-size: .7rem; color: var(--text-2); }
 .cp-stats-legend span { display: inline-flex; align-items: center; gap: 5px; }
+.cp-stats-note { margin: 14px 0 0; padding-top: 13px; border-top: 1px solid var(--border); font-size: .74rem; line-height: 1.75; color: var(--text-2); text-align: center; }
 
 /* Desktop homepage clock — fill the column height (site only, not app / mobile) */
 @media (min-width: 861px) {
