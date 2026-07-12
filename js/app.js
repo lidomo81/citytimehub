@@ -21,6 +21,7 @@
       localEyebrow: "Your local time", homeEyebrow: "Your city", save: "My favorite city", saved: "Favorite ✓",
       inHM: (h, m) => h ? `in ${h}h ${m}m` : `in ${m}m`, tomorrow: "tomorrow",
       savedToast: "Saved to My Cities.", removedToast: "Removed from My Cities.", favFull: n => `You can save up to ${n} cities.`,
+      myFav: "My favorite cities",
     },
     ar: {
       addFav: "أضِف إلى مدني", remFav: "أزِل من مدني",
@@ -34,6 +35,7 @@
       localEyebrow: "وقتك المحلي", homeEyebrow: "مدينتك", save: "مدينتي المفضلة", saved: "مفضلة ✓",
       inHM: (h, m) => h ? `بعد ${h} س ${m} د` : `بعد ${m} د`, tomorrow: "غدًا",
       savedToast: "تم الحفظ في مدني.", removedToast: "تمت الإزالة من مدني.", favFull: n => `تقدر تحفظ حتى ${n} مدن.`,
+      myFav: "مدني المفضلة",
     },
   };
   const T = I18N[LANG];
@@ -165,14 +167,49 @@
   function getHomeSlug() { try { return localStorage.getItem(HOME_KEY) || null; } catch (e) { return null; } }
   function setHomeSlug(slug) { try { localStorage.setItem(HOME_KEY, slug); } catch (e) {} }
   function clearHomeSlug() { try { localStorage.removeItem(HOME_KEY); } catch (e) {} }
-  function getFavs() { try { return JSON.parse(localStorage.getItem(FAV_KEY) || "[]"); } catch (e) { return []; } }
-  function setFavs(a) { try { localStorage.setItem(FAV_KEY, JSON.stringify(a.slice(0, MAX_FAV))); } catch (e) {} }
-  function isFav(slug) { return getFavs().includes(slug); }
-  function toggleFav(slug) {
-    let f = getFavs();
-    if (f.includes(slug)) { setFavs(f.filter(s => s !== slug)); return { ok: true }; }
-    if (f.length >= MAX_FAV) return { full: true };
-    f.push(slug); setFavs(f); return { ok: true };
+  // Favorites are stored as entries: curated cities as { slug } (kept fresh from
+  // cities.json), worldwide cities as a full object so they survive reloads.
+  // Legacy data (a plain array of slug strings) is migrated transparently on read.
+  function getFavEntries() {
+    let raw = [];
+    try { raw = JSON.parse(localStorage.getItem(FAV_KEY) || "[]"); } catch (e) { raw = []; }
+    if (!Array.isArray(raw)) return [];
+    return raw.map(e => (typeof e === "string" ? { slug: e } : e)).filter(e => e && e.slug);
+  }
+  function getFavSlugs() { return getFavEntries().map(e => e.slug); }
+  function setFavEntries(a) { try { localStorage.setItem(FAV_KEY, JSON.stringify(a.slice(0, MAX_FAV))); } catch (e) {} }
+  function isFav(slug) { return getFavSlugs().includes(slug); }
+  function favEntryFor(cityOrSlug) {
+    if (typeof cityOrSlug === "string") return { slug: cityOrSlug };
+    const c = cityOrSlug || {};
+    if (c.world) return { slug: c.slug, name: c.name, country: c.country, lat: c.lat, lng: c.lng, method: c.method, tz: c.tz || null, world: true };
+    return { slug: c.slug };
+  }
+  function toggleFav(cityOrSlug) {
+    const slug = typeof cityOrSlug === "string" ? cityOrSlug : (cityOrSlug && cityOrSlug.slug);
+    if (!slug) return { full: false };
+    const entries = getFavEntries();
+    const i = entries.findIndex(e => e.slug === slug);
+    if (i >= 0) { entries.splice(i, 1); setFavEntries(entries); return { ok: true }; }
+    if (entries.length >= MAX_FAV) return { full: true };
+    entries.push(favEntryFor(cityOrSlug)); setFavEntries(entries); return { ok: true };
+  }
+  // Resolve a stored favorite entry to a usable city object.
+  function favToCity(entry) {
+    if (!entry) return null;
+    if (entry.world) return { slug: entry.slug, name: entry.name, country: entry.country, lat: entry.lat, lng: entry.lng, method: entry.method, tz: entry.tz || null, world: true };
+    return CITIES.find(c => c.slug === entry.slug) || null;
+  }
+  function favCities() { return getFavEntries().map(favToCity).filter(Boolean); }
+  function favCityBySlug(slug) {
+    const e = getFavEntries().find(x => x.slug === slug);
+    return e ? favToCity(e) : (CITIES.find(c => c.slug === slug) || null);
+  }
+  // Resolve the pinned home city (curated via cities.json, or a saved world city).
+  function getHomeCity() {
+    const slug = getHomeSlug();
+    if (!slug) return null;
+    return CITIES.find(c => c.slug === slug) || favCityBySlug(slug);
   }
   function starBtn(slug) {
     const on = isFav(slug);
@@ -206,16 +243,26 @@
     grid.innerHTML = list.map(cardHtml).join("");
     const cc = $("#cityCount"); if (cc) cc.textContent = CITIES.length;
   }
+  function favChipHtml(c) {
+    const nm = cName(c), co = cCountry(c);
+    const dnAttr = c.tz ? ` data-tz="${c.tz}"` : "";
+    return `<span class="fav-chip" role="button" tabindex="0" data-slug="${c.slug}"${dnAttr} aria-label="${nm}${co ? ", " + co : ""}">`
+      + `<span class="fav-chip-dn" data-daynight aria-hidden="true">·</span>`
+      + `<span class="fav-chip-name">${nm}</span>`
+      + `<span class="fav-chip-x" role="button" tabindex="0" data-favx="${c.slug}" aria-label="${T.remFav}" title="${T.remFav}">×</span>`
+      + `</span>`;
+  }
   function renderMyCities() {
     const sec = $("#myCities"), grid = $("#myCitiesGrid");
     if (!sec || !grid) return;
-    const list = getFavs().map(s => CITIES.find(c => c.slug === s)).filter(Boolean);
+    const list = favCities();
     if (!list.length) { sec.hidden = true; grid.innerHTML = ""; return; }
     sec.hidden = false;
-    grid.innerHTML = list.map(cardHtml).join("");
+    grid.innerHTML = `<div class="fav-app-label">${T.myFav}</div>`
+      + `<div class="fav-chips">${list.map(favChipHtml).join("")}</div>`;
   }
   function refreshStars() {
-    const favs = getFavs();
+    const favs = getFavSlugs();
     $$(".fav-star").forEach(s => {
       const on = favs.includes(s.dataset.fav);
       s.classList.toggle("is-fav", on);
@@ -244,6 +291,38 @@
       const star = e.target.closest && e.target.closest(".fav-star");
       if (star && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); star.click(); }
     });
+
+    // "My favorite cities" chips: tap the name → open it in the panel above and
+    // scroll to it; tap the × → remove it from favorites.
+    const grid = $("#myCitiesGrid");
+    if (grid) {
+      const openChip = chip => {
+        const c = favCityBySlug(chip.dataset.slug);
+        if (!c) return;
+        setCity(c);
+        const panel = $("#cityPanel");
+        if (panel) panel.scrollIntoView({ behavior: "smooth", block: "start" });
+      };
+      grid.addEventListener("click", e => {
+        const x = e.target.closest(".fav-chip-x");
+        if (x) {
+          e.preventDefault(); e.stopPropagation();
+          toggleFav(x.dataset.favx);
+          refreshStars(); renderMyCities(); updateSaveStar();
+          toast(T.removedToast);
+          return;
+        }
+        const chip = e.target.closest(".fav-chip");
+        if (chip) { e.preventDefault(); openChip(chip); }
+      });
+      grid.addEventListener("keydown", e => {
+        if (e.key !== "Enter" && e.key !== " ") return;
+        const x = e.target.closest(".fav-chip-x");
+        if (x) { e.preventDefault(); toggleFav(x.dataset.favx); refreshStars(); renderMyCities(); updateSaveStar(); toast(T.removedToast); return; }
+        const chip = e.target.closest(".fav-chip");
+        if (chip) { e.preventDefault(); openChip(chip); }
+      });
+    }
   }
 
   function injectSearchStyles() {
@@ -481,9 +560,6 @@
     const eb = $("#cpEyebrow"); if (eb) eb.textContent = onLocal ? T.localEyebrow : (onDefault ? T.homeEyebrow : `${nm}، ${cCountry(city)}`);
     // "My city" returns to the detected local city — show it whenever we're NOT already on local
     const hb = $("#cpHome"); if (hb) hb.hidden = onLocal;
-    // Saving a worldwide city isn't wired up yet (step 2) — hide the star for now
-    // so nothing half-persists; curated cities keep the save button.
-    const sb = $("#cpSave"); if (sb) sb.hidden = !!city.world;
     const inp = $("#cpSearch"); if (inp && document.activeElement !== inp) inp.value = (onLocal || onDefault) ? "" : `${nm}, ${cCountry(city)}`;
     updateSaveStar();
     tick();
@@ -508,8 +584,7 @@
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
     const matches = CITIES.filter(c => c.tz === tz);
     const detected = matches.find(c => c.featured) || matches[0] || CITIES.find(c => c.slug === "cairo") || CITIES[0];
-    const savedSlug = getHomeSlug();
-    const saved = savedSlug ? CITIES.find(c => c.slug === savedSlug) : null;
+    const saved = getHomeCity();   // curated slug or a saved worldwide city
     detectedHome = detected;
     const home = saved || detected;
     setCity(home);
@@ -521,7 +596,8 @@
     if (sv) sv.addEventListener("click", () => {
       if (!currentCity) return;
       const slug = currentCity.slug;
-      const r = toggleFav(slug);
+      // Pass the whole city so a worldwide city is stored with its coordinates.
+      const r = toggleFav(currentCity);
       if (r.full) { toast(T.favFull(MAX_FAV)); return; }
       const nowFav = isFav(slug);
       // Save = favorite + pin this city as the panel's default (stays until changed).

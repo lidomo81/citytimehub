@@ -223,10 +223,14 @@ html.app-mode main, html.app-mode #top { padding-top: 0; }
 /* Home in app mode: show only the city panel */
 html.app-mode .hero,
 html.app-mode #tools,
-html.app-mode #myCities,
 html.app-mode #citiesCta,
 html.app-mode #reflections,
 html.app-mode #reference { display: none !important; }
+/* Favorite cities: hidden when empty (the [hidden] attribute); in the app it
+   shows as a compact labelled row, like the quick-tools rows. */
+html.app-mode #myCities:not([hidden]) { display: block; padding: 2px 0 0; }
+html.app-mode #myCities .section-head { display: none; }
+html.app-mode #myCities .container { width: min(960px, 92%); margin-inline: auto; padding-inline: 0; }
 .app-bar--home .app-bar-title { flex: 1; text-align: center; }
 /* quick tools bar — visible only inside the installed app */
 .app-tools { display: none; }
@@ -671,6 +675,32 @@ html.app-mode .prayer-insights { margin-top: 10px; }
 .ac-country { font-size: .82rem; color: var(--text-2); }
 .ac-empty { padding: 12px; color: var(--text-2); font-size: .9rem; }
 .ac-sep { padding: 8px 12px 4px; margin-top: 4px; border-top: 1px solid var(--border); font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--text-2); opacity: .7; pointer-events: none; }
+
+/* ===== My favorite cities — clickable name chips (site + app) ===== */
+.fav-app-label { display: none; }
+html.app-mode .fav-app-label { display: block; font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 4px 9px; }
+html[dir="rtl"] .fav-app-label { letter-spacing: 0; }
+.fav-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.fav-chip {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 11px 12px 11px 15px; border-radius: 13px;
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--text); font-weight: 700; cursor: pointer;
+  transition: border-color .18s var(--ease), box-shadow .18s var(--ease), transform .18s var(--ease);
+}
+html[dir="rtl"] .fav-chip { padding: 11px 15px 11px 12px; }
+.fav-chip:hover { border-color: var(--brand); transform: translateY(-1px); box-shadow: var(--shadow); }
+.fav-chip:focus-visible { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 20%, transparent); }
+.fav-chip-dn { font-size: 1rem; line-height: 1; color: var(--tint, var(--brand)); }
+.fav-chip-name { font-size: 1.08rem; letter-spacing: -.01em; }
+.fav-chip-x {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 20px; height: 20px; border-radius: 50%; margin-inline-start: 1px;
+  font-size: 1.05rem; line-height: 1; color: var(--text-2);
+  background: var(--surface-2); transition: background .16s, color .16s;
+}
+.fav-chip-x:hover, .fav-chip-x:focus-visible { outline: none; background: #ef4444; color: #fff; }
+html.app-mode .fav-chip-name { font-size: 1rem; }
 
 .swap-btn { display: grid; place-items: center; width: 44px; height: 46px; align-self: end; border: 1.5px solid var(--border); background: var(--surface); color: var(--text-2); border-radius: 12px; cursor: pointer; transition: border-color .2s, color .2s, transform .2s var(--ease); }
 .swap-btn:hover { border-color: var(--brand); color: var(--brand); transform: rotate(180deg); }
