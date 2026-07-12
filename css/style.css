@@ -746,6 +746,9 @@ html[dir="rtl"] .fav-app-label { letter-spacing: 0; }
 html[dir="rtl"] .fav-chip { padding: 11px 15px 11px 12px; }
 .fav-chip:hover { border-color: var(--brand); transform: translateY(-1px); box-shadow: var(--shadow); }
 .fav-chip:focus-visible { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 20%, transparent); }
+/* the default city (shown on open) is pinned and gently highlighted */
+.fav-chip.is-home { border-color: color-mix(in srgb, var(--brand) 55%, var(--border)); background: color-mix(in srgb, var(--brand) 8%, var(--surface)); }
+.fav-chip-pin { display: inline-flex; line-height: 0; color: var(--brand); }
 .fav-chip-dn { font-size: 1rem; line-height: 1; color: var(--tint, var(--brand)); }
 .fav-chip-name { font-size: 1.08rem; letter-spacing: -.01em; }
 .fav-chip-x {

@@ -21,7 +21,7 @@
       localEyebrow: "Your local time", homeEyebrow: "Your city", save: "My favorite city", saved: "Favorite ✓",
       inHM: (h, m) => h ? `in ${h}h ${m}m` : `in ${m}m`, tomorrow: "tomorrow",
       savedToast: "Saved to My Cities.", removedToast: "Removed from My Cities.", favFull: n => `You can save up to ${n} cities.`,
-      myFav: "My favorite cities",
+      myFav: "My favorite cities", defaultCity: "Opens by default", setDefaultToast: "Set as your default city on open.",
       streakDays: n => `${n} day${n === 1 ? "" : "s"} keeping faith with Him — may Allah keep you steadfast`, streakStart: "Begin your journey today 🌱",
       todayWord: "Today", dayDone: "Today's prayers, complete 🤍", streakNew: "🌙 May your prayers be a comfort to your heart — accepted, in shā’ Allah 🤍",
       dua: "اللَّهُمَّ أَعِنَّا عَلَى ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ",
@@ -44,7 +44,7 @@
       localEyebrow: "وقتك المحلي", homeEyebrow: "مدينتك", save: "مدينتي المفضلة", saved: "مفضلة ✓",
       inHM: (h, m) => h ? `بعد ${h} س ${m} د` : `بعد ${m} د`, tomorrow: "غدًا",
       savedToast: "تم الحفظ في مدني.", removedToast: "تمت الإزالة من مدني.", favFull: n => `تقدر تحفظ حتى ${n} مدن.`,
-      myFav: "مدني المفضلة",
+      myFav: "مدني المفضلة", defaultCity: "تظهر عند الفتح", setDefaultToast: "تم تعيينها لتظهر عند فتح الموقع.",
       streakDays: n => `منذ ${n === 1 ? "يومٍ" : n === 2 ? "يومين" : n + " " + ((n >= 3 && n <= 10) ? "أيام" : "يومًا")} وأنت على العهد.. ثبّتك الله`,
       streakStart: "ابدأ رحلتك اليوم 🌱",
       todayWord: "اليوم", dayDone: "تمّت صلوات اليوم 🤍", streakNew: "🌙 قرّت عينُك بالصلاة.. تقبّل الله منك وأحسن إليك 🤍",
@@ -266,7 +266,12 @@
   function favChipHtml(c) {
     const nm = cName(c), co = cCountry(c);
     const dnAttr = c.tz ? ` data-tz="${c.tz}"` : "";
-    return `<span class="fav-chip" role="button" tabindex="0" data-slug="${c.slug}"${dnAttr} aria-label="${nm}${co ? ", " + co : ""}">`
+    const isHome = c.slug === getHomeSlug();
+    const pin = isHome
+      ? `<span class="fav-chip-pin" aria-hidden="true" title="${T.defaultCity}"><svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></span>`
+      : "";
+    return `<span class="fav-chip${isHome ? " is-home" : ""}" role="button" tabindex="0" data-slug="${c.slug}"${dnAttr} aria-label="${nm}${co ? ", " + co : ""}${isHome ? " — " + T.defaultCity : ""}">`
+      + pin
       + `<span class="fav-chip-dn" data-daynight aria-hidden="true">·</span>`
       + `<span class="fav-chip-name">${nm}</span>`
       + `<span class="fav-chip-x" role="button" tabindex="0" data-favx="${c.slug}" aria-label="${T.remFav}" title="${T.remFav}">×</span>`
@@ -317,9 +322,15 @@
     const grid = $("#myCitiesGrid");
     if (grid) {
       const openChip = chip => {
-        const c = favCityBySlug(chip.dataset.slug);
+        const slug = chip.dataset.slug;
+        const c = favCityBySlug(slug);
         if (!c) return;
+        // Tapping a saved city opens it AND makes it the default shown on next open.
+        const changed = getHomeSlug() !== slug;
+        setHomeSlug(slug);
+        renderMyCities();               // move the 📍 pin to this city
         setCity(c);
+        if (changed) toast(T.setDefaultToast);
         const panel = $("#cityPanel");
         if (panel) panel.scrollIntoView({ behavior: "smooth", block: "start" });
       };
@@ -328,6 +339,7 @@
         if (x) {
           e.preventDefault(); e.stopPropagation();
           toggleFav(x.dataset.favx);
+          if (getHomeSlug() === x.dataset.favx) clearHomeSlug(); // removing the default reverts to your local city
           refreshStars(); renderMyCities(); updateSaveStar();
           toast(T.removedToast);
           return;
@@ -338,7 +350,7 @@
       grid.addEventListener("keydown", e => {
         if (e.key !== "Enter" && e.key !== " ") return;
         const x = e.target.closest(".fav-chip-x");
-        if (x) { e.preventDefault(); toggleFav(x.dataset.favx); refreshStars(); renderMyCities(); updateSaveStar(); toast(T.removedToast); return; }
+        if (x) { e.preventDefault(); toggleFav(x.dataset.favx); if (getHomeSlug() === x.dataset.favx) clearHomeSlug(); refreshStars(); renderMyCities(); updateSaveStar(); toast(T.removedToast); return; }
         const chip = e.target.closest(".fav-chip");
         if (chip) { e.preventDefault(); openChip(chip); }
       });
