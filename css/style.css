@@ -1341,9 +1341,10 @@ html.app-mode .cp-install { display: none !important; }
 .cth-tour-pop.arr-left .cth-tour-arrow { left: -7px; top: 50%; margin-top: -6px; border-top: none; border-right: none; }
 
 /* App mode: room for the ad banner + comfier width on phones */
-.cth-tour.is-app .cth-tour-pop { width: min(380px, calc(100vw - 20px)); }
+.cth-tour.is-app .cth-tour-pop { width: min(380px, calc(100vw - 20px)); max-height: min(42vh, 290px); }
+.cth-tour.is-app .cth-tour-copy { max-height: 9.5rem; overflow-y: auto; -webkit-overflow-scrolling: touch; }
 @media (max-width: 520px) {
-  .cth-tour.is-app .cth-tour-pop { width: calc(100vw - 16px); border-radius: 18px 18px 16px 16px; }
+  .cth-tour.is-app .cth-tour-pop { width: calc(100vw - 16px); border-radius: 18px 18px 16px 16px; max-height: min(40vh, 250px); }
   .cth-tour-btns { width: 100%; justify-content: stretch; }
   .cth-tour-b { flex: 1; text-align: center; }
 }
