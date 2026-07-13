@@ -11,6 +11,10 @@
     ? { next: "التالي", prev: "السابق", skip: "تخطّي", done: "تمّ", of: "من", all: "كل المميزات", kicker: "جولة تفاعلية" }
     : { next: "Next", prev: "Back", skip: "Skip", done: "Done", of: "of", all: "All features", kicker: "Interactive tour" };
 
+  // The exact same pin icon used to mark the default city on a "My cities" chip,
+  // so the tour and the chip show one consistent marker (not a mismatched emoji).
+  const PIN_SVG = '<span class="cth-tour-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></span>';
+
   // Individual steps. sel = null → a centered card (no spotlight). Targets are
   // resolved at show-time, and any step whose element is missing is skipped.
   const S = {
@@ -23,9 +27,9 @@
     favorite: { sel: "#cpSave",
       ar: { t: "مدينتي المفضّلة ⭐", b: "اضغط النجمة لتحفظ المدينة، فتُجمَع كل مدنك في قسم «مدني»، وتبقى محفوظة كل مرة تفتح — حتى لو كانت مدينة من أي مكان في العالم. وسأريك مكانها الآن 👇" },
       en: { t: "My favorite city ⭐", b: "Tap the star to save a city; all your cities gather in the “My cities” section, kept every time you open — even a worldwide city. Let me show you where 👇" } },
-    myCities: { sel: "#myCities",
-      ar: { t: "قسم «مدني» 📍", b: "هنا تُجمع مدنك المحفوظة. احفظ مدينة بالنجمة فتظهر هنا كشرائح — اضغط اسم المدينة لفتحها، أو × لإزالتها. حتى لو لم تحفظ بعد، هذا هو مكانها." },
-      en: { t: "Your “My cities” section 📍", b: "Your saved cities gather here as chips. Tap a name to open it, or × to remove. Even before you save one, this is where they will appear." } },
+    myCities: { sel: "#myCities", icon: PIN_SVG,
+      ar: { t: "قسم «مدني»", b: "هنا تُجمع مدنك المحفوظة. اضغط اسم أي مدينة لفتحها وجعلها المدينة التي تظهر عند كل فتح — والمعلَّمة بهذا الدبوس تمامًا كما تراه على البطاقة. واضغط × لإزالتها." },
+      en: { t: "Your “My cities” section", b: "Your saved cities gather here. Tap a name to open it and make it the one shown every time you open — marked with this same pin you see on the chip. Tap × to remove it." } },
     prayerTimes: { sel: "#prayerGrid",
       ar: { t: "مواقيت الصلاة 🕌", b: "صلوات اليوم الخمسة مع الشروق. الصلاة الحالية تتحدّد بلمسة ضوئية لطيفة." },
       en: { t: "Prayer times 🕌", b: "Today's five prayers plus sunrise. The current prayer is gently highlighted." } },
@@ -175,6 +179,7 @@
     hidePop(() => {
       const s = STEPS[idx], x = s[lang] || s.en;
       popTitle.textContent = x.t;
+      if (s.icon) popTitle.insertAdjacentHTML("beforeend", s.icon); // trusted, hardcoded markup
       popBody.textContent = x.b;
       popCount.textContent = (idx + 1) + " " + UI.of + " " + STEPS.length;
       if (popProg) popProg.style.width = ((idx + 1) / STEPS.length * 100).toFixed(1) + "%";
