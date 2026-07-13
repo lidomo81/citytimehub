@@ -2,7 +2,7 @@
   "name": "Prayer Times",
   "short_name": "Prayer Times",
   "description": "Accurate prayer times for 500 cities, a live world clock, Qibla direction, monthly timetable, time-zone comparison and a meeting planner — fast, free, offline-ready.",
-  "start_url": "/?utm_source=pwa",
+  "start_url": "/?app=1&utm_source=pwa",
   "scope": "/",
   "id": "/",
   "display": "standalone",

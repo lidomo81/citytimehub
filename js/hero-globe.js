@@ -11,6 +11,10 @@
   "use strict";
   var host = document.getElementById("heroGlobe");
   if (!host) return;
+  try {
+    if (document.documentElement.classList.contains("app-mode")
+      || new URLSearchParams(location.search).get("app") === "1") return;
+  } catch (e) { return; }
 
   var LANG = (document.documentElement.getAttribute("lang") || "en").slice(0, 2);
   var AR = LANG === "ar";

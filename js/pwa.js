@@ -151,6 +151,13 @@
   /* ----- In-app mode: the tools grid is the primary launcher, so the header
      menu (☰) is repurposed to hold only the secondary/legal links.
      Links are cloned from the footer so they match the page language. ----- */
+  function withAppParam(href) {
+    try {
+      var u = new URL(href, location.origin);
+      u.searchParams.set("app", "1");
+      return u.pathname + u.search + u.hash;
+    } catch (e) { return href; }
+  }
   function applyAppNav() {
     var inApp = document.documentElement.classList.contains("app-mode")
       || /CityTimeHubApp/i.test(navigator.userAgent || "")
@@ -158,6 +165,11 @@
       || new URLSearchParams(location.search).get("app") === "1";
     if (!inApp) return;
     document.documentElement.classList.add("app-mode");
+    document.querySelectorAll("a.lang-switch, nav.app-legal a, .app-tools a.app-tool").forEach(function (a) {
+      var href = a.getAttribute("href");
+      if (!href || href.charAt(0) === "#") return;
+      a.setAttribute("href", withAppParam(href));
+    });
     var nav = document.querySelector(".main-nav");
     if (!nav) return;
     var wanted = ["about", "privacy", "contact", "terms"];
@@ -168,7 +180,10 @@
     });
     if (links.length) {
       nav.innerHTML = "";
-      links.forEach(function (l) { nav.appendChild(l); });
+      links.forEach(function (l) {
+        l.setAttribute("href", withAppParam(l.getAttribute("href")));
+        nav.appendChild(l);
+      });
     }
   }
   if (document.readyState !== "loading") applyAppNav();

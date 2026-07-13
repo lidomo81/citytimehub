@@ -190,8 +190,8 @@ html.app-mode .tool-install,
 html.app-mode .explainer-section,
 html.app-mode .hero .eyebrow { display: none !important; }
 
-html.app-mode .app-bar {
-  display: none !important;
+html.app-mode .app-bar--home {
+  display: flex !important;
   align-items: center; gap: 10px;
   position: sticky; top: 0; z-index: 50;
   padding: 10px 14px; min-height: 52px;
@@ -199,6 +199,13 @@ html.app-mode .app-bar {
   -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
 }
+html.app-mode .site-header { display: none !important; }
+html.app-mode #stats,
+html.app-mode .explainer-section,
+html.app-mode .site-footer { display: none !important; }
+.app-bar-side { flex: none; display: inline-flex; align-items: center; justify-content: center; min-width: 38px; min-height: 38px; }
+.app-bar-side.lang-switch { min-width: 0; padding: 0 4px; font-size: .82rem; font-weight: 700; text-decoration: none; color: var(--text-2); white-space: nowrap; }
+.app-bar-side.lang-switch:hover { color: var(--brand); }
 .app-bar-back {
   display: inline-flex; align-items: center; justify-content: center;
   width: 38px; height: 38px; flex: none; border-radius: 11px;
@@ -220,8 +227,8 @@ html.app-mode main, html.app-mode #top { padding-top: 0; }
   html.app-mode .hero-desc { display: none; }
 }
 
-/* Home in app mode: show only the city panel */
-html.app-mode .hero,
+/* Home in app mode: show only the city panel (not the meridian hero/globe) */
+html.app-mode #top > .hero,
 html.app-mode #tools,
 html.app-mode #citiesCta,
 html.app-mode #reflections,
@@ -231,7 +238,14 @@ html.app-mode #reference { display: none !important; }
 html.app-mode #myCities:not([hidden]) { display: block; padding: 0; }
 html.app-mode #myCities .section-head { display: none; }
 html.app-mode #myCities .container { width: min(960px, 92%); margin-inline: auto; padding-inline: 0; }
-.app-bar--home .app-bar-title { flex: 1; text-align: center; }
+.app-bar--home .app-bar-title { flex: 1; text-align: center; min-width: 0; }
+html.app-mode .app-legal {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 14px;
+  width: min(960px, 92%); margin: 4px auto 20px; padding: 0 4px 8px;
+}
+html.app-mode .app-legal a { font-size: .74rem; font-weight: 600; color: var(--muted); text-decoration: none; }
+html.app-mode .app-legal a:hover { color: var(--brand); }
+.app-legal { display: none; }
 /* quick tools bar — visible only inside the installed app */
 .app-tools { display: none; }
 html.app-mode .nav-burger, html.app-mode .main-nav { display: none !important; }
@@ -1281,7 +1295,7 @@ html[dir="rtl"] .kicker { font-family: var(--font); }
 /* ---------- Help / welcome guide ---------- */
 .help-fab { position: fixed; bottom: 18px; inset-inline-end: 18px; z-index: 60; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--border-2, #2a3550); background: var(--surface-2); color: var(--accent); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 10px 26px -10px #000; transition: transform .15s, border-color .2s, color .2s; }
 .help-fab:hover { transform: translateY(-2px); border-color: var(--brand); color: var(--brand); }
-html.app-mode .help-fab { bottom: 14px; opacity: .72; transition: opacity .2s, transform .15s, border-color .2s, color .2s; }
+html.app-mode .help-fab { bottom: 14px; opacity: .88; transition: opacity .2s, transform .15s, border-color .2s, color .2s; }
 html.app-mode .help-fab:hover, html.app-mode .help-fab:active, html.app-mode .help-fab:focus { opacity: 1; }
 /* the install button is pointless inside an already-installed app */
 html.app-mode .cp-install { display: none !important; }

@@ -2,7 +2,7 @@
   "name": "مواقيت الفلاح",
   "short_name": "مواقيت الفلاح",
   "description": "مواقيت صلاة دقيقة لـ 500 مدينة، وساعة حيّة، واتجاه القبلة، وجدول مواقيت الشهر، ومقارنة التوقيت ومخطّط أحداث — سريع ومجاني ويعمل بدون نت.",
-  "start_url": "/ar/?utm_source=pwa",
+  "start_url": "/ar/?app=1&utm_source=pwa",
   "scope": "/",
   "id": "/ar/",
   "display": "standalone",

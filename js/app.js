@@ -165,12 +165,19 @@
     const stored = localStorage.getItem("cth-theme");
     const theme = stored || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
     document.documentElement.setAttribute("data-theme", theme);
-    $("#themeToggle").setAttribute("aria-pressed", String(theme === "dark"));
-    $("#themeToggle").addEventListener("click", () => {
-      const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
-      document.documentElement.setAttribute("data-theme", next);
-      localStorage.setItem("cth-theme", next);
-      $("#themeToggle").setAttribute("aria-pressed", String(next === "dark"));
+    const syncTheme = (t) => {
+      document.querySelectorAll(".theme-toggle-btn").forEach(btn => {
+        btn.setAttribute("aria-pressed", String(t === "dark"));
+      });
+    };
+    syncTheme(theme);
+    document.querySelectorAll(".theme-toggle-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        localStorage.setItem("cth-theme", next);
+        syncTheme(next);
+      });
     });
   }
 
@@ -287,8 +294,8 @@
     sec.hidden = false;
     sec.classList.toggle("is-empty", !list.length);
     if (!list.length) {
-      grid.innerHTML = (app ? `<div class="fav-app-label">${T.myFav}</div>` : "")
-        + `<p class="fav-empty">${T.favEmpty}</p>`;
+      if (app) { sec.hidden = true; grid.innerHTML = ""; return; }
+      grid.innerHTML = `<p class="fav-empty">${T.favEmpty}</p>`;
       return;
     }
     grid.innerHTML = `<div class="fav-app-label">${T.myFav}</div>`
@@ -1046,12 +1053,25 @@
     document.addEventListener("keydown", e => { if (e.key === "Escape" && !overlay.hidden) close(); });
 
     const tour = window.CthTour;
+    const APP_VISITS_KEY = "cth-app-visits";
     // The "?" button launches the interactive tour (site + app; the tour adapts its
     // steps to each surface). The full feature list stays reachable from the tour's
     // "All features" button. If the tour engine is unavailable, fall back to the sheet.
     if (tour) {
       btn.addEventListener("click", () => tour.start());
-      if (!tour.seen()) whenReady(() => tour.start());
+      if (!tour.seen()) {
+        const app = document.documentElement.classList.contains("app-mode");
+        if (app) {
+          let visits = 0;
+          try {
+            visits = parseInt(localStorage.getItem(APP_VISITS_KEY) || "0", 10) + 1;
+            localStorage.setItem(APP_VISITS_KEY, String(visits));
+          } catch (e) {}
+          if (visits > 1) whenReady(() => tour.start());
+        } else {
+          whenReady(() => tour.start());
+        }
+      }
     } else {
       btn.addEventListener("click", open);
       let seen = false;
