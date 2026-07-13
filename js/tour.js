@@ -8,8 +8,8 @@
   const reduce = () => { try { return matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) { return false; } };
 
   const UI = lang === "ar"
-    ? { next: "التالي", prev: "السابق", skip: "تخطّي", done: "تمّ", of: "من", all: "كل المميزات" }
-    : { next: "Next", prev: "Back", skip: "Skip", done: "Done", of: "of", all: "All features" };
+    ? { next: "التالي", prev: "السابق", skip: "تخطّي", done: "تمّ", of: "من", all: "كل المميزات", kicker: "جولة تفاعلية" }
+    : { next: "Next", prev: "Back", skip: "Skip", done: "Done", of: "of", all: "All features", kicker: "Interactive tour" };
 
   // Individual steps. sel = null → a centered card (no spotlight). Targets are
   // resolved at show-time, and any step whose element is missing is skipped.
@@ -24,8 +24,8 @@
       ar: { t: "مدينتي المفضّلة ⭐", b: "اضغط النجمة لتحفظ المدينة، فتُجمَع كل مدنك في قسم «مدني»، وتبقى محفوظة كل مرة تفتح — حتى لو كانت مدينة من أي مكان في العالم. وسأريك مكانها الآن 👇" },
       en: { t: "My favorite city ⭐", b: "Tap the star to save a city; all your cities gather in the “My cities” section, kept every time you open — even a worldwide city. Let me show you where 👇" } },
     myCities: { sel: "#myCities",
-      ar: { t: "قسم «مدني» 📍", b: "هنا مدنك المحفوظة. اضغط اسم أي مدينة لفتحها في الأعلى — وتصبح هي المدينة التي تظهر عند كل فتح، والمعلَّمة بالدبوس 📍. واضغط × لإزالتها." },
-      en: { t: "Your “My cities” section 📍", b: "Your saved cities live here. Tap a name to open it — and make it the one shown every time you open, marked with the 📍 pin. Tap × to remove it." } },
+      ar: { t: "قسم «مدني» 📍", b: "هنا تُجمع مدنك المحفوظة. احفظ مدينة بالنجمة فتظهر هنا كشرائح — اضغط اسم المدينة لفتحها، أو × لإزالتها. حتى لو لم تحفظ بعد، هذا هو مكانها." },
+      en: { t: "Your “My cities” section 📍", b: "Your saved cities gather here as chips. Tap a name to open it, or × to remove. Even before you save one, this is where they will appear." } },
     prayerTimes: { sel: "#prayerGrid",
       ar: { t: "مواقيت الصلاة 🕌", b: "صلوات اليوم الخمسة مع الشروق. الصلاة الحالية تتحدّد بلمسة ضوئية لطيفة." },
       en: { t: "Prayer times 🕌", b: "Today's five prayers plus sunrise. The current prayer is gently highlighted." } },
@@ -71,20 +71,29 @@
   }
 
   let STEPS = [];
-  let root, mask, spot, pop, popTitle, popBody, popCount, btnPrev, btnNext, btnSkip, btnAll;
-  let idx = 0, active = false, dir = 1, rafId = 0;
+  let root, mask, spot, pop, popTitle, popBody, popCount, popProg, btnPrev, btnNext, btnSkip, btnAll;
+  let idx = 0, active = false, dir = 1, rafId = 0, scrollTimer = 0, stepLock = false;
+  let lastPop = { x: null, y: null };
+  const placementMemory = {}; // sel → side; keeps popup anchored when several steps share one target
+  const fadeMs = () => reduce() ? 0 : 200;
+  const scrollMs = () => reduce() ? 40 : 460;
 
   function build() {
     root = document.createElement("div");
     root.className = "cth-tour";
+    if (document.documentElement.classList.contains("app-mode")) root.classList.add("is-app");
     root.setAttribute("dir", lang === "ar" ? "rtl" : "ltr");
     root.innerHTML =
       '<div class="cth-tour-mask"></div>' +
-      '<div class="cth-tour-spot" aria-hidden="true"></div>' +
+      '<div class="cth-tour-spot" aria-hidden="true"><span class="cth-tour-ring" aria-hidden="true"></span></div>' +
       '<div class="cth-tour-pop" role="dialog" aria-modal="true" aria-live="polite">' +
+        '<div class="cth-tour-progress" aria-hidden="true"><i class="cth-tour-progress-fill"></i></div>' +
         '<button type="button" class="cth-tour-close" aria-label="' + UI.skip + '">✕</button>' +
-        '<h3 class="cth-tour-title"></h3>' +
-        '<p class="cth-tour-body"></p>' +
+        '<span class="cth-tour-kicker">' + UI.kicker + '</span>' +
+        '<div class="cth-tour-copy">' +
+          '<h3 class="cth-tour-title"></h3>' +
+          '<p class="cth-tour-body"></p>' +
+        '</div>' +
         '<div class="cth-tour-foot">' +
           '<span class="cth-tour-count"></span>' +
           '<div class="cth-tour-btns">' +
@@ -93,6 +102,7 @@
             '<button type="button" class="cth-tour-b cth-tour-next cth-tour-primary"></button>' +
           '</div>' +
         '</div>' +
+        '<span class="cth-tour-arrow" aria-hidden="true"></span>' +
       '</div>';
     document.body.appendChild(root);
     mask = root.querySelector(".cth-tour-mask");
@@ -101,6 +111,7 @@
     popTitle = root.querySelector(".cth-tour-title");
     popBody = root.querySelector(".cth-tour-body");
     popCount = root.querySelector(".cth-tour-count");
+    popProg = root.querySelector(".cth-tour-progress-fill");
     btnPrev = root.querySelector(".cth-tour-prev");
     btnNext = root.querySelector(".cth-tour-next");
     btnSkip = root.querySelector(".cth-tour-close");
@@ -114,7 +125,13 @@
     btnAll.addEventListener("click", () => { stop(); if (typeof window.__cthOpenHelpSheet === "function") window.__cthOpenHelpSheet(); });
     document.addEventListener("keydown", onKey);
     window.addEventListener("resize", schedule, { passive: true });
-    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
+  }
+
+  function onScroll() {
+    if (!active || stepLock) return;
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(position, 120);
   }
 
   function onKey(e) {
@@ -138,34 +155,142 @@
     idx = i; render();
   }
 
+  function hidePop(cb) {
+    clearTimeout(pop._fadeT);
+    if (!pop.classList.contains("is-visible")) { if (cb) cb(); return; }
+    pop.classList.remove("is-visible");
+    spot.classList.remove("is-visible");
+    pop._fadeT = setTimeout(cb || (() => {}), fadeMs());
+  }
+  function revealPop() {
+    requestAnimationFrame(() => {
+      pop.classList.add("is-visible");
+      if (!spot.hidden) spot.classList.add("is-visible");
+    });
+  }
+
   function render() {
-    const s = STEPS[idx], x = s[lang] || s.en;
-    popTitle.textContent = x.t;
-    popBody.textContent = x.b;
-    popCount.textContent = (idx + 1) + " " + UI.of + " " + STEPS.length;
-    btnPrev.hidden = idx === 0;
-    btnNext.textContent = s.last ? UI.done : UI.next;
-    btnAll.hidden = !s.last;
-    const el = resolve(idx);
-    if (shown(el) && s.sel) {
-      root.classList.remove("is-center");
-      spot.hidden = false;
-      try { el.scrollIntoView({ block: "center", behavior: reduce() ? "auto" : "smooth" }); } catch (e) { el.scrollIntoView(); }
-      setTimeout(position, reduce() ? 0 : 340);
-    } else {
-      root.classList.add("is-center");
-      spot.hidden = true;
-      position();
+    clearTimeout(scrollTimer);
+    hidePop(() => {
+      const s = STEPS[idx], x = s[lang] || s.en;
+      popTitle.textContent = x.t;
+      popBody.textContent = x.b;
+      popCount.textContent = (idx + 1) + " " + UI.of + " " + STEPS.length;
+      if (popProg) popProg.style.width = ((idx + 1) / STEPS.length * 100).toFixed(1) + "%";
+      btnPrev.hidden = idx === 0;
+      btnNext.textContent = s.last ? UI.done : UI.next;
+      btnAll.hidden = !s.last;
+      const el = resolve(idx);
+      stepLock = true;
+      const finish = () => {
+        stepLock = false;
+        position();
+        revealPop();
+      };
+      if (shown(el) && s.sel) {
+        root.classList.remove("is-center");
+        spot.hidden = false;
+        try { el.scrollIntoView({ block: "nearest", inline: "nearest", behavior: reduce() ? "auto" : "smooth" }); } catch (e) { el.scrollIntoView(); }
+        clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(finish, scrollMs());
+      } else {
+        root.classList.add("is-center");
+        spot.hidden = true;
+        finish();
+      }
+    });
+  }
+
+  function clamp(n, lo, hi) { return Math.max(lo, Math.min(n, hi)); }
+  function popRectAt(left, top, w, h) {
+    return { left, top, right: left + w, bottom: top + h, width: w, height: h };
+  }
+  function overlapArea(a, b) {
+    const x = Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left));
+    const y = Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top));
+    return x * y;
+  }
+  function avoidZones(skipSel) {
+    const zones = [];
+    ["#prayerGrid", "#cpNext", "#cpWeek", ".prayer-insights", "#ltAnalog", ".daily-reflection"].forEach(sel => {
+      if (sel === skipSel) return;
+      const el = document.querySelector(sel);
+      if (shown(el)) zones.push(el.getBoundingClientRect());
+    });
+    return zones;
+  }
+  function placementForSide(r, popW, popH, vw, vh, m, gap, bottomM, side) {
+    const cx = r.left + r.width / 2;
+    const cy = r.top + r.height / 2;
+    let left, top;
+    switch (side) {
+      case "below": top = r.bottom + gap; left = cx - popW / 2; break;
+      case "above": top = r.top - gap - popH; left = cx - popW / 2; break;
+      case "right": top = cy - popH / 2; left = r.right + gap; break;
+      case "left": top = cy - popH / 2; left = r.left - gap - popW; break;
+      case "dock": top = vh - popH - bottomM; left = (vw - popW) / 2; break;
+      default: top = vh - popH - bottomM; left = (vw - popW) / 2; side = "dock";
     }
+    return {
+      left: clamp(left, m, vw - popW - m),
+      top: clamp(top, m, vh - popH - bottomM),
+      side,
+    };
+  }
+  // Pick a spot that stays on-screen, avoids the highlight, and steers clear of other UI text.
+  function bestPlacement(target, popW, popH, vw, vh, m, gap, bottomM, zones, prev) {
+    const r = target;
+    const cx = r.left + r.width / 2;
+    const raw = [
+      { top: r.bottom + gap, left: cx - popW / 2, pri: 3, side: "below" },
+      { top: r.top - gap - popH, left: cx - popW / 2, pri: 2, side: "above" },
+      { top: r.top + r.height / 2 - popH / 2, left: r.right + gap, pri: cx < vw * 0.5 ? 5 : 4, side: "right" },
+      { top: r.top + r.height / 2 - popH / 2, left: r.left - gap - popW, pri: cx > vw * 0.55 ? 5 : 4, side: "left" },
+      { top: vh - popH - bottomM, left: (vw - popW) / 2, pri: 2, side: "dock" },
+    ];
+    let best = null, bestScore = -Infinity;
+    raw.forEach(c => {
+      const left = clamp(c.left, m, vw - popW - m);
+      const top = clamp(c.top, m, vh - popH - bottomM);
+      const pr = popRectAt(left, top, popW, popH);
+      const tr = popRectAt(r.left, r.top, r.width, r.height);
+      let score = c.pri * 40 - overlapArea(pr, tr) * 5;
+      zones.forEach(z => { score -= overlapArea(pr, popRectAt(z.left, z.top, z.width, z.height)) * 1.8; });
+      if (score > bestScore) { bestScore = score; best = { left, top, side: c.side }; }
+    });
+    return best || { left: m, top: m, side: "dock" };
+  }
+  function placePop(x, y) {
+    pop.style.setProperty("--tx", x + "px");
+    pop.style.setProperty("--ty", y + "px");
+    lastPop.x = x; lastPop.y = y;
+  }
+  function setArrow(targetRect) {
+    const sides = ["arr-top", "arr-bottom", "arr-left", "arr-right", "arr-none"];
+    pop.classList.remove(...sides);
+    if (!targetRect) { pop.classList.add("arr-none"); return; }
+    const p = pop.getBoundingClientRect();
+    const tCx = targetRect.left + targetRect.width / 2;
+    const tCy = targetRect.top + targetRect.height / 2;
+    const opts = [
+      { cls: "arr-bottom", gap: tCy - p.bottom, ok: tCy > p.bottom + 4 },
+      { cls: "arr-top", gap: p.top - tCy, ok: tCy < p.top - 4 },
+      { cls: "arr-right", gap: tCx - p.right, ok: tCx > p.right + 4 },
+      { cls: "arr-left", gap: p.left - tCx, ok: tCx < p.left - 4 },
+    ].filter(o => o.ok).sort((a, b) => a.gap - b.gap);
+    pop.classList.add(opts[0] ? opts[0].cls : "arr-none");
   }
 
   function position() {
     if (!active) return;
     const s = STEPS[idx], el = resolve(idx);
-    const vw = window.innerWidth, vh = window.innerHeight, m = 12, gap = 14;
-    if (!el || !s.sel) { // centered card
-      pop.style.top = Math.max(m, (vh - pop.offsetHeight) / 2) + "px";
-      pop.style.left = Math.max(m, (vw - pop.offsetWidth) / 2) + "px";
+    const vw = window.innerWidth, vh = window.innerHeight, m = 14;
+    const app = document.documentElement.classList.contains("app-mode");
+    const bottomM = app ? 108 : m;
+    const gap = 20;
+    if (!el || !s.sel) {
+      placePop(Math.max(m, (vw - pop.offsetWidth) / 2), Math.max(m, vh - pop.offsetHeight - (app ? 32 : 28)));
+      setArrow(null);
       return;
     }
     const r = el.getBoundingClientRect();
@@ -178,23 +303,24 @@
     spot.style.height = (r.height + pad * 2) + "px";
     spot.style.borderRadius = (rad + pad) + "px";
     const popH = pop.offsetHeight, popW = pop.offsetWidth;
-    let top;
-    if (r.bottom + gap + popH <= vh) top = r.bottom + gap;
-    else if (r.top - gap - popH >= 0) top = r.top - gap - popH;
-    else top = Math.max(m, (vh - popH) / 2);
-    let left = r.left + r.width / 2 - popW / 2;
-    left = Math.max(m, Math.min(left, vw - popW - m));
-    pop.style.top = Math.max(m, Math.min(top, vh - popH - m)) + "px";
-    pop.style.left = left + "px";
+    const remembered = s.sel ? placementMemory[s.sel] : null;
+    const place = remembered
+      ? placementForSide(r, popW, popH, vw, vh, m, gap, bottomM, remembered)
+      : bestPlacement(r, popW, popH, vw, vh, m, gap, bottomM, avoidZones(s.sel), lastPop);
+    if (s.sel && !remembered) placementMemory[s.sel] = place.side;
+    placePop(place.left, place.top);
+    setArrow(el && s.sel ? r : null);
   }
 
-  function schedule() { if (!active) return; cancelAnimationFrame(rafId); rafId = requestAnimationFrame(position); }
+  function schedule() { if (!active || stepLock) return; cancelAnimationFrame(rafId); rafId = requestAnimationFrame(position); }
 
   function start() {
     if (active) return;
     if (!root) build();
     STEPS = buildSteps();           // pick site vs app steps at launch time
     active = true; idx = 0; dir = 1;
+    lastPop = { x: null, y: null };
+    Object.keys(placementMemory).forEach(k => delete placementMemory[k]);
     document.documentElement.classList.add("cth-tour-on");
     root.classList.add("is-active");
     render();
@@ -203,6 +329,10 @@
   function stop() {
     if (!active) return;
     active = false;
+    clearTimeout(scrollTimer);
+    clearTimeout(pop._fadeT);
+    pop.classList.remove("is-visible");
+    spot.classList.remove("is-visible");
     root.classList.remove("is-active");
     document.documentElement.classList.remove("cth-tour-on");
     try { localStorage.setItem("cth-tour-seen", "1"); } catch (e) {}

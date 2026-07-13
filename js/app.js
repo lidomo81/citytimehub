@@ -21,7 +21,8 @@
       localEyebrow: "Your local time", homeEyebrow: "Your city", save: "My favorite city", saved: "Favorite ✓",
       inHM: (h, m) => h ? `in ${h}h ${m}m` : `in ${m}m`, tomorrow: "tomorrow",
       savedToast: "Saved to My Cities.", removedToast: "Removed from My Cities.", favFull: n => `You can save up to ${n} cities.`,
-      myFav: "My favorite cities", defaultCity: "Opens by default", setDefaultToast: "Set as your default city on open.",
+      myFav: "My favorite cities", favEmpty: "Save a city with the star above — it will appear here.",
+      defaultCity: "Opens by default", setDefaultToast: "Set as your default city on open.",
       streakDays: n => `${n} day${n === 1 ? "" : "s"} keeping faith with Him — may Allah keep you steadfast`, streakStart: "Begin your journey today 🌱",
       todayWord: "Today", dayDone: "Today's prayers, complete 🤍", streakNew: "🌙 May your prayers be a comfort to your heart — accepted, in shā’ Allah 🤍",
       dua: "اللَّهُمَّ أَعِنَّا عَلَى ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ",
@@ -44,7 +45,8 @@
       localEyebrow: "وقتك المحلي", homeEyebrow: "مدينتك", save: "مدينتي المفضلة", saved: "مفضلة ✓",
       inHM: (h, m) => h ? `بعد ${h} س ${m} د` : `بعد ${m} د`, tomorrow: "غدًا",
       savedToast: "تم الحفظ في مدني.", removedToast: "تمت الإزالة من مدني.", favFull: n => `تقدر تحفظ حتى ${n} مدن.`,
-      myFav: "مدني المفضلة", defaultCity: "تظهر عند الفتح", setDefaultToast: "تم تعيينها لتظهر عند فتح الموقع.",
+      myFav: "مدني المفضلة", favEmpty: "احفظ مدينة بالنجمة في الأعلى — ستظهر هنا.",
+      defaultCity: "تظهر عند الفتح", setDefaultToast: "تم تعيينها لتظهر عند فتح الموقع.",
       streakDays: n => `منذ ${n === 1 ? "يومٍ" : n === 2 ? "يومين" : n + " " + ((n >= 3 && n <= 10) ? "أيام" : "يومًا")} وأنت على العهد.. ثبّتك الله`,
       streakStart: "ابدأ رحلتك اليوم 🌱",
       todayWord: "اليوم", dayDone: "تمّت صلوات اليوم 🤍", streakNew: "🌙 قرّت عينُك بالصلاة.. تقبّل الله منك وأحسن إليك 🤍",
@@ -281,8 +283,14 @@
     const sec = $("#myCities"), grid = $("#myCitiesGrid");
     if (!sec || !grid) return;
     const list = favCities();
-    if (!list.length) { sec.hidden = true; grid.innerHTML = ""; return; }
+    const app = document.documentElement.classList.contains("app-mode");
     sec.hidden = false;
+    sec.classList.toggle("is-empty", !list.length);
+    if (!list.length) {
+      grid.innerHTML = (app ? `<div class="fav-app-label">${T.myFav}</div>` : "")
+        + `<p class="fav-empty">${T.favEmpty}</p>`;
+      return;
+    }
     grid.innerHTML = `<div class="fav-app-label">${T.myFav}</div>`
       + `<div class="fav-chips">${list.map(favChipHtml).join("")}</div>`;
   }
