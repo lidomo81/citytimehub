@@ -203,7 +203,11 @@
           root.classList.remove("is-center");
           spot.hidden = false;
           const rect = target.getBoundingClientRect();
-          const block = isApp() && rect.top > window.innerHeight * 0.38 ? "center" : "nearest";
+          // Small targets (icons, tool tiles, chips) are always centered so they sit
+          // clearly in view with room for the bubble — no manual scrolling needed.
+          // Only sections taller than most of the screen align to their top instead.
+          const tall = rect.height > window.innerHeight * 0.66;
+          const block = tall ? "start" : "center";
           try { target.scrollIntoView({ block, inline: "nearest", behavior: reduce() ? "auto" : "smooth" }); } catch (e) { target.scrollIntoView(); }
           clearTimeout(scrollTimer);
           scrollTimer = setTimeout(finish, scrollMs());
