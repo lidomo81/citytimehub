@@ -28,7 +28,10 @@
       dua: "اللَّهُمَّ أَعِنَّا عَلَى ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ",
       duaTr: "O Allah, help us to remember You, thank You, and worship You well.",
       recover: name => `Pray ${name} now — a moment before Allah brings the heart peace 🤍`,
-      recoverMany: "Return to Him now — nearness to Allah is rest for the heart 🌙",
+      recoverPending: list => `${list} await you — return to Allah, one step at a time 🤍`,
+      recoverSeveral: n => n === 5
+        ? "Today's prayers await you — start with what you can, one step at a time 🤍"
+        : `${n} prayers await you — start with what you can, one step at a time 🤍`,
       weekTitle: "Last 7 days", statsTitle: "Your adherence", currentStreak: "Current streak", bestStreak: "Best streak",
       legendFull: "Complete", legendPart: "Partial", legendNone: "Missed", statsClose: "Close", statsHint: "Tap for details",
       streakNote: "This counter is only to encourage you to keep your prayers — not to collect any data. Everything stays on your device. Be honest with Allah and with yourself 🤍",
@@ -53,7 +56,10 @@
       dua: "اللَّهُمَّ أَعِنَّا عَلَى ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ",
       duaTr: "",
       recover: name => `أدِّ ${name} الآن.. فلحظةٌ بين يدي الله تُطمئن القلب 🤍`,
-      recoverMany: "عُد إلى الله الآن.. فالقُربُ منه راحةٌ للقلب 🌙",
+      recoverPending: list => `${list} بانتظارك — عُد إلى الله خطوةً خطوة 🤍`,
+      recoverSeveral: n => n === 5
+        ? "صلوات اليوم بانتظارك — ابدأ بما تستطيع، خطوةً خطوة 🤍"
+        : `${n} صلوات بانتظارك — ابدأ بما تستطيع، خطوةً خطوة 🤍`,
       weekTitle: "آخر ٧ أيام", statsTitle: "التزامك", currentStreak: "سلسلتك الحالية", bestStreak: "أطول سلسلة",
       legendFull: "مكتمل", legendPart: "جزئي", legendNone: "فائت", statsClose: "إغلاق", statsHint: "اضغط للتفاصيل",
       streakNote: "هذا العدّاد وسيلة لتحفيزك على المحافظة على صلاتك، وليس لجمع أي معلومات — بياناتك محفوظة على جهازك وحده. فاجعلها صدقًا مع الله ومع نفسك 🤍",
@@ -762,23 +768,34 @@
   }
 
   const prayerLabel = p => T.prayers[PRAYERS.indexOf(p)] || p;
-  // Obligatory prayers whose time window has passed today without being marked done.
-  // Windows end at: Fajr→Sunrise, Dhuhr→Asr, Asr→Maghrib, Maghrib→Isha (Isha runs till dawn).
-  function missedFard() {
+  function prayerList(labels) {
+    if (labels.length <= 1) return labels[0] || "";
+    if (labels.length === 2) return LANG === "ar" ? `${labels[0]} و${labels[1]}` : `${labels[0]} and ${labels[1]}`;
+    const last = labels[labels.length - 1];
+    return LANG === "ar"
+      ? `${labels.slice(0, -1).join("، ")}، و${last}`
+      : `${labels.slice(0, -1).join(", ")}, and ${last}`;
+  }
+  function recoverMessage(pending) {
+    const labels = pending.map(prayerLabel);
+    if (labels.length === 1) return T.recover(labels[0]);
+    if (labels.length === 2) return T.recoverPending(prayerList(labels));
+    return T.recoverSeveral(labels.length);
+  }
+  // Obligatory prayers whose adhan has passed today but are not logged yet.
+  function pendingFard() {
     if (!prayerState || !prayerState.city || !prayerState.timings) return [];
     const tz = prayerState.city.tz; if (!tz) return [];
     const t = prayerState.timings;
-    const toMin = s => { const a = (s || "").split(":"); return (+a[0]) * 60 + (+a[1]); };
+    const toMin = s => { const a = (s || "0:0").split(":"); return (+a[0]) * 60 + (+a[1]); };
     const d = new Date(Date.now() + offsetHours(tz) * 3600000);
     const nowMin = d.getUTCHours() * 60 + d.getUTCMinutes();
     const w = wGetDay(wDateStr(new Date()));
-    const ends = { Fajr: t.Sunrise, Dhuhr: t.Asr, Asr: t.Maghrib, Maghrib: t.Isha };
-    const missed = [];
-    ["Fajr", "Dhuhr", "Asr", "Maghrib"].forEach(p => {
-      const end = ends[p];
-      if (end && nowMin >= toMin(end) && !(w[p] && w[p].f)) missed.push(p);
+    return OBLIG.filter(p => {
+      const start = t[p];
+      if (!start) return false;
+      return nowMin >= toMin(start) && !(w[p] && w[p].f);
     });
-    return missed;
   }
 
   let streakFirstRender = true, streakCelebrateT = 0, completeCelebratedFor = null;
@@ -805,12 +822,11 @@
     const sub = complete ? T.dayDone : `${T.todayWord} ${prog}/5`;
     const subHtml = `<span class="cp-streak-sub">${sub}<span class="cp-pips" aria-hidden="true">${pips}</span></span>`;
 
-    // Recovery: a gentle, blame-free nudge to make up a prayer whose window passed.
-    const missed = missedFard();
-    if (missed.length) {
-      const msg = missed.length === 1 ? T.recover(prayerLabel(missed[0])) : T.recoverMany;
+    // Recovery: a gentle, blame-free nudge for every logged-missing fard whose time has passed.
+    const pending = pendingFard();
+    if (pending.length) {
       el.classList.add("cp-recover");
-      el.innerHTML = `<span class="cp-streak-main cp-recover-main">${msg}</span>${subHtml}`;
+      el.innerHTML = `<span class="cp-streak-main cp-recover-main">${recoverMessage(pending)}</span>${subHtml}`;
       streakFirstRender = false;
       return;
     }
