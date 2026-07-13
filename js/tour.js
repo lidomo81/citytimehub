@@ -11,44 +11,66 @@
     ? { next: "التالي", prev: "السابق", skip: "تخطّي", done: "تمّ", of: "من", all: "كل المميزات" }
     : { next: "Next", prev: "Back", skip: "Skip", done: "Done", of: "of", all: "All features" };
 
-  // sel = null → a centered card (no spotlight). Targets are resolved at show-time,
-  // and any step whose element is missing is skipped gracefully.
-  const STEPS = [
-    { sel: null,
+  // Individual steps. sel = null → a centered card (no spotlight). Targets are
+  // resolved at show-time, and any step whose element is missing is skipped.
+  const S = {
+    welcome: { sel: null,
       ar: { t: "أهلًا بك في CityTimeHub 🌙", b: "جولة سريعة تعرّفك بأهم المميزات في أقل من دقيقة. تقدر تتخطاها في أي وقت." },
       en: { t: "Welcome to CityTimeHub 🌙", b: "A quick tour of the main features in under a minute. You can skip anytime." } },
-    { sel: "#cpSearch",
+    search: { sel: "#cpSearch",
       ar: { t: "ابحث عن مدينتك 🔍", b: "اكتب اسم أي مدينة وشاهد وقتها ومواقيت صلاتها فورًا — من ٥٠٠ مدينة، أو أي مدينة حول العالم." },
       en: { t: "Search your city 🔍", b: "Type any city to see its time and prayer times instantly — from 500 cities, or anywhere worldwide." } },
-    { sel: "#cpSave",
-      ar: { t: "مدينتي المفضّلة ⭐", b: "اضغط النجمة لتحفظ المدينة، فتُجمَع كل مدنك في قسم «مدني» بالصفحة، وتبقى محفوظة كل مرة تفتح الموقع — حتى لو كانت مدينة من أي مكان في العالم. وسأريك مكانها الآن 👇" },
-      en: { t: "My favorite city ⭐", b: "Tap the star to save a city; all your cities gather in the “My cities” section, kept every time you open the site — even a worldwide city. Let me show you where 👇" } },
-    { sel: "#myCities",
-      ar: { t: "قسم «مدني» 📍", b: "هنا تجد المدن التي حفظتها. اضغط اسم أي مدينة لفتحها فورًا في الأعلى، أو علامة × لإزالتها." },
-      en: { t: "Your “My cities” section 📍", b: "Here are the cities you saved. Tap a name to open it instantly at the top, or the × to remove it." } },
-    { sel: "#prayerGrid",
+    favorite: { sel: "#cpSave",
+      ar: { t: "مدينتي المفضّلة ⭐", b: "اضغط النجمة لتحفظ المدينة، فتُجمَع كل مدنك في قسم «مدني»، وتبقى محفوظة كل مرة تفتح — حتى لو كانت مدينة من أي مكان في العالم. وسأريك مكانها الآن 👇" },
+      en: { t: "My favorite city ⭐", b: "Tap the star to save a city; all your cities gather in the “My cities” section, kept every time you open — even a worldwide city. Let me show you where 👇" } },
+    myCities: { sel: "#myCities",
+      ar: { t: "قسم «مدني» 📍", b: "هنا مدنك المحفوظة. اضغط اسم أي مدينة لفتحها في الأعلى — وتصبح هي المدينة التي تظهر عند كل فتح، والمعلَّمة بالدبوس 📍. واضغط × لإزالتها." },
+      en: { t: "Your “My cities” section 📍", b: "Your saved cities live here. Tap a name to open it — and make it the one shown every time you open, marked with the 📍 pin. Tap × to remove it." } },
+    prayerTimes: { sel: "#prayerGrid",
       ar: { t: "مواقيت الصلاة 🕌", b: "صلوات اليوم الخمسة مع الشروق. الصلاة الحالية تتحدّد بلمسة ضوئية لطيفة." },
       en: { t: "Prayer times 🕌", b: "Today's five prayers plus sunrise. The current prayer is gently highlighted." } },
-    { sel: "#prayerGrid",
+    tapCard: { sel: "#prayerGrid",
       ar: { t: "اضغط أي بطاقة صلاة 📿", b: "تفتح لك أذكار ما بعد الصلاة، وفضلها بحديث صحيح، ويمكنك تسجيل التزامك: صلّيت الفرض، والسنة، وقلت الأذكار." },
       en: { t: "Tap any prayer card 📿", b: "It opens the post-prayer adhkar, its virtue from an authentic hadith, and lets you log your prayer — fard, sunnah and adhkar." } },
-    { sel: "#cpNext",
+    adherence: { sel: "#cpNext",
       ar: { t: "التزامك اليومي 🌙", b: "عندما تسجّل صلواتك تظهر هنا كلمة تشجيع لطيفة وسلسلة أيامك. بياناتك محفوظة على جهازك وحده." },
       en: { t: "Your daily adherence 🌙", b: "As you log prayers, a gentle word and your streak appear here. Your data stays on your device only." } },
-    { sel: "#cpWeek",
+    week: { sel: "#cpWeek",
       ar: { t: "آخر ٧ أيام 📊", b: "اضغط هذا الشريط لترى إحصائيات التزامك: سلسلتك الحالية، وأطول سلسلة، وآخر ١٤ يومًا." },
       en: { t: "Last 7 days 📊", b: "Tap this strip to see your adherence stats: current streak, best streak, and the last 14 days." } },
-    { sel: ".prayer-insights",
+    insights: { sel: ".prayer-insights",
       ar: { t: "لمحات الصلاة ✨", b: "العدّ التنازلي للصلاة القادمة، والثلث الأخير من الليل، وأوقات الكراهة — كلها محسوبة لمدينتك تلقائيًا." },
       en: { t: "Prayer insights ✨", b: "A countdown to the next prayer, the last third of the night, and the disliked times — all computed for your city." } },
-    { sel: "#tools",
+    toolsSite: { sel: "#tools",
       ar: { t: "الأدوات 🧭", b: "أذكار الصباح والمساء، فرق التوقيت، مخطط الاجتماعات، أفضل وقت للاتصال، القبلة والمزيد — كلها مبنية على نفس محرّك الوقت الحيّ." },
       en: { t: "Tools 🧭", b: "Morning & evening adhkar, time difference, meeting planner, best time to call, Qibla and more — all built on the same live-time engine." } },
-    { sel: null, last: true,
-      ar: { t: "جاهز! 🎉", b: "يمكنك إعادة هذه الجولة في أي وقت من زر «؟» بالأسفل. وفّقك الله وبارك في وقتك." },
-      en: { t: "You're all set! 🎉", b: "Replay this tour anytime from the “?” button below. May Allah bless your time." } },
-  ];
+    dailyReflection: { sel: ".daily-reflection",
+      ar: { t: "خاطرة اليوم 🤍", b: "حديث صحيح أو آية تتجدّد كل يوم، لتبدأ يومك بلمسة إيمانية هادئة." },
+      en: { t: "Daily reflection 🤍", b: "An authentic hadith or verse that changes each day, to start your day with a calm spiritual touch." } },
+    quickToolsApp: { sel: ".app-tools",
+      ar: { t: "أدواتك السريعة 🧭", b: "كل الأدوات في متناول يدك، مرتّبة حسب النوع: الصلاة، والوقت، والتاريخ، والمعرفة — وفيها زر «التذكيرات» 🔔 لتنبيهك عند كل صلاة." },
+      en: { t: "Quick tools 🧭", b: "All tools at hand, grouped by type: Prayer, Time, Date and Knowledge — including the Reminders 🔔 tile that alerts you at each prayer." } },
+    help: { sel: "#helpBtn",
+      ar: { t: "المساعد وإعادة الجولة ❓", b: "زر «؟» هو مساعدك الدائم: اضغطه في أي وقت لإعادة هذه الجولة، أو لعرض قائمة بكل المميزات." },
+      en: { t: "Help & replay ❓", b: "The “?” button is your always-there guide: tap it anytime to replay this tour or open the full list of features." } },
+    ready: { sel: null, last: true,
+      ar: { t: "جاهز! 🎉", b: "يمكنك إعادة هذه الجولة في أي وقت من زر «؟». وفّقك الله وبارك في وقتك." },
+      en: { t: "You're all set! 🎉", b: "Replay this tour anytime from the “?” button. May Allah bless your time." } },
+  };
 
+  // Assemble the steps for the current surface: the app shows the daily reflection
+  // and the Quick-tools row (with the injected Reminders tile); the website shows
+  // its own Tools section instead. Everything else is shared.
+  function buildSteps() {
+    const app = document.documentElement.classList.contains("app-mode");
+    const list = [S.welcome, S.search, S.favorite, S.myCities, S.prayerTimes, S.tapCard, S.adherence, S.week, S.insights];
+    if (app) list.push(S.dailyReflection, S.quickToolsApp);
+    else list.push(S.toolsSite);
+    list.push(S.help, S.ready);
+    return list;
+  }
+
+  let STEPS = [];
   let root, mask, spot, pop, popTitle, popBody, popCount, btnPrev, btnNext, btnSkip, btnAll;
   let idx = 0, active = false, dir = 1, rafId = 0;
 
@@ -171,6 +193,7 @@
   function start() {
     if (active) return;
     if (!root) build();
+    STEPS = buildSteps();           // pick site vs app steps at launch time
     active = true; idx = 0; dir = 1;
     document.documentElement.classList.add("cth-tour-on");
     root.classList.add("is-active");

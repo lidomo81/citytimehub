@@ -1037,11 +1037,11 @@
     overlay.querySelectorAll("[data-help-close]").forEach(el => el.addEventListener("click", close));
     document.addEventListener("keydown", e => { if (e.key === "Escape" && !overlay.hidden) close(); });
 
-    const appMode = document.documentElement.classList.contains("app-mode");
     const tour = window.CthTour;
-    // On the site, the "?" button launches the interactive tour; the app keeps the
-    // static feature list for now (its own tour is a later phase).
-    if (tour && !appMode) {
+    // The "?" button launches the interactive tour (site + app; the tour adapts its
+    // steps to each surface). The full feature list stays reachable from the tour's
+    // "All features" button. If the tour engine is unavailable, fall back to the sheet.
+    if (tour) {
       btn.addEventListener("click", () => tour.start());
       if (!tour.seen()) whenReady(() => tour.start());
     } else {
