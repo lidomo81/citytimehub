@@ -1277,9 +1277,9 @@ html.app-mode .cp-install { display: none !important; }
 .cth-tour.is-center .cth-tour-mask { background: rgba(2, 6, 23, .5); }
 .cth-tour-pop { position: fixed; width: min(330px, calc(100vw - 24px)); box-sizing: border-box;
   padding: 18px 18px 15px; border-radius: 16px; border: 1px solid color-mix(in srgb, var(--brand) 20%, var(--border-2, #2a3550));
-  background: color-mix(in srgb, var(--surface) 62%, transparent);
+  background: linear-gradient(150deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, 0) 58%), color-mix(in srgb, var(--surface) 55%, transparent);
   -webkit-backdrop-filter: blur(22px) saturate(1.5); backdrop-filter: blur(22px) saturate(1.5);
-  box-shadow: 0 24px 60px -18px rgba(0, 0, 0, .6); transition: top .28s ease, left .28s ease; }
+  box-shadow: 0 24px 60px -18px rgba(0, 0, 0, .6), inset 0 1px 0 rgba(255, 255, 255, .22); transition: top .28s ease, left .28s ease; }
 .cth-tour-close { position: absolute; inset-block-start: 10px; inset-inline-end: 12px; width: 26px; height: 26px; border: 0; border-radius: 50%;
   background: transparent; color: var(--muted); font-size: 1rem; cursor: pointer; line-height: 1; }
 .cth-tour-close:hover { color: var(--text); }
@@ -1304,7 +1304,7 @@ html.app-mode .cp-install { display: none !important; }
 .help-overlay { position: fixed; inset: 0; z-index: 200; display: flex; align-items: center; justify-content: center; padding: 18px; }
 .help-overlay[hidden] { display: none; }
 .help-backdrop { position: absolute; inset: 0; background: rgba(4, 8, 18, .45); backdrop-filter: blur(2px); }
-.help-sheet { position: relative; width: min(440px, 100%); max-height: 86vh; overflow-y: auto; background: color-mix(in srgb, var(--surface) 68%, transparent); -webkit-backdrop-filter: blur(24px) saturate(1.5); backdrop-filter: blur(24px) saturate(1.5); color: var(--text); border: 1px solid color-mix(in srgb, var(--brand) 16%, var(--border)); border-radius: 22px; padding: 24px 22px 22px; box-shadow: 0 30px 80px -30px #000; animation: helpIn .22s ease-out; }
+.help-sheet { position: relative; width: min(440px, 100%); max-height: 86vh; overflow-y: auto; background: linear-gradient(155deg, rgba(255, 255, 255, .12), rgba(255, 255, 255, 0) 55%), color-mix(in srgb, var(--surface) 60%, transparent); -webkit-backdrop-filter: blur(24px) saturate(1.5); backdrop-filter: blur(24px) saturate(1.5); color: var(--text); border: 1px solid color-mix(in srgb, var(--brand) 16%, var(--border)); border-radius: 22px; padding: 24px 22px 22px; box-shadow: 0 30px 80px -30px #000; animation: helpIn .22s ease-out; }
 @keyframes helpIn { from { opacity: 0; transform: translateY(14px) scale(.98); } to { opacity: 1; transform: none; } }
 .help-x { position: absolute; top: 12px; inset-inline-end: 14px; width: 34px; height: 34px; border: none; background: var(--surface-2); color: var(--text-2); border-radius: 10px; font-size: 1.5rem; line-height: 1; cursor: pointer; }
 .help-x:hover { color: var(--text); }
