@@ -1190,6 +1190,25 @@ html[dir="rtl"] .hu-time, html[dir="rtl"] [dir="ltr"] { direction: ltr; unicode-
 .co-person-actions .btn-ghost { font-size: .85rem; padding: 8px 14px; }
 .co-up-actions { grid-column: 2; margin-top: 4px; }
 .co-up-actions .btn-ghost { font-size: .78rem; padding: 6px 12px; }
+.co-wa-sheet {
+  position: fixed; inset: 0; z-index: 1200; display: flex; align-items: flex-end; justify-content: center;
+  padding: 16px; background: rgba(8, 12, 24, .55); backdrop-filter: blur(4px);
+}
+.co-wa-sheet[hidden] { display: none !important; }
+.co-wa-sheet-card {
+  width: min(100%, 420px); padding: 22px 20px 18px; border-radius: 18px 18px 14px 14px;
+  background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-lg, 0 18px 40px rgba(0,0,0,.22));
+  position: relative;
+}
+.co-wa-sheet-close {
+  position: absolute; top: 10px; inset-inline-end: 12px; border: none; background: none;
+  font-size: 1.5rem; line-height: 1; color: var(--muted); cursor: pointer;
+}
+.co-wa-sheet-card h3 { margin: 0 0 8px; font-size: 1.1rem; }
+.co-wa-sheet-num { margin: 0 0 8px; font-size: 1.25rem; font-weight: 800; letter-spacing: .02em; }
+.co-wa-sheet-hint { margin: 0 0 16px; font-size: .86rem; line-height: 1.45; }
+.co-wa-sheet-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.co-wa-sheet-open { flex: 1 1 160px; }
 .co-upcoming { margin-top: 20px; }
 .co-up-k { font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 .co-up-list { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }

@@ -65,6 +65,11 @@
     copyThis: "انسخ هذا الرابط:",
     noRules: "أضف قاعدة واحدة على الأقل.",
     at: "عند",
+    waOpen: "فتح واتساب",
+    waCopy: "نسخ الرقم",
+    waCopied: "تم نسخ الرقم",
+    waSheetHint: "لو ما فتحش تلقائيًا، اضغط «فتح واتساب» أو انسخ الرقم وافتحه يدويًا.",
+    close: "إغلاق",
   } : {
     you: "Your city", youPh: "e.g. Dubai",
     addPerson: "Add someone", personName: "Name", personNamePh: "e.g. Mom",
@@ -99,6 +104,11 @@
     copyThis: "Copy this link:",
     noRules: "Add at least one rule.",
     at: "at",
+    waOpen: "Open WhatsApp",
+    waCopy: "Copy number",
+    waCopied: "Number copied",
+    waSheetHint: "If it didn't open, tap Open WhatsApp or copy the number and paste it in WhatsApp.",
+    close: "Close",
   };
 
   const hourFmt = new Intl.DateTimeFormat(LANG === "ar" ? "ar-EG-u-nu-latn" : "en-US", {
@@ -353,10 +363,7 @@
     const d = phoneDigits(person.phone);
     if (!d) return null;
     const msg = rule.waMsg || "";
-    const https = "https://wa.me/" + d + (msg ? "?text=" + encodeURIComponent(msg) : "");
-    if (!IS_APP) return https;
-    const q = msg ? "&text=" + encodeURIComponent(msg) : "";
-    return `intent://send?phone=${d}${q}#Intent;scheme=whatsapp;package=com.whatsapp;S.browser_fallback_url=${encodeURIComponent(https)};end`;
+    return "https://wa.me/" + d + (msg ? "?text=" + encodeURIComponent(msg) : "");
   }
 
   function telLink(person) {
@@ -364,18 +371,118 @@
     return d ? "tel:+" + d : null;
   }
 
+  function tryExternalUrl(url) {
+    const iframe = document.createElement("iframe");
+    iframe.style.cssText = "display:none;width:0;height:0;border:0";
+    iframe.setAttribute("aria-hidden", "true");
+    iframe.src = url;
+    document.body.appendChild(iframe);
+    setTimeout(() => iframe.remove(), 2500);
+  }
+
+  function copyPhone(phone) {
+    const p = "+" + phoneDigits(phone);
+    const done = () => toast(T.waCopied);
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(p).then(done).catch(() => {
+        window.prompt(T.waCopy, p);
+      });
+    } else {
+      window.prompt(T.waCopy, p);
+      done();
+    }
+  }
+
+  function ensureWaSheet() {
+    let sheet = $("#coWaSheet");
+    if (sheet) return sheet;
+    sheet = document.createElement("div");
+    sheet.id = "coWaSheet";
+    sheet.className = "co-wa-sheet";
+    sheet.hidden = true;
+    sheet.innerHTML = `<div class="co-wa-sheet-card" role="dialog" aria-modal="true" aria-labelledby="coWaSheetTitle">
+      <button type="button" class="co-wa-sheet-close" aria-label="${esc(T.close)}">×</button>
+      <h3 id="coWaSheetTitle">${esc(T.whatsapp)}</h3>
+      <p class="co-wa-sheet-num" dir="ltr"></p>
+      <p class="co-wa-sheet-hint muted">${esc(T.waSheetHint)}</p>
+      <div class="co-wa-sheet-actions">
+        <button type="button" class="btn co-wa-sheet-open">${esc(T.waOpen)}</button>
+        <button type="button" class="btn-ghost co-wa-sheet-copy">${esc(T.waCopy)}</button>
+      </div>
+    </div>`;
+    document.body.appendChild(sheet);
+    const close = () => { sheet.hidden = true; };
+    sheet.querySelector(".co-wa-sheet-close").addEventListener("click", close);
+    sheet.addEventListener("click", e => { if (e.target === sheet) close(); });
+    sheet.querySelector(".co-wa-sheet-open").addEventListener("click", () => {
+      const p = sheet.dataset.phone || "";
+      const m = sheet.dataset.msg || "";
+      if (!p) return;
+      const text = m ? "&text=" + encodeURIComponent(m) : "";
+      tryExternalUrl(`whatsapp://send?phone=${p}${text}`);
+    });
+    sheet.querySelector(".co-wa-sheet-copy").addEventListener("click", () => copyPhone(sheet.dataset.phone || ""));
+    return sheet;
+  }
+
+  function showWaSheet(phone, msg) {
+    const sheet = ensureWaSheet();
+    sheet.dataset.phone = phoneDigits(phone);
+    sheet.dataset.msg = msg || "";
+    sheet.querySelector(".co-wa-sheet-num").textContent = "+" + sheet.dataset.phone;
+    sheet.hidden = false;
+  }
+
+  function openWhatsApp(phone, msg) {
+    const p = phoneDigits(phone);
+    if (!p) return;
+    const text = msg ? "&text=" + encodeURIComponent(msg) : "";
+    tryExternalUrl(`whatsapp://send?phone=${p}${text}`);
+    showWaSheet(p, msg);
+  }
+
+  function openPhoneCall(phone) {
+    const p = phoneDigits(phone);
+    if (!p) return;
+    tryExternalUrl(`tel:+${p}`);
+  }
+
+  function bindAppContactClicks() {
+    if (!IS_APP || document.documentElement.dataset.coAppBound) return;
+    document.documentElement.dataset.coAppBound = "1";
+    document.addEventListener("click", e => {
+      const wa = e.target.closest(".co-wa");
+      if (wa && wa.dataset.phone) {
+        e.preventDefault();
+        e.stopPropagation();
+        openWhatsApp(wa.dataset.phone, wa.dataset.waMsg || "");
+        return;
+      }
+      const call = e.target.closest(".co-call");
+      if (call && call.dataset.phone) {
+        e.preventDefault();
+        e.stopPropagation();
+        openPhoneCall(call.dataset.phone);
+      }
+    }, true);
+  }
+
   function renderContactActions(person, rule, extraClass) {
     const r = rule || { waMsg: "" };
-    const wa = waLink(person, r);
-    const tel = telLink(person);
-    if (!wa && !tel) return "";
+    const d = phoneDigits(person.phone);
+    if (!d) return "";
+    const msg = r.waMsg || "";
     const cls = extraClass ? `co-actions ${extraClass}` : "co-actions";
     let html = `<div class="${cls}">`;
-    if (wa) {
-      const ext = IS_APP ? "" : ' target="_blank" rel="noopener"';
-      html += `<a class="btn-ghost co-wa" href="${esc(wa)}"${ext}>${esc(T.whatsapp)}</a>`;
+    if (IS_APP) {
+      html += `<button type="button" class="btn-ghost co-wa" data-phone="${esc(d)}" data-wa-msg="${esc(msg)}">${esc(T.whatsapp)}</button>`;
+      html += `<button type="button" class="btn-ghost co-call" data-phone="${esc(d)}">${esc(T.call)}</button>`;
+    } else {
+      const wa = waLink(person, r);
+      const tel = telLink(person);
+      if (wa) html += `<a class="btn-ghost co-wa" href="${esc(wa)}" target="_blank" rel="noopener">${esc(T.whatsapp)}</a>`;
+      if (tel) html += `<a class="btn-ghost co-call" href="${esc(tel)}">${esc(T.call)}</a>`;
     }
-    if (tel) html += `<a class="btn-ghost co-call" href="${esc(tel)}">${esc(T.call)}</a>`;
     html += "</div>";
     return html;
   }
@@ -715,6 +822,7 @@
     });
 
     bindPeopleEvents();
+    bindAppContactClicks();
     renderPeople();
     await renderDashboard();
 
