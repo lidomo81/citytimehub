@@ -68,7 +68,8 @@
     waOpen: "فتح واتساب",
     waCopy: "نسخ الرقم",
     waCopied: "تم نسخ الرقم",
-    waSheetHint: "لو ما فتحش تلقائيًا، اضغط «فتح واتساب» أو انسخ الرقم وافتحه يدويًا.",
+    waCopiedReady: "تم نسخ الرقم — افتح واتساب والصقه في محادثة جديدة",
+    waSheetHint: "١) افتح واتساب  ٢) محادثة جديدة  ٣) الصق الرقم في البحث",
     close: "إغلاق",
   } : {
     you: "Your city", youPh: "e.g. Dubai",
@@ -107,7 +108,8 @@
     waOpen: "Open WhatsApp",
     waCopy: "Copy number",
     waCopied: "Number copied",
-    waSheetHint: "If it didn't open, tap Open WhatsApp or copy the number and paste it in WhatsApp.",
+    waCopiedReady: "Number copied — open WhatsApp and paste it in a new chat",
+    waSheetHint: "1) Open WhatsApp  2) New chat  3) Paste the number in search",
     close: "Close",
   };
 
@@ -371,6 +373,46 @@
     return d ? "tel:+" + d : null;
   }
 
+  function waMeUrl(phone, msg) {
+    const p = phoneDigits(phone);
+    return `https://wa.me/${p}` + (msg ? `?text=${encodeURIComponent(msg)}` : "");
+  }
+
+  function tryLaunchWhatsAppSchemes(phone, msg) {
+    const p = phoneDigits(phone);
+    const enc = msg ? encodeURIComponent(msg) : "";
+    const https = waMeUrl(p, msg);
+    const intent = `intent://send?phone=${p}${msg ? "&text=" + enc : ""}#Intent;scheme=whatsapp;package=com.whatsapp;S.browser_fallback_url=${encodeURIComponent(https)};end`;
+    const a = document.createElement("a");
+    a.href = intent;
+    a.style.display = "none";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    tryExternalUrl(`whatsapp://send?phone=${p}${msg ? "&text=" + enc : ""}`);
+  }
+
+  async function tryLaunchWhatsApp(phone, msg) {
+    const p = phoneDigits(phone);
+    if (!p) return false;
+    try {
+      if (window.AndroidApp && typeof AndroidApp.openWhatsApp === "function") {
+        AndroidApp.openWhatsApp(p, msg || "");
+        return true;
+      }
+    } catch (e) {}
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: T.whatsapp, text: msg || undefined, url: waMeUrl(p, msg) });
+        return true;
+      } catch (e) {
+        if (e && e.name === "AbortError") return true;
+      }
+    }
+    tryLaunchWhatsAppSchemes(p, msg);
+    return false;
+  }
+
   function tryExternalUrl(url) {
     const iframe = document.createElement("iframe");
     iframe.style.cssText = "display:none;width:0;height:0;border:0";
@@ -380,9 +422,9 @@
     setTimeout(() => iframe.remove(), 2500);
   }
 
-  function copyPhone(phone) {
+  function copyPhone(phone, toastMsg) {
     const p = "+" + phoneDigits(phone);
-    const done = () => toast(T.waCopied);
+    const done = () => { if (toastMsg !== false) toast(toastMsg || T.waCopied); };
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(p).then(done).catch(() => {
         window.prompt(T.waCopy, p);
@@ -418,8 +460,7 @@
       const p = sheet.dataset.phone || "";
       const m = sheet.dataset.msg || "";
       if (!p) return;
-      const text = m ? "&text=" + encodeURIComponent(m) : "";
-      tryExternalUrl(`whatsapp://send?phone=${p}${text}`);
+      tryLaunchWhatsApp(p, m);
     });
     sheet.querySelector(".co-wa-sheet-copy").addEventListener("click", () => copyPhone(sheet.dataset.phone || ""));
     return sheet;
@@ -433,12 +474,13 @@
     sheet.hidden = false;
   }
 
-  function openWhatsApp(phone, msg) {
+  async function openWhatsApp(phone, msg) {
     const p = phoneDigits(phone);
     if (!p) return;
-    const text = msg ? "&text=" + encodeURIComponent(msg) : "";
-    tryExternalUrl(`whatsapp://send?phone=${p}${text}`);
-    showWaSheet(p, msg);
+    copyPhone(p, false);
+    toast(T.waCopiedReady);
+    const opened = await tryLaunchWhatsApp(p, msg);
+    if (!opened) showWaSheet(p, msg);
   }
 
   function openPhoneCall(phone) {
