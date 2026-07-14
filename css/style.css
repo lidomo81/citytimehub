@@ -1173,7 +1173,43 @@ html[dir="rtl"] .hu-time, html[dir="rtl"] [dir="ltr"] { direction: ltr; unicode-
 }
 
 /* ===================== Close Ones / أحبابك ===================== */
-.co-dash { margin-bottom: 28px; }
+.co-dash { margin-bottom: 20px; }
+.co-notify-bar {
+  display: flex; align-items: center; gap: 12px 14px; flex-wrap: wrap;
+  margin-bottom: 24px; padding: 14px 16px; border-radius: 14px;
+  border: 1px dashed rgba(96,165,200,.45); background: var(--surface);
+}
+.co-notify-ico {
+  display: inline-flex; align-items: center; justify-content: center; flex: none;
+  width: 40px; height: 40px; border-radius: 12px;
+  background: color-mix(in srgb, var(--brand) 12%, var(--surface));
+  color: var(--brand);
+}
+.co-notify-copy { flex: 1 1 180px; min-width: 0; }
+.co-notify-title { display: block; font-size: .98rem; font-weight: 800; margin-bottom: 2px; }
+.co-notify-sub { display: block; font-size: .82rem; line-height: 1.35; }
+.co-notify-badge {
+  flex: none; font-size: .72rem; font-weight: 800; letter-spacing: .04em;
+  padding: 5px 10px; border-radius: 999px;
+  background: color-mix(in srgb, var(--brand) 14%, var(--surface));
+  color: var(--brand); border: 1px solid rgba(96,165,200,.35);
+}
+.co-notify-toggle {
+  position: relative; flex: none; width: 48px; height: 28px; padding: 0; border: none;
+  border-radius: 999px; cursor: not-allowed; opacity: .55;
+  background: var(--border); transition: background .2s, opacity .2s;
+}
+.co-notify-toggle:not(:disabled) { cursor: pointer; opacity: 1; }
+.co-notify-toggle.is-on { background: var(--brand); }
+.co-notify-toggle.is-on .co-notify-knob { transform: translateX(20px); }
+[dir="rtl"] .co-notify-toggle.is-on .co-notify-knob { transform: translateX(-20px); }
+.co-notify-knob {
+  position: absolute; top: 3px; inset-inline-start: 3px; width: 22px; height: 22px;
+  border-radius: 50%; background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,.18);
+  transition: transform .2s;
+}
+.co-notify-bar.is-ready .co-notify-badge { display: none; }
+.co-notify-bar.is-ready .co-notify-toggle:not(:disabled) { opacity: 1; }
 .co-active {
   padding: 22px 24px; border-radius: 16px;
   background: linear-gradient(135deg, rgba(37,99,235,.14), rgba(96,165,200,.10));

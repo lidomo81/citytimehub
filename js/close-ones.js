@@ -86,6 +86,12 @@
     callOpen: "فتح الهاتف",
     callCopiedReady: "تم نسخ الرقم — افتح تطبيق الهاتف والصقه للاتصال",
     callSheetHint: "١) افتح تطبيق الهاتف  ٢) الصق الرقم  ٣) اضغط اتصال",
+    notifyTitle: "تذكيرات أحبابك",
+    notifySub: "نبّهني قبل كل نافذة اتصال",
+    notifySoon: "قريبًا",
+    notifySoonToast: "التذكيرات ستُفعّل مع تحديث التطبيق — ترقّب الإصدار القادم.",
+    notifyEnabled: "تم تفعيل تذكيرات أحبابك.",
+    notifyDisabled: "تم إيقاف تذكيرات أحبابك.",
     close: "إغلاق",
   } : {
     you: "Your city", youPh: "e.g. Dubai",
@@ -129,6 +135,12 @@
     callOpen: "Open phone",
     callCopiedReady: "Number copied — open your phone app and paste it to call",
     callSheetHint: "1) Open the phone app  2) Paste the number  3) Tap call",
+    notifyTitle: "Close Ones reminders",
+    notifySub: "Notify me before each connection window",
+    notifySoon: "Soon",
+    notifySoonToast: "Reminders will arrive with the next app update — stay tuned.",
+    notifyEnabled: "Close Ones reminders are on.",
+    notifyDisabled: "Close Ones reminders are off.",
     close: "Close",
   };
 
@@ -551,6 +563,48 @@
     else openPhoneCall(el.dataset.phone);
   }
 
+  function initNotifyBar() {
+    const bar = $("#coNotifyBar");
+    const btn = $("#coNotifyToggle");
+    const badge = $("#coNotifyBadge");
+    if (!bar || !btn) return;
+
+    const hasBridge = !!(window.AndroidApp && typeof AndroidApp.enableCloseOnesReminders === "function");
+    const title = $("#coNotifyTitle");
+    const sub = $("#coNotifySub");
+    if (title) title.textContent = T.notifyTitle;
+    if (sub) sub.textContent = T.notifySub;
+    if (badge) badge.textContent = T.notifySoon;
+
+    if (hasBridge) {
+      bar.classList.add("is-ready");
+      btn.disabled = false;
+      btn.removeAttribute("aria-disabled");
+      const on = localStorage.getItem("cth-co-notify") === "1";
+      btn.classList.toggle("is-on", on);
+      btn.setAttribute("aria-checked", on ? "true" : "false");
+      btn.addEventListener("click", () => {
+        const next = !btn.classList.contains("is-on");
+        try {
+          if (next) AndroidApp.enableCloseOnesReminders();
+          else if (typeof AndroidApp.disableCloseOnesReminders === "function") AndroidApp.disableCloseOnesReminders();
+        } catch (e) { return; }
+        btn.classList.toggle("is-on", next);
+        btn.setAttribute("aria-checked", next ? "true" : "false");
+        try { localStorage.setItem("cth-co-notify", next ? "1" : "0"); } catch (e) {}
+        toast(next ? T.notifyEnabled : T.notifyDisabled);
+      });
+      return;
+    }
+
+    const showSoon = () => toast(T.notifySoonToast);
+    btn.addEventListener("click", showSoon);
+    bar.addEventListener("click", e => {
+      if (e.target === btn || btn.contains(e.target)) return;
+      showSoon();
+    });
+  }
+
   function bindAppContactClicks() {
     if (!SAFE_CONTACT) return;
     document.addEventListener("click", e => {
@@ -938,6 +992,7 @@
 
     bindPeopleEvents();
     bindAppContactClicks();
+    initNotifyBar();
     renderPeople();
     await renderDashboard();
 
