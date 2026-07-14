@@ -27,6 +27,13 @@
     : ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
   const AFTER_WINDOW_MIN = 45;
+  const DEFAULT_OFFSET_AFTER = 30;
+  const DEFAULT_OFFSET_BEFORE = 15;
+  const DEFAULT_REMIND_BEFORE = 30;
+  const PRAYER_OFFSET_MIN = 5;
+  const PRAYER_OFFSET_MAX = 120;
+  const REMIND_MIN = 0;
+  const REMIND_MAX = 180;
   const STORAGE_KEY = "cth-close-ones";
   const MAX_PEOPLE = 6;
   function detectAppMode() {
@@ -61,6 +68,7 @@
     ruleAfter: "بعد صلاة", ruleBefore: "قبل صلاة", ruleFixed: "موعد ثابت",
     offsetMin: "دقائق", fixedLabel: "التذكير", fixedLabelPh: "مثال: موعد الدكتور",
     fixedDay: "اليوم", fixedTime: "الوقت (بتوقيته)", remindBefore: "ذكّرني قبل",
+    remindHint: "٠ = عند الموعد",
     actionCall: "اتصال", actionNudge: "تنبيه",
     waMsg: "رسالة واتساب (اختياري)", waMsgPh: "مثال: صلّي الفجر يا أمي 🤍",
     activeNow: "النافذة الآن", upcoming: "القادم", emptySetup: "أضف شخصًا واختر قالبًا أو قاعدة.",
@@ -110,6 +118,7 @@
     ruleAfter: "After prayer", ruleBefore: "Before prayer", ruleFixed: "Fixed appointment",
     offsetMin: "minutes", fixedLabel: "Reminder", fixedLabelPh: "e.g. Doctor appointment",
     fixedDay: "Day", fixedTime: "Time (their clock)", remindBefore: "Remind me before",
+    remindHint: "0 = at appointment time",
     actionCall: "Call", actionNudge: "Nudge",
     waMsg: "WhatsApp message (optional)", waMsgPh: "e.g. Fajr time — love you 🤍",
     activeNow: "Window now", upcoming: "Coming up", emptySetup: "Add someone and pick a template or rule.",
@@ -247,12 +256,49 @@
     }
   }
 
+  function defaultOffsetForType(type) {
+    return type === "before" ? DEFAULT_OFFSET_BEFORE : DEFAULT_OFFSET_AFTER;
+  }
+
+  function effectiveOffsetMin(rule) {
+    if (rule.type !== "after" && rule.type !== "before") return DEFAULT_OFFSET_AFTER;
+    const v = rule.offsetMin;
+    if (v == null || v === "" || !Number.isFinite(Number(v)) || Number(v) <= 0) {
+      return defaultOffsetForType(rule.type);
+    }
+    return Math.min(PRAYER_OFFSET_MAX, Math.max(PRAYER_OFFSET_MIN, Math.round(Number(v))));
+  }
+
+  function effectiveRemindBeforeMin(rule) {
+    if (rule.type !== "fixed") return DEFAULT_REMIND_BEFORE;
+    const v = rule.remindBeforeMin;
+    if (v == null || v === "" || !Number.isFinite(Number(v))) return DEFAULT_REMIND_BEFORE;
+    return Math.min(REMIND_MAX, Math.max(REMIND_MIN, Math.round(Number(v))));
+  }
+
+  function normalizeRule(rule) {
+    if (!rule || typeof rule !== "object") return;
+    if (rule.type === "after" || rule.type === "before") {
+      rule.offsetMin = effectiveOffsetMin(rule);
+    } else if (rule.type === "fixed") {
+      rule.remindBeforeMin = effectiveRemindBeforeMin(rule);
+    }
+  }
+
+  function normalizeAllRules() {
+    for (const p of state.people) {
+      if (!Array.isArray(p.rules)) { p.rules = []; continue; }
+      for (const r of p.rules) normalizeRule(r);
+    }
+  }
+
   function loadState() {
     try {
       const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
       if (raw && typeof raw === "object") {
         state.you = raw.you || "";
         state.people = Array.isArray(raw.people) ? raw.people.slice(0, MAX_PEOPLE) : [];
+        normalizeAllRules();
       }
     } catch (e) {}
   }
@@ -322,8 +368,8 @@
 
   function ruleLabel(person, rule) {
     const n = person.name || "";
-    if (rule.type === "after") return T.afterLine(n, rule.prayer, rule.offsetMin);
-    if (rule.type === "before") return T.beforeLine(n, rule.prayer, rule.offsetMin);
+    if (rule.type === "after") return T.afterLine(n, rule.prayer, effectiveOffsetMin(rule));
+    if (rule.type === "before") return T.beforeLine(n, rule.prayer, effectiveOffsetMin(rule));
     return T.fixedLine(n, rule.label || "");
   }
 
@@ -338,7 +384,7 @@
       const pr = prayers.find(p => p.key === rule.prayer);
       if (!pr) return out;
       const pMs = localToUtcMs(city, pr.h, pr.m, 0);
-      const off = (rule.offsetMin || 0) * 60000;
+      const off = effectiveOffsetMin(rule) * 60000;
       if (rule.type === "after") {
         add(pMs + off, pMs + off + AFTER_WINDOW_MIN * 60000, "after");
         const pMsTomorrow = localToUtcMs(city, pr.h, pr.m, 1);
@@ -349,14 +395,16 @@
         add(pMsTomorrow - off, pMsTomorrow, "before");
       }
     } else if (rule.type === "fixed") {
-      const ymd = cityYmd(city);
-      const rb = (rule.remindBeforeMin ?? 30) * 60000;
+      const rbMin = effectiveRemindBeforeMin(rule);
+      const rb = rbMin * 60000;
       for (let d = 0; d < 8; d++) {
         const y = cityYmd(city, d);
         if (y.dow !== (rule.dow ?? 0)) continue;
         const [hh, mm] = (rule.time || "10:00").split(":").map(Number);
-        const end = localToUtcMs(city, hh, mm, d);
-        add(end - rb, end, "fixed");
+        const apt = localToUtcMs(city, hh, mm, d);
+        const start = apt - rb;
+        const end = rbMin === 0 ? apt + AFTER_WINDOW_MIN * 60000 : apt;
+        add(start, end, "fixed");
       }
     }
     return out;
@@ -743,16 +791,18 @@
       const prayerSel = `<select class="co-rule-prayer" data-p="${idx}" data-r="${ri}">
         ${PKEYS.map(k => `<option value="${k}"${r.prayer === k ? " selected" : ""}>${esc(PNAME[k])}</option>`).join("")}
       </select>`;
-      const offset = `<input type="number" class="co-rule-offset" min="5" max="120" step="5" value="${r.offsetMin ?? 30}" data-p="${idx}" data-r="${ri}" aria-label="${esc(T.offsetMin)}" />`;
+      const offVal = effectiveOffsetMin(r);
+      const offset = `<input type="number" class="co-rule-offset" min="${PRAYER_OFFSET_MIN}" max="${PRAYER_OFFSET_MAX}" step="5" value="${offVal}" data-p="${idx}" data-r="${ri}" aria-label="${esc(T.offsetMin)}" />`;
       const dowSel = `<select class="co-rule-dow" data-p="${idx}" data-r="${ri}">
         ${DOW.map((d, i) => `<option value="${i}"${(r.dow ?? 0) === i ? " selected" : ""}>${esc(d)}</option>`).join("")}
       </select>`;
       const timeIn = `<input type="time" class="co-rule-time" value="${esc(r.time || "10:00")}" data-p="${idx}" data-r="${ri}" />`;
       const labelIn = `<input type="text" class="co-rule-label" value="${esc(r.label || "")}" placeholder="${esc(T.fixedLabelPh)}" data-p="${idx}" data-r="${ri}" />`;
-      const remind = `<input type="number" class="co-rule-remind" min="5" max="180" step="5" value="${r.remindBeforeMin ?? 30}" data-p="${idx}" data-r="${ri}" />`;
+      const rbVal = effectiveRemindBeforeMin(r);
+      const remind = `<input type="number" class="co-rule-remind" min="${REMIND_MIN}" max="${REMIND_MAX}" step="5" value="${rbVal}" data-p="${idx}" data-r="${ri}" aria-label="${esc(T.remindBefore)}" />`;
       const wa = `<input type="text" class="co-rule-wa" value="${esc(r.waMsg || "")}" placeholder="${esc(T.waMsgPh)}" data-p="${idx}" data-r="${ri}" />`;
       const detail = r.type === "fixed"
-        ? `<div class="co-rule-detail">${labelIn} ${dowSel} ${timeIn} <label class="co-mini">${esc(T.remindBefore)}</label> ${remind} ${wa}</div>`
+        ? `<div class="co-rule-detail">${labelIn} ${dowSel} ${timeIn} <label class="co-mini">${esc(T.remindBefore)}</label> ${remind} <span class="co-mini co-rule-hint">${esc(T.remindHint)}</span> ${wa}</div>`
         : `<div class="co-rule-detail">${prayerSel} <label class="co-mini">${esc(T.offsetMin)}</label> ${offset} ${wa}</div>`;
       return `<div class="co-rule" data-p="${idx}" data-r="${ri}">
         ${typeSel} ${detail}
@@ -823,13 +873,31 @@
     const p = state.people[+el.dataset.p];
     const r = p && p.rules[+el.dataset.r];
     if (!r) return;
-    if (el.classList.contains("co-rule-type")) { r.type = el.value; fullRerender = true; }
+    if (el.classList.contains("co-rule-type")) { r.type = el.value; normalizeRule(r); fullRerender = true; }
     else if (el.classList.contains("co-rule-prayer")) r.prayer = el.value;
-    else if (el.classList.contains("co-rule-offset")) r.offsetMin = +el.value;
+    else if (el.classList.contains("co-rule-offset")) {
+      const raw = el.value.trim();
+      if (!raw) r.offsetMin = defaultOffsetForType(r.type);
+      else {
+        const n = +raw;
+        r.offsetMin = !Number.isFinite(n) || n <= 0 ? defaultOffsetForType(r.type)
+          : Math.min(PRAYER_OFFSET_MAX, Math.max(PRAYER_OFFSET_MIN, Math.round(n)));
+      }
+      if (String(r.offsetMin) !== el.value) el.value = r.offsetMin;
+    }
     else if (el.classList.contains("co-rule-dow")) r.dow = +el.value;
     else if (el.classList.contains("co-rule-time")) r.time = el.value;
     else if (el.classList.contains("co-rule-label")) r.label = el.value;
-    else if (el.classList.contains("co-rule-remind")) r.remindBeforeMin = +el.value;
+    else if (el.classList.contains("co-rule-remind")) {
+      const raw = el.value.trim();
+      if (!raw) r.remindBeforeMin = DEFAULT_REMIND_BEFORE;
+      else {
+        const n = +raw;
+        r.remindBeforeMin = !Number.isFinite(n) || n < 0 ? DEFAULT_REMIND_BEFORE
+          : Math.min(REMIND_MAX, Math.max(REMIND_MIN, Math.round(n)));
+      }
+      if (String(r.remindBeforeMin) !== el.value) el.value = r.remindBeforeMin;
+    }
     else return;
     saveState();
     if (fullRerender) renderPeople();
@@ -864,6 +932,11 @@
       if (!el.dataset.p && el.dataset.p !== "0") return;
       onRuleChange(el, el.classList.contains("co-rule-type"));
     });
+    box.addEventListener("blur", e => {
+      const el = e.target;
+      if (!el.classList.contains("co-rule-offset") && !el.classList.contains("co-rule-remind")) return;
+      onRuleChange(el, false);
+    }, true);
     box.addEventListener("input", e => {
       const el = e.target;
       if (!el.classList.contains("co-rule-wa")) return;

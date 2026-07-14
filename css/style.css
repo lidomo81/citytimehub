@@ -1291,6 +1291,7 @@ html[dir="rtl"] .hu-time, html[dir="rtl"] [dir="ltr"] { direction: ltr; unicode-
 .co-rule-time { padding: 6px 8px; border-radius: 8px; border: 1px solid var(--border); }
 .co-rule-detail { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; flex: 1 1 200px; }
 .co-mini { font-size: .75rem; color: var(--muted); }
+.co-rule-hint { flex: 1 1 100%; margin-top: -2px; }
 .co-rule-del { background: none; border: none; font-size: 1.2rem; color: var(--muted); cursor: pointer; padding: 0 4px; line-height: 1; }
 .co-add-rule { margin-top: 10px; font-size: .88rem; }
 
