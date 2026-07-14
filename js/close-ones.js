@@ -70,6 +70,9 @@
     waCopied: "تم نسخ الرقم",
     waCopiedReady: "تم نسخ الرقم — افتح واتساب والصقه في محادثة جديدة",
     waSheetHint: "١) افتح واتساب  ٢) محادثة جديدة  ٣) الصق الرقم في البحث",
+    callOpen: "فتح الهاتف",
+    callCopiedReady: "تم نسخ الرقم — افتح تطبيق الهاتف والصقه للاتصال",
+    callSheetHint: "١) افتح تطبيق الهاتف  ٢) الصق الرقم  ٣) اضغط اتصال",
     close: "إغلاق",
   } : {
     you: "Your city", youPh: "e.g. Dubai",
@@ -110,6 +113,9 @@
     waCopied: "Number copied",
     waCopiedReady: "Number copied — open WhatsApp and paste it in a new chat",
     waSheetHint: "1) Open WhatsApp  2) New chat  3) Paste the number in search",
+    callOpen: "Open phone",
+    callCopiedReady: "Number copied — open your phone app and paste it to call",
+    callSheetHint: "1) Open the phone app  2) Paste the number  3) Tap call",
     close: "Close",
   };
 
@@ -483,10 +489,82 @@
     if (!opened) showWaSheet(p, msg);
   }
 
-  function openPhoneCall(phone) {
+  function tryLaunchPhoneSchemes(phone) {
+    const p = phoneDigits(phone);
+    const tel = `tel:+${p}`;
+    const a = document.createElement("a");
+    a.href = tel;
+    a.style.display = "none";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    tryExternalUrl(tel);
+    const intent = `intent://tel:+${p}#Intent;scheme=tel;end`;
+    const link = document.createElement("a");
+    link.href = intent;
+    link.style.display = "none";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
+
+  async function tryLaunchPhone(phone) {
+    const p = phoneDigits(phone);
+    if (!p) return false;
+    try {
+      if (window.AndroidApp && typeof AndroidApp.openPhone === "function") {
+        AndroidApp.openPhone(p);
+        return true;
+      }
+    } catch (e) {}
+    tryLaunchPhoneSchemes(p);
+    return false;
+  }
+
+  function ensureCallSheet() {
+    let sheet = $("#coCallSheet");
+    if (sheet) return sheet;
+    sheet = document.createElement("div");
+    sheet.id = "coCallSheet";
+    sheet.className = "co-wa-sheet co-call-sheet";
+    sheet.hidden = true;
+    sheet.innerHTML = `<div class="co-wa-sheet-card" role="dialog" aria-modal="true" aria-labelledby="coCallSheetTitle">
+      <button type="button" class="co-wa-sheet-close" aria-label="${esc(T.close)}">×</button>
+      <h3 id="coCallSheetTitle">${esc(T.call)}</h3>
+      <p class="co-wa-sheet-num" dir="ltr"></p>
+      <p class="co-wa-sheet-hint muted">${esc(T.callSheetHint)}</p>
+      <div class="co-wa-sheet-actions">
+        <button type="button" class="btn co-call-sheet-open">${esc(T.callOpen)}</button>
+        <button type="button" class="btn-ghost co-call-sheet-copy">${esc(T.waCopy)}</button>
+      </div>
+    </div>`;
+    document.body.appendChild(sheet);
+    const close = () => { sheet.hidden = true; };
+    sheet.querySelector(".co-wa-sheet-close").addEventListener("click", close);
+    sheet.addEventListener("click", e => { if (e.target === sheet) close(); });
+    sheet.querySelector(".co-call-sheet-open").addEventListener("click", () => {
+      const p = sheet.dataset.phone || "";
+      if (!p) return;
+      tryLaunchPhone(p);
+    });
+    sheet.querySelector(".co-call-sheet-copy").addEventListener("click", () => copyPhone(sheet.dataset.phone || ""));
+    return sheet;
+  }
+
+  function showCallSheet(phone) {
+    const sheet = ensureCallSheet();
+    sheet.dataset.phone = phoneDigits(phone);
+    sheet.querySelector(".co-wa-sheet-num").textContent = "+" + sheet.dataset.phone;
+    sheet.hidden = false;
+  }
+
+  async function openPhoneCall(phone) {
     const p = phoneDigits(phone);
     if (!p) return;
-    tryExternalUrl(`tel:+${p}`);
+    copyPhone(p, false);
+    toast(T.callCopiedReady);
+    const opened = await tryLaunchPhone(p);
+    if (!opened) showCallSheet(p);
   }
 
   function bindAppContactClicks() {
