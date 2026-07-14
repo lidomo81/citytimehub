@@ -1186,6 +1186,10 @@ html[dir="rtl"] .hu-time, html[dir="rtl"] [dir="ltr"] { direction: ltr; unicode-
 .co-times b { color: var(--text); margin-inline-end: 6px; }
 .co-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 .co-wa { background: rgba(37,211,102,.12); border-color: rgba(37,211,102,.35); }
+.co-person-actions { margin: 0 0 12px; }
+.co-person-actions .btn-ghost { font-size: .85rem; padding: 8px 14px; }
+.co-up-actions { grid-column: 2; margin-top: 4px; }
+.co-up-actions .btn-ghost { font-size: .78rem; padding: 6px 12px; }
 .co-upcoming { margin-top: 20px; }
 .co-up-k { font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 .co-up-list { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
@@ -1211,6 +1215,7 @@ html[dir="rtl"] .hu-time, html[dir="rtl"] [dir="ltr"] { direction: ltr; unicode-
 .co-dial-prefix.has-dial { color: var(--brand); background: color-mix(in srgb, var(--brand) 10%, var(--surface)); }
 .co-phone-input { border-radius: 0 10px 10px 0 !important; flex: 1; min-width: 0; }
 [dir="rtl"] .co-phone-input { border-radius: 10px 0 0 10px !important; }
+.co-phone-input.is-locked { opacity: .72; cursor: not-allowed; background: var(--surface-2); }
 .co-dial-hint { margin: 6px 0 0; font-size: .8rem; line-height: 1.4; }
 .co-ac { position: relative; }
 .co-submit { justify-self: start; }

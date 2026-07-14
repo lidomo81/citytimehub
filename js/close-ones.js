@@ -111,16 +111,23 @@
   const bySlug = new Map();
   const state = { you: "", people: [] };
   let prayerCache = new Map();
+  let tzCache = new Map();
   let tickTimer = null;
+  let dashGen = 0;
+  let dashTimer = null;
 
   function tzOffsetHours(tz) {
+    if (!tz) return 0;
+    if (tzCache.has(tz)) return tzCache.get(tz);
+    let off = 0;
     try {
       const p = new Intl.DateTimeFormat("en-US", { timeZone: tz, timeZoneName: "shortOffset", hour: "2-digit" })
         .formatToParts(new Date()).find(x => x.type === "timeZoneName");
       const m = p && p.value.match(/([+-])(\d{1,2})(?::(\d{2}))?/);
-      if (!m) return 0;
-      return (m[1] === "-" ? -1 : 1) * (parseInt(m[2], 10) + (m[3] ? parseInt(m[3], 10) / 60 : 0));
-    } catch (e) { return 0; }
+      if (m) off = (m[1] === "-" ? -1 : 1) * (parseInt(m[2], 10) + (m[3] ? parseInt(m[3], 10) / 60 : 0));
+    } catch (e) {}
+    tzCache.set(tz, off);
+    return off;
   }
 
   function cityYmd(city, dayOff = 0) {
@@ -147,7 +154,20 @@
   function findCity(q) {
     if (!q) return null;
     const s = norm(q);
-    return bySlug.get(s) || CITIES.find(c => norm(c.name) === s) || CITIES.find(c => c._s && c._s.startsWith(s)) || null;
+    if (bySlug.has(s)) return bySlug.get(s);
+    const hit = CITIES.find(c => norm(c.name) === s || norm(`${c.name} ${c.country}`) === s
+      || (LANG === "ar" && norm(`${c.name_ar || ""} ${c.country_ar || ""}`) === s));
+    if (hit) return hit;
+    const head = s.split(",")[0].trim();
+    if (head && head !== s) {
+      const h2 = CITIES.find(c => norm(c.name) === head || (c.name_ar && norm(c.name_ar) === head));
+      if (h2) return h2;
+    }
+    return CITIES.find(c => c._s && c._s.startsWith(head || s)) || null;
+  }
+
+  function cityLabel(c) {
+    return cN(c) + ", " + cC(c);
   }
 
   function guessHome() {
@@ -160,21 +180,27 @@
   }
 
   async function fetchPrayers(city) {
-    const key = city.slug + ":" + cityYmd(city).day;
-    if (prayerCache.has(key)) return prayerCache.get(key);
     const ymd = cityYmd(city);
+    const key = `${city.slug}:${ymd.y}-${ymd.m + 1}-${ymd.day}`;
+    if (prayerCache.has(key)) return prayerCache.get(key);
     const ds = `${String(ymd.day).padStart(2, "0")}-${String(ymd.m + 1).padStart(2, "0")}-${ymd.y}`;
     const url = `https://api.aladhan.com/v1/timings/${ds}?latitude=${city.lat}&longitude=${city.lng}&method=${city.method ?? 3}`;
-    const res = await fetch(url, { cache: "default" });
-    if (!res.ok) throw new Error("timings");
-    const { data } = await res.json();
-    const t = data.timings;
-    const prayers = PKEYS.map(k => {
-      const [h, m] = (t[k] || "0:0").split(" ")[0].split(":").map(Number);
-      return { key: k, h, m };
-    });
-    prayerCache.set(key, prayers);
-    return prayers;
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 12000);
+    try {
+      const res = await fetch(url, { cache: "default", signal: ctrl.signal });
+      if (!res.ok) throw new Error("timings");
+      const { data } = await res.json();
+      const t = data.timings;
+      const prayers = PKEYS.map(k => {
+        const [h, m] = (t[k] || "0:0").split(" ")[0].split(":").map(Number);
+        return { key: k, h, m };
+      });
+      prayerCache.set(key, prayers);
+      return prayers;
+    } finally {
+      clearTimeout(timer);
+    }
   }
 
   function loadState() {
@@ -231,7 +257,8 @@
       prefix.classList.add("has-dial");
       if (phoneIn) {
         phoneIn.placeholder = T.phonePh;
-        phoneIn.disabled = false;
+        phoneIn.readOnly = false;
+        phoneIn.classList.remove("is-locked");
       }
       if (hint) {
         hint.hidden = false;
@@ -242,7 +269,8 @@
       prefix.classList.remove("has-dial");
       if (phoneIn) {
         phoneIn.placeholder = T.phonePickCity;
-        phoneIn.disabled = true;
+        phoneIn.readOnly = true;
+        phoneIn.classList.add("is-locked");
       }
       if (hint) hint.hidden = true;
     }
@@ -332,27 +360,47 @@
     return d ? "tel:+" + d : null;
   }
 
-  function renderActions(person, rule) {
-    const wa = waLink(person, rule);
+  function renderContactActions(person, rule, extraClass) {
+    const r = rule || { waMsg: "" };
+    const wa = waLink(person, r);
     const tel = telLink(person);
-    let html = '<div class="co-actions">';
+    if (!wa && !tel) return "";
+    const cls = extraClass ? `co-actions ${extraClass}` : "co-actions";
+    let html = `<div class="${cls}">`;
     if (wa) html += `<a class="btn-ghost co-wa" href="${esc(wa)}" target="_blank" rel="noopener">${esc(T.whatsapp)}</a>`;
     if (tel) html += `<a class="btn-ghost co-call" href="${esc(tel)}">${esc(T.call)}</a>`;
-    html += `<button type="button" class="btn-ghost co-done">${esc(T.done)}</button>`;
     html += "</div>";
     return html;
+  }
+
+  function defaultRule(person) {
+    return (person.rules || []).find(x => x.waMsg) || (person.rules || [])[0] || { waMsg: "" };
+  }
+
+  function renderActions(person, rule) {
+    const contact = renderContactActions(person, rule);
+    const done = `<button type="button" class="btn-ghost co-done">${esc(T.done)}</button>`;
+    if (!contact) return `<div class="co-actions">${done}</div>`;
+    return contact.replace("</div>", done + "</div>");
+  }
+
+  function scheduleDashboard() {
+    clearTimeout(dashTimer);
+    dashTimer = setTimeout(() => renderDashboard(), 120);
   }
 
   async function renderDashboard() {
     const dash = $("#coDash");
     if (!dash) return;
+    const gen = ++dashGen;
     if (!state.people.length) {
       dash.innerHTML = `<p class="co-empty muted">${esc(T.emptySetup)}</p>`;
       return;
     }
     let windows;
     try { windows = await allWindows(); }
-    catch (e) { dash.innerHTML = `<p class="co-empty">${esc(T.errPrayer)}</p>`; return; }
+    catch (e) { if (gen === dashGen) dash.innerHTML = `<p class="co-empty">${esc(T.errPrayer)}</p>`; return; }
+    if (gen !== dashGen) return;
 
     const active = activeWindow(windows);
     const upcoming = upcomingWindows(windows);
@@ -384,6 +432,7 @@
           <span class="co-up-when">${esc(when)}</span>
           <span class="co-up-label">${esc(w.label)}</span>
           <span class="co-up-at muted">${esc(fmtAt(w.start, w.city.tz))} · ${esc(cN(w.city))}</span>
+          ${renderContactActions(w.person, w.rule, "co-up-actions")}
         </li>`;
       }
       html += "</ul></div>";
@@ -395,7 +444,7 @@
 
     dash.innerHTML = html;
     dash.querySelectorAll(".co-done").forEach(btn => {
-      btn.addEventListener("click", () => renderDashboard());
+      btn.addEventListener("click", () => scheduleDashboard());
     });
   }
 
@@ -435,6 +484,7 @@
         <button type="button" class="co-person-del" data-idx="${idx}">${esc(T.remove)}</button>
       </header>
       ${person.phone ? `<p class="co-phone muted" dir="ltr">${esc(displayPhone(person, city))}</p>` : ""}
+      ${renderContactActions(person, defaultRule(person), "co-person-actions")}
       <div class="co-templates">
         <button type="button" class="co-tpl" data-idx="${idx}" data-tpl="afterFajr30">${esc(T.tplAfterFajr)}</button>
         <button type="button" class="co-tpl" data-idx="${idx}" data-tpl="beforeFajr15">${esc(T.tplBeforeFajr)}</button>
@@ -453,7 +503,7 @@
 
   function addPerson(data) {
     if (state.people.length >= MAX_PEOPLE) { toast(T.maxPeople(MAX_PEOPLE)); return; }
-    const city = findCity(data.citySlug || data.cityInput);
+    const city = (data.citySlug && bySlug.get(data.citySlug)) || findCity(data.cityInput);
     if (!city) { toast(T.pickCity); return; }
     state.people.push({
       id: uid(),
@@ -465,7 +515,7 @@
     });
     saveState();
     renderPeople();
-    renderDashboard();
+    scheduleDashboard();
     toast(T.saved);
   }
 
@@ -483,7 +533,24 @@
     p.rules.push({ id: uid(), ...t });
     saveState();
     renderPeople();
-    renderDashboard();
+    scheduleDashboard();
+  }
+
+  function onRuleChange(el, fullRerender) {
+    const p = state.people[+el.dataset.p];
+    const r = p && p.rules[+el.dataset.r];
+    if (!r) return;
+    if (el.classList.contains("co-rule-type")) { r.type = el.value; fullRerender = true; }
+    else if (el.classList.contains("co-rule-prayer")) r.prayer = el.value;
+    else if (el.classList.contains("co-rule-offset")) r.offsetMin = +el.value;
+    else if (el.classList.contains("co-rule-dow")) r.dow = +el.value;
+    else if (el.classList.contains("co-rule-time")) r.time = el.value;
+    else if (el.classList.contains("co-rule-label")) r.label = el.value;
+    else if (el.classList.contains("co-rule-remind")) r.remindBeforeMin = +el.value;
+    else return;
+    saveState();
+    if (fullRerender) renderPeople();
+    scheduleDashboard();
   }
 
   function bindPeopleEvents() {
@@ -493,34 +560,26 @@
       const delP = e.target.closest(".co-person-del");
       if (delP) {
         state.people.splice(+delP.dataset.idx, 1);
-        saveState(); renderPeople(); renderDashboard(); return;
+        saveState(); renderPeople(); scheduleDashboard(); return;
       }
       const tpl = e.target.closest(".co-tpl");
       if (tpl) { applyTemplate(+tpl.dataset.idx, tpl.dataset.tpl); return; }
       const addR = e.target.closest(".co-add-rule");
       if (addR) {
         const p = state.people[+addR.dataset.idx];
-        if (p) { p.rules.push({ id: uid(), type: "after", prayer: "Fajr", offsetMin: 30 }); saveState(); renderPeople(); renderDashboard(); }
+        if (p) { p.rules.push({ id: uid(), type: "after", prayer: "Fajr", offsetMin: 30 }); saveState(); renderPeople(); scheduleDashboard(); }
         return;
       }
       const delR = e.target.closest(".co-rule-del");
       if (delR) {
         const p = state.people[+delR.dataset.p];
-        if (p) { p.rules.splice(+delR.dataset.r, 1); saveState(); renderPeople(); renderDashboard(); }
+        if (p) { p.rules.splice(+delR.dataset.r, 1); saveState(); renderPeople(); scheduleDashboard(); }
       }
     });
     box.addEventListener("change", e => {
       const el = e.target;
-      const p = state.people[+el.dataset.p];
-      const r = p && p.rules[+el.dataset.r];
-      if (!r) return;
-      if (el.classList.contains("co-rule-type")) { r.type = el.value; saveState(); renderPeople(); renderDashboard(); }
-      else if (el.classList.contains("co-rule-prayer")) { r.prayer = el.value; saveState(); renderDashboard(); }
-      else if (el.classList.contains("co-rule-offset")) { r.offsetMin = +el.value; saveState(); renderDashboard(); }
-      else if (el.classList.contains("co-rule-dow")) { r.dow = +el.value; saveState(); renderDashboard(); }
-      else if (el.classList.contains("co-rule-time")) { r.time = el.value; saveState(); renderDashboard(); }
-      else if (el.classList.contains("co-rule-label")) { r.label = el.value; saveState(); renderDashboard(); }
-      else if (el.classList.contains("co-rule-remind")) { r.remindBeforeMin = +el.value; saveState(); renderDashboard(); }
+      if (!el.dataset.p && el.dataset.p !== "0") return;
+      onRuleChange(el, el.classList.contains("co-rule-type"));
     });
     box.addEventListener("input", e => {
       const el = e.target;
@@ -532,6 +591,7 @@
   }
 
   function autocomplete(input, listEl, onChoose) {
+    if (!input || !listEl) return;
     let items = [], active = -1;
     const close = () => { listEl.hidden = true; active = -1; input.setAttribute("aria-expanded", "false"); };
     function paint() {
@@ -541,7 +601,14 @@
       listEl.innerHTML = items.map((c, i) => `<li class="ac-item${i === active ? " is-active" : ""}" role="option" data-i="${i}"><span>${esc(cN(c))}</span><span class="ac-country">${esc(cC(c))}</span></li>`).join("");
       listEl.hidden = false; input.setAttribute("aria-expanded", "true");
     }
-    function pick(i) { const c = items[i]; if (!c) return; onChoose(c); close(); }
+    function pick(i) {
+      const c = items[i];
+      if (!c) return;
+      input.value = cityLabel(c);
+      input.blur();
+      onChoose(c);
+      close();
+    }
     input.addEventListener("input", paint);
     input.addEventListener("focus", () => { if (input.value) paint(); });
     input.addEventListener("keydown", e => {
@@ -551,8 +618,13 @@
       else if (e.key === "Enter") { e.preventDefault(); pick(active < 0 ? 0 : active); }
       else if (e.key === "Escape") close();
     });
-    listEl.addEventListener("mousedown", e => { const li = e.target.closest("[data-i]"); if (li) { e.preventDefault(); pick(+li.dataset.i); } });
-    document.addEventListener("click", e => { if (e.target !== input && !listEl.contains(e.target)) close(); });
+    listEl.addEventListener("pointerdown", e => {
+      const li = e.target.closest(".ac-item[data-i]");
+      if (!li) return;
+      e.preventDefault();
+      pick(+li.dataset.i);
+    });
+    input.addEventListener("blur", () => setTimeout(close, 160));
   }
 
   function updateUrl() {
@@ -593,19 +665,30 @@
       if (c) { state.you = c.slug; const i = $("#coYou"); if (i) i.value = cN(c) + ", " + cC(c); }
     }
 
-    autocomplete($("#coYou"), $("#coYouAc"), c => { state.you = c.slug; saveState(); renderDashboard(); });
+    autocomplete($("#coYou"), $("#coYouAc"), c => {
+      state.you = c.slug;
+      saveState();
+    });
 
     let pendingPersonCity = "";
     autocomplete($("#coPersonCity"), $("#coPersonCityAc"), c => {
       pendingPersonCity = c.slug;
-      $("#coPersonCity").value = cN(c) + ", " + cC(c);
-      updateDialUI(c);
+      requestAnimationFrame(() => updateDialUI(c));
     });
 
     const cityInp = $("#coPersonCity");
     if (cityInp) {
       cityInp.addEventListener("input", () => {
-        if (!norm(cityInp.value)) { pendingPersonCity = ""; updateDialUI(null); }
+        const v = norm(cityInp.value);
+        if (!v) { pendingPersonCity = ""; updateDialUI(null); return; }
+        const hit = findCity(cityInp.value);
+        if (hit && cityLabel(hit) === cityInp.value) {
+          pendingPersonCity = hit.slug;
+          updateDialUI(hit);
+        } else {
+          pendingPersonCity = "";
+          updateDialUI(null);
+        }
       });
     }
     updateDialUI(null);
@@ -629,7 +712,7 @@
     await renderDashboard();
 
     clearInterval(tickTimer);
-    tickTimer = setInterval(() => renderDashboard(), 30000);
+    tickTimer = setInterval(() => scheduleDashboard(), 30000);
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
