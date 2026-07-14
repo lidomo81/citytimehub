@@ -41,6 +41,8 @@
     if (v) { try { sessionStorage.setItem("cth-app", "1"); } catch (e) {} }
     return v;
   })();
+  // Android WebView cannot safely navigate to tel:/wa.me/intent — use buttons + sheet only.
+  const SAFE_CONTACT = IS_APP || /Android/i.test(navigator.userAgent || "");
 
   const T = LANG === "ar" ? {
     you: "مدينتك", youPh: "مثال: دبي",
@@ -395,36 +397,24 @@
     return `https://wa.me/${p}` + (msg ? `?text=${encodeURIComponent(msg)}` : "");
   }
 
-  function tryLaunchWhatsAppSchemes(phone, msg) {
-    const p = phoneDigits(phone);
-    const enc = msg ? encodeURIComponent(msg) : "";
-    const https = waMeUrl(p, msg);
-    const intent = `intent://send?phone=${p}${msg ? "&text=" + enc : ""}#Intent;scheme=whatsapp;package=com.whatsapp;S.browser_fallback_url=${encodeURIComponent(https)};end`;
-    const a = document.createElement("a");
-    a.href = intent;
-    a.style.display = "none";
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    tryExternalUrl(`whatsapp://send?phone=${p}${msg ? "&text=" + enc : ""}`);
+  function tryBridgeWhatsApp(phone, msg) {
+    try {
+      if (window.AndroidApp && typeof AndroidApp.openWhatsApp === "function") {
+        AndroidApp.openWhatsApp(phoneDigits(phone), msg || "");
+        return true;
+      }
+    } catch (e) {}
+    return false;
   }
 
-  async function tryLaunchWhatsAppExtra(phone, msg) {
-    const p = phoneDigits(phone);
-    if (!p) return;
-    if (navigator.share) {
-      try { await navigator.share({ title: T.whatsapp, text: msg || undefined, url: waMeUrl(p, msg) }); } catch (e) {}
-    }
-    tryLaunchWhatsAppSchemes(p, msg);
-  }
-
-  function tryExternalUrl(url) {
-    const iframe = document.createElement("iframe");
-    iframe.style.cssText = "display:none;width:0;height:0;border:0";
-    iframe.setAttribute("aria-hidden", "true");
-    iframe.src = url;
-    document.body.appendChild(iframe);
-    setTimeout(() => iframe.remove(), 2500);
+  function tryBridgePhone(phone) {
+    try {
+      if (window.AndroidApp && typeof AndroidApp.openPhone === "function") {
+        AndroidApp.openPhone(phoneDigits(phone));
+        return true;
+      }
+    } catch (e) {}
+    return false;
   }
 
   function copyPhone(phone, toastMsg) {
@@ -470,7 +460,7 @@
       const p = sheet.dataset.phone || "";
       const m = sheet.dataset.msg || "";
       if (!p) return;
-      tryLaunchWhatsAppExtra(p, m);
+      if (!tryBridgeWhatsApp(p, m)) copyPhone(p);
     });
     sheet.querySelector(".co-wa-sheet-copy").addEventListener("click", () => copyPhone(sheet.dataset.phone || ""));
     return sheet;
@@ -481,68 +471,31 @@
     sheet.style.display = "flex";
   }
 
+  function updateSheetBridgeButtons() {
+    const bridgedWa = !!(window.AndroidApp && AndroidApp.openWhatsApp);
+    const bridgedCall = !!(window.AndroidApp && AndroidApp.openPhone);
+    const waOpen = document.querySelector(".co-wa-sheet-open");
+    const callOpen = document.querySelector(".co-call-sheet-open");
+    if (waOpen) waOpen.hidden = !bridgedWa;
+    if (callOpen) callOpen.hidden = !bridgedCall;
+  }
+
   function showWaSheet(phone, msg) {
     const sheet = ensureWaSheet();
     sheet.dataset.phone = phoneDigits(phone);
     sheet.dataset.msg = msg || "";
     sheet.querySelector(".co-wa-sheet-num").textContent = "+" + sheet.dataset.phone;
+    updateSheetBridgeButtons();
     showSheet(sheet);
   }
 
-  async function openWhatsApp(phone, msg) {
+  function openWhatsApp(phone, msg) {
     const p = phoneDigits(phone);
     if (!p) return;
-    let bridged = false;
-    try {
-      if (window.AndroidApp && typeof AndroidApp.openWhatsApp === "function") {
-        AndroidApp.openWhatsApp(p, msg || "");
-        bridged = true;
-      }
-    } catch (e) {}
+    if (tryBridgeWhatsApp(p, msg)) return;
     copyPhone(p, false);
     toast(T.waCopiedReady);
-    if (!bridged) {
-      await tryLaunchWhatsAppExtra(p, msg);
-      showWaSheet(p, msg);
-    }
-  }
-
-  function tryLaunchPhoneSchemes(phone) {
-    const p = phoneDigits(phone);
-    const tel = `tel:+${p}`;
-    const a = document.createElement("a");
-    a.href = tel;
-    a.style.display = "none";
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    tryExternalUrl(tel);
-    const intent = `intent://tel:+${p}#Intent;scheme=tel;end`;
-    const link = document.createElement("a");
-    link.href = intent;
-    link.style.display = "none";
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-  }
-
-  async function tryLaunchPhoneExtra(phone) {
-    const p = phoneDigits(phone);
-    if (!p) return;
-    tryLaunchPhoneSchemes(p);
-  }
-
-  async function tryLaunchPhone(phone) {
-    const p = phoneDigits(phone);
-    if (!p) return false;
-    try {
-      if (window.AndroidApp && typeof AndroidApp.openPhone === "function") {
-        AndroidApp.openPhone(p);
-        return true;
-      }
-    } catch (e) {}
-    await tryLaunchPhoneExtra(p);
-    return false;
+    showWaSheet(p, msg);
   }
 
   function ensureCallSheet() {
@@ -569,7 +522,7 @@
     sheet.querySelector(".co-call-sheet-open").addEventListener("click", () => {
       const p = sheet.dataset.phone || "";
       if (!p) return;
-      tryLaunchPhone(p);
+      if (!tryBridgePhone(p)) copyPhone(p);
     });
     sheet.querySelector(".co-call-sheet-copy").addEventListener("click", () => copyPhone(sheet.dataset.phone || ""));
     return sheet;
@@ -579,25 +532,17 @@
     const sheet = ensureCallSheet();
     sheet.dataset.phone = phoneDigits(phone);
     sheet.querySelector(".co-wa-sheet-num").textContent = "+" + sheet.dataset.phone;
+    updateSheetBridgeButtons();
     showSheet(sheet);
   }
 
-  async function openPhoneCall(phone) {
+  function openPhoneCall(phone) {
     const p = phoneDigits(phone);
     if (!p) return;
-    let bridged = false;
-    try {
-      if (window.AndroidApp && typeof AndroidApp.openPhone === "function") {
-        AndroidApp.openPhone(p);
-        bridged = true;
-      }
-    } catch (e) {}
+    if (tryBridgePhone(p)) return;
     copyPhone(p, false);
     toast(T.callCopiedReady);
-    if (!bridged) {
-      await tryLaunchPhoneExtra(p);
-      showCallSheet(p);
-    }
+    showCallSheet(p);
   }
 
   function onContactTap(kind, el) {
@@ -607,7 +552,11 @@
   }
 
   function bindAppContactClicks() {
-    if (!IS_APP) return;
+    if (!SAFE_CONTACT) return;
+    document.addEventListener("click", e => {
+      const bad = e.target.closest("a.co-wa, a.co-call");
+      if (bad) { e.preventDefault(); e.stopImmediatePropagation(); return; }
+    }, true);
     if (!document.documentElement.dataset.coAppBound) {
       document.documentElement.dataset.coAppBound = "1";
       const handler = e => {
@@ -640,7 +589,7 @@
     const msg = r.waMsg || "";
     const cls = extraClass ? `co-actions ${extraClass}` : "co-actions";
     let html = `<div class="${cls}">`;
-    if (IS_APP) {
+    if (SAFE_CONTACT) {
       html += `<button type="button" class="btn-ghost co-wa" data-phone="${esc(d)}" data-wa-msg="${esc(msg)}" onclick="window.cthCo&&window.cthCo.wa(this.dataset.phone,this.dataset.waMsg)">${esc(T.whatsapp)}</button>`;
       html += `<button type="button" class="btn-ghost co-call" data-phone="${esc(d)}" onclick="window.cthCo&&window.cthCo.call(this.dataset.phone)">${esc(T.call)}</button>`;
     } else {
