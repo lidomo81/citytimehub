@@ -29,6 +29,7 @@
   const AFTER_WINDOW_MIN = 45;
   const STORAGE_KEY = "cth-close-ones";
   const MAX_PEOPLE = 6;
+  const IS_APP = /CityTimeHubApp/i.test(navigator.userAgent) || /\bapp=1\b/.test(location.search);
 
   const T = LANG === "ar" ? {
     you: "مدينتك", youPh: "مثال: دبي",
@@ -352,7 +353,10 @@
     const d = phoneDigits(person.phone);
     if (!d) return null;
     const msg = rule.waMsg || "";
-    return "https://wa.me/" + d + (msg ? "?text=" + encodeURIComponent(msg) : "");
+    const https = "https://wa.me/" + d + (msg ? "?text=" + encodeURIComponent(msg) : "");
+    if (!IS_APP) return https;
+    const q = msg ? "&text=" + encodeURIComponent(msg) : "";
+    return `intent://send?phone=${d}${q}#Intent;scheme=whatsapp;package=com.whatsapp;S.browser_fallback_url=${encodeURIComponent(https)};end`;
   }
 
   function telLink(person) {
@@ -367,7 +371,10 @@
     if (!wa && !tel) return "";
     const cls = extraClass ? `co-actions ${extraClass}` : "co-actions";
     let html = `<div class="${cls}">`;
-    if (wa) html += `<a class="btn-ghost co-wa" href="${esc(wa)}" target="_blank" rel="noopener">${esc(T.whatsapp)}</a>`;
+    if (wa) {
+      const ext = IS_APP ? "" : ' target="_blank" rel="noopener"';
+      html += `<a class="btn-ghost co-wa" href="${esc(wa)}"${ext}>${esc(T.whatsapp)}</a>`;
+    }
     if (tel) html += `<a class="btn-ghost co-call" href="${esc(tel)}">${esc(T.call)}</a>`;
     html += "</div>";
     return html;
