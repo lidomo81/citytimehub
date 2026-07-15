@@ -148,6 +148,78 @@
   if (document.readyState !== "loading") wireButtons();
   else document.addEventListener("DOMContentLoaded", wireButtons);
 
+  /* ----- Site nav: one compact menu on the website; the app hides .site-header entirely. ----- */
+  function upgradeSiteNav() {
+    var inApp = document.documentElement.classList.contains("app-mode")
+      || /CityTimeHubApp/i.test(navigator.userAgent || "")
+      || inStandalone
+      || new URLSearchParams(location.search).get("app") === "1";
+    if (inApp) return;
+    var nav = document.querySelector(".main-nav");
+    if (!nav || nav.dataset.cthNav === "v2") return;
+    var ar = (document.documentElement.getAttribute("lang") || "").slice(0, 2) === "ar"
+      || location.pathname.indexOf("/ar/") === 0
+      || location.pathname === "/ar";
+    var p = ar ? "/ar" : "";
+    var items = ar ? [
+      { href: p + "/#cityPanel", label: "مواقيت الصلاة", top: true },
+      { href: p + "/close-ones/", label: "أحبابك", top: true },
+      { summary: "الأدوات", links: [
+        ["time-difference/", "قارن المدن"],
+        ["best-time-to-call/", "أفضل وقت للاتصال"],
+        ["meeting-planner/", "مخطّط الأحداث"],
+        ["prayer-clock/", "ساعة الصلاة"],
+        ["qibla/", "القبلة"],
+        ["monthly/", "مواقيت الشهر"],
+        ["azkar/morning/", "أذكار الصباح"],
+        ["azkar/evening/", "أذكار المساء"]
+      ]},
+      { href: p + "/cities/", label: "المدن", top: true },
+      { href: p + "/guides/", label: "خواطر", top: true }
+    ] : [
+      { href: "/#cityPanel", label: "Prayer Times", top: true },
+      { href: "/close-ones/", label: "Close Ones", top: true },
+      { summary: "Tools", links: [
+        ["time-difference/", "Compare Cities"],
+        ["best-time-to-call/", "Best Time to Call"],
+        ["meeting-planner/", "Event Planner"],
+        ["prayer-clock/", "Prayer Clock"],
+        ["qibla/", "Qibla"],
+        ["monthly/", "Monthly Times"],
+        ["azkar/morning/", "Morning Adhkar"],
+        ["azkar/evening/", "Evening Adhkar"]
+      ]},
+      { href: "/cities/", label: "Cities", top: true },
+      { href: "/guides/", label: "Reflections", top: true }
+    ];
+    nav.innerHTML = "";
+    items.forEach(function (it) {
+      if (it.summary) {
+        var det = document.createElement("details");
+        det.className = "nav-drop";
+        var sum = document.createElement("summary");
+        sum.textContent = it.summary;
+        var menu = document.createElement("div");
+        menu.className = "nav-drop-menu";
+        it.links.forEach(function (pair) {
+          var a = document.createElement("a");
+          a.href = p + "/" + pair[0];
+          a.textContent = pair[1];
+          menu.appendChild(a);
+        });
+        det.appendChild(sum);
+        det.appendChild(menu);
+        nav.appendChild(det);
+      } else {
+        var link = document.createElement("a");
+        link.href = it.href;
+        link.textContent = it.label;
+        nav.appendChild(link);
+      }
+    });
+    nav.dataset.cthNav = "v2";
+  }
+
   /* ----- In-app mode: the tools grid is the primary launcher, so the header
      menu (☰) is repurposed to hold only the secondary/legal links.
      Links are cloned from the footer so they match the page language. ----- */
@@ -186,8 +258,8 @@
       });
     }
   }
-  if (document.readyState !== "loading") applyAppNav();
-  else document.addEventListener("DOMContentLoaded", applyAppNav);
+  if (document.readyState !== "loading") { upgradeSiteNav(); applyAppNav(); }
+  else document.addEventListener("DOMContentLoaded", function () { upgradeSiteNav(); applyAppNav(); });
 
   /* ----- Universal Share button in the header. Uses the native share sheet
      (WhatsApp / Telegram / etc.) so a visitor can pass the page to family and
