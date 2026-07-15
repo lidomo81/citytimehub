@@ -45,9 +45,12 @@
     insights: { sel: ".prayer-insights",
       ar: { t: "لمحات الصلاة ✨", b: "العدّ التنازلي للصلاة القادمة، والثلث الأخير من الليل، وأوقات الكراهة — كلها محسوبة لمدينتك تلقائيًا." },
       en: { t: "Prayer insights ✨", b: "A countdown to the next prayer, the last third of the night, and the disliked times — all computed for your city." } },
+    spotlightSite: { sel: "#coHomeStrip", prefer: "below",
+      ar: { t: "أحبابك 🤍", b: "اضغط هذا الشريط لضبط مواعيد التواصل مع من تحب — بعد الفجر، قبل الصلاة، أو موعد ثابت — حسب توقيتهم مهما بعدت المسافة." },
+      en: { t: "Close Ones 🤍", b: "Tap this strip to set when to reach the people you love — after Fajr, before prayer, or a fixed appointment — in their local time, near or far." } },
     toolsSite: { sel: "#tools",
-      ar: { t: "الأدوات 🧭", b: "أحبابك، أذكار الصباح والمساء، فرق التوقيت، مخطّط الأحداث، أفضل وقت للاتصال، القبلة والمزيد — كلها على محرّك وقت حيّ واحد." },
-      en: { t: "Tools 🧭", b: "Close Ones, morning & evening adhkar, time difference, meeting planner, best time to call, Qibla and more — all on one live-time engine." } },
+      ar: { t: "الأدوات 🧭", b: "أذكار الصباح والمساء، فرق التوقيت، مخطّط الأحداث، أفضل وقت للاتصال، القبلة والمزيد — كلها على محرّك وقت حيّ واحد." },
+      en: { t: "Tools 🧭", b: "Morning & evening adhkar, time difference, meeting planner, best time to call, Qibla and more — all on one live-time engine." } },
     spotlightApp: { sel: "#homeSpotlight", prefer: "below",
       ar: { t: "أولوياتك اليومية 🤍", b: "أحبابك وتذكير الأذان في المقدمة — ما تحتاجه كل يوم بضغطة واحدة." },
       en: { t: "Your daily priorities 🤍", b: "Close Ones and prayer reminders up front — what you need every day, one tap away." } },
@@ -67,12 +70,13 @@
 
   // Assemble the steps for the current surface: the app shows the spotlight row
   // (Close Ones + injected Reminders card), daily reflection, then tool groups;
-  // the website shows its own Tools section instead. Everything else is shared.
+  // the website spotlights the Close Ones strip on the home panel, then the Tools
+  // catalog section. Everything else is shared.
   function buildSteps() {
     const app = document.documentElement.classList.contains("app-mode");
     const list = [S.welcome, S.search, S.favorite, S.myCities, S.prayerTimes, S.tapCard, S.adherence, S.week, S.insights];
     if (app) list.push(S.spotlightApp, S.dailyReflection, S.quickToolsApp);
-    else list.push(S.toolsSite);
+    else list.push(S.spotlightSite, S.toolsSite);
     list.push(S.help, S.ready);
     return list;
   }
