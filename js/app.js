@@ -147,6 +147,35 @@
     sp.style.setProperty("--mood", rampAt(now.getHours() + now.getMinutes() / 60));
   }
 
+  // Count the stats-band figures up from zero the first time they scroll into view.
+  function initStatsCount() {
+    const nums = $$(".stat-num").filter(el => /\d/.test(el.textContent));
+    if (!nums.length) return;
+    let reduce = false;
+    try { reduce = matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
+    if (reduce || typeof IntersectionObserver === "undefined") return; // leave final values
+    nums.forEach(el => {
+      el.dataset.target = el.textContent.replace(/\D/g, "");
+      el.dataset.suffix = el.textContent.replace(/[\d,]/g, "");
+      el.textContent = "0" + el.dataset.suffix;
+    });
+    const run = el => {
+      const target = +el.dataset.target, suffix = el.dataset.suffix, dur = 1100;
+      let start = null;
+      const step = ts => {
+        if (!start) start = ts;
+        const p = Math.min((ts - start) / dur, 1), eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(eased * target) + suffix;
+        if (p < 1) requestAnimationFrame(step); else el.textContent = target + suffix;
+      };
+      requestAnimationFrame(step);
+    };
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => { if (e.isIntersecting) { run(e.target); obs.unobserve(e.target); } });
+    }, { threshold: 0.6 });
+    nums.forEach(el => io.observe(el));
+  }
+
   /* ---------- Formatters (one per timezone, reused) ---------- */
   function formatters(tz) {
     if (fmtCache.has(tz)) return fmtCache.get(tz);
@@ -1055,6 +1084,7 @@
     startClock();
     applyMood();
     setInterval(applyMood, 300000); // refresh the time-of-day mood every 5 min
+    initStatsCount();
 
     const params = new URLSearchParams(location.search);
     const cityParam = params.get("city");
