@@ -1174,6 +1174,44 @@ html[dir="rtl"] .hu-time, html[dir="rtl"] [dir="ltr"] { direction: ltr; unicode-
 
 /* ===================== Close Ones / أحبابك ===================== */
 .co-dash { margin-bottom: 20px; }
+.co-web-hint {
+  margin: 0 0 16px; padding: 12px 14px; border-radius: 12px;
+  border: 1px solid rgba(96,165,200,.28); background: color-mix(in srgb, var(--brand) 6%, var(--surface));
+  font-size: .88rem; line-height: 1.45;
+}
+.co-day-agenda {
+  margin-bottom: 18px; padding: 16px 18px; border-radius: 14px;
+  border: 1px solid var(--border); background: var(--surface);
+}
+.co-agenda-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+.co-agenda-title { margin: 0; font-size: 1.05rem; font-weight: 800; }
+.co-agenda-sub { margin: 14px 0 8px; font-size: .82rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.co-agenda-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.co-agenda-item {
+  display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; align-items: start;
+  padding: 10px 12px; border-radius: 10px; background: var(--bg-soft);
+}
+.co-agenda-when { font-weight: 800; font-size: .88rem; color: var(--brand); white-space: nowrap; }
+.co-agenda-label { font-weight: 700; font-size: .92rem; }
+.co-agenda-at { grid-column: 1 / -1; font-size: .8rem; }
+.co-agenda-actions { grid-column: 1 / -1; }
+.co-agenda-empty { margin: 0; font-size: .88rem; }
+.co-export-cal { font-size: .82rem !important; padding: 6px 10px !important; }
+.co-home-strip {
+  display: flex; align-items: center; gap: 12px; margin: 0 16px 12px; padding: 12px 14px;
+  border-radius: 14px; text-decoration: none; color: inherit;
+  border: 1px solid rgba(96,165,200,.35);
+  background: linear-gradient(135deg, rgba(37,99,235,.10), rgba(96,165,200,.08));
+  transition: border-color .2s, transform .15s;
+}
+.co-home-strip:hover { border-color: var(--brand); transform: translateY(-1px); }
+.co-home-ico { font-size: 1.25rem; flex: none; }
+.co-home-copy { flex: 1; min-width: 0; }
+.co-home-k { display: block; font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--brand); }
+.co-home-next { display: block; font-size: .92rem; font-weight: 700; margin-top: 2px; }
+.co-home-arrow { flex: none; font-weight: 800; color: var(--brand); }
+[dir="rtl"] .co-home-arrow { transform: scaleX(-1); }
+html.app-mode .co-home-strip { margin-inline: 12px; }
 .co-notify-bar {
   display: flex; align-items: center; gap: 12px 14px; flex-wrap: wrap;
   margin-bottom: 24px; padding: 14px 16px; border-radius: 14px;

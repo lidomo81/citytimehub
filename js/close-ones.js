@@ -27,6 +27,9 @@
     : ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
   const AFTER_WINDOW_MIN = 45;
+  const DASH_HORIZON_DAYS = 1;
+  const EXPORT_HORIZON_DAYS = 6;
+  const CO_PAGE = LANG === "ar" ? "/ar/close-ones/" : "/close-ones/";
   const DEFAULT_OFFSET_AFTER = 30;
   const DEFAULT_OFFSET_BEFORE = 15;
   const DEFAULT_REMIND_BEFORE = 30;
@@ -100,6 +103,16 @@
     notifySoonToast: "التذكيرات ستُفعّل مع تحديث التطبيق — ترقّب الإصدار القادم.",
     notifyEnabled: "تم تفعيل تذكيرات أحبابك.",
     notifyDisabled: "تم إيقاف تذكيرات أحبابك.",
+    webHint: "خطّط هنا على الموقع — جدول اليوم وتصدير التقويم. التذكير التلقائي في تطبيق CityTimeHub.",
+    notifySubWeb: "جدول اليوم والتقويم هنا — التذكير التلقائي في التطبيق",
+    todayTitle: "جدول اليوم",
+    tomorrowTitle: "غدًا",
+    emptyToday: "لا نوافذ اليوم — راجع القادم أدناه",
+    exportCal: "أضف للتقويم",
+    exportCalHint: "تنزيل ملف .ics لـ Google Calendar أو Apple Calendar",
+    icsDone: "تم تنزيل ملف التقويم",
+    homeNext: (when, label) => `القادم ${when} — ${label}`,
+    homeOpen: "افتح أحبابك",
     close: "إغلاق",
   } : {
     you: "Your city", youPh: "e.g. Dubai",
@@ -150,6 +163,16 @@
     notifySoonToast: "Reminders will arrive with the next app update — stay tuned.",
     notifyEnabled: "Close Ones reminders are on.",
     notifyDisabled: "Close Ones reminders are off.",
+    webHint: "Plan here on the web — today's schedule and calendar export. Automatic reminders in the CityTimeHub app.",
+    notifySubWeb: "Today's schedule and calendar here — automatic reminders in the app",
+    todayTitle: "Today's schedule",
+    tomorrowTitle: "Tomorrow",
+    emptyToday: "No windows today — see upcoming below",
+    exportCal: "Add to calendar",
+    exportCalHint: "Download a .ics file for Google Calendar or Apple Calendar",
+    icsDone: "Calendar file downloaded",
+    homeNext: (when, label) => `Next ${when} — ${label}`,
+    homeOpen: "Open Close Ones",
     close: "Close",
   };
 
@@ -373,7 +396,7 @@
     return T.fixedLine(n, rule.label || "");
   }
 
-  function computeRuleWindows(person, city, prayers, rule) {
+  function computeRuleWindows(person, city, prayers, rule, horizonDays = DASH_HORIZON_DAYS) {
     const out = [];
     const add = (start, end, kind) => {
       if (end <= start) return;
@@ -383,21 +406,16 @@
     if (rule.type === "after" || rule.type === "before") {
       const pr = prayers.find(p => p.key === rule.prayer);
       if (!pr) return out;
-      const pMs = localToUtcMs(city, pr.h, pr.m, 0);
       const off = effectiveOffsetMin(rule) * 60000;
-      if (rule.type === "after") {
-        add(pMs + off, pMs + off + AFTER_WINDOW_MIN * 60000, "after");
-        const pMsTomorrow = localToUtcMs(city, pr.h, pr.m, 1);
-        add(pMsTomorrow + off, pMsTomorrow + off + AFTER_WINDOW_MIN * 60000, "after");
-      } else {
-        add(pMs - off, pMs, "before");
-        const pMsTomorrow = localToUtcMs(city, pr.h, pr.m, 1);
-        add(pMsTomorrow - off, pMsTomorrow, "before");
+      for (let dayOff = 0; dayOff <= horizonDays; dayOff++) {
+        const pMs = localToUtcMs(city, pr.h, pr.m, dayOff);
+        if (rule.type === "after") add(pMs + off, pMs + off + AFTER_WINDOW_MIN * 60000, "after");
+        else add(pMs - off, pMs, "before");
       }
     } else if (rule.type === "fixed") {
       const rbMin = effectiveRemindBeforeMin(rule);
       const rb = rbMin * 60000;
-      for (let d = 0; d < 8; d++) {
+      for (let d = 0; d <= horizonDays; d++) {
         const y = cityYmd(city, d);
         if (y.dow !== (rule.dow ?? 0)) continue;
         const [hh, mm] = (rule.time || "10:00").split(":").map(Number);
@@ -410,7 +428,91 @@
     return out;
   }
 
-  async function allWindows() {
+  function hasSetup() {
+    return state.people.some(p => p.rules && p.rules.length);
+  }
+
+  function viewerCity() {
+    if (state.you && bySlug.get(state.you)) return bySlug.get(state.you);
+    return bySlug.get(guessHome()) || null;
+  }
+
+  function dayKeyForCity(ms, city) {
+    if (!city) return new Date(ms).toISOString().slice(0, 10);
+    const offH = tzOffsetHours(city.tz);
+    const d = new Date(ms + offH * 3600000);
+    const p = n => String(n).padStart(2, "0");
+    return `${d.getUTCFullYear()}-${p(d.getUTCMonth() + 1)}-${p(d.getUTCDate())}`;
+  }
+
+  function agendaBuckets(windows) {
+    const city = viewerCity();
+    const now = Date.now();
+    const todayKey = dayKeyForCity(now, city);
+    const tomorrowMs = now + 86400000;
+    const tomorrowKey = dayKeyForCity(tomorrowMs, city);
+    const today = [];
+    const tomorrow = [];
+    for (const w of windows) {
+      if (w.end < now) continue;
+      const k = dayKeyForCity(w.start, city);
+      if (k === todayKey) today.push(w);
+      else if (k === tomorrowKey) tomorrow.push(w);
+    }
+    return { today, tomorrow };
+  }
+
+  function icsEscape(s) {
+    return (s || "").replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\n/g, "\\n");
+  }
+
+  function icsUtc(ms) {
+    const d = new Date(ms);
+    const p = n => String(n).padStart(2, "0");
+    return `${d.getUTCFullYear()}${p(d.getUTCMonth() + 1)}${p(d.getUTCDate())}T${p(d.getUTCHours())}${p(d.getUTCMinutes())}${p(d.getUTCSeconds())}Z`;
+  }
+
+  function buildIcs(windows) {
+    const now = Date.now();
+    const stamp = icsUtc(now);
+    const lines = [
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//CityTimeHub//Close Ones//EN",
+      "CALSCALE:GREGORIAN",
+      "METHOD:PUBLISH",
+    ];
+    const seen = new Set();
+    for (const w of windows) {
+      if (w.end <= now) continue;
+      const uid = `co-${w.rule.id || "x"}-${w.start}@citytimehub.com`;
+      if (seen.has(uid)) continue;
+      seen.add(uid);
+      const desc = w.rule.waMsg ? `DESCRIPTION:${icsEscape(w.rule.waMsg)}` : null;
+      lines.push("BEGIN:VEVENT", `UID:${uid}`, `DTSTAMP:${stamp}`, `DTSTART:${icsUtc(w.start)}`, `DTEND:${icsUtc(w.end)}`,
+        `SUMMARY:${icsEscape(w.label)}`, desc, "END:VEVENT");
+    }
+    lines.push("END:VCALENDAR");
+    return lines.filter(Boolean).join("\r\n");
+  }
+
+  async function downloadCalendar() {
+    if (!hasSetup()) return;
+    let windows;
+    try { windows = await allWindows(EXPORT_HORIZON_DAYS); }
+    catch (e) { toast(T.errPrayer); return; }
+    const body = buildIcs(windows);
+    if (!body.includes("BEGIN:VEVENT")) { toast(T.noRules); return; }
+    const blob = new Blob([body], { type: "text/calendar;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = LANG === "ar" ? "ahbabek-citytimehub.ics" : "close-ones-citytimehub.ics";
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    toast(T.icsDone);
+  }
+
+  async function allWindows(horizonDays = DASH_HORIZON_DAYS) {
     const now = Date.now();
     const windows = [];
     for (const person of state.people) {
@@ -420,7 +522,7 @@
       try { prayers = await fetchPrayers(city); }
       catch (e) { continue; }
       for (const rule of person.rules) {
-        windows.push(...computeRuleWindows(person, city, prayers, rule));
+        windows.push(...computeRuleWindows(person, city, prayers, rule, horizonDays));
       }
     }
     return windows.filter(w => w.end > now - 60000).sort((a, b) => a.start - b.start);
@@ -621,7 +723,7 @@
     const title = $("#coNotifyTitle");
     const sub = $("#coNotifySub");
     if (title) title.textContent = T.notifyTitle;
-    if (sub) sub.textContent = T.notifySub;
+    if (sub) sub.textContent = hasBridge ? T.notifySub : T.notifySubWeb;
     if (badge) badge.textContent = T.notifySoon;
 
     if (hasBridge) {
@@ -720,6 +822,53 @@
     dashTimer = setTimeout(() => renderDashboard(), 120);
   }
 
+  function renderAgendaItem(w) {
+    const inM = minsUntil(w.start);
+    const when = inM <= 1 ? T.now : T.inMin(inM);
+    const at = fmtAt(w.start, w.city.tz);
+    return `<li class="co-agenda-item">
+      <span class="co-agenda-when">${esc(when)}</span>
+      <span class="co-agenda-label">${esc(w.label)}</span>
+      <span class="co-agenda-at muted">${esc(at)} · ${esc(cN(w.city))}</span>
+      ${renderContactActions(w.person, w.rule, "co-agenda-actions")}
+    </li>`;
+  }
+
+  function renderDayAgendaHtml(windows) {
+    const { today, tomorrow } = agendaBuckets(windows);
+    let html = `<div class="co-day-agenda">`;
+    html += `<div class="co-agenda-head"><h3 class="co-agenda-title">${esc(T.todayTitle)}</h3>`;
+    html += `<button type="button" class="btn-ghost co-export-cal" title="${esc(T.exportCalHint)}">${esc(T.exportCal)}</button>`;
+    html += `</div>`;
+    if (today.length) {
+      html += `<ul class="co-agenda-list">${today.map(w => renderAgendaItem(w)).join("")}</ul>`;
+    } else {
+      html += `<p class="co-agenda-empty muted">${esc(T.emptyToday)}</p>`;
+    }
+    if (tomorrow.length) {
+      html += `<h4 class="co-agenda-sub">${esc(T.tomorrowTitle)}</h4>`;
+      html += `<ul class="co-agenda-list">${tomorrow.map(w => renderAgendaItem(w)).join("")}</ul>`;
+    }
+    html += `</div>`;
+    return html;
+  }
+
+  function renderWebHintHtml() {
+    if (IS_APP) return "";
+    const hasBridge = !!(window.AndroidApp && typeof AndroidApp.enableCloseOnesReminders === "function");
+    if (hasBridge) return "";
+    return `<p class="co-web-hint muted">${esc(T.webHint)}</p>`;
+  }
+
+  function bindDashActions(root) {
+    if (!root) return;
+    root.querySelectorAll(".co-done").forEach(btn => {
+      btn.addEventListener("click", () => scheduleDashboard());
+    });
+    const exp = root.querySelector(".co-export-cal");
+    if (exp) exp.addEventListener("click", () => downloadCalendar());
+  }
+
   async function renderDashboard() {
     const dash = $("#coDash");
     if (!dash) return;
@@ -735,7 +884,8 @@
 
     const active = activeWindow(windows);
     const upcoming = upcomingWindows(windows);
-    let html = "";
+    let html = renderWebHintHtml();
+    if (hasSetup()) html += renderDayAgendaHtml(windows);
 
     if (active) {
       const left = minsUntil(active.end);
@@ -774,9 +924,49 @@
     }
 
     dash.innerHTML = html;
-    dash.querySelectorAll(".co-done").forEach(btn => {
-      btn.addEventListener("click", () => scheduleDashboard());
-    });
+    bindDashActions(dash);
+  }
+
+  let homeTimer = null;
+  async function renderHomeStrip() {
+    const strip = $("#coHomeStrip");
+    if (!strip) return;
+    if (!hasSetup()) { strip.hidden = true; return; }
+    let windows;
+    try { windows = await allWindows(DASH_HORIZON_DAYS); }
+    catch (e) { strip.hidden = true; return; }
+    const active = activeWindow(windows);
+    const next = active || upcomingWindows(windows, 1)[0];
+    if (!next) { strip.hidden = true; return; }
+    const inM = active ? 0 : minsUntil(next.start);
+    const when = active ? T.now : (inM <= 1 ? T.now : T.inMin(inM));
+    strip.href = CO_PAGE;
+    strip.hidden = false;
+    strip.innerHTML = `<span class="co-home-ico" aria-hidden="true">🤍</span>
+      <span class="co-home-copy">
+        <strong class="co-home-k">${esc(T.homeOpen)}</strong>
+        <span class="co-home-next">${esc(T.homeNext(when, next.label))}</span>
+      </span>
+      <span class="co-home-arrow" aria-hidden="true">→</span>`;
+  }
+
+  function scheduleHomeStrip() {
+    clearTimeout(homeTimer);
+    homeTimer = setTimeout(() => renderHomeStrip(), 120);
+  }
+
+  let homeStripIv = null;
+
+  async function initHomeStrip() {
+    await renderHomeStrip();
+    if (homeStripIv) clearInterval(homeStripIv);
+    homeStripIv = setInterval(() => scheduleHomeStrip(), 60000);
+  }
+
+  async function loadCities() {
+    const res = await fetch("/data/cities.json", { cache: "force-cache" });
+    CITIES = ((await res.json()).cities || []).map(c => ({ ...c, _s: norm(c.name + " " + c.country + " " + (c.name_ar || "")) }));
+    CITIES.forEach(c => bySlug.set(c.slug, c));
   }
 
   function personCardHtml(person, idx) {
@@ -1005,16 +1195,9 @@
     }
   }
 
-  async function init() {
+  async function initPage() {
     const form = $("#coForm");
     if (!form) return;
-    try {
-      const res = await fetch("/data/cities.json", { cache: "force-cache" });
-      CITIES = ((await res.json()).cities || []).map(c => ({ ...c, _s: norm(c.name + " " + c.country + " " + (c.name_ar || "")) }));
-      CITIES.forEach(c => bySlug.set(c.slug, c));
-    } catch (e) { return; }
-
-    loadState();
     applyParams();
     if (!state.you) {
       const c = bySlug.get(guessHome());
@@ -1071,6 +1254,13 @@
 
     clearInterval(tickTimer);
     tickTimer = setInterval(() => scheduleDashboard(), 30000);
+  }
+
+  async function init() {
+    try { await loadCities(); } catch (e) { return; }
+    loadState();
+    if ($("#coForm")) await initPage();
+    if ($("#coHomeStrip")) await initHomeStrip();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
