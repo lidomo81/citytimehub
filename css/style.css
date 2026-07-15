@@ -310,10 +310,15 @@ html.app-mode .app-tools { display: block; width: min(960px, 92%); margin: 14px 
   display: grid; grid-template-columns: 1fr; gap: 10px;
   width: min(960px, 92%); margin: 0 auto 16px; padding: 0 2px;
 }
+.cp-section .home-spotlight {
+  width: 100%; max-width: none; margin: 18px 0 0; padding: 0;
+}
+.home-spotlight:has(#coHomeStrip[hidden]) { display: none; margin: 0; padding: 0; }
 html.app-mode .home-spotlight {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   margin: 14px auto 0;
 }
+html.app-mode .cp-section .home-spotlight { margin: 14px 0 0; }
 .home-spotlight:not(:has(> :not([hidden]) + :not([hidden]))) > :not([hidden]) { grid-column: 1 / -1; }
 html:not(.app-mode) #cthRemindSlot { display: none !important; }
 .app-tools-spotlight {

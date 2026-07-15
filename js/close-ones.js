@@ -1158,7 +1158,16 @@
     }
     let windows;
     try { windows = await allWindows(DASH_HORIZON_DAYS); }
-    catch (e) { strip.hidden = true; return; }
+    catch (e) {
+      strip.hidden = false;
+      strip.innerHTML = `<span class="co-home-ico" aria-hidden="true">🤍</span>
+        <span class="co-home-copy">
+          <strong class="co-home-k">${esc(T.homeOpen)}</strong>
+          <span class="co-home-next">${esc(T.homeSetupNext)}</span>
+        </span>
+        <span class="co-home-arrow" aria-hidden="true">→</span>`;
+      return;
+    }
     const active = activeWindow(windows);
     const next = active || upcomingWindows(windows, 1)[0];
     if (!next) {
@@ -1611,9 +1620,10 @@
   }
 
   async function init() {
-    try { await loadCities(); } catch (e) { return; }
+    let citiesOk = true;
+    try { await loadCities(); } catch (e) { citiesOk = false; }
     loadState();
-    if ($("#coDash")) await initPage();
+    if ($("#coDash") && citiesOk) await initPage();
     if ($("#coHomeStrip")) await initHomeStrip();
   }
 
