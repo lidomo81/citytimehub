@@ -264,6 +264,21 @@ html.app-mode .app-legal a:hover { color: var(--brand); }
 .app-legal { display: none; }
 /* quick tools bar — visible only inside the installed app */
 .app-tools { display: none; }
+/* Website (legacy markup): strip may still live inside the hidden app-tools nav — surface it alone */
+html:not(.app-mode) .app-tools:has(#coHomeStrip) {
+  display: block !important;
+  width: min(960px, 92%);
+  margin: 0 auto 16px;
+  padding: 0 2px;
+}
+html:not(.app-mode) .app-tools:has(#coHomeStrip) > :not(.app-tools-spotlight) { display: none !important; }
+html:not(.app-mode) .app-tools-spotlight:has(#coHomeStrip) {
+  display: grid !important;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin: 0;
+}
+html:not(.app-mode) #coHomeStrip { display: flex !important; }
 html.app-mode .nav-burger, html.app-mode .main-nav { display: none !important; }
 html.app-mode .app-tools { display: block; width: min(960px, 92%); margin: 14px auto 22px; }
 .app-tools-label { display: block; font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 4px 9px; }
