@@ -135,6 +135,16 @@
     addSheetTitle: "أضف شخصًا",
     addSheetLead: "الاسم ومدينته ورقم اختياري — ثم اختر القواعد من تبويب أحبابي.",
     emptyTodayCta: "ابدأ من زر + لإضافة أول شخص",
+    whenQuestion: "متى تبدأ الاتصال؟",
+    youClock: "توقيتك",
+    themClock: "توقيتها",
+    youStartHint: "الساعة التي تتحرّك فيها أنت للاتصال أو التنبيه",
+    themWindowRange: (a, b) => `من ${a} إلى ${b}`,
+    themWindowHint: min => `نافذة ${min} دقيقة على ساعتها في مدينتها`,
+    yourCityChip: city => `مدينتك: ${city}`,
+    pickYourCity: "حدّد مدينتك في تبويب «أحبابي»",
+    heroOnDay: d => `الموعد: ${d}`,
+    agendaYouAt: (youAt, themCity) => `عندك ${youAt} · عندها ${themCity}`,
     close: "إغلاق",
   } : {
     you: "Your city", youPh: "e.g. Dubai",
@@ -216,6 +226,16 @@
     addSheetTitle: "Add someone",
     addSheetLead: "Name, their city, and optional phone — then pick rules on the People tab.",
     emptyTodayCta: "Start with + to add your first person",
+    whenQuestion: "When do you reach out?",
+    youClock: "Your clock",
+    themClock: "Their clock",
+    youStartHint: "When you should call or send a nudge",
+    themWindowRange: (a, b) => `${a} – ${b}`,
+    themWindowHint: min => `${min}-minute window on their local clock`,
+    yourCityChip: city => `Your city: ${city}`,
+    pickYourCity: "Set your city on the People tab",
+    heroOnDay: d => `Scheduled: ${d}`,
+    agendaYouAt: (youAt, themCity) => `You: ${youAt} · Them: ${themCity}`,
     close: "Close",
   };
 
@@ -225,6 +245,35 @@
   const timeFmt = new Intl.DateTimeFormat(LANG === "ar" ? "ar-EG-u-nu-latn" : "en-US", {
     hour: "numeric", minute: "2-digit", hour12: true,
   });
+  const fmtTzCache = new Map();
+
+  function fmtForTz(tz, withDate) {
+    const key = `${tz || "local"}:${withDate ? "d" : "t"}`;
+    if (fmtTzCache.has(key)) return fmtTzCache.get(key);
+    const opts = { hour: "numeric", minute: "2-digit", hour12: true };
+    if (tz) opts.timeZone = tz;
+    if (withDate) { opts.weekday = "short"; opts.month = "short"; opts.day = "numeric"; }
+    const fmt = new Intl.DateTimeFormat(LANG === "ar" ? "ar-EG-u-nu-latn" : "en-US", opts);
+    fmtTzCache.set(key, fmt);
+    return fmt;
+  }
+
+  function fmtInTz(ms, tz, withDate) {
+    try { return fmtForTz(tz, withDate).format(new Date(ms)); }
+    catch (e) { return withDate ? hourFmt.format(new Date(ms)) : timeFmt.format(new Date(ms)); }
+  }
+
+  function fmtAt(ms, tz) {
+    return fmtInTz(ms, tz, false);
+  }
+
+  function fmtFull(ms, tz) {
+    return fmtInTz(ms, tz, true);
+  }
+
+  function windowDurationMin(w) {
+    return Math.max(1, Math.round((w.end - w.start) / 60000));
+  }
 
   let CITIES = [];
   const bySlug = new Map();
@@ -261,15 +310,6 @@
     const ymd = cityYmd(city, dayOff);
     const offH = tzOffsetHours(city.tz);
     return Date.UTC(ymd.y, ymd.m, ymd.day, h, m, 0) - offH * 3600000;
-  }
-
-  function fmtAt(ms, tz) {
-    try { return timeFmt.format(new Date(ms)); }
-    catch (e) { return timeFmt.format(new Date(ms)); }
-  }
-
-  function fmtFull(ms) {
-    return hourFmt.format(new Date(ms));
   }
 
   function findCity(q) {
@@ -916,6 +956,63 @@
     return windows.filter(w => w.end > now && !skip.has(windowKey(w))).slice(0, 6);
   }
 
+  function heroCountdown(w, isOpen, left) {
+    if (isOpen) return `${T.open} · ${T.endsIn(left)}`;
+    if (left <= 1) return T.now;
+    if (left < 180) return T.inMin(left);
+    const you = viewerCity();
+    return T.heroOnDay(fmtFull(w.start, you?.tz));
+  }
+
+  function renderWhenCard(w) {
+    const you = viewerCity();
+    const youTz = you?.tz;
+    const theirTz = w.city.tz;
+    const dur = windowDurationMin(w);
+    const youCityName = you ? cN(you) : (LANG === "ar" ? "مدينتك" : "Your city");
+    const themCityName = cN(w.city);
+    return `<div class="co-when-card">
+      <p class="co-when-q">${esc(T.whenQuestion)}</p>
+      <div class="co-when-row co-when-row--you">
+        <div class="co-when-head">
+          <span class="co-when-tag">${esc(T.youClock)}</span>
+          <span class="co-when-city">${esc(youCityName)}</span>
+        </div>
+        <p class="co-when-val">${esc(fmtFull(w.start, youTz))}</p>
+        <p class="co-when-hint muted">${esc(T.youStartHint)}</p>
+      </div>
+      <div class="co-when-row co-when-row--them">
+        <div class="co-when-head">
+          <span class="co-when-tag">${esc(T.themClock)}</span>
+          <span class="co-when-city">${esc(themCityName)}</span>
+        </div>
+        <p class="co-when-val">${esc(T.themWindowRange(fmtAt(w.start, theirTz), fmtAt(w.end, theirTz)))}</p>
+        <p class="co-when-hint muted">${esc(T.themWindowHint(dur))}</p>
+      </div>
+    </div>`;
+  }
+
+  function renderYouChip() {
+    const chip = $("#coYouChip");
+    if (!chip) return;
+    const you = viewerCity();
+    if (you && state.you) {
+      chip.hidden = false;
+      chip.classList.remove("is-missing");
+      chip.innerHTML = `<span class="co-you-chip-ico" aria-hidden="true">📍</span>
+        <span class="co-you-chip-txt"><strong>${esc(T.yourCityChip(cN(you)))}</strong></span>
+        <button type="button" class="co-you-chip-edit">${esc(LANG === "ar" ? "تغيير" : "Change")}</button>`;
+      chip.querySelector(".co-you-chip-edit")?.addEventListener("click", () => setTab("people"));
+    } else {
+      chip.hidden = false;
+      chip.classList.add("is-missing");
+      chip.innerHTML = `<span class="co-you-chip-ico" aria-hidden="true">⚠️</span>
+        <span class="co-you-chip-txt muted">${esc(T.pickYourCity)}</span>
+        <button type="button" class="co-you-chip-edit">${esc(LANG === "ar" ? "حدّد" : "Set")}</button>`;
+      chip.querySelector(".co-you-chip-edit")?.addEventListener("click", () => setTab("people"));
+    }
+  }
+
   function renderHeroHtml(active, next) {
     const w = active || next;
     if (!w) {
@@ -927,32 +1024,28 @@
     }
     const isOpen = !!active;
     const left = isOpen ? minsUntil(w.end) : minsUntil(w.start);
-    const when = isOpen ? T.open : (left <= 1 ? T.now : T.inMin(left));
-    const theirStart = fmtAt(w.start, w.city.tz);
-    const theirEnd = fmtAt(w.end, w.city.tz);
-    const yourStart = fmtFull(w.start);
+    const when = heroCountdown(w, isOpen, left);
     const personName = w.person.name || "";
     return `<section class="co-hero${isOpen ? " co-hero--open" : ""}" aria-label="${esc(isOpen ? T.heroOpen : T.heroNext)}">
       <p class="co-hero-k">${esc(isOpen ? T.heroOpen : T.heroNext)}</p>
       <h3 class="co-hero-title">${esc(w.label)}</h3>
-      <p class="co-hero-when">${esc(when)}${isOpen ? ` · ${esc(T.endsIn(left))}` : ""}</p>
-      <p class="co-hero-from muted">${esc(T.heroFromRules)} <strong>${esc(personName)}</strong> · ${esc(cN(w.city))}</p>
-      <div class="co-times co-hero-times">
-        <span><b>${esc(T.theirTime)}</b> ${esc(theirStart)} – ${esc(theirEnd)}</span>
-        <span><b>${esc(T.yourTime)}</b> ${esc(yourStart)}</span>
-      </div>
+      <p class="co-hero-when">${esc(when)}</p>
+      <p class="co-hero-from muted">${esc(T.heroFromRules)} <strong>${esc(personName)}</strong></p>
+      ${renderWhenCard(w)}
       ${renderActions(w.person, w.rule, w)}
     </section>`;
   }
 
   function renderAgendaItem(w) {
     const inM = minsUntil(w.start);
-    const when = inM <= 1 ? T.now : T.inMin(inM);
-    const at = fmtAt(w.start, w.city.tz);
+    const when = inM <= 1 ? T.now : (inM < 180 ? T.inMin(inM) : fmtFull(w.start, viewerCity()?.tz));
+    const you = viewerCity();
+    const youAt = fmtAt(w.start, you?.tz);
+    const themAt = fmtAt(w.start, w.city.tz);
     return `<li class="co-agenda-item">
       <span class="co-agenda-when">${esc(when)}</span>
       <span class="co-agenda-label">${esc(w.label)}</span>
-      <span class="co-agenda-at muted">${esc(at)} · ${esc(cN(w.city))}</span>
+      <span class="co-agenda-at muted">${esc(T.agendaYouAt(youAt, `${themAt} · ${cN(w.city)}`))}</span>
     </li>`;
   }
 
@@ -1022,6 +1115,7 @@
   async function renderDashboard() {
     const dash = $("#coDash");
     if (!dash) return;
+    renderYouChip();
     const gen = ++dashGen;
     if (!state.people.length) {
       dash.innerHTML = renderWebHintHtml() + renderHeroHtml(null, null);
@@ -1412,6 +1506,8 @@
     autocomplete($("#coYou"), $("#coYouAc"), c => {
       state.you = c.slug;
       saveState();
+      renderYouChip();
+      scheduleDashboard();
     });
 
     let pendingPersonCity = "";
@@ -1438,6 +1534,7 @@
     const form = $("#coForm");
     initTabs();
     initAddSheet();
+    renderYouChip();
     updateDialUI(null);
 
     if (form) form.addEventListener("submit", e => {
