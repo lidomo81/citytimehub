@@ -113,6 +113,26 @@
     icsDone: "تم تنزيل ملف التقويم",
     homeNext: (when, label) => `القادم ${when} — ${label}`,
     homeOpen: "افتح أحبابك",
+    tabToday: "اليوم",
+    tabPeople: "أحبابي",
+    leadToday: "متى تتصل أو تنبّه — من القواعد التي حفظتها لكل شخص.",
+    leadPeople: "من تحبّهم وقواعد التواصل — اضغط الاسم لتعديل القواعد.",
+    youHint: "أوقات تبويب «اليوم» تُعرض بتوقيتك أنت",
+    heroOpen: "مفتوحة الآن — حان وقت التحرّك",
+    heroNext: "أقرب نافذة قادمة",
+    heroEmpty: "لا نافذة الآن",
+    heroEmptySub: "أضف شخصًا وقاعدة، أو راجع الجدول إن وُجد.",
+    heroFromRules: "من قواعد",
+    scheduleLead: "باقي اليوم وغدًا — محسوب من قواعد كل شخص",
+    scheduleEmpty: "لا مواعيد اليوم أو غدًا — القواعد تحدّد النوافذ تلقائيًا.",
+    laterTitle: "لاحقًا هذا الأسبوع",
+    rulesCount: n => `${n} قاعدة`,
+    rulesCountMany: n => `${n} قواعد`,
+    expandRules: "عرض القواعد",
+    collapseRules: "إخفاء القواعد",
+    addSheetTitle: "أضف شخصًا",
+    addSheetLead: "الاسم ومدينته ورقم اختياري — ثم اختر القواعد من تبويب أحبابي.",
+    emptyTodayCta: "ابدأ من زر + لإضافة أول شخص",
     close: "إغلاق",
   } : {
     you: "Your city", youPh: "e.g. Dubai",
@@ -173,6 +193,26 @@
     icsDone: "Calendar file downloaded",
     homeNext: (when, label) => `Next ${when} — ${label}`,
     homeOpen: "Open Close Ones",
+    tabToday: "Today",
+    tabPeople: "People",
+    leadToday: "When to call or nudge — from the rules you saved for each person.",
+    leadPeople: "People you care about and their connection rules — tap a name to edit.",
+    youHint: "Times on Today are shown in your clock",
+    heroOpen: "Open now — time to reach out",
+    heroNext: "Next connection window",
+    heroEmpty: "No window right now",
+    heroEmptySub: "Add someone and a rule, or check the schedule below.",
+    heroFromRules: "From rules for",
+    scheduleLead: "Rest of today and tomorrow — calculated from each person\u2019s rules",
+    scheduleEmpty: "Nothing today or tomorrow — your rules create windows automatically.",
+    laterTitle: "Later this week",
+    rulesCount: n => n === 1 ? "1 rule" : `${n} rules`,
+    rulesCountMany: n => `${n} rules`,
+    expandRules: "Show rules",
+    collapseRules: "Hide rules",
+    addSheetTitle: "Add someone",
+    addSheetLead: "Name, their city, and optional phone — then pick rules on the People tab.",
+    emptyTodayCta: "Start with + to add your first person",
     close: "Close",
   };
 
@@ -191,6 +231,8 @@
   let tickTimer = null;
   let dashGen = 0;
   let dashTimer = null;
+  const expandedPeople = new Set();
+  let activeTab = "today";
 
   function tzOffsetHours(tz) {
     if (!tz) return 0;
@@ -822,6 +864,52 @@
     dashTimer = setTimeout(() => renderDashboard(), 120);
   }
 
+  function windowKey(w) {
+    return w ? `${w.start}:${w.person.id}:${w.rule.id || ""}` : "";
+  }
+
+  function rulesCountLabel(n) {
+    if (LANG === "ar") return n === 1 ? T.rulesCount(1) : T.rulesCountMany(n);
+    return T.rulesCount(n);
+  }
+
+  function laterWindows(windows, today, tomorrow, skipKey) {
+    const now = Date.now();
+    const skip = new Set([skipKey].filter(Boolean));
+    today.forEach(w => skip.add(windowKey(w)));
+    tomorrow.forEach(w => skip.add(windowKey(w)));
+    return windows.filter(w => w.end > now && !skip.has(windowKey(w))).slice(0, 6);
+  }
+
+  function renderHeroHtml(active, next) {
+    const w = active || next;
+    if (!w) {
+      return `<section class="co-hero co-hero--empty" aria-label="${esc(T.heroEmpty)}">
+        <p class="co-hero-k">${esc(T.heroEmpty)}</p>
+        <p class="co-hero-sub muted">${esc(T.heroEmptySub)}</p>
+        ${!hasSetup() ? `<button type="button" class="btn-ghost co-hero-cta" data-co-open-add>${esc(T.emptyTodayCta)}</button>` : ""}
+      </section>`;
+    }
+    const isOpen = !!active;
+    const left = isOpen ? minsUntil(w.end) : minsUntil(w.start);
+    const when = isOpen ? T.open : (left <= 1 ? T.now : T.inMin(left));
+    const theirStart = fmtAt(w.start, w.city.tz);
+    const theirEnd = fmtAt(w.end, w.city.tz);
+    const yourStart = fmtFull(w.start);
+    const personName = w.person.name || "";
+    return `<section class="co-hero${isOpen ? " co-hero--open" : ""}" aria-label="${esc(isOpen ? T.heroOpen : T.heroNext)}">
+      <p class="co-hero-k">${esc(isOpen ? T.heroOpen : T.heroNext)}</p>
+      <h3 class="co-hero-title">${esc(w.label)}</h3>
+      <p class="co-hero-when">${esc(when)}${isOpen ? ` · ${esc(T.endsIn(left))}` : ""}</p>
+      <p class="co-hero-from muted">${esc(T.heroFromRules)} <strong>${esc(personName)}</strong> · ${esc(cN(w.city))}</p>
+      <div class="co-times co-hero-times">
+        <span><b>${esc(T.theirTime)}</b> ${esc(theirStart)} – ${esc(theirEnd)}</span>
+        <span><b>${esc(T.yourTime)}</b> ${esc(yourStart)}</span>
+      </div>
+      ${renderActions(w.person, w.rule)}
+    </section>`;
+  }
+
   function renderAgendaItem(w) {
     const inM = minsUntil(w.start);
     const when = inM <= 1 ? T.now : T.inMin(inM);
@@ -830,26 +918,41 @@
       <span class="co-agenda-when">${esc(when)}</span>
       <span class="co-agenda-label">${esc(w.label)}</span>
       <span class="co-agenda-at muted">${esc(at)} · ${esc(cN(w.city))}</span>
-      ${renderContactActions(w.person, w.rule, "co-agenda-actions")}
     </li>`;
   }
 
-  function renderDayAgendaHtml(windows) {
+  function renderDayAgendaHtml(windows, skipKey) {
     const { today, tomorrow } = agendaBuckets(windows);
-    let html = `<div class="co-day-agenda">`;
-    html += `<div class="co-agenda-head"><h3 class="co-agenda-title">${esc(T.todayTitle)}</h3>`;
-    html += `<button type="button" class="btn-ghost co-export-cal" title="${esc(T.exportCalHint)}">${esc(T.exportCal)}</button>`;
-    html += `</div>`;
-    if (today.length) {
-      html += `<ul class="co-agenda-list">${today.map(w => renderAgendaItem(w)).join("")}</ul>`;
-    } else {
-      html += `<p class="co-agenda-empty muted">${esc(T.emptyToday)}</p>`;
+    const filt = list => list.filter(w => windowKey(w) !== skipKey);
+    const todayF = filt(today);
+    const tomorrowF = filt(tomorrow);
+    const later = laterWindows(windows, today, tomorrow, skipKey);
+    if (!todayF.length && !tomorrowF.length && !later.length) {
+      return `<section class="co-day-agenda co-day-agenda--empty">
+        <h3 class="co-agenda-title">${esc(T.todayTitle)}</h3>
+        <p class="co-agenda-lead muted">${esc(T.scheduleEmpty)}</p>
+      </section>`;
     }
-    if (tomorrow.length) {
+    let html = `<section class="co-day-agenda" aria-labelledby="coScheduleTitle">
+      <div class="co-agenda-head">
+        <div>
+          <h3 class="co-agenda-title" id="coScheduleTitle">${esc(T.todayTitle)}</h3>
+          <p class="co-agenda-lead muted">${esc(T.scheduleLead)}</p>
+        </div>
+        <button type="button" class="btn-ghost co-export-cal" title="${esc(T.exportCalHint)}">${esc(T.exportCal)}</button>
+      </div>`;
+    if (todayF.length) {
+      html += `<ul class="co-agenda-list">${todayF.map(w => renderAgendaItem(w)).join("")}</ul>`;
+    }
+    if (tomorrowF.length) {
       html += `<h4 class="co-agenda-sub">${esc(T.tomorrowTitle)}</h4>`;
-      html += `<ul class="co-agenda-list">${tomorrow.map(w => renderAgendaItem(w)).join("")}</ul>`;
+      html += `<ul class="co-agenda-list">${tomorrowF.map(w => renderAgendaItem(w)).join("")}</ul>`;
     }
-    html += `</div>`;
+    if (later.length) {
+      html += `<details class="co-later"><summary>${esc(T.laterTitle)}</summary>`;
+      html += `<ul class="co-agenda-list">${later.map(w => renderAgendaItem(w)).join("")}</ul></details>`;
+    }
+    html += `</section>`;
     return html;
   }
 
@@ -867,6 +970,9 @@
     });
     const exp = root.querySelector(".co-export-cal");
     if (exp) exp.addEventListener("click", () => downloadCalendar());
+    root.querySelectorAll("[data-co-open-add]").forEach(btn => {
+      btn.addEventListener("click", () => openAddSheet());
+    });
   }
 
   async function renderDashboard() {
@@ -874,7 +980,8 @@
     if (!dash) return;
     const gen = ++dashGen;
     if (!state.people.length) {
-      dash.innerHTML = `<p class="co-empty muted">${esc(T.emptySetup)}</p>`;
+      dash.innerHTML = renderWebHintHtml() + renderHeroHtml(null, null);
+      bindDashActions(dash);
       return;
     }
     let windows;
@@ -883,45 +990,11 @@
     if (gen !== dashGen) return;
 
     const active = activeWindow(windows);
-    const upcoming = upcomingWindows(windows);
+    const next = !active ? upcomingWindows(windows, 1)[0] : null;
+    const heroKey = windowKey(active || next);
     let html = renderWebHintHtml();
-    if (hasSetup()) html += renderDayAgendaHtml(windows);
-
-    if (active) {
-      const left = minsUntil(active.end);
-      const theirStart = fmtAt(active.start, active.city.tz);
-      const theirEnd = fmtAt(active.end, active.city.tz);
-      const yourStart = fmtFull(active.start);
-      html += `<div class="co-active">
-        <span class="co-active-k">${esc(T.activeNow)}</span>
-        <h3 class="co-active-title">${esc(active.label)}</h3>
-        <p class="co-active-sub">${esc(T.open)} · ${esc(T.endsIn(left))}</p>
-        <div class="co-times">
-          <span><b>${esc(T.theirTime)}</b> ${esc(theirStart)} – ${esc(theirEnd)} · ${esc(cN(active.city))}</span>
-          <span><b>${esc(T.yourTime)}</b> ${esc(yourStart)}</span>
-        </div>
-        ${renderActions(active.person, active.rule)}
-      </div>`;
-    }
-
-    if (upcoming.length) {
-      html += `<div class="co-upcoming"><span class="co-up-k">${esc(T.upcoming)}</span><ul class="co-up-list">`;
-      for (const w of upcoming) {
-        const inM = minsUntil(w.start);
-        const when = inM <= 1 ? T.now : T.inMin(inM);
-        html += `<li class="co-up-item">
-          <span class="co-up-when">${esc(when)}</span>
-          <span class="co-up-label">${esc(w.label)}</span>
-          <span class="co-up-at muted">${esc(fmtAt(w.start, w.city.tz))} · ${esc(cN(w.city))}</span>
-          ${renderContactActions(w.person, w.rule, "co-up-actions")}
-        </li>`;
-      }
-      html += "</ul></div>";
-    }
-
-    if (!active && !upcoming.length) {
-      html += `<p class="co-empty muted">${esc(T.noRules)}</p>`;
-    }
+    html += renderHeroHtml(active, next);
+    if (hasSetup()) html += renderDayAgendaHtml(windows, heroKey);
 
     dash.innerHTML = html;
     bindDashActions(dash);
@@ -1000,28 +1073,102 @@
       </div>`;
     }).join("");
 
-    return `<article class="co-person" data-idx="${idx}">
-      <header class="co-person-head">
-        <strong>${esc(person.name)}</strong>
-        <span class="muted">${esc(cityLabel)}</span>
-        <button type="button" class="co-person-del" data-idx="${idx}">${esc(T.remove)}</button>
-      </header>
-      ${person.phone ? `<p class="co-phone muted" dir="ltr">${esc(displayPhone(person, city))}</p>` : ""}
-      ${renderContactActions(person, defaultRule(person), "co-person-actions")}
-      <div class="co-templates">
-        <button type="button" class="co-tpl" data-idx="${idx}" data-tpl="afterFajr30">${esc(T.tplAfterFajr)}</button>
-        <button type="button" class="co-tpl" data-idx="${idx}" data-tpl="beforeFajr15">${esc(T.tplBeforeFajr)}</button>
-        <button type="button" class="co-tpl" data-idx="${idx}" data-tpl="afterMaghrib20">${esc(T.tplAfterMaghrib)}</button>
+    return `<article class="co-person${expandedPeople.has(idx) ? " is-open" : ""}" data-idx="${idx}">
+      <button type="button" class="co-person-toggle" data-idx="${idx}" aria-expanded="${expandedPeople.has(idx) ? "true" : "false"}">
+        <span class="co-person-toggle-main">
+          <strong class="co-person-name">${esc(person.name)}</strong>
+          <span class="co-person-meta muted">${esc(cityLabel)} · ${esc(rulesCountLabel((person.rules || []).length))}</span>
+        </span>
+        <span class="co-person-chevron" aria-hidden="true"></span>
+      </button>
+      <div class="co-person-body"${expandedPeople.has(idx) ? "" : " hidden"}>
+        <div class="co-person-body-inner">
+          ${person.phone ? `<p class="co-phone muted" dir="ltr">${esc(displayPhone(person, city))}</p>` : ""}
+          ${renderContactActions(person, defaultRule(person), "co-person-actions")}
+          <p class="co-rules-k muted">${esc(T.rules)}</p>
+          <div class="co-templates">
+            <button type="button" class="co-tpl" data-idx="${idx}" data-tpl="afterFajr30">${esc(T.tplAfterFajr)}</button>
+            <button type="button" class="co-tpl" data-idx="${idx}" data-tpl="beforeFajr15">${esc(T.tplBeforeFajr)}</button>
+            <button type="button" class="co-tpl" data-idx="${idx}" data-tpl="afterMaghrib20">${esc(T.tplAfterMaghrib)}</button>
+          </div>
+          <div class="co-rules">${rulesHtml}</div>
+          <button type="button" class="btn-ghost co-add-rule" data-idx="${idx}">+ ${esc(T.addRule)}</button>
+          <button type="button" class="co-person-del co-person-del-inline" data-idx="${idx}">${esc(T.remove)}</button>
+        </div>
       </div>
-      <div class="co-rules">${rulesHtml}</div>
-      <button type="button" class="btn-ghost co-add-rule" data-idx="${idx}">+ ${esc(T.addRule)}</button>
     </article>`;
   }
 
   function renderPeople() {
     const box = $("#coPeople");
     if (!box) return;
+    if (!state.people.length) {
+      box.innerHTML = `<div class="co-people-empty">
+        <p class="muted">${esc(LANG === "ar" ? "لم تُضف أحدًا بعد." : "No one added yet.")}</p>
+        <button type="button" class="btn co-people-empty-btn" data-co-open-add>+ ${esc(T.addPerson)}</button>
+      </div>`;
+      box.querySelector("[data-co-open-add]")?.addEventListener("click", () => openAddSheet());
+      return;
+    }
     box.innerHTML = state.people.map((p, i) => personCardHtml(p, i)).join("");
+  }
+
+  function setTab(tab) {
+    activeTab = tab;
+    const today = $("#coTabToday");
+    const people = $("#coTabPeople");
+    const panelToday = $("#coPanelToday");
+    const panelPeople = $("#coPanelPeople");
+    const onToday = tab === "today";
+    if (today) { today.classList.toggle("is-active", onToday); today.setAttribute("aria-selected", onToday ? "true" : "false"); }
+    if (people) { people.classList.toggle("is-active", !onToday); people.setAttribute("aria-selected", onToday ? "false" : "true"); }
+    if (panelToday) panelToday.hidden = !onToday;
+    if (panelPeople) panelPeople.hidden = onToday;
+  }
+
+  function openAddSheet() {
+    const sheet = $("#coAddSheet");
+    if (!sheet) return;
+    sheet.hidden = false;
+    sheet.style.display = "flex";
+    const name = $("#coPersonName");
+    if (name) name.focus();
+  }
+
+  function closeAddSheet() {
+    const sheet = $("#coAddSheet");
+    if (!sheet) return;
+    sheet.hidden = true;
+    sheet.style.display = "none";
+  }
+
+  function initTabs() {
+    const tabToday = $("#coTabToday");
+    const tabPeople = $("#coTabPeople");
+    const tabAdd = $("#coTabAdd");
+    const leadToday = $("#coLeadToday");
+    const leadPeople = $("#coLeadPeople");
+    const sheetTitle = $("#coAddSheetTitle");
+    const sheetLead = document.querySelector(".co-add-sheet-lead");
+    if (tabToday) tabToday.textContent = T.tabToday;
+    if (tabPeople) tabPeople.textContent = T.tabPeople;
+    if (leadToday) leadToday.textContent = T.leadToday;
+    if (leadPeople) leadPeople.textContent = T.leadPeople;
+    if (sheetTitle) sheetTitle.textContent = T.addSheetTitle;
+    if (sheetLead) sheetLead.textContent = T.addSheetLead;
+    const youHint = document.querySelector(".co-field-hint");
+    if (youHint) youHint.textContent = T.youHint;
+    tabToday && tabToday.addEventListener("click", () => setTab("today"));
+    tabPeople && tabPeople.addEventListener("click", () => setTab("people"));
+    tabAdd && tabAdd.addEventListener("click", () => openAddSheet());
+    setTab(activeTab);
+  }
+
+  function initAddSheet() {
+    const sheet = $("#coAddSheet");
+    if (!sheet) return;
+    sheet.querySelector(".co-add-sheet-close")?.addEventListener("click", closeAddSheet);
+    sheet.addEventListener("click", e => { if (e.target === sheet) closeAddSheet(); });
   }
 
   function addPerson(data) {
@@ -1036,9 +1183,14 @@
       phone: buildFullPhone(city, data.phone || ""),
       rules: [{ id: uid(), type: "after", prayer: "Fajr", offsetMin: 30 }],
     });
+    const newIdx = state.people.length - 1;
+    expandedPeople.clear();
+    expandedPeople.add(newIdx);
     saveState();
     renderPeople();
     scheduleDashboard();
+    closeAddSheet();
+    setTab("people");
     toast(T.saved);
   }
 
@@ -1098,9 +1250,18 @@
     const box = $("#coPeople");
     if (!box) return;
     box.addEventListener("click", e => {
+      const toggle = e.target.closest(".co-person-toggle");
+      if (toggle) {
+        const idx = +toggle.dataset.idx;
+        if (expandedPeople.has(idx)) expandedPeople.delete(idx);
+        else { expandedPeople.clear(); expandedPeople.add(idx); }
+        renderPeople();
+        return;
+      }
       const delP = e.target.closest(".co-person-del");
       if (delP) {
         state.people.splice(+delP.dataset.idx, 1);
+        expandedPeople.clear();
         saveState(); renderPeople(); scheduleDashboard(); return;
       }
       const tpl = e.target.closest(".co-tpl");
@@ -1196,8 +1357,7 @@
   }
 
   async function initPage() {
-    const form = $("#coForm");
-    if (!form) return;
+    if (!$("#coDash")) return;
     applyParams();
     if (!state.you) {
       const c = bySlug.get(guessHome());
@@ -1230,9 +1390,12 @@
         }
       });
     }
+    const form = $("#coForm");
+    initTabs();
+    initAddSheet();
     updateDialUI(null);
 
-    form.addEventListener("submit", e => {
+    if (form) form.addEventListener("submit", e => {
       e.preventDefault();
       const name = $("#coPersonName").value;
       const phone = $("#coPersonPhone").value;
@@ -1259,7 +1422,7 @@
   async function init() {
     try { await loadCities(); } catch (e) { return; }
     loadState();
-    if ($("#coForm")) await initPage();
+    if ($("#coDash")) await initPage();
     if ($("#coHomeStrip")) await initHomeStrip();
   }
 

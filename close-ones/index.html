@@ -89,60 +89,75 @@
 
     <section class="section" aria-labelledby="co-h">
       <div class="container">
-        <header class="section-head">
+        <header class="section-head co-page-head">
           <span class="kicker">Connection</span>
           <h2 id="co-h">Your window to the people you care about</h2>
-          <p class="muted">Same country or across the world — rules run on each person&#39;s prayer times and local clock. You get one clear window: call, WhatsApp, or remind.</p>
         </header>
 
-        <div id="coDash" class="co-dash" aria-live="polite"></div>
+        <nav class="co-tabs" role="tablist" aria-label="Close Ones sections">
+          <button type="button" class="co-tab is-active" id="coTabToday" role="tab" aria-selected="true" aria-controls="coPanelToday">Today</button>
+          <button type="button" class="co-tab" id="coTabPeople" role="tab" aria-selected="false" aria-controls="coPanelPeople">People</button>
+          <button type="button" class="co-tab co-tab-add" id="coTabAdd" aria-label="Add someone">+</button>
+        </nav>
 
-        <div id="coNotifyBar" class="co-notify-bar" aria-labelledby="coNotifyTitle">
-          <span class="co-notify-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>
-          <div class="co-notify-copy">
-            <strong id="coNotifyTitle" class="co-notify-title">Close Ones reminders</strong>
-            <span id="coNotifySub" class="co-notify-sub muted">Notify me before each connection window</span>
+        <div id="coPanelToday" class="co-panel" role="tabpanel" aria-labelledby="coTabToday">
+          <p class="co-panel-lead" id="coLeadToday">When to call or nudge — from the rules you saved for each person.</p>
+          <div id="coDash" class="co-dash" aria-live="polite"></div>
+          <div id="coNotifyBar" class="co-notify-bar" aria-labelledby="coNotifyTitle">
+            <span class="co-notify-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>
+            <div class="co-notify-copy">
+              <strong id="coNotifyTitle" class="co-notify-title">Close Ones reminders</strong>
+              <span id="coNotifySub" class="co-notify-sub muted">Notify me before each connection window</span>
+            </div>
+            <span id="coNotifyBadge" class="co-notify-badge">Soon</span>
+            <button type="button" id="coNotifyToggle" class="co-notify-toggle" role="switch" aria-checked="false" aria-labelledby="coNotifyTitle" aria-describedby="coNotifySub" disabled>
+              <span class="co-notify-knob" aria-hidden="true"></span>
+            </button>
           </div>
-          <span id="coNotifyBadge" class="co-notify-badge">Soon</span>
-          <button type="button" id="coNotifyToggle" class="co-notify-toggle" role="switch" aria-checked="false" aria-labelledby="coNotifyTitle" aria-describedby="coNotifySub" disabled>
-            <span class="co-notify-knob" aria-hidden="true"></span>
-          </button>
         </div>
 
-        <form id="coForm" class="co-form" autocomplete="off">
-          <div class="co-setup">
-            <div class="pl-field co-ac">
+        <div id="coPanelPeople" class="co-panel" role="tabpanel" aria-labelledby="coTabPeople" hidden>
+          <p class="co-panel-lead" id="coLeadPeople">People you care about and their connection rules — tap a name to edit.</p>
+          <div class="co-you-row">
+            <div class="pl-field co-ac co-you-field">
               <label for="coYou">Your city</label>
+              <span class="co-field-hint muted">Times on Today are shown in your clock</span>
               <input id="coYou" class="pl-input" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="coYouAc" placeholder="e.g. Dubai" />
               <ul id="coYouAc" class="ac-list" role="listbox" hidden></ul>
             </div>
           </div>
-          <fieldset class="co-add-fieldset">
-            <legend>Add someone</legend>
-            <div class="co-add-grid">
-              <div class="pl-field">
-                <label for="coPersonName">Name</label>
-                <input id="coPersonName" class="pl-input" type="text" placeholder="e.g. Mom" required />
-              </div>
-              <div class="pl-field co-ac">
-                <label for="coPersonCity">Their city</label>
-                <input id="coPersonCity" class="pl-input" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="coPersonCityAc" placeholder="e.g. Cairo" required />
-                <ul id="coPersonCityAc" class="ac-list" role="listbox" hidden></ul>
-              </div>
-              <div class="pl-field co-phone-field">
-                <label for="coPersonPhone">WhatsApp / phone (optional)</label>
-                <div class="co-phone-row">
-                  <span id="coDialPrefix" class="co-dial-prefix" dir="ltr" aria-hidden="true">+—</span>
-                  <input id="coPersonPhone" class="pl-input co-phone-input" type="tel" dir="ltr" inputmode="tel" autocomplete="tel" placeholder="Pick their city first" />
-                </div>
-                <p id="coDialHint" class="co-dial-hint muted" hidden></p>
-              </div>
-              <button type="submit" class="btn co-submit">Add someone</button>
-            </div>
-          </fieldset>
-        </form>
+          <div id="coPeople" class="co-people"></div>
+        </div>
 
-        <div id="coPeople" class="co-people"></div>
+        <div id="coAddSheet" class="co-add-sheet" hidden>
+          <div class="co-add-sheet-card" role="dialog" aria-modal="true" aria-labelledby="coAddSheetTitle">
+            <button type="button" class="co-add-sheet-close" aria-label="Close">×</button>
+            <h3 id="coAddSheetTitle" class="co-add-sheet-title">Add someone</h3>
+            <p class="co-add-sheet-lead muted">Name, their city, and optional phone — then pick rules on the People tab.</p>
+            <form id="coForm" class="co-form co-form-add" autocomplete="off">
+              <div class="co-add-grid">
+                <div class="pl-field">
+                  <label for="coPersonName">Name</label>
+                  <input id="coPersonName" class="pl-input" type="text" placeholder="e.g. Mom" required />
+                </div>
+                <div class="pl-field co-ac">
+                  <label for="coPersonCity">Their city</label>
+                  <input id="coPersonCity" class="pl-input" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="coPersonCityAc" placeholder="e.g. Cairo" required />
+                  <ul id="coPersonCityAc" class="ac-list" role="listbox" hidden></ul>
+                </div>
+                <div class="pl-field co-phone-field">
+                  <label for="coPersonPhone">WhatsApp / phone (optional)</label>
+                  <div class="co-phone-row">
+                    <span id="coDialPrefix" class="co-dial-prefix" dir="ltr" aria-hidden="true">+—</span>
+                    <input id="coPersonPhone" class="pl-input co-phone-input" type="tel" dir="ltr" inputmode="tel" autocomplete="tel" placeholder="Pick their city first" />
+                  </div>
+                  <p id="coDialHint" class="co-dial-hint muted" hidden></p>
+                </div>
+                <button type="submit" class="btn co-submit">Add someone</button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -191,7 +206,7 @@
     var y=document.getElementById("year");if(y)y.textContent=new Date().getFullYear();
   })();
   </script>
-  <script src="/js/close-ones.js?v=77" defer></script>
+  <script src="/js/close-ones.js?v=78" defer></script>
   <script src="/js/pwa.js" defer></script>
 </body>
 </html>
