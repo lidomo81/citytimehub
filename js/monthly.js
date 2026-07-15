@@ -111,7 +111,12 @@
   // ---- City autocomplete ----
   function norm(s) { return (s || "").toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[\u064b-\u0652]/g, ""); }
   function closeAc() { elAc.hidden = true; elAc.innerHTML = ""; elCity.setAttribute("aria-expanded", "false"); }
-  function pickCity(c) { city = c; elCity.value = cName(c); closeAc(); load(); }
+  function pickCity(c) {
+    city = c;
+    if (window.CTH_CITY_INP) window.CTH_CITY_INP.show(elCity, cName(c));
+    else elCity.value = cName(c);
+    closeAc(); load();
+  }
   function search(q) {
     q = norm(q); if (!q) { closeAc(); return; }
     var res = CITIES.filter(function (c) {
@@ -132,7 +137,15 @@
     });
   }
 
-  elCity.addEventListener("input", function () { search(elCity.value); });
+  elCity.addEventListener("input", function () {
+    var v = elCity.value;
+    if (!v && city) {
+      if (window.CTH_CITY_INP) window.CTH_CITY_INP.show(elCity, cName(city));
+      closeAc();
+      return;
+    }
+    search(v);
+  });
   elCity.addEventListener("blur", function () { setTimeout(closeAc, 150); });
   elPrev.addEventListener("click", function () { step(-1); });
   elNext.addEventListener("click", function () { step(1); });
@@ -141,7 +154,10 @@
   fetch("/data/cities.json").then(function (r) { return r.json(); }).then(function (j) {
     CITIES = j.cities || [];
     city = resolveDefaultCity();
-    if (city) elCity.value = cName(city);
+    if (city) {
+      if (window.CTH_CITY_INP) window.CTH_CITY_INP.show(elCity, cName(city));
+      else elCity.value = cName(city);
+    }
     load();
   }).catch(function () {
     wrap.innerHTML = "<p class=\"no-results\" style=\"text-align:center;padding:24px\">" + T.err + "</p>";

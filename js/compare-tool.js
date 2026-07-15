@@ -149,10 +149,16 @@
     }
     function choose(i) {
       const c = matches[i]; if (!c) return;
-      setSel(c); input.value = cN(c) + ", " + cC(c); input.dataset.slug = c.slug;
+      setSel(c);
+      if (window.CTH_CITY_INP) window.CTH_CITY_INP.show(input, cN(c) + ", " + cC(c), c.slug);
+      else { input.value = cN(c) + ", " + cC(c); input.dataset.slug = c.slug; }
       close(); clearError(); maybeAutoCompare(which);
     }
-    input.addEventListener("input", () => { input.dataset.slug = ""; setSel(null); active = -1; paint(); });
+    input.addEventListener("input", () => {
+      input.dataset.slug = ""; setSel(null); active = -1;
+      if (!input.value.trim() && window.CTH_CITY_INP) window.CTH_CITY_INP.reset(input);
+      paint();
+    });
     input.addEventListener("focus", () => { if (input.value && !input.dataset.slug) paint(); });
     input.addEventListener("keydown", e => {
       if (e.key === "ArrowDown") { e.preventDefault(); if (listEl.hidden) { paint(); return; } active = Math.min(active + 1, matches.length - 1); highlight(active); }
@@ -269,7 +275,8 @@
   function applyCity(input, which, c) {
     if (!c) return;
     if (which === 1) sel1 = c; else sel2 = c;
-    input.value = cN(c) + ", " + cC(c); input.dataset.slug = c.slug;
+    if (window.CTH_CITY_INP) window.CTH_CITY_INP.show(input, cN(c) + ", " + cC(c), c.slug);
+    else { input.value = cN(c) + ", " + cC(c); input.dataset.slug = c.slug; }
   }
 
   /* ---------- boot ---------- */
@@ -297,9 +304,12 @@
     const swap = $("#swapBtn");
     if (swap) swap.addEventListener("click", () => {
       const t = sel1; sel1 = sel2; sel2 = t;
-      const v1 = in1.value, s1 = in1.dataset.slug;
-      in1.value = in2.value; in1.dataset.slug = in2.dataset.slug;
-      in2.value = v1; in2.dataset.slug = s1;
+      const ph1 = in1.placeholder, s1 = in1.dataset.slug;
+      in1.placeholder = in2.placeholder;
+      if (in2.dataset.slug) in1.dataset.slug = in2.dataset.slug; else delete in1.dataset.slug;
+      in2.placeholder = ph1;
+      if (s1) in2.dataset.slug = s1; else delete in2.dataset.slug;
+      in1.value = ""; in2.value = "";
       if (sel1 && sel2) doCompare();
     });
 

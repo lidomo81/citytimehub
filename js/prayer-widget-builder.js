@@ -44,7 +44,13 @@
     const box = $("#wbCode"); if (box) box.value = embedCode();
   }
 
-  function setCity(c) { state.city = c.slug; const i = $("#wbCity"); if (i) i.value = cN(c) + ", " + cC(c); update(); }
+  function setCity(c) {
+    state.city = c.slug;
+    const i = $("#wbCity");
+    if (i && window.CTH_CITY_INP) window.CTH_CITY_INP.show(i, cN(c) + ", " + cC(c));
+    else if (i) i.value = cN(c) + ", " + cC(c);
+    update();
+  }
 
   function autocomplete(input, listEl, onChoose) {
     let items = [], active = -1;

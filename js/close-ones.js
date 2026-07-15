@@ -1470,7 +1470,9 @@
     function pick(i) {
       const c = items[i];
       if (!c) return;
-      input.value = cityLabel(c);
+      if (window.CTH_CITY_INP) window.CTH_CITY_INP.show(input, cityLabel(c));
+      else input.value = cityLabel(c);
+      input.dataset.coCity = c.slug;
       input.blur();
       onChoose(c);
       close();
@@ -1511,7 +1513,9 @@
     const y = findCity(p.get("you"));
     if (y) {
       state.you = y.slug;
-      const i = $("#coYou"); if (i) i.value = cN(y) + ", " + cC(y);
+      const i = $("#coYou");
+      if (i && window.CTH_CITY_INP) window.CTH_CITY_INP.show(i, cN(y) + ", " + cC(y));
+      else if (i) i.value = cN(y) + ", " + cC(y);
     }
   }
 
@@ -1520,7 +1524,12 @@
     applyParams();
     if (!state.you) {
       const c = bySlug.get(guessHome());
-      if (c) { state.you = c.slug; const i = $("#coYou"); if (i) i.value = cN(c) + ", " + cC(c); }
+      if (c) {
+        state.you = c.slug;
+        const i = $("#coYou");
+        if (i && window.CTH_CITY_INP) window.CTH_CITY_INP.show(i, cN(c) + ", " + cC(c));
+        else if (i) i.value = cN(c) + ", " + cC(c);
+      }
     }
 
     autocomplete($("#coYou"), $("#coYouAc"), c => {
@@ -1540,7 +1549,22 @@
     if (cityInp) {
       cityInp.addEventListener("input", () => {
         const v = norm(cityInp.value);
-        if (!v) { pendingPersonCity = ""; updateDialUI(null); return; }
+        if (!v) {
+          if (cityInp.dataset.coCity) {
+            const picked = bySlug.get(cityInp.dataset.coCity);
+            if (picked) {
+              pendingPersonCity = picked.slug;
+              if (window.CTH_CITY_INP) window.CTH_CITY_INP.show(cityInp, cityLabel(picked));
+              updateDialUI(picked);
+              return;
+            }
+          }
+          pendingPersonCity = "";
+          delete cityInp.dataset.coCity;
+          updateDialUI(null);
+          return;
+        }
+        delete cityInp.dataset.coCity;
         const hit = findCity(cityInp.value);
         if (hit && cityLabel(hit) === cityInp.value) {
           pendingPersonCity = hit.slug;
@@ -1561,13 +1585,18 @@
       e.preventDefault();
       const name = $("#coPersonName").value;
       const phone = $("#coPersonPhone").value;
-      const cityIn = $("#coPersonCity").value;
-      const city = bySlug.get(pendingPersonCity) || findCity(cityIn);
+      const city = bySlug.get(pendingPersonCity) || findCity($("#coPersonCity").value);
+      const cityIn = city ? cityLabel(city) : $("#coPersonCity").value;
       addPerson({ name, phone, citySlug: city ? city.slug : "", cityInput: cityIn });
       $("#coPersonName").value = "";
       $("#coPersonPhone").value = "";
-      $("#coPersonCity").value = "";
       pendingPersonCity = "";
+      const cityField = $("#coPersonCity");
+      if (cityField) {
+        delete cityField.dataset.coCity;
+        if (window.CTH_CITY_INP) window.CTH_CITY_INP.reset(cityField);
+        else cityField.value = "";
+      }
       updateDialUI(null);
     });
 

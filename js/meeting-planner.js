@@ -243,7 +243,9 @@
   /* ---------- Defaults & deep-link ---------- */
   function setHome(c) {
     state.from = c.slug;
-    const inp = $("#plFrom"); if (inp) { inp.value = c.name + ", " + c.country; inp.dataset.slug = c.slug; }
+    const inp = $("#plFrom");
+    if (inp && window.CTH_CITY_INP) window.CTH_CITY_INP.show(inp, c.name + ", " + c.country, c.slug);
+    else if (inp) { inp.value = c.name + ", " + c.country; inp.dataset.slug = c.slug; }
   }
 
   /* ---------- Saved groups ("Your saved", localStorage) ---------- */

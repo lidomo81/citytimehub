@@ -271,7 +271,9 @@
 
   function setFrom(c) {
     state.from = c.slug;
-    const inp = $("#btcFrom"); if (inp) inp.value = cN(c) + ", " + cC(c);
+    const inp = $("#btcFrom");
+    if (inp && window.CTH_CITY_INP) window.CTH_CITY_INP.show(inp, cN(c) + ", " + cC(c));
+    else if (inp) inp.value = cN(c) + ", " + cC(c);
     state.cities = state.cities.filter(s => s !== c.slug);
     renderChips();
   }

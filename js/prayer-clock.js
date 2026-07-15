@@ -276,8 +276,18 @@
   function removePair(y, f) { setSaved(getSaved().filter(p => !(p.y === y && p.f === f))); renderSaved(); }
   function loadPair(y, f) {
     const cy = bySlug.get(y), cf = bySlug.get(f);
-    if (cy) { state.you = cy.slug; const i = $("#pcYou"); if (i) i.value = cN(cy) + ", " + cC(cy); }
-    if (cf) { state.family = cf.slug; const i = $("#pcFamily"); if (i) i.value = cN(cf) + ", " + cC(cf); }
+    if (cy) {
+      state.you = cy.slug;
+      const i = $("#pcYou");
+      if (i && window.CTH_CITY_INP) window.CTH_CITY_INP.show(i, cN(cy) + ", " + cC(cy));
+      else if (i) i.value = cN(cy) + ", " + cC(cy);
+    }
+    if (cf) {
+      state.family = cf.slug;
+      const i = $("#pcFamily");
+      if (i && window.CTH_CITY_INP) window.CTH_CITY_INP.show(i, cN(cf) + ", " + cC(cf));
+      else if (i) i.value = cN(cf) + ", " + cC(cf);
+    }
     loadAndRender();
     const sec = $("#pcClocks"); if (sec && sec.scrollIntoView) sec.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
@@ -296,14 +306,25 @@
   function setCity(role, c) {
     state[role] = c.slug;
     const inp = $(role === "you" ? "#pcYou" : "#pcFamily");
-    if (inp) inp.value = cN(c) + ", " + cC(c);
+    if (inp && window.CTH_CITY_INP) window.CTH_CITY_INP.show(inp, cN(c) + ", " + cC(c));
+    else if (inp) inp.value = cN(c) + ", " + cC(c);
     loadAndRender();
   }
   function applyParams() {
     const p = new URLSearchParams(location.search);
     const y = findCity(p.get("you")), f = findCity(p.get("family"));
-    if (y) { state.you = y.slug; const i = $("#pcYou"); if (i) i.value = cN(y) + ", " + cC(y); }
-    if (f) { state.family = f.slug; const i = $("#pcFamily"); if (i) i.value = cN(f) + ", " + cC(f); }
+    if (y) {
+      state.you = y.slug;
+      const i = $("#pcYou");
+      if (i && window.CTH_CITY_INP) window.CTH_CITY_INP.show(i, cN(y) + ", " + cC(y));
+      else if (i) i.value = cN(y) + ", " + cC(y);
+    }
+    if (f) {
+      state.family = f.slug;
+      const i = $("#pcFamily");
+      if (i && window.CTH_CITY_INP) window.CTH_CITY_INP.show(i, cN(f) + ", " + cC(f));
+      else if (i) i.value = cN(f) + ", " + cC(f);
+    }
   }
 
   async function init() {
@@ -325,7 +346,15 @@
     });
 
     applyParams();
-    if (!state.you) { const c = bySlug.get(guessHome()); if (c) { state.you = c.slug; $("#pcYou").value = cN(c) + ", " + cC(c); } }
+    if (!state.you) {
+      const c = bySlug.get(guessHome());
+      if (c) {
+        state.you = c.slug;
+        const i = $("#pcYou");
+        if (i && window.CTH_CITY_INP) window.CTH_CITY_INP.show(i, cN(c) + ", " + cC(c));
+        else if (i) i.value = cN(c) + ", " + cC(c);
+      }
+    }
     renderSaved();
 
     requestAnimationFrame(frame);

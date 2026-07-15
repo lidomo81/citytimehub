@@ -614,7 +614,11 @@
     const eb = $("#cpEyebrow"); if (eb) eb.textContent = onLocal ? T.localEyebrow : (onDefault ? T.homeEyebrow : `${nm}، ${cCountry(city)}`);
     // "My city" returns to the detected local city — show it whenever we're NOT already on local
     const hb = $("#cpHome"); if (hb) hb.hidden = onLocal;
-    const inp = $("#cpSearch"); if (inp && document.activeElement !== inp) inp.value = (onLocal || onDefault) ? "" : `${nm}, ${cCountry(city)}`;
+    const inp = $("#cpSearch");
+    if (inp && document.activeElement !== inp) {
+      if (onLocal || onDefault) window.CTH_CITY_INP && window.CTH_CITY_INP.reset(inp);
+      else window.CTH_CITY_INP && window.CTH_CITY_INP.show(inp, `${nm}, ${cCountry(city)}`);
+    }
     updateSaveStar();
     // Tell the worship tracker whether this is the user's own city (local/saved).
     currentMine = onLocal || onDefault || isFav(city.slug);
