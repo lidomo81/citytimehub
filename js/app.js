@@ -131,6 +131,21 @@
     "#b89a78","#e0a35a","#e0824a","#b85a5e","#5e3f74","#23204a","#121634","#0c1130"
   ];
   const hex2rgb = h => [parseInt(h.slice(1,3),16), parseInt(h.slice(3,5),16), parseInt(h.slice(5,7),16)];
+  // The sky colour for a (fractional) hour, interpolated between the ramp's anchors.
+  const rampAt = h => {
+    h = ((h % 24) + 24) % 24;
+    const i0 = Math.floor(h) % 24, i1 = (i0 + 1) % 24, t = h - Math.floor(h);
+    const a = hex2rgb(RAMP[i0]), b = hex2rgb(RAMP[i1]);
+    return `rgb(${a.map((v, k) => Math.round(v + (b[k] - v) * t)).join(",")})`;
+  };
+  // Tint the top of the hero sky by the visitor's own local hour, so the page
+  // quietly carries the mood of their time of day (dawn → noon → dusk → night).
+  function applyMood() {
+    const sp = document.getElementById("skyPanel");
+    if (!sp) return;
+    const now = new Date();
+    sp.style.setProperty("--mood", rampAt(now.getHours() + now.getMinutes() / 60));
+  }
 
   /* ---------- Formatters (one per timezone, reused) ---------- */
   function formatters(tz) {
@@ -1038,6 +1053,8 @@
     initCityPanel();
     initHelp();
     startClock();
+    applyMood();
+    setInterval(applyMood, 300000); // refresh the time-of-day mood every 5 min
 
     const params = new URLSearchParams(location.search);
     const cityParam = params.get("city");
