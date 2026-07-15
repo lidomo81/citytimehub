@@ -57,7 +57,9 @@
       + '<p class="dr-text">' + body + "</p>"
       + '<p class="dr-src">' + esc(src) + "</p>"
       + "</div>";
-    host.insertAdjacentHTML("afterbegin", html);
+    const spotlight = document.getElementById("appToolsSpotlight");
+    if (spotlight) spotlight.insertAdjacentHTML("afterend", html);
+    else host.insertAdjacentHTML("afterbegin", html);
     return true;
   }
 

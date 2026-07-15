@@ -48,12 +48,15 @@
     toolsSite: { sel: "#tools",
       ar: { t: "الأدوات 🧭", b: "أذكار الصباح والمساء، فرق التوقيت، مخطط الاجتماعات، أفضل وقت للاتصال، القبلة والمزيد — كلها مبنية على نفس محرّك الوقت الحيّ." },
       en: { t: "Tools 🧭", b: "Morning & evening adhkar, time difference, meeting planner, best time to call, Qibla and more — all built on the same live-time engine." } },
+    spotlightApp: { sel: "#appToolsSpotlight", prefer: "below",
+      ar: { t: "أولوياتك اليومية 🤍", b: "أحبابك وتذكير الأذان في المقدمة — ما تحتاجه كل يوم بضغطة واحدة." },
+      en: { t: "Your daily priorities 🤍", b: "Close Ones and prayer reminders up front — what you need every day, one tap away." } },
     dailyReflection: { sel: "#dailyReflection", prefer: "below",
       ar: { t: "خاطرة اليوم 🤍", b: "حديث صحيح أو آية تتجدّد كل يوم، لتبدأ يومك بلمسة إيمانية هادئة." },
       en: { t: "Daily reflection 🤍", b: "An authentic hadith or verse that changes each day, to start your day with a calm spiritual touch." } },
     quickToolsApp: { sel: ".app-tools > .app-tools-group", prefer: "above",
-      ar: { t: "أدواتك السريعة 🧭", b: "كل الأدوات في متناول يدك، مرتّبة حسب النوع: الصلاة، والوقت، والتاريخ، والمعرفة — وفيها زر «التذكيرات» 🔔 لتنبيهك عند كل صلاة." },
-      en: { t: "Quick tools 🧭", b: "All tools at hand, grouped by type: Prayer, Time, Date and Knowledge — including the Reminders 🔔 tile that alerts you at each prayer." } },
+      ar: { t: "باقي الأدوات 🧭", b: "مرتّبة مثل الموقع: الصلاة، الأذكار، الوقت، التخطيط، وخواطر — كل شيء في مكانه." },
+      en: { t: "More tools 🧭", b: "Organized like the website: Prayer, Adhkar, Time, Planning and Reflections — everything in its place." } },
     help: { sel: "#helpBtn", prefer: "above",
       ar: { t: "المساعد وإعادة الجولة ❓", b: "زر «؟» هو مساعدك الدائم: اضغطه في أي وقت لإعادة هذه الجولة، أو لعرض قائمة بكل المميزات." },
       en: { t: "Help & replay ❓", b: "The “?” button is your always-there guide: tap it anytime to replay this tour or open the full list of features." } },
@@ -62,13 +65,13 @@
       en: { t: "You're all set! 🎉", b: "Replay this tour anytime from the “?” button. May Allah bless your time." } },
   };
 
-  // Assemble the steps for the current surface: the app shows the daily reflection
-  // and the Quick-tools row (with the injected Reminders tile); the website shows
-  // its own Tools section instead. Everything else is shared.
+  // Assemble the steps for the current surface: the app shows the spotlight row
+  // (Close Ones + injected Reminders card), daily reflection, then tool groups;
+  // the website shows its own Tools section instead. Everything else is shared.
   function buildSteps() {
     const app = document.documentElement.classList.contains("app-mode");
     const list = [S.welcome, S.search, S.favorite, S.myCities, S.prayerTimes, S.tapCard, S.adherence, S.week, S.insights];
-    if (app) list.push(S.dailyReflection, S.quickToolsApp);
+    if (app) list.push(S.spotlightApp, S.dailyReflection, S.quickToolsApp);
     else list.push(S.toolsSite);
     list.push(S.help, S.ready);
     return list;

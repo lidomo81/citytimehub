@@ -114,7 +114,8 @@
     exportCalHint: "تنزيل ملف .ics لـ Google Calendar أو Apple Calendar",
     icsDone: "تم تنزيل ملف التقويم",
     homeNext: (when, label) => `القادم ${when} — ${label}`,
-    homeOpen: "افتح أحبابك",
+    homeOpen: "أحبابك",
+    homeSetupNext: "اضبط مواعيد التواصل مع من تحبّ",
     tabToday: "اليوم",
     tabPeople: "أحبابي",
     leadToday: "متى تتصل أو تنبّه — من القواعد التي حفظتها لكل شخص.",
@@ -205,7 +206,8 @@
     exportCalHint: "Download a .ics file for Google Calendar or Apple Calendar",
     icsDone: "Calendar file downloaded",
     homeNext: (when, label) => `Next ${when} — ${label}`,
-    homeOpen: "Open Close Ones",
+    homeOpen: "Close Ones",
+    homeSetupNext: "Plan when to reach loved ones abroad",
     tabToday: "Today",
     tabPeople: "People",
     leadToday: "When to call or nudge — from the rules you saved for each person.",
@@ -1143,16 +1145,34 @@
   async function renderHomeStrip() {
     const strip = $("#coHomeStrip");
     if (!strip) return;
-    if (!hasSetup()) { strip.hidden = true; return; }
+    strip.href = CO_PAGE;
+    if (!hasSetup()) {
+      strip.hidden = false;
+      strip.innerHTML = `<span class="co-home-ico" aria-hidden="true">🤍</span>
+        <span class="co-home-copy">
+          <strong class="co-home-k">${esc(T.homeOpen)}</strong>
+          <span class="co-home-next">${esc(T.homeSetupNext)}</span>
+        </span>
+        <span class="co-home-arrow" aria-hidden="true">→</span>`;
+      return;
+    }
     let windows;
     try { windows = await allWindows(DASH_HORIZON_DAYS); }
     catch (e) { strip.hidden = true; return; }
     const active = activeWindow(windows);
     const next = active || upcomingWindows(windows, 1)[0];
-    if (!next) { strip.hidden = true; return; }
+    if (!next) {
+      strip.hidden = false;
+      strip.innerHTML = `<span class="co-home-ico" aria-hidden="true">🤍</span>
+        <span class="co-home-copy">
+          <strong class="co-home-k">${esc(T.homeOpen)}</strong>
+          <span class="co-home-next">${esc(T.heroEmptySub)}</span>
+        </span>
+        <span class="co-home-arrow" aria-hidden="true">→</span>`;
+      return;
+    }
     const inM = active ? 0 : minsUntil(next.start);
     const when = active ? T.now : (inM <= 1 ? T.now : T.inMin(inM));
-    strip.href = CO_PAGE;
     strip.hidden = false;
     strip.innerHTML = `<span class="co-home-ico" aria-hidden="true">🤍</span>
       <span class="co-home-copy">
