@@ -1128,6 +1128,25 @@ html.app-mode .fav-chip-name { font-size: 1rem; }
   .guide-card--featured h3 { font-size: 1.28rem; }
 }
 
+/* ===== Reflections index as a magazine: luminous covers ===== */
+.guide-card a { overflow: hidden; }
+.gc-cov { display: block; height: 116px; margin: -22px -22px 18px; position: relative; overflow: hidden;
+  background: linear-gradient(150deg, var(--cov-a, #161d3e), var(--cov-b, #294a72)); }
+.gc-cov::before { content: ""; position: absolute; inset-block-start: 26px; inset-inline-end: 28px;
+  width: 52px; height: 52px; border-radius: 50%;
+  background: radial-gradient(circle at 36% 34%, var(--cov-orb, #9fd0ff), color-mix(in srgb, var(--cov-orb, #9fd0ff) 22%, transparent) 68%, transparent 74%);
+  box-shadow: 0 0 30px -4px var(--cov-orb, #9fd0ff); }
+.gc-cov::after { content: ""; position: absolute; inset: 0; opacity: .55;
+  background-image:
+    radial-gradient(1.3px 1.3px at 18% 34%, #fff, transparent),
+    radial-gradient(1.1px 1.1px at 42% 22%, #d6e6ff, transparent),
+    radial-gradient(1.2px 1.2px at 30% 62%, #fff, transparent),
+    radial-gradient(1.4px 1.4px at 68% 52%, #eaf2ff, transparent); }
+.guide-card:nth-child(4n+1) .gc-cov { --cov-a: #161d3e; --cov-b: #294a72; --cov-orb: #9fd0ff; }
+.guide-card:nth-child(4n+2) .gc-cov { --cov-a: #2a2350; --cov-b: #5b3550; --cov-orb: #f0d68c; }
+.guide-card:nth-child(4n+3) .gc-cov { --cov-a: #182448; --cov-b: #2b6a8f; --cov-orb: #bfe6ff; }
+.guide-card:nth-child(4n+4) .gc-cov { --cov-a: #241a3a; --cov-b: #7a4a5a; --cov-orb: #f2c78a; }
+
 /* ===== Stats band — a non-card row that breaks the grid ===== */
 .stats-band { padding-block: 6px; }
 .stats-row { list-style: none; margin: 0; padding: 24px 12px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
