@@ -38,6 +38,7 @@
   const REMIND_MIN = 0;
   const REMIND_MAX = 180;
   const STORAGE_KEY = "cth-close-ones";
+  const DISMISS_KEY = "cth-co-dismissed";
   const MAX_PEOPLE = 6;
   function detectAppMode() {
     if (/CityTimeHubApp/i.test(navigator.userAgent || "")) return true;
@@ -79,6 +80,7 @@
     endsIn: n => `تنتهي خلال ${n} د`,
     theirTime: "توقيته", yourTime: "توقيتك",
     call: "اتصال", whatsapp: "واتساب", done: "تمّ ✓",
+    doneAck: "تمّ — ننتقل للنافذة التالية",
     afterLine: (name, prayer, off) => `بعد ${PNAME[prayer]} بـ ${off} د — ${name}`,
     beforeLine: (name, prayer, off) => `قبل ${PNAME[prayer]} ${off} د — نبّه ${name}`,
     fixedLine: (name, label) => `${label} — ${name}`,
@@ -159,6 +161,7 @@
     endsIn: n => `ends in ${n} min`,
     theirTime: "Their time", yourTime: "Your time",
     call: "Call", whatsapp: "WhatsApp", done: "Done ✓",
+    doneAck: "Done — showing the next window",
     afterLine: (name, prayer, off) => `${off} min after ${PNAME[prayer]} — ${name}`,
     beforeLine: (name, prayer, off) => `${off} min before ${PNAME[prayer]} — nudge ${name}`,
     fixedLine: (name, label) => `${label} — ${name}`,
@@ -570,14 +573,45 @@
     return windows.filter(w => w.end > now - 60000).sort((a, b) => a.start - b.start);
   }
 
+  function dismissedKeys() {
+    try {
+      const now = Date.now();
+      const raw = JSON.parse(localStorage.getItem(DISMISS_KEY) || "[]");
+      const kept = (Array.isArray(raw) ? raw : []).filter(x => x && x.until > now);
+      if (kept.length !== (raw || []).length) {
+        try { localStorage.setItem(DISMISS_KEY, JSON.stringify(kept)); } catch (e) {}
+      }
+      return new Set(kept.map(x => x.key));
+    } catch (e) { return new Set(); }
+  }
+
+  function isDismissed(w) {
+    return dismissedKeys().has(windowKey(w));
+  }
+
+  function markWindowDone(key, until) {
+    if (!key || !until) return;
+    try {
+      const now = Date.now();
+      const raw = JSON.parse(localStorage.getItem(DISMISS_KEY) || "[]");
+      const kept = (Array.isArray(raw) ? raw : []).filter(x => x && x.until > now && x.key !== key);
+      kept.push({ key, until });
+      localStorage.setItem(DISMISS_KEY, JSON.stringify(kept));
+    } catch (e) {}
+  }
+
+  function visibleWindows(windows) {
+    return windows.filter(w => !isDismissed(w));
+  }
+
   function activeWindow(windows) {
     const now = Date.now();
-    return windows.find(w => w.start <= now && w.end > now) || null;
+    return visibleWindows(windows).find(w => w.start <= now && w.end > now) || null;
   }
 
   function upcomingWindows(windows, limit = 8) {
     const now = Date.now();
-    return windows.filter(w => w.start > now).slice(0, limit);
+    return visibleWindows(windows).filter(w => w.start > now).slice(0, limit);
   }
 
   function minsUntil(ms) {
@@ -852,9 +886,10 @@
     return (person.rules || []).find(x => x.waMsg) || (person.rules || [])[0] || { waMsg: "" };
   }
 
-  function renderActions(person, rule) {
+  function renderActions(person, rule, win) {
     const contact = renderContactActions(person, rule);
-    const done = `<button type="button" class="btn-ghost co-done">${esc(T.done)}</button>`;
+    const wAttr = win ? ` data-co-win="${esc(windowKey(win))}" data-co-until="${win.end}"` : "";
+    const done = `<button type="button" class="btn-ghost co-done"${wAttr}>${esc(T.done)}</button>`;
     if (!contact) return `<div class="co-actions">${done}</div>`;
     return contact.replace("</div>", done + "</div>");
   }
@@ -906,7 +941,7 @@
         <span><b>${esc(T.theirTime)}</b> ${esc(theirStart)} – ${esc(theirEnd)}</span>
         <span><b>${esc(T.yourTime)}</b> ${esc(yourStart)}</span>
       </div>
-      ${renderActions(w.person, w.rule)}
+      ${renderActions(w.person, w.rule, w)}
     </section>`;
   }
 
@@ -966,7 +1001,16 @@
   function bindDashActions(root) {
     if (!root) return;
     root.querySelectorAll(".co-done").forEach(btn => {
-      btn.addEventListener("click", () => scheduleDashboard());
+      btn.addEventListener("click", () => {
+        const key = btn.dataset.coWin;
+        const until = +btn.dataset.coUntil;
+        if (key && until) {
+          markWindowDone(key, until);
+          toast(T.doneAck);
+        }
+        scheduleDashboard();
+        scheduleHomeStrip();
+      });
     });
     const exp = root.querySelector(".co-export-cal");
     if (exp) exp.addEventListener("click", () => downloadCalendar());
@@ -992,9 +1036,10 @@
     const active = activeWindow(windows);
     const next = !active ? upcomingWindows(windows, 1)[0] : null;
     const heroKey = windowKey(active || next);
+    const agendaWindows = visibleWindows(windows);
     let html = renderWebHintHtml();
     html += renderHeroHtml(active, next);
-    if (hasSetup()) html += renderDayAgendaHtml(windows, heroKey);
+    if (hasSetup()) html += renderDayAgendaHtml(agendaWindows, heroKey);
 
     dash.innerHTML = html;
     bindDashActions(dash);
