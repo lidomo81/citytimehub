@@ -305,12 +305,21 @@ html.app-mode .app-tools { display: block; width: min(960px, 92%); margin: 14px 
 }
 .app-tools-group:first-of-type .app-tools-cat { margin-top: 2px; }
 
-/* Spotlight — daily priorities (Close Ones + Reminders) */
+/* Spotlight — daily priorities (Close Ones + Reminders); visible on website + app */
+.home-spotlight {
+  display: grid; grid-template-columns: 1fr; gap: 10px;
+  width: min(960px, 92%); margin: 0 auto 16px; padding: 0 2px;
+}
+html.app-mode .home-spotlight {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 14px auto 0;
+}
+.home-spotlight:not(:has(> :not([hidden]) + :not([hidden]))) > :not([hidden]) { grid-column: 1 / -1; }
+html:not(.app-mode) #cthRemindSlot { display: none !important; }
 .app-tools-spotlight {
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;
   margin: 0 4px 16px;
 }
-.app-tools-spotlight:not(:has(> :not([hidden]) + :not([hidden]))) > :not([hidden]) { grid-column: 1 / -1; }
 .app-spot-card {
   display: flex; align-items: center; gap: 12px; margin: 0; padding: 14px 14px; min-height: 72px;
   border-radius: 16px; text-decoration: none; color: inherit; text-align: start;

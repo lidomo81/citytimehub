@@ -48,7 +48,7 @@
     toolsSite: { sel: "#tools",
       ar: { t: "الأدوات 🧭", b: "أحبابك، أذكار الصباح والمساء، فرق التوقيت، مخطّط الأحداث، أفضل وقت للاتصال، القبلة والمزيد — كلها على محرّك وقت حيّ واحد." },
       en: { t: "Tools 🧭", b: "Close Ones, morning & evening adhkar, time difference, meeting planner, best time to call, Qibla and more — all on one live-time engine." } },
-    spotlightApp: { sel: "#appToolsSpotlight", prefer: "below",
+    spotlightApp: { sel: "#homeSpotlight", prefer: "below",
       ar: { t: "أولوياتك اليومية 🤍", b: "أحبابك وتذكير الأذان في المقدمة — ما تحتاجه كل يوم بضغطة واحدة." },
       en: { t: "Your daily priorities 🤍", b: "Close Ones and prayer reminders up front — what you need every day, one tap away." } },
     dailyReflection: { sel: "#dailyReflection", prefer: "below",

@@ -57,7 +57,7 @@
       + '<p class="dr-text">' + body + "</p>"
       + '<p class="dr-src">' + esc(src) + "</p>"
       + "</div>";
-    const spotlight = document.getElementById("appToolsSpotlight");
+    const spotlight = document.getElementById("homeSpotlight");
     if (spotlight) spotlight.insertAdjacentHTML("afterend", html);
     else host.insertAdjacentHTML("afterbegin", html);
     return true;
