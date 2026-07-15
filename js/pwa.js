@@ -218,6 +218,35 @@
       }
     });
     nav.dataset.cthNav = "v2";
+    wireNavDrops(nav);
+  }
+
+  function wireNavDrops(nav) {
+    if (!nav) nav = document.querySelector(".main-nav");
+    if (!nav || nav.dataset.cthDropWire === "1") return;
+    var drops = nav.querySelectorAll(".nav-drop");
+    if (!drops.length) return;
+    drops.forEach(function (det) {
+      det.addEventListener("toggle", function () {
+        if (!det.open) return;
+        drops.forEach(function (other) {
+          if (other !== det) other.open = false;
+        });
+      });
+      det.querySelectorAll(".nav-drop-menu a").forEach(function (a) {
+        a.addEventListener("click", function () { det.open = false; });
+      });
+    });
+    document.addEventListener("click", function (e) {
+      drops.forEach(function (det) {
+        if (det.open && !det.contains(e.target)) det.open = false;
+      });
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "Escape") return;
+      drops.forEach(function (det) { det.open = false; });
+    });
+    nav.dataset.cthDropWire = "1";
   }
 
   /* ----- In-app mode: the tools grid is the primary launcher, so the header
@@ -258,8 +287,8 @@
       });
     }
   }
-  if (document.readyState !== "loading") { upgradeSiteNav(); applyAppNav(); }
-  else document.addEventListener("DOMContentLoaded", function () { upgradeSiteNav(); applyAppNav(); });
+  if (document.readyState !== "loading") { upgradeSiteNav(); wireNavDrops(); applyAppNav(); }
+  else document.addEventListener("DOMContentLoaded", function () { upgradeSiteNav(); wireNavDrops(); applyAppNav(); });
 
   /* ----- Universal Share button in the header. Uses the native share sheet
      (WhatsApp / Telegram / etc.) so a visitor can pass the page to family and
