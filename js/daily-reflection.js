@@ -42,8 +42,10 @@
   }
 
   function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+  const isApp = () => document.documentElement.classList.contains("app-mode");
 
   function mount() {
+    if (!isApp()) return true;
     if (document.getElementById("dailyReflection")) return true;
     const host = document.querySelector(".app-tools");
     if (!host) return false;
@@ -64,6 +66,7 @@
   }
 
   function init() {
+    if (!isApp()) return;
     let tries = 0;
     (function tick() {
       if (mount()) return;
