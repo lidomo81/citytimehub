@@ -482,7 +482,46 @@
   function saveState() {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
     updateUrl();
+    maybeSyncNativeReminders();
   }
+
+  async function buildNativeAlarmPayload(horizonDays = EXPORT_HORIZON_DAYS) {
+    if (!hasSetup()) return { lang: LANG, alarms: [] };
+    let windows;
+    try { windows = await allWindows(horizonDays); }
+    catch (e) { return { lang: LANG, alarms: [] }; }
+    const now = Date.now();
+    const alarms = visibleWindows(windows)
+      .filter(w => w.start > now)
+      .slice(0, 48)
+      .map(w => ({
+        id: windowKey(w),
+        at: w.start,
+        title: w.person.name || (LANG === "ar" ? "أحبّك" : "Loved one"),
+        body: w.label || "",
+      }));
+    return { lang: LANG, alarms };
+  }
+
+  function maybeSyncNativeReminders() {
+    try {
+      if (localStorage.getItem("cth-co-notify") !== "1") return;
+      if (!window.AndroidApp || typeof AndroidApp.syncCloseOnesReminders !== "function") return;
+      buildNativeAlarmPayload(EXPORT_HORIZON_DAYS).then(p => {
+        try { AndroidApp.syncCloseOnesReminders(JSON.stringify(p)); } catch (e) {}
+      });
+    } catch (e) {}
+  }
+
+  window.cthCloseOnesRequestSync = function(enableMode) {
+    buildNativeAlarmPayload(EXPORT_HORIZON_DAYS).then(p => {
+      const json = JSON.stringify(p);
+      try {
+        if (enableMode && AndroidApp.enableCloseOnesReminders) AndroidApp.enableCloseOnesReminders(json);
+        else if (AndroidApp.syncCloseOnesReminders) AndroidApp.syncCloseOnesReminders(json);
+      } catch (e) {}
+    });
+  };
 
   function phoneDigits(p) {
     return (p || "").replace(/\D/g, "");
@@ -955,16 +994,27 @@
       const on = localStorage.getItem("cth-co-notify") === "1";
       btn.classList.toggle("is-on", on);
       btn.setAttribute("aria-checked", on ? "true" : "false");
-      btn.addEventListener("click", () => {
+      btn.addEventListener("click", async () => {
         const next = !btn.classList.contains("is-on");
-        try {
-          if (next) AndroidApp.enableCloseOnesReminders();
-          else if (typeof AndroidApp.disableCloseOnesReminders === "function") AndroidApp.disableCloseOnesReminders();
-        } catch (e) { return; }
-        btn.classList.toggle("is-on", next);
-        btn.setAttribute("aria-checked", next ? "true" : "false");
-        try { localStorage.setItem("cth-co-notify", next ? "1" : "0"); } catch (e) {}
-        toast(next ? T.notifyEnabled : T.notifyDisabled);
+        if (!next) {
+          try {
+            if (typeof AndroidApp.disableCloseOnesReminders === "function") AndroidApp.disableCloseOnesReminders();
+          } catch (e) { return; }
+          btn.classList.toggle("is-on", false);
+          btn.setAttribute("aria-checked", "false");
+          try { localStorage.setItem("cth-co-notify", "0"); } catch (e) {}
+          toast(T.notifyDisabled);
+          return;
+        }
+        let payload;
+        try { payload = await buildNativeAlarmPayload(EXPORT_HORIZON_DAYS); }
+        catch (e) { toast(T.errPrayer); return; }
+        if (!payload.alarms.length) { toast(T.noRules); return; }
+        try { AndroidApp.enableCloseOnesReminders(JSON.stringify(payload)); }
+        catch (e) { return; }
+        btn.classList.toggle("is-on", true);
+        btn.setAttribute("aria-checked", "true");
+        try { localStorage.setItem("cth-co-notify", "1"); } catch (e) {}
       });
       return;
     }
