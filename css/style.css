@@ -128,6 +128,15 @@ svg { display: block; }
   box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,.05);
   color: var(--sky-text);
 }
+/* A soft, mood-tinted light that breathes at the top of the hero sky */
+.sky-panel::before {
+  content: ""; position: absolute; z-index: -1; pointer-events: none;
+  inset-block-start: -16%; inset-inline: 8%; height: 60%;
+  background: radial-gradient(58% 100% at 50% 0%, color-mix(in srgb, var(--mood, #3f9bf0) 55%, transparent) 0%, transparent 72%);
+  filter: blur(28px); opacity: .38; animation: skyBreath 9s ease-in-out infinite;
+}
+@keyframes skyBreath { 0%, 100% { opacity: .28; } 50% { opacity: .5; } }
+@media (prefers-reduced-motion: reduce) { .sky-panel::before { animation: none; opacity: .38; } }
 .sky-grid {
   position: absolute; inset: 0; z-index: -1;
   background-image: linear-gradient(var(--sky-line) 1px, transparent 1px),
