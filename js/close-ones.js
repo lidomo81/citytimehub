@@ -333,7 +333,7 @@
     return cN(c) + ", " + cC(c);
   }
 
-  /** Resolve a city from slug, typed value, or CTH_CITY_INP placeholder (value stays empty after pick). */
+  /** Resolve a city from slug, typed value, or CTH_CITY_INP placeholder (coYou only). */
   function resolveCityFromField(cityInp, pendingSlug) {
     const slug = pendingSlug || cityInp?.dataset?.coCity || cityInp?.dataset?.slug;
     if (slug && bySlug.has(slug)) return bySlug.get(slug);
@@ -347,6 +347,26 @@
       if (fromPh) return fromPh;
     }
     return null;
+  }
+
+  /** Add-person city field: show chosen city as real text, not a faded placeholder. */
+  function setCityFieldValue(input, city) {
+    if (!input || !city) return;
+    input.value = cityLabel(city);
+    input.dataset.coCity = city.slug;
+    delete input.dataset.slug;
+    if (window.CTH_CITY_INP) {
+      window.CTH_CITY_INP.ensurePh(input);
+      input.placeholder = input.dataset.cthPh;
+    }
+  }
+
+  function showCityInInput(input, city) {
+    if (!input || !city) return;
+    if (input.id === "coPersonCity") setCityFieldValue(input, city);
+    else if (window.CTH_CITY_INP) window.CTH_CITY_INP.show(input, cityLabel(city), city.slug);
+    else input.value = cityLabel(city);
+    input.dataset.coCity = city.slug;
   }
 
   function guessHome() {
@@ -1495,9 +1515,7 @@
     function pick(i) {
       const c = items[i];
       if (!c) return;
-      if (window.CTH_CITY_INP) window.CTH_CITY_INP.show(input, cityLabel(c), c.slug);
-      else input.value = cityLabel(c);
-      input.dataset.coCity = c.slug;
+      showCityInInput(input, c);
       input.blur();
       onChoose(c);
       close();
@@ -1576,7 +1594,7 @@
         const v = norm(cityInp.value);
         const slugHint = cityInp.dataset.coCity || cityInp.dataset.slug;
         if (!v) {
-          if (slugHint) {
+          if (slugHint && cityInp.id !== "coPersonCity") {
             const picked = bySlug.get(slugHint);
             if (picked) {
               pendingPersonCity = picked.slug;
