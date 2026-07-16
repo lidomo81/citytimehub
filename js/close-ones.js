@@ -29,6 +29,8 @@
   const AFTER_WINDOW_MIN = 45;
   const DASH_HORIZON_DAYS = 1;
   const EXPORT_HORIZON_DAYS = 6;
+  const FIXED_DATE_MAX_DAYS = 90;
+  const FIXED_RULE_HORIZON_DAYS = EXPORT_HORIZON_DAYS;
   const CO_PAGE = LANG === "ar" ? "/ar/close-ones/" : "/close-ones/";
   const DEFAULT_OFFSET_AFTER = 30;
   const DEFAULT_OFFSET_BEFORE = 15;
@@ -152,6 +154,7 @@
     heroOnDay: d => `الموعد: ${d}`,
     agendaYouAt: (youAt, themCity) => `عندك ${youAt} · عندها ${themCity}`,
     close: "إغلاق",
+    errPrayer: "تعذّر تحميل مواقيت الصلاة.",
   } : {
     you: "Your city", youPh: "e.g. Dubai",
     addPerson: "Add someone", personName: "Name", personNamePh: "e.g. Mom",
@@ -441,11 +444,11 @@
     return `${y.y}-${p(y.m + 1)}-${p(y.day)}`;
   }
 
-  function dayOffForCityDate(city, dateStr) {
+  function dayOffForCityDate(city, dateStr, maxDays = FIXED_DATE_MAX_DAYS) {
     const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec((dateStr || "").trim());
     if (!m || !city) return null;
     const target = { y: +m[1], mo: +m[2] - 1, day: +m[3] };
-    for (let d = 0; d <= EXPORT_HORIZON_DAYS + 7; d++) {
+    for (let d = 0; d <= maxDays; d++) {
       const y = cityYmd(city, d);
       if (y.y === target.y && y.m === target.mo && y.day === target.day) return d;
     }
@@ -481,6 +484,7 @@
 
   function migrateFixedRule(person, rule) {
     if (!rule || rule.type !== "fixed") return;
+    if (rule.dow != null && rule.repeatWeekly == null) rule.repeatWeekly = true;
     if (rule.date && /^\d{4}-\d{2}-\d{2}$/.test(rule.date)) return;
     rule.date = fixedDateForPerson(person, rule);
   }
@@ -575,6 +579,7 @@
   }
 
   function saveState() {
+    normalizeAllRules();
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
     updateUrl();
     maybeSyncNativeReminders();
@@ -691,12 +696,15 @@
       if (end <= start) return;
       out.push({ start, end, kind, rule, person, city, label: ruleLabel(person, rule) });
     };
+    const ruleHorizon = rule.type === "fixed"
+      ? Math.max(horizonDays, FIXED_RULE_HORIZON_DAYS)
+      : horizonDays;
 
     if (rule.type === "after" || rule.type === "before") {
       const pr = prayers.find(p => p.key === rule.prayer);
       if (!pr) return out;
       const off = effectiveOffsetMin(rule) * 60000;
-      for (let dayOff = 0; dayOff <= horizonDays; dayOff++) {
+      for (let dayOff = 0; dayOff <= ruleHorizon; dayOff++) {
         const pMs = localToUtcMs(city, pr.h, pr.m, dayOff);
         if (rule.type === "after") add(pMs + off, pMs + off + AFTER_WINDOW_MIN * 60000, "after");
         else add(pMs - off, pMs, "before");
@@ -706,18 +714,17 @@
       const rb = rbMin * 60000;
       const [hh, mm] = (rule.time || "10:00").split(":").map(Number);
       const dayOffsets = [];
-      if (rule.repeatWeekly && rule.date) {
-        const anchor = dayOffForCityDate(city, rule.date);
+      const anchorDate = (rule.date && /^\d{4}-\d{2}-\d{2}$/.test(rule.date))
+        ? rule.date
+        : fixedDateForPerson(person, rule);
+      if (rule.repeatWeekly && anchorDate) {
+        const anchor = dayOffForCityDate(city, anchorDate, ruleHorizon);
         if (anchor != null) {
-          for (let d = anchor; d <= horizonDays; d += 7) dayOffsets.push(d);
+          for (let d = anchor; d <= ruleHorizon; d += 7) dayOffsets.push(d);
         }
-      } else if (rule.date) {
-        const off = dayOffForCityDate(city, rule.date);
-        if (off != null && off >= 0 && off <= horizonDays) dayOffsets.push(off);
-      } else {
-        for (let d = 0; d <= horizonDays; d++) {
-          if (cityYmd(city, d).dow === (rule.dow ?? 0)) dayOffsets.push(d);
-        }
+      } else if (anchorDate) {
+        const off = dayOffForCityDate(city, anchorDate, ruleHorizon);
+        if (off != null && off >= 0 && off <= ruleHorizon) dayOffsets.push(off);
       }
       for (const d of dayOffsets) {
         const apt = localToUtcMs(city, hh, mm, d);
@@ -750,8 +757,7 @@
     const city = viewerCity();
     const now = Date.now();
     const todayKey = dayKeyForCity(now, city);
-    const tomorrowMs = now + 86400000;
-    const tomorrowKey = dayKeyForCity(tomorrowMs, city);
+    const tomorrowKey = city ? cityDateStr(city, 1) : dayKeyForCity(now + 86400000, null);
     const today = [];
     const tomorrow = [];
     for (const w of windows) {
@@ -813,7 +819,7 @@
     toast(T.icsDone);
   }
 
-  async function allWindows(horizonDays = EXPORT_HORIZON_DAYS) {
+  async function allWindows(horizonDays = DASH_HORIZON_DAYS) {
     const now = Date.now();
     const windows = [];
     for (const person of state.people) {
@@ -1492,7 +1498,7 @@
       const offset = `<input type="number" class="co-rule-offset" min="${PRAYER_OFFSET_MIN}" max="${PRAYER_OFFSET_MAX}" step="5" value="${offVal}" data-p="${idx}" data-r="${ri}" aria-label="${esc(T.offsetMin)}" />`;
       const cityForRule = bySlug.get(person.city);
       const dateVal = fixedDateForPerson(person, r);
-      const maxDate = cityForRule ? cityDateStr(cityForRule, EXPORT_HORIZON_DAYS) : "";
+      const maxDate = cityForRule ? cityDateStr(cityForRule, FIXED_DATE_MAX_DAYS) : "";
       const minDate = cityForRule ? cityDateStr(cityForRule, 0) : "";
       const dateIn = `<label class="co-mini co-rule-date-wrap">${esc(T.fixedDate)}
         <input type="date" class="co-rule-date" value="${esc(dateVal)}"${minDate ? ` min="${esc(minDate)}"` : ""}${maxDate ? ` max="${esc(maxDate)}"` : ""} data-p="${idx}" data-r="${ri}" aria-label="${esc(T.fixedDate)}" />
@@ -1676,7 +1682,10 @@
       if (String(r.offsetMin) !== el.value) el.value = r.offsetMin;
     }
     else if (el.classList.contains("co-rule-dow")) r.dow = +el.value;
-    else if (el.classList.contains("co-rule-date")) r.date = el.value;
+    else if (el.classList.contains("co-rule-date")) {
+      r.date = el.value;
+      if (!r.date) migrateFixedRule(p, r);
+    }
     else if (el.classList.contains("co-rule-weekly")) r.repeatWeekly = !!el.checked;
     else if (el.classList.contains("co-rule-time")) r.time = el.value;
     else if (el.classList.contains("co-rule-label")) r.label = el.value;
