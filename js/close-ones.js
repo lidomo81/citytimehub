@@ -110,6 +110,8 @@
     notifySubWeb: "جدول اليوم والتقويم هنا — التذكير التلقائي في التطبيق",
     todayTitle: "جدول اليوم",
     tomorrowTitle: "غدًا",
+    todayTitleOn: d => `جدول اليوم — ${d}`,
+    tomorrowTitleOn: d => `غدًا — ${d}`,
     emptyToday: "لا نوافذ اليوم — راجع القادم أدناه",
     exportCal: "أضف للتقويم",
     exportCalHint: "تنزيل ملف .ics لـ Google Calendar أو Apple Calendar",
@@ -203,6 +205,8 @@
     notifySubWeb: "Today's schedule and calendar here — automatic reminders in the app",
     todayTitle: "Today's schedule",
     tomorrowTitle: "Tomorrow",
+    todayTitleOn: d => `Today — ${d}`,
+    tomorrowTitleOn: d => `Tomorrow — ${d}`,
     emptyToday: "No windows today — see upcoming below",
     exportCal: "Add to calendar",
     exportCalHint: "Download a .ics file for Google Calendar or Apple Calendar",
@@ -273,6 +277,33 @@
 
   function fmtFull(ms, tz) {
     return fmtInTz(ms, tz, true);
+  }
+
+  function fmtDateLong(ms, tz) {
+    try {
+      const opts = { weekday: "long", month: "short", day: "numeric", hour: "numeric", minute: "2-digit", hour12: true };
+      if (tz) opts.timeZone = tz;
+      return new Intl.DateTimeFormat(LANG === "ar" ? "ar-EG-u-nu-latn" : "en-US", opts).format(new Date(ms));
+    } catch (e) {
+      return fmtFull(ms, tz);
+    }
+  }
+
+  /** Calendar label for today (0) or tomorrow (1) in the viewer's city clock. */
+  function fmtCalendarDay(dayOff = 0) {
+    const city = viewerCity();
+    if (!city) {
+      const d = new Date(Date.now() + dayOff * 86400000);
+      return new Intl.DateTimeFormat(LANG === "ar" ? "ar-EG-u-nu-latn" : "en-US", {
+        weekday: "long", month: "short", day: "numeric",
+      }).format(d);
+    }
+    const ymd = cityYmd(city, dayOff);
+    const offH = tzOffsetHours(city.tz);
+    const noonUtc = Date.UTC(ymd.y, ymd.m, ymd.day, 12, 0) - offH * 3600000;
+    return new Intl.DateTimeFormat(LANG === "ar" ? "ar-EG-u-nu-latn" : "en-US", {
+      weekday: "long", month: "short", day: "numeric", timeZone: city.tz,
+    }).format(new Date(noonUtc));
   }
 
   function windowDurationMin(w) {
@@ -1114,10 +1145,10 @@
 
   function heroCountdown(w, isOpen, left) {
     if (isOpen) return `${T.open} · ${T.endsIn(left)}`;
-    if (left <= 1) return T.now;
-    if (left < 180) return T.inMin(left);
+    if (left <= 1) return `${T.now} · ${fmtDateLong(w.start, viewerCity()?.tz)}`;
+    if (left < 180) return `${T.inMin(left)} · ${fmtDateLong(w.start, viewerCity()?.tz)}`;
     const you = viewerCity();
-    return T.heroOnDay(fmtFull(w.start, you?.tz));
+    return T.heroOnDay(fmtDateLong(w.start, you?.tz));
   }
 
   function renderWhenCard(w) {
@@ -1194,9 +1225,12 @@
 
   function renderAgendaItem(w) {
     const inM = minsUntil(w.start);
-    const when = inM <= 1 ? T.now : (inM < 180 ? T.inMin(inM) : fmtFull(w.start, viewerCity()?.tz));
     const you = viewerCity();
-    const youAt = fmtAt(w.start, you?.tz);
+    const youTz = you?.tz;
+    const atFull = fmtDateLong(w.start, youTz);
+    const rel = inM <= 1 ? T.now : (inM < 180 ? T.inMin(inM) : "");
+    const when = rel ? `${rel} · ${atFull}` : atFull;
+    const youAt = fmtAt(w.start, youTz);
     const themAt = fmtAt(w.start, w.city.tz);
     return `<li class="co-agenda-item">
       <span class="co-agenda-when">${esc(when)}</span>
@@ -1213,14 +1247,14 @@
     const later = laterWindows(windows, today, tomorrow, skipKey);
     if (!todayF.length && !tomorrowF.length && !later.length) {
       return `<section class="co-day-agenda co-day-agenda--empty">
-        <h3 class="co-agenda-title">${esc(T.todayTitle)}</h3>
+        <h3 class="co-agenda-title">${esc(T.todayTitleOn(fmtCalendarDay(0)))}</h3>
         <p class="co-agenda-lead muted">${esc(T.scheduleEmpty)}</p>
       </section>`;
     }
     let html = `<section class="co-day-agenda" aria-labelledby="coScheduleTitle">
       <div class="co-agenda-head">
         <div>
-          <h3 class="co-agenda-title" id="coScheduleTitle">${esc(T.todayTitle)}</h3>
+          <h3 class="co-agenda-title" id="coScheduleTitle">${esc(T.todayTitleOn(fmtCalendarDay(0)))}</h3>
           <p class="co-agenda-lead muted">${esc(T.scheduleLead)}</p>
         </div>
         <button type="button" class="btn-ghost co-export-cal" title="${esc(T.exportCalHint)}">${esc(T.exportCal)}</button>
@@ -1229,7 +1263,7 @@
       html += `<ul class="co-agenda-list">${todayF.map(w => renderAgendaItem(w)).join("")}</ul>`;
     }
     if (tomorrowF.length) {
-      html += `<h4 class="co-agenda-sub">${esc(T.tomorrowTitle)}</h4>`;
+      html += `<h4 class="co-agenda-sub">${esc(T.tomorrowTitleOn(fmtCalendarDay(1)))}</h4>`;
       html += `<ul class="co-agenda-list">${tomorrowF.map(w => renderAgendaItem(w)).join("")}</ul>`;
     }
     if (later.length) {
