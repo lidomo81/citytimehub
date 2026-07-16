@@ -64,7 +64,8 @@
     phone: "واتساب / هاتف (اختياري)", phonePh: "1012345678",
     phonePickCity: "اختر مدينته أولاً",
     dialHint: (country, dial) => `كود ${country} (${dial}) — اكتب الرقم من غير الصفر الأول`,
-    save: "حفظ", remove: "إزالة",
+    save: "حفظ", remove: "إزالة", editRule: "تعديل",
+    addRuleNew: "أضف قاعدة جديدة",
     templates: "قوالب سريعة",
     tplAfterFajr: "بعد الفجر + ٣٠ د — اتصل",
     tplBeforeFajr: "قبل الفجر ١٥ د — نبّه للصلاة",
@@ -163,7 +164,8 @@
     phone: "WhatsApp / phone (optional)", phonePh: "1012345678",
     phonePickCity: "Pick their city first",
     dialHint: (country, dial) => `${country} (${dial}) — enter the number without a leading 0`,
-    save: "Save", remove: "Remove",
+    save: "Save", remove: "Remove", editRule: "Edit",
+    addRuleNew: "Add new rule",
     templates: "Quick templates",
     tplAfterFajr: "After Fajr + 30 min — call",
     tplBeforeFajr: "15 min before Fajr — prayer nudge",
@@ -329,6 +331,7 @@
   let dashGen = 0;
   let dashTimer = null;
   const expandedPeople = new Set();
+  const ruleEditing = new Set();
   let activeTab = "today";
 
   function tzOffsetHours(tz) {
@@ -1111,17 +1114,47 @@
     else openPhoneCall(el.dataset.phone);
   }
 
+  function flashButton(btn) {
+    if (!btn) return;
+    btn.classList.add("is-pressed");
+    setTimeout(() => btn.classList.remove("is-pressed"), 450);
+  }
+
+  function ruleKey(pIdx, rIdx) {
+    return `${pIdx}-${rIdx}`;
+  }
+
+  function isRuleEditing(pIdx, rIdx) {
+    return ruleEditing.has(ruleKey(pIdx, rIdx));
+  }
+
+  function lockFieldAttrs(locked) {
+    return locked ? ' disabled aria-disabled="true"' : "";
+  }
+
+  function initReminderUi() {
+    const web = $("#coWebReminder");
+    const bar = $("#coNotifyBar");
+    if (hasNativeReminderBridge()) {
+      if (web) web.hidden = true;
+      if (bar) {
+        bar.hidden = false;
+        initNotifyBar();
+      }
+      return;
+    }
+    if (web) {
+      web.textContent = T.webHint;
+      web.hidden = false;
+    }
+    if (bar) bar.hidden = true;
+  }
+
   function initNotifyBar() {
     const bar = $("#coNotifyBar");
     const btn = $("#coNotifyToggle");
     const badge = $("#coNotifyBadge");
     if (!bar || !btn) return;
-
-    const hasBridge = hasNativeReminderBridge();
-    if (!hasBridge) {
-      bar.hidden = true;
-      return;
-    }
 
     bar.hidden = false;
     const title = $("#coNotifyTitle");
@@ -1158,6 +1191,7 @@
       btn.setAttribute("aria-checked", "true");
       try { localStorage.setItem("cth-co-notify", "1"); } catch (e) {}
       toast(T.notifyEnabled);
+      flashButton(btn);
     });
   }
 
@@ -1347,8 +1381,8 @@
     const now = Date.now();
     const nextWin = windows.find(w => w.end > now);
     const gcalHref = nextWin ? gcalUrlForWindow(nextWin) : "";
-    return `<div class="co-export-actions">
-      ${gcalHref ? `<a class="btn co-export-gcal" href="${esc(gcalHref)}" target="_blank" rel="noopener" title="${esc(T.exportGcalHint)}">${esc(T.exportGcal)}</a>` : ""}
+    return `<div class="pl-actions co-cal-actions">
+      ${gcalHref ? `<a class="btn-primary co-export-gcal" href="${esc(gcalHref)}" target="_blank" rel="noopener" title="${esc(T.exportGcalHint)}">${esc(T.exportGcal)}</a>` : ""}
       <button type="button" class="btn-ghost co-export-cal" title="${esc(T.exportCalHint)}">${esc(T.exportCal)}</button>
     </div>`;
   }
@@ -1391,14 +1425,14 @@
   }
 
   function renderWebHintHtml() {
-    if (IS_APP || hasNativeReminderBridge()) return "";
-    return `<p class="co-web-hint muted">${esc(T.webHint)}</p>`;
+    return "";
   }
 
   function bindDashActions(root) {
     if (!root) return;
     root.querySelectorAll(".co-done").forEach(btn => {
       btn.addEventListener("click", () => {
+        flashButton(btn);
         const key = btn.dataset.coWin;
         const until = +btn.dataset.coUntil;
         if (key && until) {
@@ -1410,7 +1444,7 @@
       });
     });
     const exp = root.querySelector(".co-export-cal");
-    if (exp) exp.addEventListener("click", () => downloadCalendar());
+    if (exp) exp.addEventListener("click", () => { flashButton(exp); downloadCalendar(); });
     root.querySelectorAll("[data-co-open-add]").forEach(btn => {
       btn.addEventListener("click", () => openAddSheet());
     });
@@ -1516,36 +1550,43 @@
     const city = bySlug.get(person.city);
     const cityLabel = city ? cN(city) + ", " + cC(city) : person.city;
     const rulesHtml = (person.rules || []).map((r, ri) => {
-      const typeSel = `<select class="co-rule-type" data-p="${idx}" data-r="${ri}">
+      const locked = !isRuleEditing(idx, ri);
+      const dis = lockFieldAttrs(locked);
+      const typeSel = `<select class="co-rule-type" data-p="${idx}" data-r="${ri}"${dis}>
         <option value="after"${r.type === "after" ? " selected" : ""}>${esc(T.ruleAfter)}</option>
         <option value="before"${r.type === "before" ? " selected" : ""}>${esc(T.ruleBefore)}</option>
         <option value="fixed"${r.type === "fixed" ? " selected" : ""}>${esc(T.ruleFixed)}</option>
       </select>`;
-      const prayerSel = `<select class="co-rule-prayer" data-p="${idx}" data-r="${ri}">
+      const prayerSel = `<select class="co-rule-prayer" data-p="${idx}" data-r="${ri}"${dis}>
         ${PKEYS.map(k => `<option value="${k}"${r.prayer === k ? " selected" : ""}>${esc(PNAME[k])}</option>`).join("")}
       </select>`;
       const offVal = effectiveOffsetMin(r);
-      const offset = `<input type="number" class="co-rule-offset" min="${PRAYER_OFFSET_MIN}" max="${PRAYER_OFFSET_MAX}" step="5" value="${offVal}" data-p="${idx}" data-r="${ri}" aria-label="${esc(T.offsetMin)}" />`;
+      const offset = `<input type="number" class="co-rule-offset" min="${PRAYER_OFFSET_MIN}" max="${PRAYER_OFFSET_MAX}" step="5" value="${offVal}" data-p="${idx}" data-r="${ri}" aria-label="${esc(T.offsetMin)}"${dis} />`;
       const cityForRule = bySlug.get(person.city);
       const dateVal = fixedDateForPerson(person, r);
       const maxDate = cityForRule ? cityDateStr(cityForRule, FIXED_DATE_MAX_DAYS) : "";
       const minDate = cityForRule ? cityDateStr(cityForRule, 0) : "";
       const dateIn = `<label class="co-mini co-rule-date-wrap">${esc(T.fixedDate)}
-        <input type="date" class="co-rule-date" value="${esc(dateVal)}"${minDate ? ` min="${esc(minDate)}"` : ""}${maxDate ? ` max="${esc(maxDate)}"` : ""} data-p="${idx}" data-r="${ri}" aria-label="${esc(T.fixedDate)}" />
+        <input type="date" class="co-rule-date" value="${esc(dateVal)}"${minDate ? ` min="${esc(minDate)}"` : ""}${maxDate ? ` max="${esc(maxDate)}"` : ""} data-p="${idx}" data-r="${ri}" aria-label="${esc(T.fixedDate)}"${dis} />
         <span class="co-mini co-rule-hint">${esc(T.fixedDateHint)}</span>
       </label>`;
-      const weekly = `<label class="co-mini co-rule-weekly-wrap"><input type="checkbox" class="co-rule-weekly" data-p="${idx}" data-r="${ri}"${r.repeatWeekly ? " checked" : ""} /> ${esc(T.fixedWeekly)}</label>`;
-      const timeIn = `<input type="time" class="co-rule-time" value="${esc(r.time || "10:00")}" data-p="${idx}" data-r="${ri}" />`;
-      const labelIn = `<input type="text" class="co-rule-label" value="${esc(r.label || "")}" placeholder="${esc(T.fixedLabelPh)}" data-p="${idx}" data-r="${ri}" />`;
+      const weekly = `<label class="co-mini co-rule-weekly-wrap"><input type="checkbox" class="co-rule-weekly" data-p="${idx}" data-r="${ri}"${r.repeatWeekly ? " checked" : ""}${dis} /> ${esc(T.fixedWeekly)}</label>`;
+      const timeIn = `<input type="time" class="co-rule-time" value="${esc(r.time || "10:00")}" data-p="${idx}" data-r="${ri}"${dis} />`;
+      const labelIn = `<input type="text" class="co-rule-label" value="${esc(r.label || "")}" placeholder="${esc(T.fixedLabelPh)}" data-p="${idx}" data-r="${ri}"${dis} />`;
       const rbVal = effectiveRemindBeforeMin(r);
-      const remind = `<input type="number" class="co-rule-remind" min="${REMIND_MIN}" max="${REMIND_MAX}" step="5" value="${rbVal}" data-p="${idx}" data-r="${ri}" aria-label="${esc(T.remindBefore)}" />`;
-      const wa = `<div class="co-wa-wrap"><input type="text" class="co-rule-wa" value="${esc(r.waMsg || "")}" placeholder="${esc(T.waMsgPh)}" data-p="${idx}" data-r="${ri}" aria-describedby="coWaSaved-${idx}-${ri}" /><span id="coWaSaved-${idx}-${ri}" class="co-wa-saved-hint" hidden aria-live="polite"></span></div>`;
+      const remind = `<input type="number" class="co-rule-remind" min="${REMIND_MIN}" max="${REMIND_MAX}" step="5" value="${rbVal}" data-p="${idx}" data-r="${ri}" aria-label="${esc(T.remindBefore)}"${dis} />`;
+      const wa = `<div class="co-wa-wrap"><input type="text" class="co-rule-wa" value="${esc(r.waMsg || "")}" placeholder="${esc(T.waMsgPh)}" data-p="${idx}" data-r="${ri}" aria-describedby="coWaSaved-${idx}-${ri}"${dis} /><span id="coWaSaved-${idx}-${ri}" class="co-wa-saved-hint" hidden aria-live="polite"></span></div>`;
       const detail = r.type === "fixed"
         ? `<div class="co-rule-detail">${labelIn} ${dateIn} ${timeIn} ${weekly} <label class="co-mini">${esc(T.remindBefore)}</label> ${remind} <span class="co-mini co-rule-hint">${esc(T.remindHint)}</span> ${wa}</div>`
         : `<div class="co-rule-detail">${prayerSel} <label class="co-mini">${esc(T.offsetMin)}</label> ${offset} ${wa}</div>`;
-      return `<div class="co-rule" data-p="${idx}" data-r="${ri}">
+      const actions = `<div class="co-rule-actions pl-actions">
+        <button type="button" class="btn-ghost co-rule-save" data-p="${idx}" data-r="${ri}">${esc(T.save)}</button>
+        <button type="button" class="btn-ghost co-rule-edit" data-p="${idx}" data-r="${ri}"${locked ? "" : " hidden"}>${esc(T.editRule)}</button>
+        <button type="button" class="btn-ghost co-rule-remove" data-p="${idx}" data-r="${ri}">${esc(T.remove)}</button>
+      </div>`;
+      return `<div class="co-rule${locked ? " is-locked" : " is-editing"}" data-p="${idx}" data-r="${ri}">
         ${typeSel} ${detail}
-        <button type="button" class="co-rule-del" data-p="${idx}" data-r="${ri}" aria-label="${esc(T.remove)}">×</button>
+        ${actions}
       </div>`;
     }).join("");
 
@@ -1568,7 +1609,9 @@
             <button type="button" class="co-tpl" data-idx="${idx}" data-tpl="afterMaghrib20">${esc(T.tplAfterMaghrib)}</button>
           </div>
           <div class="co-rules">${rulesHtml}</div>
-          <button type="button" class="btn-ghost co-add-rule" data-idx="${idx}">+ ${esc(T.addRule)}</button>
+          <div class="pl-actions co-person-rule-actions">
+            <button type="button" class="btn-ghost co-add-rule" data-idx="${idx}">${esc(T.addRuleNew)}</button>
+          </div>
           <button type="button" class="co-person-del co-person-del-inline" data-idx="${idx}">${esc(T.remove)}</button>
         </div>
       </div>
@@ -1662,6 +1705,7 @@
     const newIdx = state.people.length - 1;
     expandedPeople.clear();
     expandedPeople.add(newIdx);
+    ruleEditing.add(ruleKey(newIdx, 0));
     saveState();
     renderPeople();
     scheduleDashboard();
@@ -1682,12 +1726,49 @@
     if (!t) return;
     if (p.rules.some(r => r.type === t.type && r.prayer === t.prayer && r.offsetMin === t.offsetMin)) return;
     p.rules.push({ id: uid(), ...t });
+    ruleEditing.add(ruleKey(idx, p.rules.length - 1));
     saveState();
     renderPeople();
     scheduleDashboard();
   }
 
-  function onRuleChange(el, fullRerender) {
+  function syncRuleFromDom(pIdx, rIdx) {
+    const card = document.querySelector(`.co-rule[data-p="${pIdx}"][data-r="${rIdx}"]`);
+    if (!card) return;
+    card.querySelectorAll("[data-p][data-r]").forEach(el => {
+      if (+el.dataset.p !== pIdx || +el.dataset.r !== rIdx) return;
+      onRuleChange(el, false, { persist: false });
+    });
+    const wa = card.querySelector(".co-rule-wa");
+    if (wa) {
+      const p = state.people[pIdx];
+      const r = p && p.rules[rIdx];
+      if (r) r.waMsg = wa.value;
+    }
+  }
+
+  function saveRuleCard(pIdx, rIdx, btn) {
+    syncRuleFromDom(pIdx, rIdx);
+    saveState();
+    ruleEditing.delete(ruleKey(pIdx, rIdx));
+    toast(T.saved);
+    flashButton(btn);
+    scheduleDashboard();
+    renderPeople();
+  }
+
+  function editRuleCard(pIdx, rIdx, btn) {
+    ruleEditing.add(ruleKey(pIdx, rIdx));
+    flashButton(btn);
+    renderPeople();
+    requestAnimationFrame(() => {
+      const card = document.querySelector(`.co-rule[data-p="${pIdx}"][data-r="${rIdx}"]`);
+      const first = card && card.querySelector(".co-rule-detail input, .co-rule-detail select, .co-rule-type");
+      if (first) first.focus();
+    });
+  }
+
+  function onRuleChange(el, fullRerender, opts = {}) {
     const p = state.people[+el.dataset.p];
     const r = p && p.rules[+el.dataset.r];
     if (!r) return;
@@ -1730,9 +1811,11 @@
       if (String(r.remindBeforeMin) !== el.value) el.value = r.remindBeforeMin;
     }
     else return;
-    saveState();
-    if (fullRerender) renderPeople();
-    scheduleDashboard();
+    if (opts.persist !== false) {
+      saveState();
+      if (fullRerender) renderPeople();
+      scheduleDashboard();
+    }
   }
 
   function bindPeopleEvents() {
@@ -1758,22 +1841,49 @@
       const addR = e.target.closest(".co-add-rule");
       if (addR) {
         const p = state.people[+addR.dataset.idx];
-        if (p) { p.rules.push({ id: uid(), type: "after", prayer: "Fajr", offsetMin: 30 }); saveState(); renderPeople(); scheduleDashboard(); }
+        if (p) {
+          p.rules.push({ id: uid(), type: "after", prayer: "Fajr", offsetMin: 30 });
+          const ri = p.rules.length - 1;
+          ruleEditing.add(ruleKey(+addR.dataset.idx, ri));
+          saveState();
+          flashButton(addR);
+          renderPeople();
+          scheduleDashboard();
+        }
         return;
       }
-      const delR = e.target.closest(".co-rule-del");
+      const saveR = e.target.closest(".co-rule-save");
+      if (saveR) {
+        saveRuleCard(+saveR.dataset.p, +saveR.dataset.r, saveR);
+        return;
+      }
+      const editR = e.target.closest(".co-rule-edit");
+      if (editR) {
+        editRuleCard(+editR.dataset.p, +editR.dataset.r, editR);
+        return;
+      }
+      const delR = e.target.closest(".co-rule-remove");
       if (delR) {
+        flashButton(delR);
         const p = state.people[+delR.dataset.p];
-        if (p) { p.rules.splice(+delR.dataset.r, 1); saveState(); renderPeople(); scheduleDashboard(); }
+        if (p) {
+          p.rules.splice(+delR.dataset.r, 1);
+          ruleEditing.clear();
+          saveState();
+          renderPeople();
+          scheduleDashboard();
+        }
       }
     });
     box.addEventListener("change", e => {
       const el = e.target;
       if (!el.dataset.p && el.dataset.p !== "0") return;
+      if (el.closest(".co-rule.is-locked")) return;
       onRuleChange(el, el.classList.contains("co-rule-type") || el.classList.contains("co-rule-weekly"));
     });
     box.addEventListener("blur", e => {
       const el = e.target;
+      if (el.closest(".co-rule.is-locked")) return;
       if (el.classList.contains("co-rule-wa")) {
         saveWaMsg(el, true);
         return;
@@ -1783,6 +1893,7 @@
     }, true);
     box.addEventListener("input", e => {
       const el = e.target;
+      if (el.closest(".co-rule.is-locked")) return;
       if (!el.classList.contains("co-rule-wa")) return;
       saveWaMsg(el, false);
     });
@@ -1962,7 +2073,7 @@
 
     bindPeopleEvents();
     bindAppContactClicks();
-    initNotifyBar();
+    initReminderUi();
     renderPeople();
     await renderDashboard();
 
