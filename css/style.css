@@ -1515,6 +1515,7 @@ html.app-mode .co-home-strip:not(.app-spot-card) { margin-inline: 12px; }
 }
 .co-wa-sheet-card h3 { margin: 0 0 8px; font-size: 1.1rem; }
 .co-wa-sheet-num { margin: 0 0 8px; font-size: 1.25rem; font-weight: 800; letter-spacing: .02em; }
+.co-wa-sheet-msg { margin: 0 0 8px; font-size: .92rem; line-height: 1.45; white-space: pre-wrap; }
 .co-wa-sheet-hint { margin: 0 0 16px; font-size: .86rem; line-height: 1.45; }
 .co-wa-sheet-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 .co-wa-sheet-open { flex: 1 1 160px; }
@@ -1609,6 +1610,9 @@ html.app-mode .co-home-strip:not(.app-spot-card) { margin-inline: 12px; }
 .co-rule-type, .co-rule-prayer, .co-rule-dow { font-size: .88rem; padding: 6px 8px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); }
 .co-rule-offset, .co-rule-remind { width: 64px; padding: 6px 8px; border-radius: 8px; border: 1px solid var(--border); }
 .co-rule-label, .co-rule-wa { flex: 1 1 160px; min-width: 120px; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border); font-size: .88rem; }
+.co-rule-wa.is-saved { border-color: var(--brand); }
+.co-wa-wrap { flex: 1 1 100%; min-width: 160px; display: flex; flex-direction: column; gap: 4px; }
+.co-wa-saved-hint { font-size: .78rem; font-weight: 700; color: var(--brand); }
 .co-rule-time { padding: 6px 8px; border-radius: 8px; border: 1px solid var(--border); }
 .co-rule-detail { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; flex: 1 1 200px; }
 .co-mini { font-size: .75rem; color: var(--muted); }

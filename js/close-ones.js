@@ -87,6 +87,7 @@
     errPrayer: "تعذّر تحميل المواقيت.",
     maxPeople: n => `الحد الأقصى ${n} أشخاص.`,
     saved: "تم الحفظ.", pickCity: "اختر المدينة.",
+    msgSaved: "تم حفظ الرسالة.",
     share: "انسخ الرابط", linkCopied: "تم نسخ الرابط.",
     copyThis: "انسخ هذا الرابط:",
     noRules: "أضف قاعدة واحدة على الأقل.",
@@ -179,6 +180,7 @@
     errPrayer: "Couldn't load prayer times.",
     maxPeople: n => `Up to ${n} people.`,
     saved: "Saved.", pickCity: "Pick a city.",
+    msgSaved: "Message saved.",
     share: "Copy link", linkCopied: "Link copied.",
     copyThis: "Copy this link:",
     noRules: "Add at least one rule.",
@@ -724,6 +726,30 @@
     return Math.max(0, Math.ceil((ms - Date.now()) / 60000));
   }
 
+  function ruleWaMsg(pIdx, rIdx) {
+    const p = state.people[+pIdx];
+    const r = p && p.rules && p.rules[+rIdx];
+    if (!r) return "";
+    const live = document.querySelector(`.co-rule-wa[data-p="${pIdx}"][data-r="${rIdx}"]`);
+    if (live && typeof live.value === "string") {
+      r.waMsg = live.value;
+      saveState();
+      return live.value;
+    }
+    return r.waMsg || "";
+  }
+
+  function ruleRef(person, rule) {
+    const pIdx = state.people.findIndex(p => p.id === person.id);
+    let rIdx = 0;
+    if (person.rules && person.rules.length) {
+      if (rule && rule.id) rIdx = person.rules.findIndex(r => r.id === rule.id);
+      else if (rule) rIdx = person.rules.indexOf(rule);
+      if (rIdx < 0) rIdx = 0;
+    }
+    return { pIdx, rIdx };
+  }
+
   function waLink(person, rule) {
     const d = phoneDigits(person.phone);
     if (!d) return null;
@@ -790,6 +816,7 @@
       <button type="button" class="co-wa-sheet-close" aria-label="${esc(T.close)}">×</button>
       <h3 id="coWaSheetTitle">${esc(T.whatsapp)}</h3>
       <p class="co-wa-sheet-num" dir="ltr"></p>
+      <p class="co-wa-sheet-msg muted" hidden></p>
       <p class="co-wa-sheet-hint muted">${esc(T.waSheetHint)}</p>
       <div class="co-wa-sheet-actions">
         <button type="button" class="btn co-wa-sheet-open">${esc(T.waOpen)}</button>
@@ -829,6 +856,16 @@
     sheet.dataset.phone = phoneDigits(phone);
     sheet.dataset.msg = msg || "";
     sheet.querySelector(".co-wa-sheet-num").textContent = "+" + sheet.dataset.phone;
+    const msgEl = sheet.querySelector(".co-wa-sheet-msg");
+    if (msgEl) {
+      if (msg && msg.trim()) {
+        msgEl.textContent = msg;
+        msgEl.hidden = false;
+      } else {
+        msgEl.textContent = "";
+        msgEl.hidden = true;
+      }
+    }
     updateSheetBridgeButtons();
     showSheet(sheet);
   }
@@ -891,7 +928,10 @@
 
   function onContactTap(kind, el) {
     if (!el || !el.dataset.phone) return;
-    if (kind === "wa") openWhatsApp(el.dataset.phone, el.dataset.waMsg || "");
+    const msg = (el.dataset.coP != null && el.dataset.coR != null)
+      ? ruleWaMsg(el.dataset.coP, el.dataset.coR)
+      : (el.dataset.waMsg || "");
+    if (kind === "wa") openWhatsApp(el.dataset.phone, msg);
     else openPhoneCall(el.dataset.phone);
   }
 
@@ -972,12 +1012,12 @@
     const r = rule || { waMsg: "" };
     const d = phoneDigits(person.phone);
     if (!d) return "";
-    const msg = r.waMsg || "";
+    const { pIdx, rIdx } = ruleRef(person, r);
     const cls = extraClass ? `co-actions ${extraClass}` : "co-actions";
     let html = `<div class="${cls}">`;
     if (SAFE_CONTACT) {
-      html += `<button type="button" class="btn-ghost co-wa" data-phone="${esc(d)}" data-wa-msg="${esc(msg)}" onclick="window.cthCo&&window.cthCo.wa(this.dataset.phone,this.dataset.waMsg)">${esc(T.whatsapp)}</button>`;
-      html += `<button type="button" class="btn-ghost co-call" data-phone="${esc(d)}" onclick="window.cthCo&&window.cthCo.call(this.dataset.phone)">${esc(T.call)}</button>`;
+      html += `<button type="button" class="btn-ghost co-wa" data-phone="${esc(d)}" data-co-p="${pIdx}" data-co-r="${rIdx}">${esc(T.whatsapp)}</button>`;
+      html += `<button type="button" class="btn-ghost co-call" data-phone="${esc(d)}">${esc(T.call)}</button>`;
     } else {
       const wa = waLink(person, r);
       const tel = telLink(person);
@@ -1295,7 +1335,7 @@
       const labelIn = `<input type="text" class="co-rule-label" value="${esc(r.label || "")}" placeholder="${esc(T.fixedLabelPh)}" data-p="${idx}" data-r="${ri}" />`;
       const rbVal = effectiveRemindBeforeMin(r);
       const remind = `<input type="number" class="co-rule-remind" min="${REMIND_MIN}" max="${REMIND_MAX}" step="5" value="${rbVal}" data-p="${idx}" data-r="${ri}" aria-label="${esc(T.remindBefore)}" />`;
-      const wa = `<input type="text" class="co-rule-wa" value="${esc(r.waMsg || "")}" placeholder="${esc(T.waMsgPh)}" data-p="${idx}" data-r="${ri}" />`;
+      const wa = `<div class="co-wa-wrap"><input type="text" class="co-rule-wa" value="${esc(r.waMsg || "")}" placeholder="${esc(T.waMsgPh)}" data-p="${idx}" data-r="${ri}" aria-describedby="coWaSaved-${idx}-${ri}" /><span id="coWaSaved-${idx}-${ri}" class="co-wa-saved-hint" hidden aria-live="polite"></span></div>`;
       const detail = r.type === "fixed"
         ? `<div class="co-rule-detail">${labelIn} ${dowSel} ${timeIn} <label class="co-mini">${esc(T.remindBefore)}</label> ${remind} <span class="co-mini co-rule-hint">${esc(T.remindHint)}</span> ${wa}</div>`
         : `<div class="co-rule-detail">${prayerSel} <label class="co-mini">${esc(T.offsetMin)}</label> ${offset} ${wa}</div>`;
@@ -1517,16 +1557,36 @@
     });
     box.addEventListener("blur", e => {
       const el = e.target;
+      if (el.classList.contains("co-rule-wa")) {
+        saveWaMsg(el, true);
+        return;
+      }
       if (!el.classList.contains("co-rule-offset") && !el.classList.contains("co-rule-remind")) return;
       onRuleChange(el, false);
     }, true);
     box.addEventListener("input", e => {
       const el = e.target;
       if (!el.classList.contains("co-rule-wa")) return;
-      const p = state.people[+el.dataset.p];
-      const r = p && p.rules[+el.dataset.r];
-      if (r) { r.waMsg = el.value; saveState(); }
+      saveWaMsg(el, false);
     });
+  }
+
+  function saveWaMsg(el, announce) {
+    const p = state.people[+el.dataset.p];
+    const r = p && p.rules[+el.dataset.r];
+    if (!r) return;
+    r.waMsg = el.value;
+    saveState();
+    if (!announce) return;
+    toast(T.msgSaved);
+    el.classList.add("is-saved");
+    setTimeout(() => el.classList.remove("is-saved"), 1800);
+    const hint = document.getElementById(el.getAttribute("aria-describedby") || "");
+    if (hint) {
+      hint.textContent = T.msgSaved;
+      hint.hidden = false;
+      setTimeout(() => { hint.hidden = true; hint.textContent = ""; }, 2400);
+    }
   }
 
   function autocomplete(input, listEl, onChoose) {
