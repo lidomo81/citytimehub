@@ -110,19 +110,16 @@
     notifySoonToast: "التذكيرات ستُفعّل مع تحديث التطبيق — ترقّب الإصدار القادم.",
     notifyEnabled: "تم تفعيل تذكيرات أحبابك.",
     notifyDisabled: "تم إيقاف تذكيرات أحبابك.",
-    notifyDenied: "فعّل الإشعارات من إعدادات المتصفح.",
-    notifyUnsupported: "متصفحك لا يدعم الإشعارات — استخدم «أضف للتقويم».",
-    webHint: "فعّل التذكيرات هنا أو أضف المواعيد لتقويمك — مثل مخطّط الأحداث.",
-    notifySubWeb: "تنبيه في المتصفح (والصفحة مفتوحة) أو أضف للتقويم",
+    webHint: "للتذكير: أضِف المواعيد لتقويمك من الأزرار أدناه — أو فعّل التذكيرات في تطبيق CityTimeHub.",
     todayTitle: "جدول اليوم",
     tomorrowTitle: "غدًا",
     todayTitleOn: d => `جدول اليوم — ${d}`,
     tomorrowTitleOn: d => `غدًا — ${d}`,
     emptyToday: "لا نوافذ اليوم — راجع القادم أدناه",
-    exportCal: "أضف للتقويم",
-    exportCalHint: "تنزيل ملف .ics لـ Google Calendar أو Apple Calendar",
-    exportGcal: "Google Calendar",
-    exportGcalHint: "أضف أقرب موعد مباشرة — أو نزّل .ics لكل الأسبوع",
+    exportCal: "تنزيل .ics (Apple / Outlook)",
+    exportCalHint: "كل مواعيد الأسبوع في ملف واحد",
+    exportGcal: "أضِف إلى Google Calendar",
+    exportGcalHint: "أقرب موعد قادم — للباقي استخدم .ics",
     icsDone: "تم تنزيل ملف التقويم",
     homeNext: (when, label) => `القادم ${when} — ${label}`,
     homeOpen: "أحبابك",
@@ -213,19 +210,16 @@
     notifySoonToast: "Reminders will arrive with the next app update — stay tuned.",
     notifyEnabled: "Close Ones reminders are on.",
     notifyDisabled: "Close Ones reminders are off.",
-    notifyDenied: "Enable notifications in your browser settings.",
-    notifyUnsupported: "This browser can't show alerts — use Add to calendar.",
-    webHint: "Turn on reminders here or add windows to your calendar — like Event Planner.",
-    notifySubWeb: "Browser alerts while this tab is open, or add to calendar",
+    webHint: "For reminders: add windows to your calendar below — or turn on alerts in the CityTimeHub app.",
     todayTitle: "Today's schedule",
     tomorrowTitle: "Tomorrow",
     todayTitleOn: d => `Today — ${d}`,
     tomorrowTitleOn: d => `Tomorrow — ${d}`,
     emptyToday: "No windows today — see upcoming below",
-    exportCal: "Add to calendar",
-    exportCalHint: "Download a .ics file for Google Calendar or Apple Calendar",
-    exportGcal: "Google Calendar",
-    exportGcalHint: "Add the next window directly — or download .ics for the full week",
+    exportCal: "Download .ics (Apple / Outlook)",
+    exportCalHint: "All windows this week in one file",
+    exportGcal: "Add to Google Calendar",
+    exportGcalHint: "Next upcoming window — use .ics for the full week",
     icsDone: "Calendar file downloaded",
     homeNext: (when, label) => `Next ${when} — ${label}`,
     homeOpen: "Close Ones",
@@ -333,7 +327,6 @@
   let tzCache = new Map();
   let tickTimer = null;
   let dashGen = 0;
-  let webNotifyTimers = [];
   let dashTimer = null;
   const expandedPeople = new Set();
   let activeTab = "today";
@@ -591,16 +584,11 @@
     normalizeAllRules();
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
     updateUrl();
-    maybeSyncReminders();
+    maybeSyncNativeReminders();
   }
 
   function hasNativeReminderBridge() {
-    return !!(window.AndroidApp && typeof AndroidApp.syncCloseOnesReminders === "function");
-  }
-
-  function clearWebReminders() {
-    webNotifyTimers.forEach(t => clearTimeout(t));
-    webNotifyTimers = [];
+    return !!(window.AndroidApp && typeof AndroidApp.enableCloseOnesReminders === "function");
   }
 
   function utcStampGcal(ms) {
@@ -617,61 +605,6 @@
     u.searchParams.set("dates", `${utcStampGcal(w.start)}/${utcStampGcal(w.end)}`);
     if (w.rule?.waMsg) u.searchParams.set("details", w.rule.waMsg);
     return u.toString();
-  }
-
-  async function scheduleWebReminders() {
-    clearWebReminders();
-    if (hasNativeReminderBridge()) return;
-    if (localStorage.getItem("cth-co-notify") !== "1") return;
-    if (!("Notification" in window) || Notification.permission !== "granted") return;
-    let payload;
-    try { payload = await buildNativeAlarmPayload(EXPORT_HORIZON_DAYS); }
-    catch (e) { return; }
-    const now = Date.now();
-    const maxDelay = 2147483647;
-    for (const alarm of payload.alarms) {
-      if (alarm.at <= now) continue;
-      const delay = alarm.at - now;
-      if (delay > maxDelay) continue;
-      const timer = setTimeout(() => {
-        try {
-          const n = new Notification(alarm.title || (LANG === "ar" ? "أحبابك" : "Close Ones"), {
-            body: alarm.body || "",
-            icon: "/icons/icon-192.png",
-            tag: alarm.id,
-            lang: payload.lang === "ar" ? "ar" : "en",
-          });
-          n.onclick = () => { window.focus(); n.close(); location.href = CO_PAGE; };
-        } catch (e) {}
-        scheduleWebReminders();
-      }, delay);
-      webNotifyTimers.push(timer);
-    }
-  }
-
-  function disableWebReminders() {
-    clearWebReminders();
-    try { localStorage.setItem("cth-co-notify", "0"); } catch (e) {}
-  }
-
-  async function enableWebReminders() {
-    if (!("Notification" in window)) { toast(T.notifyUnsupported); return false; }
-    let perm = Notification.permission;
-    if (perm === "default") perm = await Notification.requestPermission();
-    if (perm !== "granted") { toast(T.notifyDenied); return false; }
-    let payload;
-    try { payload = await buildNativeAlarmPayload(EXPORT_HORIZON_DAYS); }
-    catch (e) { toast(T.errPrayer); return false; }
-    if (!payload.alarms.length) { toast(T.noRules); return false; }
-    try { localStorage.setItem("cth-co-notify", "1"); } catch (e) {}
-    await scheduleWebReminders();
-    toast(T.notifyEnabled);
-    return true;
-  }
-
-  function maybeSyncReminders() {
-    if (hasNativeReminderBridge()) maybeSyncNativeReminders();
-    else scheduleWebReminders();
   }
 
   async function buildNativeAlarmPayload(horizonDays = EXPORT_HORIZON_DAYS) {
@@ -1184,70 +1117,47 @@
     const badge = $("#coNotifyBadge");
     if (!bar || !btn) return;
 
-    const hasBridge = !!(window.AndroidApp && typeof AndroidApp.enableCloseOnesReminders === "function");
-    const title = $("#coNotifyTitle");
-    const sub = $("#coNotifySub");
-    if (title) title.textContent = T.notifyTitle;
-    if (sub) sub.textContent = hasBridge ? T.notifySub : T.notifySubWeb;
-    if (badge) badge.textContent = T.notifySoon;
-
-    if (hasBridge) {
-      bar.classList.add("is-ready");
-      btn.disabled = false;
-      btn.removeAttribute("aria-disabled");
-      if (badge) badge.hidden = true;
-      const on = localStorage.getItem("cth-co-notify") === "1";
-      btn.classList.toggle("is-on", on);
-      btn.setAttribute("aria-checked", on ? "true" : "false");
-      btn.addEventListener("click", async () => {
-        const next = !btn.classList.contains("is-on");
-        if (!next) {
-          try {
-            if (typeof AndroidApp.disableCloseOnesReminders === "function") AndroidApp.disableCloseOnesReminders();
-          } catch (e) { return; }
-          btn.classList.toggle("is-on", false);
-          btn.setAttribute("aria-checked", "false");
-          try { localStorage.setItem("cth-co-notify", "0"); } catch (e) {}
-          toast(T.notifyDisabled);
-          return;
-        }
-        let payload;
-        try { payload = await buildNativeAlarmPayload(EXPORT_HORIZON_DAYS); }
-        catch (e) { toast(T.errPrayer); return; }
-        if (!payload.alarms.length) { toast(T.noRules); return; }
-        try { AndroidApp.enableCloseOnesReminders(JSON.stringify(payload)); }
-        catch (e) { return; }
-        btn.classList.toggle("is-on", true);
-        btn.setAttribute("aria-checked", "true");
-        try { localStorage.setItem("cth-co-notify", "1"); } catch (e) {}
-        toast(T.notifyEnabled);
-      });
+    const hasBridge = hasNativeReminderBridge();
+    if (!hasBridge) {
+      bar.hidden = true;
       return;
     }
 
-    const canNotify = "Notification" in window;
+    bar.hidden = false;
+    const title = $("#coNotifyTitle");
+    const sub = $("#coNotifySub");
+    if (title) title.textContent = T.notifyTitle;
+    if (sub) sub.textContent = T.notifySub;
+    if (badge) badge.hidden = true;
+
     bar.classList.add("is-ready");
-    btn.disabled = !canNotify;
-    if (!canNotify) btn.setAttribute("aria-disabled", "true");
-    else btn.removeAttribute("aria-disabled");
-    if (badge) badge.hidden = canNotify;
+    btn.disabled = false;
+    btn.removeAttribute("aria-disabled");
     const on = localStorage.getItem("cth-co-notify") === "1";
-    btn.classList.toggle("is-on", on && canNotify);
-    btn.setAttribute("aria-checked", on && canNotify ? "true" : "false");
+    btn.classList.toggle("is-on", on);
+    btn.setAttribute("aria-checked", on ? "true" : "false");
     btn.addEventListener("click", async () => {
-      if (!canNotify) { toast(T.notifyUnsupported); return; }
       const next = !btn.classList.contains("is-on");
       if (!next) {
-        disableWebReminders();
+        try {
+          if (typeof AndroidApp.disableCloseOnesReminders === "function") AndroidApp.disableCloseOnesReminders();
+        } catch (e) { return; }
         btn.classList.toggle("is-on", false);
         btn.setAttribute("aria-checked", "false");
+        try { localStorage.setItem("cth-co-notify", "0"); } catch (e) {}
         toast(T.notifyDisabled);
         return;
       }
-      const ok = await enableWebReminders();
-      if (!ok) return;
+      let payload;
+      try { payload = await buildNativeAlarmPayload(EXPORT_HORIZON_DAYS); }
+      catch (e) { toast(T.errPrayer); return; }
+      if (!payload.alarms.length) { toast(T.noRules); return; }
+      try { AndroidApp.enableCloseOnesReminders(JSON.stringify(payload)); }
+      catch (e) { return; }
       btn.classList.toggle("is-on", true);
       btn.setAttribute("aria-checked", "true");
+      try { localStorage.setItem("cth-co-notify", "1"); } catch (e) {}
+      toast(T.notifyEnabled);
     });
   }
 
@@ -1432,31 +1342,38 @@
     </li>`;
   }
 
+  function renderExportActionsHtml(windows) {
+    if (!hasSetup()) return "";
+    const now = Date.now();
+    const nextWin = windows.find(w => w.end > now);
+    const gcalHref = nextWin ? gcalUrlForWindow(nextWin) : "";
+    return `<div class="co-export-actions">
+      ${gcalHref ? `<a class="btn co-export-gcal" href="${esc(gcalHref)}" target="_blank" rel="noopener" title="${esc(T.exportGcalHint)}">${esc(T.exportGcal)}</a>` : ""}
+      <button type="button" class="btn-ghost co-export-cal" title="${esc(T.exportCalHint)}">${esc(T.exportCal)}</button>
+    </div>`;
+  }
+
   function renderDayAgendaHtml(windows, skipKey) {
     const { today, tomorrow } = agendaBuckets(windows);
     const filt = list => list.filter(w => windowKey(w) !== skipKey);
     const todayF = filt(today);
     const tomorrowF = filt(tomorrow);
     const later = laterWindows(windows, today, tomorrow, skipKey);
+    const exportHtml = renderExportActionsHtml(windows);
     if (!todayF.length && !tomorrowF.length && !later.length) {
       return `<section class="co-day-agenda co-day-agenda--empty">
         <h3 class="co-agenda-title">${esc(T.todayTitleOn(fmtCalendarDay(0)))}</h3>
         <p class="co-agenda-lead muted">${esc(T.scheduleEmpty)}</p>
+        ${exportHtml}
       </section>`;
     }
-    const now = Date.now();
-    const nextWin = windows.find(w => w.end > now);
-    const gcalHref = nextWin ? gcalUrlForWindow(nextWin) : "";
     let html = `<section class="co-day-agenda" aria-labelledby="coScheduleTitle">
       <div class="co-agenda-head">
         <div>
           <h3 class="co-agenda-title" id="coScheduleTitle">${esc(T.todayTitleOn(fmtCalendarDay(0)))}</h3>
           <p class="co-agenda-lead muted">${esc(T.scheduleLead)}</p>
         </div>
-        <div class="co-export-actions">
-          ${gcalHref ? `<a class="btn co-export-gcal" href="${esc(gcalHref)}" target="_blank" rel="noopener" title="${esc(T.exportGcalHint)}">${esc(T.exportGcal)}</a>` : ""}
-          <button type="button" class="btn-ghost co-export-cal" title="${esc(T.exportCalHint)}">${esc(T.exportCal)}</button>
-        </div>
+        ${exportHtml}
       </div>`;
     if (todayF.length) {
       html += `<ul class="co-agenda-list">${todayF.map(w => renderAgendaItem(w)).join("")}</ul>`;
@@ -1474,9 +1391,7 @@
   }
 
   function renderWebHintHtml() {
-    if (IS_APP) return "";
-    const hasBridge = !!(window.AndroidApp && typeof AndroidApp.enableCloseOnesReminders === "function");
-    if (hasBridge) return "";
+    if (IS_APP || hasNativeReminderBridge()) return "";
     return `<p class="co-web-hint muted">${esc(T.webHint)}</p>`;
   }
 
@@ -2059,10 +1974,6 @@
     let citiesOk = true;
     try { await loadCities(); } catch (e) { citiesOk = false; }
     loadState();
-    if (!hasNativeReminderBridge() && localStorage.getItem("cth-co-notify") === "1") scheduleWebReminders();
-    document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === "visible") maybeSyncReminders();
-    });
     if ($("#coDash") && citiesOk) await initPage();
     if ($("#coHomeStrip")) await initHomeStrip();
   }

@@ -1422,8 +1422,9 @@ html[dir="rtl"] .hu-time, html[dir="rtl"] [dir="ltr"] { direction: ltr; unicode-
 .co-agenda-actions { grid-column: 1 / -1; }
 .co-agenda-empty { margin: 0; font-size: .88rem; }
 .co-export-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: flex-end; }
-.co-export-cal { font-size: .82rem !important; padding: 6px 10px !important; white-space: nowrap; }
-.co-export-gcal { font-size: .82rem !important; padding: 6px 10px !important; white-space: nowrap; text-decoration: none; }
+.co-day-agenda--empty .co-export-actions { justify-content: flex-start; margin-top: 12px; }
+.co-export-cal { font-size: .88rem !important; white-space: nowrap; }
+.co-export-gcal { font-size: .88rem !important; white-space: nowrap; text-decoration: none; }
 .co-later { margin-top: 12px; }
 .co-later summary {
   cursor: pointer; font-size: .82rem; font-weight: 700; color: var(--muted);
