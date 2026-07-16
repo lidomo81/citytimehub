@@ -348,23 +348,15 @@
     return cN(c) + ", " + cC(c);
   }
 
-  /** Resolve a city from slug, typed value, or CTH_CITY_INP placeholder (coYou only). */
+  /** Resolve a city from slug or typed value. */
   function resolveCityFromField(cityInp, pendingSlug) {
     const slug = pendingSlug || cityInp?.dataset?.coCity || cityInp?.dataset?.slug;
     if (slug && bySlug.has(slug)) return bySlug.get(slug);
     if (!cityInp) return null;
-    const fromVal = findCity(cityInp.value);
-    if (fromVal) return fromVal;
-    const ph = cityInp.placeholder;
-    const defaultPh = cityInp.dataset.cthPh;
-    if (ph && ph !== defaultPh) {
-      const fromPh = findCity(ph);
-      if (fromPh) return fromPh;
-    }
-    return null;
+    return findCity(cityInp.value);
   }
 
-  /** Add-person city field: show chosen city as real text, not a faded placeholder. */
+  /** Show chosen city as real text in Close Ones fields (not a faded placeholder). */
   function setCityFieldValue(input, city) {
     if (!input || !city) return;
     input.value = cityLabel(city);
@@ -378,10 +370,31 @@
 
   function showCityInInput(input, city) {
     if (!input || !city) return;
-    if (input.id === "coPersonCity") setCityFieldValue(input, city);
-    else if (window.CTH_CITY_INP) window.CTH_CITY_INP.show(input, cityLabel(city), city.slug);
-    else input.value = cityLabel(city);
-    input.dataset.coCity = city.slug;
+    setCityFieldValue(input, city);
+  }
+
+  function resetCityField(input) {
+    if (!input) return;
+    input.value = "";
+    delete input.dataset.coCity;
+    delete input.dataset.slug;
+    if (window.CTH_CITY_INP) window.CTH_CITY_INP.reset(input);
+  }
+
+  function bindCityFieldInput(input, onCity) {
+    if (!input) return;
+    input.addEventListener("input", () => {
+      const v = norm(input.value);
+      if (!v) {
+        delete input.dataset.coCity;
+        delete input.dataset.slug;
+        onCity(null);
+        return;
+      }
+      delete input.dataset.coCity;
+      delete input.dataset.slug;
+      onCity(findCity(input.value));
+    });
   }
 
   function guessHome() {
@@ -1576,7 +1589,7 @@
     });
     input.addEventListener("blur", () => {
       setTimeout(() => {
-        if (!pickLock && input.id === "coPersonCity") maybeAutoPickOnBlur();
+        if (!pickLock) maybeAutoPickOnBlur();
         if (!pickLock) close();
       }, 180);
     });
@@ -1598,12 +1611,13 @@
   function applyParams() {
     const p = new URLSearchParams(location.search);
     const y = findCity(p.get("you"));
-    if (y) {
-      state.you = y.slug;
-      const i = $("#coYou");
-      if (i && window.CTH_CITY_INP) window.CTH_CITY_INP.show(i, cN(y) + ", " + cC(y));
-      else if (i) i.value = cN(y) + ", " + cC(y);
-    }
+    if (y) state.you = y.slug;
+  }
+
+  function syncYouField() {
+    const youInp = $("#coYou");
+    const youCity = state.you && bySlug.get(state.you);
+    if (youInp && youCity) setCityFieldValue(youInp, youCity);
   }
 
   async function initPage() {
@@ -1611,13 +1625,9 @@
     applyParams();
     if (!state.you) {
       const c = bySlug.get(guessHome());
-      if (c) {
-        state.you = c.slug;
-        const i = $("#coYou");
-        if (i && window.CTH_CITY_INP) window.CTH_CITY_INP.show(i, cN(c) + ", " + cC(c));
-        else if (i) i.value = cN(c) + ", " + cC(c);
-      }
+      if (c) state.you = c.slug;
     }
+    syncYouField();
 
     autocomplete($("#coYou"), $("#coYouAc"), c => {
       state.you = c.slug;
@@ -1626,46 +1636,30 @@
       scheduleDashboard();
     });
 
+    bindCityFieldInput($("#coYou"), c => {
+      if (c) {
+        state.you = c.slug;
+        saveState();
+        renderYouChip();
+        scheduleDashboard();
+      } else if (!norm($("#coYou")?.value || "")) {
+        state.you = "";
+        saveState();
+        renderYouChip();
+        scheduleDashboard();
+      }
+    });
+
     let pendingPersonCity = "";
     autocomplete($("#coPersonCity"), $("#coPersonCityAc"), c => {
       pendingPersonCity = c.slug;
       requestAnimationFrame(() => updateDialUI(c));
     });
 
-    const cityInp = $("#coPersonCity");
-    if (cityInp) {
-      cityInp.addEventListener("input", () => {
-        const v = norm(cityInp.value);
-        const slugHint = cityInp.dataset.coCity || cityInp.dataset.slug;
-        if (!v) {
-          if (slugHint && cityInp.id !== "coPersonCity") {
-            const picked = bySlug.get(slugHint);
-            if (picked) {
-              pendingPersonCity = picked.slug;
-              cityInp.dataset.coCity = picked.slug;
-              if (window.CTH_CITY_INP) window.CTH_CITY_INP.show(cityInp, cityLabel(picked), picked.slug);
-              updateDialUI(picked);
-              return;
-            }
-          }
-          pendingPersonCity = "";
-          delete cityInp.dataset.coCity;
-          delete cityInp.dataset.slug;
-          updateDialUI(null);
-          return;
-        }
-        delete cityInp.dataset.coCity;
-        delete cityInp.dataset.slug;
-        const hit = findCity(cityInp.value);
-        if (hit) {
-          pendingPersonCity = hit.slug;
-          updateDialUI(hit);
-        } else {
-          pendingPersonCity = "";
-          updateDialUI(null);
-        }
-      });
-    }
+    bindCityFieldInput($("#coPersonCity"), c => {
+      pendingPersonCity = c ? c.slug : "";
+      updateDialUI(c);
+    });
     const form = $("#coForm");
     initTabs();
     initAddSheet();
@@ -1685,11 +1679,7 @@
       $("#coPersonName").value = "";
       $("#coPersonPhone").value = "";
       pendingPersonCity = "";
-      if (cityField) {
-        delete cityField.dataset.coCity;
-        if (window.CTH_CITY_INP) window.CTH_CITY_INP.reset(cityField);
-        else cityField.value = "";
-      }
+      if (cityField) resetCityField(cityField);
       updateDialUI(null);
     });
 
