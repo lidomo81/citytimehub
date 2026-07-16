@@ -72,6 +72,8 @@
     ruleAfter: "بعد صلاة", ruleBefore: "قبل صلاة", ruleFixed: "موعد ثابت",
     offsetMin: "دقائق", fixedLabel: "التذكير", fixedLabelPh: "مثال: موعد الدكتور",
     fixedDay: "اليوم", fixedTime: "الوقت (بتوقيته)", remindBefore: "ذكّرني قبل",
+    fixedDate: "التاريخ", fixedDateHint: "بتوقيت مدينة الشخص — اليوم أو يوم قادم",
+    fixedWeekly: "كل أسبوع",
     remindHint: "٠ = عند الموعد",
     actionCall: "اتصال", actionNudge: "تنبيه",
     waMsg: "رسالة واتساب (اختياري)", waMsgPh: "مثال: صلّي الفجر يا أمي 🤍",
@@ -83,8 +85,8 @@
     doneAck: "تمّ — ننتقل للنافذة التالية",
     afterLine: (name, prayer, off) => `بعد ${PNAME[prayer]} بـ ${off} د — ${name}`,
     beforeLine: (name, prayer, off) => `قبل ${PNAME[prayer]} ${off} د — نبّه ${name}`,
-    fixedLine: (name, label) => `${label} — ${name}`,
-    errPrayer: "تعذّر تحميل المواقيت.",
+    fixedLine: (name, label) => `${label || name}`,
+    fixedLineOn: (name, label, when) => `${label || name} — ${when}`,
     maxPeople: n => `الحد الأقصى ${n} أشخاص.`,
     saved: "تم الحفظ.", pickCity: "اختر المدينة.",
     msgSaved: "تم حفظ الرسالة.",
@@ -167,6 +169,8 @@
     ruleAfter: "After prayer", ruleBefore: "Before prayer", ruleFixed: "Fixed appointment",
     offsetMin: "minutes", fixedLabel: "Reminder", fixedLabelPh: "e.g. Doctor appointment",
     fixedDay: "Day", fixedTime: "Time (their clock)", remindBefore: "Remind me before",
+    fixedDate: "Date", fixedDateHint: "On their city clock — today or a day ahead",
+    fixedWeekly: "Every week",
     remindHint: "0 = at appointment time",
     actionCall: "Call", actionNudge: "Nudge",
     waMsg: "WhatsApp message (optional)", waMsgPh: "e.g. Fajr time — love you 🤍",
@@ -178,7 +182,8 @@
     doneAck: "Done — showing the next window",
     afterLine: (name, prayer, off) => `${off} min after ${PNAME[prayer]} — ${name}`,
     beforeLine: (name, prayer, off) => `${off} min before ${PNAME[prayer]} — nudge ${name}`,
-    fixedLine: (name, label) => `${label} — ${name}`,
+    fixedLine: (name, label) => `${label || name}`,
+    fixedLineOn: (name, label, when) => `${label || name} — ${when}`,
     errPrayer: "Couldn't load prayer times.",
     maxPeople: n => `Up to ${n} people.`,
     saved: "Saved.", pickCity: "Pick a city.",
@@ -430,6 +435,56 @@
     });
   }
 
+  function cityDateStr(city, dayOff = 0) {
+    const y = cityYmd(city, dayOff);
+    const p = n => String(n).padStart(2, "0");
+    return `${y.y}-${p(y.m + 1)}-${p(y.day)}`;
+  }
+
+  function dayOffForCityDate(city, dateStr) {
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec((dateStr || "").trim());
+    if (!m || !city) return null;
+    const target = { y: +m[1], mo: +m[2] - 1, day: +m[3] };
+    for (let d = 0; d <= EXPORT_HORIZON_DAYS + 7; d++) {
+      const y = cityYmd(city, d);
+      if (y.y === target.y && y.m === target.mo && y.day === target.day) return d;
+    }
+    return null;
+  }
+
+  function fixedDateForPerson(person, rule) {
+    if (rule?.date && /^\d{4}-\d{2}-\d{2}$/.test(rule.date)) return rule.date;
+    const city = bySlug.get(person?.city);
+    if (!city) return "";
+    if (rule?.dow != null) {
+      for (let d = 0; d <= 7; d++) {
+        const y = cityYmd(city, d);
+        if (y.dow === rule.dow) return cityDateStr(city, d);
+      }
+    }
+    return cityDateStr(city, 0);
+  }
+
+  function formatFixedDateLabel(dateStr, city) {
+    if (!dateStr || !city) return dateStr || "";
+    const off = dayOffForCityDate(city, dateStr);
+    if (off == null) return dateStr;
+    try {
+      const y = cityYmd(city, off);
+      const offH = tzOffsetHours(city.tz);
+      const noonUtc = Date.UTC(y.y, y.m, y.day, 12, 0) - offH * 3600000;
+      return new Intl.DateTimeFormat(LANG === "ar" ? "ar-EG-u-nu-latn" : "en-US", {
+        weekday: "long", month: "short", day: "numeric", timeZone: city.tz,
+      }).format(new Date(noonUtc));
+    } catch (e) { return dateStr; }
+  }
+
+  function migrateFixedRule(person, rule) {
+    if (!rule || rule.type !== "fixed") return;
+    if (rule.date && /^\d{4}-\d{2}-\d{2}$/.test(rule.date)) return;
+    rule.date = fixedDateForPerson(person, rule);
+  }
+
   function guessHome() {
     try {
       const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -489,13 +544,22 @@
       rule.offsetMin = effectiveOffsetMin(rule);
     } else if (rule.type === "fixed") {
       rule.remindBeforeMin = effectiveRemindBeforeMin(rule);
+      if (!rule.date || !/^\d{4}-\d{2}-\d{2}$/.test(rule.date)) delete rule.date;
+    }
+  }
+
+  function normalizePersonRules(person) {
+    if (!person?.rules) return;
+    for (const r of person.rules) {
+      normalizeRule(r);
+      migrateFixedRule(person, r);
     }
   }
 
   function normalizeAllRules() {
     for (const p of state.people) {
       if (!Array.isArray(p.rules)) { p.rules = []; continue; }
-      for (const r of p.rules) normalizeRule(r);
+      normalizePersonRules(p);
     }
   }
 
@@ -616,7 +680,9 @@
     const n = person.name || "";
     if (rule.type === "after") return T.afterLine(n, rule.prayer, effectiveOffsetMin(rule));
     if (rule.type === "before") return T.beforeLine(n, rule.prayer, effectiveOffsetMin(rule));
-    return T.fixedLine(n, rule.label || "");
+    const city = bySlug.get(person.city);
+    const when = formatFixedDateLabel(rule.date, city);
+    return when ? T.fixedLineOn(n, rule.label || "", when) : T.fixedLine(n, rule.label || "");
   }
 
   function computeRuleWindows(person, city, prayers, rule, horizonDays = DASH_HORIZON_DAYS) {
@@ -638,10 +704,22 @@
     } else if (rule.type === "fixed") {
       const rbMin = effectiveRemindBeforeMin(rule);
       const rb = rbMin * 60000;
-      for (let d = 0; d <= horizonDays; d++) {
-        const y = cityYmd(city, d);
-        if (y.dow !== (rule.dow ?? 0)) continue;
-        const [hh, mm] = (rule.time || "10:00").split(":").map(Number);
+      const [hh, mm] = (rule.time || "10:00").split(":").map(Number);
+      const dayOffsets = [];
+      if (rule.repeatWeekly && rule.date) {
+        const anchor = dayOffForCityDate(city, rule.date);
+        if (anchor != null) {
+          for (let d = anchor; d <= horizonDays; d += 7) dayOffsets.push(d);
+        }
+      } else if (rule.date) {
+        const off = dayOffForCityDate(city, rule.date);
+        if (off != null && off >= 0 && off <= horizonDays) dayOffsets.push(off);
+      } else {
+        for (let d = 0; d <= horizonDays; d++) {
+          if (cityYmd(city, d).dow === (rule.dow ?? 0)) dayOffsets.push(d);
+        }
+      }
+      for (const d of dayOffsets) {
         const apt = localToUtcMs(city, hh, mm, d);
         const start = apt - rb;
         const end = rbMin === 0 ? apt + AFTER_WINDOW_MIN * 60000 : apt;
@@ -735,7 +813,7 @@
     toast(T.icsDone);
   }
 
-  async function allWindows(horizonDays = DASH_HORIZON_DAYS) {
+  async function allWindows(horizonDays = EXPORT_HORIZON_DAYS) {
     const now = Date.now();
     const windows = [];
     for (const person of state.people) {
@@ -1412,16 +1490,22 @@
       </select>`;
       const offVal = effectiveOffsetMin(r);
       const offset = `<input type="number" class="co-rule-offset" min="${PRAYER_OFFSET_MIN}" max="${PRAYER_OFFSET_MAX}" step="5" value="${offVal}" data-p="${idx}" data-r="${ri}" aria-label="${esc(T.offsetMin)}" />`;
-      const dowSel = `<select class="co-rule-dow" data-p="${idx}" data-r="${ri}">
-        ${DOW.map((d, i) => `<option value="${i}"${(r.dow ?? 0) === i ? " selected" : ""}>${esc(d)}</option>`).join("")}
-      </select>`;
+      const cityForRule = bySlug.get(person.city);
+      const dateVal = fixedDateForPerson(person, r);
+      const maxDate = cityForRule ? cityDateStr(cityForRule, EXPORT_HORIZON_DAYS) : "";
+      const minDate = cityForRule ? cityDateStr(cityForRule, 0) : "";
+      const dateIn = `<label class="co-mini co-rule-date-wrap">${esc(T.fixedDate)}
+        <input type="date" class="co-rule-date" value="${esc(dateVal)}"${minDate ? ` min="${esc(minDate)}"` : ""}${maxDate ? ` max="${esc(maxDate)}"` : ""} data-p="${idx}" data-r="${ri}" aria-label="${esc(T.fixedDate)}" />
+        <span class="co-mini co-rule-hint">${esc(T.fixedDateHint)}</span>
+      </label>`;
+      const weekly = `<label class="co-mini co-rule-weekly-wrap"><input type="checkbox" class="co-rule-weekly" data-p="${idx}" data-r="${ri}"${r.repeatWeekly ? " checked" : ""} /> ${esc(T.fixedWeekly)}</label>`;
       const timeIn = `<input type="time" class="co-rule-time" value="${esc(r.time || "10:00")}" data-p="${idx}" data-r="${ri}" />`;
       const labelIn = `<input type="text" class="co-rule-label" value="${esc(r.label || "")}" placeholder="${esc(T.fixedLabelPh)}" data-p="${idx}" data-r="${ri}" />`;
       const rbVal = effectiveRemindBeforeMin(r);
       const remind = `<input type="number" class="co-rule-remind" min="${REMIND_MIN}" max="${REMIND_MAX}" step="5" value="${rbVal}" data-p="${idx}" data-r="${ri}" aria-label="${esc(T.remindBefore)}" />`;
       const wa = `<div class="co-wa-wrap"><input type="text" class="co-rule-wa" value="${esc(r.waMsg || "")}" placeholder="${esc(T.waMsgPh)}" data-p="${idx}" data-r="${ri}" aria-describedby="coWaSaved-${idx}-${ri}" /><span id="coWaSaved-${idx}-${ri}" class="co-wa-saved-hint" hidden aria-live="polite"></span></div>`;
       const detail = r.type === "fixed"
-        ? `<div class="co-rule-detail">${labelIn} ${dowSel} ${timeIn} <label class="co-mini">${esc(T.remindBefore)}</label> ${remind} <span class="co-mini co-rule-hint">${esc(T.remindHint)}</span> ${wa}</div>`
+        ? `<div class="co-rule-detail">${labelIn} ${dateIn} ${timeIn} ${weekly} <label class="co-mini">${esc(T.remindBefore)}</label> ${remind} <span class="co-mini co-rule-hint">${esc(T.remindHint)}</span> ${wa}</div>`
         : `<div class="co-rule-detail">${prayerSel} <label class="co-mini">${esc(T.offsetMin)}</label> ${offset} ${wa}</div>`;
       return `<div class="co-rule" data-p="${idx}" data-r="${ri}">
         ${typeSel} ${detail}
@@ -1571,7 +1655,15 @@
     const p = state.people[+el.dataset.p];
     const r = p && p.rules[+el.dataset.r];
     if (!r) return;
-    if (el.classList.contains("co-rule-type")) { r.type = el.value; normalizeRule(r); fullRerender = true; }
+    if (el.classList.contains("co-rule-type")) {
+      r.type = el.value;
+      if (r.type === "fixed") {
+        r.date = fixedDateForPerson(p, r);
+        if (r.repeatWeekly == null) r.repeatWeekly = false;
+      }
+      normalizeRule(r);
+      fullRerender = true;
+    }
     else if (el.classList.contains("co-rule-prayer")) r.prayer = el.value;
     else if (el.classList.contains("co-rule-offset")) {
       const raw = el.value.trim();
@@ -1584,6 +1676,8 @@
       if (String(r.offsetMin) !== el.value) el.value = r.offsetMin;
     }
     else if (el.classList.contains("co-rule-dow")) r.dow = +el.value;
+    else if (el.classList.contains("co-rule-date")) r.date = el.value;
+    else if (el.classList.contains("co-rule-weekly")) r.repeatWeekly = !!el.checked;
     else if (el.classList.contains("co-rule-time")) r.time = el.value;
     else if (el.classList.contains("co-rule-label")) r.label = el.value;
     else if (el.classList.contains("co-rule-remind")) {
@@ -1637,7 +1731,7 @@
     box.addEventListener("change", e => {
       const el = e.target;
       if (!el.dataset.p && el.dataset.p !== "0") return;
-      onRuleChange(el, el.classList.contains("co-rule-type"));
+      onRuleChange(el, el.classList.contains("co-rule-type") || el.classList.contains("co-rule-weekly"));
     });
     box.addEventListener("blur", e => {
       const el = e.target;
