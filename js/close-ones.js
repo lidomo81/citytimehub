@@ -314,19 +314,34 @@
     return Date.UTC(ymd.y, ymd.m, ymd.day, h, m, 0) - offH * 3600000;
   }
 
-  function findCity(q) {
-    if (!q) return null;
+  function searchCities(q, limit = 8) {
+    if (!q) return [];
     const s = norm(q);
-    if (bySlug.has(s)) return bySlug.get(s);
-    const hit = CITIES.find(c => norm(c.name) === s || norm(`${c.name} ${c.country}`) === s
-      || (LANG === "ar" && norm(`${c.name_ar || ""} ${c.country_ar || ""}`) === s));
-    if (hit) return hit;
-    const head = s.split(",")[0].trim();
-    if (head && head !== s) {
-      const h2 = CITIES.find(c => norm(c.name) === head || (c.name_ar && norm(c.name_ar) === head));
-      if (h2) return h2;
+    if (!s) return [];
+    if (bySlug.has(s)) return [bySlug.get(s)];
+    const head = s.split(",")[0].trim() || s;
+    const scored = [];
+    for (const c of CITIES) {
+      const n = norm(c.name);
+      const nar = norm(c.name_ar || "");
+      const nc = norm(`${c.name} ${c.country}`);
+      const ncar = norm(`${c.name_ar || ""} ${c.country_ar || ""}`);
+      let score = 0;
+      if (n === s || nar === s || nc === s || ncar === s) score = 100;
+      else if (n === head || nar === head) score = 95;
+      else if (n.startsWith(s) || nar.startsWith(s) || n.startsWith(head) || nar.startsWith(head)) score = 85;
+      else if (nc.startsWith(s) || ncar.startsWith(s)) score = 80;
+      else if (c._s && c._s.startsWith(s)) score = 75;
+      else if (n.includes(s) || nar.includes(s) || n.includes(head) || nar.includes(head)) score = 65;
+      else if (c._s && c._s.includes(s)) score = 55;
+      if (score) scored.push({ c, score });
     }
-    return CITIES.find(c => c._s && c._s.startsWith(head || s)) || null;
+    scored.sort((a, b) => b.score - a.score || (a.c.name || "").localeCompare(b.c.name || ""));
+    return scored.slice(0, limit).map(x => x.c);
+  }
+
+  function findCity(q) {
+    return searchCities(q, 1)[0] || null;
   }
 
   function cityLabel(c) {
@@ -1503,11 +1518,11 @@
 
   function autocomplete(input, listEl, onChoose) {
     if (!input || !listEl) return;
-    let items = [], active = -1;
+    let items = [], active = -1, pickLock = false;
     const close = () => { listEl.hidden = true; active = -1; input.setAttribute("aria-expanded", "false"); };
     function paint() {
       const q = norm(input.value);
-      items = q ? CITIES.filter(c => c._s.includes(q)).slice(0, 8) : [];
+      items = q ? searchCities(input.value, 8) : [];
       if (!items.length) { listEl.innerHTML = q ? `<li class="ac-empty">—</li>` : ""; listEl.hidden = !q; return; }
       listEl.innerHTML = items.map((c, i) => `<li class="ac-item${i === active ? " is-active" : ""}" role="option" data-i="${i}"><span>${esc(cN(c))}</span><span class="ac-country">${esc(cC(c))}</span></li>`).join("");
       listEl.hidden = false; input.setAttribute("aria-expanded", "true");
@@ -1515,10 +1530,21 @@
     function pick(i) {
       const c = items[i];
       if (!c) return;
+      pickLock = true;
       showCityInInput(input, c);
       input.blur();
       onChoose(c);
       close();
+      setTimeout(() => { pickLock = false; }, 250);
+    }
+    function maybeAutoPickOnBlur() {
+      if (pickLock || input.dataset.coCity) return;
+      const q = (input.value || "").trim();
+      if (!q) return;
+      const hit = findCity(q);
+      if (!hit) return;
+      showCityInInput(input, hit);
+      onChoose(hit);
     }
     input.addEventListener("input", paint);
     input.addEventListener("focus", () => { if (input.value) paint(); });
@@ -1529,13 +1555,31 @@
       else if (e.key === "Enter") { e.preventDefault(); pick(active < 0 ? 0 : active); }
       else if (e.key === "Escape") close();
     });
+    const onListPick = (e, idx) => {
+      e.preventDefault();
+      e.stopPropagation();
+      pick(idx);
+    };
+    listEl.addEventListener("mousedown", e => {
+      const li = e.target.closest(".ac-item[data-i]");
+      if (li) e.preventDefault();
+    });
+    listEl.addEventListener("click", e => {
+      const li = e.target.closest(".ac-item[data-i]");
+      if (!li) return;
+      onListPick(e, +li.dataset.i);
+    });
     listEl.addEventListener("pointerdown", e => {
       const li = e.target.closest(".ac-item[data-i]");
       if (!li) return;
-      e.preventDefault();
-      pick(+li.dataset.i);
+      onListPick(e, +li.dataset.i);
     });
-    input.addEventListener("blur", () => setTimeout(close, 160));
+    input.addEventListener("blur", () => {
+      setTimeout(() => {
+        if (!pickLock && input.id === "coPersonCity") maybeAutoPickOnBlur();
+        if (!pickLock) close();
+      }, 180);
+    });
   }
 
   function updateUrl() {
@@ -1613,7 +1657,7 @@
         delete cityInp.dataset.coCity;
         delete cityInp.dataset.slug;
         const hit = findCity(cityInp.value);
-        if (hit && cityLabel(hit) === cityInp.value) {
+        if (hit) {
           pendingPersonCity = hit.slug;
           updateDialUI(hit);
         } else {
@@ -1634,7 +1678,8 @@
       if (!name) { toast(T.personName); $("#coPersonName")?.focus(); return; }
       const phone = $("#coPersonPhone")?.value || "";
       const cityField = $("#coPersonCity");
-      const city = resolveCityFromField(cityField, pendingPersonCity);
+      let city = resolveCityFromField(cityField, pendingPersonCity);
+      if (!city && cityField?.value?.trim()) city = findCity(cityField.value);
       const cityIn = city ? cityLabel(city) : (cityField?.value || cityField?.placeholder || "");
       addPerson({ name, phone, citySlug: city ? city.slug : "", cityInput: cityIn });
       $("#coPersonName").value = "";

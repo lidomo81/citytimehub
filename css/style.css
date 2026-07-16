@@ -1592,7 +1592,8 @@ html.app-mode .co-home-strip:not(.app-spot-card) { margin-inline: 12px; }
 .co-form-add { margin: 0; }
 .co-form-add .co-add-grid { display: flex; flex-direction: column; gap: 14px; }
 .co-form-add .co-phone-field { max-width: none; }
-.co-form-add .co-submit { width: 100%; }
+.co-form-add .co-ac { position: relative; z-index: 2; }
+.co-form-add .ac-list { z-index: 1300; }
 @media (min-width: 560px) {
   .co-add-sheet { align-items: center; }
   .co-add-sheet-card { border-radius: 18px; }
