@@ -333,6 +333,22 @@
     return cN(c) + ", " + cC(c);
   }
 
+  /** Resolve a city from slug, typed value, or CTH_CITY_INP placeholder (value stays empty after pick). */
+  function resolveCityFromField(cityInp, pendingSlug) {
+    const slug = pendingSlug || cityInp?.dataset?.coCity || cityInp?.dataset?.slug;
+    if (slug && bySlug.has(slug)) return bySlug.get(slug);
+    if (!cityInp) return null;
+    const fromVal = findCity(cityInp.value);
+    if (fromVal) return fromVal;
+    const ph = cityInp.placeholder;
+    const defaultPh = cityInp.dataset.cthPh;
+    if (ph && ph !== defaultPh) {
+      const fromPh = findCity(ph);
+      if (fromPh) return fromPh;
+    }
+    return null;
+  }
+
   function guessHome() {
     try {
       const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -1479,7 +1495,7 @@
     function pick(i) {
       const c = items[i];
       if (!c) return;
-      if (window.CTH_CITY_INP) window.CTH_CITY_INP.show(input, cityLabel(c));
+      if (window.CTH_CITY_INP) window.CTH_CITY_INP.show(input, cityLabel(c), c.slug);
       else input.value = cityLabel(c);
       input.dataset.coCity = c.slug;
       input.blur();
@@ -1558,22 +1574,26 @@
     if (cityInp) {
       cityInp.addEventListener("input", () => {
         const v = norm(cityInp.value);
+        const slugHint = cityInp.dataset.coCity || cityInp.dataset.slug;
         if (!v) {
-          if (cityInp.dataset.coCity) {
-            const picked = bySlug.get(cityInp.dataset.coCity);
+          if (slugHint) {
+            const picked = bySlug.get(slugHint);
             if (picked) {
               pendingPersonCity = picked.slug;
-              if (window.CTH_CITY_INP) window.CTH_CITY_INP.show(cityInp, cityLabel(picked));
+              cityInp.dataset.coCity = picked.slug;
+              if (window.CTH_CITY_INP) window.CTH_CITY_INP.show(cityInp, cityLabel(picked), picked.slug);
               updateDialUI(picked);
               return;
             }
           }
           pendingPersonCity = "";
           delete cityInp.dataset.coCity;
+          delete cityInp.dataset.slug;
           updateDialUI(null);
           return;
         }
         delete cityInp.dataset.coCity;
+        delete cityInp.dataset.slug;
         const hit = findCity(cityInp.value);
         if (hit && cityLabel(hit) === cityInp.value) {
           pendingPersonCity = hit.slug;
@@ -1592,15 +1612,16 @@
 
     if (form) form.addEventListener("submit", e => {
       e.preventDefault();
-      const name = $("#coPersonName").value;
-      const phone = $("#coPersonPhone").value;
-      const city = bySlug.get(pendingPersonCity) || findCity($("#coPersonCity").value);
-      const cityIn = city ? cityLabel(city) : $("#coPersonCity").value;
+      const name = ($("#coPersonName")?.value || "").trim();
+      if (!name) { toast(T.personName); $("#coPersonName")?.focus(); return; }
+      const phone = $("#coPersonPhone")?.value || "";
+      const cityField = $("#coPersonCity");
+      const city = resolveCityFromField(cityField, pendingPersonCity);
+      const cityIn = city ? cityLabel(city) : (cityField?.value || cityField?.placeholder || "");
       addPerson({ name, phone, citySlug: city ? city.slug : "", cityInput: cityIn });
       $("#coPersonName").value = "";
       $("#coPersonPhone").value = "";
       pendingPersonCity = "";
-      const cityField = $("#coPersonCity");
       if (cityField) {
         delete cityField.dataset.coCity;
         if (window.CTH_CITY_INP) window.CTH_CITY_INP.reset(cityField);
