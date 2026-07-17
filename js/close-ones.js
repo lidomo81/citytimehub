@@ -158,6 +158,20 @@
     addSubmit: "حفظ",
     addedToast: name => `أضفنا ${name} 🤍`,
     addedToastRule: (name, when, city) => `أضفنا ${name} 🤍 — سنُذكّرك ${when} بتوقيت ${city}`,
+    // Groups: one card for a whole family or circle. The reminder nudges you, and
+    // you send to their WhatsApp group.
+    addKindPerson: "شخص",
+    addKindGroup: "جروب",
+    addKindQ: "شخص واحد أم جروب؟",
+    groupNamePh: "مثال: العيلة",
+    groupLinkLabel: "رابط جروب واتساب (اختياري)",
+    groupLinkPh: "الصق رابط الجروب هنا",
+    groupLinkHint: "من واتساب: الجروب ← دعوة عبر رابط ← نسخ الرابط",
+    groupLinkBad: "الرابط لازم يكون رابط دعوة واتساب (chat.whatsapp.com).",
+    groupTag: "جروب",
+    openGroup: "افتح الجروب",
+    addedGroup: name => `أضفنا جروب ${name} 🤍`,
+    addedGroupRule: (name, when, city) => `أضفنا جروب ${name} 🤍 — سنُذكّرك ${when} بتوقيت ${city}`,
     emptyTodayCta: "ابدأ من زر + لإضافة أول شخص",
     whenQuestion: "متى تبدأ الاتصال؟",
     youClock: "توقيتك",
@@ -278,6 +292,18 @@
     addSubmit: "Save",
     addedToast: name => `${name} added 🤍`,
     addedToastRule: (name, when, city) => `${name} added 🤍 — we'll remind you ${when}, ${city} time`,
+    addKindPerson: "One person",
+    addKindGroup: "A group",
+    addKindQ: "One person or a group?",
+    groupNamePh: "e.g. The family",
+    groupLinkLabel: "WhatsApp group link (optional)",
+    groupLinkPh: "Paste the group link here",
+    groupLinkHint: "In WhatsApp: the group → Invite via link → Copy link",
+    groupLinkBad: "That should be a WhatsApp invite link (chat.whatsapp.com).",
+    groupTag: "Group",
+    openGroup: "Open group",
+    addedGroup: name => `${name} group added 🤍`,
+    addedGroupRule: (name, when, city) => `${name} group added 🤍 — we'll remind you ${when}, ${city} time`,
     emptyTodayCta: "Start with + to add your first person",
     whenQuestion: "When do you reach out?",
     youClock: "Your clock",
@@ -1017,6 +1043,19 @@
     return { pIdx, rIdx };
   }
 
+  function isGroup(person) {
+    return !!person && person.kind === "group";
+  }
+
+  // A WhatsApp group is reached only through its invite link — there is no way to
+  // prefill a message to a group, so groups carry a link, not a phone/waMsg.
+  function normalizeGroupLink(raw) {
+    const s = (raw || "").trim();
+    if (!s) return "";
+    const m = s.match(/chat\.whatsapp\.com\/([A-Za-z0-9]+)/);
+    return m ? "https://chat.whatsapp.com/" + m[1] : "";
+  }
+
   function waLink(person, rule) {
     const d = phoneDigits(person.phone);
     if (!d) return null;
@@ -1316,10 +1355,18 @@
 
   function renderContactActions(person, rule, extraClass) {
     const r = rule || { waMsg: "" };
+    const cls = extraClass ? `co-actions ${extraClass}` : "co-actions";
+    // A group is reached through its invite link — one button, no phone/call.
+    if (isGroup(person)) {
+      const link = normalizeGroupLink(person.waLink);
+      if (!link) return "";
+      return `<div class="${cls}">
+        <a class="btn-ghost co-open-group" href="${esc(link)}" target="_blank" rel="noopener">${esc(T.openGroup)}</a>
+      </div>`;
+    }
     const d = phoneDigits(person.phone);
     if (!d) return "";
     const { pIdx, rIdx } = ruleRef(person, r);
-    const cls = extraClass ? `co-actions ${extraClass}` : "co-actions";
     let html = `<div class="${cls}">`;
     if (SAFE_CONTACT) {
       html += `<button type="button" class="btn-ghost co-wa" data-phone="${esc(d)}" data-co-p="${pIdx}" data-co-r="${rIdx}">${esc(T.whatsapp)}</button>`;
@@ -1717,7 +1764,7 @@
     return `<article class="co-person${expandedPeople.has(idx) ? " is-open" : ""}" data-idx="${idx}">
       <button type="button" class="co-person-toggle" data-idx="${idx}" aria-expanded="${expandedPeople.has(idx) ? "true" : "false"}">
         <span class="co-person-toggle-main">
-          <strong class="co-person-name">${esc(person.name)}</strong>
+          <strong class="co-person-name">${isGroup(person) ? `<span class="co-group-tag">${esc(T.groupTag)}</span> ` : ""}${esc(person.name)}</strong>
           <span class="co-person-meta muted">${esc(cityLabel)} · ${esc(rulesCountLabel((person.rules || []).length))}</span>
         </span>
         <span class="co-person-chevron" aria-hidden="true"></span>
@@ -1807,11 +1854,24 @@
     setTab(activeTab);
   }
 
+  function applyAddKind(kind) {
+    const group = kind === "group";
+    const phoneField = document.querySelector("#coAddSheet .co-phone-field");
+    const groupField = document.querySelector("#coAddSheet .co-group-field");
+    const nameInput = $("#coPersonName");
+    if (phoneField) phoneField.hidden = group;
+    if (groupField) groupField.hidden = !group;
+    if (nameInput) nameInput.placeholder = group ? T.groupNamePh : (LANG === "ar" ? "مثال: أمي" : "e.g. Mum");
+  }
+
   function initAddSheet() {
     const sheet = $("#coAddSheet");
     if (!sheet) return;
     sheet.querySelector(".co-add-sheet-close")?.addEventListener("click", closeAddSheet);
     sheet.addEventListener("click", e => { if (e.target === sheet) closeAddSheet(); });
+    sheet.querySelectorAll('input[name="coKind"]').forEach(r =>
+      r.addEventListener("change", () => applyAddKind(r.value)));
+    applyAddKind(sheet.querySelector('input[name="coKind"]:checked')?.value || "person");
   }
 
   function addPerson(data) {
@@ -1821,15 +1881,19 @@
     // The reminder is whatever they picked in the sheet — never one we invent for
     // them: a rule nobody chose is a notification nobody expects.
     const preset = T.presets[data.preset] || T.presets.later;
-    const name = (data.name || "").trim() || (LANG === "ar" ? "أحبّني" : "Loved one");
-    state.people.push({
+    const group = data.kind === "group";
+    const name = (data.name || "").trim() ||
+      (group ? (LANG === "ar" ? "العيلة" : "The group") : (LANG === "ar" ? "أحبّني" : "Loved one"));
+    const entry = {
       id: uid(),
       name,
       city: city.slug,
       dial: city.dial || "",
-      phone: buildFullPhone(city, data.phone || ""),
       rules: preset.rule ? [{ id: uid(), ...preset.rule }] : [],
-    });
+    };
+    if (group) { entry.kind = "group"; entry.waLink = normalizeGroupLink(data.waLink); }
+    else { entry.phone = buildFullPhone(city, data.phone || ""); }
+    state.people.push(entry);
     const newIdx = state.people.length - 1;
     expandedPeople.clear();
     expandedPeople.add(newIdx);
@@ -1840,7 +1904,10 @@
     scheduleDashboard();
     closeAddSheet();
     setTab("people");
-    toast(preset.rule ? T.addedToastRule(name, preset.when, cN(city)) : T.addedToast(name));
+    const withRule = !!preset.rule;
+    toast(group
+      ? (withRule ? T.addedGroupRule(name, preset.when, cN(city)) : T.addedGroup(name))
+      : (withRule ? T.addedToastRule(name, preset.when, cN(city)) : T.addedToast(name)));
   }
 
   function applyTemplate(idx, tpl) {
@@ -2189,15 +2256,26 @@
       e.preventDefault();
       const name = ($("#coPersonName")?.value || "").trim();
       if (!name) { toast(T.personName); $("#coPersonName")?.focus(); return; }
+      const kind = form.querySelector('input[name="coKind"]:checked')?.value || "person";
       const phone = $("#coPersonPhone")?.value || "";
+      const linkRaw = $("#coGroupLink")?.value || "";
+      // A pasted group link that isn't a real invite is a silent dead button later —
+      // reject it now rather than store something that won't open.
+      if (kind === "group" && linkRaw.trim() && !normalizeGroupLink(linkRaw)) {
+        toast(T.groupLinkBad); $("#coGroupLink")?.focus(); return;
+      }
       const cityField = $("#coPersonCity");
       let city = resolveCityFromField(cityField, pendingPersonCity);
       if (!city && cityField?.value?.trim()) city = findCity(cityField.value);
       const cityIn = city ? cityLabel(city) : (cityField?.value || cityField?.placeholder || "");
       const preset = form.querySelector('input[name="coPreset"]:checked')?.value || "later";
-      addPerson({ name, phone, preset, citySlug: city ? city.slug : "", cityInput: cityIn });
+      addPerson({ name, phone, waLink: linkRaw, kind, preset, citySlug: city ? city.slug : "", cityInput: cityIn });
       $("#coPersonName").value = "";
       $("#coPersonPhone").value = "";
+      if ($("#coGroupLink")) $("#coGroupLink").value = "";
+      const personKind = form.querySelector('input[name="coKind"][value="person"]');
+      if (personKind) personKind.checked = true;
+      applyAddKind("person");
       const first = form.querySelector('input[name="coPreset"]');
       if (first) first.checked = true;
       pendingPersonCity = "";

@@ -230,6 +230,20 @@ html.app-mode .app-bar--home {
   -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
 }
+html.app-mode .app-bar--tool {
+  display: flex !important;
+  align-items: center; gap: 10px;
+  position: sticky; top: 0; z-index: 50;
+  padding: 10px 14px; min-height: 52px;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+html.app-mode .app-bar--tool .app-bar-title {
+  flex: 1; text-align: center; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+html[dir="rtl"] .app-bar-back svg { transform: scaleX(-1); }
 html.app-mode .site-header { display: none !important; }
 html.app-mode #stats,
 html.app-mode .explainer-section,
@@ -1588,6 +1602,27 @@ html.app-mode .co-notify-bar:not([hidden]) { display: flex !important; }
 .co-phone-input.is-locked { opacity: .72; cursor: not-allowed; background: var(--surface-2); }
 .co-dial-hint { margin: 6px 0 0; font-size: .8rem; line-height: 1.4; }
 .co-ac { position: relative; }
+
+/* Person vs group — a small segmented control at the top of the add sheet. */
+.co-kind-field { grid-column: 1 / -1; border: 0; padding: 0; margin: 0; min-width: 0; }
+.co-kind-q { padding: 0; margin: 0 0 8px; font-weight: 600; color: var(--text); }
+.co-kind { display: inline-grid; grid-auto-flow: column; gap: 4px; padding: 4px;
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; }
+.co-kind-opt { position: relative; cursor: pointer; }
+.co-kind-opt input { position: absolute; opacity: 0; width: 0; height: 0; }
+.co-kind-opt span {
+  display: block; padding: 8px 20px; border-radius: 9px; font-weight: 600;
+  color: var(--text-2); text-align: center; transition: background .18s ease, color .18s ease;
+}
+.co-kind-opt input:checked + span { background: var(--surface); color: var(--brand);
+  box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+.co-kind-opt input:focus-visible + span { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+.co-group-tag {
+  display: inline-block; padding: 1px 8px; margin-inline-end: 2px; border-radius: 999px;
+  font-size: .68rem; font-weight: 800; vertical-align: middle;
+  color: var(--brand); background: color-mix(in srgb, var(--brand) 14%, transparent);
+}
 
 /* Choosing the first reminder while adding someone: tappable cards, not a
    dropdown — the whole point is that it takes one glance and one tap. */

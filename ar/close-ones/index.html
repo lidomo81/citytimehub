@@ -138,6 +138,19 @@
             <p class="co-add-sheet-lead muted">الاسم ومدينته ورقم اختياري — ثم اختر القواعد من تبويب أحبابي.</p>
             <form id="coForm" class="co-form co-form-add" autocomplete="off">
               <div class="co-add-grid">
+              <fieldset class="pl-field co-kind-field">
+                <legend class="co-kind-q">شخص واحد أم جروب؟</legend>
+                <div class="co-kind">
+                  <label class="co-kind-opt">
+                    <input type="radio" name="coKind" value="person" checked />
+                    <span>شخص</span>
+                  </label>
+                  <label class="co-kind-opt">
+                    <input type="radio" name="coKind" value="group" />
+                    <span>جروب</span>
+                  </label>
+                </div>
+              </fieldset>
                 <div class="pl-field">
                   <label for="coPersonName">الاسم</label>
                   <input id="coPersonName" class="pl-input" type="text" placeholder="مثال: أمي" required />
@@ -154,6 +167,11 @@
                     <input id="coPersonPhone" class="pl-input co-phone-input" type="tel" dir="ltr" inputmode="tel" autocomplete="tel" placeholder="اختر مدينته أولاً" />
                   </div>
                   <p id="coDialHint" class="co-dial-hint muted" hidden></p>
+                </div>
+                <div class="pl-field co-group-field" hidden>
+                  <label for="coGroupLink">رابط جروب واتساب (اختياري)</label>
+                  <input id="coGroupLink" class="pl-input" type="text" dir="ltr" inputmode="url" placeholder="الصق رابط الجروب هنا" />
+                  <p class="co-dial-hint muted">من واتساب: الجروب ← دعوة عبر رابط ← نسخ الرابط</p>
                 </div>
                 <fieldset class="pl-field co-preset-field">
                   <legend id="coPresetQ" class="co-preset-q">متى نُذكّرك به؟</legend>

@@ -138,6 +138,19 @@
             <p class="co-add-sheet-lead muted">Name, their city, and optional phone — then pick rules on the People tab.</p>
             <form id="coForm" class="co-form co-form-add" autocomplete="off">
               <div class="co-add-grid">
+              <fieldset class="pl-field co-kind-field">
+                <legend class="co-kind-q">One person or a group?</legend>
+                <div class="co-kind">
+                  <label class="co-kind-opt">
+                    <input type="radio" name="coKind" value="person" checked />
+                    <span>One person</span>
+                  </label>
+                  <label class="co-kind-opt">
+                    <input type="radio" name="coKind" value="group" />
+                    <span>A group</span>
+                  </label>
+                </div>
+              </fieldset>
                 <div class="pl-field">
                   <label for="coPersonName">Name</label>
                   <input id="coPersonName" class="pl-input" type="text" placeholder="e.g. Mom" required />
@@ -154,6 +167,11 @@
                     <input id="coPersonPhone" class="pl-input co-phone-input" type="tel" dir="ltr" inputmode="tel" autocomplete="tel" placeholder="Pick their city first" />
                   </div>
                   <p id="coDialHint" class="co-dial-hint muted" hidden></p>
+                </div>
+                <div class="pl-field co-group-field" hidden>
+                  <label for="coGroupLink">WhatsApp group link (optional)</label>
+                  <input id="coGroupLink" class="pl-input" type="text" dir="ltr" inputmode="url" placeholder="Paste the group link here" />
+                  <p class="co-dial-hint muted">In WhatsApp: the group → Invite via link → Copy link</p>
                 </div>
                 <fieldset class="pl-field co-preset-field">
                   <legend id="coPresetQ" class="co-preset-q">When should we remind you?</legend>
