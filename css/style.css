@@ -1460,6 +1460,10 @@ html.app-mode .co-home-strip:not(.app-spot-card) { margin-inline: 12px; }
   margin-top: 4px; padding: 14px 16px; border-radius: 14px;
   border: 1px dashed rgba(96,165,200,.45); background: var(--surface);
 }
+/* The reminders toggle is app-only. Hard-hide it on the website — independent of
+   any cached JS — and let it show inside the app only when JS un-hides it. */
+.co-notify-bar { display: none !important; }
+html.app-mode .co-notify-bar:not([hidden]) { display: flex !important; }
 .co-notify-ico {
   display: inline-flex; align-items: center; justify-content: center; flex: none;
   width: 40px; height: 40px; border-radius: 12px;
