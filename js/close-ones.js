@@ -1143,10 +1143,10 @@
       }
       return;
     }
-    if (web) {
-      web.textContent = T.webHint;
-      web.hidden = false;
-    }
+    // On the website there is no "notify me" toggle: reminders here are the
+    // calendar buttons below (Google Calendar / Outlook .ics). The native push
+    // toggle above is app-only. So keep both the hint and the bar hidden.
+    if (web) web.hidden = true;
     if (bar) bar.hidden = true;
   }
 
