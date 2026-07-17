@@ -165,6 +165,13 @@
     youStartHint: "الساعة التي تتحرّك فيها أنت للاتصال أو التنبيه",
     themWindowRange: (a, b) => `من ${a} إلى ${b}`,
     themWindowHint: min => `نافذة ${min} دقيقة على ساعتها في مدينتها`,
+    // What you are actually being asked to do — a sentence, not a formula.
+    heroCall: name => `اطمئنّ على ${name}`,
+    heroNudge: (name, prayer) => `نبّه ${name} لصلاة ${PNAME[prayer]}`,
+    heroRemind: (name, label) => label ? `ذكّر ${name} بـ${label}` : `موعدك مع ${name}`,
+    heroYouAt: "عندك",
+    heroThemAt: city => `في ${city}`,
+    heroRuleSub: (formula, min) => `${formula} · نافذة ${min} دقيقة`,
     yourCityChip: city => `مدينتك: ${city}`,
     pickYourCity: "حدّد مدينتك في تبويب «أحبابي»",
     heroOnDay: d => `الموعد: ${d}`,
@@ -278,6 +285,12 @@
     youStartHint: "When you should call or send a nudge",
     themWindowRange: (a, b) => `${a} – ${b}`,
     themWindowHint: min => `${min}-minute window on their local clock`,
+    heroCall: name => `Check in on ${name}`,
+    heroNudge: (name, prayer) => `Nudge ${name} for ${PNAME[prayer]}`,
+    heroRemind: (name, label) => label ? `Remind ${name} — ${label}` : `Your plan with ${name}`,
+    heroYouAt: "Your time",
+    heroThemAt: city => `In ${city}`,
+    heroRuleSub: (formula, min) => `${formula} · ${min}-minute window`,
     yourCityChip: city => `Your city: ${city}`,
     pickYourCity: "Set your city on the People tab",
     heroOnDay: d => `Scheduled: ${d}`,
@@ -324,6 +337,17 @@
       return new Intl.DateTimeFormat(LANG === "ar" ? "ar-EG-u-nu-latn" : "en-US", opts).format(new Date(ms));
     } catch (e) {
       return fmtFull(ms, tz);
+    }
+  }
+
+  /** Weekday + date, no clock time — for lines that sit next to a clock already. */
+  function fmtDayOnly(ms, tz) {
+    try {
+      const opts = { weekday: "long", month: "short", day: "numeric" };
+      if (tz) opts.timeZone = tz;
+      return new Intl.DateTimeFormat(LANG === "ar" ? "ar-EG-u-nu-latn" : "en-US", opts).format(new Date(ms));
+    } catch (e) {
+      return fmtDateLong(ms, tz);
     }
   }
 
@@ -1337,12 +1361,14 @@
     return windows.filter(w => w.end > now && !skip.has(windowKey(w))).slice(0, 6);
   }
 
+  // The clocks below the hero already say the exact time, so this line carries the
+  // countdown and the day — repeating "11:29 م" twice just made it noise.
   function heroCountdown(w, isOpen, left) {
+    const tz = viewerCity()?.tz;
     if (isOpen) return `${T.open} · ${T.endsIn(left)}`;
-    if (left <= 1) return `${T.now} · ${fmtDateLong(w.start, viewerCity()?.tz)}`;
-    if (left < 180) return `${T.inMin(left)} · ${fmtDateLong(w.start, viewerCity()?.tz)}`;
-    const you = viewerCity();
-    return T.heroOnDay(fmtDateLong(w.start, you?.tz));
+    if (left <= 1) return `${T.now} · ${fmtDayOnly(w.start, tz)}`;
+    if (left < 180) return `${T.inMin(left)} · ${fmtDayOnly(w.start, tz)}`;
+    return T.heroOnDay(fmtDayOnly(w.start, tz));
   }
 
   function renderWhenCard(w) {
@@ -1394,6 +1420,15 @@
     }
   }
 
+  // The window label ("20 min after Maghrib — Khaled") answers *what rule fired*.
+  // The hero answers *what you should do*, so it needs its own sentence.
+  function heroTitle(w) {
+    const name = w.person.name || "";
+    if (w.rule.type === "before") return T.heroNudge(name, w.rule.prayer);
+    if (w.rule.type === "fixed") return T.heroRemind(name, w.rule.label || "");
+    return T.heroCall(name);
+  }
+
   function renderHeroHtml(active, next) {
     const w = active || next;
     if (!w) {
@@ -1406,13 +1441,34 @@
     const isOpen = !!active;
     const left = isOpen ? minsUntil(w.end) : minsUntil(w.start);
     const when = heroCountdown(w, isOpen, left);
-    const personName = w.person.name || "";
+    const you = viewerCity();
+    const youCityName = you ? cN(you) : (LANG === "ar" ? "مدينتك" : "Your city");
+    const range = T.themWindowRange(fmtAt(w.start, w.city.tz), fmtAt(w.end, w.city.tz));
+    // Two clocks only earn their space when they disagree. Family in your own city
+    // is the common case — showing the same time twice looks broken.
+    const sameZone = !!you && (you.slug === w.city.slug || you.tz === w.city.tz);
+    const clocks = sameZone
+      ? `<div class="co-clock co-clock--you co-clock--solo">
+          <span class="co-clock-tag">${esc(T.heroYouAt)}</span>
+          <strong class="co-clock-val">${esc(fmtAt(w.start, you.tz))}</strong>
+          <span class="co-clock-city muted">${esc(youCityName)} · ${esc(range)}</span>
+        </div>`
+      : `<div class="co-clock co-clock--you">
+          <span class="co-clock-tag">${esc(T.heroYouAt)}</span>
+          <strong class="co-clock-val">${esc(fmtAt(w.start, you?.tz))}</strong>
+          <span class="co-clock-city muted">${esc(youCityName)}</span>
+        </div>
+        <div class="co-clock co-clock--them">
+          <span class="co-clock-tag">${esc(T.heroThemAt(cN(w.city)))}</span>
+          <strong class="co-clock-val">${esc(fmtAt(w.start, w.city.tz))}</strong>
+          <span class="co-clock-city muted">${esc(range)}</span>
+        </div>`;
     return `<section class="co-hero${isOpen ? " co-hero--open" : ""}" aria-label="${esc(isOpen ? T.heroOpen : T.heroNext)}">
       <p class="co-hero-k">${esc(isOpen ? T.heroOpen : T.heroNext)}</p>
-      <h3 class="co-hero-title">${esc(w.label)}</h3>
+      <h3 class="co-hero-title">${esc(heroTitle(w))}</h3>
       <p class="co-hero-when">${esc(when)}</p>
-      <p class="co-hero-from muted">${esc(T.heroFromRules)} <strong>${esc(personName)}</strong></p>
-      ${renderWhenCard(w)}
+      <div class="co-hero-clocks${sameZone ? " co-hero-clocks--solo" : ""}">${clocks}</div>
+      <p class="co-hero-rule muted">${esc(T.heroRuleSub(w.label, windowDurationMin(w)))}</p>
       ${renderActions(w.person, w.rule, w)}
     </section>`;
   }

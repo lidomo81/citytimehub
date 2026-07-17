@@ -1349,10 +1349,39 @@ html[dir="rtl"] .hu-time, html[dir="rtl"] [dir="ltr"] { direction: ltr; unicode-
   padding: 20px 22px; border-radius: 16px;
   background: var(--surface); border: 1px solid var(--border);
 }
+/* An open window is the one moment the tool exists for — let it glow, gently. */
 .co-hero--open {
   background: linear-gradient(135deg, rgba(37,99,235,.14), rgba(96,165,200,.10));
-  border-color: rgba(96,165,200,.32);
+  border-color: color-mix(in srgb, var(--brand) 55%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--brand) 22%, transparent),
+              0 10px 34px -12px color-mix(in srgb, var(--brand) 55%, transparent);
+  animation: coHeroBreath 6s ease-in-out infinite;
 }
+@keyframes coHeroBreath {
+  0%, 100% { box-shadow: 0 0 0 1px color-mix(in srgb, var(--brand) 18%, transparent),
+                         0 10px 30px -14px color-mix(in srgb, var(--brand) 45%, transparent); }
+  50%      { box-shadow: 0 0 0 1px color-mix(in srgb, var(--brand) 30%, transparent),
+                         0 12px 40px -10px color-mix(in srgb, var(--brand) 65%, transparent); }
+}
+@media (prefers-reduced-motion: reduce) { .co-hero--open { animation: none; } }
+
+/* Your clock and theirs, side by side — the whole answer in one glance. */
+.co-hero-clocks {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 0 12px;
+}
+.co-clock {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 12px 14px; border-radius: 12px;
+  background: var(--surface-2); border: 1px solid var(--border);
+}
+.co-hero-clocks--solo { grid-template-columns: 1fr; }
+.co-clock--you { border-color: color-mix(in srgb, var(--brand) 40%, var(--border)); }
+.co-clock-tag { font-size: .74rem; font-weight: 800; letter-spacing: .04em; color: var(--text-2); }
+.co-clock--you .co-clock-tag { color: var(--brand); }
+.co-clock-val { font-size: 1.15rem; font-weight: 800; line-height: 1.3; font-variant-numeric: tabular-nums; }
+.co-clock-city { font-size: .76rem; line-height: 1.4; }
+.co-hero-rule { margin: 0 0 14px; font-size: .8rem; line-height: 1.5; }
+@media (max-width: 420px) { .co-hero-clocks { grid-template-columns: 1fr; } }
 .co-hero--empty { text-align: center; padding: 28px 20px; }
 .co-hero-k {
   margin: 0 0 6px; font-size: .72rem; font-weight: 800; letter-spacing: .08em;
