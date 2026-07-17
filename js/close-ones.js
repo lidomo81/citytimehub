@@ -117,10 +117,10 @@
     todayTitleOn: d => `جدول اليوم — ${d}`,
     tomorrowTitleOn: d => `غدًا — ${d}`,
     emptyToday: "لا نوافذ اليوم — راجع القادم أدناه",
-    exportCal: "تنزيل .ics (Apple / Outlook)",
-    exportCalHint: "كل مواعيد الأسبوع في ملف واحد",
-    exportGcal: "أضِف إلى Google Calendar",
-    exportGcalHint: "أقرب موعد قادم — للباقي استخدم .ics",
+    exportCal: "كل الأسبوع — ملف .ics",
+    exportCalHint: "كل مواعيد الأسبوع في ملف واحد — لـ Apple و Outlook وأي تقويم",
+    exportGcal: "أقرب موعد — Google Calendar",
+    exportGcalHint: "يضيف الموعد القادم فقط (جوجل تسمح بحدثٍ واحد) — للأسبوع كله استخدم ملف .ics",
     icsDone: "تم تنزيل ملف التقويم",
     homeNext: (when, label) => `القادم ${when} — ${label}`,
     homeOpen: "أحبابك",
@@ -218,10 +218,10 @@
     todayTitleOn: d => `Today — ${d}`,
     tomorrowTitleOn: d => `Tomorrow — ${d}`,
     emptyToday: "No windows today — see upcoming below",
-    exportCal: "Download .ics (Apple / Outlook)",
-    exportCalHint: "All windows this week in one file",
-    exportGcal: "Add to Google Calendar",
-    exportGcalHint: "Next upcoming window — use .ics for the full week",
+    exportCal: "Whole week — .ics file",
+    exportCalHint: "Every reminder this week in one file — for Apple, Outlook and any calendar",
+    exportGcal: "Next reminder — Google Calendar",
+    exportGcalHint: "Adds the next reminder only (Google allows one event per link) — use the .ics file for the whole week",
     icsDone: "Calendar file downloaded",
     homeNext: (when, label) => `Next ${when} — ${label}`,
     homeOpen: "Close Ones",
@@ -503,28 +503,46 @@
     return (CITIES.find(c => c.slug === "cairo") || CITIES[0] || {}).slug;
   }
 
-  async function fetchPrayers(city) {
-    const ymd = cityYmd(city);
-    const key = `${city.slug}:${ymd.y}-${ymd.m + 1}-${ymd.day}`;
+  // Prayer times shift a few minutes every day, so a reminder for tomorrow (or
+  // for the week we export) must use *that day's* times — not today's. AlAdhan's
+  // calendar endpoint returns a whole month, so one request covers every day.
+  const parseTimings = t => PKEYS.map(k => {
+    const [h, m] = (t[k] || "0:0").split(" ")[0].split(":").map(Number);
+    return { key: k, h, m };
+  });
+
+  function fetchMonth(city, y, mo) {
+    const key = `${city.slug}:${y}-${mo}`;
     if (prayerCache.has(key)) return prayerCache.get(key);
-    const ds = `${String(ymd.day).padStart(2, "0")}-${String(ymd.m + 1).padStart(2, "0")}-${ymd.y}`;
-    const url = `https://api.aladhan.com/v1/timings/${ds}?latitude=${city.lat}&longitude=${city.lng}&method=${city.method ?? 3}`;
-    const ctrl = new AbortController();
-    const timer = setTimeout(() => ctrl.abort(), 12000);
-    try {
-      const res = await fetch(url, { cache: "default", signal: ctrl.signal });
-      if (!res.ok) throw new Error("timings");
-      const { data } = await res.json();
-      const t = data.timings;
-      const prayers = PKEYS.map(k => {
-        const [h, m] = (t[k] || "0:0").split(" ")[0].split(":").map(Number);
-        return { key: k, h, m };
-      });
-      prayerCache.set(key, prayers);
-      return prayers;
-    } finally {
-      clearTimeout(timer);
-    }
+    const url = `https://api.aladhan.com/v1/calendar/${y}/${mo}?latitude=${city.lat}&longitude=${city.lng}&method=${city.method ?? 3}`;
+    const p = (async () => {
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), 12000);
+      try {
+        const res = await fetch(url, { cache: "default", signal: ctrl.signal });
+        if (!res.ok) throw new Error("calendar");
+        const { data } = await res.json();
+        const map = new Map();
+        (data || []).forEach(d => {
+          const g = d && d.date && d.date.gregorian && d.date.gregorian.date; // DD-MM-YYYY
+          if (!g || !d.timings) return;
+          const [dd, mm, yy] = g.split("-").map(Number);
+          map.set(`${yy}-${mm}-${dd}`, parseTimings(d.timings));
+        });
+        if (!map.size) throw new Error("calendar-empty");
+        return map;
+      } finally { clearTimeout(timer); }
+    })();
+    prayerCache.set(key, p);
+    p.catch(() => prayerCache.delete(key)); // let a failed month be retried
+    return p;
+  }
+
+  // The prayers for this city on the day `dayOff` days from today (its own date).
+  async function prayersForDay(city, dayOff = 0) {
+    const ymd = cityYmd(city, dayOff);
+    const map = await fetchMonth(city, ymd.y, ymd.m + 1);
+    return map.get(`${ymd.y}-${ymd.m + 1}-${ymd.day}`) || null;
   }
 
   function defaultOffsetForType(type) {
@@ -715,7 +733,7 @@
     return when ? T.fixedLineOn(n, rule.label || "", when) : T.fixedLine(n, rule.label || "");
   }
 
-  function computeRuleWindows(person, city, prayers, rule, horizonDays = DASH_HORIZON_DAYS) {
+  function computeRuleWindows(person, city, prayersByDay, rule, horizonDays = DASH_HORIZON_DAYS) {
     const out = [];
     const add = (start, end, kind) => {
       if (end <= start) return;
@@ -726,10 +744,12 @@
       : horizonDays;
 
     if (rule.type === "after" || rule.type === "before") {
-      const pr = prayers.find(p => p.key === rule.prayer);
-      if (!pr) return out;
       const off = effectiveOffsetMin(rule) * 60000;
       for (let dayOff = 0; dayOff <= ruleHorizon; dayOff++) {
+        const dayPrayers = prayersByDay.get(dayOff);
+        if (!dayPrayers) continue;
+        const pr = dayPrayers.find(p => p.key === rule.prayer);
+        if (!pr) continue;
         const pMs = localToUtcMs(city, pr.h, pr.m, dayOff);
         if (rule.type === "after") add(pMs + off, pMs + off + AFTER_WINDOW_MIN * 60000, "after");
         else add(pMs - off, pMs, "before");
@@ -850,11 +870,18 @@
     for (const person of state.people) {
       const city = bySlug.get(person.city);
       if (!city || !person.rules || !person.rules.length) continue;
-      let prayers;
-      try { prayers = await fetchPrayers(city); }
-      catch (e) { continue; }
+      // Each day gets its own prayer times (they drift a few minutes daily).
+      const maxDay = Math.max(horizonDays, FIXED_RULE_HORIZON_DAYS);
+      const byDay = new Map();
+      try {
+        for (let d = 0; d <= maxDay; d++) {
+          const pr = await prayersForDay(city, d);
+          if (pr) byDay.set(d, pr);
+        }
+      } catch (e) { continue; }
+      if (!byDay.size) continue;
       for (const rule of person.rules) {
-        windows.push(...computeRuleWindows(person, city, prayers, rule, horizonDays));
+        windows.push(...computeRuleWindows(person, city, byDay, rule, horizonDays));
       }
     }
     return windows.filter(w => w.end > now - 60000).sort((a, b) => a.start - b.start);

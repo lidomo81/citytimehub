@@ -1626,6 +1626,13 @@ html.app-mode .co-notify-bar:not([hidden]) { display: flex !important; }
 .co-rule.is-locked .co-rule-type,
 .co-rule.is-locked .co-rule-detail input,
 .co-rule.is-locked .co-rule-detail select { opacity: .92; cursor: default; }
+/* A saved (locked) rule is read-only, not unreadable: browsers grey out disabled
+   fields via -webkit-text-fill-color, which washed the text out in the app. */
+.co-rule input:disabled, .co-rule select:disabled, .co-rule textarea:disabled,
+.co-people input:disabled, .co-people select:disabled, .co-people textarea:disabled {
+  color: var(--text) !important; -webkit-text-fill-color: var(--text) !important;
+  background: var(--surface-2); opacity: 1; cursor: default;
+}
 .btn-ghost.is-pressed,
 .btn-primary.is-pressed,
 .co-done.is-pressed { transform: scale(.96); opacity: .88; }
