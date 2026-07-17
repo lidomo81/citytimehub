@@ -27,6 +27,9 @@
     : ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
   const AFTER_WINDOW_MIN = 45;
+  const PERIODIC_MIN_DAYS = 1;
+  const PERIODIC_MAX_DAYS = 30;
+  const DEFAULT_PERIODIC_DAYS = 3;
   const DASH_HORIZON_DAYS = 1;
   const EXPORT_HORIZON_DAYS = 6;
   const FIXED_DATE_MAX_DAYS = 90;
@@ -72,7 +75,11 @@
     tplAfterMaghrib: "بعد المغرب + ٢٠ د — اتصل",
     rules: "قواعد التواصل",
     addRule: "أضف قاعدة",
-    ruleAfter: "بعد صلاة", ruleBefore: "قبل صلاة", ruleFixed: "موعد ثابت",
+    ruleAfter: "بعد صلاة", ruleBefore: "قبل صلاة", ruleFixed: "موعد ثابت", rulePeriodic: "اطمئنان دوري",
+    everyLabel: "كل", everyDaysUnit: "أيام", everyDays: "كل كام يوم", atTime: "الساعة",
+    periodicHint: "تذكير يتكرر تلقائيًا لتطمئنّ عليه بين الحين والحين",
+    periodicLine: (name, n) => `اطمئنّ على ${name} — كل ${n} أيام`,
+    tplCheckin: "اطمئنان كل ٣ أيام",
     offsetMin: "دقائق", fixedLabel: "التذكير", fixedLabelPh: "مثال: موعد الدكتور",
     fixedDay: "اليوم", fixedTime: "الوقت (بتوقيته)", remindBefore: "ذكّرني قبل",
     fixedDate: "التاريخ", fixedDateHint: "بتوقيت مدينة الشخص — اليوم أو يوم قادم",
@@ -207,7 +214,11 @@
     tplAfterMaghrib: "After Maghrib + 20 min — call",
     rules: "Connection rules",
     addRule: "Add rule",
-    ruleAfter: "After prayer", ruleBefore: "Before prayer", ruleFixed: "Fixed appointment",
+    ruleAfter: "After prayer", ruleBefore: "Before prayer", ruleFixed: "Fixed appointment", rulePeriodic: "Regular check-in",
+    everyLabel: "Every", everyDaysUnit: "days", everyDays: "Every how many days", atTime: "at",
+    periodicHint: "A reminder that repeats on its own, so you check in now and then",
+    periodicLine: (name, n) => `Check in on ${name} — every ${n} days`,
+    tplCheckin: "Check-in every 3 days",
     offsetMin: "minutes", fixedLabel: "Reminder", fixedLabelPh: "e.g. Doctor appointment",
     fixedDay: "Day", fixedTime: "Time (their clock)", remindBefore: "Remind me before",
     fixedDate: "Date", fixedDateHint: "On their city clock — today or a day ahead",
@@ -637,6 +648,12 @@
     return Math.min(PRAYER_OFFSET_MAX, Math.max(PRAYER_OFFSET_MIN, Math.round(Number(v))));
   }
 
+  function effectiveEveryDays(rule) {
+    const v = Math.round(Number(rule.everyDays));
+    if (!Number.isFinite(v)) return DEFAULT_PERIODIC_DAYS;
+    return Math.min(PERIODIC_MAX_DAYS, Math.max(PERIODIC_MIN_DAYS, v));
+  }
+
   function effectiveRemindBeforeMin(rule) {
     if (rule.type !== "fixed") return DEFAULT_REMIND_BEFORE;
     const v = rule.remindBeforeMin;
@@ -651,13 +668,29 @@
     } else if (rule.type === "fixed") {
       rule.remindBeforeMin = effectiveRemindBeforeMin(rule);
       if (!rule.date || !/^\d{4}-\d{2}-\d{2}$/.test(rule.date)) delete rule.date;
+    } else if (rule.type === "periodic") {
+      rule.everyDays = effectiveEveryDays(rule);
+      if (!/^\d{1,2}:\d{2}$/.test(rule.time || "")) rule.time = "19:00";
     }
+  }
+
+  function cityYmdStr(city, dayOff = 0) {
+    const y = cityYmd(city, dayOff);
+    const p = n => String(n).padStart(2, "0");
+    return `${y.y}-${p(y.m + 1)}-${p(y.day)}`;
   }
 
   function normalizePersonRules(person) {
     if (!person?.rules) return;
+    const city = bySlug.get(person.city);
     for (const r of person.rules) {
       normalizeRule(r);
+      // A periodic rule counts "every N days" from a fixed anchor, set once when
+      // the rule is created — otherwise every day would look like day zero and it
+      // would fire daily.
+      if (r.type === "periodic" && !/^\d{4}-\d{2}-\d{2}$/.test(r.startDate || "") && city) {
+        r.startDate = cityYmdStr(city, 0);
+      }
       migrateFixedRule(person, r);
     }
   }
@@ -814,6 +847,7 @@
     const n = person.name || "";
     if (rule.type === "after") return T.afterLine(n, rule.prayer, effectiveOffsetMin(rule));
     if (rule.type === "before") return T.beforeLine(n, rule.prayer, effectiveOffsetMin(rule));
+    if (rule.type === "periodic") return T.periodicLine(n, effectiveEveryDays(rule));
     const city = bySlug.get(person.city);
     const when = formatFixedDateLabel(rule.date, city);
     return when ? T.fixedLineOn(n, rule.label || "", when) : T.fixedLine(n, rule.label || "");
@@ -825,7 +859,7 @@
       if (end <= start) return;
       out.push({ start, end, kind, rule, person, city, label: ruleLabel(person, rule) });
     };
-    const ruleHorizon = rule.type === "fixed"
+    const ruleHorizon = (rule.type === "fixed" || rule.type === "periodic")
       ? Math.max(horizonDays, FIXED_RULE_HORIZON_DAYS)
       : horizonDays;
 
@@ -862,6 +896,20 @@
         const start = apt - rb;
         const end = rbMin === 0 ? apt + AFTER_WINDOW_MIN * 60000 : apt;
         add(start, end, "fixed");
+      }
+    } else if (rule.type === "periodic") {
+      const every = effectiveEveryDays(rule);
+      const [hh, mm] = (rule.time || "19:00").split(":").map(Number);
+      const startStr = /^\d{4}-\d{2}-\d{2}$/.test(rule.startDate || "")
+        ? rule.startDate : cityYmdStr(city, 0);
+      const [sy, sm, sd] = startStr.split("-").map(Number);
+      const startMs = Date.UTC(sy, sm - 1, sd);
+      for (let dayOff = 0; dayOff <= ruleHorizon; dayOff++) {
+        const ymd = cityYmd(city, dayOff);
+        const diff = Math.round((Date.UTC(ymd.y, ymd.m, ymd.day) - startMs) / 86400000);
+        if (diff < 0 || diff % every !== 0) continue;
+        const apt = localToUtcMs(city, hh, mm, dayOff);
+        add(apt, apt + AFTER_WINDOW_MIN * 60000, "periodic");
       }
     }
     return out;
@@ -1727,6 +1775,7 @@
         <option value="after"${r.type === "after" ? " selected" : ""}>${esc(T.ruleAfter)}</option>
         <option value="before"${r.type === "before" ? " selected" : ""}>${esc(T.ruleBefore)}</option>
         <option value="fixed"${r.type === "fixed" ? " selected" : ""}>${esc(T.ruleFixed)}</option>
+        <option value="periodic"${r.type === "periodic" ? " selected" : ""}>${esc(T.rulePeriodic)}</option>
       </select>`;
       const prayerSel = `<select class="co-rule-prayer" data-p="${idx}" data-r="${ri}"${dis}>
         ${PKEYS.map(k => `<option value="${k}"${r.prayer === k ? " selected" : ""}>${esc(PNAME[k])}</option>`).join("")}
@@ -1747,8 +1796,12 @@
       const rbVal = effectiveRemindBeforeMin(r);
       const remind = `<input type="number" class="co-rule-remind" min="${REMIND_MIN}" max="${REMIND_MAX}" step="5" value="${rbVal}" data-p="${idx}" data-r="${ri}" aria-label="${esc(T.remindBefore)}"${dis} />`;
       const wa = `<div class="co-wa-wrap"><input type="text" class="co-rule-wa" value="${esc(r.waMsg || "")}" placeholder="${esc(T.waMsgPh)}" data-p="${idx}" data-r="${ri}" aria-describedby="coWaSaved-${idx}-${ri}"${dis} /><span id="coWaSaved-${idx}-${ri}" class="co-wa-saved-hint" hidden aria-live="polite"></span></div>`;
+      const everyIn = `<input type="number" class="co-rule-every" min="${PERIODIC_MIN_DAYS}" max="${PERIODIC_MAX_DAYS}" step="1" value="${effectiveEveryDays(r)}" data-p="${idx}" data-r="${ri}" aria-label="${esc(T.everyDays)}"${dis} />`;
+      const periodicTime = `<input type="time" class="co-rule-time" value="${esc(r.time || "19:00")}" data-p="${idx}" data-r="${ri}"${dis} />`;
       const detail = r.type === "fixed"
         ? `<div class="co-rule-detail">${labelIn} ${dateIn} ${timeIn} ${weekly} <label class="co-mini">${esc(T.remindBefore)}</label> ${remind} <span class="co-mini co-rule-hint">${esc(T.remindHint)}</span> ${wa}</div>`
+        : r.type === "periodic"
+        ? `<div class="co-rule-detail"><label class="co-mini">${esc(T.everyLabel)}</label> ${everyIn} <label class="co-mini">${esc(T.everyDaysUnit)}</label> <label class="co-mini">${esc(T.atTime)}</label> ${periodicTime} <span class="co-mini co-rule-hint">${esc(T.periodicHint)}</span> ${wa}</div>`
         : `<div class="co-rule-detail">${prayerSel} <label class="co-mini">${esc(T.offsetMin)}</label> ${offset} ${wa}</div>`;
       const actions = `<div class="co-rule-actions pl-actions">
         <button type="button" class="btn-ghost co-rule-save" data-p="${idx}" data-r="${ri}">${esc(T.save)}</button>
@@ -1778,6 +1831,7 @@
             <button type="button" class="co-tpl" data-idx="${idx}" data-tpl="afterFajr30">${esc(T.tplAfterFajr)}</button>
             <button type="button" class="co-tpl" data-idx="${idx}" data-tpl="beforeFajr15">${esc(T.tplBeforeFajr)}</button>
             <button type="button" class="co-tpl" data-idx="${idx}" data-tpl="afterMaghrib20">${esc(T.tplAfterMaghrib)}</button>
+            <button type="button" class="co-tpl" data-idx="${idx}" data-tpl="checkin3">${esc(T.tplCheckin)}</button>
           </div>
           <div class="co-rules">${rulesHtml}</div>
           <div class="pl-actions co-person-rule-actions">
@@ -1917,6 +1971,7 @@
       afterFajr30: { type: "after", prayer: "Fajr", offsetMin: 30 },
       beforeFajr15: { type: "before", prayer: "Fajr", offsetMin: 15, waMsg: LANG === "ar" ? "صلّي الفجر يا حبيبتي 🤍" : "Fajr time — love you 🤍" },
       afterMaghrib20: { type: "after", prayer: "Maghrib", offsetMin: 20 },
+      checkin3: { type: "periodic", everyDays: DEFAULT_PERIODIC_DAYS, time: "19:00" },
     };
     const t = templates[tpl];
     if (!t) return;
@@ -1975,6 +2030,9 @@
       if (r.type === "fixed") {
         r.date = fixedDateForPerson(p, r);
         if (r.repeatWeekly == null) r.repeatWeekly = false;
+      } else if (r.type === "periodic") {
+        const city = bySlug.get(p.city);
+        if (city) r.startDate = cityYmdStr(city, 0);
       }
       normalizeRule(r);
       fullRerender = true;
@@ -1989,6 +2047,11 @@
           : Math.min(PRAYER_OFFSET_MAX, Math.max(PRAYER_OFFSET_MIN, Math.round(n)));
       }
       if (String(r.offsetMin) !== el.value) el.value = r.offsetMin;
+    }
+    else if (el.classList.contains("co-rule-every")) {
+      const raw = el.value.trim();
+      r.everyDays = raw ? effectiveEveryDays({ everyDays: +raw }) : DEFAULT_PERIODIC_DAYS;
+      if (String(r.everyDays) !== el.value) el.value = r.everyDays;
     }
     else if (el.classList.contains("co-rule-dow")) r.dow = +el.value;
     else if (el.classList.contains("co-rule-date")) {
