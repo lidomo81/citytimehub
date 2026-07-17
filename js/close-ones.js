@@ -1795,7 +1795,9 @@
       const labelIn = `<input type="text" class="co-rule-label" value="${esc(r.label || "")}" placeholder="${esc(T.fixedLabelPh)}" data-p="${idx}" data-r="${ri}"${dis} />`;
       const rbVal = effectiveRemindBeforeMin(r);
       const remind = `<input type="number" class="co-rule-remind" min="${REMIND_MIN}" max="${REMIND_MAX}" step="5" value="${rbVal}" data-p="${idx}" data-r="${ri}" aria-label="${esc(T.remindBefore)}"${dis} />`;
-      const wa = `<div class="co-wa-wrap"><input type="text" class="co-rule-wa" value="${esc(r.waMsg || "")}" placeholder="${esc(T.waMsgPh)}" data-p="${idx}" data-r="${ri}" aria-describedby="coWaSaved-${idx}-${ri}"${dis} /><span id="coWaSaved-${idx}-${ri}" class="co-wa-saved-hint" hidden aria-live="polite"></span></div>`;
+      // No prewritten message for a group: WhatsApp can't prefill a group chat, so
+      // the field would be a promise the tool can't keep.
+      const wa = isGroup(person) ? "" : `<div class="co-wa-wrap"><input type="text" class="co-rule-wa" value="${esc(r.waMsg || "")}" placeholder="${esc(T.waMsgPh)}" data-p="${idx}" data-r="${ri}" aria-describedby="coWaSaved-${idx}-${ri}"${dis} /><span id="coWaSaved-${idx}-${ri}" class="co-wa-saved-hint" hidden aria-live="polite"></span></div>`;
       const everyIn = `<input type="number" class="co-rule-every" min="${PERIODIC_MIN_DAYS}" max="${PERIODIC_MAX_DAYS}" step="1" value="${effectiveEveryDays(r)}" data-p="${idx}" data-r="${ri}" aria-label="${esc(T.everyDays)}"${dis} />`;
       const periodicTime = `<input type="time" class="co-rule-time" value="${esc(r.time || "19:00")}" data-p="${idx}" data-r="${ri}"${dis} />`;
       const detail = r.type === "fixed"
@@ -1945,8 +1947,14 @@
       dial: city.dial || "",
       rules: preset.rule ? [{ id: uid(), ...preset.rule }] : [],
     };
-    if (group) { entry.kind = "group"; entry.waLink = normalizeGroupLink(data.waLink); }
-    else { entry.phone = buildFullPhone(city, data.phone || ""); }
+    if (group) {
+      entry.kind = "group";
+      entry.waLink = normalizeGroupLink(data.waLink);
+      // A group can't receive a prewritten message, so don't carry a preset's one.
+      entry.rules.forEach(r => { delete r.waMsg; });
+    } else {
+      entry.phone = buildFullPhone(city, data.phone || "");
+    }
     state.people.push(entry);
     const newIdx = state.people.length - 1;
     expandedPeople.clear();
