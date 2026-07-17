@@ -137,6 +137,7 @@
     heroFromRules: "من قواعد",
     scheduleLead: "باقي اليوم وغدًا — محسوب من قواعد كل شخص",
     scheduleEmpty: "لا مواعيد اليوم أو غدًا — القواعد تحدّد النوافذ تلقائيًا.",
+    scheduleEmptyOther: "لا مواعيد أخرى اليوم أو غدًا — القادم معروضٌ بالأعلى.",
     laterTitle: "لاحقًا هذا الأسبوع",
     rulesCount: n => `${n} قاعدة`,
     rulesCountMany: n => `${n} قواعد`,
@@ -238,6 +239,7 @@
     heroFromRules: "From rules for",
     scheduleLead: "Rest of today and tomorrow — calculated from each person\u2019s rules",
     scheduleEmpty: "Nothing today or tomorrow — your rules create windows automatically.",
+    scheduleEmptyOther: "Nothing else today or tomorrow — your next reminder is shown above.",
     laterTitle: "Later this week",
     rulesCount: n => n === 1 ? "1 rule" : `${n} rules`,
     rulesCountMany: n => `${n} rules`,
@@ -310,12 +312,9 @@
         weekday: "long", month: "short", day: "numeric",
       }).format(d);
     }
-    const ymd = cityYmd(city, dayOff);
-    const offH = tzOffsetHours(city.tz);
-    const noonUtc = Date.UTC(ymd.y, ymd.m, ymd.day, 12, 0) - offH * 3600000;
     return new Intl.DateTimeFormat(LANG === "ar" ? "ar-EG-u-nu-latn" : "en-US", {
       weekday: "long", month: "short", day: "numeric", timeZone: city.tz,
-    }).format(new Date(noonUtc));
+    }).format(new Date(localToUtcMs(city, 12, 0, dayOff)));
   }
 
   function windowDurationMin(w) {
@@ -334,30 +333,39 @@
   const ruleEditing = new Set();
   let activeTab = "today";
 
-  function tzOffsetHours(tz) {
+  // A zone's UTC offset changes with daylight saving, so a window days from now
+  // must use the offset on *its own* day — not today's.
+  function tzOffsetAt(tz, whenMs = Date.now()) {
     if (!tz) return 0;
-    if (tzCache.has(tz)) return tzCache.get(tz);
+    const key = tz + "|" + Math.floor(whenMs / 86400000); // one lookup per zone per day
+    if (tzCache.has(key)) return tzCache.get(key);
     let off = 0;
     try {
       const p = new Intl.DateTimeFormat("en-US", { timeZone: tz, timeZoneName: "shortOffset", hour: "2-digit" })
-        .formatToParts(new Date()).find(x => x.type === "timeZoneName");
+        .formatToParts(new Date(whenMs)).find(x => x.type === "timeZoneName");
       const m = p && p.value.match(/([+-])(\d{1,2})(?::(\d{2}))?/);
       if (m) off = (m[1] === "-" ? -1 : 1) * (parseInt(m[2], 10) + (m[3] ? parseInt(m[3], 10) / 60 : 0));
     } catch (e) {}
-    tzCache.set(tz, off);
+    tzCache.set(key, off);
     return off;
   }
 
   function cityYmd(city, dayOff = 0) {
-    const offH = tzOffsetHours(city.tz);
-    const d = new Date(Date.now() + offH * 3600000 + dayOff * 86400000);
+    const at = Date.now() + dayOff * 86400000;
+    const offH = tzOffsetAt(city.tz, at);
+    const d = new Date(at + offH * 3600000);
     return { y: d.getUTCFullYear(), m: d.getUTCMonth(), day: d.getUTCDate(), dow: d.getUTCDay() };
   }
 
   function localToUtcMs(city, h, m, dayOff = 0) {
     const ymd = cityYmd(city, dayOff);
-    const offH = tzOffsetHours(city.tz);
-    return Date.UTC(ymd.y, ymd.m, ymd.day, h, m, 0) - offH * 3600000;
+    const wall = Date.UTC(ymd.y, ymd.m, ymd.day, h, m, 0);
+    // Resolve the offset on that day, then refine once in case the first guess
+    // landed on the other side of a daylight-saving switch.
+    const off1 = tzOffsetAt(city.tz, wall);
+    const utc1 = wall - off1 * 3600000;
+    const off2 = tzOffsetAt(city.tz, utc1);
+    return off2 === off1 ? utc1 : wall - off2 * 3600000;
   }
 
   function searchCities(q, limit = 8) {
@@ -478,12 +486,9 @@
     const off = dayOffForCityDate(city, dateStr);
     if (off == null) return dateStr;
     try {
-      const y = cityYmd(city, off);
-      const offH = tzOffsetHours(city.tz);
-      const noonUtc = Date.UTC(y.y, y.m, y.day, 12, 0) - offH * 3600000;
       return new Intl.DateTimeFormat(LANG === "ar" ? "ar-EG-u-nu-latn" : "en-US", {
         weekday: "long", month: "short", day: "numeric", timeZone: city.tz,
-      }).format(new Date(noonUtc));
+      }).format(new Date(localToUtcMs(city, 12, 0, off)));
     } catch (e) { return dateStr; }
   }
 
@@ -792,7 +797,7 @@
 
   function dayKeyForCity(ms, city) {
     if (!city) return new Date(ms).toISOString().slice(0, 10);
-    const offH = tzOffsetHours(city.tz);
+    const offH = tzOffsetAt(city.tz, ms);
     const d = new Date(ms + offH * 3600000);
     const p = n => String(n).padStart(2, "0");
     return `${d.getUTCFullYear()}-${p(d.getUTCMonth() + 1)}-${p(d.getUTCDate())}`;
@@ -1422,9 +1427,12 @@
     const later = laterWindows(windows, today, tomorrow, skipKey);
     const exportHtml = renderExportActionsHtml(windows);
     if (!todayF.length && !tomorrowF.length && !later.length) {
+      // Only truly empty if nothing was filtered out: when the one window we have
+      // is the one already shown above, saying "nothing" contradicts the screen.
+      const heroShown = !!skipKey && windows.some(w => windowKey(w) === skipKey);
       return `<section class="co-day-agenda co-day-agenda--empty">
         <h3 class="co-agenda-title">${esc(T.todayTitleOn(fmtCalendarDay(0)))}</h3>
-        <p class="co-agenda-lead muted">${esc(T.scheduleEmpty)}</p>
+        <p class="co-agenda-lead muted">${esc(heroShown ? T.scheduleEmptyOther : T.scheduleEmpty)}</p>
         ${exportHtml}
       </section>`;
     }
