@@ -649,6 +649,11 @@
       if (raw && typeof raw === "object") {
         state.you = raw.you || "";
         state.people = Array.isArray(raw.people) ? raw.people.slice(0, MAX_PEOPLE) : [];
+        // A draft that was never saved shouldn't come back to life on reload —
+        // editing persists as you type, so drafts can reach storage.
+        for (const p of state.people) {
+          if (Array.isArray(p.rules)) p.rules = p.rules.filter(r => !r || !r.draft);
+        }
         normalizeAllRules();
       }
     } catch (e) {}
@@ -695,6 +700,8 @@
         at: w.start,
         title: w.person.name || (LANG === "ar" ? "أحبّك" : "Loved one"),
         body: w.label || "",
+        phone: phoneDigits(w.person.phone) || "",
+        waMsg: (w.rule && w.rule.waMsg) ? w.rule.waMsg : "",
       }));
     return { lang: LANG, alarms };
   }
@@ -934,6 +941,7 @@
       } catch (e) { continue; }
       if (!byDay.size) continue;
       for (const rule of person.rules) {
+        if (rule.draft) continue; // unsaved — it exists only in the editor
         windows.push(...computeRuleWindows(person, city, byDay, rule, horizonDays));
       }
     }
@@ -1870,6 +1878,8 @@
 
   function saveRuleCard(pIdx, rIdx, btn) {
     syncRuleFromDom(pIdx, rIdx);
+    const r = state.people[pIdx]?.rules[rIdx];
+    if (r) delete r.draft; // saving is what turns a draft into a live reminder
     saveState();
     ruleEditing.delete(ruleKey(pIdx, rIdx));
     toast(T.saved);
@@ -1963,13 +1973,13 @@
       if (addR) {
         const p = state.people[+addR.dataset.idx];
         if (p) {
-          p.rules.push({ id: uid(), type: "after", prayer: "Fajr", offsetMin: 30 });
+          // A rule you are still writing is a draft: it must not create windows,
+          // reach the dashboard, or schedule a real notification before you save.
+          p.rules.push({ id: uid(), type: "after", prayer: "Fajr", offsetMin: 30, draft: true });
           const ri = p.rules.length - 1;
           ruleEditing.add(ruleKey(+addR.dataset.idx, ri));
-          saveState();
           flashButton(addR);
           renderPeople();
-          scheduleDashboard();
         }
         return;
       }
@@ -2211,6 +2221,7 @@
     loadState();
     if ($("#coDash") && citiesOk) await initPage();
     if ($("#coHomeStrip")) await initHomeStrip();
+    maybeSyncNativeReminders();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
