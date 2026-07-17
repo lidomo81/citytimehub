@@ -155,7 +155,40 @@
                   </div>
                   <p id="coDialHint" class="co-dial-hint muted" hidden></p>
                 </div>
-                <button type="submit" class="btn co-submit">أضف شخصًا</button>
+                <fieldset class="pl-field co-preset-field">
+                  <legend id="coPresetQ" class="co-preset-q">متى نُذكّرك به؟</legend>
+                  <div class="co-presets">
+                    <label class="co-preset">
+                      <input type="radio" name="coPreset" value="beforeFajr15" checked />
+                      <span class="co-preset-body">
+                        <span class="co-preset-label">قبل الفجر</span>
+                        <span class="co-preset-hint">تنبيهٌ للصلاة — قبلها بربع ساعة</span>
+                      </span>
+                    </label>
+                    <label class="co-preset">
+                      <input type="radio" name="coPreset" value="afterMaghrib20" />
+                      <span class="co-preset-body">
+                        <span class="co-preset-label">بعد المغرب</span>
+                        <span class="co-preset-hint">اطمئنانٌ في هدوء المساء</span>
+                      </span>
+                    </label>
+                    <label class="co-preset">
+                      <input type="radio" name="coPreset" value="afterFajr30" />
+                      <span class="co-preset-body">
+                        <span class="co-preset-label">بعد الفجر</span>
+                        <span class="co-preset-hint">صباحٌ هادئٌ لمكالمة</span>
+                      </span>
+                    </label>
+                    <label class="co-preset">
+                      <input type="radio" name="coPreset" value="later" />
+                      <span class="co-preset-body">
+                        <span class="co-preset-label">أختار لاحقًا</span>
+                        <span class="co-preset-hint">أضِفه الآن، واختر التذكير وقتما تشاء</span>
+                      </span>
+                    </label>
+                  </div>
+                </fieldset>
+                <button type="submit" class="btn co-submit">حفظ</button>
               </div>
             </form>
           </div>
@@ -210,7 +243,7 @@
   })();
   </script>
   <script src="/js/city-input.js" defer></script>
-  <script src="/js/close-ones.js?v=118" defer></script>
+  <script src="/js/close-ones.js?v=120" defer></script>
   <script src="/js/pwa.js" defer></script>
 </body>
 </html>

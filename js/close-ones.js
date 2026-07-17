@@ -139,12 +139,25 @@
     scheduleEmpty: "لا مواعيد اليوم أو غدًا — القواعد تحدّد النوافذ تلقائيًا.",
     scheduleEmptyOther: "لا مواعيد أخرى اليوم أو غدًا — القادم معروضٌ بالأعلى.",
     laterTitle: "لاحقًا هذا الأسبوع",
+    rulesCountNone: "بلا تذكير بعد",
     rulesCount: n => `${n} قاعدة`,
     rulesCountMany: n => `${n} قواعد`,
     expandRules: "عرض القواعد",
     collapseRules: "إخفاء القواعد",
-    addSheetTitle: "أضف شخصًا",
-    addSheetLead: "الاسم ومدينته ورقم اختياري — ثم اختر القواعد من تبويب أحبابي.",
+    addSheetTitle: "مَن تحبّ أن تبقى قريبًا منه؟",
+    addSheetLead: "اسمه ومدينته، واختر متى نُذكّرك به — ويمكنك تغيير ذلك متى شئت.",
+    addPresetQ: "متى نُذكّرك به؟",
+    // Labels stay free of gendered pronouns: the same card is chosen for a mother
+    // and for a brother, and "مغربه" for أمي reads wrong.
+    presets: {
+      beforeFajr15: { label: "قبل الفجر", hint: "تنبيهٌ للصلاة — قبلها بربع ساعة", when: "قبل الفجر بربع ساعة", rule: { type: "before", prayer: "Fajr", offsetMin: 15, waMsg: "صلّي الفجر يا حبيبتي 🤍" } },
+      afterMaghrib20: { label: "بعد المغرب", hint: "اطمئنانٌ في هدوء المساء", when: "بعد المغرب", rule: { type: "after", prayer: "Maghrib", offsetMin: 20 } },
+      afterFajr30: { label: "بعد الفجر", hint: "صباحٌ هادئٌ لمكالمة", when: "بعد الفجر", rule: { type: "after", prayer: "Fajr", offsetMin: 30 } },
+      later: { label: "أختار لاحقًا", hint: "أضِفه الآن، واختر التذكير وقتما تشاء", when: "", rule: null },
+    },
+    addSubmit: "حفظ",
+    addedToast: name => `أضفنا ${name} 🤍`,
+    addedToastRule: (name, when, city) => `أضفنا ${name} 🤍 — سنُذكّرك ${when} بتوقيت ${city}`,
     emptyTodayCta: "ابدأ من زر + لإضافة أول شخص",
     whenQuestion: "متى تبدأ الاتصال؟",
     youClock: "توقيتك",
@@ -241,12 +254,23 @@
     scheduleEmpty: "Nothing today or tomorrow — your rules create windows automatically.",
     scheduleEmptyOther: "Nothing else today or tomorrow — your next reminder is shown above.",
     laterTitle: "Later this week",
+    rulesCountNone: "no reminder yet",
     rulesCount: n => n === 1 ? "1 rule" : `${n} rules`,
     rulesCountMany: n => `${n} rules`,
     expandRules: "Show rules",
     collapseRules: "Hide rules",
-    addSheetTitle: "Add someone",
-    addSheetLead: "Name, their city, and optional phone — then pick rules on the People tab.",
+    addSheetTitle: "Who do you want to stay close to?",
+    addSheetLead: "Their name and city, then choose when we remind you — you can change it any time.",
+    addPresetQ: "When should we remind you?",
+    presets: {
+      beforeFajr15: { label: "Before their Fajr", hint: "A nudge to wake them for prayer", when: "15 minutes before their Fajr", rule: { type: "before", prayer: "Fajr", offsetMin: 15, waMsg: "Fajr time — love you 🤍" } },
+      afterMaghrib20: { label: "After their Maghrib", hint: "To check in on a quiet evening", when: "after their Maghrib", rule: { type: "after", prayer: "Maghrib", offsetMin: 20 } },
+      afterFajr30: { label: "After their Fajr", hint: "A calm morning to call", when: "after their Fajr", rule: { type: "after", prayer: "Fajr", offsetMin: 30 } },
+      later: { label: "I'll choose later", hint: "Add them now, pick a reminder whenever", when: "", rule: null },
+    },
+    addSubmit: "Save",
+    addedToast: name => `${name} added 🤍`,
+    addedToastRule: (name, when, city) => `${name} added 🤍 — we'll remind you ${when}, ${city} time`,
     emptyTodayCta: "Start with + to add your first person",
     whenQuestion: "When do you reach out?",
     youClock: "Your clock",
@@ -1300,6 +1324,7 @@
   }
 
   function rulesCountLabel(n) {
+    if (!n) return T.rulesCountNone;
     if (LANG === "ar") return n === 1 ? T.rulesCount(1) : T.rulesCountMany(n);
     return T.rulesCount(n);
   }
@@ -1729,24 +1754,29 @@
     if (state.people.length >= MAX_PEOPLE) { toast(T.maxPeople(MAX_PEOPLE)); return; }
     const city = (data.citySlug && bySlug.get(data.citySlug)) || findCity(data.cityInput);
     if (!city) { toast(T.pickCity); return; }
+    // The reminder is whatever they picked in the sheet — never one we invent for
+    // them: a rule nobody chose is a notification nobody expects.
+    const preset = T.presets[data.preset] || T.presets.later;
+    const name = (data.name || "").trim() || (LANG === "ar" ? "أحبّني" : "Loved one");
     state.people.push({
       id: uid(),
-      name: (data.name || "").trim() || (LANG === "ar" ? "أحبّني" : "Loved one"),
+      name,
       city: city.slug,
       dial: city.dial || "",
       phone: buildFullPhone(city, data.phone || ""),
-      rules: [{ id: uid(), type: "after", prayer: "Fajr", offsetMin: 30 }],
+      rules: preset.rule ? [{ id: uid(), ...preset.rule }] : [],
     });
     const newIdx = state.people.length - 1;
     expandedPeople.clear();
     expandedPeople.add(newIdx);
-    ruleEditing.add(ruleKey(newIdx, 0));
+    // Only drop them straight into the editor when there is nothing to edit yet.
+    if (!preset.rule) ruleEditing.add(ruleKey(newIdx, 0));
     saveState();
     renderPeople();
     scheduleDashboard();
     closeAddSheet();
     setTab("people");
-    toast(T.saved);
+    toast(preset.rule ? T.addedToastRule(name, preset.when, cN(city)) : T.addedToast(name));
   }
 
   function applyTemplate(idx, tpl) {
@@ -2098,9 +2128,12 @@
       let city = resolveCityFromField(cityField, pendingPersonCity);
       if (!city && cityField?.value?.trim()) city = findCity(cityField.value);
       const cityIn = city ? cityLabel(city) : (cityField?.value || cityField?.placeholder || "");
-      addPerson({ name, phone, citySlug: city ? city.slug : "", cityInput: cityIn });
+      const preset = form.querySelector('input[name="coPreset"]:checked')?.value || "later";
+      addPerson({ name, phone, preset, citySlug: city ? city.slug : "", cityInput: cityIn });
       $("#coPersonName").value = "";
       $("#coPersonPhone").value = "";
+      const first = form.querySelector('input[name="coPreset"]');
+      if (first) first.checked = true;
       pendingPersonCity = "";
       if (cityField) resetCityField(cityField);
       updateDialUI(null);

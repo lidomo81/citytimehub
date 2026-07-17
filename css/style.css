@@ -1559,6 +1559,30 @@ html.app-mode .co-notify-bar:not([hidden]) { display: flex !important; }
 .co-phone-input.is-locked { opacity: .72; cursor: not-allowed; background: var(--surface-2); }
 .co-dial-hint { margin: 6px 0 0; font-size: .8rem; line-height: 1.4; }
 .co-ac { position: relative; }
+
+/* Choosing the first reminder while adding someone: tappable cards, not a
+   dropdown — the whole point is that it takes one glance and one tap. */
+.co-preset-field { grid-column: 1 / -1; border: 0; padding: 0; margin: 2px 0 0; min-width: 0; }
+.co-preset-q { padding: 0; margin: 0 0 10px; font-weight: 600; color: var(--text); }
+.co-presets { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; }
+.co-preset { position: relative; display: block; cursor: pointer; }
+.co-preset input { position: absolute; opacity: 0; width: 0; height: 0; }
+.co-preset-body {
+  display: flex; flex-direction: column; gap: 3px; height: 100%;
+  padding: 12px 14px; border: 1px solid var(--border); border-radius: 12px;
+  background: var(--surface); transition: border-color .18s ease, background .18s ease, transform .18s ease;
+}
+.co-preset:hover .co-preset-body { border-color: color-mix(in srgb, var(--brand) 45%, var(--border)); transform: translateY(-1px); }
+.co-preset-label { font-weight: 600; color: var(--text); }
+.co-preset-hint { font-size: .82rem; line-height: 1.45; color: var(--text-2); }
+.co-preset input:checked + .co-preset-body {
+  border-color: var(--brand);
+  background: color-mix(in srgb, var(--brand) 10%, var(--surface));
+  box-shadow: 0 0 0 1px var(--brand) inset;
+}
+.co-preset input:focus-visible + .co-preset-body { outline: 2px solid var(--brand); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .co-preset-body { transition: none; } .co-preset:hover .co-preset-body { transform: none; } }
+
 .co-submit { justify-self: start; }
 .co-people { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
 .co-people-empty { text-align: center; padding: 28px 16px; border-radius: 14px; border: 1px dashed var(--border); }
