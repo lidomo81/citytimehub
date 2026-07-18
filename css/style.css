@@ -1999,16 +1999,17 @@ html[dir="rtl"] .prose blockquote { border-radius: 14px 0 0 14px; }
 
 /* ---------------- Morning / Evening Adhkar ---------------- */
 #azkarTool { max-width: 640px; margin: 0 auto; }
-.az-topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-.az-progress { font-weight: 700; color: var(--text-2); font-variant-numeric: tabular-nums; }
+.az-topbar { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+/* progress stays at the start; the share + reset controls group at the end */
+.az-progress { font-weight: 700; color: var(--text-2); font-variant-numeric: tabular-nums; margin-inline-end: auto; }
 .az-reset { background: transparent; border: 1px solid var(--border-2); color: var(--text-2); border-radius: 999px; padding: 6px 14px; font: inherit; font-size: .86rem; cursor: pointer; }
 .az-reset:hover { color: var(--text); border-color: var(--brand); }
 .az-bar { height: 6px; border-radius: 999px; background: var(--surface-2); overflow: hidden; margin-bottom: 16px; }
 .az-bar > i { display: block; block-size: 100%; inline-size: 0; background: linear-gradient(90deg, var(--accent), var(--brand)); border-radius: 999px; transition: inline-size .35s ease; }
 .az-card { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 30px 26px; box-shadow: var(--shadow); text-align: center; }
-/* Quiet "share this dhikr" button in the card corner — a gift you forward, not a CTA. */
-.az-share { position: absolute; inset-block-start: 12px; inset-inline-end: 12px; display: inline-flex; align-items: center; justify-content: center; inline-size: 36px; block-size: 36px; padding: 0; border: 1px solid var(--border); border-radius: 50%; background: var(--surface-2); color: var(--text-2); cursor: pointer; transition: color .18s ease, border-color .18s ease, transform .18s ease; }
-.az-share:hover { color: var(--brand); border-color: color-mix(in srgb, var(--brand) 45%, var(--border)); transform: translateY(-1px); }
+/* "Share this dhikr" — a quiet control in the toolbar, away from the sacred text. */
+.az-share { display: inline-flex; align-items: center; justify-content: center; inline-size: 34px; block-size: 34px; padding: 0; border: 1px solid var(--border-2); border-radius: 50%; background: transparent; color: var(--text-2); cursor: pointer; transition: color .18s ease, border-color .18s ease, transform .18s ease; }
+.az-share:hover { color: var(--brand); border-color: var(--brand); transform: translateY(-1px); }
 .az-share:active { transform: scale(.94); }
 .az-toast { position: fixed; inset-block-end: 22px; inset-inline: 0; margin-inline: auto; inline-size: max-content; max-inline-size: 84vw; background: var(--surface); color: var(--text); border: 1px solid var(--border); padding: 10px 16px; border-radius: 12px; font-size: .9rem; box-shadow: 0 12px 34px -12px rgba(0,0,0,.6); opacity: 0; transform: translateY(6px); transition: opacity .2s ease, transform .2s ease; pointer-events: none; z-index: 9999; }
 .az-toast.is-shown { opacity: 1; transform: translateY(0); }

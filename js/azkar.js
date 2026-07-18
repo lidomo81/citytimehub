@@ -91,7 +91,6 @@
         ? (it.virtue ? `<p class="az-virtue"><strong>${T.virtue}:</strong> ${it.virtue}</p>` : "")
         : `${it.translit ? `<p class="az-translit">${it.translit}</p>` : ""}${it.translation ? `<p class="az-translation">${it.translation}</p>` : ""}`;
       card.innerHTML = `
-        <button class="az-share" type="button" aria-label="${T.share}" title="${T.share}">${SHARE_SVG}</button>
         <p class="az-arabic" dir="rtl" lang="ar">${it.text}</p>
         ${sub}
         <button class="az-counter${done ? " is-done" : ""}" type="button" aria-label="${T.tap}">
@@ -104,8 +103,6 @@
       if (prevB) prevB.disabled = i === 0;
       if (nextB) nextB.textContent = i === items.length - 1 ? T.restart : T.next;
       card.querySelector(".az-counter").addEventListener("click", tap);
-      const sb = card.querySelector(".az-share");
-      if (sb) sb.addEventListener("click", () => shareDhikr(items[state.idx], T));
       if (state.idx === items.length - 1 && done && typeof opts.onComplete === "function") opts.onComplete();
     }
     function tap() {
@@ -127,6 +124,21 @@
     if (prevB) prevB.addEventListener("click", () => go(-1));
     if (nextB) nextB.addEventListener("click", () => go(1));
     if (resetB) resetB.addEventListener("click", () => { state = { idx: 0, rem: items.map(x => x.count || 1) }; save(); render(); });
+
+    // Share sits in the controls row, not on the sacred text — shares the dhikr
+    // that's currently open.
+    const topbar = root.querySelector(".az-topbar");
+    if (topbar && opts.share !== false && !topbar.querySelector(".az-share")) {
+      const sb = document.createElement("button");
+      sb.type = "button";
+      sb.className = "az-share";
+      sb.setAttribute("aria-label", T.share);
+      sb.title = T.share;
+      sb.innerHTML = SHARE_SVG;
+      sb.addEventListener("click", () => shareDhikr(items[state.idx], T));
+      if (resetB && resetB.parentNode === topbar) topbar.insertBefore(sb, resetB);
+      else topbar.appendChild(sb);
+    }
     render();
     return { render, reset: () => { state = { idx: 0, rem: items.map(x => x.count || 1) }; save(); render(); } };
   }
