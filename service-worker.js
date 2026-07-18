@@ -10,13 +10,13 @@
      (language-aware), so installed city apps open offline.
    Bump CACHE_VERSION to invalidate old caches on the next visit.
    ===================================================================== */
-const CACHE_VERSION = "cth-v133";
+const CACHE_VERSION = "cth-v134";
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 const API_CACHE = `${CACHE_VERSION}-api`;
 
 const SHELL = [
-  "/", "/ar/",
+  "/", "/ar",
   "/css/style.css",
   "/js/app.js", "/js/city.js", "/js/city-input.js", "/js/city-pulse.js", "/js/occasions.js", "/js/prayer-insights.js", "/js/daily-reflection.js", "/js/tour.js", "/js/compare-tool.js", "/js/meeting-planner.js",
   "/js/best-time-to-call.js", "/js/prayer-clock.js", "/js/close-ones.js", "/js/prayer-widget.js",
@@ -93,7 +93,7 @@ self.addEventListener("fetch", (event) => {
         })
         .catch(() =>
           caches.match(req).then((c) =>
-            c || caches.match(url.pathname.startsWith("/ar") ? "/ar/" : "/")
+            c || caches.match(url.pathname.startsWith("/ar") ? "/ar" : "/")
           )
         )
     );
