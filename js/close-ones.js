@@ -2193,8 +2193,8 @@
     function paint() {
       const q = norm(input.value);
       items = q ? searchCities(input.value, 8) : [];
-      if (!items.length) { listEl.innerHTML = q ? `<li class="ac-empty">—</li>` : ""; listEl.hidden = !q; return; }
-      listEl.innerHTML = items.map((c, i) => `<li class="ac-item${i === active ? " is-active" : ""}" role="option" data-i="${i}"><span>${esc(cN(c))}</span><span class="ac-country">${esc(cC(c))}</span></li>`).join("");
+      if (!items.length) { listEl.innerHTML = q ? CTH_CITY_INP.emptyHtml() : ""; listEl.hidden = !q; return; }
+      listEl.innerHTML = items.map((c, i) => CTH_CITY_INP.optionHtml(cN(c), cC(c), i, active, input.value)).join("");
       listEl.hidden = false; input.setAttribute("aria-expanded", "true");
     }
     function pick(i) {

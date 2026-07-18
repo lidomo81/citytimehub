@@ -593,7 +593,7 @@
     let localItems = [], worldItems = [], items = [], active = -1;
     let wseq = 0, wtimer = null;
     const close = () => { listEl.hidden = true; active = -1; input.setAttribute("aria-expanded", "false"); };
-    const liHtml = (c, i) => `<li class="ac-item${i === active ? " is-active" : ""}" role="option" data-i="${i}"><span>${cName(c)}</span><span class="ac-country">${cCountry(c)}</span></li>`;
+    const liHtml = (c, i) => CTH_CITY_INP.optionHtml(cName(c), cCountry(c), i, active, input.value);
     function paint() {
       items = localItems.concat(worldItems);
       if (!items.length) { listEl.innerHTML = ""; close(); return; }

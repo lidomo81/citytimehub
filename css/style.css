@@ -903,6 +903,8 @@ html[dir="rtl"] .tool-card--featured h3 { padding-inline-end: 0; padding-inline-
 .ac-name { font-weight: 600; color: var(--text); }
 .ac-country { font-size: .82rem; color: var(--text-2); }
 .ac-empty { padding: 12px; color: var(--text-2); font-size: .9rem; }
+/* The matched run in a city search result — same accent for every search box. */
+.ac-hl { background: none; color: var(--brand); font-weight: 700; }
 .ac-sep { padding: 8px 12px 4px; margin-top: 4px; border-top: 1px solid var(--border); font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--text-2); opacity: .7; pointer-events: none; }
 
 /* ===== My favorite cities — clickable name chips (site + app) ===== */

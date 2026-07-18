@@ -103,9 +103,8 @@
     function paint() {
       const q = norm(input.value);
       items = q ? CITIES.filter(c => c._s.includes(q)).slice(0, 8) : [];
-      if (!items.length) { listEl.innerHTML = ""; close(); return; }
-      listEl.innerHTML = items.map((c, i) =>
-        `<li class="ac-item${i === active ? " is-active" : ""}" role="option" data-i="${i}"><span>${esc(cN(c))}</span><span class="ac-country">${esc(cC(c))}</span></li>`).join("");
+      if (!items.length) { listEl.innerHTML = q ? CTH_CITY_INP.emptyHtml() : ""; listEl.hidden = !q; return; }
+      listEl.innerHTML = items.map((c, i) => CTH_CITY_INP.optionHtml(cN(c), cC(c), i, active, input.value)).join("");
       listEl.hidden = false; input.setAttribute("aria-expanded", "true");
     }
     function pick(i) {

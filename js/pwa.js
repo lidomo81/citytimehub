@@ -259,11 +259,41 @@
       return u.pathname + u.search + u.hash;
     } catch (e) { return href; }
   }
-  function applyAppNav() {
-    var inApp = document.documentElement.classList.contains("app-mode")
+  function inAppMode() {
+    return document.documentElement.classList.contains("app-mode")
       || /CityTimeHubApp/i.test(navigator.userAgent || "")
       || inStandalone
       || new URLSearchParams(location.search).get("app") === "1";
+  }
+  function isAppHome() {
+    var p = location.pathname.replace(/\/+$/, "") || "/";
+    return p === "" || p === "/" || p === "/ar";
+  }
+  function toolBarTitle() {
+    var h1 = document.querySelector("main h1, .hero-title, h1");
+    if (h1 && h1.textContent) return h1.textContent.trim();
+    return (document.title || "CityTimeHub").replace(/\s*[|—-]\s*CityTimeHub.*$/i, "").trim();
+  }
+  function installToolAppBar() {
+    if (!inAppMode()) return;
+    document.documentElement.classList.add("app-mode");
+    if (isAppHome() || document.querySelector(".app-bar--tool")) return;
+    var ar = (document.documentElement.getAttribute("lang") || "").slice(0, 2) === "ar"
+      || location.pathname.indexOf("/ar/") === 0
+      || location.pathname === "/ar";
+    var home = ar ? "/ar/?app=1" : "/?app=1";
+    var bar = document.createElement("div");
+    bar.className = "app-bar app-bar--tool";
+    bar.setAttribute("role", "banner");
+    bar.innerHTML =
+      '<a class="app-bar-back" href="' + home + '" aria-label="' + (ar ? "الرئيسية" : "Home") + '">' +
+      '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></a>' +
+      '<span class="app-bar-title">' + cthEsc(toolBarTitle()) + '</span>' +
+      '<span class="app-bar-spacer" aria-hidden="true"></span>';
+    document.body.insertBefore(bar, document.body.firstChild);
+  }
+  function applyAppNav() {
+    var inApp = inAppMode();
     if (!inApp) return;
     document.documentElement.classList.add("app-mode");
     document.querySelectorAll("a.lang-switch, nav.app-legal a, .app-tools a.app-tool").forEach(function (a) {
@@ -287,8 +317,8 @@
       });
     }
   }
-  if (document.readyState !== "loading") { upgradeSiteNav(); wireNavDrops(); applyAppNav(); }
-  else document.addEventListener("DOMContentLoaded", function () { upgradeSiteNav(); wireNavDrops(); applyAppNav(); });
+  if (document.readyState !== "loading") { upgradeSiteNav(); wireNavDrops(); applyAppNav(); installToolAppBar(); }
+  else document.addEventListener("DOMContentLoaded", function () { upgradeSiteNav(); wireNavDrops(); applyAppNav(); installToolAppBar(); });
 
   /* ----- Universal Share button in the header. Uses the native share sheet
      (WhatsApp / Telegram / etc.) so a visitor can pass the page to family and
@@ -367,10 +397,15 @@
     wrap.querySelector(".help-x").addEventListener("click", close);
     wrap.querySelector(".help-backdrop").addEventListener("click", close);
     var timer = null, seq = 0;
+    // Highlight the matched run the same way the site's inline searches do, so the
+    // app picker feels like one family with them. Falls back to plain escaped text.
+    var HL = (window.CTH_CITY_INP && window.CTH_CITY_INP.highlight)
+      ? window.CTH_CITY_INP.highlight : function (t) { return cthEsc(t); };
     function render(items) {
-      if (!items.length) { list.innerHTML = '<li class="suggest-item" style="cursor:default;opacity:.6">' + (ar ? "لا نتائج" : "No results") + "</li>"; list._items = []; return; }
+      if (!items.length) { list.innerHTML = '<li class="suggest-item" style="cursor:default;opacity:.6">' + (ar ? "لا توجد مدينة بهذا الاسم" : "No city found") + "</li>"; list._items = []; return; }
+      var q = input.value;
       list.innerHTML = items.map(function (c, i) {
-        return '<li class="suggest-item" data-i="' + i + '"><span class="suggest-name">' + cthEsc(c.name) + '</span><span class="suggest-meta"><span class="suggest-country">' + cthEsc(c.country) + "</span></span></li>";
+        return '<li class="suggest-item" data-i="' + i + '"><span class="suggest-name">' + HL(c.name, q) + '</span><span class="suggest-meta"><span class="suggest-country">' + cthEsc(c.country) + "</span></span></li>";
       }).join("");
       list._items = items;
     }
