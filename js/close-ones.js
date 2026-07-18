@@ -989,6 +989,15 @@
     catch (e) { toast(T.errPrayer); return; }
     const body = buildIcs(windows);
     if (!body.includes("BEGIN:VEVENT")) { toast(T.noRules); return; }
+    // In the app a blob download goes nowhere — hand the calendar to the native
+    // side, which opens the phone's calendar import instead.
+    try {
+      if (window.AndroidApp && typeof AndroidApp.openCalendar === "function") {
+        AndroidApp.openCalendar(body);
+        toast(T.icsDone);
+        return;
+      }
+    } catch (e) {}
     const blob = new Blob([body], { type: "text/calendar;charset=utf-8" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
