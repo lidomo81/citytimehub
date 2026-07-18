@@ -9,11 +9,53 @@
       of: "من", times: n => n === 1 ? "مرة واحدة" : `${n} مرات`, virtue: "الفضل",
       done: "تمّ ✓", next: "التالي", prev: "السابق", reset: "إعادة من البداية",
       tap: "اضغط للعدّ", restart: "ابدأ من جديد",
+      share: "شارك هذا الذِّكر", copied: "تم نسخ الذِّكر ✓",
     } : {
       of: "of", times: n => n === 1 ? "once" : `${n} times`, virtue: "Virtue",
       done: "Done ✓", next: "Next", prev: "Previous", reset: "Start over",
       tap: "Tap to count", restart: "Start again",
+      share: "Share this dhikr", copied: "Dhikr copied ✓",
     };
+  }
+
+  var SHARE_SVG = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>';
+
+  function copyFallback(text) {
+    try {
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      document.execCommand("copy"); document.body.removeChild(ta);
+    } catch (e) {}
+  }
+  function azToast(msg) {
+    var t = document.getElementById("azShareToast");
+    if (!t) {
+      t = document.createElement("div"); t.id = "azShareToast"; t.className = "az-toast";
+      document.body.appendChild(t);
+    }
+    t.textContent = msg; t.classList.add("is-shown");
+    clearTimeout(t._h); t._h = setTimeout(function () { t.classList.remove("is-shown"); }, 1800);
+  }
+  // Share the current dhikr text itself (with source + link), so a forwarded
+  // message is the dhikr — not a bare link nobody opens.
+  function shareDhikr(item, T) {
+    if (!item) return;
+    var canon = document.querySelector('link[rel="canonical"]');
+    var url = (canon && canon.href) || location.href;
+    // Just the page's own name ("Morning Adhkar" / "أذكار الصباح"), before any
+    // tagline or the site name.
+    var title = (document.title || "CityTimeHub").split(/\s*[|—]\s*/)[0].trim() || "CityTimeHub";
+    var text = "«" + item.text + "»\n— " + title + " · CityTimeHub";
+    if (navigator.share) {
+      navigator.share({ title: title, text: text, url: url }).catch(function () {});
+    } else {
+      var full = text + "\n" + url;
+      var done = function () { azToast(T.copied); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(full).then(done, function () { copyFallback(full); done(); });
+      } else { copyFallback(full); done(); }
+    }
   }
 
   // Mount an adhkar card UI inside `root` (which must contain the standard
@@ -49,6 +91,7 @@
         ? (it.virtue ? `<p class="az-virtue"><strong>${T.virtue}:</strong> ${it.virtue}</p>` : "")
         : `${it.translit ? `<p class="az-translit">${it.translit}</p>` : ""}${it.translation ? `<p class="az-translation">${it.translation}</p>` : ""}`;
       card.innerHTML = `
+        <button class="az-share" type="button" aria-label="${T.share}" title="${T.share}">${SHARE_SVG}</button>
         <p class="az-arabic" dir="rtl" lang="ar">${it.text}</p>
         ${sub}
         <button class="az-counter${done ? " is-done" : ""}" type="button" aria-label="${T.tap}">
@@ -61,6 +104,8 @@
       if (prevB) prevB.disabled = i === 0;
       if (nextB) nextB.textContent = i === items.length - 1 ? T.restart : T.next;
       card.querySelector(".az-counter").addEventListener("click", tap);
+      const sb = card.querySelector(".az-share");
+      if (sb) sb.addEventListener("click", () => shareDhikr(items[state.idx], T));
       if (state.idx === items.length - 1 && done && typeof opts.onComplete === "function") opts.onComplete();
     }
     function tap() {
