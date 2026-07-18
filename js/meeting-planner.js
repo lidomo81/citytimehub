@@ -208,6 +208,14 @@
       `DESCRIPTION:${eventDetails().replace(/[,;\\]/g, m => "\\" + m)}`,
       "END:VEVENT", "END:VCALENDAR"
     ].join("\r\n");
+    // In the app a blob download goes nowhere — hand the calendar to the native
+    // side, which opens the phone's calendar import.
+    try {
+      if (window.AndroidApp && typeof AndroidApp.openCalendar === "function") {
+        AndroidApp.openCalendar(ics);
+        return;
+      }
+    } catch (e) {}
     const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);

@@ -346,6 +346,12 @@
       var canon = document.querySelector('link[rel="canonical"]');
       var url = (canon && canon.href) || location.href;
       var title = (document.title || "CityTimeHub").replace(/\s*[|—-]\s*CityTimeHub.*$/i, "").trim() || "CityTimeHub";
+      try {
+        if (window.AndroidApp && typeof AndroidApp.shareText === "function") {
+          AndroidApp.shareText(title + "\n" + url);
+          return;
+        }
+      } catch (e) {}
       if (navigator.share) {
         navigator.share({ title: title, text: title, url: url }).catch(function () {});
       } else if (navigator.clipboard && navigator.clipboard.writeText) {

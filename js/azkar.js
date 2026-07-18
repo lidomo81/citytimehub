@@ -47,10 +47,18 @@
     // tagline or the site name.
     var title = (document.title || "CityTimeHub").split(/\s*[|—]\s*/)[0].trim() || "CityTimeHub";
     var text = "«" + item.text + "»\n— " + title + " · CityTimeHub";
+    var full = text + "\n" + url;
+    // In the app the WebView has no navigator.share, so open the native share
+    // sheet through the bridge; then the mobile Web Share sheet; then copy.
+    try {
+      if (window.AndroidApp && typeof AndroidApp.shareText === "function") {
+        AndroidApp.shareText(full);
+        return;
+      }
+    } catch (e) {}
     if (navigator.share) {
       navigator.share({ title: title, text: text, url: url }).catch(function () {});
     } else {
-      var full = text + "\n" + url;
       var done = function () { azToast(T.copied); };
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(full).then(done, function () { copyFallback(full); done(); });
