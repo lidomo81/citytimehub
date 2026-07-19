@@ -99,7 +99,7 @@
         ? (it.virtue ? `<p class="az-virtue"><strong>${T.virtue}:</strong> ${it.virtue}</p>` : "")
         : `${it.translit ? `<p class="az-translit">${it.translit}</p>` : ""}${it.translation ? `<p class="az-translation">${it.translation}</p>` : ""}`;
       card.innerHTML = `
-        <p class="az-arabic" dir="rtl" lang="ar">${it.text}</p>
+        <p class="az-arabic${it.quran ? " az-arabic--quran" : ""}" dir="rtl" lang="ar">${it.text}</p>
         ${sub}
         <button class="az-counter${done ? " is-done" : ""}" type="button" aria-label="${T.tap}">
           <span class="az-counter-num">${done ? "✓" : rem}</span>
