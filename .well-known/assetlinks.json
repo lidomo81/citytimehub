@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.citytimehub.app",
+      "sha256_cert_fingerprints": [
+        "57:99:25:1B:5A:69:A9:33:20:98:98:64:EF:05:C9:58:E2:51:2D:C7:CF:E5:55:8C:B9:B8:02:DC:C8:89:87:EB"
+      ]
+    }
+  }
+]
