@@ -571,9 +571,12 @@ html.app-mode[data-app-tab="azkar"] #cthAzkarRemindSlot:not(:empty) {
   margin-top: 12px;
 }
 
-/* Reminder cards (injected by Android app) */
+/* Reminder cards (injected by Android app) — tab-scoped only */
 .app-remind-slot { display: none; }
-.app-remind-slot:not(:empty) { display: block; }
+html.app-mode[data-app-tab="home"] #cthPrayerRemindSlot,
+html.app-mode[data-app-tab="home"] #cthAzkarRemindSlot,
+html.app-mode[data-app-tab="prayer"] #cthAzkarRemindSlot { display: none !important; }
+html.app-mode:not([data-app-tab="home"]) .cp-toolbar { display: none !important; }
 .app-remind-slot .app-spot-card { width: 100%; margin: 0; }
 html.app-mode[data-app-tab="prayer"] .app-remind-slot .app-spot-card,
 html.app-mode[data-app-tab="azkar"] .app-remind-slot .app-spot-card {
