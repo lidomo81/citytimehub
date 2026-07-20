@@ -1120,6 +1120,35 @@
     const btn = document.getElementById("helpBtn");
     if (!overlay || !btn) return;
     const HELP_KEY = "cth-help-seen";
+    const app = document.documentElement.classList.contains("app-mode");
+    const ar = (document.documentElement.lang || "").slice(0, 2) === "ar";
+
+    if (app) {
+      const remind = document.getElementById("cthRemindHelp");
+      if (remind) {
+        remind.hidden = false;
+        const strong = remind.querySelector("strong");
+        const span = remind.querySelector("span");
+        if (strong && span) {
+          if (ar) {
+            strong.textContent = "تذكير الأذان والأذكار";
+            span.innerHTML = "تذكير الأذان في تبويب <strong>الصلاة</strong> — وتذكير أذكار الصباح والمساء في تبويب <strong>الأذكار</strong>.";
+          } else {
+            strong.textContent = "Prayer & adhkar reminders";
+            span.innerHTML = "Adhan reminder on the <strong>Prayer</strong> tab — morning/evening adhkar on the <strong>Adhkar</strong> tab.";
+          }
+        }
+      }
+      overlay.querySelectorAll(".help-list li").forEach(li => {
+        const t = (li.querySelector("strong") || {}).textContent || "";
+        if (/Install|التثبيت/.test(t)) li.hidden = true;
+      });
+      const sub = overlay.querySelector(".help-sub");
+      if (sub) sub.textContent = ar
+        ? "دليل سريع للتبويبات والأزرار في التطبيق."
+        : "A quick guide to the app tabs and buttons.";
+    }
+
     const open = () => { overlay.hidden = false; document.body.style.overflow = "hidden"; };
     const close = () => { overlay.hidden = true; document.body.style.overflow = ""; try { localStorage.setItem(HELP_KEY, "1"); } catch (e) {} };
     // Let the tour reopen the full feature list from its last step.

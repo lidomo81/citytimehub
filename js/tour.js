@@ -21,30 +21,57 @@
     welcome: { sel: null,
       ar: { t: "أهلًا بك في CityTimeHub 🌙", b: "جولة سريعة تعرّفك بأهم المميزات في أقل من دقيقة. تقدر تتخطاها في أي وقت." },
       en: { t: "Welcome to CityTimeHub 🌙", b: "A quick tour of the main features in under a minute. You can skip anytime." } },
-    search: { sel: "#cpSearch",
-      ar: { t: "ابحث عن مدينتك 🔍", b: "اكتب اسم أي مدينة وشاهد وقتها ومواقيت صلاتها فورًا — من ٥٠٠ مدينة، أو أي مدينة حول العالم." },
-      en: { t: "Search your city 🔍", b: "Type any city to see its time and prayer times instantly — from 500 cities, or anywhere worldwide." } },
-    favorite: { sel: "#cpSave",
-      ar: { t: "مدينتي المفضّلة ⭐", b: "اضغط النجمة لتحفظ المدينة، فتُجمَع كل مدنك في قسم «مدني»، وتبقى محفوظة كل مرة تفتح — حتى لو كانت مدينة من أي مكان في العالم. وسأريك مكانها الآن 👇" },
-      en: { t: "My favorite city ⭐", b: "Tap the star to save a city; all your cities gather in the “My cities” section, kept every time you open — even a worldwide city. Let me show you where 👇" } },
-    myCities: { sel: "#myCities", icon: PIN_SVG,
-      ar: { t: "قسم «مدني»", b: "هنا تُجمع مدنك المحفوظة. اضغط اسم أي مدينة لفتحها وجعلها المدينة التي تظهر عند كل فتح — والمعلَّمة بهذا الدبوس تمامًا كما تراه على البطاقة. واضغط × لإزالتها." },
-      en: { t: "Your “My cities” section", b: "Your saved cities gather here. Tap a name to open it and make it the one shown every time you open — marked with this same pin you see on the chip. Tap × to remove it." } },
-    prayerTimes: { sel: "#prayerGrid",
-      ar: { t: "مواقيت الصلاة 🕌", b: "صلوات اليوم الخمسة مع الشروق. الصلاة الحالية تتحدّد بلمسة ضوئية لطيفة." },
-      en: { t: "Prayer times 🕌", b: "Today's five prayers plus sunrise. The current prayer is gently highlighted." } },
-    tapCard: { sel: "#prayerGrid",
-      ar: { t: "اضغط أي بطاقة صلاة 📿", b: "تفتح لك أذكار ما بعد الصلاة، وفضلها بحديث صحيح، ويمكنك تسجيل التزامك: صلّيت الفرض، والسنة، وقلت الأذكار." },
-      en: { t: "Tap any prayer card 📿", b: "It opens the post-prayer adhkar, its virtue from an authentic hadith, and lets you log your prayer — fard, sunnah and adhkar." } },
-    adherence: { sel: "#cpNext",
-      ar: { t: "التزامك اليومي 🌙", b: "عندما تسجّل صلواتك تظهر هنا كلمة تشجيع لطيفة وسلسلة أيامك. بياناتك محفوظة على جهازك وحده." },
-      en: { t: "Your daily adherence 🌙", b: "As you log prayers, a gentle word and your streak appear here. Your data stays on your device only." } },
-    week: { sel: "#cpWeek",
+    welcomeApp: { sel: null,
+      ar: { t: "أهلًا بك في تطبيق CityTimeHub 🌙", b: "جولة سريعة على التبويبات الأربعة: الرئيسية، الصلاة، الأذكار، والأدوات — في أقل من دقيقة." },
+      en: { t: "Welcome to the CityTimeHub app 🌙", b: "A quick tour of the four tabs — Home, Prayer, Adhkar, and Tools — in under a minute." } },
+    appNav: { sel: ".app-bottom-nav", tab: "home", prefer: "above",
+      ar: { t: "التبويبات السفلية 📱", b: "الرئيسية: وقتك ومدينتك. الصلاة: المواقيت والتذكير. الأذكار: صباح ومساء ونوم. الأدوات: باقي الميزات." },
+      en: { t: "Bottom tabs 📱", b: "Home: your time and city. Prayer: times and reminders. Adhkar: morning, evening and bedtime. Tools: everything else." } },
+    search: { sel: "#cpSearch", tab: "home",
+      ar: { t: "ابحث عن مدينتك 🔍", b: "في تبويب الرئيسية — اكتب اسم أي مدينة وشاهد وقتها ومواقيت صلاتها فورًا." },
+      en: { t: "Search your city 🔍", b: "On the Home tab — type any city to see its time and prayer times instantly." } },
+    favorite: { sel: "#cpSave", tab: "home",
+      ar: { t: "مدينتي المفضّلة ⭐", b: "اضغط النجمة لتحفظ المدينة في قسم «مدني» — تبقى محفوظة كل مرة تفتح التطبيق." },
+      en: { t: "My favorite city ⭐", b: "Tap the star to save the city in “My cities” — kept every time you open the app." } },
+    myCities: { sel: "#myCities", tab: "home", icon: PIN_SVG,
+      ar: { t: "قسم «مدني»", b: "مدنك المحفوظة تظهر هنا في الرئيسية. اضغط اسم أي مدينة لفتحها — والمعلَّمة بهذا الدبوس هي الافتراضية." },
+      en: { t: "Your “My cities” section", b: "Your saved cities appear here on Home. Tap a name to open it — the one with this pin is your default." } },
+    homeClock: { sel: ".cp-clock", tab: "home",
+      ar: { t: "وقت مدينتك 🕐", b: "الساعة الحية لمدينتك المختارة — في تبويب الرئيسية." },
+      en: { t: "Your city time 🕐", b: "The live clock for your chosen city — on the Home tab." } },
+    cityPulse: { sel: "#cityPulse", tab: "home", prefer: "below",
+      ar: { t: "نبض المدينة 🌤️", b: "لمحة عن الطقس والجو في مدينتك — تظهر تلقائيًا في الرئيسية." },
+      en: { t: "City pulse 🌤️", b: "A quick weather snapshot for your city — shown automatically on Home." } },
+    prayerTimes: { sel: "#prayerGrid", tab: "prayer",
+      ar: { t: "مواقيت الصلاة 🕌", b: "في تبويب الصلاة — صلوات اليوم الخمسة مع الشروق. الصلاة الحالية تتحدّد بلمسة ضوئية." },
+      en: { t: "Prayer times 🕌", b: "On the Prayer tab — today's five prayers plus sunrise. The current prayer is gently highlighted." } },
+    tapCard: { sel: "#prayerGrid", tab: "prayer",
+      ar: { t: "اضغط أي بطاقة صلاة 📿", b: "تفتح أذكار ما بعد الصلاة وفضلها، ويمكنك تسجيل التزامك: الفرض، والسنة، والأذكار." },
+      en: { t: "Tap any prayer card 📿", b: "Opens post-prayer adhkar and its virtue, and lets you log fard, sunnah and adhkar." } },
+    adherence: { sel: "#cpNext", tab: "prayer",
+      ar: { t: "التزامك اليومي 🌙", b: "عندما تسجّل صلواتك تظهر هنا كلمة تشجيع وسلسلة أيامك — بياناتك على جهازك وحده." },
+      en: { t: "Your daily adherence 🌙", b: "As you log prayers, a gentle word and your streak appear here — saved on your device only." } },
+    week: { sel: "#cpWeek", tab: "prayer",
       ar: { t: "آخر ٧ أيام 📊", b: "اضغط هذا الشريط لترى إحصائيات التزامك: سلسلتك الحالية، وأطول سلسلة، وآخر ١٤ يومًا." },
-      en: { t: "Last 7 days 📊", b: "Tap this strip to see your adherence stats: current streak, best streak, and the last 14 days." } },
-    insights: { sel: ".prayer-insights",
-      ar: { t: "لمحات الصلاة ✨", b: "العدّ التنازلي للصلاة القادمة، والثلث الأخير من الليل، وأوقات الكراهة — كلها محسوبة لمدينتك تلقائيًا." },
-      en: { t: "Prayer insights ✨", b: "A countdown to the next prayer, the last third of the night, and the disliked times — all computed for your city." } },
+      en: { t: "Last 7 days 📊", b: "Tap this strip for your stats: current streak, best streak, and the last 14 days." } },
+    insights: { sel: ".prayer-insights", tab: "prayer",
+      ar: { t: "لمحات الصلاة ✨", b: "عدّ تنازلي للصلاة القادمة، والثلث الأخير من الليل، وأوقات الكراهة — محسوبة لمدينتك." },
+      en: { t: "Prayer insights ✨", b: "Countdown to the next prayer, the last third of the night, and disliked times — for your city." } },
+    prayerRemind: { sel: "#cthPrayerRemindSlot", tab: "prayer", prefer: "below",
+      ar: { t: "تذكير الأذان 🔔", b: "في تبويب الصلاة — اضغط لاختيار نغمة الإشعار وتفعيل تنبيه كل صلاة." },
+      en: { t: "Adhan reminder 🔔", b: "On the Prayer tab — tap to pick a notification sound and get alerted at each prayer." } },
+    azkarHub: { sel: ".app-azkar-grid", tab: "azkar", prefer: "below",
+      ar: { t: "الأذكار 📿", b: "في تبويب الأذكار — اختر صباح أو مساء أو قبل النوم. كل مجموعة بعدّاد تكرار وحفظ تلقائي." },
+      en: { t: "Adhkar 📿", b: "On the Adhkar tab — pick morning, evening or bedtime. Each set has a tap counter and auto-save." } },
+    azkarRemind: { sel: "#cthAzkarRemindSlot", tab: "azkar", prefer: "below",
+      ar: { t: "تذكير الأذكار 🌙", b: "في تبويب الأذكار — فعّل تنبيه أذكار الصباح والمساء وجمعة الذكر." },
+      en: { t: "Adhkar reminders 🌙", b: "On the Adhkar tab — enable alerts for morning, evening and Friday adhkar." } },
+    appTools: { sel: "nav.app-tools", tab: "tools", prefer: "above",
+      ar: { t: "الأدوات 🧭", b: "في تبويب الأدوات — ساعة الصلاة، القبلة، فرق التوقيت، مخطّط الأحداث، وأكثر." },
+      en: { t: "Tools 🧭", b: "On the Tools tab — prayer clock, Qibla, time difference, meeting planner, and more." } },
+    closeOnesTool: { sel: 'nav.app-tools a[href*="close-ones"]', tab: "tools",
+      ar: { t: "أحبابك 🤍", b: "من تبويب الأدوات — اضبط مواعيد التواصل مع من تحب حسب توقيتهم." },
+      en: { t: "Close Ones 🤍", b: "From the Tools tab — set when to reach loved ones in their local time." } },
     spotlightSite: { sel: "#coHomeStrip", prefer: "below",
       ar: { t: "أحبابك 🤍", b: "اضغط هذا الشريط لضبط مواعيد التواصل مع من تحب — بعد الفجر، قبل الصلاة، أو موعد ثابت — حسب توقيتهم مهما بعدت المسافة." },
       en: { t: "Close Ones 🤍", b: "Tap this strip to set when to reach the people you love — after Fajr, before prayer, or a fixed appointment — in their local time, near or far." } },
@@ -54,9 +81,9 @@
     spotlightApp: { sel: "#homeSpotlight", prefer: "below",
       ar: { t: "أولوياتك اليومية 🤍", b: "أحبابك وتذكير الأذان في المقدمة — ما تحتاجه كل يوم بضغطة واحدة." },
       en: { t: "Your daily priorities 🤍", b: "Close Ones and prayer reminders up front — what you need every day, one tap away." } },
-    dailyReflection: { sel: "#dailyReflection", prefer: "below",
-      ar: { t: "خاطرة اليوم 🤍", b: "حديث صحيح أو آية تتجدّد كل يوم، لتبدأ يومك بلمسة إيمانية هادئة." },
-      en: { t: "Daily reflection 🤍", b: "An authentic hadith or verse that changes each day, to start your day with a calm spiritual touch." } },
+    dailyReflection: { sel: "#dailyReflection", tab: "home", prefer: "above",
+      ar: { t: "خاطرة اليوم 🤍", b: "في الرئيسية — حديث صحيح أو آية تتجدّد كل يوم، لتبدأ يومك بلمسة إيمانية هادئة." },
+      en: { t: "Daily reflection 🤍", b: "On Home — an authentic hadith or verse that changes each day, for a calm spiritual start." } },
     quickToolsApp: { sel: ".app-tools > .app-tools-group", prefer: "above",
       ar: { t: "باقي الأدوات 🧭", b: "مرتّبة مثل الموقع: الصلاة، الأذكار، الوقت، التخطيط، وخواطر — كل شيء في مكانه." },
       en: { t: "More tools 🧭", b: "Organized like the website: Prayer, Adhkar, Time, Planning and Reflections — everything in its place." } },
@@ -68,17 +95,24 @@
       en: { t: "You're all set! 🎉", b: "Replay this tour anytime from the “?” button. May Allah bless your time." } },
   };
 
-  // Assemble the steps for the current surface: the app shows the spotlight row
-  // (Close Ones + injected Reminders card), daily reflection, then tool groups;
-  // the website spotlights the Close Ones strip on the home panel, then the Tools
-  // catalog section. Everything else is shared.
+  // Site vs app: the app uses bottom tabs — each step can declare `tab` and the
+  // tour switches tabs before spotlighting the target.
   function buildSteps() {
     const app = document.documentElement.classList.contains("app-mode");
-    const list = [S.welcome, S.search, S.favorite, S.myCities, S.prayerTimes, S.tapCard, S.adherence, S.week, S.insights];
-    if (app) list.push(S.spotlightApp, S.dailyReflection, S.quickToolsApp);
-    else list.push(S.spotlightSite, S.toolsSite);
-    list.push(S.help, S.ready);
-    return list;
+    if (!app) {
+      const list = [S.welcome, S.search, S.favorite, S.myCities, S.prayerTimes, S.tapCard, S.adherence, S.week, S.insights];
+      list.push(S.spotlightSite, S.toolsSite);
+      list.push(S.help, S.ready);
+      return list;
+    }
+    return [
+      S.welcomeApp, S.appNav,
+      S.search, S.favorite, S.myCities, S.homeClock, S.cityPulse, S.dailyReflection,
+      S.prayerTimes, S.tapCard, S.adherence, S.week, S.insights, S.prayerRemind,
+      S.azkarHub, S.azkarRemind,
+      S.appTools, S.closeOnesTool,
+      S.help, S.ready,
+    ];
   }
 
   let STEPS = [];
@@ -89,6 +123,16 @@
   const fadeMs = () => reduce() ? 0 : 200;
   const scrollMs = () => reduce() ? 40 : 460;
   const isApp = () => document.documentElement.classList.contains("app-mode");
+
+  function ensureTab(tab) {
+    if (!isApp() || !tab) return Promise.resolve();
+    const cur = document.documentElement.getAttribute("data-app-tab") || "home";
+    if (cur === tab) return Promise.resolve();
+    if (window.CTH_AppTabs && typeof window.CTH_AppTabs.setActiveTab === "function") {
+      window.CTH_AppTabs.setActiveTab(tab, { pushHash: false, smooth: false });
+    }
+    return new Promise(r => setTimeout(r, reduce() ? 60 : 320));
+  }
 
   function build() {
     root = document.createElement("div");
@@ -186,45 +230,43 @@
     hidePop(() => {
       const s = STEPS[idx], x = s[lang] || s.en;
       popTitle.textContent = x.t;
-      if (s.icon) popTitle.insertAdjacentHTML("beforeend", s.icon); // trusted, hardcoded markup
+      if (s.icon) popTitle.insertAdjacentHTML("beforeend", s.icon);
       popBody.textContent = x.b;
       popCount.textContent = (idx + 1) + " " + UI.of + " " + STEPS.length;
       if (popProg) popProg.style.width = ((idx + 1) / STEPS.length * 100).toFixed(1) + "%";
       btnPrev.hidden = idx === 0;
       btnNext.textContent = s.last ? UI.done : UI.next;
       btnAll.hidden = !s.last;
-      const el = resolve(idx);
       stepLock = true;
-      const runStep = (attempt) => {
-        const target = resolve(idx);
-        if (s.sel === "#dailyReflection" && !shown(target) && attempt < 24) {
-          scrollTimer = setTimeout(() => runStep(attempt + 1), 200);
-          return;
-        }
-        const finish = () => {
-          stepLock = false;
-          position();
-          revealPop();
+      ensureTab(s.tab || (isApp() ? "home" : null)).then(() => {
+        const runStep = (attempt) => {
+          const target = resolve(idx);
+          if (s.sel === "#dailyReflection" && !shown(target) && attempt < 24) {
+            scrollTimer = setTimeout(() => runStep(attempt + 1), 200);
+            return;
+          }
+          const finish = () => {
+            stepLock = false;
+            position();
+            revealPop();
+          };
+          if (shown(target) && s.sel) {
+            root.classList.remove("is-center");
+            spot.hidden = false;
+            const rect = target.getBoundingClientRect();
+            const tall = rect.height > window.innerHeight * 0.66;
+            const block = tall ? "start" : "center";
+            try { target.scrollIntoView({ block, inline: "nearest", behavior: reduce() ? "auto" : "smooth" }); } catch (e) { target.scrollIntoView(); }
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(finish, scrollMs());
+          } else {
+            root.classList.add("is-center");
+            spot.hidden = true;
+            finish();
+          }
         };
-        if (shown(target) && s.sel) {
-          root.classList.remove("is-center");
-          spot.hidden = false;
-          const rect = target.getBoundingClientRect();
-          // Small targets (icons, tool tiles, chips) are always centered so they sit
-          // clearly in view with room for the bubble — no manual scrolling needed.
-          // Only sections taller than most of the screen align to their top instead.
-          const tall = rect.height > window.innerHeight * 0.66;
-          const block = tall ? "start" : "center";
-          try { target.scrollIntoView({ block, inline: "nearest", behavior: reduce() ? "auto" : "smooth" }); } catch (e) { target.scrollIntoView(); }
-          clearTimeout(scrollTimer);
-          scrollTimer = setTimeout(finish, scrollMs());
-        } else {
-          root.classList.add("is-center");
-          spot.hidden = true;
-          finish();
-        }
-      };
-      runStep(0);
+        runStep(0);
+      });
     });
   }
 
@@ -241,7 +283,8 @@
     const zones = [];
     const insideTools = skipSel && (skipSel.includes("app-tools") || skipSel === "#dailyReflection");
     const list = ["#prayerGrid", "#cpNext", "#cpWeek", ".prayer-insights", "#ltAnalog", "#dailyReflection"];
-    if (isApp() && !insideTools) list.push(".app-tools");
+    if (isApp() && !insideTools) list.push(".app-bottom-nav");
+    if (isApp() && skipSel !== ".app-bottom-nav" && !insideTools) list.push("nav.app-tools");
     if (isApp() && skipSel !== "#helpBtn") list.push("#helpBtn");
     list.forEach(sel => {
       if (sel === skipSel) return;
@@ -251,8 +294,13 @@
     return zones;
   }
   function bottomInset() {
-    let base = isApp() ? 118 : 14;
+    let base = isApp() ? 72 : 14;
     if (isApp()) {
+      const nav = document.querySelector(".app-bottom-nav");
+      if (nav && shown(nav)) {
+        const nr = nav.getBoundingClientRect();
+        base = Math.max(base, window.innerHeight - nr.top + 12);
+      }
       const fab = document.getElementById("helpBtn");
       if (fab && shown(fab)) {
         const fr = fab.getBoundingClientRect();
@@ -273,6 +321,7 @@
     const opts = [];
     const add = (side, pri) => opts.push({ side, pri });
     if (step.prefer) add(step.prefer, 14);
+    if (step.sel === ".app-bottom-nav") add("above", 22);
     if (step.sel === "#helpBtn") add(cx > vw * 0.5 ? "left" : "right", 15);
     if (high || !low) { add("below", 9); add("right", 6); add("left", 6); }
     if (low || !high) { add("above", 10); add("right", 7); add("left", 7); }
@@ -387,10 +436,13 @@
   function start() {
     if (active) return;
     if (!root) build();
-    STEPS = buildSteps();           // pick site vs app steps at launch time
+    STEPS = buildSteps();
     active = true; idx = 0; dir = 1;
     lastPop = { x: null, y: null };
     Object.keys(placementMemory).forEach(k => delete placementMemory[k]);
+    if (isApp() && window.CTH_AppTabs && typeof window.CTH_AppTabs.setActiveTab === "function") {
+      window.CTH_AppTabs.setActiveTab("home", { pushHash: false, smooth: false });
+    }
     document.documentElement.classList.add("cth-tour-on");
     root.classList.add("is-active");
     render();
