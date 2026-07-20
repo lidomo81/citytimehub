@@ -1188,15 +1188,17 @@
       const remind = document.getElementById("cthRemindHelp");
       if (remind) {
         remind.hidden = false;
-        const strong = remind.querySelector("strong");
-        const span = remind.querySelector("span");
-        if (strong && span) {
+        const ic = remind.querySelector(".help-ic");
+        if (ic) ic.textContent = "🔔";
+        const strong = remind.querySelector("div > strong");
+        const body = remind.querySelector("div > span");
+        if (strong && body) {
           if (ar) {
             strong.textContent = "تذكير الأذان والأذكار";
-            span.innerHTML = "تذكير الأذان في تبويب <strong>الصلاة</strong> — وتذكير أذكار الصباح والمساء في تبويب <strong>الأذكار</strong>.";
+            body.textContent = "تذكير الأذان في تبويب الصلاة — وتذكير أذكار الصباح والمساء في تبويب الأذكار.";
           } else {
             strong.textContent = "Prayer & adhkar reminders";
-            span.innerHTML = "Adhan reminder on the <strong>Prayer</strong> tab — morning/evening adhkar on the <strong>Adhkar</strong> tab.";
+            body.textContent = "Adhan reminder on the Prayer tab — morning/evening adhkar on the Adhkar tab.";
           }
         }
       }

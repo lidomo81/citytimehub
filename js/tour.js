@@ -46,8 +46,8 @@
       ar: { t: "مواقيت الصلاة 🕌", b: "في تبويب الصلاة — صلوات اليوم الخمسة مع الشروق. الصلاة الحالية تتحدّد بلمسة ضوئية." },
       en: { t: "Prayer times 🕌", b: "On the Prayer tab — today's five prayers plus sunrise. The current prayer is gently highlighted." } },
     tapCard: { sel: "#prayerGrid", tab: "prayer",
-      ar: { t: "اضغط أي بطاقة صلاة 📿", b: "تفتح أذكار ما بعد الصلاة وفضلها، ويمكنك تسجيل التزامك: الفرض، والسنة، والأذكار." },
-      en: { t: "Tap any prayer card 📿", b: "Opens post-prayer adhkar and its virtue, and lets you log fard, sunnah and adhkar." } },
+      ar: { t: "اضغط أي بطاقة صلاة 📿", b: "كل بطاقة قابلة للضغط: تفتح أذكار ما بعد الصلاة وفضلها، وتسجّل الفرض والسنة والأذكار — والختم على البطاقة يمتلئ مع التزامك." },
+      en: { t: "Tap any prayer card 📿", b: "Every card is tappable: it opens post-prayer adhkar and the prayer’s virtue, and lets you log fard, sunnah and adhkar — the seal on the card fills as you keep up." } },
     adherence: { sel: "#cpNext", tab: "prayer",
       ar: { t: "التزامك اليومي 🌙", b: "عندما تسجّل صلواتك تظهر هنا كلمة تشجيع وسلسلة أيامك — بياناتك على جهازك وحده." },
       en: { t: "Your daily adherence 🌙", b: "As you log prayers, a gentle word and your streak appear here — saved on your device only." } },
@@ -61,8 +61,8 @@
       ar: { t: "تذكير الأذان 🔔", b: "في تبويب الصلاة — اضغط لاختيار نغمة الإشعار وتفعيل تنبيه كل صلاة." },
       en: { t: "Adhan reminder 🔔", b: "On the Prayer tab — tap to pick a notification sound and get alerted at each prayer." } },
     azkarHub: { sel: ".app-azkar-grid", tab: "azkar", prefer: "below",
-      ar: { t: "الأذكار 📿", b: "في تبويب الأذكار — اختر صباح أو مساء أو قبل النوم. كل مجموعة بعدّاد تكرار وحفظ تلقائي." },
-      en: { t: "Adhkar 📿", b: "On the Adhkar tab — pick morning, evening or bedtime. Each set has a tap counter and auto-save." } },
+      ar: { t: "تبويب الأذكار 📿", b: "هنا أذكار الصباح والمساء وقبل النوم — كل مجموعة بعدّاد تكرار وحفظ تلقائي على جهازك." },
+      en: { t: "Adhkar tab 📿", b: "Morning, evening and bedtime adhkar — each set has a tap counter and auto-save on your device." } },
     azkarRemind: { sel: "#cthAzkarRemindSlot", tab: "azkar", prefer: "below",
       ar: { t: "تذكير الأذكار 🌙", b: "في تبويب الأذكار — فعّل تنبيه أذكار الصباح والمساء وجمعة الذكر." },
       en: { t: "Adhkar reminders 🌙", b: "On the Adhkar tab — enable alerts for morning, evening and Friday adhkar." } },
@@ -207,11 +207,27 @@
   // A target counts only if it is actually laid out (not display:none / hidden / empty).
   const shown = el => !!(el && el.getClientRects().length);
 
+  // App tabs hide off-tab targets with CSS. A step that declares `tab` is still
+  // reachable — render() will switch tabs before spotlighting. Only skip when
+  // the element is missing, or it's on the *current* tab but not laid out
+  // (e.g. empty "My cities").
+  function stepReachable(i) {
+    const s = STEPS[i];
+    if (!s) return false;
+    if (!s.sel) return true;
+    const el = resolve(i);
+    if (!el) return false;
+    if (isApp() && s.tab) {
+      const cur = document.documentElement.getAttribute("data-app-tab") || "home";
+      if (s.tab !== cur) return true;
+    }
+    return shown(el);
+  }
+
   function go(step) {
     dir = step >= 0 ? 1 : -1;
     let i = idx + step;
-    // skip steps whose target is gone or currently hidden (e.g. the empty "My cities" row)
-    while (i >= 0 && i < STEPS.length) { if (!STEPS[i].sel || shown(resolve(i))) break; i += dir; }
+    while (i >= 0 && i < STEPS.length) { if (stepReachable(i)) break; i += dir; }
     if (i < 0) return;
     if (i >= STEPS.length) { stop(); return; }
     idx = i; render();
