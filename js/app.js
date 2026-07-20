@@ -691,7 +691,6 @@
     updateStatusBox();
     tick();
     loadPrayer(city); loadSun(city);
-    syncPrayerCityToApp(city);
   }
   function updateSaveStar() {
     const b = $("#cpSave"); if (!b || !currentCity) return;
@@ -718,7 +717,7 @@
     setCity(home);
 
     const inp = $("#cpSearch"), list = $("#cpAcList");
-    if (inp && list) attachAutocomplete(inp, list, c => setCity(c), { worldwide: true });
+    if (inp && list) attachAutocomplete(inp, list, c => { setCity(c); syncPrayerCityToApp(c); }, { worldwide: true });
 
     const sv = $("#cpSave");
     if (sv) sv.addEventListener("click", () => {
@@ -737,7 +736,7 @@
       toast(nowFav ? T.savedToast : T.removedToast);
     });
     const hm = $("#cpHome");
-    if (hm) hm.addEventListener("click", () => { if (detectedHome) setCity(detectedHome); });
+    if (hm) hm.addEventListener("click", () => { if (detectedHome) { setCity(detectedHome); syncPrayerCityToApp(detectedHome); } });
 
     const inst = $("#cpInstall");
     if (inst) {
