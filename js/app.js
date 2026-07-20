@@ -644,6 +644,24 @@
   }
 
   /* ---------- Unified city panel (time + prayer + sun, searchable) ---------- */
+  function cityPayload(city) {
+    if (!city || city.lat == null || city.lng == null) return null;
+    return {
+      name: city.name,
+      name_ar: city.name_ar || city.name,
+      country: city.country || "",
+      country_ar: city.country_ar || city.country || "",
+      lat: city.lat,
+      lng: city.lng,
+      method: city.method != null ? city.method : 3,
+    };
+  }
+  function syncPrayerCityToApp(city) {
+    if (!window.AndroidApp || typeof AndroidApp.syncPrayerCity !== "function") return;
+    const payload = cityPayload(city);
+    if (!payload) return;
+    try { AndroidApp.syncPrayerCity(JSON.stringify(payload)); } catch (e) {}
+  }
   function setCity(city) {
     if (!city) return;
     currentCity = city;
@@ -673,6 +691,7 @@
     updateStatusBox();
     tick();
     loadPrayer(city); loadSun(city);
+    syncPrayerCityToApp(city);
   }
   function updateSaveStar() {
     const b = $("#cpSave"); if (!b || !currentCity) return;
@@ -1194,6 +1213,11 @@
     };
     tick();
   }
+
+  window.cthGetPrayerCity = function () {
+    const payload = cityPayload(currentCity);
+    return payload ? JSON.stringify(payload) : null;
+  };
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
