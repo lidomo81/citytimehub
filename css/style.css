@@ -520,8 +520,7 @@ html.app-mode:not([data-app-tab="home"]) #myCities { display: none !important; }
 html.app-mode:not([data-app-tab="home"]) .daily-reflection { display: none !important; }
 html.app-mode[data-app-tab="tools"] .app-tools-group--azkar { display: none !important; }
 
-/* —— Home tab: dates instead of streak; reflection strip —— */
-html.app-mode[data-app-tab="home"] #cpNext,
+/* —— Home tab: dates + next-prayer teaser; reflection + Close Ones —— */
 html.app-mode[data-app-tab="home"] #cpWeek,
 html.app-mode[data-app-tab="home"] #cpDua { display: none !important; }
 html.app-mode[data-app-tab="home"] .cp-devotion .cp-dev-title,
@@ -535,10 +534,11 @@ html.app-mode[data-app-tab="home"] .cp-devotion .cp-dev-head {
   padding: 0 16px 10px;
 }
 html.app-mode[data-app-tab="home"] .cp-devotion .datebar { margin: 0 auto; }
-html.app-mode #coHomeStrip { display: none !important; }
+html.app-mode:not([data-app-tab="home"]) #coHomeStrip { display: none !important; }
 html.app-mode[data-app-tab="home"] .home-spotlight {
   grid-template-columns: 1fr;
   margin: 10px 0 0;
+  gap: 10px;
 }
 html.app-mode[data-app-tab="home"] .daily-reflection--home {
   margin: 0;
@@ -576,7 +576,17 @@ html.app-mode[data-app-tab="azkar"] #cthAzkarRemindSlot:not(:empty) {
 html.app-mode[data-app-tab="home"] #cthPrayerRemindSlot,
 html.app-mode[data-app-tab="home"] #cthAzkarRemindSlot,
 html.app-mode[data-app-tab="prayer"] #cthAzkarRemindSlot { display: none !important; }
-html.app-mode:not([data-app-tab="home"]) .cp-toolbar { display: none !important; }
+/* Search on Home + Prayer; hide elsewhere */
+html.app-mode:not([data-app-tab="home"]):not([data-app-tab="prayer"]) .cp-toolbar { display: none !important; }
+html.app-mode[data-app-tab="prayer"] .cp-toolbar {
+  display: flex !important;
+  margin: 6px 0 10px;
+  gap: 8px;
+}
+html.app-mode[data-app-tab="prayer"] .cp-toolbar .cp-save,
+html.app-mode[data-app-tab="prayer"] .cp-toolbar .cp-home,
+html.app-mode[data-app-tab="prayer"] .cp-toolbar .cp-install { display: none !important; }
+html.app-mode[data-app-tab="prayer"] .cp-toolbar .cp-ac { flex: 1; min-width: 0; }
 .app-remind-slot .app-spot-card { width: 100%; margin: 0; }
 html.app-mode[data-app-tab="prayer"] .app-remind-slot .app-spot-card,
 html.app-mode[data-app-tab="azkar"] .app-remind-slot .app-spot-card {
@@ -604,40 +614,68 @@ html.app-mode[data-app-tab="home"] .cp-devotion {
 html.app-mode[data-app-tab="home"] .city-pulse { margin-top: 0; padding: 12px 12px 10px; }
 html.app-mode[data-app-tab="home"] .city-pulse-line { font-size: .88rem; line-height: 1.45; }
 html.app-mode[data-app-tab="home"] .home-spotlight { margin-top: 10px; }
-html.app-mode[data-app-tab="home"] .co-home-strip.app-spot-card { min-height: 58px; padding: 12px 14px; }
+html.app-mode[data-app-tab="home"] .co-home-strip.app-spot-card {
+  min-height: 58px; padding: 12px 14px;
+  border-color: color-mix(in srgb, #f472b6 28%, var(--border));
+}
+html.app-mode[data-app-tab="home"] #cpNext.cp-home-teaser {
+  display: inline-flex !important;
+  align-items: center; justify-content: center; gap: 6px;
+  width: auto; max-width: 100%; margin: 2px auto 0;
+  padding: 8px 14px; border-radius: 999px;
+  font-size: .82rem; font-weight: 700; cursor: pointer;
+  background: color-mix(in srgb, var(--brand) 12%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--brand) 32%, var(--border));
+  color: var(--text);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform .12s, border-color .2s, background .2s;
+}
+html.app-mode[data-app-tab="home"] #cpNext.cp-home-teaser:active { transform: scale(.97); }
+html.app-mode[data-app-tab="home"] #cpNext.cp-home-teaser .cp-teaser-go {
+  color: var(--brand); font-weight: 800; opacity: .85;
+}
+[dir="rtl"] html.app-mode[data-app-tab="home"] #cpNext.cp-home-teaser .cp-teaser-go { transform: scaleX(-1); display: inline-block; }
 html.app-mode[data-app-tab="home"] #cityPanel { padding-bottom: 6px; }
 html.app-mode[data-app-tab="home"] #myCities:not([hidden]) { display: block; padding: 0 0 6px; }
 
-/* Prayer: full grid, compact top strip */
+/* Prayer: full grid, compact top strip — more breathing room */
 html.app-mode[data-app-tab="prayer"] .cp-grid { grid-template-columns: 1fr; }
 html.app-mode[data-app-tab="prayer"] .cp-clock {
-  padding: 10px 16px 8px;
+  padding: 12px 16px 10px;
   flex-direction: row; align-items: center; justify-content: space-between; gap: 12px;
   background: linear-gradient(135deg, color-mix(in srgb, var(--brand) 8%, var(--surface)), var(--surface));
 }
 html.app-mode[data-app-tab="prayer"] .cp-clock-mid {
-  flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: space-between;
-  gap: 6px 12px; width: 100%;
+  flex-direction: column; align-items: stretch; gap: 8px; width: 100%;
 }
 html.app-mode[data-app-tab="prayer"] .cp-clock .eyebrow,
 html.app-mode[data-app-tab="prayer"] .cp-clock .lt-analog { display: none !important; }
-html.app-mode[data-app-tab="prayer"] .cp-clock-info { flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
-html.app-mode[data-app-tab="prayer"] .cp-clock-info .lt-city { font-size: 1rem; margin: 0; }
-html.app-mode[data-app-tab="prayer"] .cp-clock-info .lt-time { font-size: 1.35rem; margin: 0; }
-html.app-mode[data-app-tab="prayer"] .cp-clock-info .lt-meta { font-size: .72rem; margin: 0; }
-html.app-mode[data-app-tab="prayer"] #cpNext { margin: 0; width: 100%; justify-content: center; font-size: .82rem; padding: 7px 12px; }
-html.app-mode[data-app-tab="prayer"] .cp-devotion { border: none; padding: 8px 14px 10px; border-top: 1px solid var(--border); }
-html.app-mode[data-app-tab="prayer"] .cp-dev-head { margin-bottom: 8px; }
-html.app-mode[data-app-tab="prayer"] .cp-dev-title { font-size: .92rem; }
-html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
-html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card { padding: 28px 8px 12px; }
-html.app-mode[data-app-tab="prayer"] .prayer-name { font-size: .72rem; }
-html.app-mode[data-app-tab="prayer"] .prayer-time { font-size: 1rem; }
+html.app-mode[data-app-tab="prayer"] .cp-clock-info {
+  display: flex; flex-direction: row; flex-wrap: wrap; align-items: baseline;
+  justify-content: space-between; gap: 4px 12px; width: 100%;
+}
+html.app-mode[data-app-tab="prayer"] .cp-clock-info .lt-city { font-size: 1.02rem; margin: 0; }
+html.app-mode[data-app-tab="prayer"] .cp-clock-info .lt-time { font-size: 1.4rem; margin: 0; letter-spacing: -.02em; }
+html.app-mode[data-app-tab="prayer"] .cp-clock-info .lt-meta { font-size: .72rem; margin: 0; width: 100%; opacity: .85; }
+html.app-mode[data-app-tab="prayer"] #cpNext {
+  margin: 0; width: 100%; justify-content: center; font-size: .84rem; padding: 9px 14px;
+  border-radius: 14px;
+}
+html.app-mode[data-app-tab="prayer"] .cp-dua { margin: 4px auto 0; max-inline-size: 36ch; font-size: .95rem; }
+html.app-mode[data-app-tab="prayer"] .cp-week { margin-top: 6px; align-self: center; }
+html.app-mode[data-app-tab="prayer"] .cp-devotion { border: none; padding: 10px 14px 12px; border-top: 1px solid var(--border); }
+html.app-mode[data-app-tab="prayer"] .cp-dev-head { margin-bottom: 10px; }
+html.app-mode[data-app-tab="prayer"] .cp-dev-title { font-size: .95rem; }
+html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-grid { grid-template-columns: repeat(3, 1fr); gap: 9px; }
+html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card { padding: 30px 8px 14px; border-radius: 16px; }
+html.app-mode[data-app-tab="prayer"] .prayer-name { font-size: .74rem; }
+html.app-mode[data-app-tab="prayer"] .prayer-time { font-size: 1.05rem; }
 html.app-mode[data-app-tab="prayer"] .city-pulse,
 html.app-mode[data-app-tab="prayer"] .home-spotlight { display: none !important; }
 html.app-mode[data-app-tab="prayer"] .prayer-insights,
-html.app-mode[data-app-tab="prayer"] #occasions { margin-top: 8px; padding: 12px; }
+html.app-mode[data-app-tab="prayer"] #occasions { margin-top: 10px; padding: 14px; border-radius: 16px; }
 html.app-mode[data-app-tab="prayer"] .pi-headline { font-size: .95rem; margin-bottom: 8px; }
+html.app-mode[data-app-tab="prayer"] #cityPanel { padding-bottom: 10px; }
 
 /* Azkar hub tab */
 .app-tab-azkar { display: none; padding: 12px 0 8px; }

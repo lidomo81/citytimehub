@@ -75,6 +75,12 @@
     spotlightSite: { sel: "#coHomeStrip", prefer: "below",
       ar: { t: "أحبابك 🤍", b: "اضغط هذا الشريط لضبط مواعيد التواصل مع من تحب — بعد الفجر، قبل الصلاة، أو موعد ثابت — حسب توقيتهم مهما بعدت المسافة." },
       en: { t: "Close Ones 🤍", b: "Tap this strip to set when to reach the people you love — after Fajr, before prayer, or a fixed appointment — in their local time, near or far." } },
+    closeOnesHome: { sel: "#coHomeStrip", tab: "home", prefer: "below",
+      ar: { t: "أحبابك 🤍", b: "في الرئيسية — اضبط مواعيد التواصل مع من تحب حسب توقيتهم، مهما بعدت المسافة." },
+      en: { t: "Close Ones 🤍", b: "On Home — set when to reach loved ones in their local time, near or far." } },
+    homeNext: { sel: "#cpNext", tab: "home", prefer: "below",
+      ar: { t: "الصلاة القادمة 🕌", b: "لمحة سريعة عن الصلاة التالية — اضغطها للانتقال إلى تبويب الصلاة والمواقيت الكاملة." },
+      en: { t: "Next prayer 🕌", b: "A quick peek at the upcoming prayer — tap to open the Prayer tab with full times." } },
     toolsSite: { sel: "#tools",
       ar: { t: "الأدوات 🧭", b: "أذكار الصباح والمساء، فرق التوقيت، مخطّط الأحداث، أفضل وقت للاتصال، القبلة والمزيد — كلها على محرّك وقت حيّ واحد." },
       en: { t: "Tools 🧭", b: "Morning & evening adhkar, time difference, meeting planner, best time to call, Qibla and more — all on one live-time engine." } },
@@ -107,10 +113,10 @@
     }
     return [
       S.welcomeApp, S.appNav,
-      S.search, S.favorite, S.myCities, S.homeClock, S.cityPulse, S.dailyReflection,
+      S.search, S.favorite, S.myCities, S.homeClock, S.cityPulse, S.homeNext, S.dailyReflection, S.closeOnesHome,
       S.prayerTimes, S.tapCard, S.adherence, S.week, S.insights, S.prayerRemind,
       S.azkarHub, S.azkarRemind,
-      S.appTools, S.closeOnesTool,
+      S.appTools,
       S.help, S.ready,
     ];
   }

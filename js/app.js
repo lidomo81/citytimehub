@@ -35,6 +35,7 @@
       weekTitle: "Last 7 days", statsTitle: "Your adherence", currentStreak: "Current streak", bestStreak: "Best streak",
       legendFull: "Complete", legendPart: "Partial", legendNone: "Missed", statsClose: "Close", statsHint: "Tap for details",
       streakNote: "This counter is only to encourage you to keep your prayers — not to collect any data. Everything stays on your device. Be honest with Allah and with yourself 🤍",
+      openPrayer: "Open prayer",
     },
     ar: {
       addFav: "أضِف إلى مدني", remFav: "أزِل من مدني",
@@ -63,6 +64,7 @@
       weekTitle: "آخر ٧ أيام", statsTitle: "التزامك", currentStreak: "سلسلتك الحالية", bestStreak: "أطول سلسلة",
       legendFull: "مكتمل", legendPart: "جزئي", legendNone: "فائت", statsClose: "إغلاق", statsHint: "اضغط للتفاصيل",
       streakNote: "هذا العدّاد وسيلة لتحفيزك على المحافظة على صلاتك، وليس لجمع أي معلومات — بياناتك محفوظة على جهازك وحده. فاجعلها صدقًا مع الله ومع نفسك 🤍",
+      openPrayer: "افتح الصلاة",
     },
   };
   const T = I18N[LANG];
@@ -991,6 +993,42 @@
     document.body.style.overflow = "hidden";
   }
 
+  // Compact next-prayer chip on the Home tab — one tap opens the Prayer tab.
+  function updateHomeTeaser(el) {
+    el.classList.remove("cp-streak", "cp-celebrate", "cp-recover");
+    el.classList.add("cp-home-teaser");
+    el.setAttribute("role", "button");
+    el.setAttribute("tabindex", "0");
+    el.setAttribute("aria-label", T.openPrayer);
+    if (!prayerState || !prayerState.city) { el.hidden = true; return; }
+    const off = offsetHours(prayerState.city.tz) * 3600000;
+    const d = new Date(Date.now() + off);
+    const nowMin = d.getUTCHours() * 60 + d.getUTCMinutes();
+    let idx = -1, nextMin = 0;
+    for (let i = 0; i < PRAYERS.length; i++) {
+      const [hh, mm] = (prayerState.timings[PRAYERS[i]] || "0:0").split(":");
+      const pm = (+hh) * 60 + (+mm);
+      if (pm > nowMin) { idx = i; nextMin = pm; break; }
+    }
+    let tomorrow = false;
+    if (idx < 0) { idx = 0; const [hh, mm] = (prayerState.timings.Fajr || "0:0").split(":"); nextMin = (+hh) * 60 + (+mm) + 1440; tomorrow = true; }
+    const diff = nextMin - nowMin, dh = Math.floor(diff / 60), dm = diff % 60;
+    el.hidden = false;
+    el.innerHTML = `<span class="cp-next-dot" aria-hidden="true"></span><strong>${T.prayers[idx]}${tomorrow ? " " + T.tomorrow : ""}</strong> · <span class="cp-next-in">${T.inHM(dh, dm)}</span><span class="cp-teaser-go" aria-hidden="true">→</span>`;
+    if (!el.dataset.teaserWired) {
+      el.dataset.teaserWired = "1";
+      const go = () => {
+        if (window.CTH_AppTabs && typeof CTH_AppTabs.setActiveTab === "function") {
+          CTH_AppTabs.setActiveTab("prayer", { smooth: true });
+        } else {
+          location.hash = "prayer";
+        }
+      };
+      el.addEventListener("click", go);
+      el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+    }
+  }
+
   // The box under the clock: your city → streak; another city → next-prayer line.
   function updateStatusBox() {
     const el = $("#cpNext"); if (!el) return;
@@ -999,10 +1037,14 @@
     const dua = ensureDuaEl();
     if (isApp && tab === "home") {
       if (dua) dua.hidden = true;
-      el.hidden = true;
       hideWeek();
+      updateHomeTeaser(el);
       return;
     }
+    el.classList.remove("cp-home-teaser");
+    el.removeAttribute("role");
+    el.removeAttribute("tabindex");
+    el.removeAttribute("aria-label");
     if (currentMine) { if (dua) dua.hidden = false; el.classList.add("cp-streak"); renderStreak(el); renderWeek(); }
     else { if (dua) dua.hidden = true; el.classList.remove("cp-streak", "cp-celebrate", "cp-recover"); hideWeek(); updateNextLine(); }
   }
@@ -1190,7 +1232,7 @@
             visits = parseInt(localStorage.getItem(APP_VISITS_KEY) || "0", 10) + 1;
             localStorage.setItem(APP_VISITS_KEY, String(visits));
           } catch (e) {}
-          if (visits > 1) whenReady(() => tour.start());
+          if (visits >= 1) whenReady(() => tour.start());
         } else {
           whenReady(() => tour.start());
         }

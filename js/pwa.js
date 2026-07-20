@@ -304,7 +304,7 @@
     var inApp = inAppMode();
     if (!inApp) return;
     document.documentElement.classList.add("app-mode");
-    document.querySelectorAll("a.lang-switch, nav.app-legal a, .app-tools a.app-tool").forEach(function (a) {
+    document.querySelectorAll("a.lang-switch, nav.app-legal a, .app-tools a.app-tool, #coHomeStrip").forEach(function (a) {
       var href = a.getAttribute("href");
       if (!href || href.charAt(0) === "#") return;
       a.setAttribute("href", withAppParam(href));
