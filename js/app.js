@@ -583,6 +583,7 @@
     setTimeout(() => { tick(); setInterval(tick, 1000); }, delay);
     setInterval(updateStatusBox, 30000);
     window.addEventListener("cth-worship", updateStatusBox);
+    document.addEventListener("cth-app-tab", updateStatusBox);
   }
 
   /* ---------- Prayer times + Hijri (AlAdhan) ---------- */
@@ -975,7 +976,14 @@
   // The box under the clock: your city → streak; another city → next-prayer line.
   function updateStatusBox() {
     const el = $("#cpNext"); if (!el) return;
+    const tab = document.documentElement.getAttribute("data-app-tab") || "home";
     const dua = ensureDuaEl();
+    if (tab === "home") {
+      if (dua) dua.hidden = true;
+      el.hidden = true;
+      hideWeek();
+      return;
+    }
     if (currentMine) { if (dua) dua.hidden = false; el.classList.add("cp-streak"); renderStreak(el); renderWeek(); }
     else { if (dua) dua.hidden = true; el.classList.remove("cp-streak", "cp-celebrate", "cp-recover"); hideWeek(); updateNextLine(); }
   }

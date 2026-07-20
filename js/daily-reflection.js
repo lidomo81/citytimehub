@@ -1,14 +1,12 @@
 /* =====================================================================
    CityTimeHub — js/daily-reflection.js
-   "Reflection of the day" card shown above the app tools grid (app mode).
+   "Reflection of the day" card on the app home tab (خاطرة اليوم).
    A short, authentic hadith (Bukhari / Muslim) or a Quran verse that
    rotates once per day. Fully client-side, no API, works offline.
-   Every hadith here is from Sahih al-Bukhari and/or Sahih Muslim.
    ===================================================================== */
 (() => {
   "use strict";
 
-  // ar / en text, with source. All hadith are Bukhari/Muslim only.
   const ITEMS = [
     { ar: "إنَّما الأعمالُ بالنِّيّاتِ، وإنَّما لكلِّ امرئٍ ما نوى.", en: "Actions are but by intentions, and every person will have only what they intended.", sa: "متفق عليه", se: "Bukhari & Muslim" },
     { ar: "مَن كان يؤمنُ باللهِ واليومِ الآخرِ فَلْيَقُلْ خيرًا أو لِيَصْمُتْ.", en: "Whoever believes in Allah and the Last Day, let him speak good or remain silent.", sa: "متفق عليه", se: "Bukhari & Muslim" },
@@ -34,32 +32,38 @@
 
   const lang = () => ((document.documentElement.lang || "en").slice(0, 2) === "ar" ? "ar" : "en");
   const kicker = () => (lang() === "ar" ? "💡 خاطرة اليوم" : "💡 Reflection of the day");
+  const isApp = () => document.documentElement.classList.contains("app-mode");
 
-  // Same item for everyone on a given day; advances once per day.
   function pick() {
     const day = Math.floor(Date.now() / 86400000);
     return ITEMS[((day % ITEMS.length) + ITEMS.length) % ITEMS.length];
   }
 
   function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
-  const isApp = () => document.documentElement.classList.contains("app-mode");
+
+  function hostEl() {
+    if (isApp() && document.getElementById("dailyReflectionSlot")) {
+      return document.getElementById("dailyReflectionSlot");
+    }
+    return document.querySelector(".app-tools");
+  }
 
   function mount() {
     if (!isApp()) return true;
     if (document.getElementById("dailyReflection")) return true;
-    const host = document.querySelector(".app-tools");
+    const host = hostEl();
     if (!host) return false;
     const ar = lang() === "ar";
     const it = pick();
     const text = ar ? it.ar : it.en;
     const src = ar ? it.sa : it.se;
     const body = it.verse ? ("﴿" + esc(text) + "﴾") : ("«" + esc(text) + "»");
-    const html = '<div id="dailyReflection" class="daily-reflection" aria-live="polite">'
+    const html = '<div id="dailyReflection" class="daily-reflection daily-reflection--home" aria-live="polite">'
       + '<span class="dr-kicker">' + kicker() + "</span>"
       + '<p class="dr-text">' + body + "</p>"
       + '<p class="dr-src">' + esc(src) + "</p>"
       + "</div>";
-    host.insertAdjacentHTML("afterbegin", html);
+    host.insertAdjacentHTML("beforeend", html);
     return true;
   }
 

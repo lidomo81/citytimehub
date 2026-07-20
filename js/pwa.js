@@ -292,6 +292,14 @@
       '<span class="app-bar-spacer" aria-hidden="true"></span>';
     document.body.insertBefore(bar, document.body.firstChild);
   }
+  function ensureAppTabs() {
+    if (!inAppMode()) return;
+    if (window.CTH_AppTabs || document.querySelector("script[src*='app-tabs.js']")) return;
+    var s = document.createElement("script");
+    s.src = "/js/app-tabs.js";
+    s.defer = true;
+    document.head.appendChild(s);
+  }
   function applyAppNav() {
     var inApp = inAppMode();
     if (!inApp) return;
@@ -317,8 +325,8 @@
       });
     }
   }
-  if (document.readyState !== "loading") { upgradeSiteNav(); wireNavDrops(); applyAppNav(); installToolAppBar(); }
-  else document.addEventListener("DOMContentLoaded", function () { upgradeSiteNav(); wireNavDrops(); applyAppNav(); installToolAppBar(); });
+  if (document.readyState !== "loading") { upgradeSiteNav(); wireNavDrops(); applyAppNav(); installToolAppBar(); ensureAppTabs(); }
+  else document.addEventListener("DOMContentLoaded", function () { upgradeSiteNav(); wireNavDrops(); applyAppNav(); installToolAppBar(); ensureAppTabs(); });
 
   /* ----- Universal Share button in the header. Uses the native share sheet
      (WhatsApp / Telegram / etc.) so a visitor can pass the page to family and
