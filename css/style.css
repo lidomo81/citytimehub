@@ -2401,7 +2401,7 @@ html[dir="rtl"] .prayer-azkar-tx { letter-spacing: 0; }
 .az-sheet-head strong { font-size: 1.05rem; }
 .az-sheet-close { inline-size: 34px; block-size: 34px; border-radius: 50%; border: 1px solid var(--border-2); background: var(--surface-2); color: var(--text-2); font-size: 1rem; cursor: pointer; line-height: 1; }
 .az-sheet-close:hover { color: var(--text); }
-.az-sheet-body { overflow-y: auto; padding: 18px 20px 22px; }
+.az-sheet-body { overflow-y: auto; overscroll-behavior: contain; padding: 18px 20px 22px; }
 .az-sheet-body .az-card { box-shadow: none; }
 
 /* ================= Mobile polish & ergonomics ================= */

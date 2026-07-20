@@ -127,8 +127,13 @@
       <button class="az-next" type="button">${lang === "ar" ? "التالي" : "Next"}</button>
     </div>`;
 
+  function setPullToRefresh(enabled) {
+    try { if (window.AndroidApp && AndroidApp.setPullToRefresh) AndroidApp.setPullToRefresh(enabled); } catch (e) {}
+  }
+
   function buildSheet() {
     sheet = document.createElement("div");
+    sheet.id = "prayerAzkarSheet";
     sheet.className = "az-sheet-overlay";
     sheet.hidden = true;
     sheet.innerHTML = `
@@ -142,7 +147,7 @@
     document.body.appendChild(sheet);
     sheetBody = sheet.querySelector("#prayerAzkarTool");
     sheetTitle = sheet.querySelector(".pa-head-title");
-    const close = () => { sheet.hidden = true; document.documentElement.style.overflow = ""; decorate(); };
+    const close = () => { sheet.hidden = true; document.documentElement.style.overflow = ""; setPullToRefresh(true); decorate(); };
     sheet.addEventListener("click", e => { if (e.target === sheet) close(); });
     sheet.querySelector(".az-sheet-close").addEventListener("click", close);
     document.addEventListener("keydown", e => { if (e.key === "Escape" && !sheet.hidden) close(); });
@@ -227,6 +232,7 @@
     if (prayerName) { markRead(prayerName); decorate(); }
     sheet.hidden = false;
     document.documentElement.style.overflow = "hidden";
+    setPullToRefresh(false);
   }
 
   const reduceMotion = () => { try { return matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) { return false; } };
