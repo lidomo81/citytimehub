@@ -635,6 +635,24 @@ html.app-mode[data-app-tab="home"] #cpNext.cp-home-teaser .cp-teaser-go {
   color: var(--brand); font-weight: 800; opacity: .85;
 }
 [dir="rtl"] html.app-mode[data-app-tab="home"] #cpNext.cp-home-teaser .cp-teaser-go { transform: scaleX(-1); display: inline-block; }
+html.app-mode:not([data-app-tab="home"]) #cthHomeRemindStatus { display: none !important; }
+html.app-mode[data-app-tab="home"] .cth-home-remind {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  width: auto; max-width: 100%; margin: 0 auto;
+  padding: 7px 13px; border-radius: 999px;
+  font: inherit; font-size: .78rem; font-weight: 700; cursor: pointer;
+  color: var(--text-2);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform .12s, border-color .2s, background .2s, color .2s;
+}
+html.app-mode[data-app-tab="home"] .cth-home-remind.is-on {
+  color: var(--text);
+  background: color-mix(in srgb, #34d399 12%, var(--surface));
+  border-color: color-mix(in srgb, #34d399 36%, var(--border));
+}
+html.app-mode[data-app-tab="home"] .cth-home-remind:active { transform: scale(.97); }
 html.app-mode[data-app-tab="home"] #cityPanel { padding-bottom: 6px; }
 html.app-mode[data-app-tab="home"] #myCities:not([hidden]) { display: block; padding: 0 0 6px; }
 
