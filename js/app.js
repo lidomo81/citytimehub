@@ -994,9 +994,10 @@
   // The box under the clock: your city → streak; another city → next-prayer line.
   function updateStatusBox() {
     const el = $("#cpNext"); if (!el) return;
+    const isApp = document.documentElement.classList.contains("app-mode");
     const tab = document.documentElement.getAttribute("data-app-tab") || "home";
     const dua = ensureDuaEl();
-    if (tab === "home") {
+    if (isApp && tab === "home") {
       if (dua) dua.hidden = true;
       el.hidden = true;
       hideWeek();
