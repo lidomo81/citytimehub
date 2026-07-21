@@ -183,7 +183,7 @@
       btn.dataset.tab = id;
       if (id === activeTab) btn.setAttribute("aria-current", "page");
       else btn.removeAttribute("aria-current");
-      btn.innerHTML = iconSvg(id) + '<span class="app-tab-label">' + L[id] + '</span>';
+      btn.innerHTML = '<span class="app-tab-ico" aria-hidden="true">' + iconSvg(id) + '</span><span class="app-tab-label">' + L[id] + '</span>';
       nav.appendChild(btn);
     });
 

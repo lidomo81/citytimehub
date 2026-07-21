@@ -22,6 +22,10 @@
       inHM: (h, m) => h ? `in ${h}h ${m}m` : `in ${m}m`, tomorrow: "tomorrow",
       savedToast: "Saved to My Cities.", removedToast: "Removed from My Cities.", favFull: n => `You can save up to ${n} cities.`,
       myFav: "My favorite cities", favEmpty: "Save a city with the star above — it will appear here.",
+      favEmptyApp: "Tap the star above to save a city — it will show up here for quick access.",
+      greetDawn: "A peaceful start — Fajr’s light is near 🌅",
+      greetMorning: "Good morning — may your day begin with remembrance 🤍",
+      greetDusk: "As the day softens — Maghrib is near 🌇",
       defaultCity: "Opens by default", setDefaultToast: "Set as your default city on open.",
       streakDays: n => `${n} day${n === 1 ? "" : "s"} keeping faith with Him — may Allah keep you steadfast`, streakStart: "Begin your journey today 🌱",
       todayWord: "Today", dayDone: "Today's prayers, complete 🤍", streakNew: "🌙 May your prayers be a comfort to your heart — accepted, in shā’ Allah 🤍",
@@ -50,6 +54,10 @@
       inHM: (h, m) => h ? `بعد ${h} س ${m} د` : `بعد ${m} د`, tomorrow: "غدًا",
       savedToast: "تم الحفظ في مدني.", removedToast: "تمت الإزالة من مدني.", favFull: n => `تقدر تحفظ حتى ${n} مدن.`,
       myFav: "مدني المفضلة", favEmpty: "احفظ مدينة بالنجمة في الأعلى — ستظهر هنا.",
+      favEmptyApp: "اضغط النجمة بالأعلى لحفظ مدينة — هتظهر هنا للوصول السريع.",
+      greetDawn: "بداية هادئة — نور الفجر قريب 🌅",
+      greetMorning: "صباح الخير — ابدأ يومك بذكر الله 🤍",
+      greetDusk: "مع هدوء النهار — المغرب قريب 🌇",
       defaultCity: "تظهر عند الفتح", setDefaultToast: "تم تعيينها لتظهر عند فتح الموقع.",
       streakDays: n => `منذ ${n === 1 ? "يومٍ" : n === 2 ? "يومين" : n + " " + ((n >= 3 && n <= 10) ? "أيام" : "يومًا")} وأنت على العهد.. ثبّتك الله`,
       streakStart: "ابدأ رحلتك اليوم 🌱",
@@ -346,7 +354,15 @@
     sec.hidden = false;
     sec.classList.toggle("is-empty", !list.length);
     if (!list.length) {
-      if (app) { sec.hidden = true; grid.innerHTML = ""; return; }
+      if (app) {
+        sec.hidden = false;
+        grid.innerHTML =
+          `<div class="fav-empty-card" role="status">` +
+          `<span class="fav-empty-ico" aria-hidden="true">⭐</span>` +
+          `<p class="fav-empty">${T.favEmptyApp || T.favEmpty}</p>` +
+          `</div>`;
+        return;
+      }
       grid.innerHTML = `<p class="fav-empty">${T.favEmpty}</p>`;
       return;
     }
@@ -615,6 +631,59 @@
       }
     } catch (e) {}
     if (root.getAttribute("data-daypart") !== part) root.setAttribute("data-daypart", part);
+    updateHomeGreeting();
+  }
+
+  /* Gentle once-a-day line under the Home clock (dawn / morning / dusk). */
+  function greetKey() {
+    const d = new Date();
+    return `cth-home-greet:${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+  }
+  function ensureHomeGreetEl() {
+    let el = document.getElementById("cthHomeGreet");
+    if (el) return el;
+    const mid = document.querySelector(".cp-clock-mid");
+    if (!mid) return null;
+    el = document.createElement("p");
+    el.id = "cthHomeGreet";
+    el.className = "cth-home-greet";
+    el.hidden = true;
+    el.setAttribute("role", "status");
+    const after = mid.querySelector("#ltAnalog") || mid.querySelector(".cp-clock-info");
+    if (after && after.nextSibling) mid.insertBefore(el, after.nextSibling);
+    else mid.appendChild(el);
+    return el;
+  }
+  function dismissHomeGreeting() {
+    const el = document.getElementById("cthHomeGreet");
+    if (el) el.hidden = true;
+    try { localStorage.setItem(greetKey(), "1"); } catch (e) {}
+  }
+  function updateHomeGreeting() {
+    const root = document.documentElement;
+    const el = ensureHomeGreetEl();
+    if (!el) return;
+    if (!root.classList.contains("app-mode") || (root.getAttribute("data-app-tab") || "home") !== "home") {
+      el.hidden = true;
+      return;
+    }
+    let seen = false;
+    try { seen = localStorage.getItem(greetKey()) === "1"; } catch (e) {}
+    if (seen) { el.hidden = true; return; }
+    const part = root.getAttribute("data-daypart") || "";
+    let msg = "";
+    if (part === "dawn") msg = T.greetDawn;
+    else if (part === "morning") msg = T.greetMorning;
+    else if (part === "dusk") msg = T.greetDusk;
+    if (!msg) { el.hidden = true; return; }
+    el.textContent = msg;
+    el.hidden = false;
+    if (!el.dataset.wired) {
+      el.dataset.wired = "1";
+      const onScroll = () => { if (!el.hidden) dismissHomeGreeting(); };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      setTimeout(() => { if (!el.hidden) dismissHomeGreeting(); }, 14000);
+    }
   }
 
   function startClock() {

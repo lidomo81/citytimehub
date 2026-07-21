@@ -488,10 +488,20 @@ html.app-mode .app-bottom-nav {
   transition: color .2s, background .2s, transform .12s;
   -webkit-tap-highlight-color: transparent;
 }
-.app-tab svg { opacity: .78; transition: opacity .2s, transform .2s; }
+.app-tab svg { opacity: .78; transition: opacity .2s, transform .2s, fill .2s; }
 .app-tab-label { font-size: .62rem; font-weight: 700; letter-spacing: .01em; line-height: 1.1; white-space: nowrap; }
+.app-tab-ico {
+  display: grid; place-items: center;
+  width: 30px; height: 30px; border-radius: 11px;
+  transition: background .2s, transform .2s;
+}
 .app-tab.is-active { color: var(--brand); background: color-mix(in srgb, var(--brand) 10%, transparent); }
-.app-tab.is-active svg { opacity: 1; transform: translateY(-1px); }
+.app-tab.is-active .app-tab-ico {
+  background: color-mix(in srgb, var(--brand) 18%, transparent);
+  transform: translateY(-1px);
+}
+.app-tab.is-active svg { opacity: 1; stroke-width: 2.15; }
+.app-tab.is-active[data-tab="home"] svg { fill: color-mix(in srgb, var(--brand) 22%, transparent); }
 .app-tab:active { transform: scale(.94); }
 
 html.app-mode body { padding-top: calc(var(--app-bar-h) + env(safe-area-inset-top, 0px)); }
@@ -826,8 +836,21 @@ html.app-mode[data-app-tab="home"] #top {
 
 /* Tools tab — tighter grid */
 html.app-mode[data-app-tab="tools"] nav.app-tools { margin: 10px auto 8px; }
-html.app-mode[data-app-tab="tools"] .app-tools-cat { margin-top: 10px; }
-html.app-mode[data-app-tab="tools"] .app-tool { padding: 12px 8px; min-block-size: 68px; }
+html.app-mode[data-app-tab="tools"] .app-tools-cat {
+  margin-top: 14px; font-size: .7rem; letter-spacing: .06em;
+  color: var(--muted);
+}
+html.app-mode[data-app-tab="tools"] .app-tools-group:first-of-type .app-tools-cat { margin-top: 4px; }
+html.app-mode[data-app-tab="tools"] .app-tool {
+  padding: 14px 8px; min-block-size: 76px;
+  border-radius: 18px;
+  box-shadow: 0 8px 22px -18px rgba(0,0,0,.35);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--surface) 92%, #fff), var(--surface));
+}
+html.app-mode[data-app-tab="tools"] .app-tool svg {
+  width: 20px; height: 20px; padding: 10px;
+  border-radius: 14px;
+}
 html.app-mode[data-app-tab="tools"] .daily-reflection { display: none !important; }
 html.app-mode[data-app-tab="tools"] nav.app-legal { margin-bottom: 4px; }
 
@@ -1445,8 +1468,34 @@ html.app-mode .fav-app-label { display: block; font-size: .72rem; font-weight: 8
 html[dir="rtl"] .fav-app-label { letter-spacing: 0; }
 .fav-chips { display: flex; flex-wrap: wrap; gap: 10px; }
 .fav-empty { margin: 0; padding: 6px 4px 2px; font-size: .8rem; color: var(--muted); line-height: 1.65; }
+html.app-mode .fav-empty-card {
+  display: flex; align-items: flex-start; gap: 12px;
+  margin: 4px 0 8px; padding: 14px 14px;
+  border-radius: 16px;
+  border: 1px dashed color-mix(in srgb, #f5a623 40%, var(--border));
+  background: color-mix(in srgb, #f5a623 7%, var(--surface));
+}
+html.app-mode .fav-empty-ico { font-size: 1.25rem; line-height: 1; margin-top: 2px; }
+html.app-mode .fav-empty-card .fav-empty {
+  padding: 0; font-size: .86rem; font-weight: 600; color: var(--text-2); line-height: 1.55;
+}
 html:not(.app-mode) #myCities.is-empty .section-head p { display: none; }
 html:not(.app-mode) #myCities.is-empty .section-head { margin-bottom: 8px; }
+
+/* Soft once-a-day greeting on Home */
+html.app-mode:not([data-app-tab="home"]) #cthHomeGreet { display: none !important; }
+.cth-home-greet {
+  margin: 0 auto; max-width: 34ch; text-align: center;
+  padding: 6px 12px; border-radius: 999px;
+  font-size: .78rem; font-weight: 700; line-height: 1.45;
+  color: color-mix(in srgb, var(--brand) 35%, var(--text));
+  background: color-mix(in srgb, var(--brand) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--brand) 18%, transparent);
+  animation: greetIn .35s ease;
+}
+.cth-home-greet[hidden] { display: none !important; }
+@keyframes greetIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .cth-home-greet { animation: none; } }
 .fav-chip {
   display: inline-flex; align-items: center; gap: 9px;
   padding: 11px 12px 11px 15px; border-radius: 13px;
@@ -2658,10 +2707,28 @@ html[dir="rtl"] .prayer-azkar-tx { letter-spacing: 0; }
 }
 
 /* sheet */
-.az-sheet-overlay { position: fixed; inset: 0; z-index: 1200; display: flex; align-items: flex-end; justify-content: center; background: rgba(4, 8, 18, .72); backdrop-filter: blur(3px); padding: 0; }
+.az-sheet-overlay {
+  position: fixed; inset: 0; z-index: 1200; display: flex; align-items: flex-end; justify-content: center;
+  background: rgba(4, 8, 18, .72); backdrop-filter: blur(3px); padding: 0;
+  animation: azOverlayIn .24s ease;
+}
 .az-sheet-overlay[hidden] { display: none !important; }
-.az-sheet { inline-size: min(560px, 100%); max-block-size: 92vh; display: flex; flex-direction: column; background: var(--surface); color: var(--text); border-radius: 22px 22px 0 0; border: 1px solid var(--border); border-block-end: none; box-shadow: 0 -20px 60px -20px rgba(0,0,0,.6); padding-block-end: env(safe-area-inset-bottom, 0); animation: azSheetUp .28s cubic-bezier(.2,.8,.2,1); }
-@keyframes azSheetUp { from { transform: translateY(16px); opacity: .6; } to { transform: translateY(0); opacity: 1; } }
+.az-sheet {
+  inline-size: min(560px, 100%); max-block-size: 92vh; display: flex; flex-direction: column;
+  background: var(--surface); color: var(--text); border-radius: 22px 22px 0 0;
+  border: 1px solid var(--border); border-block-end: none;
+  box-shadow: 0 -20px 60px -20px rgba(0,0,0,.6);
+  padding-block-end: env(safe-area-inset-bottom, 0);
+  animation: azSheetUp .34s cubic-bezier(.2,.85,.2,1);
+}
+@keyframes azOverlayIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes azSheetUp {
+  from { transform: translateY(36px); opacity: .4; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .az-sheet-overlay, .az-sheet { animation: none; }
+}
 @media (min-width: 600px) { .az-sheet-overlay { align-items: center; } .az-sheet { border-radius: 22px; border-block-end: 1px solid var(--border); } }
 .az-sheet-head { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-block-end: 1px solid var(--border); position: sticky; inset-block-start: 0; background: var(--surface); border-radius: 22px 22px 0 0; }
 .az-sheet-head strong { font-size: 1.05rem; }
