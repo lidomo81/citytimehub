@@ -11,13 +11,22 @@ const ROOT = path.resolve(import.meta.dirname, "..");
 const MORNING = path.join(ROOT, "azkar", "morning", "index.html");
 
 const COUNT_AR_MUAVWIDHAT = "مرة واحدة، وثلاثًا بعد الفجر والمغرب";
+const COUNT_EN_MUAVWIDHAT = "Once; three times after Fajr and Maghrib";
 
-const VIRTUE = {
+const VIRTUE_AR = {
   kursi:
     "[سورة البقرة، الآية: 255] من قرأ آية الكرسي دبر كل صلاة لم يمنعه من دخول الجنة إلا أن يموت.",
   ikhlas: "[سورة الإخلاص] المعوّذات؛ تُقرأ دبر كل صلاة.",
   falaq: "[سورة الفلق] من المعوّذات؛ تُقرأ دبر كل صلاة.",
   nas: "[سورة الناس] من المعوّذات؛ تُقرأ دبر كل صلاة.",
+};
+
+const VIRTUE_EN = {
+  kursi:
+    "[Al-Baqarah 2:255] Whoever recites Ayat al-Kursi after every prayer, nothing prevents him from entering Paradise except death.",
+  ikhlas: "[Surah Al-Ikhlas] Among the Mu'awwidhat; recited after every prayer.",
+  falaq: "[Surah Al-Falaq] Among the Mu'awwidhat; recited after every prayer.",
+  nas: "[Surah An-Nas] Among the Mu'awwidhat; recited after every prayer.",
 };
 
 function loadMorningCanon() {
@@ -89,7 +98,7 @@ function classify(item) {
   return null;
 }
 
-function applyCanon(item, kind, canon) {
+function applyCanon(item, kind, canon, isAr) {
   const src =
     kind === "kursi"
       ? canon.kursi
@@ -104,21 +113,21 @@ function applyCanon(item, kind, canon) {
   if (src.translit != null) item.translit = src.translit;
   item.quran = true;
   item.count = 1;
-  item.virtue = VIRTUE[kind];
+  item.virtue = isAr ? VIRTUE_AR[kind] : VIRTUE_EN[kind];
 
   if (kind === "kursi") {
-    item.countAr = src.countAr || "مرة واحدة";
+    item.countAr = isAr ? (src.countAr || "مرة واحدة") : "Once";
   } else {
-    item.countAr = COUNT_AR_MUAVWIDHAT;
+    item.countAr = isAr ? COUNT_AR_MUAVWIDHAT : COUNT_EN_MUAVWIDHAT;
   }
 }
 
-function patchPrayerData(data, canon) {
+function patchPrayerData(data, canon, isAr) {
   const found = { kursi: 0, ikhlas: 0, falaq: 0, nas: 0 };
   for (const item of data) {
     const kind = classify(item);
     if (!kind) continue;
-    applyCanon(item, kind, canon);
+    applyCanon(item, kind, canon, isAr);
     found[kind]++;
   }
   return found;
@@ -173,7 +182,11 @@ function main() {
       missing++;
       continue;
     }
-    const found = patchPrayerData(extracted.data, canon);
+    const found = patchPrayerData(
+      extracted.data,
+      canon,
+      file.replace(/\\/g, "/").includes("/ar/")
+    );
     const total = found.kursi + found.ikhlas + found.falaq + found.nas;
     if (total < 4) {
       bad.push([file, `matched only ${JSON.stringify(found)}`]);
