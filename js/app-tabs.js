@@ -81,8 +81,17 @@
   function setActiveTab(tab, opts) {
     opts = opts || {};
     if (TAB_IDS.indexOf(tab) < 0) tab = "home";
+    var prev = document.documentElement.getAttribute("data-app-tab") || "home";
     document.documentElement.setAttribute("data-app-tab", tab);
     try { localStorage.setItem(STORAGE_KEY, tab); } catch (e) {}
+
+    if (prev !== tab) {
+      document.documentElement.classList.add("app-tab-switching");
+      clearTimeout(setActiveTab._fadeT);
+      setActiveTab._fadeT = setTimeout(function () {
+        document.documentElement.classList.remove("app-tab-switching");
+      }, 240);
+    }
 
     document.querySelectorAll(".app-bottom-nav .app-tab").forEach(function (btn) {
       var on = btn.dataset.tab === tab;

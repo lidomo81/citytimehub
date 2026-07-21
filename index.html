@@ -216,10 +216,16 @@
           <div class="cp-devotion">
             <div class="cp-dev-head">
               <h3 class="cp-dev-title">Prayer times</h3>
-              <div class="datebar">
-                <span class="datebar-item"><span class="muted">Gregorian</span> <strong id="gregDate" class="mono">—</strong></span>
+              <div class="datebar datebar--paper" role="group" aria-label="Date">
+                <span class="datebar-item datebar-item--greg">
+                  <span class="muted datebar-label">Gregorian</span>
+                  <strong id="gregDate" class="mono datebar-val">—</strong>
+                </span>
                 <span class="datebar-sep" aria-hidden="true"></span>
-                <span class="datebar-item"><span class="muted">Hijri</span> <strong id="hijriDate" class="mono">—</strong></span>
+                <span class="datebar-item datebar-item--hijri">
+                  <span class="muted datebar-label">Hijri</span>
+                  <strong id="hijriDate" class="mono datebar-val">—</strong>
+                </span>
               </div>
             </div>
             <div id="prayerGrid" class="prayer-grid" aria-live="polite">

@@ -533,7 +533,11 @@ html.app-mode[data-app-tab="home"] .cp-devotion .cp-dev-head {
   margin: 0;
   padding: 0 16px 10px;
 }
-html.app-mode[data-app-tab="home"] .cp-devotion .datebar { margin: 0 auto; }
+html.app-mode[data-app-tab="home"] .cp-devotion .datebar { margin: 0 auto; width: min(100%, 340px); }
+/* Home: one-line next occasion; full card stays on Prayer */
+html.app-mode:not([data-app-tab="home"]) #occHomeTeaser { display: none !important; }
+html.app-mode[data-app-tab="home"] #occHomeTeaser { display: inline-flex !important; }
+html.app-mode[data-app-tab="prayer"] #occHomeTeaser { display: none !important; }
 html.app-mode:not([data-app-tab="home"]) #coHomeStrip { display: none !important; }
 html.app-mode[data-app-tab="home"] .home-spotlight {
   grid-template-columns: 1fr;
@@ -1051,6 +1055,128 @@ html.app-mode .prayer-insights { margin-top: 10px; }
 .datebar { display: inline-flex; align-items: center; gap: 16px; flex-wrap: wrap; background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; padding: 12px 18px; margin-bottom: 22px; }
 .datebar-item { font-size: .95rem; }
 .datebar-sep { width: 1px; height: 18px; background: var(--border-2); }
+.datebar-label { display: inline; }
+.datebar-val { font-weight: 700; }
+
+/* App: dual "report paper" dates — Gregorian | Hijri */
+html.app-mode .datebar--paper {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: stretch;
+  gap: 0;
+  width: min(100%, 340px);
+  margin-bottom: 0;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid color-mix(in srgb, #c6a24b 30%, var(--border));
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 11px,
+      color-mix(in srgb, var(--text) 3.5%, transparent) 11px 12px
+    ),
+    linear-gradient(165deg,
+      color-mix(in srgb, #f3e4c4 14%, var(--surface)),
+      var(--surface) 55%,
+      color-mix(in srgb, #c6a24b 6%, var(--surface)));
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #fff 8%, transparent),
+    0 10px 28px -22px rgba(0,0,0,.45);
+}
+html.app-mode .datebar--paper .datebar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 12px 10px;
+  text-align: center;
+  min-width: 0;
+}
+html.app-mode .datebar--paper .datebar-label {
+  display: block;
+  font-size: .66rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  opacity: .9;
+}
+html.app-mode .datebar--paper .datebar-val {
+  display: block;
+  font-size: .86rem;
+  font-weight: 800;
+  line-height: 1.4;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  word-break: break-word;
+}
+html.app-mode .datebar--paper .datebar-sep {
+  width: 1px;
+  height: auto;
+  align-self: stretch;
+  margin: 10px 0;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    color-mix(in srgb, #c6a24b 50%, var(--border)) 20%,
+    color-mix(in srgb, #c6a24b 50%, var(--border)) 80%,
+    transparent
+  );
+}
+html.app-mode .datebar--paper .datebar-item--hijri {
+  background: color-mix(in srgb, #c6a24b 9%, transparent);
+}
+html.app-mode[data-app-tab="prayer"] .datebar--paper {
+  width: min(100%, 360px);
+  margin-inline: auto;
+}
+
+/* Home occasions teaser → opens Prayer tab */
+.occ-home-teaser {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  width: min(100%, 340px);
+  margin: 8px auto 0;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, #c6a24b 28%, var(--border));
+  background: color-mix(in srgb, #c6a24b 8%, var(--surface));
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+  text-align: start;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform .12s, border-color .2s, background .2s;
+}
+.occ-home-teaser:active { transform: scale(.98); }
+.occ-home-em { font-size: 1.15rem; flex: none; line-height: 1; }
+.occ-home-copy {
+  flex: 1; min-width: 0;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.occ-home-copy strong { font-size: .88rem; font-weight: 800; }
+.occ-home-copy span { font-size: .74rem; font-weight: 600; color: var(--text-2); }
+.occ-home-go { flex: none; color: var(--brand); font-weight: 800; opacity: .8; }
+[dir="rtl"] .occ-home-go { transform: scaleX(-1); }
+
+/* Soft tab content fade (app only) */
+@keyframes appTabIn {
+  from { opacity: .55; transform: translateY(5px); }
+  to { opacity: 1; transform: none; }
+}
+html.app-mode.app-tab-switching #cityPanel,
+html.app-mode.app-tab-switching .app-tab-azkar,
+html.app-mode.app-tab-switching nav.app-tools {
+  animation: appTabIn .22s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  html.app-mode.app-tab-switching #cityPanel,
+  html.app-mode.app-tab-switching .app-tab-azkar,
+  html.app-mode.app-tab-switching nav.app-tools { animation: none; }
+}
 .prayer-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--gap); }
 .prayer-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 40px 12px 18px; box-shadow: var(--shadow); text-align: center; animation: rise .4s var(--ease) both; transition: transform .22s var(--ease), border-color .22s; }
 .prayer-card:hover { transform: translateY(-3px); border-color: var(--border-2); }

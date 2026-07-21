@@ -217,10 +217,16 @@
           <div class="cp-devotion">
             <div class="cp-dev-head">
               <h3 class="cp-dev-title">مواقيت الصلاة</h3>
-              <div class="datebar">
-                <span class="datebar-item"><span class="muted">ميلادي</span> <strong id="gregDate" class="mono">—</strong></span>
+              <div class="datebar datebar--paper" role="group" aria-label="التاريخ">
+                <span class="datebar-item datebar-item--greg">
+                  <span class="muted datebar-label">ميلادي</span>
+                  <strong id="gregDate" class="mono datebar-val">—</strong>
+                </span>
                 <span class="datebar-sep" aria-hidden="true"></span>
-                <span class="datebar-item"><span class="muted">هجري</span> <strong id="hijriDate" class="mono">—</strong></span>
+                <span class="datebar-item datebar-item--hijri">
+                  <span class="muted datebar-label">هجري</span>
+                  <strong id="hijriDate" class="mono datebar-val">—</strong>
+                </span>
               </div>
             </div>
             <div id="prayerGrid" class="prayer-grid" aria-live="polite">
