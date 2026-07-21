@@ -998,7 +998,12 @@
     let pips = "";
     for (let k = 0; k < 5; k++) pips += `<i class="cp-pip${k < prog ? " on" : ""}"></i>`;
     const sub = complete ? T.dayDone : `${T.todayWord} ${prog}/5`;
-    const subHtml = `<span class="cp-streak-sub">${sub}<span class="cp-pips" aria-hidden="true">${pips}</span></span>`;
+    const pct = Math.round((prog / 5) * 100);
+    const barHtml =
+      `<span class="cp-progress${complete ? " is-full" : ""}" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="${prog}" aria-label="${sub}">` +
+      `<i style="width:${pct}%"></i></span>`;
+    const subHtml =
+      `<span class="cp-streak-sub">${sub}<span class="cp-pips" aria-hidden="true">${pips}</span></span>${barHtml}`;
 
     // Recovery: a gentle, blame-free nudge for every logged-missing fard whose time has passed.
     const pending = pendingFard();

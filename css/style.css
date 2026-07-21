@@ -890,13 +890,31 @@ html.app-mode[data-app-tab="tools"] nav.app-legal { margin-bottom: 4px; }
 .cp-dua-tr { display: block; margin-top: 3px; font-size: .72rem; font-weight: 400; font-style: italic; color: var(--text-2); line-height: 1.5; }
 
 /* Streak variant of the status box (shown for the user's own city) */
-.cp-next.cp-streak { flex-direction: column; align-items: center; gap: 3px; white-space: normal; text-align: center; padding: 8px 16px; background: linear-gradient(180deg, rgba(245,166,35,.14), rgba(240,110,40,.10)); border-color: rgba(245,166,35,.34); }
+.cp-next.cp-streak { flex-direction: column; align-items: center; gap: 6px; white-space: normal; text-align: center; padding: 10px 16px 12px; background: linear-gradient(180deg, rgba(245,166,35,.14), rgba(240,110,40,.10)); border-color: rgba(245,166,35,.34); }
 .cp-streak-main { display: inline-flex; align-items: center; gap: 6px; font-weight: 800; color: var(--text); font-size: .92rem; }
 .cp-flame { font-size: 1rem; line-height: 1; filter: drop-shadow(0 0 6px rgba(245,200,120,.55)); }
 .cp-streak-sub { display: inline-flex; align-items: center; gap: 8px; font-size: .74rem; color: var(--text-2); }
 .cp-pips { display: inline-flex; gap: 4px; }
 .cp-pip { width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid var(--border-2); background: transparent; opacity: .5; transition: background .25s, border-color .25s, box-shadow .25s, opacity .25s; }
 .cp-pip.on { opacity: 1; background: var(--pw-fard, #22c55e); border-color: var(--pw-fard, #22c55e); box-shadow: 0 0 0 2px color-mix(in srgb, var(--pw-fard, #22c55e) 22%, transparent); }
+.cp-progress {
+  display: block; width: min(100%, 200px); height: 5px; margin-top: 2px;
+  border-radius: 999px; overflow: hidden;
+  background: color-mix(in srgb, var(--border-2) 55%, transparent);
+}
+.cp-progress > i {
+  display: block; height: 100%; width: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #22c55e, #86efac);
+  box-shadow: 0 0 10px color-mix(in srgb, #22c55e 45%, transparent);
+  transition: width .45s cubic-bezier(.2,.8,.2,1);
+}
+.cp-progress.is-full > i {
+  background: linear-gradient(90deg, #f5a623, #fbbf24);
+  box-shadow: 0 0 12px color-mix(in srgb, #f5a623 50%, transparent);
+}
+html.app-mode[data-app-tab="prayer"] .cp-progress { width: min(100%, 240px); }
+@media (prefers-reduced-motion: reduce) { .cp-progress > i { transition: none; } }
 /* Recovery: a calm, supportive nudge (not alarming) */
 .cp-next.cp-recover { background: linear-gradient(180deg, rgba(96,165,200,.13), rgba(96,165,200,.07)); border-color: rgba(96,165,200,.36); }
 .cp-recover-main { color: var(--text); font-weight: 700; font-size: .88rem; line-height: 1.5; }
