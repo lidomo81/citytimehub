@@ -607,6 +607,46 @@ html.app-mode[data-app-tab="home"] .cp-grid { grid-template-columns: 1fr; }
 html.app-mode[data-app-tab="home"] .cp-clock {
   padding: 16px 18px 10px;
   background: radial-gradient(120% 100% at 50% 0%, color-mix(in srgb, var(--brand) 12%, transparent), transparent 70%);
+  transition: background .7s ease;
+}
+/* Soft time-of-day wash on the Home clock (city-local prayer segments) */
+html.app-mode[data-app-tab="home"][data-daypart="night"] .cp-clock {
+  background: radial-gradient(120% 110% at 50% 0%, rgba(99, 102, 241, .22), rgba(15, 23, 42, .08) 55%, transparent 75%);
+}
+html.app-mode[data-app-tab="home"][data-daypart="dawn"] .cp-clock {
+  background: radial-gradient(120% 110% at 50% 0%, rgba(251, 146, 60, .22), rgba(251, 191, 36, .08) 50%, transparent 75%);
+}
+html.app-mode[data-app-tab="home"][data-daypart="morning"] .cp-clock {
+  background: radial-gradient(120% 110% at 50% 0%, rgba(56, 189, 248, .18), rgba(125, 211, 252, .06) 50%, transparent 75%);
+}
+html.app-mode[data-app-tab="home"][data-daypart="noon"] .cp-clock {
+  background: radial-gradient(120% 110% at 50% 0%, rgba(251, 191, 36, .20), rgba(253, 224, 71, .07) 50%, transparent 75%);
+}
+html.app-mode[data-app-tab="home"][data-daypart="afternoon"] .cp-clock {
+  background: radial-gradient(120% 110% at 50% 0%, rgba(251, 113, 133, .14), rgba(251, 191, 36, .06) 50%, transparent 75%);
+}
+html.app-mode[data-app-tab="home"][data-daypart="dusk"] .cp-clock {
+  background: radial-gradient(120% 110% at 50% 0%, rgba(249, 115, 22, .22), rgba(129, 140, 248, .10) 55%, transparent 75%);
+}
+html.app-mode[data-app-tab="home"] .lt-time { position: relative; }
+html.app-mode[data-app-tab="home"] .lt-time::after {
+  content: "";
+  display: inline-block;
+  width: 7px; height: 7px; margin-inline-start: 8px; margin-bottom: .18em;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 0 0 rgba(52, 211, 153, .45);
+  vertical-align: middle;
+  animation: cthLivePulse 2.2s ease-out infinite;
+}
+@keyframes cthLivePulse {
+  0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, .5); }
+  70% { box-shadow: 0 0 0 8px rgba(52, 211, 153, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.app-mode[data-app-tab="home"] .lt-time::after { animation: none; }
+  html.app-mode[data-app-tab="home"] .cp-clock { transition: none; }
 }
 html.app-mode[data-app-tab="home"] .cp-clock-info .lt-meta { display: none; }
 html.app-mode[data-app-tab="home"] .cp-clock .eyebrow { display: none; }
@@ -733,13 +773,51 @@ html.app-mode[data-app-tab="home"] #top {
   box-shadow: 0 18px 40px -18px color-mix(in srgb, var(--brand) 35%, transparent);
 }
 .app-azkar-glow {
-  position: absolute; inset: 0; pointer-events: none; opacity: .9;
+  position: absolute; inset: 0; pointer-events: none; opacity: .95;
   background: radial-gradient(120% 120% at 0% 0%, color-mix(in srgb, var(--brand) 16%, transparent), transparent 55%);
 }
-.app-azkar-card--morning { border-color: color-mix(in srgb, #fbbf24 35%, var(--border)); }
-.app-azkar-card--evening { border-color: color-mix(in srgb, #6366f1 32%, var(--border)); }
-.app-azkar-card--sleep { border-color: color-mix(in srgb, #38bdf8 32%, var(--border)); }
-.app-azkar-ico { font-size: 1.65rem; flex: none; line-height: 1; z-index: 1; }
+.app-azkar-card--morning {
+  border-color: color-mix(in srgb, #fbbf24 42%, var(--border));
+  background: linear-gradient(135deg, color-mix(in srgb, #fbbf24 14%, var(--surface)), var(--surface) 58%);
+}
+.app-azkar-card--morning .app-azkar-glow {
+  background: radial-gradient(110% 120% at 0% 0%, color-mix(in srgb, #fbbf24 32%, transparent), transparent 58%);
+}
+.app-azkar-card--morning .app-azkar-ico {
+  background: color-mix(in srgb, #fbbf24 20%, var(--surface-2));
+  box-shadow: 0 8px 20px -12px rgba(251, 191, 36, .55);
+}
+.app-azkar-card--morning .app-azkar-arrow { color: #d97706; }
+.app-azkar-card--evening {
+  border-color: color-mix(in srgb, #818cf8 42%, var(--border));
+  background: linear-gradient(135deg, color-mix(in srgb, #6366f1 16%, var(--surface)), var(--surface) 58%);
+}
+.app-azkar-card--evening .app-azkar-glow {
+  background: radial-gradient(110% 120% at 0% 0%, color-mix(in srgb, #6366f1 34%, transparent), transparent 58%);
+}
+.app-azkar-card--evening .app-azkar-ico {
+  background: color-mix(in srgb, #6366f1 22%, var(--surface-2));
+  box-shadow: 0 8px 20px -12px rgba(99, 102, 241, .55);
+}
+.app-azkar-card--evening .app-azkar-arrow { color: #818cf8; }
+.app-azkar-card--sleep {
+  border-color: color-mix(in srgb, #38bdf8 40%, var(--border));
+  background: linear-gradient(135deg, color-mix(in srgb, #0ea5e9 14%, var(--surface)), var(--surface) 58%);
+}
+.app-azkar-card--sleep .app-azkar-glow {
+  background: radial-gradient(110% 120% at 0% 0%, color-mix(in srgb, #38bdf8 30%, transparent), transparent 58%);
+}
+.app-azkar-card--sleep .app-azkar-ico {
+  background: color-mix(in srgb, #38bdf8 20%, var(--surface-2));
+  box-shadow: 0 8px 20px -12px rgba(56, 189, 248, .5);
+}
+.app-azkar-card--sleep .app-azkar-arrow { color: #0ea5e9; }
+.app-azkar-ico {
+  font-size: 1.55rem; flex: none; line-height: 1; z-index: 1;
+  width: 48px; height: 48px; border-radius: 14px;
+  display: grid; place-items: center;
+  background: var(--surface-2);
+}
 .app-azkar-body { flex: 1; min-width: 0; z-index: 1; display: flex; flex-direction: column; gap: 3px; }
 .app-azkar-body strong { font-size: .98rem; font-weight: 800; color: var(--text); }
 .app-azkar-body span { font-size: .78rem; font-weight: 600; color: var(--text-2); line-height: 1.35; }

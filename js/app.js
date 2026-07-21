@@ -577,15 +577,54 @@
         ltOffsetMs = offsetHours(ctz, now) * 3600000;
       }
     }
+    // Soft day-part wash for the app Home tab (once a minute is enough).
+    if (now.getSeconds() === 0) updateDayAtmosphere();
+  }
+
+  /* App Home atmosphere: tint the clock by local prayer-day segment. */
+  function updateDayAtmosphere() {
+    const root = document.documentElement;
+    if (!root.classList.contains("app-mode")) {
+      root.removeAttribute("data-daypart");
+      return;
+    }
+    let part = "day";
+    try {
+      const toMin = s => { const a = (s || "0:0").split(":"); return (+a[0]) * 60 + (+a[1]); };
+      if (prayerState && prayerState.city && prayerState.city.tz && prayerState.timings) {
+        const d = new Date(Date.now() + offsetHours(prayerState.city.tz) * 3600000);
+        const nowMin = d.getUTCHours() * 60 + d.getUTCMinutes();
+        const t = prayerState.timings;
+        const fajr = toMin(t.Fajr), sunrise = toMin(t.Sunrise), dhuhr = toMin(t.Dhuhr);
+        const asr = toMin(t.Asr), maghrib = toMin(t.Maghrib), isha = toMin(t.Isha);
+        if (nowMin >= isha || nowMin < fajr) part = "night";
+        else if (nowMin < sunrise) part = "dawn";
+        else if (nowMin < dhuhr) part = "morning";
+        else if (nowMin < asr) part = "noon";
+        else if (nowMin < maghrib) part = "afternoon";
+        else part = "dusk";
+      } else {
+        const d = new Date(Date.now() + ltOffsetMs);
+        const h = d.getUTCHours();
+        if (h < 5 || h >= 20) part = "night";
+        else if (h < 7) part = "dawn";
+        else if (h < 11) part = "morning";
+        else if (h < 15) part = "noon";
+        else if (h < 17) part = "afternoon";
+        else part = "dusk";
+      }
+    } catch (e) {}
+    if (root.getAttribute("data-daypart") !== part) root.setAttribute("data-daypart", part);
   }
 
   function startClock() {
     tick();
+    updateDayAtmosphere();
     const delay = 1000 - (Date.now() % 1000);
     setTimeout(() => { tick(); setInterval(tick, 1000); }, delay);
     setInterval(updateStatusBox, 30000);
     window.addEventListener("cth-worship", updateStatusBox);
-    document.addEventListener("cth-app-tab", updateStatusBox);
+    document.addEventListener("cth-app-tab", () => { updateStatusBox(); updateDayAtmosphere(); });
   }
 
   /* ---------- Prayer times + Hijri (AlAdhan) ---------- */
@@ -789,6 +828,7 @@
       updateStatusBox();
       if (t.Sunrise && t.Sunset) fillSun(clean(t.Sunrise), clean(t.Sunset));
       refreshCityPulse(city, prayerState.timings);
+      updateDayAtmosphere();
     };
     try {
       const res = await fetch(url);
