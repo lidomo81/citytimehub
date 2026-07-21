@@ -66,6 +66,9 @@
     azkarRemind: { sel: "#cthAzkarRemindSlot", tab: "azkar", prefer: "below",
       ar: { t: "تذكير الأذكار 🌙", b: "في تبويب الأذكار — فعّل تنبيه أذكار الصباح والمساء وجمعة الذكر." },
       en: { t: "Adhkar reminders 🌙", b: "On the Adhkar tab — enable alerts for morning, evening and Friday adhkar." } },
+    widgetsApp: { sel: null,
+      ar: { t: "ويدجت الشاشة الرئيسية 📲", b: "من قائمة ويدجتات الموبايل أضف «مواقيت الصلاة» أو «الأذكار» — مواقيت اليوم وأذكار الوقت المناسب بدون ما تفتح التطبيق." },
+      en: { t: "Home screen widgets 📲", b: "From your phone’s widget picker, add Prayer times or Adhkar — today’s times and the right adhkar for now, without opening the app." } },
     appTools: { sel: "nav.app-tools", tab: "tools", prefer: "above",
       ar: { t: "الأدوات 🧭", b: "في تبويب الأدوات — ساعة الصلاة، القبلة، فرق التوقيت، مخطّط الأحداث، وأكثر." },
       en: { t: "Tools 🧭", b: "On the Tools tab — prayer clock, Qibla, time difference, meeting planner, and more." } },
@@ -115,7 +118,7 @@
       S.welcomeApp, S.appNav,
       S.search, S.favorite, S.myCities, S.homeClock, S.cityPulse, S.homeNext, S.dailyReflection, S.closeOnesHome,
       S.prayerTimes, S.tapCard, S.adherence, S.week, S.insights, S.prayerRemind,
-      S.azkarHub, S.azkarRemind,
+      S.azkarHub, S.azkarRemind, S.widgetsApp,
       S.appTools,
       S.help, S.ready,
     ];
