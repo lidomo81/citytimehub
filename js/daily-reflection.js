@@ -81,8 +81,14 @@
   const lang = () => ((document.documentElement.lang || "en").slice(0, 2) === "ar" ? "ar" : "en");
   const kicker = () => (lang() === "ar" ? "خاطرة اليوم" : "Reflection of the day");
 
+  // Count days from the reader's own calendar date, not from UTC. The
+  // "on this day" line below the reflection matches the local date, so a UTC
+  // day number would let the two lines sit a day apart for hours — a reader in
+  // Cairo would see the reflection change at 9pm and the history line at
+  // midnight. Both now turn over together at local midnight.
   function pick() {
-    const day = Math.floor(Date.now() / 86400000);
+    const now = new Date();
+    const day = Math.floor(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) / 86400000);
     return ITEMS[((day % ITEMS.length) + ITEMS.length) % ITEMS.length];
   }
 
