@@ -135,7 +135,7 @@
         '<div class="app-azkar-grid">' +
           '<a class="app-azkar-card app-azkar-card--waking" href="' + withAppParam(p + "/azkar/waking/") + '">' +
             '<span class="app-azkar-glow" aria-hidden="true"></span>' +
-            '<span class="app-azkar-ico" aria-hidden="true">☀️</span>' +
+            '<span class="app-azkar-ico" aria-hidden="true">⏰</span>' +
             '<span class="app-azkar-body"><strong>' + L.azWaking + '</strong><span>' + L.azWakingSub + '</span></span>' +
             '<span class="app-azkar-arrow" aria-hidden="true">→</span>' +
           '</a>' +
