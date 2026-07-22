@@ -234,6 +234,16 @@
     {
       "cal": "g",
       "m": 1,
+      "d": 19,
+      "ye": "2006",
+      "ya": "٢٠٠٦م",
+      "em": "🚀",
+      "en": "A craft set out for Pluto at the highest speed anything had ever left the Earth. Even so, the journey took nine and a half years.",
+      "ar": "انطلقت مركبة نحو بلوتو بأعلى سرعة غادر بها شيء كوكب الأرض حتى ذلك الوقت. ومع ذلك استغرقت الرحلة تسع سنوات ونصفًا."
+    },
+    {
+      "cal": "g",
+      "m": 1,
       "d": 23,
       "ye": "1960",
       "ya": "١٩٦٠م",
@@ -330,6 +340,16 @@
       "em": "📻",
       "en": "The Greenwich time signal — six short beeps on the radio — was broadcast for the first time, putting the observatory's clock in every home.",
       "ar": "بُثّتْ إشارةُ توقيت جرينتش — ستُّ نقراتٍ قصيرةٍ في الراديو — لأولِ مرة، فدخلتْ ساعةُ المرصدِ كلَّ بيت."
+    },
+    {
+      "cal": "g",
+      "m": 2,
+      "d": 8,
+      "ye": "1828",
+      "ya": "١٨٢٨م",
+      "em": "📗",
+      "en": "Jules Verne was born. He is the one who wrote of men flying to the Moon from Florida in a craft carrying three, a century before it actually happened from Florida with three on board.",
+      "ar": "وُلد جول فيرن. وهو الذي كتب عن رجال يطيرون إلى القمر من فلوريدا في مركبة تحمل ثلاثة، قبل قرن من حدوث ذلك فعلًا من فلوريدا وعلى متنها ثلاثة."
     },
     {
       "cal": "g",
@@ -554,6 +574,16 @@
     {
       "cal": "g",
       "m": 3,
+      "d": 17,
+      "ye": "1958",
+      "ya": "١٩٥٨م",
+      "em": "🛰️",
+      "en": "A grapefruit-sized satellite was launched, running on sunlight. Its batteries died long ago but it is still up there, the oldest thing of ours in space.",
+      "ar": "أُطلق قمر صناعي بحجم ثمرة جريب فروت، يعمل بضوء الشمس. ونفدت بطارياته منذ زمن بعيد، لكنه ما زال هناك، وهو أقدم ما لنا في الفضاء."
+    },
+    {
+      "cal": "g",
+      "m": 3,
       "d": 18,
       "ye": "1965",
       "ya": "١٩٦٥م",
@@ -704,6 +734,16 @@
     {
       "cal": "g",
       "m": 4,
+      "d": 15,
+      "ye": "1452",
+      "ya": "١٤٥٢م",
+      "em": "🎨",
+      "en": "Leonardo da Vinci was born. He filled thousands of pages with drawings of machines and studies of nature, and wrote them in mirror script that reads properly only when held to a mirror.",
+      "ar": "وُلد ليوناردو دافنشي. وقد ملأ آلاف الصفحات برسوم الآلات ودراسات الطبيعة، وكتبها بخط معكوس لا يُقرأ على وجهه إلا أمام المرآة."
+    },
+    {
+      "cal": "g",
+      "m": 4,
       "d": 19,
       "ye": "1971",
       "ya": "١٩٧١م",
@@ -810,6 +850,16 @@
       "em": "♟️",
       "en": "A computer beat the world chess champion in a full match for the first time.",
       "ar": "هزمَ حاسوبٌ بطلَ العالمِ في الشطرنجِ في مباراةٍ كاملةٍ لأولِ مرة."
+    },
+    {
+      "cal": "g",
+      "m": 5,
+      "d": 12,
+      "ye": "1820",
+      "ya": "١٨٢٠م",
+      "em": "🕯️",
+      "en": "Florence Nightingale was born. She showed with charts that far more soldiers were dying of dirt than of wounds, and clean wards became the rule.",
+      "ar": "وُلدت فلورنس نايتنجيل. وقد أثبتت بالرسوم البيانية أن عدد الجنود الذين يموتون من القذارة أكثر بكثير ممن يموتون من الجراح، فصارت نظافة العنابر قاعدة."
     },
     {
       "cal": "g",
@@ -1024,6 +1074,16 @@
     {
       "cal": "g",
       "m": 6,
+      "d": 21,
+      "ye": "2004",
+      "ya": "٢٠٠٤م",
+      "em": "🚀",
+      "en": "A craft built by a private company reached space and came home. Until that day, only governments had ever managed it.",
+      "ar": "بلغت مركبة بنتها شركة خاصة حافة الفضاء ثم عادت. وحتى ذلك اليوم لم يكن قد نجح في ذلك غير الحكومات."
+    },
+    {
+      "cal": "g",
+      "m": 6,
       "d": 23,
       "ye": "1868",
       "ya": "١٨٦٨م",
@@ -1120,6 +1180,16 @@
       "em": "💰",
       "en": "Britain offered a fortune to anyone who could work out how far east or west a ship was at sea. The answer turned out to be a clock accurate enough to keep home time on board.",
       "ar": "رصدتْ بريطانيا ثروةً لمن يهتدي إلى معرفةِ موقعِ السفينةِ شرقًا أو غربًا في عرضِ البحر. وكان الحلُّ ساعةً دقيقةً تحفظُ توقيتَ الوطنِ على ظهرِ السفينة."
+    },
+    {
+      "cal": "g",
+      "m": 7,
+      "d": 9,
+      "ye": "1877",
+      "ya": "١٨٧٧م",
+      "em": "🎾",
+      "en": "The first Wimbledon tennis tournament began. Twenty-two men entered, and the entry fee was set to pay for a new roller for the grass.",
+      "ar": "بدأت أول بطولة تنس في ويمبلدون. اشترك فيها اثنان وعشرون رجلًا، وحُدّدت رسوم الاشتراك لشراء مِحدلة جديدة للعشب."
     },
     {
       "cal": "g",
@@ -1344,6 +1414,16 @@
     {
       "cal": "g",
       "m": 8,
+      "d": 21,
+      "ye": "1911",
+      "ya": "١٩١١م",
+      "em": "🖼️",
+      "en": "The Mona Lisa was stolen from the Louvre by a workman who simply walked out with it under his coat. The empty wall drew bigger crowds than the painting had, and that is when it became the most famous picture in the world.",
+      "ar": "سُرقت الموناليزا من متحف اللوفر على يد عامل خرج بها ببساطة تحت معطفه. وقد اجتذب الحائط الفارغ زحامًا أكبر مما اجتذبته اللوحة، ومن يومها صارت أشهر صورة في العالم."
+    },
+    {
+      "cal": "g",
+      "m": 8,
       "d": 25,
       "ye": "1609",
       "ya": "١٦٠٩م",
@@ -1560,6 +1640,16 @@
       "em": "✉️",
       "en": "Countries agreed that a letter could reach any of them with one stamp bought at home. Before that, you paid every country along the way.",
       "ar": "اتّفقتْ الدولُ على أن تصلَ الرسالةُ إلى أيٍّ منها بطابعٍ واحدٍ يُشترى من بلدِ المرسِل. وقبلَها كنتَ تدفعُ لكلِّ دولةٍ في الطريق."
+    },
+    {
+      "cal": "g",
+      "m": 10,
+      "d": 10,
+      "ye": "1846",
+      "ya": "١٨٤٦م",
+      "em": "🔵",
+      "en": "The largest moon of Neptune was found just seventeen days after Neptune itself. It goes round its planet backwards, which no large moon elsewhere does.",
+      "ar": "اكتُشف أكبر أقمار نبتون بعد سبعة عشر يومًا فقط من اكتشاف نبتون نفسه. وهو يدور حول كوكبه في اتجاه معاكس، وهو أمر لا يفعله أي قمر كبير غيره."
     },
     {
       "cal": "g",
@@ -1850,6 +1940,16 @@
       "em": "🌍",
       "en": "The crew of Apollo 17 photographed the whole Earth lit from edge to edge. It is one of the most reproduced pictures ever taken.",
       "ar": "صوّرَ طاقمُ أبولو ١٧ الأرضَ كاملةً مضاءةً من طرفِها إلى طرفِها. وهي من أكثرِ الصورِ تداولًا في التاريخ."
+    },
+    {
+      "cal": "g",
+      "m": 12,
+      "d": 9,
+      "ye": "1968",
+      "ya": "١٩٦٨م",
+      "em": "🖱️",
+      "en": "In one ninety-minute demonstration, an engineer showed the mouse, windows, video calling and shared editing — most of how we use a computer today, shown in a single sitting.",
+      "ar": "في عرض واحد مدته تسعون دقيقة، قدّم مهندس الفأرة والنوافذ والمكالمة المرئية والتحرير المشترك — أي معظم طريقة استعمالنا للحاسوب اليوم، في جلسة واحدة."
     },
     {
       "cal": "g",
