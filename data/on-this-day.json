@@ -254,6 +254,16 @@
     {
       "cal": "g",
       "m": 2,
+      "d": 3,
+      "ye": "1966",
+      "ya": "١٩٦٦م",
+      "em": "🌑",
+      "en": "A craft came down gently on the Moon without breaking up, and sent back the first pictures taken from the surface itself. It settled a long argument by proving the ground was firm enough to carry a spacecraft's weight.",
+      "ar": "هبطت مركبة على سطح القمر هبوطًا هادئًا دون أن تتحطم، وأرسلت أول صور من على السطح نفسه. وقد حسمت خلافًا طويلًا لأنها أثبتت أن التربة صلبة تكفي لحمل ثقل مركبة."
+    },
+    {
+      "cal": "g",
+      "m": 2,
       "d": 5,
       "ye": "1924",
       "ya": "١٩٢٤م",
@@ -300,6 +310,16 @@
       "em": "🔍",
       "en": "Pluto was found by a young man comparing two photographs of the same patch of sky, looking for the one dot that had moved.",
       "ar": "اكتُشف بلوتو على يدِ شابٍّ كان يقارنُ صورتينِ لبقعةٍ واحدةٍ من السماء، باحثًا عن النقطةِ التي تحرّكتْ وحدَها."
+    },
+    {
+      "cal": "g",
+      "m": 2,
+      "d": 18,
+      "ye": "1201",
+      "ya": "١٢٠١م",
+      "em": "🔭",
+      "en": "Nasir al-Din al-Tusi was born. He later built the observatory at Maragha, one of the largest of its time, and the tables he drew up were still being used to work out where the planets would be centuries after him.",
+      "ar": "وُلد نصير الدين الطوسي. وقد أنشأ فيما بعد مرصد مراغة، وكان من أضخم المراصد في زمانه، وظلت جداوله تُستعمل في معرفة مواقع الكواكب قرونًا بعده."
     },
     {
       "cal": "g",
@@ -380,6 +400,16 @@
       "em": "☎️",
       "en": "Alexander Graham Bell was born. His mother and his wife were both deaf, and his work on sound began there.",
       "ar": "وُلد ألكسندر جراهام بيل. كانت أمُّه وزوجتُه صمّاوَين، ومن هنا بدأَ اشتغالُه بالصوت."
+    },
+    {
+      "cal": "g",
+      "m": 3,
+      "d": 6,
+      "ye": "1869",
+      "ya": "١٨٦٩م",
+      "em": "⚗️",
+      "en": "Mendeleev presented a table arranging all the known elements in order. He left empty places in it and said elements nobody had found yet would fill them — and years later they were found.",
+      "ar": "عرض مندلييف جدولًا رتب فيه العناصر المعروفة كلها. وقد ترك فيه خانات فارغة وقال إن عناصر لم تُكتشف بعد ستملؤها، ووُجدت فعلًا بعد سنوات."
     },
     {
       "cal": "g",
@@ -564,6 +594,16 @@
     {
       "cal": "g",
       "m": 4,
+      "d": 14,
+      "ye": "1126",
+      "ya": "١١٢٦م",
+      "em": "📚",
+      "en": "Ibn Rushd was born in Cordoba. He worked as a physician, a philosopher and a judge all at once, and his commentaries on Aristotle were the road by which Europe later came to know Greek philosophy.",
+      "ar": "وُلد ابن رشد في قرطبة. وقد جمع بين الطب والفلسفة والقضاء في وقت واحد، وكانت شروحه لكتب أرسطو هي الطريق الذي عرفت به أوروبا الفلسفة اليونانية فيما بعد."
+    },
+    {
+      "cal": "g",
+      "m": 4,
       "d": 19,
       "ye": "1971",
       "ya": "١٩٧١م",
@@ -624,6 +664,16 @@
     {
       "cal": "g",
       "m": 5,
+      "d": 1,
+      "ye": "1840",
+      "ya": "١٨٤٠م",
+      "em": "✉️",
+      "en": "The first postage stamp went on sale. Before it, the person receiving a letter was the one who paid for it, so a great many people simply refused to take theirs.",
+      "ar": "بِيع أول طابع بريد في التاريخ. وقبله كان المستلم هو الذي يدفع أجرة الرسالة، فكان كثير من الناس يرفضون استلامها."
+    },
+    {
+      "cal": "g",
+      "m": 5,
       "d": 8,
       "ye": "1980",
       "ya": "١٩٨٠م",
@@ -650,6 +700,16 @@
       "em": "💉",
       "en": "The first vaccination was given. The idea of protecting people from a disease before they catch it started here.",
       "ar": "أُعطي أولُ تطعيمٍ في التاريخ. ومن هنا بدأتْ فكرةُ وقايةِ الناسِ من المرضِ قبلَ أن يُصابوا به."
+    },
+    {
+      "cal": "g",
+      "m": 5,
+      "d": 16,
+      "ye": "1960",
+      "ya": "١٩٦٠م",
+      "em": "🔦",
+      "en": "The first laser worked. Nobody then knew what it was good for, and today it is in disc players, eye surgery and the cables that carry the internet.",
+      "ar": "اشتغل أول جهاز ليزر. ولم يكن أحد يعرف وقتها ما فائدته، وهو اليوم في مشغلات الأقراص وعمليات العيون وكابلات الإنترنت."
     },
     {
       "cal": "g",
@@ -1154,6 +1214,16 @@
     {
       "cal": "g",
       "m": 9,
+      "d": 17,
+      "ye": "1683",
+      "ya": "١٦٨٣م",
+      "em": "🔬",
+      "en": "A Dutch cloth merchant described tiny living things he had seen through a lens he made himself. It was the first time anyone knew there is life the eye cannot see.",
+      "ar": "وصف تاجر أقمشة هولندي كائنات دقيقة رآها بعدسة صنعها بنفسه. وكانت أول مرة يعرف فيها الإنسان أن هناك حياة لا تراها العين."
+    },
+    {
+      "cal": "g",
+      "m": 9,
       "d": 23,
       "ye": "1846",
       "ya": "١٨٤٦م",
@@ -1260,6 +1330,16 @@
       "em": "🌍",
       "en": "The first photograph of the Earth from space was taken, from a camera on a rocket. It came back as a grainy black-and-white curve.",
       "ar": "أُخذتْ أولُ صورةٍ للأرضِ من الفضاء، بكاميرا على متنِ صاروخ. وعادتْ منحنًى أبيضَ وأسودَ غيرَ واضح."
+    },
+    {
+      "cal": "g",
+      "m": 10,
+      "d": 27,
+      "ye": "1449",
+      "ya": "١٤٤٩م",
+      "em": "🌟",
+      "en": "Ulugh Beg died. He was a ruler and an astronomer at the same time, and at the observatory he built in Samarkand he measured the length of the year — his figure was off by less than a minute.",
+      "ar": "تُوفي أُلغ بيك، وكان حاكمًا وعالم فلك في وقت واحد. وقد بنى مرصدًا في سمرقند وقاس فيه طول السنة، فجاء حسابه مخطئًا بأقل من دقيقة واحدة."
     },
     {
       "cal": "g",
@@ -1384,6 +1464,16 @@
     {
       "cal": "g",
       "m": 12,
+      "d": 12,
+      "ye": "1901",
+      "ya": "١٩٠١م",
+      "em": "📻",
+      "en": "Marconi received a wireless signal that had crossed the Atlantic. Scientists had said such waves travel in a straight line and could never follow the curve of the Earth; the test showed otherwise.",
+      "ar": "استقبل ماركوني إشارة لاسلكية عبرت المحيط الأطلسي. وكان العلماء يقولون إن هذه الموجات تسير في خط مستقيم فلن تتبع انحناء الأرض، فأثبتت التجربة عكس ذلك."
+    },
+    {
+      "cal": "g",
+      "m": 12,
       "d": 14,
       "ye": "1900",
       "ya": "١٩٠٠م",
@@ -1410,6 +1500,16 @@
       "em": "✈️",
       "en": "The first aeroplane flight lasted twelve seconds and covered less than the length of a modern airliner.",
       "ar": "استغرقتْ أولُ رحلةِ طائرةٍ اثنتيْ عشرةَ ثانيةً وقطعتْ مسافةً أقلَّ من طولِ طائرةِ ركّابٍ حديثة."
+    },
+    {
+      "cal": "g",
+      "m": 12,
+      "d": 19,
+      "ye": "1111",
+      "ya": "١١١١م",
+      "em": "🕌",
+      "en": "Abu Hamid al-Ghazali died. He had left his post at the greatest school of his day and withdrawn from people for years, and out of that came his famous book The Revival of the Religious Sciences.",
+      "ar": "تُوفي أبو حامد الغزالي. وقد ترك منصبه في أكبر مدرسة في زمانه واعتزل الناس سنوات، وخرج من تلك العزلة بكتابه الشهير «إحياء علوم الدين»."
     },
     {
       "cal": "g",
