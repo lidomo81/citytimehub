@@ -361,13 +361,22 @@ html.app-mode .app-tools { display: block; width: min(960px, 92%); margin: 14px 
 .cp-section .home-spotlight {
   width: 100%; max-width: none; margin: 18px 0 0; padding: 0;
 }
-html:not(.app-mode) #dailyReflection { display: none !important; }
+html:not(.app-mode) .home-reflection-slot:empty { display: none; }
 html:not(.app-mode) #cityPanel.cp-section { padding-bottom: clamp(16px, 2.5vw, 28px); }
 html:not(.app-mode) #cityPanel.cp-section .home-spotlight { margin: 14px 0 0; }
 html:not(.app-mode) #cityPanel .co-home-strip { min-height: 72px; width: 100%; }
 html:not(.app-mode) #cityPanel .co-home-next { font-size: .88rem; line-height: 1.45; }
 html:not(.app-mode) #tools.section { padding-top: clamp(24px, 3.5vw, 40px); }
-.home-spotlight:has(#coHomeStrip[hidden]) { display: none; margin: 0; padding: 0; }
+/* Keep spotlight if reflection is present even when Close Ones strip is hidden */
+.home-spotlight:has(#coHomeStrip[hidden]):not(:has(.daily-reflection)) { display: none; margin: 0; padding: 0; }
+html:not(.app-mode) .home-spotlight {
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+html:not(.app-mode) .daily-reflection--home {
+  margin: 0;
+  width: 100%;
+}
 html.app-mode .home-spotlight {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   margin: 14px auto 0;

@@ -1,6 +1,6 @@
 /* =====================================================================
    CityTimeHub — js/daily-reflection.js
-   "Reflection of the day" card on the app home tab (خاطرة اليوم).
+   "Reflection of the day" card (خاطرة اليوم) on Home — website + app.
    A short, authentic hadith (Bukhari / Muslim) or a Quran verse that
    rotates once per day. Fully client-side, no API, works offline.
    ===================================================================== */
@@ -32,7 +32,6 @@
 
   const lang = () => ((document.documentElement.lang || "en").slice(0, 2) === "ar" ? "ar" : "en");
   const kicker = () => (lang() === "ar" ? "خاطرة اليوم" : "Reflection of the day");
-  const isApp = () => document.documentElement.classList.contains("app-mode");
 
   function pick() {
     const day = Math.floor(Date.now() / 86400000);
@@ -42,14 +41,11 @@
   function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
 
   function hostEl() {
-    if (isApp() && document.getElementById("dailyReflectionSlot")) {
-      return document.getElementById("dailyReflectionSlot");
-    }
-    return document.querySelector(".app-tools");
+    return document.getElementById("dailyReflectionSlot")
+      || document.querySelector(".app-tools");
   }
 
   function mount() {
-    if (!isApp()) return true;
     if (document.getElementById("dailyReflection")) return true;
     const host = hostEl();
     if (!host) return false;
@@ -63,12 +59,11 @@
       + '<p class="dr-text">' + body + "</p>"
       + '<p class="dr-src">' + esc(src) + "</p>"
       + "</div>";
-    host.insertAdjacentHTML("beforeend", html);
+    host.insertAdjacentHTML(host.id === "dailyReflectionSlot" ? "beforeend" : "afterbegin", html);
     return true;
   }
 
   function init() {
-    if (!isApp()) return;
     let tries = 0;
     (function tick() {
       if (mount()) return;
