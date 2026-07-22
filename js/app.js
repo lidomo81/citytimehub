@@ -923,9 +923,11 @@
       else { grid.innerHTML = `<p class="no-results" style="grid-column:1/-1">${T.prayerErr}</p>`; }
     }
   }
-  function updateNextLine() {
-    const el = $("#cpNext"); if (!el) return;
-    if (!prayerState || !prayerState.city) { el.hidden = true; return; }
+  // Which prayer is next, and how long until it. One calculation feeding the
+  // home teaser, the next-prayer line and the card tag on the Prayer tab, so
+  // the app cannot end up stating the same wait three different ways.
+  function nextPrayerCountdown() {
+    if (!prayerState || !prayerState.city) return null;
     const off = offsetHours(prayerState.city.tz) * 3600000;
     const d = new Date(Date.now() + off);
     const nowMin = d.getUTCHours() * 60 + d.getUTCMinutes();
@@ -937,9 +939,28 @@
     }
     let tomorrow = false;
     if (idx < 0) { idx = 0; const [hh, mm] = (prayerState.timings.Fajr || "0:0").split(":"); nextMin = (+hh) * 60 + (+mm) + 1440; tomorrow = true; }
-    const diff = nextMin - nowMin, dh = Math.floor(diff / 60), dm = diff % 60;
+    const diff = nextMin - nowMin;
+    return { idx, tomorrow, dh: Math.floor(diff / 60), dm: diff % 60 };
+  }
+
+  // The wait is shown on the next-prayer card itself, where the eye already is.
+  function updateNextPrayerCard() {
+    const grid = $("#prayerGrid"); if (!grid) return;
+    const n = nextPrayerCountdown();
+    grid.querySelectorAll(".prayer-card").forEach((card) => {
+      const isNext = !!n && card.dataset.p === PRAYERS[n.idx];
+      card.classList.toggle("is-next", isNext);
+      const tag = card.querySelector(".prayer-tag");
+      if (tag) tag.textContent = isNext ? T.inHM(n.dh, n.dm) : "";
+    });
+  }
+
+  function updateNextLine() {
+    const el = $("#cpNext"); if (!el) return;
+    const n = nextPrayerCountdown();
+    if (!n) { el.hidden = true; return; }
     el.hidden = false;
-    el.innerHTML = `<span class="cp-next-dot" aria-hidden="true"></span>${T.next}: <strong>${T.prayers[idx]}${tomorrow ? " " + T.tomorrow : ""}</strong> · <span class="mono">${prayerState.timings[PRAYERS[idx]]}</span> <span class="cp-next-in">${T.inHM(dh, dm)}</span>`;
+    el.innerHTML = `<span class="cp-next-dot" aria-hidden="true"></span>${T.next}: <strong>${T.prayers[n.idx]}${n.tomorrow ? " " + T.tomorrow : ""}</strong> · <span class="mono">${prayerState.timings[PRAYERS[n.idx]]}</span> <span class="cp-next-in">${T.inHM(n.dh, n.dm)}</span>`;
   }
 
   /* ---------- Prayer streak (reads the same worship record the sheet writes) ---------- */
@@ -1183,22 +1204,11 @@
     el.setAttribute("role", "button");
     el.setAttribute("tabindex", "0");
     el.setAttribute("aria-label", T.openPrayer);
-    if (!prayerState || !prayerState.city) { el.hidden = true; return; }
-    const off = offsetHours(prayerState.city.tz) * 3600000;
-    const d = new Date(Date.now() + off);
-    const nowMin = d.getUTCHours() * 60 + d.getUTCMinutes();
-    let idx = -1, nextMin = 0;
-    for (let i = 0; i < PRAYERS.length; i++) {
-      const [hh, mm] = (prayerState.timings[PRAYERS[i]] || "0:0").split(":");
-      const pm = (+hh) * 60 + (+mm);
-      if (pm > nowMin) { idx = i; nextMin = pm; break; }
-    }
-    let tomorrow = false;
-    if (idx < 0) { idx = 0; const [hh, mm] = (prayerState.timings.Fajr || "0:0").split(":"); nextMin = (+hh) * 60 + (+mm) + 1440; tomorrow = true; }
-    const diff = nextMin - nowMin, dh = Math.floor(diff / 60), dm = diff % 60;
+    const n = nextPrayerCountdown();
+    if (!n) { el.hidden = true; return; }
     el.hidden = false;
     // Quiet results-board line (no chip / arrow), matching Home A+ mockup.
-    el.innerHTML = `<strong>${T.prayers[idx]}${tomorrow ? " " + T.tomorrow : ""}</strong> · <span class="cp-next-in">${T.inHM(dh, dm)}</span>`;
+    el.innerHTML = `<strong>${T.prayers[n.idx]}${n.tomorrow ? " " + T.tomorrow : ""}</strong> · <span class="cp-next-in">${T.inHM(n.dh, n.dm)}</span>`;
     if (!el.dataset.teaserWired) {
       el.dataset.teaserWired = "1";
       const go = () => {
@@ -1215,6 +1225,7 @@
 
   // The box under the clock: your city → streak; another city → next-prayer line.
   function updateStatusBox() {
+    updateNextPrayerCard();
     const el = $("#cpNext"); if (!el) return;
     syncStatusMount();
     const isApp = document.documentElement.classList.contains("app-mode");

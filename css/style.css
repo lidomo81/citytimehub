@@ -1694,7 +1694,9 @@ html.app-mode.app-tab-switching nav.app-tools {
   background-attachment: fixed;
 }
 .prayer-time { font-family: var(--mono); font-size: 1.3rem; font-weight: 700; font-variant-numeric: tabular-nums; margin-top: 6px; }
-.prayer-tag { display: block; margin-top: 6px; font-size: .64rem; font-weight: 800; color: var(--brand); text-transform: uppercase; letter-spacing: .1em; min-height: 13px; }
+/* Holds the countdown to the next prayer, so it carries digits now — no
+   uppercasing, and lining figures so it does not jitter as it counts down. */
+.prayer-tag { display: block; margin-top: 6px; font-size: .64rem; font-weight: 800; color: var(--brand); letter-spacing: .04em; min-height: 13px; font-variant-numeric: tabular-nums; }
 
 /* ============ 9. SUN ============ */
 .sun-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
