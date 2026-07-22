@@ -708,7 +708,7 @@ html.app-mode[data-app-tab="home"] .cp-clock-info .lt-meta { display: none; }
 html.app-mode[data-app-tab="home"] .cp-clock .eyebrow { display: none; }
 html.app-mode[data-app-tab="home"] .cp-clock-info .lt-city {
   margin: 0;
-  font-size: 1.05rem;
+  font-size: 1.08rem;
   font-weight: 650;
   letter-spacing: .02em;
   color: var(--text-2);
@@ -716,7 +716,7 @@ html.app-mode[data-app-tab="home"] .cp-clock-info .lt-city {
 html.app-mode[data-app-tab="home"] .cp-clock-info h2 { margin: 0; }
 html.app-mode[data-app-tab="home"] .cp-clock .lt-time {
   position: relative;
-  margin: 4px 0 8px;
+  margin: 2px 0 4px;
   font-size: clamp(3.35rem, 16vw, 4.15rem);
   font-weight: 800;
   letter-spacing: .04em;
@@ -725,41 +725,67 @@ html.app-mode[data-app-tab="home"] .cp-clock .lt-time {
   color: var(--text);
 }
 html.app-mode[data-app-tab="home"] .cp-clock .lt-time::after { display: none; }
+/* Weekday under the clock — classic نتيجة cue */
+.lt-weekday { display: none; margin: 0; }
+html.app-mode[data-app-tab="home"] .lt-weekday {
+  display: block;
+  margin: 2px 0 4px;
+  font-size: 1.22rem;
+  font-weight: 750;
+  letter-spacing: .08em;
+  color: var(--text);
+  line-height: 1.25;
+}
 html.app-mode[data-app-tab="home"] .cp-devotion {
   border: none;
   padding: 2px 16px 0;
   border-inline-start: none;
 }
+/* Dual date cells — ميلادي | هجري like old wall calendars */
 html.app-mode[data-app-tab="home"] .datebar--paper {
-  width: min(100%, 380px);
+  width: min(100%, 372px);
+  margin: 10px auto 0;
+  padding: 0;
+  gap: 10px;
+  grid-template-columns: 1fr 1fr;
   border: none;
-  border-top: 1px solid color-mix(in srgb, var(--text) 16%, transparent);
   border-radius: 0;
   background: transparent;
   box-shadow: none;
-  grid-template-columns: 1fr;
-  gap: 0;
+  overflow: visible;
 }
 html.app-mode[data-app-tab="home"] .datebar--paper .datebar-sep { display: none; }
 html.app-mode[data-app-tab="home"] .datebar--paper .datebar-item {
-  padding: 12px 6px 6px;
-  gap: 2px;
+  gap: 6px;
+  min-height: 78px;
+  padding: 12px 10px 14px;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--text) 14%, transparent);
+  background: color-mix(in srgb, var(--surface-2) 72%, transparent);
 }
 html.app-mode[data-app-tab="home"] .datebar--paper .datebar-item--hijri {
-  background: transparent;
-  padding-top: 2px;
-  padding-bottom: 4px;
+  border-color: color-mix(in srgb, #c6a24b 36%, var(--border));
+  background: color-mix(in srgb, #c6a24b 10%, var(--surface));
 }
-html.app-mode[data-app-tab="home"] .datebar--paper .datebar-label { display: none; }
+html.app-mode[data-app-tab="home"] .datebar--paper .datebar-label {
+  display: block;
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  opacity: .9;
+}
 html.app-mode[data-app-tab="home"] .datebar--paper .datebar-val {
-  font-size: 1.15rem;
-  font-weight: 700;
-  line-height: 1.5;
+  font-size: 1.02rem;
+  font-weight: 750;
+  line-height: 1.4;
+  color: var(--text);
 }
 html.app-mode[data-app-tab="home"] .datebar--paper .datebar-item--hijri .datebar-val {
-  font-size: 1.08rem;
-  font-weight: 650;
-  color: var(--text-2);
+  font-size: .98rem;
+  font-weight: 700;
+  color: var(--text);
 }
 html.app-mode[data-app-tab="home"] #cpNext.cp-home-teaser {
   display: flex !important;
@@ -768,14 +794,14 @@ html.app-mode[data-app-tab="home"] #cpNext.cp-home-teaser {
   gap: 6px;
   width: min(380px, 92%);
   max-width: 100%;
-  margin: 8px auto 14px;
-  padding: 16px 14px 18px;
+  margin: 14px auto 16px;
+  padding: 14px 14px 18px;
   border: none;
-  border-top: 1px solid color-mix(in srgb, var(--text) 14%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
   border-radius: 0;
   background: transparent;
   box-shadow: none;
-  font-size: .9rem;
+  font-size: .94rem;
   font-weight: 650;
   color: var(--text-2);
   cursor: pointer;

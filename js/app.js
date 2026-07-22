@@ -192,7 +192,8 @@
     const pair = {
       time: new Intl.DateTimeFormat("en-GB", { timeZone: tz, hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false }),
       hm:   new Intl.DateTimeFormat("en-GB", { timeZone: tz, hour: "2-digit", minute: "2-digit", hour12: false }),
-      date: new Intl.DateTimeFormat(LANG === "ar" ? "ar-EG-u-nu-latn" : "en-US", { timeZone: tz, weekday: "short", day: "numeric", month: "short" })
+      date: new Intl.DateTimeFormat(LANG === "ar" ? "ar-EG-u-nu-latn" : "en-US", { timeZone: tz, weekday: "short", day: "numeric", month: "short" }),
+      weekday: new Intl.DateTimeFormat(LANG === "ar" ? "ar-EG-u-nu-latn" : "en-US", { timeZone: tz, weekday: "long" })
     };
     fmtCache.set(tz, pair);
     return pair;
@@ -583,6 +584,7 @@
         // rather than the wrong (browser) time for a split second.
         ltT.textContent = "—:—:—";
         const ltD = $("#ltDate"); if (ltD) ltD.textContent = "…";
+        const ltW = $("#ltWeekday"); if (ltW) ltW.textContent = "…";
         const ltZ = $("#ltZone"); if (ltZ) ltZ.textContent = "…";
       } else {
         const ctz = (currentCity && currentCity.tz) || tz;
@@ -592,6 +594,7 @@
         // Home "نتيجة زمان" shows HH:mm; elsewhere keep live seconds.
         ltT.textContent = homeBoard ? cloc.hm.format(now) : cloc.time.format(now);
         const ltD = $("#ltDate"); if (ltD) ltD.textContent = cloc.date.format(now);
+        const ltW = $("#ltWeekday"); if (ltW) ltW.textContent = cloc.weekday.format(now);
         const ltZ = $("#ltZone"); if (ltZ) ltZ.textContent = `${ctz.replace(/_/g," ")} · ${offsetLabel(offsetHours(ctz, now))}`;
         ltOffsetMs = offsetHours(ctz, now) * 3600000;
       }
