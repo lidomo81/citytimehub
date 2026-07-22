@@ -33,6 +33,16 @@
     },
     {
       "cal": "h",
+      "m": 7,
+      "d": 30,
+      "ye": "204 AH",
+      "ya": "٢٠٤هـ",
+      "em": "📖",
+      "en": "Imam al-Shafi'i died in Egypt. He was the first to write down rules for how a ruling is derived, and after him that became a science standing on its own.",
+      "ar": "تُوفي الإمام الشافعي بمصر. وقد كان أول من كتب قواعد لاستنباط الأحكام، فصار هذا بعده علمًا قائمًا بذاته."
+    },
+    {
+      "cal": "h",
       "m": 9,
       "d": 17,
       "ye": "2 AH",
@@ -60,6 +70,16 @@
       "em": "🕌",
       "en": "The first Eid al-Fitr in Islam was prayed in Madinah, in the same year fasting Ramadan became obligatory.",
       "ar": "صُلّي أولُ عيدِ فطرٍ في الإسلام بالمدينة، في العامِ نفسِه الذي فُرِض فيه صيامُ رمضان."
+    },
+    {
+      "cal": "h",
+      "m": 10,
+      "d": 1,
+      "ye": "256 AH",
+      "ya": "٢٥٦هـ",
+      "em": "📚",
+      "en": "Imam al-Bukhari died on the night of Eid al-Fitr. He had spent sixteen years gathering his Sahih, picking each hadith out of thousands he had heard on his travels.",
+      "ar": "تُوفي الإمام البخاري ليلة عيد الفطر. وقد قضى ست عشرة سنة في جمع صحيحه، وكان يختار الحديث الواحد من بين آلاف سمعها في رحلاته."
     },
     {
       "cal": "h",
@@ -134,6 +154,16 @@
     {
       "cal": "g",
       "m": 1,
+      "d": 2,
+      "ye": "1959",
+      "ya": "١٩٥٩م",
+      "em": "🌑",
+      "en": "A craft escaped the Earth's pull for the first time and flew past the Moon. It had no way of stopping, and has been going round the sun ever since.",
+      "ar": "أفلتت مركبة من جاذبية الأرض لأول مرة ومرت بجوار القمر. ولم تكن تملك طريقة للتوقف، فهي تدور حول الشمس منذ ذلك اليوم."
+    },
+    {
+      "cal": "g",
+      "m": 1,
       "d": 4,
       "ye": "1643",
       "ya": "١٦٤٣م",
@@ -180,6 +210,16 @@
       "em": "📖",
       "en": "Wikipedia opened, on the odd idea that strangers writing together could build an encyclopaedia. It now runs in more than three hundred languages.",
       "ar": "انطلقتْ ويكيبيديا على فكرةٍ غريبة: أنْ يكتبَ الغرباءُ معًا موسوعةً واحدة. وهي اليومَ بأكثرَ من ثلاثِمئةِ لغة."
+    },
+    {
+      "cal": "g",
+      "m": 1,
+      "d": 17,
+      "ye": "1706",
+      "ya": "١٧٠٦م",
+      "em": "⚡",
+      "en": "Benjamin Franklin was born. He invented the lightning rod and refused to register it, saying that as we gain from what others invent, we should let others gain from what we invent.",
+      "ar": "وُلد بنجامين فرانكلين. وقد اخترع مانعة الصواعق ورفض تسجيلها باسمه، وقال إننا ننتفع بما اخترعه غيرنا فلنترك لغيرنا ما اخترعناه."
     },
     {
       "cal": "g",
@@ -250,6 +290,16 @@
       "em": "🛰️",
       "en": "America's first satellite found belts of radiation wrapped around the Earth that nobody knew were there.",
       "ar": "اكتشفَ أولُ قمرٍ صناعيٍّ أمريكيٍّ أحزمةَ إشعاعٍ تُحيطُ بالأرضِ لم يكنْ أحدٌ يعلمُ بوجودِها."
+    },
+    {
+      "cal": "g",
+      "m": 2,
+      "d": 1,
+      "ye": "1884",
+      "ya": "١٨٨٤م",
+      "em": "📕",
+      "en": "The first part of the Oxford English Dictionary came out. They had thought it would take ten years; it took seventy, and that first part stopped at the word \"ant\".",
+      "ar": "صدر أول جزء من قاموس أوكسفورد الإنجليزي. وكانوا يظنون أنه يحتاج عشر سنوات فاستغرق سبعين، وانتهى الجزء الأول عند كلمة «ant»."
     },
     {
       "cal": "g",
@@ -494,6 +544,16 @@
     {
       "cal": "g",
       "m": 3,
+      "d": 20,
+      "ye": "1916",
+      "ya": "١٩١٦م",
+      "em": "🌌",
+      "en": "Einstein published his theory of gravity. In it he said that heavy bodies bend the space around them, and that what we call gravity is nothing but movement along that bend.",
+      "ar": "نشر أينشتاين نظريته في الجاذبية. وقد قال فيها إن الأجسام الثقيلة تُحني الفراغ من حولها، وأن ما نسميه جاذبية ليس إلا سيرًا في هذا الانحناء."
+    },
+    {
+      "cal": "g",
+      "m": 3,
       "d": 23,
       "ye": "1950",
       "ya": "١٩٥٠م",
@@ -580,6 +640,16 @@
       "em": "🏥",
       "en": "The World Health Organization came into being, to give every country somewhere to turn when disease crosses a border.",
       "ar": "أُنشئتْ منظمةُ الصحةِ العالمية، ليكونَ لكلِّ دولةٍ مرجعٌ تلجأُ إليه حينَ يعبرُ المرضُ الحدود."
+    },
+    {
+      "cal": "g",
+      "m": 4,
+      "d": 9,
+      "ye": "1860",
+      "ya": "١٨٦٠م",
+      "em": "🎵",
+      "en": "The oldest surviving recording of a human voice was made. It was traced on paper blackened with soot, and the man who made it had no way to play it back — it stayed silent until a computer read it a century and a half later.",
+      "ar": "سُجل أقدم صوت بشري لا يزال باقيًا إلى اليوم. وقد رسمه صاحبه على ورق مُسوَّد بالسخام، ولم يكن يملك طريقة لسماعه، فظل صامتًا حتى قرأه الحاسوب بعد قرن ونصف."
     },
     {
       "cal": "g",
@@ -724,6 +794,16 @@
     {
       "cal": "g",
       "m": 5,
+      "d": 18,
+      "ye": "1048",
+      "ya": "١٠٤٨م",
+      "em": "📐",
+      "en": "Omar Khayyam was born. He was asked to reform the calendar, and worked out the length of the year more accurately than the calendar Europe would take up five hundred years after him.",
+      "ar": "وُلد عمر الخيام. وقد كُلّف بإصلاح التقويم فحسب طول السنة حسابًا جاء أدق من التقويم الذي أخذت به أوروبا بعده بخمسمئة سنة."
+    },
+    {
+      "cal": "g",
+      "m": 5,
       "d": 19,
       "ye": "1910",
       "ya": "١٩١٠م",
@@ -824,6 +904,16 @@
     {
       "cal": "g",
       "m": 6,
+      "d": 10,
+      "ye": "940",
+      "ya": "٩٤٠م",
+      "em": "📏",
+      "en": "Abu al-Wafa al-Buzjani was born. He drew up tables for working out triangles accurate to eight decimal places — the same kind of calculation used to find the direction of the qiblah and the times of prayer.",
+      "ar": "وُلد أبو الوفا البوزجاني. وقد وضع جداول لحساب المثلثات بلغت دقتها ثمانية أرقام بعد الفاصلة، وهي الحسابات نفسها التي يُعرف بها اتجاه القبلة ومواقيت الصلاة."
+    },
+    {
+      "cal": "g",
+      "m": 6,
       "d": 13,
       "ye": "1983",
       "ya": "١٩٨٣م",
@@ -890,6 +980,16 @@
       "em": "🧬",
       "en": "The first reading of the complete human genetic code was announced. It took ten years and cost billions; today it takes a day.",
       "ar": "أُعلنتْ أولُ قراءةٍ كاملةٍ للشيفرةِ الوراثيةِ للإنسان. استغرقتْ عشرَ سنواتٍ وكلّفتْ المليارات؛ وتستغرقُ اليومَ يومًا واحدًا."
+    },
+    {
+      "cal": "g",
+      "m": 6,
+      "d": 27,
+      "ye": "1967",
+      "ya": "١٩٦٧م",
+      "em": "🏧",
+      "en": "The first cash machine was switched on. It worked with paper vouchers, because the plastic card had not been invented yet.",
+      "ar": "شُغّلت أول ماكينة صراف آلي. وكانت تعمل بقسائم ورقية لأن البطاقة البلاستيكية لم تكن قد ظهرت بعد."
     },
     {
       "cal": "g",

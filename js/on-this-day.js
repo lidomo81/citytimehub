@@ -46,12 +46,23 @@
     return d;
   }
 
+  // A Hijri month is 29 or 30 days depending on the year, so an entry dated the
+  // 30th would silently vanish in every year its month runs short. Treat the
+  // 30th as "the last day of the month" and let it fall on the 29th instead.
+  function matchesHijri(it, h, tomorrow) {
+    if (!h || it.m !== h.m) return false;
+    if (it.d === h.d) return true;
+    if (it.d !== 30 || h.d !== 29) return false;
+    return !!tomorrow && tomorrow.d === 1; // today is the month's last day
+  }
+
   function todaysItems(items) {
     const now = previewDate() || new Date();
     const g = { m: now.getMonth() + 1, d: now.getDate() };
     const h = hijriToday(now);
+    const tomorrow = hijriToday(new Date(now.getTime() + 86400000));
     return items.filter((it) =>
-      it.cal === "h" ? (h && it.m === h.m && it.d === h.d) : (it.m === g.m && it.d === g.d)
+      it.cal === "h" ? matchesHijri(it, h, tomorrow) : (it.m === g.m && it.d === g.d)
     );
   }
 
