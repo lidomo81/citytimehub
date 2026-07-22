@@ -70,34 +70,26 @@
     return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
 
-  function slot() {
-    const ref = document.getElementById("dailyReflection");
-    if (ref) return { host: ref, where: "afterend" };
-    const s = document.getElementById("dailyReflectionSlot");
-    if (s) return { host: s, where: "beforeend" };
-    return null;
-  }
-
   function render(items) {
     if (document.getElementById("onThisDay")) return true;
     const today = todaysItems(items);
     if (!today.length) return true; // nothing for today — stay quiet
-    const at = slot();
-    if (!at) return false;
+    // Lives inside the reflection card, so a day without an entry simply shows
+    // the reflection alone rather than leaving a gap where a card used to be.
+    const card = document.getElementById("dailyReflection");
+    if (!card) return false;
 
     const ar = lang() === "ar";
     const it = today[new Date().getFullYear() % today.length];
     const text = ar ? it.ar : it.en;
     const year = ar ? it.ya : it.ye;
-    const label = kicker() + (year ? (ar ? " · " : " · ") + year : "");
+    const label = kicker() + (year ? " · " + year : "");
 
-    const html = '<div id="onThisDay" class="daily-reflection daily-reflection--home otd-card" aria-live="polite">'
-      + '<span class="dr-kicker">' + esc(label) + "</span>"
-      + '<p class="dr-text otd-text">'
-      + (it.em ? '<span class="otd-em" aria-hidden="true">' + esc(it.em) + "</span>" : "")
-      + esc(text) + "</p>"
-      + "</div>";
-    at.host.insertAdjacentHTML(at.where, html);
+    const html = '<p id="onThisDay" class="dr-otd">'
+      + '<span class="dr-otd-label">' + esc(label) + "</span>"
+      + (it.em ? '<span class="dr-otd-em" aria-hidden="true">' + esc(it.em) + "</span>" : "")
+      + esc(text) + "</p>";
+    card.insertAdjacentHTML("beforeend", html);
     return true;
   }
 
