@@ -164,6 +164,16 @@
     {
       "cal": "g",
       "m": 1,
+      "d": 3,
+      "ye": "2019",
+      "ya": "٢٠١٩م",
+      "em": "🌑",
+      "en": "A craft landed on the far side of the Moon, the side we never see. It had to talk to Earth through another craft, because the Moon itself blocks the way.",
+      "ar": "هبطت مركبة على الوجه البعيد من القمر، الوجه الذي لا نراه أبدًا. وقد اضطرت أن تتحدث إلى الأرض عبر مركبة أخرى، لأن القمر نفسه يحجب الطريق."
+    },
+    {
+      "cal": "g",
+      "m": 1,
       "d": 4,
       "ye": "1643",
       "ya": "١٦٤٣م",
@@ -334,6 +344,16 @@
     {
       "cal": "g",
       "m": 2,
+      "d": 4,
+      "ye": "2004",
+      "ya": "٢٠٠٤م",
+      "em": "👥",
+      "en": "Facebook opened, for the students of one university only. Twenty years later a third of the people on Earth had an account.",
+      "ar": "انطلق فيسبوك لطلاب جامعة واحدة فقط. وبعد عشرين سنة صار لثلث سكان الأرض حساب عليه."
+    },
+    {
+      "cal": "g",
+      "m": 2,
       "d": 5,
       "ye": "1924",
       "ya": "١٩٢٤م",
@@ -490,6 +510,16 @@
       "em": "☎️",
       "en": "Alexander Graham Bell was born. His mother and his wife were both deaf, and his work on sound began there.",
       "ar": "وُلد ألكسندر جراهام بيل. كانت أمُّه وزوجتُه صمّاوَين، ومن هنا بدأَ اشتغالُه بالصوت."
+    },
+    {
+      "cal": "g",
+      "m": 3,
+      "d": 5,
+      "ye": "1979",
+      "ya": "١٩٧٩م",
+      "em": "🌋",
+      "en": "A passing craft spotted volcanoes erupting on a moon of Jupiter. Until that day, everyone assumed the Earth was the only world with live volcanoes.",
+      "ar": "رصدت مركبة عابرة براكين ثائرة على أحد أقمار المشتري. وحتى ذلك اليوم كان الجميع يظن أن الأرض هي العالم الوحيد الذي فيه براكين حية."
     },
     {
       "cal": "g",
@@ -754,6 +784,16 @@
     {
       "cal": "g",
       "m": 4,
+      "d": 20,
+      "ye": "1902",
+      "ya": "١٩٠٢م",
+      "em": "⚗️",
+      "en": "Marie Curie finished pulling a tenth of a gram of radium out of a whole tonne of rock dug from a mine, after four years of work in an old wooden hut with a leaking roof.",
+      "ar": "أتمّت ماري كوري استخراج عُشر جرام من الراديوم من طن كامل من الصخر المستخرج من المنجم، بعد أربع سنوات من العمل في غرفة خشبية قديمة يتسرب منها المطر."
+    },
+    {
+      "cal": "g",
+      "m": 4,
       "d": 22,
       "ye": "1970",
       "ya": "١٩٧٠م",
@@ -820,6 +860,16 @@
       "em": "✉️",
       "en": "The first postage stamp went on sale. Before it, the person receiving a letter was the one who paid for it, so a great many people simply refused to take theirs.",
       "ar": "بِيع أول طابع بريد في التاريخ. وقبله كان المستلم هو الذي يدفع أجرة الرسالة، فكان كثير من الناس يرفضون استلامها."
+    },
+    {
+      "cal": "g",
+      "m": 5,
+      "d": 5,
+      "ye": "1961",
+      "ya": "١٩٦١م",
+      "em": "🚀",
+      "en": "The first American went to space, three weeks after the Soviets. His flight lasted fifteen minutes and he never left sight of the Earth.",
+      "ar": "صعد أول أمريكي إلى الفضاء بعد السوفييت بثلاثة أسابيع. واستغرقت رحلته خمس عشرة دقيقة، ولم تغب الأرض عن ناظريه لحظة."
     },
     {
       "cal": "g",
@@ -970,6 +1020,16 @@
       "em": "🌑",
       "en": "During a total eclipse, starlight was seen bending as it passed the sun — exactly as Einstein had predicted four years earlier.",
       "ar": "أثناءَ كسوفٍ كلّي، رُصد ضوءُ النجومِ وهو ينحني عند مرورِه قربَ الشمس — تمامًا كما تنبّأَ أينشتاين قبلَ أربعِ سنوات."
+    },
+    {
+      "cal": "g",
+      "m": 6,
+      "d": 2,
+      "ye": "1966",
+      "ya": "١٩٦٦م",
+      "em": "🌘",
+      "en": "An American craft settled softly on the Moon and sent back eleven thousand photographs. They were the pictures the Apollo crews later used to pick where to land.",
+      "ar": "استقرت مركبة أمريكية برفق على سطح القمر وأرسلت أحد عشر ألف صورة. وهي الصور التي اختار بها روّاد أبولو فيما بعد أماكن هبوطهم."
     },
     {
       "cal": "g",
@@ -1200,6 +1260,16 @@
       "em": "📺",
       "en": "A satellite carried live television across the Atlantic for the first time. The picture lasted twenty minutes.",
       "ar": "نقلَ قمرٌ صناعيٌّ بثًّا تلفزيونيًا حيًّا عبرَ الأطلسي لأولِ مرة. ودامتِ الصورةُ عشرينَ دقيقة."
+    },
+    {
+      "cal": "g",
+      "m": 7,
+      "d": 13,
+      "ye": "1930",
+      "ya": "١٩٣٠م",
+      "em": "⚽",
+      "en": "The first football World Cup kicked off. Only thirteen countries came, because the trip to Uruguay by ship took two weeks each way.",
+      "ar": "انطلقت أول بطولة كأس عالم لكرة القدم. ولم يحضرها إلا ثلاث عشرة دولة، لأن الرحلة إلى الأوروجواي بالسفينة كانت تستغرق أسبوعين في كل اتجاه."
     },
     {
       "cal": "g",
@@ -1470,6 +1540,16 @@
       "em": "⏭️",
       "en": "Britain's last day on the old calendar. People went to sleep on 2 September and woke up on the 14th — eleven days deleted at once.",
       "ar": "آخرُ يومٍ لبريطانيا على التقويمِ القديم. نامَ الناسُ ليلةَ ٢ سبتمبر واستيقظوا يومَ ١٤ منه — أحدَ عشرَ يومًا حُذفتْ دفعةً واحدة."
+    },
+    {
+      "cal": "g",
+      "m": 9,
+      "d": 3,
+      "ye": "1976",
+      "ya": "١٩٧٦م",
+      "em": "🔴",
+      "en": "A second craft landed on Mars and kept working for three years. It and the first one together sent back the first close look at the Martian ground.",
+      "ar": "هبطت مركبة ثانية على المريخ وظلت تعمل ثلاث سنوات. وقد أرسلت هي والمركبة الأولى أول نظرة قريبة إلى تربة المريخ."
     },
     {
       "cal": "g",
@@ -1774,6 +1854,16 @@
     {
       "cal": "g",
       "m": 11,
+      "d": 2,
+      "ye": "2000",
+      "ya": "٢٠٠٠م",
+      "em": "🏠",
+      "en": "Three men moved into the space station. There has not been a single day since without someone living up there.",
+      "ar": "انتقل ثلاثة رجال للسكن في محطة الفضاء. ولم يمرّ يوم واحد منذ ذلك الحين دون أن يكون هناك أحد يعيش فيها."
+    },
+    {
+      "cal": "g",
+      "m": 11,
       "d": 4,
       "ye": "1922",
       "ya": "١٩٢٢م",
@@ -1960,6 +2050,16 @@
       "em": "🏅",
       "en": "The first Nobel Prizes were awarded, funded by the will of the man who invented dynamite.",
       "ar": "مُنحتْ جوائزُ نوبل لأولِ مرة، بتمويلٍ من وصيةِ الرجلِ الذي اخترعَ الديناميت."
+    },
+    {
+      "cal": "g",
+      "m": 12,
+      "d": 11,
+      "ye": "1997",
+      "ya": "١٩٩٧م",
+      "em": "🌡️",
+      "en": "The first agreement putting limits on the gases that warm the planet was reached in Kyoto. It was the start of every climate agreement that followed.",
+      "ar": "أُبرم في كيوتو أول اتفاق يضع حدودًا للغازات التي ترفع حرارة الكوكب. وكان بداية كل اتفاقات المناخ التي جاءت بعده."
     },
     {
       "cal": "g",
