@@ -345,6 +345,19 @@ html.app-mode .app-tools { display: block; width: min(960px, 92%); margin: 14px 
 .dr-src { margin: 9px 0 0; padding-top: 8px; border-top: 1px solid var(--border);
   font-size: .74rem; font-weight: 600; color: var(--text-2); }
 
+/* ===== On this day — sits right under the reflection, deliberately quieter ===== */
+/* The slot holds the reflection and the on-this-day card stacked, so the gap
+   lives on the container — the cards' own margins are zeroed further down. */
+.home-reflection-slot { display: flex; flex-direction: column; gap: 12px; }
+html .otd-card {
+  border-color: var(--border);
+  background: var(--surface);
+  box-shadow: none;
+}
+.otd-card .dr-kicker { color: var(--text-2); }
+.otd-text { font-size: .92rem; font-weight: 600; line-height: 1.75; color: var(--text-2); }
+.otd-em { margin-inline-end: 7px; font-size: 1.02rem; }
+
 /* ===== App tools — category groups ===== */
 .app-tools-group { margin-bottom: 4px; }
 .app-tools-cat {

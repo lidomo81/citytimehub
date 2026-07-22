@@ -1,0 +1,128 @@
+{
+  "note": "On this day — curated, one line each. cal: 'h' = Hijri date (moves with the moon), 'g' = Gregorian date. Only firmly-attested dates are listed; days that hold no entry simply show no card.",
+  "items": [
+    { "cal": "h", "m": 3, "d": 12, "ye": "1 AH", "ya": "١هـ", "em": "🕌",
+      "en": "The Prophet ﷺ reached Quba on the outskirts of Madinah, ending the Hijrah — the journey the Islamic calendar counts from.",
+      "ar": "وصلَ النبيُّ ﷺ إلى قُباء على مشارف المدينة، فتمّت الهجرة — الرحلة التي يُؤرَّخ منها التقويم الهجري." },
+
+    { "cal": "h", "m": 9, "d": 17, "ye": "2 AH", "ya": "٢هـ", "em": "⚔️",
+      "en": "The Battle of Badr — fought in Ramadan, and called in the Quran the Day of Criterion.",
+      "ar": "غزوة بدر — وقعتْ في رمضان، وسمّاها القرآن «يومَ الفرقان»." },
+
+    { "cal": "h", "m": 10, "d": 1, "ye": "2 AH", "ya": "٢هـ", "em": "🕌",
+      "en": "The first Eid al-Fitr in Islam was prayed in Madinah, the year fasting Ramadan was made obligatory.",
+      "ar": "صُلّي أولُ عيدِ فطرٍ في الإسلام بالمدينة، في العام الذي فُرِض فيه صيامُ رمضان." },
+
+    { "cal": "h", "m": 9, "d": 20, "ye": "8 AH", "ya": "٨هـ", "em": "🕋",
+      "en": "The conquest of Makkah — the city entered without a battle, and a general amnesty was declared.",
+      "ar": "فتحُ مكة — دخلتْ المدينةُ بلا قتال، وأُعلن العفوُ العام عن أهلها." },
+
+    { "cal": "h", "m": 12, "d": 9, "ye": "10 AH", "ya": "١٠هـ", "em": "🏔️",
+      "en": "The Farewell Sermon at Arafah — the Prophet ﷺ addressed the largest gathering of his life, and never performed Hajj again.",
+      "ar": "خطبةُ الوداع بعرفة — خطبَ النبيُّ ﷺ في أكبر جمعٍ شهدَه، ولم يحجَّ بعدها." },
+
+    { "cal": "h", "m": 1, "d": 10, "ye": "", "ya": "", "em": "🌊",
+      "en": "Ashura — the day the Prophet ﷺ found the Jews of Madinah fasting in thanks for Musa's deliverance, and said: we have more right to Musa than you.",
+      "ar": "عاشوراء — اليومُ الذي وجدَ فيه النبيُّ ﷺ يهودَ المدينةِ صيامًا شكرًا لنجاةِ موسى، فقال: «نحنُ أحقُّ بموسى منكم»." },
+
+    { "cal": "h", "m": 1, "d": 1, "ye": "17 AH", "ya": "١٧هـ", "em": "📜",
+      "en": "Umar ibn al-Khattab adopted the Hijrah as year one — and chose Muharram, not the month of the Hijrah itself, as the start of the year.",
+      "ar": "اعتمدَ عمرُ بنُ الخطاب الهجرةَ بدايةً للتأريخ — واختارَ المحرَّم رأسًا للسنة، لا شهرَ الهجرةِ نفسه." },
+
+    { "cal": "g", "m": 1, "d": 1, "ye": "45 BC", "ya": "٤٥ ق.م", "em": "📅",
+      "en": "The Julian calendar came into force — the first to fix the year at 365.25 days. Its quarter-day error would drift into ten full days by 1582.",
+      "ar": "بدأ العملُ بالتقويم اليولياني — أولُ تقويمٍ يثبّت السنةَ عند ٣٦٥ يومًا وربع. وخطأُ الربعِ هذا تراكمَ حتى صارَ عشرةَ أيامٍ كاملة سنةَ ١٥٨٢." },
+
+    { "cal": "g", "m": 2, "d": 24, "ye": "1582", "ya": "١٥٨٢م", "em": "📜",
+      "en": "Pope Gregory XIII issued the decree reforming the calendar: skip ten days, and drop the leap year in three centuries out of every four.",
+      "ar": "أصدرَ البابا غريغوري الثالث عشر مرسومَ إصلاح التقويم: تُحذَف عشرةُ أيام، ويُلغى اليومُ الكبيس في ثلاثةِ قرونٍ من كلِّ أربعة." },
+
+    { "cal": "g", "m": 2, "d": 29, "ye": "", "ya": "", "em": "🗓️",
+      "en": "A leap day. The rule is stricter than most people know: a century year is a leap year only if divisible by 400 — so 2000 was, and 1900 was not.",
+      "ar": "يومٌ كبيس. والقاعدةُ أدقُّ مما يظنُّ الكثيرون: سنةُ القرنِ لا تكون كبيسةً إلا إذا قُسِمتْ على ٤٠٠ — فسنةُ ٢٠٠٠ كانت كبيسة، و١٩٠٠ لم تكن." },
+
+    { "cal": "g", "m": 10, "d": 15, "ye": "1582", "ya": "١٥٨٢م", "em": "⏭️",
+      "en": "The Gregorian calendar took effect. The day before it was 4 October — the 5th through the 14th never existed.",
+      "ar": "دخلَ التقويمُ الغريغوري حيّزَ التنفيذ. واليومُ الذي سبقَه كان ٤ أكتوبر — أما الأيامُ من ٥ إلى ١٤ فلم توجدْ قط." },
+
+    { "cal": "g", "m": 9, "d": 2, "ye": "1752", "ya": "١٧٥٢م", "em": "⏭️",
+      "en": "Britain's last Julian day. Its people went to sleep on 2 September and woke on the 14th — eleven days deleted at once.",
+      "ar": "آخرُ يومٍ يولياني في بريطانيا. نامَ الناسُ ليلةَ ٢ سبتمبر واستيقظوا في ١٤ منه — أحدَ عشرَ يومًا حُذفتْ دفعةً واحدة." },
+
+    { "cal": "g", "m": 6, "d": 16, "ye": "1657", "ya": "١٦٥٧م", "em": "🕰️",
+      "en": "Christiaan Huygens patented the pendulum clock. It cut the error of the best clocks from about fifteen minutes a day to under a minute.",
+      "ar": "سجّلَ كريستيان هويغنز براءةَ ساعةِ البندول. فهبطَ خطأُ أدقِّ الساعات من نحو خمسَ عشرةَ دقيقةً يوميًا إلى أقلَّ من دقيقة." },
+
+    { "cal": "g", "m": 10, "d": 2, "ye": "1608", "ya": "١٦٠٨م", "em": "🔭",
+      "en": "The earliest known patent application for a telescope was filed in the Netherlands. It was refused — the idea was already too widely known.",
+      "ar": "قُدِّم أولُ طلبِ براءةٍ معروفٍ للتلسكوب في هولندا. ورُفض الطلب — لأنَّ الفكرةَ كانت قد انتشرتْ بالفعل." },
+
+    { "cal": "g", "m": 1, "d": 7, "ye": "1610", "ya": "١٦١٠م", "em": "🪐",
+      "en": "Galileo saw the moons of Jupiter. Their eclipses ran like clockwork, and were later proposed as a sky-clock for finding longitude.",
+      "ar": "رصدَ غاليليو أقمارَ المشتري. وكانت خسوفاتُها تنتظمُ كالساعة، فاقتُرحتْ لاحقًا ساعةً سماويةً لتحديدِ خطوط الطول." },
+
+    { "cal": "g", "m": 10, "d": 22, "ye": "1707", "ya": "١٧٠٧م", "em": "⚓",
+      "en": "A British fleet wrecked off the Scilly Isles after miscalculating its longitude. The disaster is what pushed Britain to hunt for a solution.",
+      "ar": "تحطّمَ أسطولٌ بريطاني قربَ جُزُر سيلي بعد خطأٍ في حسابِ خطِّ الطول. وهذه الكارثةُ هي ما دفعَ بريطانيا للبحثِ عن حل." },
+
+    { "cal": "g", "m": 7, "d": 8, "ye": "1714", "ya": "١٧١٤م", "em": "💰",
+      "en": "Britain's Longitude Act offered a fortune to whoever could find a ship's longitude at sea. The answer turned out to be a clock accurate enough to keep home time.",
+      "ar": "رصدَ «قانونُ الطول» البريطاني ثروةً لمن يهتدي إلى تحديدِ خطِّ طولِ السفينةِ في البحر. وكان الحلُّ ساعةً دقيقةً بما يكفي لحفظِ توقيتِ الوطن." },
+
+    { "cal": "g", "m": 9, "d": 4, "ye": "973", "ya": "٩٧٣م", "em": "📚",
+      "en": "Al-Biruni was born. His book on the calendars of past nations compared the Hijri, Julian, Persian and Hebrew systems side by side.",
+      "ar": "وُلد أبو الريحان البيروني. وكتابُه «الآثار الباقية عن القرون الخالية» قارنَ بين التقاويم الهجري واليولياني والفارسي والعبري جنبًا إلى جنب." },
+
+    { "cal": "g", "m": 11, "d": 17, "ye": "1858", "ya": "١٨٥٨م", "em": "🔢",
+      "en": "The zero point of the Modified Julian Day. Astronomers still count days straight from here, with no months or years to get in the way.",
+      "ar": "نقطةُ الصفر في «اليوم اليولياني المعدَّل». وما زال الفلكيّون يعدّون الأيامَ منها عدًّا متصلًا، بلا شهورٍ ولا سنواتٍ تعترضُ الحساب." },
+
+    { "cal": "g", "m": 11, "d": 18, "ye": "1883", "ya": "١٨٨٣م", "em": "🚂",
+      "en": "The Day of Two Noons: North America's railways switched to standard time zones, and clocks in many cities struck noon twice.",
+      "ar": "«يومُ الظهرين»: تحوّلتْ سككُ أمريكا الشمالية إلى المناطق الزمنية القياسية، فدقّتْ ساعاتُ مدنٍ كثيرة ظهرًا مرّتين." },
+
+    { "cal": "g", "m": 10, "d": 13, "ye": "1884", "ya": "١٨٨٤م", "em": "🧭",
+      "en": "The Washington conference adopted Greenwich as the prime meridian — the decision every time zone on this site is still measured from.",
+      "ar": "اعتمدَ مؤتمرُ واشنطن خطَّ جرينتش مبدأً للطول — وهو القرارُ الذي ما زالتْ تُقاسُ منه كلُّ منطقةٍ زمنيةٍ في هذا الموقع." },
+
+    { "cal": "g", "m": 4, "d": 30, "ye": "1916", "ya": "١٩١٦م", "em": "☀️",
+      "en": "Germany became the first country to move its clocks forward for summer, to save coal during the war. Most of Europe followed within weeks.",
+      "ar": "صارتْ ألمانيا أولَ دولةٍ تقدّمُ ساعاتِها للصيف، توفيرًا للفحم أثناءَ الحرب. وتبعَها أكثرُ أوروبا خلالَ أسابيع." },
+
+    { "cal": "g", "m": 2, "d": 5, "ye": "1924", "ya": "١٩٢٤م", "em": "📻",
+      "en": "The Greenwich time signal — the famous six pips — was broadcast for the first time, putting the observatory's clock in every listener's home.",
+      "ar": "بُثّتْ إشارةُ توقيت جرينتش الصوتية — النقراتُ الستُّ الشهيرة — لأولِ مرة، فدخلتْ ساعةُ المرصدِ بيتَ كلِّ مستمع." },
+
+    { "cal": "g", "m": 1, "d": 1, "ye": "1925", "ya": "١٩٢٥م", "em": "🌙",
+      "en": "The astronomical day was moved to begin at midnight instead of noon, finally matching the civil day everyone else lived by.",
+      "ar": "نُقلتْ بدايةُ اليومِ الفلكي إلى منتصفِ الليل بدلًا من الظهر، فوافقَ أخيرًا اليومَ المدنيَّ الذي يعيشُ به الناس." },
+
+    { "cal": "g", "m": 10, "d": 4, "ye": "1957", "ya": "١٩٥٧م", "em": "🛰️",
+      "en": "Sputnik was launched. Tracking its signal proved satellites could fix a position on the ground — the idea that grew into GPS.",
+      "ar": "أُطلق سبوتنك. وتتبُّعُ إشارتِه أثبتَ أنَّ الأقمارَ الصناعية تستطيع تحديدَ موقعٍ على الأرض — وهي الفكرةُ التي كبرتْ فصارتْ نظامَ GPS." },
+
+    { "cal": "g", "m": 1, "d": 1, "ye": "1958", "ya": "١٩٥٨م", "em": "⚛️",
+      "en": "The reference instant of International Atomic Time. Since then the second has been counted by caesium atoms, not by the turning of the Earth.",
+      "ar": "اللحظةُ المرجعية للتوقيت الذرّي الدولي. ومنذُها صارتِ الثانيةُ تُعَدُّ بذرّاتِ السيزيوم، لا بدورانِ الأرض." },
+
+    { "cal": "g", "m": 7, "d": 20, "ye": "1969", "ya": "١٩٦٩م", "em": "🌕",
+      "en": "The first landing on the Moon — the same moon whose crescent still opens and closes the Hijri months.",
+      "ar": "أولُ هبوطٍ على سطحِ القمر — القمرُ نفسُه الذي ما زالَ هلالُه يفتحُ الشهورَ الهجريةَ ويُغلقُها." },
+
+    { "cal": "g", "m": 1, "d": 1, "ye": "1970", "ya": "١٩٧٠م", "em": "💻",
+      "en": "The zero moment of Unix time. Nearly every computer and phone counts the seconds from this instant — including the clock on this page.",
+      "ar": "لحظةُ الصفر في توقيت يونكس. فكلُّ حاسوبٍ وهاتفٍ تقريبًا يعدُّ الثواني منذُ هذه اللحظة — بما فيها الساعةُ في هذه الصفحة." },
+
+    { "cal": "g", "m": 1, "d": 1, "ye": "1972", "ya": "١٩٧٢م", "em": "🌍",
+      "en": "UTC formally became the basis of civil time worldwide — an atomic clock kept in step with the Earth by the occasional leap second.",
+      "ar": "صارَ التوقيتُ العالمي المنسَّق UTC أساسَ التوقيتِ المدني رسميًا في العالم — ساعةٌ ذرّيةٌ تُبقى موافقةً للأرض بثانيةٍ كبيسةٍ بين حينٍ وآخر." },
+
+    { "cal": "g", "m": 6, "d": 30, "ye": "1972", "ya": "١٩٧٢م", "em": "⏱️",
+      "en": "The first leap second was added. For one minute that day the clock read 23:59:60 — a second that exists on no ordinary clock.",
+      "ar": "أُضيفتْ أولُ ثانيةٍ كبيسة. فقرأتِ الساعةُ في تلك الدقيقة ٢٣:٥٩:٦٠ — ثانيةٌ لا وجودَ لها في أيِّ ساعةٍ عادية." },
+
+    { "cal": "g", "m": 12, "d": 31, "ye": "2016", "ya": "٢٠١٦م", "em": "⏳",
+      "en": "The most recent leap second was added to the world's clocks. None has been needed since — the Earth has been spinning slightly faster.",
+      "ar": "أُضيفتْ آخرُ ثانيةٍ كبيسةٍ حتى اليوم إلى ساعاتِ العالم. ولم تُضَفْ واحدةٌ بعدَها — إذ صارتِ الأرضُ تدورُ أسرعَ قليلًا." }
+  ]
+}
