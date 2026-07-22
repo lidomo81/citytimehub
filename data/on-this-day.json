@@ -194,6 +194,16 @@
     {
       "cal": "g",
       "m": 1,
+      "d": 9,
+      "ye": "2007",
+      "ya": "٢٠٠٧م",
+      "em": "📱",
+      "en": "The first iPhone was shown on stage. It had no app store and no copy and paste, and it still managed to change what everyone expected a phone to be.",
+      "ar": "عُرض أول آيفون على المسرح. لم يكن فيه متجر تطبيقات ولا حتى نسخ ولصق، ومع ذلك استطاع تغيير ما ينتظره الناس من الهاتف."
+    },
+    {
+      "cal": "g",
+      "m": 1,
       "d": 10,
       "ye": "1863",
       "ya": "١٨٦٣م",
@@ -410,6 +420,16 @@
       "em": "🔭",
       "en": "Galileo was born. He did not invent the telescope, but he was the first to point it carefully at the sky and write down what he saw.",
       "ar": "وُلد غاليليو. لم يخترعِ التلسكوب، لكنّه أولُ من وجّهَه إلى السماءِ بعنايةٍ ودوّنَ ما رآه."
+    },
+    {
+      "cal": "g",
+      "m": 2,
+      "d": 16,
+      "ye": "1923",
+      "ya": "١٩٢٣م",
+      "em": "⚱️",
+      "en": "The burial chamber of Tutankhamun was opened in Luxor, three months after the steps to it were found. Almost everything inside was still where it had been left.",
+      "ar": "فُتحت حجرة دفن توت عنخ آمون في الأقصر، بعد ثلاثة أشهر من العثور على السلم المؤدي إليها. وكان كل ما بداخلها تقريبًا في موضعه الذي تُرك فيه."
     },
     {
       "cal": "g",
@@ -674,6 +694,16 @@
     {
       "cal": "g",
       "m": 3,
+      "d": 29,
+      "ye": "1974",
+      "ya": "١٩٧٤م",
+      "em": "☿️",
+      "en": "A craft reached Mercury, the closest planet to the sun. It is so hard to get to that only two craft have ever been.",
+      "ar": "وصلت مركبة إلى عطارد، أقرب الكواكب إلى الشمس. والوصول إليه صعب إلى حدّ أن مركبتين فقط بلغتاه حتى اليوم."
+    },
+    {
+      "cal": "g",
+      "m": 3,
       "d": 31,
       "ye": "1889",
       "ya": "١٨٨٩م",
@@ -720,6 +750,16 @@
       "em": "🕌",
       "en": "The foundation stone of al-Azhar was laid in Cairo. In the years that followed it became a school and a beacon of learning, and it is one of the oldest universities in the world.",
       "ar": "وُضع حجرُ أساسِ الجامعِ الأزهرِ في القاهرة. وبعدَ سنواتٍ صارَ مدرسةً ومنارةً للعلمِ، فهو من أقدمِ الجامعاتِ في العالم."
+    },
+    {
+      "cal": "g",
+      "m": 4,
+      "d": 6,
+      "ye": "1896",
+      "ya": "١٨٩٦م",
+      "em": "🏛️",
+      "en": "The first modern Olympic Games opened in Athens, after a gap of fifteen hundred years. Fourteen countries took part, and the winners were given silver, not gold.",
+      "ar": "افتُتحت أول دورة أولمبية حديثة في أثينا، بعد انقطاع دام ألفًا وخمسمئة سنة. شاركت فيها أربع عشرة دولة، ونال الفائزون الفضة لا الذهب."
     },
     {
       "cal": "g",
@@ -1023,6 +1063,16 @@
     },
     {
       "cal": "g",
+      "m": 5,
+      "d": 30,
+      "ye": "1971",
+      "ya": "١٩٧١م",
+      "em": "🔴",
+      "en": "A craft left for Mars to circle it rather than fly past. It arrived to find the whole planet buried under a dust storm, and had to wait weeks for the air to clear.",
+      "ar": "انطلقت مركبة إلى المريخ لتدور حوله بدل أن تمرّ به. ووصلت فوجدت الكوكب كله مطمورًا تحت عاصفة من الغبار، فاضطرت أن تنتظر أسابيع حتى يصفو الجو."
+    },
+    {
+      "cal": "g",
       "m": 6,
       "d": 2,
       "ye": "1966",
@@ -1114,6 +1164,16 @@
     {
       "cal": "g",
       "m": 6,
+      "d": 18,
+      "ye": "1983",
+      "ya": "١٩٨٣م",
+      "em": "👩‍🚀",
+      "en": "The first American woman went to space, at thirty-two. She remains the youngest American ever to have gone.",
+      "ar": "صعدت أول امرأة أمريكية إلى الفضاء وعمرها اثنتان وثلاثون سنة. وهي إلى اليوم أصغر أمريكي يصعد إلى الفضاء."
+    },
+    {
+      "cal": "g",
+      "m": 6,
       "d": 19,
       "ye": "1623",
       "ya": "١٦٢٣م",
@@ -1200,6 +1260,16 @@
       "em": "🎧",
       "en": "The first personal music player went on sale. Until then, listening to your own music while walking was not something people did.",
       "ar": "طُرح أولُ مشغّلِ موسيقى شخصي. وقبلَه لم يكنِ الاستماعُ لموسيقاكَ وأنتَ تمشي شيئًا يفعلُه الناس."
+    },
+    {
+      "cal": "g",
+      "m": 7,
+      "d": 3,
+      "ye": "1886",
+      "ya": "١٨٨٦م",
+      "em": "🚗",
+      "en": "The first car was driven in public for the first time. It managed a few hundred metres, then the drive belt snapped.",
+      "ar": "سارت أول سيارة أمام الناس لأول مرة. وقطعت بضع مئات من الأمتار ثم انقطع سيرها المتحرك."
     },
     {
       "cal": "g",
@@ -1594,6 +1664,16 @@
     {
       "cal": "g",
       "m": 9,
+      "d": 10,
+      "ye": "2008",
+      "ya": "٢٠٠٨م",
+      "em": "⚛️",
+      "en": "The largest machine ever built was switched on, a ring twenty-seven kilometres round buried under the border of France and Switzerland.",
+      "ar": "شُغّلت أكبر آلة بناها الإنسان، وهي حلقة محيطها سبعة وعشرون كيلومترًا مدفونة تحت الحدود بين فرنسا وسويسرا."
+    },
+    {
+      "cal": "g",
+      "m": 9,
       "d": 12,
       "ye": "1958",
       "ya": "١٩٥٨م",
@@ -1700,6 +1780,16 @@
       "em": "🛰️",
       "en": "The first satellite was launched. Following its beeps from the ground showed that satellites could pinpoint a place on Earth — the idea behind every map app today.",
       "ar": "أُطلق أولُ قمرٍ صناعي. وتتبُّعُ صفيرِه من الأرضِ أثبتَ أنَّ الأقمارَ تستطيعُ تحديدَ موقعٍ على الأرض — وهي الفكرةُ وراءَ كلِّ تطبيقِ خرائطَ اليوم."
+    },
+    {
+      "cal": "g",
+      "m": 10,
+      "d": 6,
+      "ye": "1927",
+      "ya": "١٩٢٧م",
+      "em": "🎬",
+      "en": "The first film in which the audience heard an actor speak was shown. Until that evening, every film in the world was silent.",
+      "ar": "عُرض أول فيلم يسمع فيه الجمهور صوت ممثل يتكلم. وحتى تلك الليلة كانت كل أفلام العالم صامتة."
     },
     {
       "cal": "g",
@@ -2120,6 +2210,16 @@
       "em": "🌗",
       "en": "Three men left Earth's orbit for the first time and travelled all the way round the Moon and back.",
       "ar": "غادرَ ثلاثةُ رجالٍ مدارَ الأرضِ لأولِ مرة، وطافوا حولَ القمرِ ثم عادوا."
+    },
+    {
+      "cal": "g",
+      "m": 12,
+      "d": 22,
+      "ye": "1887",
+      "ya": "١٨٨٧م",
+      "em": "🔢",
+      "en": "Srinivasa Ramanujan was born. He is the one who taught himself from a single borrowed book, and sent what he had worked out to a professor in England who at first took him for a fraud.",
+      "ar": "وُلد سرينيفاسا رامانوجان. وهو الذي تعلّم بنفسه من كتاب واحد استعاره، وأرسل ما توصّل إليه إلى أستاذ في إنجلترا ظنّه في البداية محتالًا."
     },
     {
       "cal": "g",
