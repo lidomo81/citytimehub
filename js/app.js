@@ -589,10 +589,11 @@
       } else {
         const ctz = (currentCity && currentCity.tz) || tz;
         const cloc = formatters(ctz);
-        const homeBoard = document.documentElement.classList.contains("app-mode")
-          && document.documentElement.getAttribute("data-app-tab") === "home";
-        // Home "نتيجة زمان" shows HH:mm; elsewhere keep live seconds.
-        ltT.textContent = homeBoard ? cloc.hm.format(now) : cloc.time.format(now);
+        // In the app this clock is a supporting line, not the subject, and a
+        // seconds digit ticking beside the city name pulls the eye for nothing.
+        // On the website the same board is the hero, so it keeps live seconds.
+        const inApp = document.documentElement.classList.contains("app-mode");
+        ltT.textContent = inApp ? cloc.hm.format(now) : cloc.time.format(now);
         const ltD = $("#ltDate"); if (ltD) ltD.textContent = cloc.date.format(now);
         const ltW = $("#ltWeekday"); if (ltW) ltW.textContent = cloc.weekday.format(now);
         const ltZ = $("#ltZone"); if (ltZ) ltZ.textContent = `${ctz.replace(/_/g," ")} · ${offsetLabel(offsetHours(ctz, now))}`;
