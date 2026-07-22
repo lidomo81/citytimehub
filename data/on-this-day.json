@@ -204,6 +204,16 @@
     {
       "cal": "g",
       "m": 1,
+      "d": 14,
+      "ye": "2005",
+      "ya": "٢٠٠٥م",
+      "em": "🌫️",
+      "en": "A small craft came down through the thick orange clouds of Titan, the largest moon of Saturn. It is the most distant landing anyone has ever made, and it sent back the sound of the wind there.",
+      "ar": "نزلت مركبة صغيرة عبر السحب البرتقالية الكثيفة فوق تيتان، أكبر أقمار زحل. وهو أبعد هبوط وصل إليه الإنسان، وقد أرسلت منه صوت الرياح هناك."
+    },
+    {
+      "cal": "g",
+      "m": 1,
       "d": 15,
       "ye": "2001",
       "ya": "٢٠٠١م",
@@ -330,6 +340,16 @@
       "em": "💡",
       "en": "Thomas Edison was born. He was nearly deaf from childhood, and said it helped him concentrate.",
       "ar": "وُلد توماس إديسون. كان شبهَ أصمَّ منذُ طفولتِه، وكان يقولُ إنَّ ذلك ساعدَه على التركيز."
+    },
+    {
+      "cal": "g",
+      "m": 2,
+      "d": 12,
+      "ye": "2001",
+      "ya": "٢٠٠١م",
+      "em": "🪨",
+      "en": "A craft settled on the surface of an asteroid, though it had never been built to land on anything. It kept sending signals from the ground for another two weeks.",
+      "ar": "استقرت مركبة على سطح كويكب، مع أنها لم تُصنع أصلًا للهبوط على شيء. وقد ظلت ترسل إشاراتها من على السطح أسبوعين بعدها."
     },
     {
       "cal": "g",
@@ -564,6 +584,16 @@
     {
       "cal": "g",
       "m": 3,
+      "d": 24,
+      "ye": "1882",
+      "ya": "١٨٨٢م",
+      "em": "🫁",
+      "en": "The cause of tuberculosis was announced, at a time the disease was killing one European in seven. Knowing the cause is what made a cure possible.",
+      "ar": "أُعلن عن سبب مرض السل، في وقت كان يقتل واحدًا من كل سبعة في أوروبا. ومعرفة السبب هي التي فتحت الطريق أمام العلاج."
+    },
+    {
+      "cal": "g",
+      "m": 3,
       "d": 25,
       "ye": "1655",
       "ya": "١٦٥٥م",
@@ -714,6 +744,16 @@
     {
       "cal": "g",
       "m": 4,
+      "d": 26,
+      "ye": "1803",
+      "ya": "١٨٠٣م",
+      "em": "🌠",
+      "en": "Some three thousand stones fell on a French town in front of everyone. Until then scholars had refused to believe stones could fall from the sky, and after it nobody doubted it again.",
+      "ar": "سقطت نحو ثلاثة آلاف حجر على بلدة فرنسية أمام أعين الناس. وكان العلماء قبلها يرفضون تصديق أن حجارة تسقط من السماء، فلم يشك أحد بعدها."
+    },
+    {
+      "cal": "g",
+      "m": 4,
       "d": 30,
       "ye": "1916",
       "ya": "١٩١٦م",
@@ -740,6 +780,16 @@
       "em": "✉️",
       "en": "The first postage stamp went on sale. Before it, the person receiving a letter was the one who paid for it, so a great many people simply refused to take theirs.",
       "ar": "بِيع أول طابع بريد في التاريخ. وقبله كان المستلم هو الذي يدفع أجرة الرسالة، فكان كثير من الناس يرفضون استلامها."
+    },
+    {
+      "cal": "g",
+      "m": 5,
+      "d": 6,
+      "ye": "1954",
+      "ya": "١٩٥٤م",
+      "em": "🏃",
+      "en": "A runner covered a mile in under four minutes, which doctors had said the body could not do. Within two months someone else had done it too.",
+      "ar": "قطع عدّاء ميلًا في أقل من أربع دقائق، وكان الأطباء يقولون إن الجسم لا يحتمل ذلك. وخلال شهرين فعلها غيره."
     },
     {
       "cal": "g",
@@ -954,6 +1004,16 @@
     {
       "cal": "g",
       "m": 6,
+      "d": 19,
+      "ye": "1623",
+      "ya": "١٦٢٣م",
+      "em": "🧮",
+      "en": "Blaise Pascal was born. At nineteen he built a machine that added and subtracted, to spare his father the long nights of counting taxes by hand.",
+      "ar": "وُلد بليز باسكال. وقد صنع في التاسعة عشرة آلة تجمع وتطرح، ليريح أباه من ليالي حساب الضرائب باليد."
+    },
+    {
+      "cal": "g",
+      "m": 6,
       "d": 20,
       "ye": "1840",
       "ya": "١٨٤٠م",
@@ -1030,6 +1090,16 @@
       "em": "🌟",
       "en": "Chinese and Arab astronomers recorded a new star so bright it was visible in daylight for three weeks. It was a dying star exploding.",
       "ar": "سجّلَ فلكيّونَ صينيّونَ وعربٌ نجمًا جديدًا بلغَ من السطوعِ أن رُئي في وضحِ النهارِ ثلاثةَ أسابيع. وكان نجمًا يحتضرُ وينفجر."
+    },
+    {
+      "cal": "g",
+      "m": 7,
+      "d": 5,
+      "ye": "1687",
+      "ya": "١٦٨٧م",
+      "em": "🍎",
+      "en": "Newton's book on motion and gravity was published. In it he showed that the same rule that makes an apple fall keeps the Moon going round the Earth.",
+      "ar": "نُشر كتاب نيوتن عن الحركة والجاذبية. وقد بيّن فيه أن القاعدة التي تُسقط التفاحة هي نفسها التي تُبقي القمر يدور حول الأرض."
     },
     {
       "cal": "g",
@@ -1160,6 +1230,16 @@
       "em": "🌬️",
       "en": "Oxygen was identified. Until then nobody knew that the air we breathe is a mixture rather than one single thing.",
       "ar": "عُرِف الأكسجينُ لأولِ مرة. وقبلَ ذلك لم يكنْ أحدٌ يعلمُ أنَّ الهواءَ الذي نتنفّسُه خليطٌ لا مادةٌ واحدة."
+    },
+    {
+      "cal": "g",
+      "m": 8,
+      "d": 3,
+      "ye": "1958",
+      "ya": "١٩٥٨م",
+      "em": "🧭",
+      "en": "A submarine passed under the North Pole beneath the ice. There is no land there at all — only a frozen sheet floating on a deep ocean.",
+      "ar": "مرّت غواصة تحت القطب الشمالي من أسفل الجليد. فليس هناك يابسة على الإطلاق، وإنما صفيحة متجمدة تطفو فوق محيط عميق."
     },
     {
       "cal": "g",
@@ -1664,6 +1744,16 @@
     {
       "cal": "g",
       "m": 11,
+      "d": 16,
+      "ye": "1974",
+      "ya": "١٩٧٤م",
+      "em": "📡",
+      "en": "A message was beamed from Earth toward a distant cluster of stars, describing where we are and what we are made of. It will arrive in twenty-five thousand years.",
+      "ar": "أُرسلت رسالة من الأرض في اتجاه حشد بعيد من النجوم، تصف أين نحن ومم نتكوّن. وستصل بعد خمسة وعشرين ألف سنة."
+    },
+    {
+      "cal": "g",
+      "m": 11,
       "d": 17,
       "ye": "1858",
       "ya": "١٨٥٨م",
@@ -1740,6 +1830,16 @@
       "em": "❤️",
       "en": "The first human heart transplant was carried out. The operation took five hours and thirty people.",
       "ar": "أُجريتْ أولُ عمليةِ زرعِ قلبٍ لإنسان. استغرقتْ خمسَ ساعاتٍ وشاركَ فيها ثلاثونَ شخصًا."
+    },
+    {
+      "cal": "g",
+      "m": 12,
+      "d": 6,
+      "ye": "1877",
+      "ya": "١٨٧٧م",
+      "em": "🎙️",
+      "en": "Edison recorded his own voice and played it straight back to the men in his workshop. They were so startled that some of them refused to believe it.",
+      "ar": "سجّل إديسون صوته وأعاد تشغيله فورًا أمام العاملين في ورشته. وقد فوجئوا حتى إن بعضهم رفض أن يصدّق ما سمعه."
     },
     {
       "cal": "g",
