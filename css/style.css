@@ -577,15 +577,15 @@ html.app-mode[data-app-tab="home"] .daily-reflection--home {
 }
 html.app-mode[data-app-tab="home"] .daily-reflection--home .dr-kicker {
   margin-bottom: 8px;
-  font-size: .62rem;
+  font-size: .68rem;
   letter-spacing: .14em;
   color: var(--text-2);
   font-weight: 700;
 }
 html.app-mode[data-app-tab="home"] .daily-reflection--home .dr-text {
-  font-size: .92rem;
+  font-size: 1.02rem;
   font-weight: 600;
-  line-height: 1.75;
+  line-height: 1.8;
   color: var(--text);
 }
 html.app-mode[data-app-tab="home"] .daily-reflection--home .dr-src {
@@ -708,16 +708,16 @@ html.app-mode[data-app-tab="home"] .cp-clock-info .lt-meta { display: none; }
 html.app-mode[data-app-tab="home"] .cp-clock .eyebrow { display: none; }
 html.app-mode[data-app-tab="home"] .cp-clock-info .lt-city {
   margin: 0;
-  font-size: .92rem;
-  font-weight: 600;
+  font-size: 1.05rem;
+  font-weight: 650;
   letter-spacing: .02em;
   color: var(--text-2);
 }
 html.app-mode[data-app-tab="home"] .cp-clock-info h2 { margin: 0; }
 html.app-mode[data-app-tab="home"] .cp-clock .lt-time {
   position: relative;
-  margin: 2px 0 4px;
-  font-size: clamp(3.1rem, 15vw, 3.85rem);
+  margin: 4px 0 8px;
+  font-size: clamp(3.35rem, 16vw, 4.15rem);
   font-weight: 800;
   letter-spacing: .04em;
   font-variant-numeric: tabular-nums;
@@ -731,11 +731,10 @@ html.app-mode[data-app-tab="home"] .cp-devotion {
   border-inline-start: none;
 }
 html.app-mode[data-app-tab="home"] .datebar--paper {
-  width: min(100%, 360px);
+  width: min(100%, 380px);
+  border: none;
+  border-top: 1px solid color-mix(in srgb, var(--text) 16%, transparent);
   border-radius: 0;
-  border-left: none;
-  border-right: none;
-  border-color: color-mix(in srgb, var(--text) 16%, transparent);
   background: transparent;
   box-shadow: none;
   grid-template-columns: 1fr;
@@ -743,44 +742,41 @@ html.app-mode[data-app-tab="home"] .datebar--paper {
 }
 html.app-mode[data-app-tab="home"] .datebar--paper .datebar-sep { display: none; }
 html.app-mode[data-app-tab="home"] .datebar--paper .datebar-item {
-  padding: 7px 4px;
+  padding: 12px 6px 6px;
   gap: 2px;
 }
 html.app-mode[data-app-tab="home"] .datebar--paper .datebar-item--hijri {
   background: transparent;
   padding-top: 2px;
-  padding-bottom: 10px;
+  padding-bottom: 4px;
 }
 html.app-mode[data-app-tab="home"] .datebar--paper .datebar-label { display: none; }
 html.app-mode[data-app-tab="home"] .datebar--paper .datebar-val {
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   font-weight: 700;
   line-height: 1.5;
 }
 html.app-mode[data-app-tab="home"] .datebar--paper .datebar-item--hijri .datebar-val {
-  font-size: .98rem;
+  font-size: 1.08rem;
   font-weight: 650;
   color: var(--text-2);
-}
-html.app-mode[data-app-tab="home"] .datebar--paper .datebar-item {
-  padding: 10px 6px;
 }
 html.app-mode[data-app-tab="home"] #cpNext.cp-home-teaser {
   display: flex !important;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  width: min(360px, 92%);
+  width: min(380px, 92%);
   max-width: 100%;
-  margin: 12px auto 0;
-  padding: 10px 0 2px;
+  margin: 8px auto 14px;
+  padding: 16px 14px 18px;
   border: none;
   border-top: 1px solid color-mix(in srgb, var(--text) 14%, transparent);
   border-radius: 0;
   background: transparent;
   box-shadow: none;
-  font-size: .8rem;
-  font-weight: 600;
+  font-size: .9rem;
+  font-weight: 650;
   color: var(--text-2);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
