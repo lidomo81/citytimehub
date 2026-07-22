@@ -83,11 +83,14 @@
     const it = today[new Date().getFullYear() % today.length];
     const text = ar ? it.ar : it.en;
     const year = ar ? it.ya : it.ye;
-    const label = kicker() + (year ? " · " + year : "");
 
+    // Emoji and year ride on the label line, so the sentence itself starts clean.
     const html = '<p id="onThisDay" class="dr-otd">'
-      + '<span class="dr-otd-label">' + esc(label) + "</span>"
+      + '<span class="dr-otd-label">'
       + (it.em ? '<span class="dr-otd-em" aria-hidden="true">' + esc(it.em) + "</span>" : "")
+      + esc(kicker())
+      + (year ? ' <span class="dr-otd-year">' + esc(year) + "</span>" : "")
+      + "</span>"
       + esc(text) + "</p>";
     card.insertAdjacentHTML("beforeend", html);
     return true;

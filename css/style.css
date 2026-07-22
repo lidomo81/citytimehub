@@ -350,12 +350,16 @@ html.app-mode .app-tools { display: block; width: min(960px, 92%); margin: 14px 
 .dr-otd {
   margin: 10px 0 0; padding-top: 9px; border-top: 1px solid var(--border);
   font-size: .84rem; font-weight: 500; line-height: 1.7; color: var(--text-2);
+  text-wrap: pretty;
 }
+/* One divider, not two: the source keeps its rule only when it is the last line. */
+.dr-src:has(+ .dr-otd) { margin-top: 7px; padding-top: 0; border-top: none; }
 .dr-otd-label {
   display: block; font-size: .6rem; font-weight: 800; letter-spacing: .09em;
-  text-transform: uppercase; color: var(--text-2); opacity: .75; margin-bottom: 5px;
+  text-transform: uppercase; color: var(--text-2); opacity: .8; margin-bottom: 5px;
 }
-.dr-otd-em { margin-inline-end: 6px; font-size: .95rem; }
+.dr-otd-year { margin-inline-start: 4px; color: var(--brand); opacity: .95; letter-spacing: .04em; }
+.dr-otd-em { margin-inline-end: 5px; font-size: .9rem; }
 
 /* ===== App tools — category groups ===== */
 .app-tools-group { margin-bottom: 4px; }
@@ -626,6 +630,7 @@ html.app-mode[data-app-tab="home"] .daily-reflection--home .dr-otd {
   font-size: .78rem;
   line-height: 1.75;
   opacity: .9;
+  text-wrap: balance;
 }
 html.app-mode[data-app-tab="home"] .daily-reflection--home .dr-otd-label {
   font-size: .58rem;
