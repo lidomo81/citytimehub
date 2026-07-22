@@ -44,13 +44,13 @@
     return isAr()
       ? { home: "الرئيسية", prayer: "الصلاة", azkar: "الأذكار", tools: "أدوات",
           brand: "CityTimeHub", azkarHub: "اختر مجموعة الأذكار",
-          azMorning: "أذكار الصباح", azEvening: "أذكار المساء", azSleep: "أذكار النوم",
-          azMorningSub: "ابدأ يومك بالذكر", azEveningSub: "ختم المساء بالحفظ",
+          azWaking: "أذكار الاستيقاظ", azMorning: "أذكار الصباح", azEvening: "أذكار المساء", azSleep: "أذكار النوم",
+          azWakingSub: "أول ما تصحى من النوم", azMorningSub: "ابدأ يومك بالذكر", azEveningSub: "ختم المساء بالحفظ",
           azSleepSub: "قبل النوم بسكينة" }
       : { home: "Home", prayer: "Prayer", azkar: "Adhkar", tools: "Tools",
           brand: "CityTimeHub", azkarHub: "Choose your adhkar",
-          azMorning: "Morning", azEvening: "Evening", azSleep: "Bedtime",
-          azMorningSub: "Start the day with dhikr", azEveningSub: "Close the evening in remembrance",
+          azWaking: "Waking", azMorning: "Morning", azEvening: "Evening", azSleep: "Bedtime",
+          azWakingSub: "The moment you wake", azMorningSub: "Start the day with dhikr", azEveningSub: "Close the evening in remembrance",
           azSleepSub: "Peace before sleep" };
   }
 
@@ -133,6 +133,12 @@
       '<div class="container app-azkar-hub">' +
         '<p class="app-azkar-lead">' + L.azkarHub + '</p>' +
         '<div class="app-azkar-grid">' +
+          '<a class="app-azkar-card app-azkar-card--waking" href="' + withAppParam(p + "/azkar/waking/") + '">' +
+            '<span class="app-azkar-glow" aria-hidden="true"></span>' +
+            '<span class="app-azkar-ico" aria-hidden="true">☀️</span>' +
+            '<span class="app-azkar-body"><strong>' + L.azWaking + '</strong><span>' + L.azWakingSub + '</span></span>' +
+            '<span class="app-azkar-arrow" aria-hidden="true">→</span>' +
+          '</a>' +
           '<a class="app-azkar-card app-azkar-card--morning" href="' + withAppParam(p + "/azkar/morning/") + '">' +
             '<span class="app-azkar-glow" aria-hidden="true"></span>' +
             '<span class="app-azkar-ico" aria-hidden="true">🌅</span>' +

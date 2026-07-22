@@ -798,6 +798,18 @@ html.app-mode[data-app-tab="home"] #top {
   box-shadow: 0 8px 20px -12px rgba(251, 191, 36, .55);
 }
 .app-azkar-card--morning .app-azkar-arrow { color: #d97706; }
+.app-azkar-card--waking {
+  border-color: color-mix(in srgb, #34d399 42%, var(--border));
+  background: linear-gradient(135deg, color-mix(in srgb, #10b981 14%, var(--surface)), var(--surface) 58%);
+}
+.app-azkar-card--waking .app-azkar-glow {
+  background: radial-gradient(110% 120% at 0% 0%, color-mix(in srgb, #34d399 32%, transparent), transparent 58%);
+}
+.app-azkar-card--waking .app-azkar-ico {
+  background: color-mix(in srgb, #34d399 20%, var(--surface-2));
+  box-shadow: 0 8px 20px -12px rgba(52, 211, 153, .5);
+}
+.app-azkar-card--waking .app-azkar-arrow { color: #059669; }
 .app-azkar-card--evening {
   border-color: color-mix(in srgb, #818cf8 42%, var(--border));
   background: linear-gradient(135deg, color-mix(in srgb, #6366f1 16%, var(--surface)), var(--surface) 58%);
