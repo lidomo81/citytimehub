@@ -617,6 +617,22 @@ html.app-mode[data-app-tab="home"] .daily-reflection--home .dr-src {
   font-weight: 500;
   opacity: .75;
 }
+/* The reflection is a borderless strip here, so the history line drops the solid
+   rule for a dashed hairline matching the strip above it. */
+html.app-mode[data-app-tab="home"] .daily-reflection--home .dr-otd {
+  margin-top: 13px;
+  padding-top: 12px;
+  border-top: 1px dashed color-mix(in srgb, var(--text) 13%, transparent);
+  font-size: .78rem;
+  line-height: 1.75;
+  opacity: .9;
+}
+html.app-mode[data-app-tab="home"] .daily-reflection--home .dr-otd-label {
+  font-size: .58rem;
+  letter-spacing: .12em;
+  margin-bottom: 6px;
+  opacity: .65;
+}
 html.app-mode[data-app-tab="home"] .home-reflection-slot:empty { display: none; }
 
 /* —— Prayer tab: centered dates + reminder slot —— */
