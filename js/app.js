@@ -587,7 +587,10 @@
       } else {
         const ctz = (currentCity && currentCity.tz) || tz;
         const cloc = formatters(ctz);
-        ltT.textContent = cloc.time.format(now);
+        const homeBoard = document.documentElement.classList.contains("app-mode")
+          && document.documentElement.getAttribute("data-app-tab") === "home";
+        // Home "نتيجة زمان" shows HH:mm; elsewhere keep live seconds.
+        ltT.textContent = homeBoard ? cloc.hm.format(now) : cloc.time.format(now);
         const ltD = $("#ltDate"); if (ltD) ltD.textContent = cloc.date.format(now);
         const ltZ = $("#ltZone"); if (ltZ) ltZ.textContent = `${ctz.replace(/_/g," ")} · ${offsetLabel(offsetHours(ctz, now))}`;
         ltOffsetMs = offsetHours(ctz, now) * 3600000;
@@ -693,7 +696,11 @@
     setTimeout(() => { tick(); setInterval(tick, 1000); }, delay);
     setInterval(updateStatusBox, 30000);
     window.addEventListener("cth-worship", updateStatusBox);
-    document.addEventListener("cth-app-tab", () => { updateStatusBox(); updateDayAtmosphere(); });
+    document.addEventListener("cth-app-tab", () => {
+      updateStatusBox();
+      updateDayAtmosphere();
+      ensureAppRemindCards();
+    });
   }
 
   /* ---------- Prayer times + Hijri (AlAdhan) ---------- */
@@ -1029,6 +1036,7 @@
     d.id = "cpDua"; d.className = "cp-dua"; d.hidden = true; d.setAttribute("dir", "rtl");
     d.innerHTML = `<span class="cp-dua-ar">${T.dua}</span>` + (LANG === "ar" || !T.duaTr ? "" : `<span class="cp-dua-tr" dir="ltr">${T.duaTr}</span>`);
     box.parentNode.insertBefore(d, box);
+    syncStatusMount();
     return d;
   }
 
@@ -1044,6 +1052,7 @@
     wk.setAttribute("aria-label", T.statsTitle + " — " + T.statsHint);
     box.parentNode.insertBefore(wk, box.nextSibling);
     wk.addEventListener("click", openStatsPanel);
+    syncStatusMount();
     return wk;
   }
   function renderWeek() {
@@ -1107,7 +1116,64 @@
     document.body.style.overflow = "hidden";
   }
 
-  // Compact next-prayer chip on the Home tab — one tap opens the Prayer tab.
+  // Quiet "الآن" board on the Prayer tab (streak + week + dua).
+  function ensureNowBoard() {
+    let board = document.getElementById("cpNowBoard");
+    if (board) return board;
+    board = document.createElement("div");
+    board.id = "cpNowBoard";
+    board.className = "cp-now-board";
+    return board;
+  }
+
+  // Keep #cpNext in the right place per surface without breaking streak wiring.
+  function syncStatusMount() {
+    const el = document.getElementById("cpNext");
+    if (!el) return;
+    const mid = document.querySelector(".cp-clock-mid");
+    const info = mid && mid.querySelector(".cp-clock-info");
+    const head = document.querySelector("#cityPanel .cp-dev-head");
+    const isApp = document.documentElement.classList.contains("app-mode");
+    const tab = document.documentElement.getAttribute("data-app-tab") || "home";
+    const dua = document.getElementById("cpDua");
+    const week = document.getElementById("cpWeek");
+    const board = ensureNowBoard();
+
+    if (isApp && tab === "home" && head) {
+      // Home board: time → dates → next-prayer line (after .cp-dev-head).
+      if (head.nextElementSibling !== el) head.insertAdjacentElement("afterend", el);
+      return;
+    }
+
+    if (isApp && tab === "prayer" && board) {
+      // Prayer tab: times grid first, adherence board below it.
+      const grid = document.getElementById("prayerGrid");
+      const devotion = document.querySelector("#cityPanel .cp-devotion");
+      const remind = document.getElementById("cthPrayerRemindSlot");
+      if (grid) {
+        if (grid.nextElementSibling !== board) grid.insertAdjacentElement("afterend", board);
+      } else if (devotion && board.parentElement !== devotion) {
+        devotion.appendChild(board);
+      } else if (remind && board.nextElementSibling !== remind) {
+        remind.insertAdjacentElement("beforebegin", board);
+      }
+      if (el.parentElement !== board) board.appendChild(el);
+      if (week && week.parentElement !== board) board.appendChild(week);
+      if (dua && dua.parentElement !== board) board.appendChild(dua);
+      return;
+    }
+
+    if (mid && info) {
+      if (el.parentElement !== mid) info.insertAdjacentElement("afterend", el);
+      if (dua && dua.parentElement !== mid) mid.insertBefore(dua, el);
+      if (week && week.parentElement !== mid) {
+        if (el.nextSibling) mid.insertBefore(week, el.nextSibling);
+        else mid.appendChild(week);
+      }
+    }
+  }
+
+  // Compact next-prayer line on the Home tab — one tap opens the Prayer tab.
   function updateHomeTeaser(el) {
     el.classList.remove("cp-streak", "cp-celebrate", "cp-recover");
     el.classList.add("cp-home-teaser");
@@ -1128,7 +1194,8 @@
     if (idx < 0) { idx = 0; const [hh, mm] = (prayerState.timings.Fajr || "0:0").split(":"); nextMin = (+hh) * 60 + (+mm) + 1440; tomorrow = true; }
     const diff = nextMin - nowMin, dh = Math.floor(diff / 60), dm = diff % 60;
     el.hidden = false;
-    el.innerHTML = `<span class="cp-next-dot" aria-hidden="true"></span><strong>${T.prayers[idx]}${tomorrow ? " " + T.tomorrow : ""}</strong> · <span class="cp-next-in">${T.inHM(dh, dm)}</span><span class="cp-teaser-go" aria-hidden="true">→</span>`;
+    // Quiet results-board line (no chip / arrow), matching Home A+ mockup.
+    el.innerHTML = `<strong>${T.prayers[idx]}${tomorrow ? " " + T.tomorrow : ""}</strong> · <span class="cp-next-in">${T.inHM(dh, dm)}</span>`;
     if (!el.dataset.teaserWired) {
       el.dataset.teaserWired = "1";
       const go = () => {
@@ -1146,6 +1213,7 @@
   // The box under the clock: your city → streak; another city → next-prayer line.
   function updateStatusBox() {
     const el = $("#cpNext"); if (!el) return;
+    syncStatusMount();
     const isApp = document.documentElement.classList.contains("app-mode");
     const tab = document.documentElement.getAttribute("data-app-tab") || "home";
     const dua = ensureDuaEl();
@@ -1161,6 +1229,7 @@
     el.removeAttribute("aria-label");
     if (currentMine) { if (dua) dua.hidden = false; el.classList.add("cp-streak"); renderStreak(el); renderWeek(); }
     else { if (dua) dua.hidden = true; el.classList.remove("cp-streak", "cp-celebrate", "cp-recover"); hideWeek(); updateNextLine(); }
+    syncStatusMount();
   }
 
   function nextPrayer(t, city) {
@@ -1268,6 +1337,8 @@
     applyMood();
     setInterval(applyMood, 300000); // refresh the time-of-day mood every 5 min
     initStatsCount();
+    ensureAppRemindCards();
+    setTimeout(ensureAppRemindCards, 600);
 
     const params = new URLSearchParams(location.search);
     const cityParam = params.get("city");
@@ -1370,6 +1441,64 @@
       tries++; setTimeout(tick, 200);
     };
     tick();
+  }
+
+  // Reminder cards for app mode (Android injects the same IDs; skip if already present).
+  function ensureAppRemindCards() {
+    if (!document.documentElement.classList.contains("app-mode")) return;
+    const ar = LANG === "ar";
+    const hasAndroid = !!(window.AndroidApp && typeof AndroidApp.openPrayerReminders === "function");
+
+    const prayerSlot = document.getElementById("cthPrayerRemindSlot");
+    if (prayerSlot && !document.getElementById("cthRemindTool")) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.id = "cthRemindTool";
+      b.className = "app-spot-card app-spot-remind";
+      b.setAttribute("aria-label", ar ? "تذكير الأذان" : "Prayer reminders");
+      b.innerHTML =
+        '<span class="app-spot-ico" aria-hidden="true">🔔</span>' +
+        '<span class="app-spot-copy"><strong class="app-spot-k">' +
+        (ar ? "تذكير الأذان" : "Reminders") +
+        '</strong><span class="app-spot-sub">' +
+        (ar ? "تنبيه عند كل صلاة" : "Alert at each prayer") +
+        "</span></span>";
+      b.addEventListener("click", () => {
+        try {
+          if (hasAndroid) AndroidApp.openPrayerReminders();
+          else toast(ar ? "تفعيل التذكير من تطبيق أندرويد" : "Enable reminders in the Android app");
+        } catch (e) {}
+      });
+      prayerSlot.appendChild(b);
+      prayerSlot.removeAttribute("hidden");
+    }
+
+    const azkarSlot = document.getElementById("cthAzkarRemindSlot");
+    if (azkarSlot && !document.getElementById("cthSpiritualTool")) {
+      const s = document.createElement("button");
+      s.type = "button";
+      s.id = "cthSpiritualTool";
+      s.className = "app-spot-card app-spot-remind";
+      s.setAttribute("aria-label", ar ? "تذكير الأذكار" : "Adhkar reminders");
+      s.innerHTML =
+        '<span class="app-spot-ico" aria-hidden="true">📿</span>' +
+        '<span class="app-spot-copy"><strong class="app-spot-k">' +
+        (ar ? "تذكير الأذكار" : "Adhkar reminders") +
+        '</strong><span class="app-spot-sub">' +
+        (ar ? "صباح، مساء، وجمعة" : "Morning, evening & Friday") +
+        "</span></span>";
+      s.addEventListener("click", () => {
+        try {
+          if (window.AndroidApp && typeof AndroidApp.openSpiritualReminders === "function") {
+            AndroidApp.openSpiritualReminders();
+          } else {
+            toast(ar ? "تفعيل تذكير الأذكار من تطبيق أندرويد" : "Enable adhkar reminders in the Android app");
+          }
+        } catch (e) {}
+      });
+      azkarSlot.appendChild(s);
+      azkarSlot.removeAttribute("hidden");
+    }
   }
 
   window.cthGetPrayerCity = function () {

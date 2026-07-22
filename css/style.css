@@ -530,38 +530,71 @@ html.app-mode:not([data-app-tab="home"]) #myCities { display: none !important; }
 html.app-mode:not([data-app-tab="home"]) .daily-reflection { display: none !important; }
 html.app-mode[data-app-tab="tools"] .app-tools-group--azkar { display: none !important; }
 
-/* —— Home tab: dates + next-prayer teaser; reflection + Close Ones —— */
+/* —— Home tab: نتيجة زمان (quiet board) —— */
 html.app-mode[data-app-tab="home"] #cpWeek,
 html.app-mode[data-app-tab="home"] #cpDua { display: none !important; }
 html.app-mode[data-app-tab="home"] .cp-devotion .cp-dev-title,
 html.app-mode[data-app-tab="home"] .cp-devotion #prayerGrid,
 html.app-mode[data-app-tab="home"] .cp-devotion .prayer-insights,
-html.app-mode[data-app-tab="home"] .cp-devotion #occasions { display: none !important; }
+html.app-mode[data-app-tab="home"] .cp-devotion #occasions,
+html.app-mode[data-app-tab="home"] .cp-devotion #cityPulse,
+html.app-mode[data-app-tab="home"] #cityPulse,
+html.app-mode[data-app-tab="home"] #coHomeStrip,
+html.app-mode[data-app-tab="home"] #occHomeTeaser,
+html.app-mode[data-app-tab="home"] #cthHomeGreet,
+html.app-mode[data-app-tab="home"] .cp-clock .lt-analog,
+html.app-mode[data-app-tab="home"] #ltAnalog { display: none !important; }
+
 html.app-mode[data-app-tab="home"] .cp-devotion .cp-dev-head {
   display: flex !important;
   justify-content: center;
   margin: 0;
-  padding: 0 16px 10px;
+  padding: 4px 20px 0;
 }
-html.app-mode[data-app-tab="home"] .cp-devotion .datebar { margin: 0 auto; width: min(100%, 340px); }
-/* Home: one-line next occasion; full card stays on Prayer */
+html.app-mode[data-app-tab="home"] .cp-devotion .datebar { margin: 0 auto; width: min(100%, 360px); }
 html.app-mode:not([data-app-tab="home"]) #occHomeTeaser { display: none !important; }
-html.app-mode[data-app-tab="home"] #occHomeTeaser { display: inline-flex !important; }
 html.app-mode[data-app-tab="prayer"] #occHomeTeaser { display: none !important; }
 html.app-mode:not([data-app-tab="home"]) #coHomeStrip { display: none !important; }
+
+/* Reflection as quiet footer strip */
 html.app-mode[data-app-tab="home"] .home-spotlight {
   grid-template-columns: 1fr;
-  margin: 10px 0 0;
-  gap: 10px;
+  margin: 18px auto 0;
+  gap: 0;
+  width: min(400px, 92%);
+  padding: 0;
+  border-top: 1px dashed color-mix(in srgb, var(--text) 14%, transparent);
 }
 html.app-mode[data-app-tab="home"] .daily-reflection--home {
   margin: 0;
   width: 100%;
-  padding: 14px 14px 12px;
+  padding: 16px 8px 4px;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  text-align: center;
+}
+html.app-mode[data-app-tab="home"] .daily-reflection--home .dr-kicker {
+  margin-bottom: 8px;
+  font-size: .62rem;
+  letter-spacing: .14em;
+  color: var(--text-2);
+  font-weight: 700;
 }
 html.app-mode[data-app-tab="home"] .daily-reflection--home .dr-text {
-  font-size: .94rem;
+  font-size: .92rem;
+  font-weight: 600;
   line-height: 1.75;
+  color: var(--text);
+}
+html.app-mode[data-app-tab="home"] .daily-reflection--home .dr-src {
+  margin-top: 8px;
+  padding-top: 0;
+  border-top: none;
+  font-size: .7rem;
+  font-weight: 500;
+  opacity: .75;
 }
 html.app-mode[data-app-tab="home"] .home-reflection-slot:empty { display: none; }
 
@@ -574,11 +607,12 @@ html.app-mode[data-app-tab="prayer"] .cp-dev-head {
 }
 html.app-mode[data-app-tab="prayer"] .cp-dev-title { width: 100%; text-align: center; }
 html.app-mode[data-app-tab="prayer"] .cp-devotion .datebar { margin-inline: auto; }
-html.app-mode[data-app-tab="prayer"] #cthPrayerRemindSlot:not(:empty) {
+html.app-mode[data-app-tab="prayer"] #cthPrayerRemindSlot {
   display: block !important;
-  width: min(960px, 92%);
-  margin: 8px auto 0;
-  padding: 0 2px;
+  width: 100%;
+  max-width: none;
+  margin: 12px 0 0;
+  padding: 0;
 }
 html.app-mode[data-app-tab="azkar"] #cthAzkarRemindSlot:not(:empty) {
   display: block !important;
@@ -612,149 +646,415 @@ html.app-mode[data-app-tab="azkar"] #cthAzkarRemindSlot .app-spot-card:only-chil
   grid-column: 1 / -1;
 }
 
-/* Home: clock + pulse + spotlight */
-html.app-mode[data-app-tab="home"] .cp-grid { grid-template-columns: 1fr; }
+/* Home: نتيجة زمان — digital board */
+html.app-mode[data-app-tab="home"] .cp-grid { grid-template-columns: 1fr; gap: 0; }
+html.app-mode[data-app-tab="home"] .cp-toolbar {
+  display: flex !important;
+  width: min(400px, 92%);
+  margin: 4px auto 2px;
+  gap: 8px;
+  opacity: .88;
+  transition: opacity .2s ease;
+}
+html.app-mode[data-app-tab="home"] .cp-toolbar:focus-within,
+html.app-mode[data-app-tab="home"] .cp-toolbar:hover { opacity: 1; }
+html.app-mode[data-app-tab="home"] .cp-toolbar .cp-home,
+html.app-mode[data-app-tab="home"] .cp-toolbar .cp-install { display: none !important; }
+html.app-mode[data-app-tab="home"] .cp-toolbar .cp-ac { flex: 1; min-width: 0; }
+html.app-mode[data-app-tab="home"] .cp-toolbar .cp-save {
+  display: inline-flex !important;
+  flex: none;
+  width: 42px;
+  min-width: 42px;
+  height: 42px;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+}
+html.app-mode[data-app-tab="home"] .cp-toolbar .cp-save .cp-save-txt {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+html.app-mode[data-app-tab="home"] .cp-toolbar .cp-ac input {
+  font-size: .82rem;
+  padding-block: 8px;
+  border-radius: 12px;
+  background: transparent;
+}
 html.app-mode[data-app-tab="home"] .cp-clock {
-  padding: 16px 18px 10px;
-  background: radial-gradient(120% 100% at 50% 0%, color-mix(in srgb, var(--brand) 12%, transparent), transparent 70%);
-  transition: background .7s ease;
+  padding: 18px 20px 4px;
+  background: transparent;
+  transition: none;
 }
-/* Soft time-of-day wash on the Home clock (city-local prayer segments) */
-html.app-mode[data-app-tab="home"][data-daypart="night"] .cp-clock {
-  background: radial-gradient(120% 110% at 50% 0%, rgba(99, 102, 241, .22), rgba(15, 23, 42, .08) 55%, transparent 75%);
+html.app-mode[data-app-tab="home"][data-daypart] .cp-clock { background: transparent; }
+html.app-mode[data-app-tab="home"] .cp-clock-mid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
 }
-html.app-mode[data-app-tab="home"][data-daypart="dawn"] .cp-clock {
-  background: radial-gradient(120% 110% at 50% 0%, rgba(251, 146, 60, .22), rgba(251, 191, 36, .08) 50%, transparent 75%);
-}
-html.app-mode[data-app-tab="home"][data-daypart="morning"] .cp-clock {
-  background: radial-gradient(120% 110% at 50% 0%, rgba(56, 189, 248, .18), rgba(125, 211, 252, .06) 50%, transparent 75%);
-}
-html.app-mode[data-app-tab="home"][data-daypart="noon"] .cp-clock {
-  background: radial-gradient(120% 110% at 50% 0%, rgba(251, 191, 36, .20), rgba(253, 224, 71, .07) 50%, transparent 75%);
-}
-html.app-mode[data-app-tab="home"][data-daypart="afternoon"] .cp-clock {
-  background: radial-gradient(120% 110% at 50% 0%, rgba(251, 113, 133, .14), rgba(251, 191, 36, .06) 50%, transparent 75%);
-}
-html.app-mode[data-app-tab="home"][data-daypart="dusk"] .cp-clock {
-  background: radial-gradient(120% 110% at 50% 0%, rgba(249, 115, 22, .22), rgba(129, 140, 248, .10) 55%, transparent 75%);
-}
-html.app-mode[data-app-tab="home"] .lt-time { position: relative; }
-html.app-mode[data-app-tab="home"] .lt-time::after {
-  content: "";
-  display: inline-block;
-  width: 7px; height: 7px; margin-inline-start: 8px; margin-bottom: .18em;
-  border-radius: 50%;
-  background: #34d399;
-  box-shadow: 0 0 0 0 rgba(52, 211, 153, .45);
-  vertical-align: middle;
-  animation: cthLivePulse 2.2s ease-out infinite;
-}
-@keyframes cthLivePulse {
-  0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, .5); }
-  70% { box-shadow: 0 0 0 8px rgba(52, 211, 153, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
-}
-@media (prefers-reduced-motion: reduce) {
-  html.app-mode[data-app-tab="home"] .lt-time::after { animation: none; }
-  html.app-mode[data-app-tab="home"] .cp-clock { transition: none; }
+html.app-mode[data-app-tab="home"] .cp-clock-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
 }
 html.app-mode[data-app-tab="home"] .cp-clock-info .lt-meta { display: none; }
 html.app-mode[data-app-tab="home"] .cp-clock .eyebrow { display: none; }
-html.app-mode[data-app-tab="home"] .cp-clock .lt-time { font-size: clamp(2rem, 8vw, 2.45rem); }
-html.app-mode[data-app-tab="home"] .cp-clock-mid { gap: 10px; }
-html.app-mode[data-app-tab="home"] .cp-devotion {
-  border: none; padding: 0 16px 4px; border-inline-start: none;
+html.app-mode[data-app-tab="home"] .cp-clock-info .lt-city {
+  margin: 0;
+  font-size: .92rem;
+  font-weight: 600;
+  letter-spacing: .02em;
+  color: var(--text-2);
 }
-html.app-mode[data-app-tab="home"] .city-pulse { margin-top: 0; padding: 12px 12px 10px; }
-html.app-mode[data-app-tab="home"] .city-pulse-line { font-size: .88rem; line-height: 1.45; }
-html.app-mode[data-app-tab="home"] .home-spotlight { margin-top: 10px; }
-html.app-mode[data-app-tab="home"] .co-home-strip.app-spot-card {
-  min-height: 58px; padding: 12px 14px;
-  border-color: color-mix(in srgb, #f472b6 28%, var(--border));
+html.app-mode[data-app-tab="home"] .cp-clock-info h2 { margin: 0; }
+html.app-mode[data-app-tab="home"] .cp-clock .lt-time {
+  position: relative;
+  margin: 2px 0 4px;
+  font-size: clamp(3.1rem, 15vw, 3.85rem);
+  font-weight: 800;
+  letter-spacing: .04em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  color: var(--text);
+}
+html.app-mode[data-app-tab="home"] .cp-clock .lt-time::after { display: none; }
+html.app-mode[data-app-tab="home"] .cp-devotion {
+  border: none;
+  padding: 2px 16px 0;
+  border-inline-start: none;
+}
+html.app-mode[data-app-tab="home"] .datebar--paper {
+  width: min(100%, 360px);
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+  border-color: color-mix(in srgb, var(--text) 16%, transparent);
+  background: transparent;
+  box-shadow: none;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+html.app-mode[data-app-tab="home"] .datebar--paper .datebar-sep { display: none; }
+html.app-mode[data-app-tab="home"] .datebar--paper .datebar-item {
+  padding: 7px 4px;
+  gap: 2px;
+}
+html.app-mode[data-app-tab="home"] .datebar--paper .datebar-item--hijri {
+  background: transparent;
+  padding-top: 2px;
+  padding-bottom: 10px;
+}
+html.app-mode[data-app-tab="home"] .datebar--paper .datebar-label { display: none; }
+html.app-mode[data-app-tab="home"] .datebar--paper .datebar-val {
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+html.app-mode[data-app-tab="home"] .datebar--paper .datebar-item--hijri .datebar-val {
+  font-size: .98rem;
+  font-weight: 650;
+  color: var(--text-2);
+}
+html.app-mode[data-app-tab="home"] .datebar--paper .datebar-item {
+  padding: 10px 6px;
 }
 html.app-mode[data-app-tab="home"] #cpNext.cp-home-teaser {
-  display: inline-flex !important;
-  align-items: center; justify-content: center; gap: 6px;
-  width: auto; max-width: 100%; margin: 2px auto 0;
-  padding: 8px 14px; border-radius: 999px;
-  font-size: .82rem; font-weight: 700; cursor: pointer;
-  background: color-mix(in srgb, var(--brand) 12%, var(--surface));
-  border: 1px solid color-mix(in srgb, var(--brand) 32%, var(--border));
-  color: var(--text);
-  -webkit-tap-highlight-color: transparent;
-  transition: transform .12s, border-color .2s, background .2s;
-}
-html.app-mode[data-app-tab="home"] #cpNext.cp-home-teaser:active { transform: scale(.97); }
-html.app-mode[data-app-tab="home"] #cpNext.cp-home-teaser .cp-teaser-go {
-  color: var(--brand); font-weight: 800; opacity: .85;
-}
-[dir="rtl"] html.app-mode[data-app-tab="home"] #cpNext.cp-home-teaser .cp-teaser-go { transform: scaleX(-1); display: inline-block; }
-html.app-mode:not([data-app-tab="home"]) #cthHomeRemindStatus { display: none !important; }
-html.app-mode[data-app-tab="home"] .cth-home-remind {
-  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-  width: auto; max-width: 100%; margin: 0 auto;
-  padding: 7px 13px; border-radius: 999px;
-  font: inherit; font-size: .78rem; font-weight: 700; cursor: pointer;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: min(360px, 92%);
+  max-width: 100%;
+  margin: 12px auto 0;
+  padding: 10px 0 2px;
+  border: none;
+  border-top: 1px solid color-mix(in srgb, var(--text) 14%, transparent);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  font-size: .8rem;
+  font-weight: 600;
   color: var(--text-2);
-  background: var(--surface-2);
-  border: 1px solid var(--border);
+  cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  transition: transform .12s, border-color .2s, background .2s, color .2s;
+  transition: color .2s ease, opacity .2s ease;
 }
-html.app-mode[data-app-tab="home"] .cth-home-remind.is-on {
-  color: var(--text);
-  background: color-mix(in srgb, #34d399 12%, var(--surface));
-  border-color: color-mix(in srgb, #34d399 36%, var(--border));
+html.app-mode[data-app-tab="home"] #cpNext.cp-home-teaser:active {
+  transform: none;
+  opacity: .7;
 }
-html.app-mode[data-app-tab="home"] .cth-home-remind:active { transform: scale(.97); }
-html.app-mode[data-app-tab="home"] #cityPanel { padding-bottom: 6px; }
-html.app-mode[data-app-tab="home"] #myCities:not([hidden]) { display: block; padding: 0 0 6px; }
+html.app-mode[data-app-tab="home"] #cpNext.cp-home-teaser .cp-next-dot { display: none; }
+html.app-mode[data-app-tab="home"] #cpNext.cp-home-teaser .cp-teaser-go {
+  color: var(--text-2);
+  font-weight: 700;
+  opacity: .55;
+}
+[dir="rtl"] html.app-mode[data-app-tab="home"] #cpNext.cp-home-teaser .cp-teaser-go {
+  transform: scaleX(-1);
+  display: inline-block;
+}
+html.app-mode:not([data-app-tab="home"]) #cthHomeRemindStatus { display: none !important; }
+html.app-mode[data-app-tab="home"] #cthHomeRemindStatus { display: none !important; }
+html.app-mode[data-app-tab="home"] #cityPanel {
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+html.app-mode[data-app-tab="home"] #top {
+  justify-content: center;
+}
 
-/* Prayer: full grid, compact top strip — more breathing room */
-html.app-mode[data-app-tab="prayer"] .cp-grid { grid-template-columns: 1fr; }
+/* Favorite cities — quiet strip under the home board (fills empty space) */
+html.app-mode[data-app-tab="home"] #myCities:not([hidden]) {
+  display: block !important;
+  width: min(400px, 92%);
+  margin: 14px auto 6px;
+  padding: 0;
+}
+html.app-mode[data-app-tab="home"] #myCities .container {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+html.app-mode[data-app-tab="home"] #myCities .fav-app-label {
+  text-align: center;
+  font-size: .68rem;
+  font-weight: 750;
+  letter-spacing: .08em;
+  color: var(--text-2);
+  margin: 0 0 8px;
+  opacity: .9;
+}
+html.app-mode[data-app-tab="home"] #myCities .fav-chips {
+  justify-content: center;
+}
+html.app-mode[data-app-tab="home"] #myCities .fav-empty-card {
+  margin: 0;
+  padding: 12px 10px;
+  border-radius: 14px;
+  border: 1px dashed color-mix(in srgb, var(--text) 16%, transparent);
+  background: transparent;
+  box-shadow: none;
+  text-align: center;
+}
+html.app-mode[data-app-tab="home"] #myCities .fav-empty {
+  margin: 0;
+  font-size: .78rem;
+  color: var(--text-2);
+}
+
+/* Prayer: لوحة اليوم — clear quiet sections (match approved mockup) */
+html.app-mode[data-app-tab="prayer"] .cp-grid { grid-template-columns: 1fr; gap: 12px; }
+html.app-mode[data-app-tab="prayer"] .cp-toolbar {
+  display: flex !important;
+  margin: 4px 0 8px;
+  gap: 8px;
+  opacity: .85;
+}
 html.app-mode[data-app-tab="prayer"] .cp-clock {
-  padding: 12px 16px 10px;
-  flex-direction: row; align-items: center; justify-content: space-between; gap: 12px;
-  background: linear-gradient(135deg, color-mix(in srgb, var(--brand) 8%, var(--surface)), var(--surface));
+  padding: 10px 14px 6px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: transparent;
+  border: none;
 }
 html.app-mode[data-app-tab="prayer"] .cp-clock-mid {
-  flex-direction: column; align-items: stretch; gap: 8px; width: 100%;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  width: 100%;
 }
 html.app-mode[data-app-tab="prayer"] .cp-clock .eyebrow,
 html.app-mode[data-app-tab="prayer"] .cp-clock .lt-analog { display: none !important; }
 html.app-mode[data-app-tab="prayer"] .cp-clock-info {
-  display: flex; flex-direction: row; flex-wrap: wrap; align-items: baseline;
-  justify-content: space-between; gap: 4px 12px; width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 12px;
+  width: 100%;
+  padding: 2px 2px 4px;
 }
-html.app-mode[data-app-tab="prayer"] .cp-clock-info .lt-city { font-size: 1.02rem; margin: 0; }
-html.app-mode[data-app-tab="prayer"] .cp-clock-info .lt-time { font-size: 1.4rem; margin: 0; letter-spacing: -.02em; }
-html.app-mode[data-app-tab="prayer"] .cp-clock-info .lt-meta { font-size: .72rem; margin: 0; width: 100%; opacity: .85; }
+html.app-mode[data-app-tab="prayer"] .cp-clock-info .lt-city { font-size: 1rem; margin: 0; font-weight: 700; }
+html.app-mode[data-app-tab="prayer"] .cp-clock-info .lt-time {
+  font-size: 1.35rem; margin: 0; letter-spacing: -.02em; font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+html.app-mode[data-app-tab="prayer"] .cp-clock-info .lt-meta { display: none; }
+
+/* Section 2 — الآن board */
+html.app-mode[data-app-tab="prayer"] .cp-now-board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin: 12px 0 0;
+  padding: 14px 14px 12px;
+  border-radius: 18px;
+  border: 1px solid color-mix(in srgb, #34d399 22%, var(--border));
+  background: color-mix(in srgb, #34d399 6%, var(--surface));
+}
+html.app-mode[data-app-tab="prayer"] .cp-now-board::before {
+  content: "الالتزام";
+  align-self: flex-start;
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  color: #34d399;
+}
+html[lang="en"].app-mode[data-app-tab="prayer"] .cp-now-board::before { content: "Adherence"; }
 html.app-mode[data-app-tab="prayer"] #cpNext {
-  margin: 0; width: 100%; justify-content: center; font-size: .84rem; padding: 9px 14px;
+  margin: 0;
+  width: 100%;
+  justify-content: center;
+  font-size: .9rem;
+  padding: 8px 10px;
   border-radius: 14px;
+  border-color: color-mix(in srgb, #34d399 28%, var(--border));
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
 }
-html.app-mode[data-app-tab="prayer"] .cp-dua { margin: 4px auto 0; max-inline-size: 36ch; font-size: .95rem; }
-html.app-mode[data-app-tab="prayer"] .cp-week { margin-top: 6px; align-self: center; }
-html.app-mode[data-app-tab="prayer"] .cp-devotion { border: none; padding: 10px 14px 12px; border-top: 1px solid var(--border); }
-html.app-mode[data-app-tab="prayer"] .cp-dev-head { margin-bottom: 10px; }
-html.app-mode[data-app-tab="prayer"] .cp-dev-title { font-size: .95rem; }
-html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-grid { grid-template-columns: repeat(3, 1fr); gap: 9px; }
-html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card { padding: 30px 8px 14px; border-radius: 16px; }
-html.app-mode[data-app-tab="prayer"] .prayer-name { font-size: .74rem; }
-html.app-mode[data-app-tab="prayer"] .prayer-time { font-size: 1.05rem; }
+html.app-mode[data-app-tab="prayer"] #cpNext.cp-streak {
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  border-color: color-mix(in srgb, #34d399 30%, var(--border));
+}
+html.app-mode[data-app-tab="prayer"] .cp-dua {
+  margin: 2px auto 0;
+  max-inline-size: 36ch;
+  font-size: .88rem;
+  color: var(--text-2);
+  font-weight: 600;
+}
+html.app-mode[data-app-tab="prayer"] .cp-week {
+  margin-top: 2px;
+  align-self: center;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--surface) 80%, transparent);
+}
+
+/* Section 3 — المواقيت */
+html.app-mode[data-app-tab="prayer"] .cp-devotion {
+  border: none;
+  padding: 6px 4px 8px;
+  border-top: none;
+}
+html.app-mode[data-app-tab="prayer"] .cp-dev-head {
+  flex-direction: column;
+  align-items: stretch;
+  text-align: start;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+html.app-mode[data-app-tab="prayer"] .cp-dev-title {
+  width: 100%;
+  text-align: start;
+  margin: 0;
+  padding: 0 4px;
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+  color: var(--text-2);
+}
+html.app-mode[data-app-tab="prayer"] .cp-devotion .datebar {
+  margin-inline: 0;
+  width: 100%;
+  max-width: none;
+}
+html.app-mode[data-app-tab="prayer"] .datebar--paper {
+  width: 100%;
+  margin-inline: 0;
+  border-radius: 14px;
+  box-shadow: none;
+}
+html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card {
+  padding: 22px 10px 14px;
+  border-radius: 16px;
+  box-shadow: none;
+}
+html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card.is-next {
+  border-color: color-mix(in srgb, #34d399 55%, var(--border));
+  background: color-mix(in srgb, #34d399 8%, var(--surface));
+  box-shadow: none;
+}
+html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card.is-next .prayer-name,
+html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card.is-next .prayer-tag {
+  color: #34d399;
+}
+
+/* Section 4/5 — reminder + occasions as calm rows */
+html.app-mode[data-app-tab="prayer"] #cthPrayerRemindSlot {
+  display: block !important;
+  width: 100%;
+  margin: 12px 0 0;
+  padding: 0;
+  min-height: 0;
+}
+html.app-mode[data-app-tab="prayer"] #cthPrayerRemindSlot[hidden] {
+  display: block !important;
+}
+html.app-mode[data-app-tab="prayer"] #cthPrayerRemindSlot:empty {
+  display: none !important;
+}
+html.app-mode[data-app-tab="prayer"] #cthPrayerRemindSlot .app-spot-card {
+  border-radius: 14px;
+  min-height: 52px;
+  box-shadow: none;
+  width: 100%;
+}
+html.app-mode[data-app-tab="prayer"] #occasions {
+  margin-top: 10px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: none;
+}
+html.app-mode[data-app-tab="prayer"] .prayer-insights {
+  margin-top: 10px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: none;
+}
+html.app-mode[data-app-tab="prayer"] .pi-headline { font-size: .92rem; margin-bottom: 8px; }
+html.app-mode[data-app-tab="prayer"] #cityPanel { padding-bottom: 12px; }
+
+/* Hide empty now-board chrome on non-prayer / website */
+html:not(.app-mode) .cp-now-board,
+html.app-mode:not([data-app-tab="prayer"]) .cp-now-board {
+  display: contents;
+}
+html:not(.app-mode) .cp-now-board::before,
+html.app-mode:not([data-app-tab="prayer"]) .cp-now-board::before { content: none; }
 html.app-mode[data-app-tab="prayer"] .city-pulse,
 html.app-mode[data-app-tab="prayer"] .home-spotlight { display: none !important; }
-html.app-mode[data-app-tab="prayer"] .prayer-insights,
-html.app-mode[data-app-tab="prayer"] #occasions { margin-top: 10px; padding: 14px; border-radius: 16px; }
-html.app-mode[data-app-tab="prayer"] .pi-headline { font-size: .95rem; margin-bottom: 8px; }
-html.app-mode[data-app-tab="prayer"] #cityPanel { padding-bottom: 10px; }
+html.app-mode[data-app-tab="prayer"] .prayer-name { font-size: .78rem; }
+html.app-mode[data-app-tab="prayer"] .prayer-time { font-size: 1.08rem; font-weight: 800; }
 
 /* Azkar hub tab */
 .app-tab-azkar { display: none; padding: 12px 0 8px; }
 html.app-mode[data-app-tab="azkar"] .app-tab-azkar { display: block !important; }
-html.app-mode[data-app-tab="azkar"] #top,
-html.app-mode[data-app-tab="home"] #top {
+html.app-mode[data-app-tab="azkar"] #top {
   justify-content: flex-start;
+}
+html.app-mode[data-app-tab="home"] #top {
+  justify-content: center;
 }
 @media (min-height: 640px) {
   html.app-mode[data-app-tab="azkar"] #top {

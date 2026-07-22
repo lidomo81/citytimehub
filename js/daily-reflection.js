@@ -31,7 +31,7 @@
   ];
 
   const lang = () => ((document.documentElement.lang || "en").slice(0, 2) === "ar" ? "ar" : "en");
-  const kicker = () => (lang() === "ar" ? "💡 خاطرة اليوم" : "💡 Reflection of the day");
+  const kicker = () => (lang() === "ar" ? "خاطرة اليوم" : "Reflection of the day");
   const isApp = () => document.documentElement.classList.contains("app-mode");
 
   function pick() {
