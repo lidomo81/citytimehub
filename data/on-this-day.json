@@ -1344,6 +1344,16 @@
     {
       "cal": "g",
       "m": 9,
+      "d": 9,
+      "ye": "1947",
+      "ya": "١٩٤٧م",
+      "em": "🦋",
+      "en": "A team fixing a jammed computer found a moth caught between its parts. They taped it into the logbook and wrote: first actual case of a bug being found. The word was already in use for faults, but this is the most famous page left of it.",
+      "ar": "وجد فريق يصلح حاسوبًا معطلًا فراشة عالقة بين أجزائه، فألصقوها في دفتر العمل وكتبوا: أول حشرة حقيقية نعثر عليها. وكانت الكلمة مستعملة قبل ذلك في وصف الأعطال، لكن هذه الصفحة هي أشهر ما بقي منها."
+    },
+    {
+      "cal": "g",
+      "m": 9,
       "d": 12,
       "ye": "1958",
       "ya": "١٩٥٨م",
@@ -1364,12 +1374,42 @@
     {
       "cal": "g",
       "m": 9,
+      "d": 16,
+      "ye": "1987",
+      "ya": "١٩٨٧م",
+      "em": "🌍",
+      "en": "The countries of the world agreed to stop making the substances that were tearing a hole in the ozone layer. It is the only environmental agreement every country on Earth has signed, and the hole has been closing ever since.",
+      "ar": "اتفقت دول العالم على وقف صناعة المواد التي كانت تثقب طبقة الأوزون. وهي الاتفاقية البيئية الوحيدة التي وقّعتها كل دول الأرض، والثقب يضيق فعلًا منذ ذلك الحين."
+    },
+    {
+      "cal": "g",
+      "m": 9,
       "d": 17,
       "ye": "1683",
       "ya": "١٦٨٣م",
       "em": "🔬",
       "en": "A Dutch cloth merchant described tiny living things he had seen through a lens he made himself. It was the first time anyone knew there is life the eye cannot see.",
       "ar": "وصف تاجر أقمشة هولندي كائنات دقيقة رآها بعدسة صنعها بنفسه. وكانت أول مرة يعرف فيها الإنسان أن هناك حياة لا تراها العين."
+    },
+    {
+      "cal": "g",
+      "m": 9,
+      "d": 19,
+      "ye": "1991",
+      "ya": "١٩٩١م",
+      "em": "🧊",
+      "en": "Two walkers in the Alps came across a body they took to be recent. It turned out to be a man who died five thousand three hundred years ago, kept by the ice along with his clothes and his tools.",
+      "ar": "عثر متنزهان في جبال الألب على جثة ظنّاها حديثة. فتبيّن أنها لرجل مات قبل خمسة آلاف وثلاثمئة سنة، حفظه الجليد بملابسه وأدواته."
+    },
+    {
+      "cal": "g",
+      "m": 9,
+      "d": 20,
+      "ye": "1519",
+      "ya": "١٥١٩م",
+      "em": "⛵",
+      "en": "Five ships sailed from Spain, meaning to reach the spice islands by heading west. Nobody on board knew it would become the first voyage right around the world.",
+      "ar": "أبحرت خمس سفن من إسبانيا تريد بلوغ جزر التوابل من ناحية الغرب. ولم يكن أحد على متنها يعلم أنها ستكون أول رحلة تدور حول الأرض كلها."
     },
     {
       "cal": "g",
@@ -1390,6 +1430,16 @@
       "em": "🧫",
       "en": "Penicillin was discovered by accident, on a dish left out over a holiday. It has saved more lives than almost anything else in medicine.",
       "ar": "اكتُشف البنسلين بالصدفةِ في طبقٍ تُرك أثناءَ إجازة. وقد أنقذَ من الأرواحِ ما لم ينقذْه شيءٌ آخرُ في الطبِّ تقريبًا."
+    },
+    {
+      "cal": "g",
+      "m": 9,
+      "d": 30,
+      "ye": "1882",
+      "ya": "١٨٨٢م",
+      "em": "💧",
+      "en": "The first power station running on the force of water was switched on. It lit two houses and a paper mill, and it is the grandparent of every dam that lights a city today.",
+      "ar": "شُغّلت أول محطة كهرباء تعمل بقوة الماء. وقد كانت تكفي لإضاءة بيتين ومصنع ورق، وهي جدّة كل السدود التي تنير المدن اليوم."
     },
     {
       "cal": "g",
@@ -1414,6 +1464,16 @@
     {
       "cal": "g",
       "m": 10,
+      "d": 7,
+      "ye": "1959",
+      "ya": "١٩٥٩م",
+      "em": "🌘",
+      "en": "The first pictures of the far side of the Moon came back. It is the side never seen from Earth, because the Moon turns on itself in exactly the time it takes to go round us.",
+      "ar": "وصلت أول صور للوجه البعيد من القمر. وهو الوجه الذي لا يُرى من الأرض أبدًا، لأن القمر يدور حول نفسه في نفس المدة التي يدور فيها حولنا."
+    },
+    {
+      "cal": "g",
+      "m": 10,
       "d": 9,
       "ye": "1874",
       "ya": "١٨٧٤م",
@@ -1434,6 +1494,16 @@
     {
       "cal": "g",
       "m": 10,
+      "d": 14,
+      "ye": "1947",
+      "ya": "١٩٤٧م",
+      "em": "✈️",
+      "en": "An aircraft went faster than sound for the first time. The pilot had broken two ribs two days before and told nobody, in case they kept him on the ground.",
+      "ar": "تجاوزت طائرة سرعة الصوت لأول مرة. وقد كان الطيار قد كسر ضلعين قبلها بيومين ولم يخبر أحدًا، خوفًا من أن يمنعوه من الطيران."
+    },
+    {
+      "cal": "g",
+      "m": 10,
       "d": 15,
       "ye": "1582",
       "ya": "١٥٨٢م",
@@ -1450,6 +1520,16 @@
       "em": "🏥",
       "en": "An operation was performed on a sleeping patient in public for the first time. Until that day, surgery meant being held down awake.",
       "ar": "أُجريتْ عمليةٌ جراحيةٌ على مريضٍ نائمٍ أمامَ الحضورِ لأولِ مرة. وقبلَ ذلك اليومِ كانتِ الجراحةُ تعني أن يُمسَكَ المريضُ وهو مستيقظ."
+    },
+    {
+      "cal": "g",
+      "m": 10,
+      "d": 19,
+      "ye": "2017",
+      "ya": "٢٠١٧م",
+      "em": "☄️",
+      "en": "The first object ever seen passing through our solar system from another star was spotted. It was moving too fast for the sun to hold on to, so it went by and will not come back.",
+      "ar": "رُصد أول جسم يعبر مجموعتنا الشمسية قادمًا من نجم آخر. وقد كان يسير بسرعة أكبر من أن تمسك به الشمس، فمرّ ومضى ولن يعود."
     },
     {
       "cal": "g",
@@ -1484,12 +1564,32 @@
     {
       "cal": "g",
       "m": 10,
+      "d": 26,
+      "ye": "1861",
+      "ya": "١٨٦١م",
+      "em": "🐎",
+      "en": "The horseback express mail in America stopped just two days after the telegraph wires reached the far coast. A rider had covered that route in ten days; a message now took minutes.",
+      "ar": "توقف بريد الخيول السريع في أمريكا بعد يومين فقط من وصول أسلاك التلغراف إلى الساحل الآخر. وقد كان الفارس يقطع الطريق في عشرة أيام، فصارت الرسالة تصل في دقائق."
+    },
+    {
+      "cal": "g",
+      "m": 10,
       "d": 27,
       "ye": "1449",
       "ya": "١٤٤٩م",
       "em": "🌟",
       "en": "Ulugh Beg died. He was a ruler and an astronomer at the same time, and at the observatory he built in Samarkand he measured the length of the year — his figure was off by less than a minute.",
       "ar": "تُوفي أُلغ بيك، وكان حاكمًا وعالم فلك في وقت واحد. وقد بنى مرصدًا في سمرقند وقاس فيه طول السنة، فجاء حسابه مخطئًا بأقل من دقيقة واحدة."
+    },
+    {
+      "cal": "g",
+      "m": 10,
+      "d": 28,
+      "ye": "1886",
+      "ya": "١٨٨٦م",
+      "em": "🗽",
+      "en": "The Statue of Liberty was unveiled in New York. It had arrived from France in pieces, packed in two hundred and fourteen crates, and was put back together part by part.",
+      "ar": "أُزيح الستار عن تمثال الحرية في نيويورك. وقد وصل من فرنسا مفكّكًا في مئتين وأربعة عشر صندوقًا، ثم أُعيد تركيبه قطعة قطعة."
     },
     {
       "cal": "g",
