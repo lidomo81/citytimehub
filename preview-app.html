@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>معاينة التطبيق — CityTimeHub</title>
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      gap: 16px;
+      padding: 24px 16px 40px;
+      font-family: system-ui, "Segoe UI", Tahoma, sans-serif;
+      background: #0a0e17;
+      color: #e8eef8;
+    }
+    h1 { margin: 0; font-size: 1rem; font-weight: 700; opacity: .9; }
+    .hint { margin: 0; font-size: .82rem; opacity: .65; max-width: 420px; text-align: center; line-height: 1.5; }
+    .tabs { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+    .tabs button {
+      border: 1px solid #2a3550;
+      background: #121826;
+      color: #e8eef8;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font: inherit;
+      font-size: .85rem;
+      font-weight: 650;
+      cursor: pointer;
+    }
+    .tabs button.is-on { border-color: #34d399; color: #34d399; }
+    .phone {
+      width: min(390px, 100%);
+      height: min(844px, calc(100vh - 140px));
+      border-radius: 28px;
+      border: 2px solid #2a3550;
+      overflow: hidden;
+      background: #0B1120;
+      box-shadow: 0 30px 80px -30px #000;
+    }
+    .phone iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      background: #0B1120;
+    }
+  </style>
+</head>
+<body>
+  <h1>معاينة شكل التطبيق (موبايل)</h1>
+  <p class="hint">دي نفس صفحة الـ WebView داخل إطار هاتف. التعديلات المحلية تظهر هنا قبل الرفع على الموقع الحقيقي.</p>
+  <div class="tabs">
+    <button type="button" data-tab="home" class="is-on">الرئيسية</button>
+    <button type="button" data-tab="prayer">الصلاة</button>
+    <button type="button" data-tab="azkar">الأذكار</button>
+    <button type="button" data-tab="tools">الأدوات</button>
+  </div>
+  <div class="phone" aria-label="إطار معاينة الموبايل">
+    <iframe id="frame" title="CityTimeHub app preview" src="/ar/?app=1&preview=1#home"></iframe>
+  </div>
+  <script>
+    const frame = document.getElementById("frame");
+    const bust = Date.now();
+    function go(tab) {
+      frame.src = "/ar/?app=1&preview=" + bust + "#" + tab;
+      document.querySelectorAll(".tabs button").forEach(function (b) {
+        b.classList.toggle("is-on", b.dataset.tab === tab);
+      });
+    }
+    document.querySelector(".tabs").addEventListener("click", function (e) {
+      const btn = e.target.closest("button[data-tab]");
+      if (!btn) return;
+      go(btn.dataset.tab);
+    });
+  </script>
+</body>
+</html>
