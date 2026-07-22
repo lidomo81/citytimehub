@@ -284,6 +284,16 @@
     {
       "cal": "g",
       "m": 1,
+      "d": 25,
+      "ye": "1915",
+      "ya": "١٩١٥م",
+      "em": "☎️",
+      "en": "The first telephone call across America was made, from New York to San Francisco. The two men on the line were the same two who had spoken on the first call thirty-nine years earlier.",
+      "ar": "أُجريت أول مكالمة هاتفية عبر أمريكا كلها، من نيويورك إلى سان فرانسيسكو. وكان الرجلان على الخط هما نفس الرجلين اللذين تحدثا في أول مكالمة قبل ذلك بتسع وثلاثين سنة."
+    },
+    {
+      "cal": "g",
+      "m": 1,
       "d": 26,
       "ye": "1926",
       "ya": "١٩٢٦م",
@@ -504,6 +514,16 @@
     {
       "cal": "g",
       "m": 2,
+      "d": 26,
+      "ye": "1935",
+      "ya": "١٩٣٥م",
+      "em": "📡",
+      "en": "A test in an English field showed that an aircraft could be spotted from far away by the radio waves bouncing off it. It became radar, and today it keeps every airport in the world running.",
+      "ar": "أثبتت تجربة في حقل إنجليزي أن الطائرة يمكن رصدها من بعيد عن طريق موجات الراديو المرتدة عنها. وصار هذا هو الرادار، الذي تعمل به اليوم مطارات العالم كلها."
+    },
+    {
+      "cal": "g",
+      "m": 2,
       "d": 29,
       "ye": "",
       "ya": "",
@@ -694,6 +714,16 @@
     {
       "cal": "g",
       "m": 3,
+      "d": 27,
+      "ye": "1899",
+      "ya": "١٨٩٩م",
+      "em": "📻",
+      "en": "The first wireless message crossed the sea between England and France. Ships could finally call for help without a wire running to shore.",
+      "ar": "عبرت أول رسالة لاسلكية البحر بين إنجلترا وفرنسا. فصار في وسع السفن أخيرًا أن تطلب النجدة دون سلك ممدود إلى الشاطئ."
+    },
+    {
+      "cal": "g",
+      "m": 3,
       "d": 29,
       "ye": "1974",
       "ya": "١٩٧٤م",
@@ -780,6 +810,16 @@
       "em": "🎵",
       "en": "The oldest surviving recording of a human voice was made. It was traced on paper blackened with soot, and the man who made it had no way to play it back — it stayed silent until a computer read it a century and a half later.",
       "ar": "سُجل أقدم صوت بشري لا يزال باقيًا إلى اليوم. وقد رسمه صاحبه على ورق مُسوَّد بالسخام، ولم يكن يملك طريقة لسماعه، فظل صامتًا حتى قرأه الحاسوب بعد قرن ونصف."
+    },
+    {
+      "cal": "g",
+      "m": 4,
+      "d": 11,
+      "ye": "1970",
+      "ya": "١٩٧٠م",
+      "em": "🚀",
+      "en": "Apollo 13 lifted off for the Moon. Two days later an oxygen tank burst, and the crew came home alive on air and power meant to last two men two days, not three men four.",
+      "ar": "انطلقت أبولو ١٣ نحو القمر. وبعد يومين انفجر خزان أكسجين، وعاد الطاقم سالمًا على هواء وطاقة كانت تكفي رجلين يومين لا ثلاثة رجال أربعة أيام."
     },
     {
       "cal": "g",
@@ -1024,6 +1064,16 @@
     {
       "cal": "g",
       "m": 5,
+      "d": 22,
+      "ye": "1906",
+      "ya": "١٩٠٦م",
+      "em": "✈️",
+      "en": "The Wright brothers registered their flying machine. What they had actually solved was not lift but steering — how to turn a machine in the air without it rolling over.",
+      "ar": "سجّل الأخوان رايت آلتهما الطائرة. والمشكلة التي حلّاها في الحقيقة لم تكن الارتفاع بل التوجيه — كيف تُدار الآلة في الهواء دون أن تنقلب."
+    },
+    {
+      "cal": "g",
+      "m": 5,
       "d": 24,
       "ye": "1844",
       "ya": "١٨٤٤م",
@@ -1100,6 +1150,16 @@
       "em": "🌍",
       "en": "The first world conference on the environment opened, the first time governments sat together over the state of the planet.",
       "ar": "افتُتح أولُ مؤتمرٍ عالميٍّ للبيئة، وهو أولُ اجتماعٍ للحكوماتِ حولَ حالِ الكوكب."
+    },
+    {
+      "cal": "g",
+      "m": 6,
+      "d": 6,
+      "ye": "1984",
+      "ya": "١٩٨٤م",
+      "em": "🧩",
+      "en": "Tetris was programmed by a researcher in Moscow on an office computer, for his own amusement. It spread from desk to desk on floppy disks and has sold more copies than almost any game since.",
+      "ar": "برمج باحث في موسكو لعبة تتريس على حاسوب مكتبه لتسليته الخاصة. وانتقلت من مكتب إلى مكتب على الأقراص المرنة، وصارت من أكثر الألعاب مبيعًا حتى اليوم."
     },
     {
       "cal": "g",
@@ -1433,6 +1493,16 @@
     },
     {
       "cal": "g",
+      "m": 7,
+      "d": 31,
+      "ye": "1964",
+      "ya": "١٩٦٤م",
+      "em": "🌘",
+      "en": "A craft sent back the first close photographs of the Moon, taking pictures right up to the moment it struck the ground. The last one was taken less than a second before it hit.",
+      "ar": "أرسلت مركبة أول صور قريبة لسطح القمر، وظلت تصوّر حتى لحظة ارتطامها بالأرض. وأُخذت آخر صورة قبل ارتطامها بأقل من ثانية واحدة."
+    },
+    {
+      "cal": "g",
       "m": 8,
       "d": 1,
       "ye": "1774",
@@ -1490,6 +1560,16 @@
       "em": "🔴",
       "en": "A car-sized rover landed on Mars, lowered on ropes from a hovering platform. It is still driving.",
       "ar": "هبطتْ عربةٌ بحجمِ سيارةٍ على المرّيخ، أُنزلتْ بالحبالِ من منصّةٍ محلّقة. وما زالتْ تسير."
+    },
+    {
+      "cal": "g",
+      "m": 8,
+      "d": 9,
+      "ye": "1173",
+      "ya": "١١٧٣م",
+      "em": "🗼",
+      "en": "Work began on the tower at Pisa. It started leaning while only three floors were up, because the ground beneath one side was softer, and it took two hundred years to finish.",
+      "ar": "بدأ بناء برج بيزا. وبدأ يميل وهو ما زال في طوابقه الثلاثة الأولى، لأن الأرض تحت أحد جانبيه كانت أليَن، واستغرق إتمامه مئتي سنة."
     },
     {
       "cal": "g",
@@ -1750,6 +1830,16 @@
       "em": "🧫",
       "en": "Penicillin was discovered by accident, on a dish left out over a holiday. It has saved more lives than almost anything else in medicine.",
       "ar": "اكتُشف البنسلين بالصدفةِ في طبقٍ تُرك أثناءَ إجازة. وقد أنقذَ من الأرواحِ ما لم ينقذْه شيءٌ آخرُ في الطبِّ تقريبًا."
+    },
+    {
+      "cal": "g",
+      "m": 9,
+      "d": 29,
+      "ye": "1954",
+      "ya": "١٩٥٤م",
+      "em": "🔬",
+      "en": "Twelve countries agreed to build one shared laboratory rather than twelve smaller ones. Everything found there is published for anyone to read, and the web was invented inside it.",
+      "ar": "اتفقت اثنتا عشرة دولة على بناء مختبر واحد مشترك بدل اثني عشر مختبرًا صغيرًا. وكل ما يُكتشف فيه يُنشر ليقرأه من شاء، وفي داخله اختُرع الويب."
     },
     {
       "cal": "g",
@@ -2040,6 +2130,16 @@
       "em": "🚂",
       "en": "The Day of Two Noons: North America's railways switched to time zones, and clocks in many cities struck noon twice.",
       "ar": "«يومُ الظهرين»: تحوّلتْ سككُ حديدِ أمريكا الشماليةِ إلى المناطقِ الزمنية، فدقّتْ ساعاتُ مدنٍ كثيرةٍ الظهرَ مرّتين."
+    },
+    {
+      "cal": "g",
+      "m": 11,
+      "d": 19,
+      "ye": "1969",
+      "ya": "١٩٦٩م",
+      "em": "👣",
+      "en": "A craft landed on the Moon about two hundred metres from another craft that had arrived two and a half years before it. Its crew walked over, cut pieces off it, and carried them home to see what the Moon had done to them.",
+      "ar": "هبطت مركبة على القمر على بُعد مئتي متر تقريبًا من مركبة أخرى كانت قد وصلت قبلها بسنتين ونصف. فمشى روّادها إليها وقطعوا منها أجزاء وحملوها إلى الأرض ليروا ما فعله بها القمر."
     },
     {
       "cal": "g",
