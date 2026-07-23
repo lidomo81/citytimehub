@@ -111,18 +111,21 @@
       if (prevB) prevB.disabled = i === 0;
       if (nextB) nextB.textContent = i === items.length - 1 ? T.restart : T.next;
       card.querySelector(".az-counter").addEventListener("click", tap);
-      reportProgress(i + 1, items.length);
+      reportProgress(i + 1, items.length, it.text);
       if (state.idx === items.length - 1 && done && typeof opts.onComplete === "function") opts.onComplete();
     }
 
     // The home-screen widget lives outside the browser and cannot read this
-    // page, so tell the app where the reader has reached. Same numbers the
-    // progress line shows here, so the two never disagree.
-    function reportProgress(reached, total) {
+    // page, so send it the dhikr on screen along with the position. Sending the
+    // text matters: with only a number the widget had to show some dhikr of its
+    // own beside a counter that counted a different list, so "3 of 26" sat above
+    // a line that was not the third of anything.
+    function reportProgress(reached, total, html) {
       if (!opts.azkarType) return;
       try {
         if (window.AndroidApp && typeof AndroidApp.azkarProgress === "function") {
-          AndroidApp.azkarProgress(opts.azkarType, reached, total);
+          const plain = String(html || "").replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
+          AndroidApp.azkarProgress(opts.azkarType, reached, total, plain);
         }
       } catch (e) { /* older app build without the bridge */ }
     }
