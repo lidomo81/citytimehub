@@ -8,8 +8,8 @@
       "ye": "17 AH",
       "ya": "١٧هـ",
       "em": "📜",
-      "en": "Umar ibn al-Khattab made the Hijrah year one. He chose Muharram to open the year, not the month the Hijrah actually happened in.",
-      "ar": "جعلَ عمرُ بنُ الخطاب سنةَ الهجرةِ أولَ السنين. واختارَ المحرَّمَ ليبدأَ به العام، لا الشهرَ الذي وقعتْ فيه الهجرةُ فعلًا."
+      "en": "Umar ibn al-Khattab made the year of the Hijrah the start of the Islamic calendar.\nHe chose Muharram as the first month of the year, although the Hijrah itself took place in Rabi' al-Awwal.",
+      "ar": "جعل عمر بن الخطاب سنة الهجرة بداية للتقويم الإسلامي.\nواختار شهر المحرّم أول شهور العام، رغم أن الهجرة نفسها وقعت في شهر ربيع الأول."
     },
     {
       "cal": "h",
@@ -18,8 +18,8 @@
       "ye": "",
       "ya": "",
       "em": "🌊",
-      "en": "Ashura. The Prophet ﷺ found the people of Madinah fasting this day in thanks for Musa's rescue, and said we have more right to Musa than they do.",
-      "ar": "عاشوراء. وجدَ النبيُّ ﷺ أهلَ المدينةِ يصومونَ هذا اليومَ شكرًا لنجاةِ موسى، فقال: «نحنُ أحقُّ بموسى منكم»."
+      "en": "The Prophet ﷺ found the people of Madinah fasting Ashura in thanks for the rescue of Musa, peace be upon him.\nHe said \"we have more right to Musa than you\", then fasted it himself and told others to fast it.",
+      "ar": "وجد النبي ﷺ أهل المدينة يصومون يوم عاشوراء شكرًا لنجاة موسى عليه السلام.\nفقال: «نحن أحق بموسى منكم»، فصامه وأمر بصيامه."
     },
     {
       "cal": "h",
@@ -38,8 +38,8 @@
       "ye": "204 AH",
       "ya": "٢٠٤هـ",
       "em": "📖",
-      "en": "Imam al-Shafi'i died in Egypt. He was the first to write down rules for how a ruling is derived, and after him that became a science standing on its own.",
-      "ar": "تُوفي الإمام الشافعي بمصر. وقد كان أول من كتب قواعد لاستنباط الأحكام، فصار هذا بعده علمًا قائمًا بذاته."
+      "en": "Imam al-Shafi'i died in Egypt.\nHe was the first to write down the rules for deriving rulings, and after him that became a science of its own.",
+      "ar": "تُوفي الإمام الشافعي بمصر.\nوكان أول من كتب قواعد استنباط الأحكام، فصار ذلك بعده علمًا قائمًا بذاته."
     },
     {
       "cal": "h",
@@ -48,8 +48,8 @@
       "ye": "2 AH",
       "ya": "٢هـ",
       "em": "⚔️",
-      "en": "The Battle of Badr took place, in the middle of Ramadan. The Quran calls that day the Day of Criterion.",
-      "ar": "وقعتْ غزوةُ بدر في منتصفِ رمضان. وسمّى القرآنُ ذلك اليومَ «يومَ الفرقان»."
+      "en": "The Battle of Badr was fought in the middle of Ramadan, the first major encounter between the Muslims and Quraysh.\nThe Quran calls that day the Day of Criterion, for the line it drew between truth and falsehood.",
+      "ar": "وقعت غزوة بدر في منتصف شهر رمضان، وكانت أول مواجهة كبرى بين المسلمين وقريش.\nوسمّى القرآن ذلك اليوم «يوم الفرقان» لما كان فيه من تمييز بين الحق والباطل."
     },
     {
       "cal": "h",
@@ -78,8 +78,8 @@
       "ye": "256 AH",
       "ya": "٢٥٦هـ",
       "em": "📚",
-      "en": "Imam al-Bukhari died on the night of Eid al-Fitr. He had spent sixteen years gathering his Sahih, picking each hadith out of thousands he had heard on his travels.",
-      "ar": "تُوفي الإمام البخاري ليلة عيد الفطر. وقد قضى ست عشرة سنة في جمع صحيحه، وكان يختار الحديث الواحد من بين آلاف سمعها في رحلاته."
+      "en": "Imam al-Bukhari died on the night of Eid al-Fitr, after a long life spent seeking hadith.\nHe had given sixteen years to gathering his Sahih, choosing each one carefully from the thousands he had heard on his travels.",
+      "ar": "تُوفي الإمام البخاري ليلة عيد الفطر، بعد رحلة طويلة في طلب الحديث.\nفقد أمضى ستة عشر عامًا في جمع صحيحه، يختار أحاديثه بعناية من بين آلاف ما سمعه في أسفاره."
     },
     {
       "cal": "h",
@@ -88,8 +88,8 @@
       "ye": "10 AH",
       "ya": "١٠هـ",
       "em": "🏔️",
-      "en": "The Farewell Sermon at Arafah. It was the largest gathering the Prophet ﷺ ever addressed, and he did not perform Hajj again after it.",
-      "ar": "خطبةُ الوداع بعرفة. وكانت أكبرَ جمعٍ خطبَ فيه النبيُّ ﷺ، ولم يحجَّ بعدها."
+      "en": "The Prophet ﷺ gave the Farewell Sermon at Arafah during his final Hajj.\nIt was the greatest gathering he ever addressed, and he did not perform Hajj again.",
+      "ar": "ألقى النبي ﷺ خطبة الوداع في عرفة خلال حجته الأخيرة.\nوكانت أعظم خطبة جمع فيها المسلمين في حياته، ولم يحج بعدها."
     },
     {
       "cal": "g",
@@ -98,8 +98,8 @@
       "ye": "45 BC",
       "ya": "٤٥ ق.م",
       "em": "📅",
-      "en": "The Julian calendar began. It set the year at 365 days and a quarter — close, but slightly too long, and the small error grew into ten whole days by 1582.",
-      "ar": "بدأ العملُ بالتقويم اليولياني. جعلَ السنةَ ٣٦٥ يومًا وربعًا — رقمٌ قريبٌ لكنه أطولُ قليلًا من الحقيقة، فتراكمَ الفرقُ حتى صارَ عشرةَ أيامٍ كاملةٍ سنةَ ١٥٨٢."
+      "en": "The Julian calendar came into use, setting the year at 365 days and a quarter.\nThat small excess piled up over the centuries until the gap stood at ten whole days by 1582.",
+      "ar": "بدأ العمل بالتقويم اليولياني، الذي جعل السنة ٣٦٥ يومًا وربعًا.\nلكن الزيادة البسيطة تراكمت عبر القرون حتى أصبح الفرق عشرة أيام كاملة بحلول عام ١٥٨٢."
     },
     {
       "cal": "g",
@@ -108,8 +108,8 @@
       "ye": "1801",
       "ya": "١٨٠١م",
       "em": "🔭",
-      "en": "The first object was spotted in the wide gap between Mars and Jupiter. We now know thousands of rocks orbit there.",
-      "ar": "رُصد أولُ جِرمٍ في الفراغِ الواسع بين المرّيخ والمشتري. ونعرفُ اليومَ أنَّ آلافَ الصخورِ تدورُ هناك."
+      "en": "The first object was spotted between Mars and Jupiter, revealing a belt of rock out there.\nToday we know thousands of asteroids circle in that region, one nobody had expected to exist.",
+      "ar": "رُصد أول جسم بين المريخ والمشتري، كاشفًا عن وجود حزام من الصخور الفضائية.\nواليوم نعرف أن آلاف الكويكبات تدور هناك، في منطقة لم يكن أحد يتوقع وجودها."
     },
     {
       "cal": "g",
@@ -128,8 +128,8 @@
       "ye": "1958",
       "ya": "١٩٥٨م",
       "em": "⚛️",
-      "en": "The starting point of atomic time. From here on, a second was measured by atoms instead of by the spin of the Earth.",
-      "ar": "نقطةُ البدايةِ للتوقيتِ الذرّي. ومن هنا صارتِ الثانيةُ تُقاسُ بالذرّاتِ بدلًا من دورانِ الأرض."
+      "en": "The age of official atomic time began, and a second came to be fixed by the vibration of atoms rather than the spin of the Earth.\nScientists had found that our planet does not turn at a perfectly steady rate, while atoms give a far more exact measure of time.",
+      "ar": "بدأ عصر التوقيت الذرّي الرسمي، فأصبحت الثانية تُحدَّد اعتمادًا على اهتزازات الذرّات لا على دوران الأرض.\nفقد اكتشف العلماء أن دوران كوكبنا ليس منتظمًا تمامًا، بينما تمنح الذرّات معيارًا أدق لقياس الزمن."
     },
     {
       "cal": "g",
@@ -158,8 +158,8 @@
       "ye": "1959",
       "ya": "١٩٥٩م",
       "em": "🌑",
-      "en": "A craft escaped the Earth's pull for the first time and flew past the Moon. It had no way of stopping, and has been going round the sun ever since.",
-      "ar": "أفلتت مركبة من جاذبية الأرض لأول مرة ومرت بجوار القمر. ولم تكن تملك طريقة للتوقف، فهي تدور حول الشمس منذ ذلك اليوم."
+      "en": "A craft escaped the Earth's pull for the first time and flew past the Moon.\nThere was no way to stop it or steer it, and it has been going round the sun ever since.",
+      "ar": "أفلتت مركبة من جاذبية الأرض لأول مرة ومرت بجوار القمر.\nولم تكن هناك طريقة لإيقافها أو التحكم بها، فهي تدور حول الشمس منذ ذلك اليوم."
     },
     {
       "cal": "g",
@@ -168,8 +168,8 @@
       "ye": "2019",
       "ya": "٢٠١٩م",
       "em": "🌑",
-      "en": "A craft landed on the far side of the Moon, the side we never see. It had to talk to Earth through another craft, because the Moon itself blocks the way.",
-      "ar": "هبطت مركبة على الوجه البعيد من القمر، الوجه الذي لا نراه أبدًا. وقد اضطرت أن تتحدث إلى الأرض عبر مركبة أخرى، لأن القمر نفسه يحجب الطريق."
+      "en": "A craft landed on the far side of the Moon, the side we never see.\nIt had to speak to Earth through another craft, because the Moon itself blocks the way.",
+      "ar": "هبطت مركبة على الوجه البعيد من القمر، الذي لا نراه أبدًا.\nواضطرت أن تتحدث إلى الأرض عبر مركبة أخرى، لأن القمر نفسه يحجب الطريق."
     },
     {
       "cal": "g",
@@ -178,8 +178,8 @@
       "ye": "1643",
       "ya": "١٦٤٣م",
       "em": "🍎",
-      "en": "Isaac Newton was born. England was still on the old calendar then, so his birthday is written as 25 December in English books and 4 January in ours.",
-      "ar": "وُلد إسحاق نيوتن. وكانت إنجلترا حينَها على التقويمِ القديم، فيُكتبُ مولدُه ٢٥ ديسمبر في كتبِهم و٤ يناير في كتبِنا."
+      "en": "Isaac Newton was born.\nEngland was still on the old calendar, so his birthday is written 25 December in their books and 4 January in ours.",
+      "ar": "وُلد إسحاق نيوتن.\nوكانت إنجلترا حينها على التقويم القديم، فيُكتب مولده ٢٥ ديسمبر في كتبهم و٤ يناير في كتبنا."
     },
     {
       "cal": "g",
@@ -198,8 +198,8 @@
       "ye": "1610",
       "ya": "١٦١٠م",
       "em": "🪐",
-      "en": "Galileo saw four moons circling Jupiter. It was the first proof that not everything in the sky revolves around us.",
-      "ar": "رأى غاليليو أربعةَ أقمارٍ تدورُ حولَ المشتري. وكان ذلك أولَ دليلٍ على أنَّ ليسَ كلُّ ما في السماءِ يدورُ حولَنا."
+      "en": "Galileo saw four moons circling Jupiter.\nIt was the first proof that not everything in the sky goes round us.",
+      "ar": "رأى غاليليو أربعة أقمار تدور حول المشتري.\nوكان ذلك أول دليل على أن ليس كل ما في السماء يدور حولنا."
     },
     {
       "cal": "g",
@@ -208,8 +208,8 @@
       "ye": "2007",
       "ya": "٢٠٠٧م",
       "em": "📱",
-      "en": "The first iPhone was shown on stage. It had no app store and no copy and paste, and it still managed to change what everyone expected a phone to be.",
-      "ar": "عُرض أول آيفون على المسرح. لم يكن فيه متجر تطبيقات ولا حتى نسخ ولصق، ومع ذلك استطاع تغيير ما ينتظره الناس من الهاتف."
+      "en": "The first iPhone was shown on stage.\nIt had no app store and no copy and paste, and it still changed what people expected a phone to be.",
+      "ar": "عُرض أول آيفون على المسرح.\nلم يكن فيه متجر تطبيقات ولا حتى نسخ ولصق، ومع ذلك استطاع تغيير ما ينتظره الناس من الهاتف."
     },
     {
       "cal": "g",
@@ -218,8 +218,8 @@
       "ye": "1863",
       "ya": "١٨٦٣م",
       "em": "🚇",
-      "en": "London opened the world's first underground railway. It ran on steam, and the tunnels filled with smoke.",
-      "ar": "افتتحتْ لندنُ أولَ قطارِ أنفاقٍ في العالم. كان يعملُ بالبخار، فكانتْ الأنفاقُ تمتلئُ بالدخان."
+      "en": "London opened the world's first underground railway, its trains running on steam at the start.\nThe tunnels filled with smoke and haze, which made the ride hard going and had passengers complaining.",
+      "ar": "افتتحت لندن أول شبكة قطار أنفاق في العالم، وكان قطارها يعمل بالبخار في بدايته.\nلكن الأنفاق كانت تمتلئ بالدخان والضباب، مما جعل الرحلة تجربة صعبة ودفع الركاب إلى الشكوى."
     },
     {
       "cal": "g",
@@ -228,8 +228,8 @@
       "ye": "1922",
       "ya": "١٩٢٢م",
       "em": "💉",
-      "en": "Insulin was given to a patient for the first time. Diabetes changed overnight from a death sentence into something people live with.",
-      "ar": "أُعطي الأنسولينُ لمريضٍ لأولِ مرة. فتحوّلَ السكّري بينَ يومٍ وليلةٍ من مرضٍ قاتلٍ إلى مرضٍ يُعاشُ معه."
+      "en": "Insulin was given to a patient for the first time.\nOvernight, diabetes turned from a death sentence into something people can live with.",
+      "ar": "أُعطي الأنسولين لمريض لأول مرة.\nفتحوّل السكري بين يوم وليلة من مرض قاتل إلى مرض يمكن التعايش معه."
     },
     {
       "cal": "g",
@@ -238,8 +238,8 @@
       "ye": "2005",
       "ya": "٢٠٠٥م",
       "em": "🌫️",
-      "en": "A small craft came down through the thick orange clouds of Titan, the largest moon of Saturn. It is the most distant landing anyone has ever made, and it sent back the sound of the wind there.",
-      "ar": "نزلت مركبة صغيرة عبر السحب البرتقالية الكثيفة فوق تيتان، أكبر أقمار زحل. وهو أبعد هبوط وصل إليه الإنسان، وقد أرسلت منه صوت الرياح هناك."
+      "en": "A small craft came down through the thick orange clouds of Titan, making the most distant landing any human-built craft has managed.\nFrom there it sent back the first recording of the wind on that far-off world.",
+      "ar": "انحدرت مركبة صغيرة عبر الغيوم البرتقالية الكثيفة لقمر تيتان، لتسجل أبعد هبوط قامت به مركبة من صنع الإنسان حتى الآن.\nومن هناك أرسلت أول تسجيل لصوت الرياح في ذلك العالم البعيد."
     },
     {
       "cal": "g",
@@ -248,8 +248,8 @@
       "ye": "2001",
       "ya": "٢٠٠١م",
       "em": "📖",
-      "en": "Wikipedia opened, on the odd idea that strangers writing together could build an encyclopaedia. It now runs in more than three hundred languages.",
-      "ar": "انطلقتْ ويكيبيديا على فكرةٍ غريبة: أنْ يكتبَ الغرباءُ معًا موسوعةً واحدة. وهي اليومَ بأكثرَ من ثلاثِمئةِ لغة."
+      "en": "Wikipedia began on an idea that sounded impossible at the time: that strangers could together build one encyclopaedia holding what people know.\nIt is now the largest free encyclopaedia in the world, written in more than three hundred languages.",
+      "ar": "بدأت ويكيبيديا بفكرة بدت مستحيلة في ذلك الوقت؛ أن يشارك الغرباء في بناء موسوعة واحدة تجمع معرفة البشر.\nواليوم أصبحت أكبر موسوعة حرة في العالم، تُكتب بأكثر من ثلاثمئة لغة."
     },
     {
       "cal": "g",
@@ -258,8 +258,8 @@
       "ye": "1706",
       "ya": "١٧٠٦م",
       "em": "⚡",
-      "en": "Benjamin Franklin was born. He invented the lightning rod and refused to register it, saying that as we gain from what others invent, we should let others gain from what we invent.",
-      "ar": "وُلد بنجامين فرانكلين. وقد اخترع مانعة الصواعق ورفض تسجيلها باسمه، وقال إننا ننتفع بما اخترعه غيرنا فلنترك لغيرنا ما اخترعناه."
+      "en": "Benjamin Franklin was born.\nHe invented the lightning rod and refused to register it, saying that as we gain from what others invent, we should let others gain from ours.",
+      "ar": "وُلد بنجامين فرانكلين.\nاخترع مانعة الصواعق ورفض تسجيلها باسمه، وقال إننا ننتفع بما اخترعه غيرنا فلنترك لغيرنا ما اخترعناه."
     },
     {
       "cal": "g",
@@ -298,8 +298,8 @@
       "ye": "1986",
       "ya": "١٩٨٦م",
       "em": "🛰️",
-      "en": "A spacecraft passed Uranus and sent back the first close pictures of it. No craft has been back since.",
-      "ar": "مرّتْ مركبةٌ فضائيةٌ بكوكبِ أورانوس وأرسلتْ أولَ صورٍ قريبةٍ له. ولم تَزُرْه مركبةٌ أخرى حتى اليوم."
+      "en": "A spacecraft passed Uranus and sent back the first close pictures of it.\nNo craft has been back since, so everything we know of it came from that single visit.",
+      "ar": "مرّت مركبة بكوكب أورانوس وأرسلت أول صور قريبة له.\nولم تزره مركبة أخرى حتى اليوم، فكل ما نعرفه عنه جاء من تلك الزيارة الواحدة."
     },
     {
       "cal": "g",
@@ -308,8 +308,8 @@
       "ye": "1915",
       "ya": "١٩١٥م",
       "em": "☎️",
-      "en": "The first telephone call across America was made, from New York to San Francisco. The two men on the line were the same two who had spoken on the first call thirty-nine years earlier.",
-      "ar": "أُجريت أول مكالمة هاتفية عبر أمريكا كلها، من نيويورك إلى سان فرانسيسكو. وكان الرجلان على الخط هما نفس الرجلين اللذين تحدثا في أول مكالمة قبل ذلك بتسع وثلاثين سنة."
+      "en": "The first telephone call across America was made.\nThe two men on the line were the same two who had spoken on the very first call thirty-nine years earlier.",
+      "ar": "أُجريت أول مكالمة هاتفية عبر أمريكا كلها.\nوكان الرجلان على الخط هما نفس الرجلين اللذين تحدثا في أول مكالمة قبل ذلك بتسع وثلاثين سنة."
     },
     {
       "cal": "g",
@@ -318,8 +318,8 @@
       "ye": "1926",
       "ya": "١٩٢٦م",
       "em": "📺",
-      "en": "Television was shown working in public for the first time. The picture was small, grey and blurry.",
-      "ar": "عُرض التلفازُ وهو يعملُ أمامَ الناسِ لأولِ مرة. وكانتِ الصورةُ صغيرةً رماديةً غيرَ واضحة."
+      "en": "Television was shown working in public for the first time.\nThe picture was small and grey, and the features on it could barely be made out.",
+      "ar": "عُرض التلفاز وهو يعمل أمام الناس لأول مرة.\nوكانت الصورة صغيرة رمادية بالكاد تُميَّز ملامحها."
     },
     {
       "cal": "g",
@@ -328,8 +328,8 @@
       "ye": "1880",
       "ya": "١٨٨٠م",
       "em": "💡",
-      "en": "Edison registered his electric lamp. What made it matter was not the light but that it lasted long enough to be worth selling.",
-      "ar": "سجّلَ إديسون مصباحَه الكهربائي. ولم تكنِ الأهميةُ في الضوءِ نفسِه، بل في أنّه دامَ وقتًا يكفي ليُباع."
+      "en": "Edison registered his electric lamp, though the real breakthrough was not in making light.\nIt was in building a lamp that kept burning long enough to be practical and within everyone's reach.",
+      "ar": "سجّل إديسون اختراعه للمصباح الكهربائي، لكن ثورته الحقيقية لم تكن في إنتاج الضوء فقط.\nبل في ابتكار مصباح يستمر في العمل فترة كافية ليصبح عمليًا ومتاحًا للجميع."
     },
     {
       "cal": "g",
@@ -338,8 +338,8 @@
       "ye": "1878",
       "ya": "١٨٧٨م",
       "em": "☎️",
-      "en": "The first telephone exchange opened, with twenty-one subscribers. Before it, a phone could only call one other phone.",
-      "ar": "افتُتحتْ أولُ مقسمِ هاتفٍ بواحدٍ وعشرينَ مشتركًا. وقبلَه كان الهاتفُ لا يتّصلُ إلا بهاتفٍ واحدٍ بعينِه."
+      "en": "The first telephone exchange opened with twenty-one subscribers, turning the phone from a link between two devices into a network joining people.\nBefore it, each phone was tied to one particular phone, which left it useful between two places and nowhere else.",
+      "ar": "افتُتح أول مقسم هاتفي ليستقبل واحدًا وعشرين مشتركًا، فحوّل الهاتف من اتصال بين جهازين فقط إلى شبكة تجمع الناس.\nفقبل ذلك، كان كل هاتف مرتبطًا بهاتف محدد، مما جعل فائدته محدودة بين مكانين لا أكثر."
     },
     {
       "cal": "g",
@@ -348,8 +348,8 @@
       "ye": "1886",
       "ya": "١٨٨٦م",
       "em": "🚗",
-      "en": "The first car was registered. It had three wheels and was slower than a running man.",
-      "ar": "سُجّلتْ أولُ سيارة. كانت بثلاثِ عجلاتٍ وأبطأَ من رجلٍ يجري."
+      "en": "The first car in history was registered, a simple machine on three wheels.\nIt went no faster than a running man, yet it began a change in how people move that has never stopped.",
+      "ar": "سُجّلت أول سيارة في التاريخ، وكانت مركبة بسيطة بثلاث عجلات.\nلم تكن سرعتها تتجاوز سرعة رجل يركض، لكنها كانت بداية ثورة غيّرت طريقة تنقّل البشر."
     },
     {
       "cal": "g",
@@ -368,8 +368,8 @@
       "ye": "1884",
       "ya": "١٨٨٤م",
       "em": "📕",
-      "en": "The first part of the Oxford English Dictionary came out. They had thought it would take ten years; it took seventy, and that first part stopped at the word \"ant\".",
-      "ar": "صدر أول جزء من قاموس أوكسفورد الإنجليزي. وكانوا يظنون أنه يحتاج عشر سنوات فاستغرق سبعين، وانتهى الجزء الأول عند كلمة «ant»."
+      "en": "The first part of the Oxford English Dictionary came out, from a project its makers had thought would be done in ten years.\nGathering the words and their meanings took some seventy, and that first part stopped at the word \"ant\".",
+      "ar": "صدر أول جزء من قاموس أوكسفورد الإنجليزي بعد مشروع ظنّ القائمون عليه أنه سيكتمل خلال عشر سنوات فقط.\nلكن جمع الكلمات وتعريفاتها استغرق نحو سبعين عامًا، وانتهى الجزء الأول عند كلمة «ant»."
     },
     {
       "cal": "g",
@@ -388,8 +388,8 @@
       "ye": "2004",
       "ya": "٢٠٠٤م",
       "em": "👥",
-      "en": "Facebook opened, for the students of one university only. Twenty years later a third of the people on Earth had an account.",
-      "ar": "انطلق فيسبوك لطلاب جامعة واحدة فقط. وبعد عشرين سنة صار لثلث سكان الأرض حساب عليه."
+      "en": "Facebook began as a small network for the students of one university.\nWithin two decades it had become a global platform used by more than two billion people.",
+      "ar": "انطلق فيسبوك كشبكة صغيرة مخصصة لطلاب جامعة واحدة فقط.\nوخلال عقدين من الزمن، تحوّل إلى منصة عالمية يستخدمها أكثر من ملياري شخص حول العالم."
     },
     {
       "cal": "g",
@@ -418,8 +418,8 @@
       "ye": "1828",
       "ya": "١٨٢٨م",
       "em": "📗",
-      "en": "Jules Verne was born. He is the one who wrote of men flying to the Moon from Florida in a craft carrying three, a century before it actually happened from Florida with three on board.",
-      "ar": "وُلد جول فيرن. وهو الذي كتب عن رجال يطيرون إلى القمر من فلوريدا في مركبة تحمل ثلاثة، قبل قرن من حدوث ذلك فعلًا من فلوريدا وعلى متنها ثلاثة."
+      "en": "Jules Verne was born, a writer whose imagination ran ahead of his age.\nHe wrote of a voyage to the Moon setting off from Florida with three men aboard, a century before much the same thing happened from the same place with three aboard.",
+      "ar": "وُلد جول فيرن، الكاتب الذي سبق عصره بخياله العلمي.\nفقد كتب عن رحلة إلى القمر تنطلق من فلوريدا بمركبة تحمل ثلاثة روّاد، قبل أن يتحقق حلم مشابه بعد قرن من الزمن من المكان نفسه وبثلاثة روّاد."
     },
     {
       "cal": "g",
@@ -428,8 +428,8 @@
       "ye": "1847",
       "ya": "١٨٤٧م",
       "em": "💡",
-      "en": "Thomas Edison was born. He was nearly deaf from childhood, and said it helped him concentrate.",
-      "ar": "وُلد توماس إديسون. كان شبهَ أصمَّ منذُ طفولتِه، وكان يقولُ إنَّ ذلك ساعدَه على التركيز."
+      "en": "Thomas Edison was born, one of the great inventors in history.\nHe had been badly hard of hearing since childhood, and felt it sometimes helped him concentrate and shut out the noise around him.",
+      "ar": "وُلد توماس إديسون، أحد أعظم المخترعين في التاريخ.\nكان يعاني من ضعف شديد في السمع منذ طفولته، وكان يرى أن ذلك ساعده أحيانًا على التركيز والابتعاد عن الضوضاء من حوله."
     },
     {
       "cal": "g",
@@ -438,8 +438,8 @@
       "ye": "2001",
       "ya": "٢٠٠١م",
       "em": "🪨",
-      "en": "A craft settled on the surface of an asteroid, though it had never been built to land on anything. It kept sending signals from the ground for another two weeks.",
-      "ar": "استقرت مركبة على سطح كويكب، مع أنها لم تُصنع أصلًا للهبوط على شيء. وقد ظلت ترسل إشاراتها من على السطح أسبوعين بعدها."
+      "en": "A spacecraft settled on the surface of an asteroid, something it had never been meant to do.\nIt had been built only for the main mission, yet it went on working and sent signals from the surface for two weeks after touching down.",
+      "ar": "استقرت مركبة فضائية على سطح كويكب في إنجاز لم يكن مخططًا له أصلًا.\nفقد صُممت للمهمة الأساسية فقط، لكنها واصلت العمل وأرسلت إشاراتها من السطح لمدة أسبوعين بعد الهبوط."
     },
     {
       "cal": "g",
