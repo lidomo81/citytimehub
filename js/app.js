@@ -21,7 +21,8 @@
       localEyebrow: "Your local time", homeEyebrow: "Your city", save: "My favorite city", saved: "Favorite ✓",
       inHM: (h, m) => h ? `in ${h}h ${m}m` : `in ${m}m`, tomorrow: "tomorrow",
       savedToast: "Saved to My Cities.", removedToast: "Removed from My Cities.", favFull: n => `You can save up to ${n} cities.`,
-      myFav: "My favorite cities", favEmpty: "Save a city with the star above — it will appear here.",
+      myFav: "My favorite cities", favShort: "Cities",
+      favEmpty: "Save a city with the star above — it will appear here.",
       favEmptyApp: "Tap the star above to save a city — it will show up here for quick access.",
       greetDawn: "A peaceful start — Fajr’s light is near 🌅",
       greetMorning: "Good morning — may your day begin with remembrance 🤍",
@@ -53,7 +54,8 @@
       localEyebrow: "وقتك المحلي", homeEyebrow: "مدينتك", save: "مدينتي المفضلة", saved: "مفضلة ✓",
       inHM: (h, m) => h ? `بعد ${h} س ${m} د` : `بعد ${m} د`, tomorrow: "غدًا",
       savedToast: "تم الحفظ في مدني.", removedToast: "تمت الإزالة من مدني.", favFull: n => `تقدر تحفظ حتى ${n} مدن.`,
-      myFav: "مدني المفضلة", favEmpty: "احفظ مدينة بالنجمة في الأعلى — ستظهر هنا.",
+      myFav: "مدني المفضلة", favShort: "مدني",
+      favEmpty: "احفظ مدينة بالنجمة في الأعلى — ستظهر هنا.",
       favEmptyApp: "اضغط النجمة بالأعلى لحفظ مدينة — هتظهر هنا للوصول السريع.",
       greetDawn: "بداية هادئة — نور الفجر قريب 🌅",
       greetMorning: "صباح الخير — ابدأ يومك بذكر الله 🤍",
@@ -347,6 +349,7 @@
       + `<span class="fav-chip-x" role="button" tabindex="0" data-favx="${c.slug}" aria-label="${T.remFav}" title="${T.remFav}">×</span>`
       + `</span>`;
   }
+  let favCitiesOpen = false;
   function renderMyCities() {
     const sec = $("#myCities"), grid = $("#myCitiesGrid");
     if (!sec || !grid) return;
@@ -355,6 +358,8 @@
     sec.hidden = false;
     sec.classList.toggle("is-empty", !list.length);
     if (!list.length) {
+      favCitiesOpen = false;
+      sec.classList.remove("is-fav-collapsible", "is-fav-open");
       if (app) {
         sec.hidden = false;
         grid.innerHTML =
@@ -367,8 +372,30 @@
       grid.innerHTML = `<p class="fav-empty">${T.favEmpty}</p>`;
       return;
     }
-    grid.innerHTML = `<div class="fav-app-label">${T.myFav}</div>`
-      + `<div class="fav-chips">${list.map(favChipHtml).join("")}</div>`;
+    const chips = `<div class="fav-chips">${list.map(favChipHtml).join("")}</div>`;
+    // Home app only: collapse when 3+ cities so the quiet board stays calm.
+    const collapse = app && list.length >= 3;
+    if (!collapse) {
+      favCitiesOpen = false;
+      sec.classList.remove("is-fav-collapsible", "is-fav-open");
+      grid.innerHTML = `<div class="fav-app-label">${T.myFav}</div>` + chips;
+      return;
+    }
+    sec.classList.add("is-fav-collapsible");
+    sec.classList.toggle("is-fav-open", favCitiesOpen);
+    const peek = list.slice(0, 2).map(c =>
+      `<span class="fav-peek-name">${cName(c)}</span>`
+    ).join("");
+    grid.innerHTML =
+      `<button type="button" class="fav-summary" aria-expanded="${favCitiesOpen ? "true" : "false"}" aria-controls="favCitiesBody">` +
+        `<span class="fav-summary-left">` +
+          `<span class="fav-summary-ico" aria-hidden="true">⭐</span>` +
+          `<span class="fav-summary-title">${T.favShort || T.myFav}<span class="fav-summary-count"> · ${list.length}</span></span>` +
+        `</span>` +
+        `<span class="fav-summary-peek" aria-hidden="true">${peek}</span>` +
+        `<span class="fav-summary-chev" aria-hidden="true">›</span>` +
+      `</button>` +
+      `<div class="fav-body" id="favCitiesBody"${favCitiesOpen ? "" : " hidden"}>${chips}</div>`;
   }
   function refreshStars() {
     const favs = getFavSlugs();
@@ -419,6 +446,13 @@
         if (panel) panel.scrollIntoView({ behavior: "smooth", block: "start" });
       };
       grid.addEventListener("click", e => {
+        const summary = e.target.closest(".fav-summary");
+        if (summary) {
+          e.preventDefault();
+          favCitiesOpen = !favCitiesOpen;
+          renderMyCities();
+          return;
+        }
         const x = e.target.closest(".fav-chip-x");
         if (x) {
           e.preventDefault(); e.stopPropagation();

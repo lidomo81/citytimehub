@@ -1035,6 +1035,84 @@ html.app-mode[data-app-tab="home"] #myCities .fav-empty {
   color: var(--text-2);
 }
 
+/* Home: collapse favorite chips when 3+ cities */
+html.app-mode[data-app-tab="home"] #myCities .fav-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  text-align: start;
+  -webkit-tap-highlight-color: transparent;
+}
+html.app-mode[data-app-tab="home"] #myCities .fav-summary:active { opacity: .88; }
+html.app-mode[data-app-tab="home"] #myCities.is-fav-open .fav-summary {
+  border-color: color-mix(in srgb, var(--brand) 35%, var(--border));
+}
+html.app-mode[data-app-tab="home"] #myCities .fav-summary-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: none;
+}
+html.app-mode[data-app-tab="home"] #myCities .fav-summary-ico { font-size: 1rem; line-height: 1; }
+html.app-mode[data-app-tab="home"] #myCities .fav-summary-title {
+  font-size: .84rem;
+  font-weight: 750;
+  color: var(--text);
+}
+html.app-mode[data-app-tab="home"] #myCities .fav-summary-count {
+  font-weight: 650;
+  color: var(--text-2);
+}
+html.app-mode[data-app-tab="home"] #myCities .fav-summary-peek {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+  justify-content: flex-end;
+  min-width: 0;
+  overflow: hidden;
+}
+html.app-mode[data-app-tab="home"] #myCities .fav-peek-name {
+  max-width: 72px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: .68rem;
+  font-weight: 650;
+  color: var(--muted);
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
+  background: color-mix(in srgb, var(--bg) 50%, transparent);
+}
+html.app-mode[data-app-tab="home"] #myCities .fav-summary-chev {
+  flex: none;
+  color: var(--muted);
+  font-size: 1.05rem;
+  transition: transform .15s ease;
+}
+html.app-mode[data-app-tab="home"] #myCities.is-fav-open .fav-summary-chev {
+  transform: rotate(-90deg);
+}
+html.app-mode[data-app-tab="home"] #myCities .fav-body {
+  margin-top: 10px;
+}
+html.app-mode[data-app-tab="home"] #myCities .fav-body[hidden] {
+  display: none !important;
+}
+html.app-mode[data-app-tab="home"] #myCities.is-fav-collapsible .fav-app-label {
+  display: none;
+}
+
 /* Prayer: لوحة اليوم — clear quiet sections (match approved mockup) */
 html.app-mode[data-app-tab="prayer"] .cp-grid { grid-template-columns: 1fr; gap: 12px; }
 html.app-mode[data-app-tab="prayer"] .cp-toolbar {
