@@ -1156,24 +1156,84 @@ html.app-mode[data-app-tab="prayer"] .datebar--paper {
   border-radius: 14px;
   box-shadow: none;
 }
+/* Prayer times as a list, app + Prayer tab only.
+   Six centred cards became a single column of rows; a row fits the name, the
+   time and the countdown on one line, which a 2-up card never could, and reads
+   in a glance. Scoped tightly so the website's grid is untouched. */
 html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-grid {
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--surface);
 }
 html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card {
-  padding: 22px 10px 14px;
-  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  border: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  text-align: start;
+  animation: none;
+}
+html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card:last-child { border-bottom: none; }
+html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card:hover { transform: none; }
+
+/* Name leads; time takes the middle; the countdown and the after-prayer icon
+   sit at the trailing edge. */
+html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-name {
+  flex: 1;
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--text);
+}
+html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-time {
+  margin-top: 0;
+  font-size: .92rem;
+  font-weight: 800;
+}
+html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-tag {
+  margin-top: 0;
+  min-height: 0;
+  font-size: .62rem;
+  white-space: nowrap;
+}
+
+/* The seal and the misbaha were pinned to the card corners; in a row they ride
+   the trailing edge inline instead. */
+html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card .prayer-azkar-hint {
+  position: static;
+  order: 5;
+  opacity: .5;
+}
+html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card .pw-seal {
+  position: static;
+  order: 6;
+  width: 20px;
+  height: 20px;
   box-shadow: none;
 }
+
+/* Next prayer: a soft green wash on the row, not a bordered tile. */
 html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card.is-next {
-  border-color: color-mix(in srgb, #34d399 55%, var(--border));
-  background: color-mix(in srgb, #34d399 8%, var(--surface));
+  background: color-mix(in srgb, #34d399 9%, transparent);
+  border-color: color-mix(in srgb, var(--border) 70%, transparent);
   box-shadow: none;
 }
 html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card.is-next .prayer-name,
+html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card.is-next .prayer-time,
 html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card.is-next .prayer-tag {
   color: #34d399;
 }
+
+/* Sunrise is not a prayer — dimmed so the eye passes over it. */
+html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card[data-p="Sunrise"] { opacity: .55; }
 
 /* Section 4/5 — reminder + occasions as calm rows */
 html.app-mode[data-app-tab="prayer"] #cthPrayerRemindSlot {
@@ -1346,7 +1406,6 @@ html.app-mode[data-app-tab="tools"] .daily-reflection { display: none !important
 html.app-mode[data-app-tab="tools"] nav.app-legal { margin-bottom: 4px; }
 
 @media (max-width: 380px) {
-  html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-grid { grid-template-columns: repeat(2, 1fr); }
   .app-tab-label { font-size: .58rem; }
 }
 
