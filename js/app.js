@@ -440,7 +440,7 @@
         const changed = getHomeSlug() !== slug;
         setHomeSlug(slug);
         renderMyCities();               // move the 📍 pin to this city
-        setCity(c);
+        setCity(c, { syncApp: true });
         if (changed) toast(T.setDefaultToast);
         const panel = $("#cityPanel");
         if (panel) panel.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -817,7 +817,7 @@
     if (!payload) return;
     try { AndroidApp.syncPrayerCity(JSON.stringify(payload)); } catch (e) {}
   }
-  function setCity(city) {
+  function setCity(city, opts) {
     if (!city) return;
     currentCity = city;
     // Curated cities carry their own tz; a worldwide city has none yet — its tz
@@ -846,6 +846,8 @@
     updateStatusBox();
     tick();
     loadPrayer(city); loadSun(city);
+    // User-driven city changes only — never on initial load (would reschedule alarms).
+    if (opts && opts.syncApp) syncPrayerCityToApp(city);
   }
   function updateSaveStar() {
     const b = $("#cpSave"); if (!b || !currentCity) return;
@@ -872,7 +874,7 @@
     setCity(home);
 
     const inp = $("#cpSearch"), list = $("#cpAcList");
-    if (inp && list) attachAutocomplete(inp, list, c => { setCity(c); syncPrayerCityToApp(c); }, { worldwide: true });
+    if (inp && list) attachAutocomplete(inp, list, c => setCity(c, { syncApp: true }), { worldwide: true });
 
     const sv = $("#cpSave");
     if (sv) sv.addEventListener("click", () => {
@@ -891,7 +893,7 @@
       toast(nowFav ? T.savedToast : T.removedToast);
     });
     const hm = $("#cpHome");
-    if (hm) hm.addEventListener("click", () => { if (detectedHome) { setCity(detectedHome); syncPrayerCityToApp(detectedHome); } });
+    if (hm) hm.addEventListener("click", () => { if (detectedHome) setCity(detectedHome, { syncApp: true }); });
 
     const inst = $("#cpInstall");
     if (inst) {
