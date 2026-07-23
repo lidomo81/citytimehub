@@ -2,9 +2,10 @@
    CityTimeHub — js/prayer-insights.js
    "Prayer insights" card. Fully client-side, computed from today's
    prayer timings (Fajr, Sunrise, Dhuhr, Asr, Maghrib, Isha) — no API.
-   Shows: daytime/nighttime, night length, the start of the last third of
-   the night, and whether it is currently a disliked (karahah) time. The
-   countdown to the next prayer belongs to the prayer card, not here.
+   Shows: night length, the start of the last third of the night, and whether
+   it is currently a disliked (karahah) time. The countdown to the next prayer
+   belongs to the prayer card, not here, and whether it is day or night the
+   reader can see for themselves.
    Times are approximate and shown for guidance; the note points detailed
    rulings back to scholars.
    Matches the city-pulse / occasions card styling.
@@ -15,7 +16,6 @@
   const I = {
     en: {
       kicker: "Prayer insights",
-      day: "☀️ Daytime", night: "🌙 Nighttime",
       nightLen: l => `🌙 Night ${l}`,
       lastThird: t => `🕋 Last third of the night from ${t}`,
       karahah: "⚠️ Disliked time now",
@@ -23,7 +23,6 @@
     },
     ar: {
       kicker: "إضاءات الصلاة",
-      day: "☀️ نهار", night: "🌙 ليل",
       nightLen: l => `🌙 طول الليل ${l}`,
       lastThird: t => `🕋 الثلث الأخير من الليل يبدأ ${t}`,
       karahah: "⚠️ وقت كراهة الآن",
@@ -68,13 +67,12 @@
     const chipsEl = document.getElementById("piChips");
     if (!chipsEl) return;
 
-    const { min } = nowLocal(tz);
-    const sr = toMin(t.Sunrise), mg = toMin(t.Maghrib);
-    const isDay = t.Sunrise && t.Maghrib && min >= sr && min < mg;
+    const mg = toMin(t.Maghrib);
 
+    // No day/night chip: the reader can see out of a window, and the clock is
+    // right above it. It filled a slot without answering anything.
     const chips = [];
     if (isKarahah(t, tz)) chips.push(`<span class="pi-chip is-warn">${T.karahah}</span>`);
-    chips.push(`<span class="pi-chip">${isDay ? T.day : T.night}</span>`);
     if (t.Maghrib && t.Fajr) {
       const nightMin = (toMin(t.Fajr) + 1440) - mg;         // sunset → next dawn
       const lastThird = mg + Math.round(nightMin * 2 / 3);   // start of last third
