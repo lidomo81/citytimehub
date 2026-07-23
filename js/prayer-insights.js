@@ -2,10 +2,10 @@
    CityTimeHub — js/prayer-insights.js
    "Prayer insights" card. Fully client-side, computed from today's
    prayer timings (Fajr, Sunrise, Dhuhr, Asr, Maghrib, Isha) — no API.
-   Shows: night length, the start of the last third of the night, and whether
-   it is currently a disliked (karahah) time. The countdown to the next prayer
-   belongs to the prayer card, not here, and whether it is day or night the
-   reader can see for themselves.
+   Shows: when the last third of the night begins, and whether it is currently
+   a disliked (karahah) time. The countdown to the next prayer belongs to the
+   prayer card, not here; whether it is day or night the reader can see; and
+   night length was only a step toward the last third, so it is not shown.
    Times are approximate and shown for guidance; the note points detailed
    rulings back to scholars.
    Matches the city-pulse / occasions card styling.
@@ -16,14 +16,12 @@
   const I = {
     en: {
       kicker: "Prayer insights",
-      nightLen: l => `🌙 Night ${l}`,
       lastThird: t => `🕋 Last third of the night from ${t}`,
       karahah: "⚠️ Disliked time now",
       note: "Times are approximate, for guidance. Detailed rulings on the disliked times are best confirmed with people of knowledge.",
     },
     ar: {
       kicker: "إضاءات الصلاة",
-      nightLen: l => `🌙 طول الليل ${l}`,
       lastThird: t => `🕋 الثلث الأخير من الليل يبدأ ${t}`,
       karahah: "⚠️ وقت كراهة الآن",
       note: "الأوقات تقديرية للاسترشاد، وتفاصيل أوقات الكراهة تُراجع من أهل العلم.",
@@ -34,7 +32,6 @@
   const pad = n => String(n).padStart(2, "0");
   const toMin = s => { const a = (s || "").split(":"); return (+a[0]) * 60 + (+a[1]); };
   const hhmm = m => { m = ((m % 1440) + 1440) % 1440; return pad(Math.floor(m / 60)) + ":" + pad(m % 60); };
-  const durHM = m => Math.floor(m / 60) + ":" + pad(m % 60);
   function offsetHours(tz, when = new Date()) {
     const p = new Intl.DateTimeFormat("en-US", { timeZone: tz, timeZoneName: "shortOffset", hour: "2-digit" })
       .formatToParts(when).find(x => x.type === "timeZoneName");
@@ -70,13 +67,14 @@
     const mg = toMin(t.Maghrib);
 
     // No day/night chip: the reader can see out of a window, and the clock is
-    // right above it. It filled a slot without answering anything.
+    // right above it. No "night length" either — it was a step in working out
+    // the last third, not something to act on; the reader wants when to rise,
+    // which the last-third chip already gives.
     const chips = [];
     if (isKarahah(t, tz)) chips.push(`<span class="pi-chip is-warn">${T.karahah}</span>`);
     if (t.Maghrib && t.Fajr) {
       const nightMin = (toMin(t.Fajr) + 1440) - mg;         // sunset → next dawn
       const lastThird = mg + Math.round(nightMin * 2 / 3);   // start of last third
-      chips.push(`<span class="pi-chip">${T.nightLen(durHM(nightMin))}</span>`);
       chips.push(`<span class="pi-chip">${T.lastThird(hhmm(lastThird))}</span>`);
     }
     chipsEl.innerHTML = chips.join("");
