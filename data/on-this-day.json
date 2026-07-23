@@ -339,7 +339,7 @@
       "ya": "١٨٧٨م",
       "em": "☎️",
       "en": "The first telephone exchange opened with twenty-one subscribers, turning the phone from a link between two devices into a network joining people.\nBefore it, each phone was tied to one particular phone, which left it useful between two places and nowhere else.",
-      "ar": "افتُتح أول مقسم هاتفي ليستقبل واحدًا وعشرين مشتركًا، فحوّل الهاتف من اتصال بين جهازين فقط إلى شبكة تجمع الناس.\nفقبل ذلك، كان كل هاتف مرتبطًا بهاتف محدد، مما جعل فائدته محدودة بين مكانين لا أكثر."
+      "ar": "افتُتح أول سنترال هاتفي ليستقبل واحدًا وعشرين مشتركًا، فحوّل الهاتف من اتصال بين جهازين فقط إلى شبكة تجمع الناس.\nفقبل ذلك، كان كل هاتف مرتبطًا بهاتف محدد، مما جعل فائدته محدودة بين مكانين لا أكثر."
     },
     {
       "cal": "g",
@@ -879,7 +879,7 @@
       "ya": "١٩٧٠م",
       "em": "🚀",
       "en": "Apollo 13 lifted off for the Moon. Two days later an oxygen tank burst, and the crew came home alive on air and power meant to last two men two days, not three men four.",
-      "ar": "انطلقت أبولو ١٣ نحو القمر. وبعد يومين انفجر خزان أكسجين، وعاد الطاقم سالمًا على هواء وطاقة كانت تكفي رجلين يومين لا ثلاثة رجال أربعة أيام."
+      "ar": "انطلقت أبولو ١٣ نحو القمر. وبعد يومين انفجر خزان أكسجين، وعاد الطاقم سالمًا على هواء وطاقة كانت تكفي رجلين لمدة يومين فقط لا ثلاثة رجال أربعة أيام."
     },
     {
       "cal": "g",
@@ -1798,8 +1798,8 @@
       "ye": "1859",
       "ya": "١٨٥٩م",
       "em": "🌞",
-      "en": "The strongest solar storm on record struck the Earth; sparks flew from telegraph wires and the northern lights were seen as far south as the tropics.",
-      "ar": "ضربت الأرض أقوى عاصفة شمسية مسجّلة، فتطاير الشرر من أسلاك التلغراف ورُئي الشفق القطبي حتى المناطق الحارة."
+      "en": "The strongest solar storm on record struck the Earth; sparks flew from telegraph wires, and the northern lights appeared over places that had never seen them.",
+      "ar": "ضربت الأرض أقوى عاصفة شمسية مسجلة، فتطاير الشرر من أسلاك التلغراف، وظهر الشفق القطبي حتى في مناطق لم يُرَ فيها من قبل."
     },
     {
       "cal": "g",
@@ -1848,8 +1848,8 @@
       "ye": "1522",
       "ya": "١٥٢٢م",
       "em": "⛵",
-      "en": "A ship completed the first voyage right around the world; five had set out, and one came back with eighteen men out of two hundred and seventy.",
-      "ar": "أتمّت سفينة أول رحلة حول العالم كاملًا، بعدما خرجت خمس سفن وعادت واحدة بثمانية عشر رجلًا من مئتين وسبعين."
+      "en": "A ship completed the first voyage right around the world; five had set out and only one came back, carrying eighteen men out of two hundred and seventy.",
+      "ar": "أتمّت سفينة أول رحلة حول العالم، بعدما أبحرت خمس سفن ولم تعد سوى واحدة، وعلى متنها ثمانية عشر رجلًا فقط من أصل مئتين وسبعين."
     },
     {
       "cal": "g",
@@ -1938,8 +1938,8 @@
       "ye": "1981",
       "ya": "١٩٨١م",
       "em": "🕊️",
-      "en": "The world set aside one day a year for peace.\nSince 2001 it has carried a call to lay down arms for twenty-four hours, wherever fighting is going on.",
-      "ar": "خصّص العالم يومًا واحدًا في السنة للسلام.\nومنذ ٢٠٠١ صار يحمل دعوة لوقف السلاح أربعًا وعشرين ساعة، في أي مكان يدور فيه قتال."
+      "en": "The world set aside a day for peace, and since 2001 it has become a call for a full day's ceasefire wherever there is conflict.",
+      "ar": "خصّص العالم يومًا للسلام، وتحول منذ عام ٢٠٠١ إلى دعوة لوقف إطلاق النار لمدة يوم كامل في مناطق النزاعات."
     },
     {
       "cal": "g",
@@ -1968,8 +1968,8 @@
       "ye": "1928",
       "ya": "١٩٢٨م",
       "em": "🧫",
-      "en": "Penicillin was discovered by accident on a dish left out over a holiday, and it has saved more lives than anything else in medicine.",
-      "ar": "اكتُشف البنسلين بالصدفة في طبق تُرك أثناء إجازة، وقد أنقذ من الأرواح ما لم ينقذه شيء آخر في الطب."
+      "en": "Penicillin was discovered by accident on a dish left out over a holiday, and it became one of the greatest finds in medicine, saving millions of lives.",
+      "ar": "اكتُشف البنسلين بالصدفة في طبق تُرك أثناء إجازة، ليصبح أحد أعظم الاكتشافات الطبية وينقذ ملايين الأرواح."
     },
     {
       "cal": "g",
@@ -2018,8 +2018,8 @@
       "ye": "1957",
       "ya": "١٩٥٧م",
       "em": "🛰️",
-      "en": "Sputnik was launched, the first satellite in history, and following its beeps from the ground showed that satellites can fix a position — the idea behind every map app today.",
-      "ar": "أُطلق سبوتنك، أول قمر صناعي في التاريخ، وتتبّع صفيره من الأرض أثبت أن الأقمار تستطيع تحديد المواقع، وهي الفكرة وراء كل تطبيق خرائط اليوم."
+      "en": "Sputnik was launched, the first satellite in history, and its radio signals led scientists toward the position-finding techniques every navigation system rests on today.",
+      "ar": "أُطلق سبوتنك، أول قمر صناعي في التاريخ، وألهمت إشاراته اللاسلكية العلماء لتطوير تقنيات تحديد المواقع التي تقوم عليها أنظمة الملاحة اليوم."
     },
     {
       "cal": "g",
@@ -2088,8 +2088,8 @@
       "ye": "1582",
       "ya": "١٥٨٢م",
       "em": "⏭️",
-      "en": "The calendar we use today came into force; the day before it was 4 October, and the 5th to the 14th never happened.",
-      "ar": "بدأ العمل بالتقويم الذي نستعمله اليوم، وكان اليوم الذي سبقه ٤ أكتوبر، أما الأيام من ٥ إلى ١٤ فلم تحدث قط."
+      "en": "The Gregorian calendar we use today came into force; people jumped straight from 4 October to 15 October, and ten days vanished from the calendar.",
+      "ar": "بدأ العمل بالتقويم الميلادي الحالي، فقفز الناس من ٤ أكتوبر إلى ١٥ أكتوبر مباشرة، واختفت عشرة أيام من التقويم."
     },
     {
       "cal": "g",
@@ -2138,8 +2138,8 @@
       "ye": "1946",
       "ya": "١٩٤٦م",
       "em": "🌍",
-      "en": "The first photograph of the Earth from space was taken by a camera aboard a rocket, and it came back a blurred black-and-white curve.",
-      "ar": "أُخذت أول صورة للأرض من الفضاء بكاميرا على متن صاروخ، وعادت منحنى أبيض وأسود غير واضح."
+      "en": "The first photograph of the Earth from space was taken by a camera carried on a rocket, and it came back a hazy black-and-white image that showed the curve of our planet for the first time.",
+      "ar": "التُقطت أول صورة للأرض من الفضاء بكاميرا حملها صاروخ، وعادت صورةً ضبابية بالأبيض والأسود كشفت انحناء كوكبنا لأول مرة."
     },
     {
       "cal": "g",
@@ -2148,8 +2148,8 @@
       "ye": "1861",
       "ya": "١٨٦١م",
       "em": "🐎",
-      "en": "The horseback express mail in America stopped.\nTwo days after the telegraph wires reached the far coast, a letter that had taken ten days on horseback became minutes down a wire.",
-      "ar": "توقف بريد الخيول السريع في أمريكا.\nفبعد يومين فقط من وصول أسلاك التلغراف إلى الساحل الآخر، تحولت رسالة كانت تحتاج عشرة أيام على ظهور الخيل إلى دقائق عبر الكهرباء."
+      "en": "The age of the horseback express mail in America ended; once the telegraph reached the far coast, a letter's journey went from ten days to minutes.",
+      "ar": "انتهى عصر بريد الخيول السريع في أمريكا، فبعد وصول التلغراف إلى الساحل الآخر، تحولت رحلة الرسالة من عشرة أيام إلى دقائق."
     },
     {
       "cal": "g",
@@ -2188,8 +2188,8 @@
       "ye": "1938",
       "ya": "١٩٣٨م",
       "em": "📻",
-      "en": "A radio play about an invasion from Mars was broadcast as if it were the news.\nListeners who tuned in late believed it, and it became the best-known lesson in how a form can be mistaken for the truth.",
-      "ar": "بُثّت مسرحية إذاعية عن غزو من المريخ بأسلوب النشرة الإخبارية.\nوصدّقها من فاته أولها، فصارت أشهر درس في أن القالب قد يُحسب حقيقة."
+      "en": "A radio play about an invasion from Mars was broadcast in the form of a news bulletin, alarming thousands of listeners and proving that how a story is told can carry more weight than the story itself.",
+      "ar": "بُثّت مسرحية إذاعية عن غزوٍ من المريخ بصيغة نشرة إخبارية، فأربكت آلاف المستمعين وأثبتت أن طريقة عرض الخبر قد تكون أقوى من الخبر نفسه."
     },
     {
       "cal": "g",
@@ -2199,7 +2199,7 @@
       "ya": "٢٠٠٠م",
       "em": "🏠",
       "en": "Three men moved into the space station. There has not been a single day since without someone living up there.",
-      "ar": "انتقل ثلاثة رجال للسكن في محطة الفضاء. ولم يمرّ يوم واحد منذ ذلك الحين دون أن يكون هناك أحد يعيش فيها."
+      "ar": "انتقل ثلاثة رجال للسكن في محطة الفضاء. ولم يمرّ يوم واحد منذ ذلك الحين دون أن يكون هناك من يعيش فيها."
     },
     {
       "cal": "g",
@@ -2228,8 +2228,8 @@
       "ye": "1895",
       "ya": "١٨٩٥م",
       "em": "🦴",
-      "en": "X-rays were discovered, and within weeks doctors everywhere were using them to look at broken bones without cutting.",
-      "ar": "اكتُشفت الأشعة السينية، وخلال أسابيع صار الأطباء في كل مكان ينظرون بها إلى العظام المكسورة دون جراحة."
+      "en": "X-rays were discovered, and for the first time doctors could see inside the human body without cutting.",
+      "ar": "اكتُشفت الأشعة السينية، فتمكن الأطباء لأول مرة من رؤية ما داخل جسم الإنسان دون جراحة."
     },
     {
       "cal": "g",
@@ -2248,8 +2248,8 @@
       "ye": "1572",
       "ya": "١٥٧٢م",
       "em": "✨",
-      "en": "A new star appeared, bright enough to be seen by day, and it proved the sky is not the unchanging thing it had been thought for centuries.",
-      "ar": "ظهر نجم جديد بلغ من السطوع أن رُئي نهارًا، فأثبت أن السماء ليست ثابتة لا تتغير كما كان يُعتقد قرونًا."
+      "en": "A new star appeared, very bright, and its appearance was important evidence that the sky is not the fixed thing many had long supposed.",
+      "ar": "ظهر نجم جديد لامع جدًا، وكان ظهوره دليلًا مهمًا على أن السماء ليست ثابتة كما ظن كثيرون قديمًا."
     },
     {
       "cal": "g",
@@ -2268,8 +2268,8 @@
       "ye": "1998",
       "ya": "١٩٩٨م",
       "em": "🤝",
-      "en": "A day for small kindnesses was marked for the first time.\nIt is kept in dozens of countries now, and asks one thing: a good turn for someone you owe nothing.",
-      "ar": "أُحيي لأول مرة يوم للمعروف الصغير.\nوصار يُحتفى به في عشرات الدول، ولا يطلب سوى شيء واحد: صنيع لمن لا تدين له بشيء."
+      "en": "A day for small kindnesses was marked for the first time, and it spread to dozens of countries with one simple message: do good for someone who owes you nothing.",
+      "ar": "أُحيي لأول مرة يوم للمعروف الصغير، وانتشر في عشرات الدول برسالة بسيطة: افعل خيرًا لمن لا تنتظر منه شيئًا."
     },
     {
       "cal": "g",
@@ -2308,8 +2308,8 @@
       "ye": "1883",
       "ya": "١٨٨٣م",
       "em": "🚂",
-      "en": "North America's railways adopted time zones for the first time.\nOn the day of the change, clocks in many cities struck twelve twice, while in others twelve came only once.",
-      "ar": "اعتمدت سكك حديد أمريكا الشمالية المناطق الزمنية لأول مرة.\nوفي يوم التغيير، دقّت ساعات مدن كثيرة الثانية عشرة مرتين، بينما لم تأتِ الثانية عشرة في مدن أخرى إلا مرة واحدة."
+      "en": "North America's railways adopted time zones for the first time, and on the day of the change some cities turned their hands back and struck midnight twice, while others passed it only once.",
+      "ar": "اعتمدت سكك حديد أمريكا الشمالية المناطق الزمنية لأول مرة، وفي يوم التغيير أعادت بعض المدن عقاربها فدقّت منتصف الليل مرتين، بينما مرّت مدن أخرى به مرة واحدة."
     },
     {
       "cal": "g",
@@ -2358,8 +2358,8 @@
       "ye": "1660",
       "ya": "١٦٦٠م",
       "em": "📚",
-      "en": "A group in London agreed to meet weekly and test claims by experiment rather than argument, and it became the world's oldest scientific society.",
-      "ar": "اتفقت جماعة في لندن على اللقاء أسبوعيًا واختبار الدعاوى بالتجربة لا بالجدل، فصارت أقدم جمعية علمية في العالم."
+      "en": "A group of scholars in London began meeting weekly to test ideas by experiment and observation rather than argument, and founded the world's oldest scientific society.",
+      "ar": "اجتمعت مجموعة من العلماء في لندن أسبوعيًا لاختبار الأفكار بالتجربة والملاحظة بدلًا من الجدل، فأسسوا أقدم جمعية علمية في العالم."
     },
     {
       "cal": "g",
@@ -2388,8 +2388,8 @@
       "ye": "1985",
       "ya": "١٩٨٥م",
       "em": "🙌",
-      "en": "A day was set for volunteers.\nAbout a billion people give their time somewhere in the world each year, worth more than the economy of most countries.",
-      "ar": "خُصّص يوم للمتطوّعين.\nونحو مليار إنسان يبذلون وقتهم في مكان ما من العالم كل عام، بقيمة تفوق اقتصاد أغلب الدول."
+      "en": "A world day for volunteers was set aside in recognition of what they give, and about a billion people take part each year in work worth more than the economies of many countries.",
+      "ar": "خُصّص يوم عالمي للمتطوعين تقديرًا لعطائهم، ويشارك نحو مليار شخص كل عام في أعمال تطوعية تترك أثرًا يفوق قيمة اقتصادات دول كثيرة."
     },
     {
       "cal": "g",
@@ -2478,8 +2478,8 @@
       "ye": "1847",
       "ya": "١٨٤٧م",
       "em": "🩺",
-      "en": "Semmelweis published his finding that a doctor washing his hands saves lives.\nHe was mocked for it and died before it was accepted, and it remains the cheapest thing a hospital can do.",
-      "ar": "نشر زيملفايس اكتشافه أن غسل الطبيب ليديه يُنقذ الأرواح.\nوقد سُخر منه ومات قبل أن يُقبل كلامه، وما زال هذا أرخص ما تفعله مستشفى."
+      "en": "Semmelweis found that doctors washing their hands cut the number of patients who died, but his idea was mocked even after his death, and today it is the simplest rule of medical safety.",
+      "ar": "اكتشف زيملفايس أن غسل أيدي الأطباء يقلل وفيات المرضى، لكن فكرته قوبلت بالسخرية حتى بعد وفاته، وأصبحت اليوم أبسط قواعد السلامة الطبية."
     },
     {
       "cal": "g",
@@ -2538,8 +2538,8 @@
       "ye": "1968",
       "ya": "١٩٦٨م",
       "em": "🌏",
-      "en": "An astronaut photographed the Earth rising over the Moon's horizon, and many say it is the picture that started the environmental movement.",
-      "ar": "صوّر رائد فضاء الأرض وهي تشرق فوق أفق القمر، ويقول كثيرون إنها الصورة التي أطلقت حركة حماية البيئة."
+      "en": "An astronaut photographed the Earth rising over the Moon's horizon, and it became a symbol of the beauty of our planet and a powerful reason to protect it.",
+      "ar": "التقط رائد فضاء صورة للأرض وهي تشرق فوق أفق القمر، فأصبحت رمزًا لجمال كوكبنا ودافعًا مهمًا لحماية البيئة."
     },
     {
       "cal": "g",
@@ -2568,8 +2568,8 @@
       "ye": "1895",
       "ya": "١٨٩٥م",
       "em": "🎬",
-      "en": "The first film was shown to a paying audience; it ran for under a minute and showed nothing but workers leaving a factory.",
-      "ar": "عُرض أول فيلم على جمهور يدفع ثمن التذكرة، واستمر أقل من دقيقة ولم يُظهر إلا عمالًا يخرجون من مصنع."
+      "en": "The first film was shown to a paying audience; it ran under a minute and showed workers leaving a factory, and it began the age of cinema.",
+      "ar": "عُرض أول فيلم أمام جمهور دفع ثمن التذكرة، ولم يتجاوز دقيقة واحدة، أظهر فيها عمالًا يخرجون من مصنع، لكنه بدأ عصر السينما."
     },
     {
       "cal": "g",
