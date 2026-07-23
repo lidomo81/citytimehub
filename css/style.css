@@ -649,8 +649,121 @@ html.app-mode[data-app-tab="prayer"] .cp-dev-head {
   text-align: center;
   gap: 8px;
 }
-html.app-mode[data-app-tab="prayer"] .cp-dev-title { width: 100%; text-align: center; }
 html.app-mode[data-app-tab="prayer"] .cp-devotion .datebar { margin-inline: auto; }
+
+/* ——— Prayer tab, tightened ———
+   Seven separate boxes stacked down the tab, each with its own heading, border
+   and padding; the padding alone was eating a quarter of the screen. What is
+   needed daily stays in view, what is needed monthly moves behind a tap. */
+
+/* "مواقيت الصلاة" — the tab bar already says Prayer. */
+html.app-mode[data-app-tab="prayer"] .cp-dev-title { display: none; }
+
+/* The two dates read as one line rather than two bordered cells. */
+html.app-mode[data-app-tab="prayer"] .datebar--paper {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+  padding: 2px 0;
+  border: none;
+  background: none;
+  box-shadow: none;
+}
+html.app-mode[data-app-tab="prayer"] .datebar--paper .datebar-item {
+  display: inline-flex;
+  /* The stacked style makes each cell a column, which narrowed the date to the
+     column's width and broke it across three lines. Back to a row. */
+  flex-direction: row;
+  align-items: baseline;
+  flex: 0 0 auto;
+  width: auto;
+  gap: 5px;
+  padding: 0;
+  border: none;
+  background: none;
+  white-space: nowrap;
+}
+html.app-mode[data-app-tab="prayer"] .datebar--paper .datebar-label { display: none; }
+html.app-mode[data-app-tab="prayer"] .datebar--paper .datebar-val {
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--text-2);
+  /* The stacked layout let a date break mid-word to fit its column. On one
+     line there is room for both, so let each keep its natural width. */
+  white-space: nowrap;
+  word-break: normal;
+  width: auto;
+  max-width: none;
+}
+html.app-mode[data-app-tab="prayer"] .datebar--paper .datebar-item--hijri::before {
+  content: "·";
+  color: var(--muted);
+  margin-inline-end: 6px;
+}
+
+/* The chips say what they are; the heading above them did not add to that, and
+   the note under them repeats the one at the foot of the tab. */
+html.app-mode[data-app-tab="prayer"] .pi-kicker,
+html.app-mode[data-app-tab="prayer"] .pi-note,
+html.app-mode[data-app-tab="prayer"] .occasions-note { display: none; }
+html.app-mode[data-app-tab="prayer"] .prayer-insights {
+  padding: 10px 12px;
+}
+html.app-mode[data-app-tab="prayer"] .pi-chips { justify-content: center; }
+
+/* Occasions: the nearest one is enough on the tab; the rest open on a tap. */
+html.app-mode[data-app-tab="prayer"] .occasions:not(.is-open) .occ-item:not(:first-child) {
+  display: none;
+}
+html.app-mode[data-app-tab="prayer"] .occasions {
+  padding: 10px 12px;
+  cursor: pointer;
+}
+html.app-mode[data-app-tab="prayer"] .occasions-kicker { display: none; }
+html.app-mode[data-app-tab="prayer"] .occasions::after {
+  content: "›";
+  position: absolute;
+  inset-inline-start: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+html.app-mode[data-app-tab="prayer"] .occasions.is-open::after { content: "×"; font-size: .95rem; }
+html.app-mode[data-app-tab="prayer"] .occasions { position: relative; }
+
+/* The search opens from the city name rather than holding the top of the tab. */
+html.app-mode[data-app-tab="prayer"]:not(.cp-search-open) .cp-toolbar { display: none !important; }
+html.app-mode[data-app-tab="prayer"] #lt-h {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+html.app-mode[data-app-tab="prayer"] #lt-h::after {
+  content: "▾";
+  margin-inline-start: 5px;
+  font-size: .62em;
+  color: var(--muted);
+  vertical-align: middle;
+}
+html.app-mode[data-app-tab="prayer"].cp-search-open #lt-h::after { content: "▴"; }
+html.app-mode[data-app-tab="prayer"] #lt-h:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+/* One note, once, at the foot of the Prayer tab — and nowhere else. It lives
+   inside the shared devotion block, which the Home tab also shows. */
+.cp-tab-note {
+  display: none;
+  margin: 10px 0 0;
+  font-size: .62rem;
+  line-height: 1.6;
+  color: var(--muted);
+  text-align: center;
+}
+html.app-mode[data-app-tab="prayer"] .cp-tab-note { display: block; }
 html.app-mode[data-app-tab="prayer"] #cthPrayerRemindSlot {
   display: block !important;
   width: 100%;

@@ -224,6 +224,76 @@
     setActiveTab(tab, { pushHash: false });
   }
 
+  /* Prayer tab: changing city is the rarest thing done here, so the search box
+     does not sit across the top of the screen. The city name is the control —
+     tap it and the search opens beneath, tap away or pick a city and it closes. */
+  function wireCitySearch() {
+    var root = document.documentElement;
+    var city = document.getElementById("lt-h");
+    var bar = document.querySelector(".cp-toolbar");
+    if (!city || !bar || city.dataset.citySearchWired) return;
+    city.dataset.citySearchWired = "1";
+    city.setAttribute("role", "button");
+    city.setAttribute("tabindex", "0");
+
+    function close() { root.classList.remove("cp-search-open"); }
+    function open() {
+      root.classList.add("cp-search-open");
+      var input = bar.querySelector("input");
+      if (input) setTimeout(function () { input.focus(); }, 60);
+    }
+    function toggle() {
+      if (root.getAttribute("data-app-tab") !== "prayer") return;
+      root.classList.contains("cp-search-open") ? close() : open();
+    }
+
+    city.addEventListener("click", toggle);
+    city.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
+    });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+    // A city was chosen, or the reader moved to another tab.
+    window.addEventListener("cth-city", close);
+    document.addEventListener("click", function (e) {
+      if (!root.classList.contains("cp-search-open")) return;
+      if (bar.contains(e.target) || city.contains(e.target)) return;
+      close();
+    });
+  }
+
+  /* Prayer tab: the nearest occasion is enough on screen; tapping the row opens
+     the rest. And the two notices that said the same thing become one, once,
+     at the foot of the tab. */
+  function wirePrayerRows() {
+    var ar = (document.documentElement.getAttribute("lang") || "en").slice(0, 2) === "ar";
+
+    var occ = document.getElementById("occasions");
+    if (occ && !occ.dataset.rowWired) {
+      occ.dataset.rowWired = "1";
+      occ.setAttribute("role", "button");
+      occ.setAttribute("tabindex", "0");
+      var toggle = function () {
+        if (document.documentElement.getAttribute("data-app-tab") !== "prayer") return;
+        occ.classList.toggle("is-open");
+      };
+      occ.addEventListener("click", toggle);
+      occ.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
+      });
+    }
+
+    var host = document.querySelector(".cp-devotion");
+    if (host && !document.getElementById("cpTabNote")) {
+      var note = document.createElement("p");
+      note.id = "cpTabNote";
+      note.className = "cp-tab-note";
+      note.textContent = ar
+        ? "الأوقات تقديرية للاسترشاد، والمواعيد تخضع لرؤية الهلال."
+        : "Times are approximate, for guidance, and dates depend on the sighting of the moon.";
+      host.appendChild(note);
+    }
+  }
+
   function init() {
     if (!inAppMode()) return;
     document.documentElement.classList.add("app-mode");
@@ -231,6 +301,11 @@
     var active = isAppHome() ? readTab() : (detectToolTabActive() || "");
     installBottomNav(active || "home");
     if (isAppHome()) initHomeTabs();
+    wireCitySearch();
+    // The occasions card and the insights card are injected after load.
+    wirePrayerRows();
+    setTimeout(wirePrayerRows, 1200);
+    setTimeout(wirePrayerRows, 3000);
 
     window.addEventListener("hashchange", function () {
       if (!isAppHome()) return;
