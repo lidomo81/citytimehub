@@ -111,7 +111,20 @@
       if (prevB) prevB.disabled = i === 0;
       if (nextB) nextB.textContent = i === items.length - 1 ? T.restart : T.next;
       card.querySelector(".az-counter").addEventListener("click", tap);
+      reportProgress(i + 1, items.length);
       if (state.idx === items.length - 1 && done && typeof opts.onComplete === "function") opts.onComplete();
+    }
+
+    // The home-screen widget lives outside the browser and cannot read this
+    // page, so tell the app where the reader has reached. Same numbers the
+    // progress line shows here, so the two never disagree.
+    function reportProgress(reached, total) {
+      if (!opts.azkarType) return;
+      try {
+        if (window.AndroidApp && typeof AndroidApp.azkarProgress === "function") {
+          AndroidApp.azkarProgress(opts.azkarType, reached, total);
+        }
+      } catch (e) { /* older app build without the bridge */ }
     }
     function tap() {
       const i = state.idx;
@@ -159,7 +172,7 @@
     let items = [];
     try { items = JSON.parse(document.getElementById("azkarData").textContent); } catch (e) {}
     const type = pageRoot.dataset.azkarType || "morning";
-    mount(pageRoot, items, { storeKey: `cth-azkar:${type}`, daily: true });
+    mount(pageRoot, items, { storeKey: `cth-azkar:${type}`, daily: true, azkarType: type });
     document.addEventListener("keydown", e => {
       const ar = document.documentElement.lang === "ar";
       if (e.key === "ArrowRight") pageRoot.querySelector(ar ? ".az-prev" : ".az-next")?.click();
