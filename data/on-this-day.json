@@ -28,8 +28,8 @@
       "ye": "1 AH",
       "ya": "١هـ",
       "em": "🕌",
-      "en": "The Prophet ﷺ arrived at Quba, just outside Madinah, completing the Hijrah — the journey the Islamic calendar counts its years from.",
-      "ar": "وصلَ النبيُّ ﷺ إلى قُباء قربَ المدينة، فتمّت الهجرة — وهي الرحلةُ التي يبدأُ منها عدُّ السنواتِ في التقويم الهجري."
+      "en": "The Prophet ﷺ reached Quba on the edge of Madinah.\nWith that the Hijrah was complete, and the Islamic calendar counts its years from that one.",
+      "ar": "وصل النبي ﷺ إلى قُباء على مشارف المدينة.\nوبهذا تمّت الهجرة، ومن سنتها يبدأ عدّ السنين في التقويم الهجري."
     },
     {
       "cal": "h",
@@ -58,8 +58,8 @@
       "ye": "8 AH",
       "ya": "٨هـ",
       "em": "🕋",
-      "en": "Makkah was entered without a battle, and everyone in the city was pardoned.",
-      "ar": "دخلَ المسلمونَ مكةَ بغيرِ قتال، وعُفِيَ عن أهلِها جميعًا."
+      "en": "Makkah was entered without a battle.\nEveryone in the city was pardoned — the same people who had driven them out eight years earlier.",
+      "ar": "دخل المسلمون مكة بغير قتال.\nوعُفي عن أهلها جميعًا، وهم الذين أخرجوهم منها قبل ثماني سنين."
     },
     {
       "cal": "h",
@@ -68,8 +68,8 @@
       "ye": "2 AH",
       "ya": "٢هـ",
       "em": "🕌",
-      "en": "The first Eid al-Fitr in Islam was prayed in Madinah, in the same year fasting Ramadan became obligatory.",
-      "ar": "صُلّي أولُ عيدِ فطرٍ في الإسلام بالمدينة، في العامِ نفسِه الذي فُرِض فيه صيامُ رمضان."
+      "en": "The first Eid al-Fitr prayer in Islam was held in Madinah.\nIt fell in the same year fasting Ramadan was made obligatory.",
+      "ar": "صُلّيت أول صلاة عيد فطر في الإسلام بالمدينة.\nوكان ذلك في العام نفسه الذي فُرض فيه صيام رمضان."
     },
     {
       "cal": "h",
@@ -118,8 +118,8 @@
       "ye": "1925",
       "ya": "١٩٢٥م",
       "em": "🌙",
-      "en": "Astronomers moved the start of their day from noon to midnight, so their day finally matched everyone else's.",
-      "ar": "نقلَ الفلكيّونَ بدايةَ يومِهم من الظهرِ إلى منتصفِ الليل، فصارَ يومُهم أخيرًا مثلَ يومِ بقيةِ الناس."
+      "en": "Astronomers moved the start of their day from noon to midnight.\nAfter centuries apart, their day finally matched everyone else's.",
+      "ar": "نقل الفلكيون بداية يومهم من الظهر إلى منتصف الليل.\nوبذلك صار يومهم مثل يوم بقية الناس، بعد قرون من الاختلاف."
     },
     {
       "cal": "g",
@@ -138,8 +138,8 @@
       "ye": "1970",
       "ya": "١٩٧٠م",
       "em": "💻",
-      "en": "Almost every computer and phone counts time as the number of seconds since this exact moment — including the clock on this page.",
-      "ar": "كلُّ حاسوبٍ وهاتفٍ تقريبًا يحسبُ الوقتَ بعددِ الثواني منذُ هذه اللحظةِ بالذات — بما فيها الساعةُ في هذه الصفحة."
+      "en": "The first computer systems began counting from this instant.\nEvery computer and phone today still measures time as seconds since that day, including the clock on this page.",
+      "ar": "بدأ العدّ من هذه اللحظة في أول أنظمة الحاسوب.\nوكل حاسوب وهاتف اليوم يحسب الوقت بعدد الثواني منذ ذلك اليوم، بما فيها الساعة في هذه الصفحة."
     },
     {
       "cal": "g",
@@ -148,8 +148,8 @@
       "ye": "1972",
       "ya": "١٩٧٢م",
       "em": "🌍",
-      "en": "The world agreed on one shared clock, UTC, and every country's time is now counted as hours ahead of it or behind it.",
-      "ar": "اتّفقَ العالمُ على ساعةٍ واحدةٍ مشتركة هي UTC، وصارَ توقيتُ كلِّ دولةٍ يُحسبُ بعددِ ساعاتٍ قبلَها أو بعدَها."
+      "en": "UTC became the basis of civil time worldwide.\nEvery country's time has been counted as hours ahead of it or behind it ever since.",
+      "ar": "صار التوقيت العالمي المنسَّق أساس التوقيت المدني في العالم.\nومن يومها يُحسب توقيت كل دولة بعدد ساعات قبله أو بعده."
     },
     {
       "cal": "g",
@@ -268,8 +268,8 @@
       "ye": "2006",
       "ya": "٢٠٠٦م",
       "em": "🚀",
-      "en": "A craft set out for Pluto at the highest speed anything had ever left the Earth. Even so, the journey took nine and a half years.",
-      "ar": "انطلقت مركبة نحو بلوتو بأعلى سرعة غادر بها شيء كوكب الأرض حتى ذلك الوقت. ومع ذلك استغرقت الرحلة تسع سنوات ونصفًا."
+      "en": "New Horizons set out on its journey to Pluto.\nIt left Earth at the highest launch speed any craft had reached, and still needed nine and a half years to get there.",
+      "ar": "انطلقت مركبة «نيو هورايزنز» في رحلتها إلى بلوتو.\nوغادرت الأرض بأعلى سرعة انطلاق حققتها مركبة فضائية، ومع ذلك احتاجت إلى تسع سنوات ونصف لتصل إليه."
     },
     {
       "cal": "g",
@@ -288,8 +288,8 @@
       "ye": "1960",
       "ya": "١٩٦٠م",
       "em": "🌊",
-      "en": "Two men reached the deepest point in the ocean, almost eleven kilometres down — and found a fish living there.",
-      "ar": "وصلَ رجلانِ إلى أعمقِ نقطةٍ في المحيط، على عمقِ أحدَ عشرَ كيلومترًا تقريبًا — ووجدا سمكةً تعيشُ هناك."
+      "en": "Two men reached the deepest point in the ocean.\nThere, nearly eleven kilometres down, they found a fish living where life had been thought impossible.",
+      "ar": "بلغ رجلان أعمق نقطة في المحيط.\nوهناك، على عمق يقترب من أحد عشر كيلومترًا، عُثر على سمكة تعيش في بيئة كان يُظن أن الحياة فيها مستحيلة."
     },
     {
       "cal": "g",
@@ -358,8 +358,8 @@
       "ye": "1958",
       "ya": "١٩٥٨م",
       "em": "🛰️",
-      "en": "America's first satellite found belts of radiation wrapped around the Earth that nobody knew were there.",
-      "ar": "اكتشفَ أولُ قمرٍ صناعيٍّ أمريكيٍّ أحزمةَ إشعاعٍ تُحيطُ بالأرضِ لم يكنْ أحدٌ يعلمُ بوجودِها."
+      "en": "America launched its first satellite.\nIt found belts of radiation wrapped around the Earth that nobody knew were there.",
+      "ar": "أطلقت أمريكا أول قمر صناعي لها.\nفاكتشف أحزمة إشعاع تحيط بالأرض لم يكن أحد يعلم بوجودها."
     },
     {
       "cal": "g",
@@ -378,8 +378,8 @@
       "ye": "1966",
       "ya": "١٩٦٦م",
       "em": "🌑",
-      "en": "A craft came down gently on the Moon without breaking up, and sent back the first pictures taken from the surface itself. It settled a long argument by proving the ground was firm enough to carry a spacecraft's weight.",
-      "ar": "هبطت مركبة على سطح القمر هبوطًا هادئًا دون أن تتحطم، وأرسلت أول صور من على السطح نفسه. وقد حسمت خلافًا طويلًا لأنها أثبتت أن التربة صلبة تكفي لحمل ثقل مركبة."
+      "en": "The first craft touched the Moon's surface without breaking up.\nThe pictures it sent settled a question that had puzzled scientists for years: can a spacecraft stand on lunar soil?",
+      "ar": "لامست أول مركبة سطح القمر دون أن تتحطم.\nوكانت الصور التي أرسلتها كافية لحسم سؤال حيّر العلماء طويلًا: هل تستطيع المركبات أن تقف على تربة القمر؟"
     },
     {
       "cal": "g",
@@ -398,8 +398,8 @@
       "ye": "1924",
       "ya": "١٩٢٤م",
       "em": "📻",
-      "en": "The Greenwich time signal — six short beeps on the radio — was broadcast for the first time, putting the observatory's clock in every home.",
-      "ar": "بُثّتْ إشارةُ توقيت جرينتش — ستُّ نقراتٍ قصيرةٍ في الراديو — لأولِ مرة، فدخلتْ ساعةُ المرصدِ كلَّ بيت."
+      "en": "Greenwich time reached people by radio for the first time.\nSix short beeps set millions of clocks ticking to one rhythm.",
+      "ar": "وصل توقيت غرينتش إلى الناس عبر الراديو لأول مرة.\nست نقرات قصيرة جعلت ملايين الساعات تدق على إيقاع واحد."
     },
     {
       "cal": "g",
@@ -468,8 +468,8 @@
       "ye": "1923",
       "ya": "١٩٢٣م",
       "em": "⚱️",
-      "en": "The burial chamber of Tutankhamun was opened in Luxor, three months after the steps to it were found. Almost everything inside was still where it had been left.",
-      "ar": "فُتحت حجرة دفن توت عنخ آمون في الأقصر، بعد ثلاثة أشهر من العثور على السلم المؤدي إليها. وكان كل ما بداخلها تقريبًا في موضعه الذي تُرك فيه."
+      "en": "The burial chamber of Tutankhamun was opened in Luxor.\nAlmost everything inside still stood where it had been left three thousand years before.",
+      "ar": "فُتحت حجرة دفن توت عنخ آمون في الأقصر.\nوكان كل ما بداخلها تقريبًا في موضعه الذي تُرك فيه قبل ثلاثة آلاف عام."
     },
     {
       "cal": "g",
@@ -488,8 +488,8 @@
       "ye": "1930",
       "ya": "١٩٣٠م",
       "em": "🔍",
-      "en": "Pluto was found by a young man comparing two photographs of the same patch of sky, looking for the one dot that had moved.",
-      "ar": "اكتُشف بلوتو على يدِ شابٍّ كان يقارنُ صورتينِ لبقعةٍ واحدةٍ من السماء، باحثًا عن النقطةِ التي تحرّكتْ وحدَها."
+      "en": "Pluto was found by a young man of twenty-four.\nAt first it showed only as a small dot that seemed to shift, while millions of stars stayed fixed in place.",
+      "ar": "اكتُشف بلوتو على يد شاب في الرابعة والعشرين.\nولم يظهر في البداية إلا كنقطة صغيرة بدت وكأنها تتحرك، بينما بقيت ملايين النجوم ثابتة في مكانها."
     },
     {
       "cal": "g",
@@ -518,8 +518,8 @@
       "ye": "1962",
       "ya": "١٩٦٢م",
       "em": "🚀",
-      "en": "An American circled the Earth three times in under five hours — a journey that takes a plane more than a day.",
-      "ar": "دارَ رائدُ فضاءٍ أمريكيٌّ حولَ الأرضِ ثلاثَ مرّاتٍ في أقلَّ من خمسِ ساعات — رحلةٌ تستغرقُ بالطائرةِ أكثرَ من يوم."
+      "en": "The first American circled the Earth three times.\nThe flight lasted under five hours, and covered more than a hundred and twenty thousand kilometres.",
+      "ar": "دار أول أمريكي حول الأرض ثلاث مرات.\nواستغرقت الرحلة أقل من خمس ساعات، قطع خلالها أكثر من مئة وعشرين ألف كيلومتر."
     },
     {
       "cal": "g",
@@ -538,8 +538,8 @@
       "ye": "1997",
       "ya": "١٩٩٧م",
       "em": "🐑",
-      "en": "The world was told about Dolly the sheep, the first animal grown from a single cell of an adult.",
-      "ar": "أُعلن للعالمِ عن النعجةِ دوللي، أولِ حيوانٍ يُستنسخُ من خليةٍ واحدةٍ لحيوانٍ بالغ."
+      "en": "The world was told about Dolly the sheep.\nShe was the first animal grown from a single cell of an adult.",
+      "ar": "أُعلن للعالم عن النعجة دوللي.\nوهي أول حيوان يُستنسخ من خلية واحدة لحيوان بالغ."
     },
     {
       "cal": "g",
@@ -548,8 +548,8 @@
       "ye": "1582",
       "ya": "١٥٨٢م",
       "em": "📜",
-      "en": "The order to fix the calendar was issued: skip ten days, and stop counting a leap year in three century-years out of every four.",
-      "ar": "صدرَ الأمرُ بإصلاحِ التقويم: تُحذَفُ عشرةُ أيام، ويتوقّفُ عدُّ السنةِ الكبيسةِ في ثلاثِ سنواتٍ من كلِّ أربعِ سنواتِ قرن."
+      "en": "An order came that changed how time is counted.\nPeople woke to find ten days gone from the calendar, in a move that put the year back on course.",
+      "ar": "صدر قرار غيّر طريقة حساب الوقت.\nاستيقظ الناس ليجدوا عشرة أيام قد اختفت من التقويم، في خطوة أعادت السنة إلى مسارها الصحيح."
     },
     {
       "cal": "g",
@@ -558,8 +558,8 @@
       "ye": "1935",
       "ya": "١٩٣٥م",
       "em": "📡",
-      "en": "A test in an English field showed that an aircraft could be spotted from far away by the radio waves bouncing off it. It became radar, and today it keeps every airport in the world running.",
-      "ar": "أثبتت تجربة في حقل إنجليزي أن الطائرة يمكن رصدها من بعيد عن طريق موجات الراديو المرتدة عنها. وصار هذا هو الرادار، الذي تعمل به اليوم مطارات العالم كلها."
+      "en": "A test in an English field showed an aircraft could be spotted from far off.\nThe radio waves bouncing back became radar, and every airport in the world now runs on it.",
+      "ar": "أثبتت تجربة في حقل إنجليزي أن الطائرة تُرصد من بعيد.\nموجات الراديو المرتدة عنها صارت الرادار، الذي تعمل به اليوم مطارات العالم كلها."
     },
     {
       "cal": "g",
@@ -578,8 +578,8 @@
       "ye": "1896",
       "ya": "١٨٩٦م",
       "em": "☢️",
-      "en": "Radiation was discovered by accident: a scientist left a rock on a wrapped photographic plate in a drawer, and the plate came out marked.",
-      "ar": "اكتُشف الإشعاعُ بالصدفة: تركَ عالمٌ حجرًا فوقَ لوحٍ تصويرٍ مغلَّفٍ في دُرج، فخرجَ اللوحُ وعليه أثر."
+      "en": "Radioactivity was discovered by accident.\nA scientist left a radioactive mineral on a photographic plate inside a drawer, and an image appeared on it though no light had reached it.",
+      "ar": "اكتُشف النشاط الإشعاعي بالمصادفة.\nترك عالمٌ معدنًا مشعًا فوق لوح تصوير داخل درج، فظهرت عليه صورة رغم أنه لم يتعرض للضوء."
     },
     {
       "cal": "g",
@@ -658,8 +658,8 @@
       "ye": "1781",
       "ya": "١٧٨١م",
       "em": "🪐",
-      "en": "Uranus was discovered, doubling the known size of the solar system in one night.",
-      "ar": "اكتُشف كوكبُ أورانوس، فتضاعفَ حجمُ المجموعةِ الشمسيةِ المعروفُ في ليلةٍ واحدة."
+      "en": "Uranus was discovered.\nOvernight, the size of the solar system as people knew it roughly doubled.",
+      "ar": "اكتُشف كوكب أورانوس.\nوفجأة، تضاعف حجم المجموعة الشمسية المعروف للبشر تقريبًا في ليلة واحدة."
     },
     {
       "cal": "g",
@@ -748,8 +748,8 @@
       "ye": "1882",
       "ya": "١٨٨٢م",
       "em": "🫁",
-      "en": "The cause of tuberculosis was announced, at a time the disease was killing one European in seven. Knowing the cause is what made a cure possible.",
-      "ar": "أُعلن عن سبب مرض السل، في وقت كان يقتل واحدًا من كل سبعة في أوروبا. ومعرفة السبب هي التي فتحت الطريق أمام العلاج."
+      "en": "The cause of tuberculosis was announced.\nIt was killing one European in seven, and knowing the cause is what made a cure possible.",
+      "ar": "أُعلن عن سبب مرض السل.\nوكان يقتل حينها واحدًا من كل سبعة في أوروبا، ومعرفة السبب هي التي فتحت الطريق للعلاج."
     },
     {
       "cal": "g",
@@ -858,8 +858,8 @@
       "ye": "1948",
       "ya": "١٩٤٨م",
       "em": "🏥",
-      "en": "The World Health Organization came into being, to give every country somewhere to turn when disease crosses a border.",
-      "ar": "أُنشئتْ منظمةُ الصحةِ العالمية، ليكونَ لكلِّ دولةٍ مرجعٌ تلجأُ إليه حينَ يعبرُ المرضُ الحدود."
+      "en": "The World Health Organization came into being.\nThe world gained one shared body to coordinate against diseases that recognise no borders.",
+      "ar": "أُنشئت منظمة الصحة العالمية.\nفأصبح للعالم مرجعٌ مشترك ينسّق مواجهة الأمراض التي لا تعرف حدودًا بين الدول."
     },
     {
       "cal": "g",
@@ -918,8 +918,8 @@
       "ye": "1971",
       "ya": "١٩٧١م",
       "em": "🛰️",
-      "en": "The first space station was put in orbit — the first time people had a place to stay in space rather than just pass through.",
-      "ar": "وُضعتْ أولُ محطةٍ فضائيةٍ في المدار — فصارَ للناسِ لأولِ مرةٍ مكانٌ يقيمونَ فيه بالفضاءِ لا مجرّدُ عبور."
+      "en": "The first space station was put in orbit.\nFor the first time people had somewhere to stay in space, not merely a passing trip.",
+      "ar": "وُضعت أول محطة فضائية في المدار.\nولأول مرة، أصبح للبشر مكانٌ يقيمون فيه في الفضاء، لا مجرد رحلة عابرة."
     },
     {
       "cal": "g",
@@ -928,8 +928,8 @@
       "ye": "1902",
       "ya": "١٩٠٢م",
       "em": "⚗️",
-      "en": "Marie Curie finished pulling a tenth of a gram of radium out of a whole tonne of rock dug from a mine, after four years of work in an old wooden hut with a leaking roof.",
-      "ar": "أتمّت ماري كوري استخراج عُشر جرام من الراديوم من طن كامل من الصخر المستخرج من المنجم، بعد أربع سنوات من العمل في غرفة خشبية قديمة يتسرب منها المطر."
+      "en": "Marie Curie finished separating a tenth of a gram of radium.\nIt came out of a whole tonne of rock, after four years in a wooden hut with a leaking roof.",
+      "ar": "أتمّت ماري كوري استخراج عُشر جرام من الراديوم.\nاستخرجته من طن كامل من الصخر، بعد أربع سنوات في غرفة خشبية يتسرب منها المطر."
     },
     {
       "cal": "g",
@@ -1028,8 +1028,8 @@
       "ye": "1954",
       "ya": "١٩٥٤م",
       "em": "🏃",
-      "en": "A runner covered a mile in under four minutes, which doctors had said the body could not do. Within two months someone else had done it too.",
-      "ar": "قطع عدّاء ميلًا في أقل من أربع دقائق، وكان الأطباء يقولون إن الجسم لا يحتمل ذلك. وخلال شهرين فعلها غيره."
+      "en": "A runner covered a mile in under four minutes.\nDoctors had said the body could not do it; someone else did it within two months.",
+      "ar": "قطع عدّاء ميلًا في أقل من أربع دقائق.\nوكان الأطباء يقولون إن الجسم لا يحتمل ذلك، ثم فعلها غيره خلال شهرين."
     },
     {
       "cal": "g",
@@ -1048,8 +1048,8 @@
       "ye": "1997",
       "ya": "١٩٩٧م",
       "em": "♟️",
-      "en": "A computer beat the world chess champion in a full match for the first time.",
-      "ar": "هزمَ حاسوبٌ بطلَ العالمِ في الشطرنجِ في مباراةٍ كاملةٍ لأولِ مرة."
+      "en": "A computer beat the world chess champion.\nIt was the first time a reigning world champion had lost a full match to a machine in formal play.",
+      "ar": "هزم حاسوب بطل العالم في الشطرنج.\nوكانت تلك أول مرة يخسر فيها بطلٌ عالمي مباراة كاملة أمام آلة في مواجهة رسمية."
     },
     {
       "cal": "g",
@@ -1088,8 +1088,8 @@
       "ye": "1865",
       "ya": "١٨٦٥م",
       "em": "📡",
-      "en": "Twenty countries agreed on shared rules so a telegram could cross borders without being rewritten at each one.",
-      "ar": "اتّفقتْ عشرونَ دولةً على قواعدَ مشتركة، حتى تعبرَ البرقيةُ الحدودَ دونَ أن تُعادَ كتابتُها عندَ كلِّ دولة."
+      "en": "Twenty countries agreed on shared rules for the telegraph.\nA message could now cross a border without being rewritten at each one.",
+      "ar": "اتفقت عشرون دولة على قواعد مشتركة للبرق.\nفصارت البرقية تعبر الحدود دون أن تُعاد كتابتها عند كل دولة."
     },
     {
       "cal": "g",
@@ -1128,8 +1128,8 @@
       "ye": "1927",
       "ya": "١٩٢٧م",
       "em": "✈️",
-      "en": "A pilot landed in Paris after flying the Atlantic alone without stopping — thirty-three hours with no sleep and no radio.",
-      "ar": "هبطَ طيّارٌ في باريس بعد عبورِ الأطلسي وحدَه دونَ توقّف — ثلاثًا وثلاثينَ ساعةً بلا نومٍ ولا راديو."
+      "en": "A pilot landed in Paris after crossing the Atlantic alone.\nThirty-three hours with no sleep, no radio, and nobody knowing where he was.",
+      "ar": "هبط طيّار في باريس بعد عبور الأطلسي وحده.\nثلاث وثلاثون ساعة بلا نوم ولا راديو ولا أحد يعرف أين هو."
     },
     {
       "cal": "g",
@@ -1188,8 +1188,8 @@
       "ye": "1919",
       "ya": "١٩١٩م",
       "em": "🌑",
-      "en": "During a total eclipse, starlight was seen bending as it passed the sun — exactly as Einstein had predicted four years earlier.",
-      "ar": "أثناءَ كسوفٍ كلّي، رُصد ضوءُ النجومِ وهو ينحني عند مرورِه قربَ الشمس — تمامًا كما تنبّأَ أينشتاين قبلَ أربعِ سنوات."
+      "en": "During a total eclipse, starlight was seen bending as it passed the sun.\nThe bend matched what Einstein had predicted four years earlier.",
+      "ar": "رُصد ضوء النجوم وهو ينحني قرب الشمس أثناء كسوف كلي.\nوجاء الانحناء مطابقًا لما تنبأ به أينشتاين قبلها بأربع سنوات."
     },
     {
       "cal": "g",
@@ -1228,8 +1228,8 @@
       "ye": "1972",
       "ya": "١٩٧٢م",
       "em": "🌍",
-      "en": "The first world conference on the environment opened, the first time governments sat together over the state of the planet.",
-      "ar": "افتُتح أولُ مؤتمرٍ عالميٍّ للبيئة، وهو أولُ اجتماعٍ للحكوماتِ حولَ حالِ الكوكب."
+      "en": "The first world conference on the environment opened.\nFor the first time, the world's governments met to discuss the future of the planet itself.",
+      "ar": "افتُتح أول مؤتمر عالمي للبيئة.\nولأول مرة، اجتمعت حكومات العالم لمناقشة مستقبل الكوكب نفسه."
     },
     {
       "cal": "g",
@@ -1268,8 +1268,8 @@
       "ye": "1983",
       "ya": "١٩٨٣م",
       "em": "🚀",
-      "en": "A spacecraft crossed the orbit of the outermost planet, becoming the first thing made by human hands to leave the planets behind.",
-      "ar": "عبرتْ مركبةٌ مدارَ أبعدِ الكواكب، فصارتْ أولَ شيءٍ صنعتْه يدُ الإنسانِ يتركُ الكواكبَ خلفَه."
+      "en": "Pioneer 10 crossed the orbit of Neptune, the outermost planet at the time.\nIt became the first craft built by people to leave the planets behind and carry on beyond them.",
+      "ar": "عبرت مركبة «بايونير ١٠» مدار نبتون، أبعد الكواكب حينها.\nفصارت أول مركبة صنعها الإنسان تترك نطاق الكواكب خلفها وتمضي إلى ما وراءه."
     },
     {
       "cal": "g",
@@ -1328,8 +1328,8 @@
       "ye": "1840",
       "ya": "١٨٤٠م",
       "em": "📡",
-      "en": "The telegraph was registered, along with the code of dots and dashes that let letters travel down a wire.",
-      "ar": "سُجّل التلغراف، ومعه شفرةُ النقاطِ والشُّرَط التي جعلتِ الحروفَ تسيرُ في سلك."
+      "en": "The telegraph was registered, with its code of dots and dashes.\nFor the first time in history a message outran its messenger, and letters travelled down a wire instead of in someone's hand.",
+      "ar": "سُجّل التلغراف وشفرته المكوّنة من نقاط وشُرَط.\nولأول مرة في التاريخ، سبقت الرسالة حاملها، وسارت الحروف عبر الأسلاك بدل أن يحملها إنسان."
     },
     {
       "cal": "g",
@@ -1398,8 +1398,8 @@
       "ye": "1972",
       "ya": "١٩٧٢م",
       "em": "⏱️",
-      "en": "An extra second was added to the world's clocks for the first time, because the Earth does not spin at a perfectly steady rate.",
-      "ar": "أُضيفتْ ثانيةٌ زائدةٌ إلى ساعاتِ العالمِ لأولِ مرة، لأنَّ الأرضَ لا تدورُ بانتظامٍ تامّ."
+      "en": "An extra second was added to the world's clocks for the first time.\nFor one minute the clock read 23:59:60, a second that exists on no ordinary clock.",
+      "ar": "أُضيفت ثانية زائدة إلى ساعات العالم لأول مرة.\nفقرأت الساعة في تلك الدقيقة ٢٣:٥٩:٦٠، وهي ثانية لا وجود لها في أي ساعة عادية."
     },
     {
       "cal": "g",
@@ -1428,8 +1428,8 @@
       "ye": "1054",
       "ya": "١٠٥٤م",
       "em": "🌟",
-      "en": "Chinese and Arab astronomers recorded a new star so bright it was visible in daylight for three weeks. It was a dying star exploding.",
-      "ar": "سجّلَ فلكيّونَ صينيّونَ وعربٌ نجمًا جديدًا بلغَ من السطوعِ أن رُئي في وضحِ النهارِ ثلاثةَ أسابيع. وكان نجمًا يحتضرُ وينفجر."
+      "en": "Chinese and Arab astronomers recorded a new star in the sky.\nIt was bright enough to be seen in daylight for weeks, before it became clear it was a dying star exploding.",
+      "ar": "سجّل فلكيون صينيون وعرب ظهور نجم جديد في السماء.\nكان ساطعًا لدرجة أنه رُئي نهارًا لأسابيع، قبل أن يتضح أنه انفجار نجم يحتضر."
     },
     {
       "cal": "g",
@@ -1448,8 +1448,8 @@
       "ye": "1885",
       "ya": "١٨٨٥م",
       "em": "💉",
-      "en": "A boy bitten by a rabid dog was treated with the first rabies vaccine, and lived.",
-      "ar": "عُولج صبيٌّ عضّه كلبٌ مسعورٌ بأولِ لقاحٍ لداءِ الكَلَب، فنجا."
+      "en": "A boy bitten by a rabid dog was treated with the first rabies vaccine.\nHe lived, though before that day such a bite had meant almost certain death.",
+      "ar": "عولج صبي عضّه كلب مسعور بأول لقاح لداء الكَلَب.\nونجا، بعدما كان هذا النوع من العَضّ يعني الموت المؤكد تقريبًا قبل ذلك اليوم."
     },
     {
       "cal": "g",
@@ -1458,8 +1458,8 @@
       "ye": "1714",
       "ya": "١٧١٤م",
       "em": "💰",
-      "en": "Britain offered a fortune to anyone who could work out how far east or west a ship was at sea. The answer turned out to be a clock accurate enough to keep home time on board.",
-      "ar": "رصدتْ بريطانيا ثروةً لمن يهتدي إلى معرفةِ موقعِ السفينةِ شرقًا أو غربًا في عرضِ البحر. وكان الحلُّ ساعةً دقيقةً تحفظُ توقيتَ الوطنِ على ظهرِ السفينة."
+      "en": "Britain offered a great prize to whoever could fix a ship's position at sea.\nThe answer was a sea clock accurate enough to hold home time, letting sailors know where they were across the oceans.",
+      "ar": "رصدت بريطانيا جائزة كبرى لمن يحدد موقع السفن في عرض البحر بدقة.\nوكان الحل ساعة بحرية دقيقة تحفظ توقيت الوطن، فتُمكّن البحّارة من معرفة موقعهم عبر المحيطات."
     },
     {
       "cal": "g",
@@ -1498,8 +1498,8 @@
       "ye": "2015",
       "ya": "٢٠١٥م",
       "em": "🔭",
-      "en": "A spacecraft reached Pluto after nine years of travel, and we finally saw what it looks like.",
-      "ar": "وصلتْ مركبةٌ إلى بلوتو بعد تسعِ سنواتٍ من السفر، فرأينا أخيرًا كيف يبدو."
+      "en": "New Horizons reached Pluto after nine and a half years of travel.\nFor the first time people saw its surface up close, including a white plain of ice shaped like a heart.",
+      "ar": "وصلت مركبة «نيو هورايزنز» إلى بلوتو بعد تسع سنوات ونصف من السفر.\nولأول مرة، رأى البشر سطحه عن قرب، بما فيه سهل جليدي أبيض على شكل قلب."
     },
     {
       "cal": "g",
@@ -1518,8 +1518,8 @@
       "ye": "1969",
       "ya": "١٩٦٩م",
       "em": "🚀",
-      "en": "Apollo 11 lifted off for the Moon carrying three men and a computer weaker than any phone sold today.",
-      "ar": "انطلقتْ أبولو ١١ نحوَ القمرِ تحملُ ثلاثةَ رجالٍ وحاسوبًا أضعفَ من أيِّ هاتفٍ يُباعُ اليوم."
+      "en": "Apollo 11 set off for the Moon.\nIt carried three astronauts and a computer far weaker than the phone in a child's hand today, and it still guided them to the surface of another world.",
+      "ar": "انطلقت «أبولو ١١» نحو القمر.\nحملت ثلاثة رواد فضاء وحاسوبًا بقدرات أقل بكثير من هاتف ذكي في يد طفل اليوم، ومع ذلك قادهم إلى سطح عالم آخر."
     },
     {
       "cal": "g",
@@ -1528,8 +1528,8 @@
       "ye": "1969",
       "ya": "١٩٦٩م",
       "em": "🌕",
-      "en": "A spacecraft landed on the Moon — the same moon whose crescent still opens and closes the Hijri months.",
-      "ar": "هبطتْ مركبةٌ على سطحِ القمر — القمرِ نفسِه الذي ما زالَ هلالُه يفتحُ الشهورَ الهجريةَ ويغلقُها."
+      "en": "A spacecraft landed on the Moon.\nThe same body whose crescent people had watched for centuries to know when the Hijri months begin and end.",
+      "ar": "هبطت مركبة على سطح القمر.\nذلك الجرم نفسه الذي ظل البشر ينظرون إلى هلاله قرونًا ليعرفوا بداية الشهور الهجرية ونهايتها."
     },
     {
       "cal": "g",
@@ -1538,8 +1538,8 @@
       "ye": "1976",
       "ya": "١٩٧٦م",
       "em": "🔴",
-      "en": "The first craft to work on the surface of Mars landed and sent back a photograph of the ground under its own feet.",
-      "ar": "هبطتْ أولُ مركبةٍ تعملُ على سطحِ المرّيخ، وأرسلتْ صورةً للأرضِ تحتَ قدمَيها."
+      "en": "The first craft to work on the surface of Mars touched down.\nIt sent back the first picture from that surface, then kept going for six years, far beyond the life it was built for.",
+      "ar": "هبطت أول مركبة تعمل على سطح المريخ.\nوأرسلت أول صورة من سطحه، ثم واصلت عملها ست سنوات متجاوزة عمرها المتوقع بكثير."
     },
     {
       "cal": "g",
@@ -1588,8 +1588,8 @@
       "ye": "1958",
       "ya": "١٩٥٨م",
       "em": "🏛️",
-      "en": "NASA was created, and its founding law required it to publish what it found rather than keep it secret.",
-      "ar": "أُنشئتْ وكالةُ ناسا، ونصَّ قانونُ إنشائِها على أن تنشرَ ما تكتشفُه لا أن تكتمَه."
+      "en": "NASA was created.\nIts founding law required its findings to be published for everyone, rather than locked in a drawer.",
+      "ar": "أُنشئت وكالة ناسا.\nونصّ قانون تأسيسها على أن تُنشر نتائج اكتشافاتها ليعرفها الجميع، لا أن تبقى حبيسة الأدراج."
     },
     {
       "cal": "g",
@@ -1718,8 +1718,8 @@
       "ye": "1868",
       "ya": "١٨٦٨م",
       "em": "☀️",
-      "en": "Helium was identified in the light of the sun twenty-seven years before anyone found it on Earth. It is the only element we came to know in the sky first.",
-      "ar": "عُرف عنصر الهيليوم من ضوء الشمس قبل أن يُعثر عليه على الأرض بسبع وعشرين سنة. وهو العنصر الوحيد الذي عرفناه في السماء أولًا."
+      "en": "Helium was first identified in the light of the sun.\nIt is the only element scientists came to know in the sky twenty-seven years before finding it on Earth.",
+      "ar": "اكتُشف الهيليوم لأول مرة في ضوء الشمس.\nوكان العنصر الوحيد الذي عرفه العلماء في السماء قبل أن يجدوه على الأرض بسبع وعشرين سنة."
     },
     {
       "cal": "g",
@@ -1728,8 +1728,8 @@
       "ye": "1839",
       "ya": "١٨٣٩م",
       "em": "📷",
-      "en": "France bought the rights to photography and gave the method to the world free of charge.",
-      "ar": "اشترتْ فرنسا حقوقَ التصويرِ الفوتوغرافي وأهدتْ طريقتَه للعالمِ بلا مقابل."
+      "en": "France bought the rights to photography.\nThen it gave the method away to the whole world, free of charge.",
+      "ar": "اشترت فرنسا حقوق التصوير الفوتوغرافي.\nثم أهدت طريقته للعالم كله بلا مقابل."
     },
     {
       "cal": "g",
@@ -1768,8 +1768,8 @@
       "ye": "1609",
       "ya": "١٦٠٩م",
       "em": "🔭",
-      "en": "Galileo showed his telescope to the leaders of Venice from the top of a tower, letting them see ships hours before they appeared.",
-      "ar": "عرضَ غاليليو تلسكوبَه على حكّامِ البندقيةِ من أعلى برج، فأراهم السفنَ قبلَ ظهورِها بساعات."
+      "en": "Galileo showed his telescope to the leaders of Venice from the top of a tower.\nHe let them see distant ships before the eye could catch them, and they rewarded him by doubling his salary.",
+      "ar": "عرض غاليليو تلسكوبه على حكّام البندقية من أعلى برج.\nفأراهم السفن البعيدة قبل أن تُرى بالعين، فكافأوه بمضاعفة راتبه."
     },
     {
       "cal": "g",
@@ -1778,8 +1778,8 @@
       "ye": "1989",
       "ya": "١٩٨٩م",
       "em": "🔵",
-      "en": "A spacecraft reached Neptune, the last of the planets, ending a twelve-year tour of the outer solar system.",
-      "ar": "وصلتْ مركبةٌ إلى نبتون، آخرِ الكواكب، فاختتمتْ جولةً استمرّتْ اثنتيْ عشرةَ سنةً في أطرافِ المجموعةِ الشمسية."
+      "en": "Voyager 2 reached Neptune, the outermost planet in the solar system.\nWith it the craft completed a grand tour that had taken in all four outer planets over twelve years.",
+      "ar": "وصلت «فوياجر ٢» إلى نبتون، أبعد كواكب المجموعة الشمسية.\nوبذلك أكملت رحلة استكشاف كبرى زارت خلالها الكواكب الخارجية الأربعة خلال اثنتي عشرة سنة."
     },
     {
       "cal": "g",
@@ -1838,8 +1838,8 @@
       "ye": "1977",
       "ya": "١٩٧٧م",
       "em": "💿",
-      "en": "Voyager 1 left Earth carrying a golden record of greetings in fifty-five languages, in case anyone ever finds it.",
-      "ar": "غادرتْ فوياجر ١ الأرضَ تحملُ أسطوانةً ذهبيةً فيها تحياتٌ بخمسٍ وخمسينَ لغة، تحسُّبًا لأن يعثرَ عليها أحدٌ يومًا."
+      "en": "Voyager 1 left Earth.\nIt carried a golden record of sounds, pictures and greetings in fifty-five languages, a message someone may one day find far out among the stars.",
+      "ar": "غادرت «فوياجر ١» الأرض.\nوحملت معها أسطوانة ذهبية تسجل أصواتًا وصورًا وتحيات بخمسٍ وخمسين لغة، كرسالة قد يعثر عليها أحد يومًا بعيدًا بين النجوم."
     },
     {
       "cal": "g",
@@ -1858,8 +1858,8 @@
       "ye": "1947",
       "ya": "١٩٤٧م",
       "em": "🦋",
-      "en": "A team fixing a jammed computer found a moth caught between its parts. They taped it into the logbook and wrote: first actual case of a bug being found. The word was already in use for faults, but this is the most famous page left of it.",
-      "ar": "وجد فريق يصلح حاسوبًا معطلًا فراشة عالقة بين أجزائه، فألصقوها في دفتر العمل وكتبوا: أول حشرة حقيقية نعثر عليها. وكانت الكلمة مستعملة قبل ذلك في وصف الأعطال، لكن هذه الصفحة هي أشهر ما بقي منها."
+      "en": "A team of engineers found a moth caught inside a jammed computer.\nThey taped it into the logbook and wrote \"first actual case of a bug being found\" — the most famous page left of a word already in use for faults.",
+      "ar": "وجد فريق من المهندسين فراشة عالقة داخل حاسوب معطّل.\nألصقوها في دفتر العمل وكتبوا: «أول حشرة حقيقية نعثر عليها»، وهي أشهر صفحة بقيت من كلمة كانت تُستعمل قبلها في وصف الأعطال."
     },
     {
       "cal": "g",
@@ -1868,8 +1868,8 @@
       "ye": "2008",
       "ya": "٢٠٠٨م",
       "em": "⚛️",
-      "en": "The largest machine ever built was switched on, a ring twenty-seven kilometres round buried under the border of France and Switzerland.",
-      "ar": "شُغّلت أكبر آلة بناها الإنسان، وهي حلقة محيطها سبعة وعشرون كيلومترًا مدفونة تحت الحدود بين فرنسا وسويسرا."
+      "en": "The largest scientific instrument ever built was switched on.\nA giant ring running twenty-seven kilometres underground between France and Switzerland, built to uncover the secrets of the universe's smallest parts.",
+      "ar": "شُغّل أكبر جهاز علمي بناه الإنسان.\nحلقة عملاقة تمتد سبعة وعشرين كيلومترًا تحت الأرض بين فرنسا وسويسرا، صُممت لكشف أسرار أصغر مكوّنات الكون."
     },
     {
       "cal": "g",
@@ -1948,8 +1948,8 @@
       "ye": "1846",
       "ya": "١٨٤٦م",
       "em": "🔵",
-      "en": "Neptune was found with pen and paper before anyone looked: its pull on Uranus showed where it had to be, and the telescope found it that same night.",
-      "ar": "اكتُشف نبتون بالورقةِ والقلمِ قبلَ أن ينظرَ إليه أحد: دلّ جذبُه لأورانوس على موضعِه، فوجدَه التلسكوبُ في الليلةِ نفسِها."
+      "en": "Neptune was found by calculation before any eye had seen it.\nWobbles in the orbit of Uranus gave away an unknown planet; astronomers worked out where it must be, turned a telescope there, and it appeared.",
+      "ar": "اكتُشف نبتون بالحساب قبل أن تراه العين.\nكشفت اضطرابات مدار أورانوس عن وجود كوكب مجهول، فحسب العلماء مكانه، ووجّهوا التلسكوب إليه فظهر لأول مرة."
     },
     {
       "cal": "g",
@@ -1978,8 +1978,8 @@
       "ye": "1954",
       "ya": "١٩٥٤م",
       "em": "🔬",
-      "en": "Twelve countries agreed to build one shared laboratory rather than twelve smaller ones. Everything found there is published for anyone to read, and the web was invented inside it.",
-      "ar": "اتفقت اثنتا عشرة دولة على بناء مختبر واحد مشترك بدل اثني عشر مختبرًا صغيرًا. وكل ما يُكتشف فيه يُنشر ليقرأه من شاء، وفي داخله اختُرع الويب."
+      "en": "Twelve countries agreed to build one shared scientific laboratory.\nThe web was born inside it — the idea of making information reachable by everyone instead of trapped on researchers' machines.",
+      "ar": "اتفقت اثنتا عشرة دولة على بناء مختبر علمي واحد مشترك.\nوفي داخله وُلد الويب، فكرة جعل المعلومات متاحة للجميع بدل أن تبقى حبيسة أجهزة الباحثين."
     },
     {
       "cal": "g",
@@ -2048,8 +2048,8 @@
       "ye": "1874",
       "ya": "١٨٧٤م",
       "em": "✉️",
-      "en": "Countries agreed that a letter could reach any of them with one stamp bought at home. Before that, you paid every country along the way.",
-      "ar": "اتّفقتْ الدولُ على أن تصلَ الرسالةُ إلى أيٍّ منها بطابعٍ واحدٍ يُشترى من بلدِ المرسِل. وقبلَها كنتَ تدفعُ لكلِّ دولةٍ في الطريق."
+      "en": "Countries agreed on one postal system, with a single stamp good for anywhere in the world.\nBefore it, the sender paid a separate fee to every country the letter passed through.",
+      "ar": "اتفقت الدول على نظام بريدي واحد وطابع يكفي لأي وجهة في العالم.\nوقبل ذلك، كان المرسِل يدفع رسومًا منفصلة لكل دولة تمر بها رسالته."
     },
     {
       "cal": "g",
@@ -2128,8 +2128,8 @@
       "ye": "1707",
       "ya": "١٧٠٧م",
       "em": "⚓",
-      "en": "A British fleet ran aground because nobody on board could tell how far east or west they were. The loss is what pushed the search for a solution.",
-      "ar": "جنحَ أسطولٌ بريطانيٌّ لأنَّ أحدًا على متنِه لم يستطعْ تحديدَ موقعِه شرقًا أو غربًا. وهذه الخسارةُ هي ما دفعَ للبحثِ عن حل."
+      "en": "A British fleet ran aground off the Scilly Isles after misjudging where it was.\nIts commanders could not tell whether they lay east or west of their line, and the disaster drove the search for a reliable way to find longitude at sea.",
+      "ar": "جنح أسطول بريطاني قرب جزر سيلي بسبب خطأ في تحديد موقعه.\nلم يعرف القادة هل كانوا شرق خطهم أم غربه، وكانت الكارثة سببًا في البحث عن طريقة دقيقة لمعرفة خط الطول في البحر."
     },
     {
       "cal": "g",
@@ -2148,8 +2148,8 @@
       "ye": "1861",
       "ya": "١٨٦١م",
       "em": "🐎",
-      "en": "The horseback express mail in America stopped just two days after the telegraph wires reached the far coast. A rider had covered that route in ten days; a message now took minutes.",
-      "ar": "توقف بريد الخيول السريع في أمريكا بعد يومين فقط من وصول أسلاك التلغراف إلى الساحل الآخر. وقد كان الفارس يقطع الطريق في عشرة أيام، فصارت الرسالة تصل في دقائق."
+      "en": "The horseback express mail in America stopped.\nTwo days after the telegraph wires reached the far coast, a letter that had taken ten days on horseback became minutes down a wire.",
+      "ar": "توقف بريد الخيول السريع في أمريكا.\nفبعد يومين فقط من وصول أسلاك التلغراف إلى الساحل الآخر، تحولت رسالة كانت تحتاج عشرة أيام على ظهور الخيل إلى دقائق عبر الكهرباء."
     },
     {
       "cal": "g",
@@ -2288,8 +2288,8 @@
       "ye": "1974",
       "ya": "١٩٧٤م",
       "em": "📡",
-      "en": "A message was beamed from Earth toward a distant cluster of stars, describing where we are and what we are made of. It will arrive in twenty-five thousand years.",
-      "ar": "أُرسلت رسالة من الأرض في اتجاه حشد بعيد من النجوم، تصف أين نحن ومم نتكوّن. وستصل بعد خمسة وعشرين ألف سنة."
+      "en": "A message was beamed from Earth toward a distant cluster of stars.\nIt describes us, where the Earth sits and what it is made of, but it will not arrive for some twenty-five thousand years.",
+      "ar": "أُرسلت رسالة من الأرض نحو حشد نجمي بعيد.\nحملت وصفًا للبشر ومكان الأرض وتركيبها، لكنها لن تصل قبل نحو خمسةٍ وعشرين ألف سنة."
     },
     {
       "cal": "g",
@@ -2308,8 +2308,8 @@
       "ye": "1883",
       "ya": "١٨٨٣م",
       "em": "🚂",
-      "en": "The Day of Two Noons: North America's railways switched to time zones, and clocks in many cities struck noon twice.",
-      "ar": "«يومُ الظهرين»: تحوّلتْ سككُ حديدِ أمريكا الشماليةِ إلى المناطقِ الزمنية، فدقّتْ ساعاتُ مدنٍ كثيرةٍ الظهرَ مرّتين."
+      "en": "North America's railways adopted time zones for the first time.\nOn the day of the change, clocks in many cities struck twelve twice, while in others twelve came only once.",
+      "ar": "اعتمدت سكك حديد أمريكا الشمالية المناطق الزمنية لأول مرة.\nوفي يوم التغيير، دقّت ساعات مدن كثيرة الثانية عشرة مرتين، بينما لم تأتِ الثانية عشرة في مدن أخرى إلا مرة واحدة."
     },
     {
       "cal": "g",
@@ -2318,8 +2318,8 @@
       "ye": "1969",
       "ya": "١٩٦٩م",
       "em": "👣",
-      "en": "A craft landed on the Moon about two hundred metres from another craft that had arrived two and a half years before it. Its crew walked over, cut pieces off it, and carried them home to see what the Moon had done to them.",
-      "ar": "هبطت مركبة على القمر على بُعد مئتي متر تقريبًا من مركبة أخرى كانت قد وصلت قبلها بسنتين ونصف. فمشى روّادها إليها وقطعوا منها أجزاء وحملوها إلى الأرض ليروا ما فعله بها القمر."
+      "en": "Apollo 12 came down about two hundred metres from a craft that had landed before it.\nThe crew walked over, took pieces off it and carried them back to Earth, to see what the years on the Moon had done to them.",
+      "ar": "هبطت «أبولو ١٢» على بُعد نحو مئتي متر من مركبة هبطت قبلها.\nفمشى الرواد إليها، وأخذوا منها أجزاءً عادوا بها إلى الأرض، ليروا كيف غيّرها بقاؤها على القمر."
     },
     {
       "cal": "g",
@@ -2338,8 +2338,8 @@
       "ye": "1783",
       "ya": "١٧٨٣م",
       "em": "🎈",
-      "en": "Two men rose over Paris in a hot-air balloon — the first time a human being ever left the ground and came back safely.",
-      "ar": "ارتفعَ رجلانِ فوقَ باريس في منطادٍ بالهواءِ الساخن — وكانتْ أولَ مرةٍ يغادرُ فيها إنسانٌ الأرضَ ويعودُ سالمًا."
+      "en": "Two men rose over Paris in a hot-air balloon.\nIt was the first time a human being left the ground and came back down safely.",
+      "ar": "ارتفع رجلان فوق باريس في منطاد يعمل بالهواء الساخن.\nوكانت أول مرة يغادر فيها إنسان الأرض ثم يعود إليها سالمًا."
     },
     {
       "cal": "g",
@@ -2418,8 +2418,8 @@
       "ye": "1968",
       "ya": "١٩٦٨م",
       "em": "🖱️",
-      "en": "In one ninety-minute demonstration, an engineer showed the mouse, windows, video calling and shared editing — most of how we use a computer today, shown in a single sitting.",
-      "ar": "في عرض واحد مدته تسعون دقيقة، قدّم مهندس الفأرة والنوافذ والمكالمة المرئية والتحرير المشترك — أي معظم طريقة استعمالنا للحاسوب اليوم، في جلسة واحدة."
+      "en": "An engineer gave a demonstration lasting ninety minutes.\nIn it he unveiled the mouse, windows, video calling and shared editing, years before any of them became part of daily life.",
+      "ar": "قدّم مهندس عرضًا استمر تسعين دقيقة.\nكشف فيه الفأرة والنوافذ والمكالمة المرئية والتحرير المشترك، قبل أن تصبح كلها جزءًا من حياتنا اليومية بسنوات طويلة."
     },
     {
       "cal": "g",
@@ -2428,8 +2428,8 @@
       "ye": "1901",
       "ya": "١٩٠١م",
       "em": "🏅",
-      "en": "The first Nobel Prizes were awarded, funded by the will of the man who invented dynamite.",
-      "ar": "مُنحتْ جوائزُ نوبل لأولِ مرة، بتمويلٍ من وصيةِ الرجلِ الذي اخترعَ الديناميت."
+      "en": "The Nobel Prizes were awarded for the first time.\nThey were funded by the will of Alfred Nobel, who invented dynamite, to reward whoever brings humanity the greatest benefit.",
+      "ar": "مُنحت جوائز نوبل لأول مرة.\nوجاء تمويلها من وصية ألفريد نوبل، مخترع الديناميت، ليُكافأ بها من يقدّم أعظم فائدة للبشرية."
     },
     {
       "cal": "g",
@@ -2458,8 +2458,8 @@
       "ye": "1900",
       "ya": "١٩٠٠م",
       "em": "⚛️",
-      "en": "A physicist showed that energy comes in fixed small amounts rather than a smooth flow. He called it a lucky guess; it opened a whole new physics.",
-      "ar": "أثبتَ عالمُ فيزياءَ أنَّ الطاقةَ تأتي في مقاديرَ صغيرةٍ محدّدةٍ لا في تدفّقٍ متّصل. وسمّاها تخمينًا موفّقًا؛ ففتحتْ فيزياءَ جديدةً بكاملِها."
+      "en": "Planck proposed that energy moves only in fixed small amounts.\nHe took it for a mathematical trick, and it became the beginning of quantum physics.",
+      "ar": "اقترح بلانك أن الطاقة لا تنتقل إلا في مقادير صغيرة محددة.\nوعدّها مجرد حيلة رياضية، لكنها أصبحت بداية فيزياء الكم."
     },
     {
       "cal": "g",
@@ -2468,8 +2468,8 @@
       "ye": "1970",
       "ya": "١٩٧٠م",
       "em": "🟠",
-      "en": "A craft landed on Venus and survived twenty-three minutes in heat that melts lead — the first landing on another planet.",
-      "ar": "هبطتْ مركبةٌ على الزهرةِ وصمدتْ ثلاثًا وعشرينَ دقيقةً في حرارةٍ تُذيبُ الرصاص — وكان أولَ هبوطٍ على كوكبٍ آخر."
+      "en": "A craft landed on the surface of Venus for the first time.\nIt held out for twenty-three minutes in heat enough to melt lead and a pressure that crushes most machines.",
+      "ar": "هبطت مركبة على سطح الزهرة لأول مرة.\nوصمدت ثلاثًا وعشرين دقيقة وسط حرارة تكفي لإذابة الرصاص وضغطٍ يسحق معظم الآلات."
     },
     {
       "cal": "g",
@@ -2488,8 +2488,8 @@
       "ye": "1903",
       "ya": "١٩٠٣م",
       "em": "✈️",
-      "en": "The first aeroplane flight lasted twelve seconds and covered less than the length of a modern airliner.",
-      "ar": "استغرقتْ أولُ رحلةِ طائرةٍ اثنتيْ عشرةَ ثانيةً وقطعتْ مسافةً أقلَّ من طولِ طائرةِ ركّابٍ حديثة."
+      "en": "The first aeroplane flew for just twelve seconds.\nIt covered less ground than the length of a modern airliner standing still.",
+      "ar": "حلّقت أول طائرة اثنتي عشرة ثانية فقط.\nولم تقطع إلا مسافةً أقصر من طول طائرة ركاب حديثة وهي متوقفة على الأرض."
     },
     {
       "cal": "g",
@@ -2508,8 +2508,8 @@
       "ye": "1968",
       "ya": "١٩٦٨م",
       "em": "🌗",
-      "en": "Three men left Earth's orbit for the first time and travelled all the way round the Moon and back.",
-      "ar": "غادرَ ثلاثةُ رجالٍ مدارَ الأرضِ لأولِ مرة، وطافوا حولَ القمرِ ثم عادوا."
+      "en": "Three men left Earth's orbit for the first time.\nThey went round the Moon and came back, and it was the first time people saw the whole Earth hanging in the dark of space.",
+      "ar": "غادر ثلاثة رجال مدار الأرض لأول مرة.\nداروا حول القمر ثم عادوا، وكانت أول مرة يرى فيها البشر الأرض كاملة معلّقة في ظلام الفضاء."
     },
     {
       "cal": "g",
@@ -2548,8 +2548,8 @@
       "ye": "2021",
       "ya": "٢٠٢١م",
       "em": "🔭",
-      "en": "The largest telescope ever sent to space was launched, folded up like origami, and unfolded itself over the following month.",
-      "ar": "أُطلق أكبرُ تلسكوبٍ أُرسل إلى الفضاء، مطويًّا كورقةِ أوريغامي، ثم فردَ نفسَه على مدى الشهرِ التالي."
+      "en": "The largest telescope ever sent to space was launched.\nIt went up folded like a sheet of origami, then opened its mirrors and panels over weeks before it could begin looking into the depths of the universe.",
+      "ar": "أُطلق أكبر تلسكوب أُرسل إلى الفضاء.\nانطلق مطويًا مثل ورقة أوريغامي، ثم فتح مراياه وأجزاءه تدريجيًا خلال أسابيع ليبدأ النظر إلى أعماق الكون."
     },
     {
       "cal": "g",
