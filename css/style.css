@@ -359,6 +359,8 @@ html.app-mode .app-tools { display: block; width: min(960px, 92%); margin: 14px 
   text-transform: uppercase; color: var(--text-2); opacity: .8; margin-bottom: 5px;
 }
 .dr-otd-year { margin-inline-start: 4px; color: var(--brand); opacity: .95; letter-spacing: .04em; }
+/* Second beat of the entry — what it led to — on its own line, a shade back. */
+.dr-otd-then { display: block; margin-top: 3px; opacity: .82; }
 .dr-otd-em { margin-inline-end: 5px; font-size: .9rem; }
 
 /* ===== App tools — category groups ===== */

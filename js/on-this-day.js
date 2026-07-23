@@ -84,6 +84,14 @@
     const text = ar ? it.ar : it.en;
     const year = ar ? it.ya : it.ye;
 
+    // Entries are written in two beats — what happened, then why it still
+    // matters — separated by a newline. The second beat sits on its own line,
+    // a shade quieter, so the pair reads as a very short story.
+    const beats = text.split("\n").map((s) => s.trim()).filter(Boolean);
+    const body = beats.length > 1
+      ? esc(beats[0]) + '<span class="dr-otd-then">' + esc(beats.slice(1).join(" ")) + "</span>"
+      : esc(text);
+
     // Emoji and year ride on the label line, so the sentence itself starts clean.
     const html = '<p id="onThisDay" class="dr-otd">'
       + '<span class="dr-otd-label">'
@@ -91,7 +99,7 @@
       + esc(kicker())
       + (year ? ' <span class="dr-otd-year">' + esc(year) + "</span>" : "")
       + "</span>"
-      + esc(text) + "</p>";
+      + body + "</p>";
     card.insertAdjacentHTML("beforeend", html);
     return true;
   }

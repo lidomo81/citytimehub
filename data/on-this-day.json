@@ -184,6 +184,16 @@
     {
       "cal": "g",
       "m": 1,
+      "d": 5,
+      "ye": "2005",
+      "ya": "٢٠٠٥م",
+      "em": "🔭",
+      "en": "The body called Eris was found out beyond Neptune.\nIt was the direct reason Pluto was struck off the list of planets less than a year later.",
+      "ar": "اكتُشف جِرم «إيريس» خلف نبتون.\nوكان هذا الاكتشاف السبب المباشر في خروج بلوتو من قائمة الكواكب بعد أقل من عام."
+    },
+    {
+      "cal": "g",
+      "m": 1,
       "d": 7,
       "ye": "1610",
       "ya": "١٦١٠م",
@@ -260,6 +270,16 @@
       "em": "🚀",
       "en": "A craft set out for Pluto at the highest speed anything had ever left the Earth. Even so, the journey took nine and a half years.",
       "ar": "انطلقت مركبة نحو بلوتو بأعلى سرعة غادر بها شيء كوكب الأرض حتى ذلك الوقت. ومع ذلك استغرقت الرحلة تسع سنوات ونصفًا."
+    },
+    {
+      "cal": "g",
+      "m": 1,
+      "d": 20,
+      "ye": "1929",
+      "ya": "١٩٢٩م",
+      "em": "🎬",
+      "en": "The first talking film shot entirely outdoors was shown.\nUntil then the microphone could not leave the studio, so every scene in every film was acted indoors.",
+      "ar": "عُرض أول فيلم ناطق صُوّر كله في الهواء الطلق.\nوحتى ذلك الحين لم يكن الميكروفون يغادر الاستوديو، فكانت كل المشاهد تُمثَّل في الداخل."
     },
     {
       "cal": "g",
@@ -384,6 +404,16 @@
     {
       "cal": "g",
       "m": 2,
+      "d": 7,
+      "ye": "1984",
+      "ya": "١٩٨٤م",
+      "em": "👨‍🚀",
+      "en": "Bruce McCandless stepped away from his spacecraft with no line holding him.\nNothing kept him from falling but a small jet pack, and nobody has done it since.",
+      "ar": "ابتعد بروس مكاندلس عن مركبته دون أي حبل يمسكه.\nولم يكن يحول بينه وبين الضياع سوى محرك صغير على ظهره، ولم يعدها أحد بعده."
+    },
+    {
+      "cal": "g",
+      "m": 2,
       "d": 8,
       "ye": "1828",
       "ya": "١٨٢٨م",
@@ -440,6 +470,16 @@
       "em": "⚱️",
       "en": "The burial chamber of Tutankhamun was opened in Luxor, three months after the steps to it were found. Almost everything inside was still where it had been left.",
       "ar": "فُتحت حجرة دفن توت عنخ آمون في الأقصر، بعد ثلاثة أشهر من العثور على السلم المؤدي إليها. وكان كل ما بداخلها تقريبًا في موضعه الذي تُرك فيه."
+    },
+    {
+      "cal": "g",
+      "m": 2,
+      "d": 17,
+      "ye": "1929",
+      "ya": "١٩٢٩م",
+      "em": "🏛️",
+      "en": "Egypt began putting every known ancient site on a single map.\nBefore it, a temple could be taken apart and shipped abroad with nobody keeping count.",
+      "ar": "بدأت مصر تسجيل كل موقع أثري معروف على خريطة واحدة.\nوقبلها كان المعبد يُفكَّك ويُشحن إلى الخارج دون أن يحصيه أحد."
     },
     {
       "cal": "g",
@@ -584,6 +624,16 @@
     {
       "cal": "g",
       "m": 3,
+      "d": 8,
+      "ye": "1618",
+      "ya": "١٦١٨م",
+      "em": "🪐",
+      "en": "Kepler found the rule tying a planet's year to its distance from the sun.\nAfter it, anyone could work out how far a planet lies simply by timing one orbit.",
+      "ar": "اهتدى كِبلر إلى القاعدة التي تربط سنة الكوكب بمسافته عن الشمس.\nوبعدها صار في وسع أي أحد أن يعرف بُعد كوكب بمجرد قياس زمن دورة واحدة."
+    },
+    {
+      "cal": "g",
+      "m": 3,
       "d": 10,
       "ye": "1876",
       "ya": "١٨٧٦م",
@@ -670,6 +720,16 @@
       "em": "🌌",
       "en": "Einstein published his theory of gravity. In it he said that heavy bodies bend the space around them, and that what we call gravity is nothing but movement along that bend.",
       "ar": "نشر أينشتاين نظريته في الجاذبية. وقد قال فيها إن الأجسام الثقيلة تُحني الفراغ من حولها، وأن ما نسميه جاذبية ليس إلا سيرًا في هذا الانحناء."
+    },
+    {
+      "cal": "g",
+      "m": 3,
+      "d": 22,
+      "ye": "1993",
+      "ya": "١٩٩٣م",
+      "em": "💧",
+      "en": "The world marked its first Water Day.\nA quarter of the people on Earth still have no clean water in the house they live in.",
+      "ar": "أُقيم أول يوم عالمي للمياه.\nوما زال رُبع سكان الأرض بلا ماء نظيف في البيت الذي يسكنونه."
     },
     {
       "cal": "g",
@@ -870,6 +930,16 @@
       "em": "⚗️",
       "en": "Marie Curie finished pulling a tenth of a gram of radium out of a whole tonne of rock dug from a mine, after four years of work in an old wooden hut with a leaking roof.",
       "ar": "أتمّت ماري كوري استخراج عُشر جرام من الراديوم من طن كامل من الصخر المستخرج من المنجم، بعد أربع سنوات من العمل في غرفة خشبية قديمة يتسرب منها المطر."
+    },
+    {
+      "cal": "g",
+      "m": 4,
+      "d": 21,
+      "ye": "1934",
+      "ya": "١٩٣٤م",
+      "em": "📷",
+      "en": "The famous photograph of the Loch Ness monster was published.\nSixty years later, one of the men behind it admitted the whole creature was a toy submarine.",
+      "ar": "نُشرت الصورة الشهيرة لوحش بحيرة لوخ نِس.\nوبعد ستين عامًا اعترف أحد من دبّروها بأن الوحش كله كان غوّاصة لعبة."
     },
     {
       "cal": "g",
@@ -1084,6 +1154,16 @@
     {
       "cal": "g",
       "m": 5,
+      "d": 26,
+      "ye": "1922",
+      "ya": "١٩٢٢م",
+      "em": "🏺",
+      "en": "The Egyptian Museum finished its first full catalogue.\nIt holds more than a hundred and twenty thousand pieces, and most of them have never been put on show.",
+      "ar": "أتمّ المتحف المصري أول فهرس كامل لمقتنياته.\nوهو يضم أكثر من مئة وعشرين ألف قطعة، لم يُعرض معظمها قط."
+    },
+    {
+      "cal": "g",
+      "m": 5,
       "d": 27,
       "ye": "1332",
       "ya": "١٣٣٢م",
@@ -1270,6 +1350,16 @@
       "em": "⌨️",
       "en": "The typewriter was registered. Its letter layout was designed to slow typists down so the keys would stop jamming — and we still use it on our phones.",
       "ar": "سُجّلتْ الآلةُ الكاتبة. ورُتّبتْ حروفُها لإبطاءِ الكاتبِ حتى تتوقّفَ المفاتيحُ عن التشابك — وما زلنا نستعملُ الترتيبَ نفسَه في هواتفِنا."
+    },
+    {
+      "cal": "g",
+      "m": 6,
+      "d": 25,
+      "ye": "1178",
+      "ya": "١١٧٨م",
+      "em": "🌙",
+      "en": "Five monks in England wrote down a burst of light on the crescent moon.\nAstronomers are still arguing over what they saw, and a young crater sits close to where they pointed.",
+      "ar": "دوّن خمسة رهبان في إنجلترا وميضًا رأوه على هلال القمر.\nوما زال الفلكيّون يختلفون فيما رأوه، وثمة فوهة حديثة قريبة من الموضع الذي أشاروا إليه."
     },
     {
       "cal": "g",
@@ -1474,6 +1564,16 @@
     {
       "cal": "g",
       "m": 7,
+      "d": 26,
+      "ye": "1963",
+      "ya": "١٩٦٣م",
+      "em": "📡",
+      "en": "The first satellite to hang still over one spot on Earth was launched.\nEvery weather picture and every satellite dish since rests on a satellite that never appears to move.",
+      "ar": "أُطلق أول قمر صناعي يثبت فوق نقطة واحدة من الأرض.\nوكل صورة طقس وكل طبق استقبال بعده يقوم على قمر لا يبدو أنه يتحرك."
+    },
+    {
+      "cal": "g",
+      "m": 7,
       "d": 27,
       "ye": "1866",
       "ya": "١٨٦٦م",
@@ -1594,6 +1694,16 @@
     {
       "cal": "g",
       "m": 8,
+      "d": 15,
+      "ye": "1799",
+      "ya": "١٧٩٩م",
+      "em": "📐",
+      "en": "The scholars of the French expedition began surveying Egypt.\nWhat came out of it was the Description of Egypt: twenty-three volumes that took twenty years to print.",
+      "ar": "بدأ علماء الحملة الفرنسية مسح مصر.\nوخرج من ذلك كتاب «وصف مصر»: ثلاثة وعشرون مجلدًا استغرقت طباعتها عشرين عامًا."
+    },
+    {
+      "cal": "g",
+      "m": 8,
       "d": 17,
       "ye": "1877",
       "ya": "١٨٧٧م",
@@ -1640,6 +1750,16 @@
       "em": "🖼️",
       "en": "The Mona Lisa was stolen from the Louvre by a workman who simply walked out with it under his coat. The empty wall drew bigger crowds than the painting had, and that is when it became the most famous picture in the world.",
       "ar": "سُرقت الموناليزا من متحف اللوفر على يد عامل خرج بها ببساطة تحت معطفه. وقد اجتذب الحائط الفارغ زحامًا أكبر مما اجتذبته اللوحة، ومن يومها صارت أشهر صورة في العالم."
+    },
+    {
+      "cal": "g",
+      "m": 8,
+      "d": 24,
+      "ye": "1891",
+      "ya": "١٨٩١م",
+      "em": "🎞️",
+      "en": "Edison registered a camera fast enough to capture movement.\nFilms were watched one person at a time, bent over a hole in a wooden box.",
+      "ar": "سجّل إديسون آلة تصوير سريعة بما يكفي لالتقاط الحركة.\nوكانت الأفلام تُشاهَد فردًا فردًا، بانحناء على فتحة في صندوق خشبي."
     },
     {
       "cal": "g",
@@ -1814,12 +1934,32 @@
     {
       "cal": "g",
       "m": 9,
+      "d": 21,
+      "ye": "1981",
+      "ya": "١٩٨١م",
+      "em": "🕊️",
+      "en": "The world set aside one day a year for peace.\nSince 2001 it has carried a call to lay down arms for twenty-four hours, wherever fighting is going on.",
+      "ar": "خصّص العالم يومًا واحدًا في السنة للسلام.\nومنذ ٢٠٠١ صار يحمل دعوة لوقف السلاح أربعًا وعشرين ساعة، في أي مكان يدور فيه قتال."
+    },
+    {
+      "cal": "g",
+      "m": 9,
       "d": 23,
       "ye": "1846",
       "ya": "١٨٤٦م",
       "em": "🔵",
       "en": "Neptune was found with pen and paper before anyone looked: its pull on Uranus showed where it had to be, and the telescope found it that same night.",
       "ar": "اكتُشف نبتون بالورقةِ والقلمِ قبلَ أن ينظرَ إليه أحد: دلّ جذبُه لأورانوس على موضعِه، فوجدَه التلسكوبُ في الليلةِ نفسِها."
+    },
+    {
+      "cal": "g",
+      "m": 9,
+      "d": 27,
+      "ye": "1822",
+      "ya": "١٨٢٢م",
+      "em": "📜",
+      "en": "Champollion announced that he had cracked the Egyptian hieroglyphs.\nFrom that day, thousands of inscriptions that had stood silent for two thousand years could be read again.",
+      "ar": "أعلن شامبليون نجاحه في فك رموز الهيروغليفية المصرية.\nومنذ ذلك اليوم، أصبح بالإمكان قراءة آلاف النقوش التي ظلت صامتة لأكثر من ألفي عام."
     },
     {
       "cal": "g",
@@ -1850,6 +1990,16 @@
       "em": "💧",
       "en": "The first power station running on the force of water was switched on. It lit two houses and a paper mill, and it is the grandparent of every dam that lights a city today.",
       "ar": "شُغّلت أول محطة كهرباء تعمل بقوة الماء. وقد كانت تكفي لإضاءة بيتين ومصنع ورق، وهي جدّة كل السدود التي تنير المدن اليوم."
+    },
+    {
+      "cal": "g",
+      "m": 10,
+      "d": 1,
+      "ye": "1990",
+      "ya": "١٩٩٠م",
+      "em": "👵",
+      "en": "A day was set aside for older people.\nThe world now holds more people over sixty-five than under five, for the first time in its history.",
+      "ar": "خُصّص يوم لكبار السن.\nوصار في العالم اليوم عدد من تجاوزوا الخامسة والستين أكبر من عدد من هم دون الخامسة، لأول مرة في تاريخه."
     },
     {
       "cal": "g",
@@ -2033,6 +2183,16 @@
     },
     {
       "cal": "g",
+      "m": 10,
+      "d": 30,
+      "ye": "1938",
+      "ya": "١٩٣٨م",
+      "em": "📻",
+      "en": "A radio play about an invasion from Mars was broadcast as if it were the news.\nListeners who tuned in late believed it, and it became the best-known lesson in how a form can be mistaken for the truth.",
+      "ar": "بُثّت مسرحية إذاعية عن غزو من المريخ بأسلوب النشرة الإخبارية.\nوصدّقها من فاته أولها، فصارت أشهر درس في أن القالب قد يُحسب حقيقة."
+    },
+    {
+      "cal": "g",
       "m": 11,
       "d": 2,
       "ye": "2000",
@@ -2074,6 +2234,16 @@
     {
       "cal": "g",
       "m": 11,
+      "d": 9,
+      "ye": "1934",
+      "ya": "١٩٣٤م",
+      "em": "✨",
+      "en": "Carl Sagan was born.\nHe spent his life explaining the sky in plain words, and said we are all made of the ash of stars that died long before us.",
+      "ar": "وُلد كارل ساجان.\nقضى عمره يشرح السماء بكلام بسيط، وقال إننا جميعًا من رماد نجوم ماتت قبلنا بزمن بعيد."
+    },
+    {
+      "cal": "g",
+      "m": 11,
       "d": 11,
       "ye": "1572",
       "ya": "١٥٧٢م",
@@ -2090,6 +2260,16 @@
       "em": "☄️",
       "en": "A craft landed on a comet for the first time, after a journey of ten years. It bounced twice on touchdown, because the comet's pull was too weak to hold it down.",
       "ar": "هبطت مركبة على سطح مذنّب لأول مرة، بعد رحلة استغرقت عشر سنوات. وقد ارتدّت مرتين عند الهبوط لأن جاذبية المذنّب أضعف من أن تمسك بها."
+    },
+    {
+      "cal": "g",
+      "m": 11,
+      "d": 13,
+      "ye": "1998",
+      "ya": "١٩٩٨م",
+      "em": "🤝",
+      "en": "A day for small kindnesses was marked for the first time.\nIt is kept in dozens of countries now, and asks one thing: a good turn for someone you owe nothing.",
+      "ar": "أُحيي لأول مرة يوم للمعروف الصغير.\nوصار يُحتفى به في عشرات الدول، ولا يطلب سوى شيء واحد: صنيع لمن لا تدين له بشيء."
     },
     {
       "cal": "g",
@@ -2204,6 +2384,16 @@
     {
       "cal": "g",
       "m": 12,
+      "d": 5,
+      "ye": "1985",
+      "ya": "١٩٨٥م",
+      "em": "🙌",
+      "en": "A day was set for volunteers.\nAbout a billion people give their time somewhere in the world each year, worth more than the economy of most countries.",
+      "ar": "خُصّص يوم للمتطوّعين.\nونحو مليار إنسان يبذلون وقتهم في مكان ما من العالم كل عام، بقيمة تفوق اقتصاد أغلب الدول."
+    },
+    {
+      "cal": "g",
+      "m": 12,
       "d": 6,
       "ye": "1877",
       "ya": "١٨٧٧م",
@@ -2280,6 +2470,16 @@
       "em": "🟠",
       "en": "A craft landed on Venus and survived twenty-three minutes in heat that melts lead — the first landing on another planet.",
       "ar": "هبطتْ مركبةٌ على الزهرةِ وصمدتْ ثلاثًا وعشرينَ دقيقةً في حرارةٍ تُذيبُ الرصاص — وكان أولَ هبوطٍ على كوكبٍ آخر."
+    },
+    {
+      "cal": "g",
+      "m": 12,
+      "d": 16,
+      "ye": "1847",
+      "ya": "١٨٤٧م",
+      "em": "🩺",
+      "en": "Semmelweis published his finding that a doctor washing his hands saves lives.\nHe was mocked for it and died before it was accepted, and it remains the cheapest thing a hospital can do.",
+      "ar": "نشر زيملفايس اكتشافه أن غسل الطبيب ليديه يُنقذ الأرواح.\nوقد سُخر منه ومات قبل أن يُقبل كلامه، وما زال هذا أرخص ما تفعله مستشفى."
     },
     {
       "cal": "g",
