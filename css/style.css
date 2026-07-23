@@ -1170,10 +1170,17 @@ html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-grid {
   background: var(--surface);
 }
 html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card {
-  display: flex;
+  position: relative;
+  /* A grid, not flex. Each row is its own grid, so the third column must be a
+     fixed width, not auto — otherwise the countdown row sizes it to its text
+     and the empty rows collapse it, and the times stop lining up. The fixed
+     reserve keeps column one identical on every row, so the times share an edge. */
+  display: grid;
+  grid-template-columns: 1fr 4.4em 5.2em;
   align-items: center;
   gap: 10px;
   padding: 11px 14px;
+  padding-inline-start: 34px;   /* room for the icons pinned at the trailing edge */
   border: none;
   border-bottom: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
   border-radius: 0;
@@ -1188,37 +1195,49 @@ html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card:hover { transform
 /* Name leads; time takes the middle; the countdown and the after-prayer icon
    sit at the trailing edge. */
 html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-name {
-  flex: 1;
+  grid-column: 1;
   font-size: .82rem;
   font-weight: 700;
   color: var(--text);
 }
 html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-time {
+  grid-column: 2;
+  text-align: start;
   margin-top: 0;
   font-size: .92rem;
   font-weight: 800;
 }
+/* The countdown sits in the third column, which is empty on every other row —
+   so it never shifts the time. */
 html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-tag {
+  grid-column: 3;
   margin-top: 0;
   min-height: 0;
-  font-size: .62rem;
+  font-size: .6rem;
   white-space: nowrap;
 }
 
-/* The seal and the misbaha were pinned to the card corners; in a row they ride
-   the trailing edge inline instead. */
+/* The seal and the misbaha were pinned to the card corners. They are decoration,
+   not part of the row's rhythm, so they stay out of the flex flow — pinned to
+   the trailing edge — and never nudge the time out of its column. */
 html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card .prayer-azkar-hint {
-  position: static;
-  order: 5;
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 12px;
+  transform: translateY(-50%);
   opacity: .5;
 }
 html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card .pw-seal {
-  position: static;
-  order: 6;
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 8px;
+  transform: translateY(-50%);
   width: 20px;
   height: 20px;
   box-shadow: none;
 }
+/* When a prayer is done its seal shows there; the misbaha hint steps aside. */
+html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card.pw-done .prayer-azkar-hint { display: none; }
 
 /* Next prayer: a soft green wash on the row, not a bordered tile. */
 html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card.is-next {
