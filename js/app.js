@@ -811,10 +811,15 @@
       method: city.method != null ? city.method : 3,
     };
   }
-  function syncPrayerCityToApp(city) {
+  // Only the latest user-driven city change may update the Android widget.
+  // Without this, an older in-flight sync (e.g. a just-searched city) can finish
+  // after the user already went back, and the widget gets stuck going "forward only".
+  let prayerWidgetSyncSeq = 0;
+  function syncPrayerCityToApp(city, timings) {
     if (!window.AndroidApp || typeof AndroidApp.syncPrayerCity !== "function") return;
     const payload = cityPayload(city);
     if (!payload) return;
+    if (timings && typeof timings === "object") payload.timings = timings;
     try { AndroidApp.syncPrayerCity(JSON.stringify(payload)); } catch (e) {}
   }
   function setCity(city, opts) {
@@ -845,9 +850,11 @@
     } catch (e) {}
     updateStatusBox();
     tick();
-    loadPrayer(city); loadSun(city);
-    // User-driven city changes only — never on initial load (would reschedule alarms).
-    if (opts && opts.syncApp) syncPrayerCityToApp(city);
+    // User-driven only — sync after timings load so Android applies the same city
+    // the UI is showing (and so a newer choice cancels an older sync).
+    const wantSync = !!(opts && opts.syncApp);
+    const syncSeq = wantSync ? ++prayerWidgetSyncSeq : null;
+    loadPrayer(city, syncSeq); loadSun(city);
   }
   function updateSaveStar() {
     const b = $("#cpSave"); if (!b || !currentCity) return;
@@ -910,12 +917,17 @@
     }
   }
 
-  async function loadPrayer(city) {
+  async function loadPrayer(city, widgetSyncSeq) {
     if (!city) return;
     const grid = $("#prayerGrid"), today = new Date();
     const ds = `${String(today.getDate()).padStart(2,"0")}-${String(today.getMonth()+1).padStart(2,"0")}-${today.getFullYear()}`;
     const url = `https://api.aladhan.com/v1/timings/${ds}?latitude=${city.lat}&longitude=${city.lng}&method=${city.method ?? 3}`;
     const PKEY = "cth-prayer:" + city.slug;
+    const maybeSyncWidget = () => {
+      if (widgetSyncSeq == null || widgetSyncSeq !== prayerWidgetSyncSeq) return;
+      if (currentCity !== city || !prayerState || prayerState.city !== city) return;
+      syncPrayerCityToApp(city, prayerState.timings);
+    };
     const render = (data, stale) => {
       // Worldwide cities arrive without a timezone; AlAdhan returns it in meta.
       // Resolve it before anything that needs it (next-prayer, the live clock).
@@ -935,6 +947,7 @@
       const next = nextPrayer(t, city);
       prayerState = { city, timings: {} };
       PRAYERS.forEach(p => prayerState.timings[p] = clean(t[p]));
+      if (t.Sunrise) prayerState.timings.Sunrise = clean(t.Sunrise);
       grid.innerHTML = PRAYERS.map((p, i) => `
         <article class="prayer-card${p === next ? " is-next" : ""}" data-p="${p}">
           <div class="prayer-name">${T.prayers[i]}</div>
@@ -945,6 +958,7 @@
       if (t.Sunrise && t.Sunset) fillSun(clean(t.Sunrise), clean(t.Sunset));
       refreshCityPulse(city, prayerState.timings);
       updateDayAtmosphere();
+      maybeSyncWidget();
     };
     try {
       const res = await fetch(url);
