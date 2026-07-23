@@ -1148,6 +1148,17 @@
     board = document.createElement("div");
     board.id = "cpNowBoard";
     board.className = "cp-now-board";
+    board.addEventListener("click", () => {
+      if (document.documentElement.getAttribute("data-app-tab") !== "prayer") return;
+      const box = document.getElementById("cpNext");
+      if (box && box.classList.contains("cp-streak")) openStatsPanel();
+    });
+    board.addEventListener("keydown", e => {
+      if (e.key !== "Enter" && e.key !== " ") return;
+      if (document.documentElement.getAttribute("data-app-tab") !== "prayer") return;
+      const box = document.getElementById("cpNext");
+      if (box && box.classList.contains("cp-streak")) { e.preventDefault(); openStatsPanel(); }
+    });
     return board;
   }
 
@@ -1242,8 +1253,30 @@
     el.removeAttribute("role");
     el.removeAttribute("tabindex");
     el.removeAttribute("aria-label");
-    if (currentMine) { if (dua) dua.hidden = false; el.classList.add("cp-streak"); renderStreak(el); renderWeek(); }
-    else { if (dua) dua.hidden = true; el.classList.remove("cp-streak", "cp-celebrate", "cp-recover"); hideWeek(); updateNextLine(); }
+    if (currentMine) {
+      if (dua) dua.hidden = isApp && tab === "prayer";
+      el.classList.add("cp-streak");
+      renderStreak(el);
+      renderWeek();
+      const board = document.getElementById("cpNowBoard");
+      if (board && isApp && tab === "prayer") {
+        board.setAttribute("role", "button");
+        board.setAttribute("tabindex", "0");
+        board.setAttribute("aria-label", T.statsTitle + " — " + T.statsHint);
+      }
+    }
+    else {
+      if (dua) dua.hidden = true;
+      el.classList.remove("cp-streak", "cp-celebrate", "cp-recover");
+      hideWeek();
+      updateNextLine();
+      const board = document.getElementById("cpNowBoard");
+      if (board) {
+        board.removeAttribute("role");
+        board.removeAttribute("tabindex");
+        board.removeAttribute("aria-label");
+      }
+    }
     syncStatusMount();
   }
 
