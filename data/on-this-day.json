@@ -138,8 +138,8 @@
       "ye": "1970",
       "ya": "١٩٧٠م",
       "em": "💻",
-      "en": "The first computer systems began counting from this instant.\nEvery computer and phone today still measures time as seconds since that day, including the clock on this page.",
-      "ar": "بدأ العدّ من هذه اللحظة في أول أنظمة الحاسوب.\nوكل حاسوب وهاتف اليوم يحسب الوقت بعدد الثواني منذ ذلك اليوم، بما فيها الساعة في هذه الصفحة."
+      "en": "The makers of the Unix system chose this moment as the zero point for counting time in computers.\nEvery computer and phone still tells the time by the seconds gone by since it, the clock on this page included.",
+      "ar": "اختار مطوّرو نظام «يونكس» هذه اللحظة لتكون نقطة الصفر لحساب الزمن في الحواسيب.\nوما زال كل حاسوب وهاتف اليوم يعرف الوقت بعدد الثواني التي مضت منذها، ومنها الساعة في هذه الصفحة."
     },
     {
       "cal": "g",
@@ -448,8 +448,8 @@
       "ye": "1990",
       "ya": "١٩٩٠م",
       "em": "🔵",
-      "en": "A spacecraft turned its camera back at us from six billion kilometres away. Earth came out as a single pale blue dot.",
-      "ar": "أدارتْ مركبةٌ فضائيةٌ كاميرتَها نحوَنا من مسافةِ ستةِ مليارات كيلومتر. فظهرتِ الأرضُ نقطةً زرقاءَ باهتةً واحدة."
+      "en": "A spacecraft turned its camera back at us from six billion kilometres away.\nThe whole Earth came out as one pale blue dot, carrying everyone who ever lived and everything that ever happened.",
+      "ar": "أدارت مركبة فضائية كاميرتها نحونا من مسافة ستة مليارات كيلومتر.\nفظهرت الأرض كلها نقطة زرقاء باهتة، وعليها كل من عاش وكل ما حدث في التاريخ."
     },
     {
       "cal": "g",
@@ -458,8 +458,8 @@
       "ye": "1564",
       "ya": "١٥٦٤م",
       "em": "🔭",
-      "en": "Galileo was born. He did not invent the telescope, but he was the first to point it carefully at the sky and write down what he saw.",
-      "ar": "وُلد غاليليو. لم يخترعِ التلسكوب، لكنّه أولُ من وجّهَه إلى السماءِ بعنايةٍ ودوّنَ ما رآه."
+      "en": "Galileo was born, the first to look at the sky as a scientist rather than an onlooker.\nHe did not invent the telescope, but he was the first to turn it carefully on the stars and write down everything he saw.",
+      "ar": "وُلد غاليليو، وكان أول من نظر إلى السماء نظرة عالم لا نظرة متأمل.\nفهو لم يخترع التلسكوب، لكنه أول من وجّهه إلى النجوم بعناية ودوّن كل ما رآه."
     },
     {
       "cal": "g",
@@ -498,8 +498,8 @@
       "ye": "1201",
       "ya": "١٢٠١م",
       "em": "🔭",
-      "en": "Nasir al-Din al-Tusi was born. He later built the observatory at Maragha, one of the largest of its time, and the tables he drew up were still being used to work out where the planets would be centuries after him.",
-      "ar": "وُلد نصير الدين الطوسي. وقد أنشأ فيما بعد مرصد مراغة، وكان من أضخم المراصد في زمانه، وظلت جداوله تُستعمل في معرفة مواقع الكواكب قرونًا بعده."
+      "en": "Nasir al-Din al-Tusi was born, among the foremost astronomers of his age.\nHe built the observatory at Maragha, and his tables of the planets' positions were still in use for centuries after his death.",
+      "ar": "وُلد نصير الدين الطوسي، أحد أبرز علماء الفلك في زمانه.\nوقد أنشأ مرصد مراغة، وظلت جداوله لمواقع الكواكب تُستعمل قرونًا بعد وفاته."
     },
     {
       "cal": "g",
@@ -508,8 +508,8 @@
       "ye": "1473",
       "ya": "١٤٧٣م",
       "em": "☀️",
-      "en": "Copernicus was born. He argued the Earth goes around the sun, and waited until the end of his life to publish it.",
-      "ar": "وُلد كوبرنيكوس. قالَ إنَّ الأرضَ تدورُ حولَ الشمس، وانتظرَ حتى أواخرِ عمرِه لينشرَ ذلك."
+      "en": "Copernicus was born, whose idea moved the Earth out of the centre of the universe.\nHe said it is the Earth that goes round the sun, and waited until the end of his life to publish it.",
+      "ar": "وُلد كوبرنيكوس، صاحب الفكرة التي أخرجت الأرض من مركز الكون.\nقال إن الأرض هي التي تدور حول الشمس، وانتظر حتى أواخر عمره قبل أن ينشر ذلك."
     },
     {
       "cal": "g",
@@ -528,8 +528,8 @@
       "ye": "1878",
       "ya": "١٨٧٨م",
       "em": "📒",
-      "en": "The first telephone directory was printed. It was a single page and held fifty names, with no numbers — you asked the operator for the person.",
-      "ar": "طُبع أولُ دليلِ هاتف. كان صفحةً واحدةً فيها خمسونَ اسمًا بلا أرقام — إذ كنتَ تطلبُ الشخصَ من عاملِ المقسمِ بالاسم."
+      "en": "The first telephone directory was printed, and it held not a single number.\nOne page carrying fifty names — you asked the operator for the person by name, not by number.",
+      "ar": "طُبع أول دليل هاتف في التاريخ، ولم يكن فيه رقم واحد.\nصفحة واحدة تحمل خمسين اسمًا، إذ كنت تطلب الشخص من عامل المقسم باسمه لا برقمه."
     },
     {
       "cal": "g",
@@ -568,8 +568,8 @@
       "ye": "",
       "ya": "",
       "em": "🗓️",
-      "en": "A leap day. The rule is stricter than most people think: a year ending in two zeros is only a leap year if it divides by 400 — so 2000 was one, and 1900 was not.",
-      "ar": "يومٌ كبيس. والقاعدةُ أدقُّ ممّا يظنُّ الناس: السنةُ المنتهيةُ بصفرينِ لا تكونُ كبيسةً إلا إذا قُسِمتْ على ٤٠٠ — فسنةُ ٢٠٠٠ كانت كبيسة، و١٩٠٠ لم تكن."
+      "en": "A leap day, which comes only once in four years.\nThe rule is stricter than most people think: a year ending in two zeros is a leap year only if it divides by 400, so 2000 was one and 1900 was not.",
+      "ar": "يوم كبيس، لا يأتي إلا مرة كل أربع سنوات.\nوالقاعدة أدق مما يظن الناس: السنة المنتهية بصفرين ليست كبيسة إلا إذا قُسمت على ٤٠٠، فسنة ٢٠٠٠ كانت كبيسة و١٩٠٠ لم تكن."
     },
     {
       "cal": "g",
@@ -588,8 +588,8 @@
       "ye": "1847",
       "ya": "١٨٤٧م",
       "em": "☎️",
-      "en": "Alexander Graham Bell was born. His mother and his wife were both deaf, and his work on sound began there.",
-      "ar": "وُلد ألكسندر جراهام بيل. كانت أمُّه وزوجتُه صمّاوَين، ومن هنا بدأَ اشتغالُه بالصوت."
+      "en": "Alexander Graham Bell was born, the inventor of the telephone.\nHis mother and his wife were both deaf, and it was his wish to help them that started his work on sound and how to carry it.",
+      "ar": "وُلد ألكسندر جراهام بيل، مخترع الهاتف.\nوكانت أمه وزوجته صمّاوين، ومن رغبته في مساعدتهما بدأ اشتغاله بالصوت وطرق نقله."
     },
     {
       "cal": "g",
@@ -598,8 +598,8 @@
       "ye": "1979",
       "ya": "١٩٧٩م",
       "em": "🌋",
-      "en": "A passing craft spotted volcanoes erupting on a moon of Jupiter. Until that day, everyone assumed the Earth was the only world with live volcanoes.",
-      "ar": "رصدت مركبة عابرة براكين ثائرة على أحد أقمار المشتري. وحتى ذلك اليوم كان الجميع يظن أن الأرض هي العالم الوحيد الذي فيه براكين حية."
+      "en": "A passing craft spotted volcanoes erupting on a moon of Jupiter.\nUntil that day everyone had assumed the Earth was the only world with living volcanoes.",
+      "ar": "رصدت مركبة عابرة براكين ثائرة على أحد أقمار المشتري.\nوحتى ذلك اليوم كان الجميع يظن أن الأرض هي العالم الوحيد الذي فيه براكين حية."
     },
     {
       "cal": "g",
@@ -608,8 +608,8 @@
       "ye": "1869",
       "ya": "١٨٦٩م",
       "em": "⚗️",
-      "en": "Mendeleev presented a table arranging all the known elements in order. He left empty places in it and said elements nobody had found yet would fill them — and years later they were found.",
-      "ar": "عرض مندلييف جدولًا رتب فيه العناصر المعروفة كلها. وقد ترك فيه خانات فارغة وقال إن عناصر لم تُكتشف بعد ستملؤها، ووُجدت فعلًا بعد سنوات."
+      "en": "Mendeleev presented a table setting out every element then known.\nHe left blank places in it and said elements not yet found would fill them — and years later they were.",
+      "ar": "عرض مندلييف جدولًا رتّب فيه العناصر المعروفة كلها.\nوترك فيه خانات فارغة وقال إن عناصر لم تُكتشف بعد ستملؤها، فوُجدت فعلًا بعد سنوات."
     },
     {
       "cal": "g",
@@ -618,8 +618,8 @@
       "ye": "1876",
       "ya": "١٨٧٦م",
       "em": "📞",
-      "en": "The telephone was registered — by a matter of hours. Another inventor filed a similar idea the very same day.",
-      "ar": "سُجّل الهاتفُ رسميًا — بفارقِ ساعات. فقد تقدّمَ مخترعٌ آخرُ بفكرةٍ مشابهةٍ في اليومِ نفسِه."
+      "en": "The telephone was registered in Bell's name by a matter of hours.\nAnother inventor filed a similar idea the very same day, and but for those hours the telephone would carry a different name.",
+      "ar": "سُجّل الهاتف رسميًا باسم بيل، بفارق ساعات لا أكثر.\nفقد تقدّم مخترع آخر بفكرة مشابهة في اليوم نفسه، ولولا تلك الساعات لاختلف اسم مخترع الهاتف."
     },
     {
       "cal": "g",
@@ -638,8 +638,8 @@
       "ye": "1876",
       "ya": "١٨٧٦م",
       "em": "🗣️",
-      "en": "The first sentence was spoken down a telephone. It was said to an assistant in the next room.",
-      "ar": "نُطقتْ أولُ جملةٍ عبرَ الهاتف. قِيلتْ لمساعدٍ كان في الغرفةِ المجاورة."
+      "en": "The first sentence was spoken down a telephone.\nIt was said to an assistant in the next room, who heard it in his own device and could not believe a wire had carried it.",
+      "ar": "نُطقت أول جملة عبر الهاتف.\nقيلت لمساعد كان في الغرفة المجاورة، فسمعها في جهازه ولم يصدق أن الصوت جاءه من سلك."
     },
     {
       "cal": "g",
@@ -648,8 +648,8 @@
       "ye": "1989",
       "ya": "١٩٨٩م",
       "em": "🕸️",
-      "en": "A researcher handed his manager a proposal for linking documents across computers. The note came back marked: vague, but exciting. It became the web.",
-      "ar": "سلّمَ باحثٌ مديرَه اقتراحًا لربطِ المستنداتِ بين الحواسيب. فعادتْ الورقةُ وعليها: «غامض، لكنه مثير». وصارَ هذا الاقتراحُ هو الويب."
+      "en": "A researcher handed his manager a proposal for linking documents across computers.\nThe paper came back with a note on it — \"vague, but exciting\" — and that proposal was the beginning of the web.",
+      "ar": "سلّم باحث مديره اقتراحًا لربط المستندات بين الحواسيب.\nفعادت الورقة وعليها ملاحظة: «غامض، لكنه مثير»، وكان ذلك الاقتراح هو بداية الويب."
     },
     {
       "cal": "g",
@@ -668,8 +668,8 @@
       "ye": "1879",
       "ya": "١٨٧٩م",
       "em": "🧠",
-      "en": "Albert Einstein was born. He was slow to speak as a child, and his family worried about him.",
-      "ar": "وُلد ألبرت أينشتاين. تأخّرَ في الكلامِ صغيرًا حتى قلقَ عليه أهلُه."
+      "en": "Albert Einstein was born.\nHe was slow to speak as a child, enough to worry his family, and went on to write the most famous equation in science.",
+      "ar": "وُلد ألبرت أينشتاين.\nتأخّر في الكلام صغيرًا حتى قلق عليه أهله، ثم صار صاحب أشهر معادلة في تاريخ العلم."
     },
     {
       "cal": "g",
@@ -678,8 +678,8 @@
       "ye": "1985",
       "ya": "١٩٨٥م",
       "em": "🌐",
-      "en": "The first .com address on the internet was registered. Today there are more than a hundred and fifty million.",
-      "ar": "سُجّل أولُ عنوانٍ ينتهي بـ com. على الإنترنت. واليومَ تجاوزَ العددُ مئةً وخمسينَ مليونًا."
+      "en": "The first .com address on the internet was registered.\nNobody thought it worth anything at the time; today there are more than a hundred and fifty million of them.",
+      "ar": "سُجّل أول عنوان ينتهي بـ com. على الإنترنت.\nولم يكن أحد يظن أن لهذا قيمة، واليوم تجاوز عدد هذه العناوين مئة وخمسين مليونًا."
     },
     {
       "cal": "g",
@@ -688,8 +688,8 @@
       "ye": "1926",
       "ya": "١٩٢٦م",
       "em": "🚀",
-      "en": "The first liquid-fuel rocket flew. It rose twelve metres and landed in a cabbage field — and every rocket since works the same way.",
-      "ar": "طارَ أولُ صاروخٍ يعملُ بالوقودِ السائل. ارتفعَ اثنيْ عشرَ مترًا وسقطَ في حقلِ كرنب — وكلُّ صاروخٍ بعدَه يعملُ بالمبدأِ نفسِه."
+      "en": "The first liquid-fuel rocket flew.\nIt rose twelve metres and came down in a cabbage field, and yet every rocket since works on the same principle.",
+      "ar": "طار أول صاروخ يعمل بالوقود السائل.\nارتفع اثني عشر مترًا وسقط في حقل كرنب، ومع ذلك فكل صاروخ بعده يعمل بالمبدأ نفسه."
     },
     {
       "cal": "g",
@@ -698,8 +698,8 @@
       "ye": "1958",
       "ya": "١٩٥٨م",
       "em": "🛰️",
-      "en": "A grapefruit-sized satellite was launched, running on sunlight. Its batteries died long ago but it is still up there, the oldest thing of ours in space.",
-      "ar": "أُطلق قمر صناعي بحجم ثمرة جريب فروت، يعمل بضوء الشمس. ونفدت بطارياته منذ زمن بعيد، لكنه ما زال هناك، وهو أقدم ما لنا في الفضاء."
+      "en": "A satellite the size of a grapefruit was launched, running on sunlight.\nIts batteries died long ago, but it is still circling up there, the oldest thing of ours in space.",
+      "ar": "أُطلق قمر صناعي بحجم ثمرة جريب فروت يعمل بضوء الشمس.\nونفدت بطارياته منذ زمن بعيد، لكنه ما زال يدور هناك، وهو أقدم ما لنا في الفضاء."
     },
     {
       "cal": "g",
@@ -708,8 +708,8 @@
       "ye": "1965",
       "ya": "١٩٦٥م",
       "em": "👨‍🚀",
-      "en": "A man stepped outside his spacecraft for twelve minutes. His suit swelled up so much he barely fitted back through the hatch.",
-      "ar": "خرجَ رجلٌ من مركبتِه إلى الفضاءِ اثنتيْ عشرةَ دقيقة. وانتفختْ بدلتُه حتى كادَ لا يعودُ يمرُّ من البابِ عائدًا."
+      "en": "A man stepped out of his craft into space for twelve minutes.\nHis suit swelled in the vacuum until he could barely get back through the hatch he had come out of.",
+      "ar": "خرج رجل من مركبته إلى الفضاء اثنتي عشرة دقيقة.\nوانتفخت بدلته في الفراغ حتى كاد لا يستطيع العودة من الباب الذي خرج منه."
     },
     {
       "cal": "g",
@@ -718,8 +718,8 @@
       "ye": "1916",
       "ya": "١٩١٦م",
       "em": "🌌",
-      "en": "Einstein published his theory of gravity. In it he said that heavy bodies bend the space around them, and that what we call gravity is nothing but movement along that bend.",
-      "ar": "نشر أينشتاين نظريته في الجاذبية. وقد قال فيها إن الأجسام الثقيلة تُحني الفراغ من حولها، وأن ما نسميه جاذبية ليس إلا سيرًا في هذا الانحناء."
+      "en": "Einstein published his theory of gravity.\nIn it he said heavy bodies bend the space around them, and what we call gravity is nothing but movement along that bend.",
+      "ar": "نشر أينشتاين نظريته في الجاذبية.\nوقال فيها إن الأجسام الثقيلة تُحني الفراغ من حولها، وأن ما نسميه جاذبية ليس إلا سيرًا في هذا الانحناء."
     },
     {
       "cal": "g",
@@ -738,8 +738,8 @@
       "ye": "1950",
       "ya": "١٩٥٠م",
       "em": "🌦️",
-      "en": "The countries of the world agreed to share their weather readings. It is why a forecast for a distant city is possible at all.",
-      "ar": "اتّفقتْ دولُ العالمِ على تبادلِ قراءاتِ الطقسِ بينَها. ولهذا صارَ من الممكنِ أصلًا معرفةُ حالةِ الجوِّ في مدينةٍ بعيدة."
+      "en": "The countries of the world agreed to share their weather readings.\nThat is the only reason it is possible at all to know the weather in a city on the far side of the Earth.",
+      "ar": "اتفقت دول العالم على تبادل قراءات الطقس بينها.\nولهذا صار من الممكن أصلًا أن تعرف حالة الجو في مدينة على الطرف الآخر من الأرض."
     },
     {
       "cal": "g",
@@ -758,8 +758,8 @@
       "ye": "1655",
       "ya": "١٦٥٥م",
       "em": "🌑",
-      "en": "Titan, the largest moon of Saturn, was discovered. It is the only moon we know of with a thick atmosphere.",
-      "ar": "اكتُشف تيتان، أكبرُ أقمارِ زُحل. وهو القمرُ الوحيدُ الذي نعرفُ أنَّ له غلافًا جوّيًا كثيفًا."
+      "en": "Titan, the largest moon of Saturn, was discovered.\nIt is the only moon we know with a thick atmosphere, and there are lakes on its surface, though not of water.",
+      "ar": "اكتُشف تيتان، أكبر أقمار زحل.\nوهو القمر الوحيد الذي نعرف أن له غلافًا جويًا كثيفًا، وعلى سطحه بحيرات لكنها ليست من ماء."
     },
     {
       "cal": "g",
@@ -768,8 +768,8 @@
       "ye": "1953",
       "ya": "١٩٥٣م",
       "em": "💉",
-      "en": "A vaccine for polio was announced. Its inventor refused to patent it, and gave it away.",
-      "ar": "أُعلن عن لقاحٍ لشللِ الأطفال. ورفضَ مخترعُه تسجيلَه باسمِه، وأعطاه للناسِ بلا مقابل."
+      "en": "A vaccine for polio was announced, a disease that was crippling thousands of children a year.\nIts inventor refused to patent it, and when asked who owned it he said: the people own it — could anyone patent the sun?",
+      "ar": "أُعلن عن لقاح لشلل الأطفال، وكان المرض يشلّ آلاف الأطفال كل عام.\nورفض مخترعه تسجيله باسمه، وقال حين سُئل عمّن يملكه: «الناس يملكونه، وهل يملك أحد الشمس؟»."
     },
     {
       "cal": "g",
@@ -778,8 +778,8 @@
       "ye": "1899",
       "ya": "١٨٩٩م",
       "em": "📻",
-      "en": "The first wireless message crossed the sea between England and France. Ships could finally call for help without a wire running to shore.",
-      "ar": "عبرت أول رسالة لاسلكية البحر بين إنجلترا وفرنسا. فصار في وسع السفن أخيرًا أن تطلب النجدة دون سلك ممدود إلى الشاطئ."
+      "en": "The first wireless message crossed the sea between England and France.\nShips could finally call for help without a wire running back to shore.",
+      "ar": "عبرت أول رسالة لاسلكية البحر بين إنجلترا وفرنسا.\nفصار في وسع السفن أخيرًا أن تطلب النجدة دون سلك ممدود إلى الشاطئ."
     },
     {
       "cal": "g",
@@ -788,8 +788,8 @@
       "ye": "1974",
       "ya": "١٩٧٤م",
       "em": "☿️",
-      "en": "A craft reached Mercury, the closest planet to the sun. It is so hard to get to that only two craft have ever been.",
-      "ar": "وصلت مركبة إلى عطارد، أقرب الكواكب إلى الشمس. والوصول إليه صعب إلى حدّ أن مركبتين فقط بلغتاه حتى اليوم."
+      "en": "A craft reached Mercury, the closest planet to the sun.\nGetting there is harder than it sounds: only two craft have ever managed it.",
+      "ar": "وصلت مركبة إلى عطارد، أقرب الكواكب إلى الشمس.\nوالوصول إليه أصعب مما يُظن، إذ لم تبلغه سوى مركبتين حتى اليوم."
     },
     {
       "cal": "g",
@@ -798,8 +798,8 @@
       "ye": "1889",
       "ya": "١٨٨٩م",
       "em": "🗼",
-      "en": "The Eiffel Tower was finished. It was meant to stand for twenty years, and was kept only because it made a good radio mast.",
-      "ar": "اكتملَ بناءُ برجِ إيفل. كان مقرَّرًا أن يبقى عشرينَ سنةً فقط، ولم يُبقَ عليه إلا لأنه صلحَ صاريةً للراديو."
+      "en": "The Eiffel Tower was finished, against the objections of many Parisians.\nIt was meant to come down after twenty years, and was kept only because it made a useful radio mast.",
+      "ar": "اكتمل بناء برج إيفل وسط اعتراض كثير من أهل باريس.\nوكان مقررًا أن يُهدم بعد عشرين سنة، ولم يُبقَ عليه إلا لأنه صلح صارية للراديو."
     },
     {
       "cal": "g",
@@ -808,8 +808,8 @@
       "ye": "1976",
       "ya": "١٩٧٦م",
       "em": "🍏",
-      "en": "Apple was founded in a family garage. Its first product was a bare circuit board, sold without a case, screen or keyboard.",
-      "ar": "تأسّستْ آبل في مرآبِ منزلٍ عائلي. وكان أولُ منتجاتِها لوحةً إلكترونيةً عاريةً تُباعُ بلا صندوقٍ ولا شاشةٍ ولا لوحةِ مفاتيح."
+      "en": "Apple was founded in a family garage.\nIts first product was a bare circuit board, sold with no case, no screen and no keyboard.",
+      "ar": "تأسّست آبل في مرآب منزل عائلي.\nوكان أول منتجاتها لوحة إلكترونية عارية تُباع بلا صندوق ولا شاشة ولا لوحة مفاتيح."
     },
     {
       "cal": "g",
@@ -818,8 +818,8 @@
       "ye": "1845",
       "ya": "١٨٤٥م",
       "em": "☀️",
-      "en": "The first photograph of the sun was taken. The exposure lasted one sixtieth of a second, and the spots on its surface showed clearly.",
-      "ar": "أُخذتْ أولُ صورةٍ فوتوغرافيةٍ للشمس. استغرقَ التقاطُها جزءًا من ستّينَ من الثانية، وظهرتْ فيها البقعُ على سطحِها بوضوح."
+      "en": "The first photograph of the sun was taken.\nThe exposure lasted a sixtieth of a second, and the spots on its surface showed clearly.",
+      "ar": "أُخذت أول صورة فوتوغرافية للشمس.\nاستغرق التقاطها جزءًا من ستين من الثانية، وظهرت فيها البقع على سطحها بوضوح."
     },
     {
       "cal": "g",
@@ -828,8 +828,8 @@
       "ye": "1973",
       "ya": "١٩٧٣م",
       "em": "📱",
-      "en": "The first call from a handheld mobile phone was made in the street. The phone weighed a kilo and needed ten hours of charging to run for thirty minutes.",
-      "ar": "أُجريتْ أولُ مكالمةٍ من هاتفٍ محمولٍ في الشارع. كان وزنُ الهاتفِ كيلوجرامًا، ويحتاجُ عشرَ ساعاتِ شحنٍ ليعملَ نصفَ ساعة."
+      "en": "The first call from a handheld mobile phone was made in the street.\nThe phone weighed a kilo and needed ten hours of charging to run for thirty minutes, and the first thing its maker did was ring his rival to tell him.",
+      "ar": "أُجريت أول مكالمة من هاتف محمول في الشارع.\nكان وزن الهاتف كيلوجرامًا ويحتاج عشر ساعات شحن ليعمل نصف ساعة، وأول ما فعله صاحبه أن اتصل بمنافسه ليخبره."
     },
     {
       "cal": "g",
@@ -838,8 +838,8 @@
       "ye": "970",
       "ya": "٩٧٠م",
       "em": "🕌",
-      "en": "The foundation stone of al-Azhar was laid in Cairo. In the years that followed it became a school and a beacon of learning, and it is one of the oldest universities in the world.",
-      "ar": "وُضع حجرُ أساسِ الجامعِ الأزهرِ في القاهرة. وبعدَ سنواتٍ صارَ مدرسةً ومنارةً للعلمِ، فهو من أقدمِ الجامعاتِ في العالم."
+      "en": "The foundation stone of al-Azhar was laid in Cairo.\nIn the years that followed it became a school and a beacon of learning, and it is one of the oldest universities in the world.",
+      "ar": "وُضع حجر أساس الجامع الأزهر في القاهرة.\nوبعد سنوات صار مدرسة ومنارة للعلم، فهو من أقدم الجامعات في العالم."
     },
     {
       "cal": "g",
@@ -848,8 +848,8 @@
       "ye": "1896",
       "ya": "١٨٩٦م",
       "em": "🏛️",
-      "en": "The first modern Olympic Games opened in Athens, after a gap of fifteen hundred years. Fourteen countries took part, and the winners were given silver, not gold.",
-      "ar": "افتُتحت أول دورة أولمبية حديثة في أثينا، بعد انقطاع دام ألفًا وخمسمئة سنة. شاركت فيها أربع عشرة دولة، ونال الفائزون الفضة لا الذهب."
+      "en": "The first modern Olympic Games opened in Athens, after a gap of fifteen hundred years.\nOnly fourteen countries took part, and the winners were given silver medals, not gold.",
+      "ar": "افتُتحت أول دورة أولمبية حديثة في أثينا، بعد انقطاع دام ألفًا وخمسمئة سنة.\nشاركت فيها أربع عشرة دولة فقط، ونال الفائزون ميداليات من الفضة لا من الذهب."
     },
     {
       "cal": "g",
@@ -868,8 +868,8 @@
       "ye": "1860",
       "ya": "١٨٦٠م",
       "em": "🎵",
-      "en": "The oldest surviving recording of a human voice was made. It was traced on paper blackened with soot, and the man who made it had no way to play it back — it stayed silent until a computer read it a century and a half later.",
-      "ar": "سُجل أقدم صوت بشري لا يزال باقيًا إلى اليوم. وقد رسمه صاحبه على ورق مُسوَّد بالسخام، ولم يكن يملك طريقة لسماعه، فظل صامتًا حتى قرأه الحاسوب بعد قرن ونصف."
+      "en": "The oldest surviving recording of a human voice was made.\nIts maker traced it on paper blackened with smoke, and had no way to play it back, so it stayed silent until a computer read it a century and a half later.",
+      "ar": "سُجّل أقدم صوت بشري لا يزال باقيًا إلى اليوم.\nرسمه صاحبه على ورق مغطى بسواد الدخان، ولم يكن يملك طريقة لسماعه، فظل صامتًا حتى قرأه الحاسوب بعد قرن ونصف."
     },
     {
       "cal": "g",
