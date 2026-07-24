@@ -45,13 +45,15 @@
       ? { home: "الرئيسية", prayer: "الصلاة", azkar: "الأذكار", tools: "أدوات",
           brand: "CityTimeHub", azkarHub: "اختر مجموعة الأذكار",
           azWaking: "أذكار الاستيقاظ", azMorning: "أذكار الصباح", azEvening: "أذكار المساء", azSleep: "أذكار النوم",
+          azRuqyah: "الرقية الشرعية",
           azWakingSub: "أول ما تصحى من النوم", azMorningSub: "ابدأ يومك بالذكر", azEveningSub: "ختم المساء بالحفظ",
-          azSleepSub: "قبل النوم بسكينة" }
+          azSleepSub: "قبل النوم بسكينة", azRuqyahSub: "من القرآن والسنة للتحصّن" }
       : { home: "Home", prayer: "Prayer", azkar: "Adhkar", tools: "Tools",
           brand: "CityTimeHub", azkarHub: "Choose your adhkar",
           azWaking: "Waking", azMorning: "Morning", azEvening: "Evening", azSleep: "Bedtime",
+          azRuqyah: "Ruqyah",
           azWakingSub: "The moment you wake", azMorningSub: "Start the day with dhikr", azEveningSub: "Close the evening in remembrance",
-          azSleepSub: "Peace before sleep" };
+          azSleepSub: "Peace before sleep", azRuqyahSub: "Quran & Sunnah for healing" };
   }
 
   function tabFromHash() {
@@ -155,6 +157,12 @@
             '<span class="app-azkar-glow" aria-hidden="true"></span>' +
             '<span class="app-azkar-ico" aria-hidden="true">🛌</span>' +
             '<span class="app-azkar-body"><strong>' + L.azSleep + '</strong><span>' + L.azSleepSub + '</span></span>' +
+            '<span class="app-azkar-arrow" aria-hidden="true">→</span>' +
+          '</a>' +
+          '<a class="app-azkar-card app-azkar-card--ruqyah" href="' + withAppParam(p + "/azkar/ruqyah/") + '">' +
+            '<span class="app-azkar-glow" aria-hidden="true"></span>' +
+            '<span class="app-azkar-ico" aria-hidden="true">💚</span>' +
+            '<span class="app-azkar-body"><strong>' + L.azRuqyah + '</strong><span>' + L.azRuqyahSub + '</span></span>' +
             '<span class="app-azkar-arrow" aria-hidden="true">→</span>' +
           '</a>' +
         '</div>' +
