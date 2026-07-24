@@ -93,6 +93,21 @@
     { ar: "فَٱتَّقُوا۟ ٱللَّهَ وَأَصْلِحُوا۟ ذَاتَ بَيْنِكُمْ ۖ وَأَطِيعُوا۟ ٱللَّهَ وَرَسُولَهُۥٓ إِن كُنتُم مُّؤْمِنِينَ", en: "So be mindful of Allah and set right the matters between you, and obey Allah and His Messenger, if you are believers.", sa: "القرآن — الأنفال ١", se: "Quran — Al-Anfal 1", verse: true },
     { ar: "۞ وَسَارِعُوٓا۟ إِلَىٰ مَغْفِرَةٍۢ مِّن رَّبِّكُمْ وَجَنَّةٍ عَرْضُهَا ٱلسَّمَـٰوَٰتُ وَٱلْأَرْضُ أُعِدَّتْ لِلْمُتَّقِينَ", en: "And hasten to forgiveness from your Lord and a garden as wide as the heavens and the earth, prepared for those mindful of Allah.", sa: "القرآن — آل عمران ١٣٣", se: "Quran — Aal 'Imran 133", verse: true },
     { ar: "إِنَّمَا ٱلْمُؤْمِنُونَ إِخْوَةٌۭ فَأَصْلِحُوا۟ بَيْنَ أَخَوَيْكُمْ ۚ وَٱتَّقُوا۟ ٱللَّهَ لَعَلَّكُمْ تُرْحَمُونَ", en: "The believers are but brothers, so set right the matters between your brothers, and be mindful of Allah, that you may receive mercy.", sa: "القرآن — الحجرات ١٠", se: "Quran — Al-Hujurat 10", verse: true },
+    { ar: "إنَّ اللهَ طيّبٌ لا يقبلُ إلا طيّبًا.", en: "Allah is Pure and accepts only what is pure.", sa: "رواه مسلم", se: "Muslim" },
+    { ar: "مَن أحبَّ لقاءَ اللهِ أحبَّ اللهُ لقاءَه.", en: "Whoever loves to meet Allah, Allah loves to meet him.", sa: "متفق عليه", se: "Bukhari & Muslim" },
+    { ar: "مَن يُرِدِ اللهُ به خيرًا يُفقِّهْه في الدِّينِ.", en: "When Allah wills good for someone, He gives him understanding of the religion.", sa: "متفق عليه", se: "Bukhari & Muslim" },
+    { ar: "الحلالُ بيّنٌ والحرامُ بيّنٌ.", en: "The lawful is clear and the unlawful is clear.", sa: "متفق عليه", se: "Bukhari & Muslim" },
+    { ar: "إنَّ الدِّينَ يُسرٌ.", en: "The religion is ease.", sa: "رواه البخاري", se: "Bukhari" },
+    { ar: "كلُّ أمّتي مُعافًى إلا المجاهرينَ.", en: "All of my nation will be pardoned except those who sin openly.", sa: "متفق عليه", se: "Bukhari & Muslim" },
+    { ar: "الحياءُ لا يأتي إلا بخيرٍ.", en: "Modesty brings nothing but good.", sa: "متفق عليه", se: "Bukhari & Muslim" },
+    { ar: "نعمتانِ مغبونٌ فيهما كثيرٌ من الناسِ: الصحّةُ والفراغُ.", en: "Two blessings many people lose out on: health and free time.", sa: "رواه البخاري", se: "Bukhari" },
+    { ar: "احرِصْ على ما ينفعُك واستعِنْ باللهِ ولا تعجِزْ.", en: "Strive for what benefits you, seek Allah's help, and do not give up.", sa: "رواه مسلم", se: "Muslim" },
+    { ar: "لا يُلدَغُ المؤمنُ من جُحرٍ واحدٍ مرّتينِ.", en: "A believer is not stung from the same hole twice.", sa: "متفق عليه", se: "Bukhari & Muslim" },
+    { ar: "وَٱسْتَعِينُوا۟ بِٱلصَّبْرِ وَٱلصَّلَوٰةِ ۚ وَإِنَّهَا لَكَبِيرَةٌ إِلَّا عَلَى ٱلْخَـٰشِعِينَ", en: "And seek help through patience and prayer; and indeed, it is difficult except for the humble.", sa: "القرآن — البقرة ٤٥", se: "Quran — Al-Baqarah 45", verse: true },
+    { ar: "وَلْيَعْفُوا۟ وَلْيَصْفَحُوٓا۟ ۗ أَلَا تُحِبُّونَ أَن يَغْفِرَ ٱللَّهُ لَكُمْ ۗ وَٱللَّهُ غَفُورٌۭ رَّحِيمٌ", en: "Let them pardon and overlook. Would you not love that Allah should forgive you? And Allah is Forgiving and Merciful.", sa: "القرآن — النور ٢٢", se: "Quran — An-Nur 22", verse: true },
+    { ar: "ٱدْفَعْ بِٱلَّتِى هِىَ أَحْسَنُ فَإِذَا ٱلَّذِى بَيْنَكَ وَبَيْنَهُۥ عَدَٰوَةٌۭ كَأَنَّهُۥ وَلِىٌّ حَمِيمٌۭ", en: "Repel evil with that which is better, and then the one between whom and you was enmity will become as though a devoted friend.", sa: "القرآن — فصلت ٣٤", se: "Quran — Fussilat 34", verse: true },
+    { ar: "قُلْ يَـٰعِبَادِىَ ٱلَّذِينَ أَسْرَفُوا۟ عَلَىٰٓ أَنفُسِهِمْ لَا تَقْنَطُوا۟ مِن رَّحْمَةِ ٱللَّهِ ۚ إِنَّ ٱللَّهَ يَغْفِرُ ٱلذُّنُوبَ جَمِيعًا ۚ إِنَّهُۥ هُوَ ٱلْغَفُورُ ٱلرَّحِيمُ", en: "Say: O My servants who have transgressed against themselves, do not despair of the mercy of Allah. Indeed, Allah forgives all sins. He is the Forgiving, the Merciful.", sa: "القرآن — الزمر ٥٣", se: "Quran — Az-Zumar 53", verse: true },
+    { ar: "لَا يُكَلِّفُ ٱللَّهُ نَفْسًا إِلَّا وُسْعَهَا ۚ لَهَا مَا كَسَبَتْ وَعَلَيْهَا مَا ٱكْتَسَبَتْ", en: "Allah does not burden a soul beyond its capacity. It has what it has earned, and against it what it has earned.", sa: "القرآن — البقرة ٢٨٦", se: "Quran — Al-Baqarah 286", verse: true },
   ];
 
   const lang = () => ((document.documentElement.lang || "en").slice(0, 2) === "ar" ? "ar" : "en");
