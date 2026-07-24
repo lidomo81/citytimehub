@@ -97,7 +97,7 @@
       const i = state.idx, it = items[i], rem = state.rem[i], count = it.count || 1, done = rem <= 0;
       const sub = lang === "ar"
         ? (it.virtue ? `<p class="az-virtue"><strong>${T.virtue}:</strong> ${it.virtue}</p>` : "")
-        : `${it.translit ? `<p class="az-translit">${it.translit}</p>` : ""}${it.translation ? `<p class="az-translation">${it.translation}</p>` : ""}`;
+        : `${it.translit ? `<p class="az-translit">${it.translit}</p>` : ""}${it.translation ? `<p class="az-translation">${it.translation}</p>` : ""}${it.virtueEn ? `<p class="az-virtue"><strong>${T.virtue}:</strong> ${it.virtueEn}</p>` : ""}`;
       card.innerHTML = `
         <p class="az-arabic${it.quran ? " az-arabic--quran" : ""}" dir="rtl" lang="ar">${it.text}</p>
         ${sub}
