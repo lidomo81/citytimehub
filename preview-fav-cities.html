@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>معاينة — شريط مدني القابل للفتح</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0b1120;
+      --surface: #111a30;
+      --border: #1e2a44;
+      --text: #eaf1ff;
+      --text-2: #94a3b8;
+      --muted: #64748b;
+      --brand: #2563eb;
+      --gold: #c6a24b;
+      --next: #f5a623;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      font-family: "IBM Plex Sans Arabic", system-ui, sans-serif;
+      background: #070b14;
+      color: var(--text);
+      padding: 28px 16px 48px;
+      display: grid;
+      justify-items: center;
+      gap: 16px;
+    }
+    h1 { font-size: 1.05rem; font-weight: 750; }
+    .hint {
+      max-width: 640px; text-align: center; font-size: .84rem;
+      color: var(--text-2); line-height: 1.65;
+    }
+    .toggle { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+    .toggle button {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font: inherit;
+      font-size: .82rem;
+      font-weight: 650;
+      cursor: pointer;
+    }
+    .toggle button.is-on { border-color: var(--brand); color: #93c5fd; }
+    .phones {
+      display: flex; gap: 24px; flex-wrap: wrap; justify-content: center; align-items: flex-start;
+    }
+    .phone-wrap { display: grid; gap: 10px; justify-items: center; }
+    .phone-wrap .label {
+      font-size: .75rem; font-weight: 700; letter-spacing: .04em; color: var(--text-2);
+    }
+    .phone {
+      width: min(360px, 92vw);
+      border-radius: 28px;
+      border: 2px solid #2a3550;
+      background: var(--bg);
+      overflow: hidden;
+      box-shadow: 0 30px 80px -30px #000;
+      padding: 14px 14px 18px;
+    }
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 10px; padding: 4px 2px;
+    }
+    .topbar strong { font-size: .95rem; }
+    .icon {
+      width: 32px; height: 32px; border-radius: 10px;
+      border: 1px solid var(--border); display: grid; place-items: center;
+      color: var(--text-2); font-size: .9rem;
+    }
+    .search {
+      display: flex; gap: 8px; margin-bottom: 12px;
+    }
+    .search .star {
+      width: 42px; height: 42px; border-radius: 12px;
+      border: 1px solid var(--border); display: grid; place-items: center;
+      color: var(--gold); flex: none;
+    }
+    .search .bar {
+      flex: 1; height: 42px; border-radius: 12px;
+      border: 1px solid var(--border); background: transparent;
+      color: var(--muted); font-size: .82rem;
+      display: flex; align-items: center; padding: 0 12px; gap: 8px;
+    }
+
+    .board {
+      text-align: center;
+      padding: 14px 12px 8px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: color-mix(in srgb, var(--surface) 80%, transparent);
+      margin-bottom: 14px;
+    }
+    .board .city { font-size: 1.05rem; font-weight: 650; color: var(--text-2); }
+    .board .time {
+      margin: 6px 0 8px;
+      font-size: 3.2rem; font-weight: 800; letter-spacing: .04em;
+      font-variant-numeric: tabular-nums; line-height: 1;
+    }
+    .board .wd { font-size: 1.12rem; font-weight: 750; margin-bottom: 10px; letter-spacing: .06em; }
+    .dates {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;
+    }
+    .dates .cell {
+      padding: 10px 8px; border-radius: 14px;
+      border: 1px solid color-mix(in srgb, var(--text) 14%, transparent);
+      background: color-mix(in srgb, var(--surface) 70%, transparent);
+    }
+    .dates .cell.hijri {
+      border-color: color-mix(in srgb, var(--gold) 34%, var(--border));
+      background: color-mix(in srgb, var(--gold) 9%, var(--surface));
+    }
+    .dates .lab {
+      display: block; font-size: .62rem; font-weight: 800;
+      letter-spacing: .1em; color: var(--text-2); margin-bottom: 4px;
+    }
+    .dates .val { font-size: .88rem; font-weight: 750; }
+    .next {
+      padding: 12px 8px 6px;
+      border-top: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+      font-size: .9rem; font-weight: 650; color: var(--text-2);
+    }
+    .next strong { color: var(--next); }
+
+    .refl {
+      text-align: center;
+      padding: 12px 6px 8px;
+      margin-bottom: 12px;
+      border-top: 1px dashed color-mix(in srgb, var(--text) 14%, transparent);
+    }
+    .refl .k {
+      font-size: .68rem; font-weight: 700; letter-spacing: .14em;
+      color: var(--text-2); margin-bottom: 8px;
+    }
+    .refl .tx { font-size: 1rem; font-weight: 600; line-height: 1.8; }
+    .refl .src { margin-top: 6px; font-size: .7rem; color: var(--muted); }
+
+    /* —— Favorites —— */
+    .fav { margin-top: 4px; }
+    .fav-label {
+      text-align: center;
+      font-size: .68rem; font-weight: 750; letter-spacing: .08em;
+      color: var(--text-2); margin: 0 0 8px; opacity: .9;
+    }
+    .chips {
+      display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+    }
+    .chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 12px; border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      font-size: .78rem; font-weight: 650;
+    }
+    .chip .dn { opacity: .7; font-size: .7rem; }
+    .chip .x { opacity: .45; margin-inline-start: 2px; }
+
+    /* Collapsed summary strip (3+) */
+    .fav-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      width: 100%;
+      padding: 11px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+      text-align: start;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .fav-summary:active { opacity: .88; }
+    .fav-summary .left {
+      display: flex; align-items: center; gap: 8px; min-width: 0;
+    }
+    .fav-summary .ico { font-size: 1rem; }
+    .fav-summary .title {
+      font-size: .84rem; font-weight: 750;
+    }
+    .fav-summary .count {
+      font-size: .72rem; font-weight: 650; color: var(--text-2);
+    }
+    .fav-summary .peek {
+      display: flex; gap: 4px; flex: 1; justify-content: flex-end;
+      min-width: 0; overflow: hidden;
+    }
+    .fav-summary .peek span {
+      max-width: 72px;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      font-size: .68rem; font-weight: 650; color: var(--muted);
+      padding: 3px 8px; border-radius: 999px;
+      border: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
+      background: color-mix(in srgb, var(--bg) 50%, transparent);
+    }
+    .fav-summary .chev {
+      flex: none; color: var(--muted); font-size: 1.05rem;
+      transition: transform .15s ease;
+    }
+    .fav.is-open .fav-summary .chev { transform: rotate(-90deg); }
+    .fav-body { display: none; margin-top: 10px; }
+    .fav.is-open .fav-body { display: block; }
+    .fav.is-open .fav-summary {
+      border-color: color-mix(in srgb, var(--brand) 35%, var(--border));
+    }
+
+    .empty {
+      margin: 0; padding: 12px 10px; border-radius: 14px;
+      border: 1px dashed color-mix(in srgb, var(--text) 16%, transparent);
+      text-align: center; font-size: .78rem; color: var(--text-2);
+    }
+
+    .nav {
+      display: flex; justify-content: space-around;
+      margin-top: 16px; padding-top: 10px;
+      border-top: 1px solid var(--border);
+      font-size: .68rem; color: var(--muted); font-weight: 650;
+    }
+    .nav .on { color: var(--brand); }
+
+    .note {
+      max-width: 720px;
+      font-size: .8rem; color: var(--text-2); line-height: 1.65;
+      text-align: center; padding: 12px 14px; border-radius: 12px;
+      border: 1px dashed var(--border);
+      background: color-mix(in srgb, var(--surface) 60%, transparent);
+    }
+    .note b { color: var(--text); }
+
+    body[data-view="two"] .phone-wrap[data-pane="many"] { display: none; }
+    body[data-view="many"] .phone-wrap[data-pane="two"] { display: none; }
+  </style>
+</head>
+<body data-view="both">
+  <h1>معاينة شريط مدني</h1>
+  <p class="hint">
+    قبل التنفيذ — لو المدن 1 أو 2 تظهر مباشرة.
+    لو أكتر من 2: شريط مضغوط قابل للضغط يفتح القائمة كاملة.
+  </p>
+
+  <div class="toggle" role="group" aria-label="عرض المعاينة">
+    <button type="button" data-view="both" class="is-on">جنب بعض</button>
+    <button type="button" data-view="two">مدينتين (مفتوح)</button>
+    <button type="button" data-view="many">4 مدن (طيّ)</button>
+  </div>
+
+  <div class="phones">
+    <!-- 2 cities: always open -->
+    <div class="phone-wrap" data-pane="two">
+      <span class="label">1–2 مدينة → ظاهرة مباشرة</span>
+      <div class="phone">
+        <div class="topbar">
+          <span class="icon">☀</span>
+          <strong>CityTimeHub</strong>
+          <span class="icon" style="font-size:.72rem;padding:0 6px;width:auto">English</span>
+        </div>
+        <div class="search">
+          <span class="star">★</span>
+          <div class="bar"><span>⌕</span> ابحث باسم المدينة</div>
+        </div>
+        <div class="board">
+          <div class="city">القاهرة</div>
+          <div class="time" dir="ltr">21:27</div>
+          <div class="wd">الجمعة</div>
+          <div class="dates">
+            <div class="cell"><span class="lab">ميلادي</span><span class="val">24 يوليو 2026</span></div>
+            <div class="cell hijri"><span class="lab">هجري</span><span class="val">10 صفر 1448</span></div>
+          </div>
+          <div class="next"><strong>العشاء</strong> · بعد 18 د</div>
+        </div>
+        <div class="refl">
+          <div class="k">خاطرة اليوم</div>
+          <div class="tx">﴿أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ﴾</div>
+          <div class="src">القرآن — الرعد ٢٨</div>
+        </div>
+
+        <div class="fav">
+          <div class="fav-label">مدني المفضلة</div>
+          <div class="chips">
+            <span class="chip"><span class="dn">☾</span> القاهرة <span class="x">×</span></span>
+            <span class="chip"><span class="dn">☀</span> الرياض <span class="x">×</span></span>
+          </div>
+        </div>
+
+        <div class="nav">
+          <span class="on">الرئيسية</span>
+          <span>الصلاة</span>
+          <span>الأذكار</span>
+          <span>أدوات</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 cities: collapsible -->
+    <div class="phone-wrap" data-pane="many">
+      <span class="label">3+ مدن → شريط قابل للفتح (اضغط)</span>
+      <div class="phone">
+        <div class="topbar">
+          <span class="icon">☀</span>
+          <strong>CityTimeHub</strong>
+          <span class="icon" style="font-size:.72rem;padding:0 6px;width:auto">English</span>
+        </div>
+        <div class="search">
+          <span class="star">★</span>
+          <div class="bar"><span>⌕</span> ابحث باسم المدينة</div>
+        </div>
+        <div class="board">
+          <div class="city">القاهرة</div>
+          <div class="time" dir="ltr">21:27</div>
+          <div class="wd">الجمعة</div>
+          <div class="dates">
+            <div class="cell"><span class="lab">ميلادي</span><span class="val">24 يوليو 2026</span></div>
+            <div class="cell hijri"><span class="lab">هجري</span><span class="val">10 صفر 1448</span></div>
+          </div>
+          <div class="next"><strong>العشاء</strong> · بعد 18 د</div>
+        </div>
+        <div class="refl">
+          <div class="k">خاطرة اليوم</div>
+          <div class="tx">﴿أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ﴾</div>
+          <div class="src">القرآن — الرعد ٢٨</div>
+        </div>
+
+        <div class="fav" id="favMany">
+          <button type="button" class="fav-summary" aria-expanded="false" aria-controls="favBody">
+            <span class="left">
+              <span class="ico" aria-hidden="true">⭐</span>
+              <span>
+                <span class="title">مدني</span>
+                <span class="count"> · 4</span>
+              </span>
+            </span>
+            <span class="peek" aria-hidden="true">
+              <span>القاهرة</span>
+              <span>الرياض</span>
+            </span>
+            <span class="chev" aria-hidden="true">›</span>
+          </button>
+          <div class="fav-body" id="favBody">
+            <div class="chips">
+              <span class="chip"><span class="dn">☾</span> القاهرة <span class="x">×</span></span>
+              <span class="chip"><span class="dn">☀</span> الرياض <span class="x">×</span></span>
+              <span class="chip"><span class="dn">☾</span> دبي <span class="x">×</span></span>
+              <span class="chip"><span class="dn">☀</span> لندن <span class="x">×</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav">
+          <span class="on">الرئيسية</span>
+          <span>الصلاة</span>
+          <span>الأذكار</span>
+          <span>أدوات</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="note">
+    <b>القاعدة:</b> أقل من 3 مدن = شرائح ظاهرة زي دلوقتي.
+    من 3 فأكثر = شريط <b>مدني · العدد</b> مع لمحة لأسماء أول مدينتين، والضغط يفتح الكل.
+    كده الرئيسية تفضل هادية لما القائمة تكبر.
+  </p>
+
+  <script>
+    document.querySelector(".toggle").addEventListener("click", function (e) {
+      var btn = e.target.closest("button[data-view]");
+      if (!btn) return;
+      document.querySelectorAll(".toggle button").forEach(function (b) {
+        b.classList.toggle("is-on", b === btn);
+      });
+      document.body.dataset.view = btn.dataset.view;
+    });
+
+    var fav = document.getElementById("favMany");
+    var summary = fav.querySelector(".fav-summary");
+    summary.addEventListener("click", function () {
+      var open = fav.classList.toggle("is-open");
+      summary.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>معاينة — صندوق الالتزام المضغوط</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0b1120;
+      --surface: #111a30;
+      --surface-2: #0f1628;
+      --border: #1e2a44;
+      --text: #eaf1ff;
+      --text-2: #94a3b8;
+      --muted: #64748b;
+      --brand: #2563eb;
+      --green: #34d399;
+      --next: #f5a623;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      font-family: "IBM Plex Sans Arabic", system-ui, sans-serif;
+      background: #070b14;
+      color: var(--text);
+      padding: 28px 16px 48px;
+      display: grid;
+      justify-items: center;
+      gap: 18px;
+    }
+    h1 { font-size: 1.05rem; font-weight: 750; }
+    .hint { max-width: 640px; text-align: center; font-size: .84rem; color: var(--text-2); line-height: 1.65; }
+    .toggle {
+      display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+    }
+    .toggle button {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font: inherit;
+      font-size: .82rem;
+      font-weight: 650;
+      cursor: pointer;
+    }
+    .toggle button.is-on { border-color: var(--green); color: var(--green); }
+    .phones {
+      display: flex; gap: 28px; flex-wrap: wrap; justify-content: center; align-items: flex-start;
+    }
+    .phone-wrap { display: grid; gap: 10px; justify-items: center; }
+    .phone-wrap .label {
+      font-size: .75rem; font-weight: 700; letter-spacing: .04em; color: var(--text-2);
+    }
+    .phone {
+      width: min(360px, 92vw);
+      border-radius: 28px;
+      border: 2px solid #2a3550;
+      background: var(--bg);
+      overflow: hidden;
+      box-shadow: 0 30px 80px -30px #000;
+      padding: 14px 14px 18px;
+    }
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 12px; padding: 4px 2px;
+    }
+    .topbar strong { font-size: .95rem; }
+    .icon {
+      width: 32px; height: 32px; border-radius: 10px;
+      border: 1px solid var(--border); display: grid; place-items: center;
+      color: var(--text-2); font-size: .9rem;
+    }
+    .head {
+      display: flex; align-items: baseline; justify-content: space-between;
+      gap: 10px; margin-bottom: 8px; padding: 2px 2px;
+    }
+    .city {
+      font-size: 1rem; font-weight: 750; cursor: pointer;
+    }
+    .city::after {
+      content: "▾";
+      margin-inline-start: 5px;
+      font-size: .62em;
+      color: var(--muted);
+      vertical-align: middle;
+    }
+    .city .hint-chip {
+      display: inline-block;
+      margin-inline-start: 4px;
+      font-size: .62rem;
+      font-weight: 700;
+      color: var(--muted);
+      opacity: .85;
+      vertical-align: middle;
+    }
+    .clock { font-size: 1.35rem; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+    .dates {
+      display: flex; justify-content: center; gap: 8px; align-items: baseline;
+      color: var(--text-2); font-size: .78rem; font-weight: 600; margin-bottom: 12px;
+    }
+    .dates .dot { color: var(--muted); }
+
+    /* Prayer list (shared) */
+    .plist {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      background: var(--surface);
+      margin-bottom: 12px;
+    }
+    .prow {
+      display: grid;
+      grid-template-columns: 1fr 4.4em 5.2em;
+      gap: 10px;
+      align-items: center;
+      padding: 11px 14px;
+      border-bottom: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+      font-size: .82rem;
+    }
+    .prow:last-child { border-bottom: none; }
+    .prow.is-next { background: color-mix(in srgb, var(--next) 8%, transparent); }
+    .prow .n { font-weight: 700; }
+    .prow .t { font-weight: 800; font-size: .92rem; font-variant-numeric: tabular-nums; }
+    .prow .tag { font-size: .6rem; color: var(--next); font-weight: 700; white-space: nowrap; }
+
+    /* ——— CURRENT adherence (big) ——— */
+    .board-old {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      padding: 14px 14px 12px;
+      border-radius: 18px;
+      border: 1px solid color-mix(in srgb, var(--green) 22%, var(--border));
+      background: color-mix(in srgb, var(--green) 6%, var(--surface));
+    }
+    .board-old .k {
+      align-self: flex-start;
+      font-size: .68rem; font-weight: 800; letter-spacing: .08em; color: var(--green);
+    }
+    .board-old .dua {
+      text-align: center; font-size: .88rem; font-weight: 600; color: var(--text-2);
+      max-width: 36ch; line-height: 1.7; margin: 2px 0 4px;
+    }
+    .board-old .status {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid color-mix(in srgb, var(--green) 28%, var(--border));
+      background: color-mix(in srgb, var(--surface) 88%, transparent);
+      text-align: center;
+      font-size: .9rem; font-weight: 650;
+    }
+    .board-old .week {
+      display: flex; gap: 7px; justify-content: center; margin-top: 4px;
+    }
+    .board-old .week i {
+      width: 10px; height: 10px; border-radius: 50%;
+      border: 1.5px solid var(--border); display: block;
+    }
+    .board-old .week-label {
+      font-size: .68rem; color: var(--muted); margin-top: 2px;
+    }
+
+    /* ——— PROPOSED compact adherence ——— */
+    .board-new {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid color-mix(in srgb, var(--green) 20%, var(--border));
+      background: color-mix(in srgb, var(--green) 5%, var(--surface));
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: border-color .15s ease, background .15s ease;
+    }
+    .board-new:active { opacity: .88; }
+    .board-new .row1 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .board-new .msg {
+      min-width: 0;
+      font-size: .82rem;
+      font-weight: 650;
+      color: var(--text);
+      line-height: 1.35;
+    }
+    .board-new .score {
+      flex: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .72rem;
+      font-weight: 750;
+      color: var(--green);
+      white-space: nowrap;
+    }
+    .board-new .pips {
+      display: inline-flex; gap: 3px;
+    }
+    .board-new .pips i {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: color-mix(in srgb, var(--green) 18%, transparent);
+      border: 1px solid color-mix(in srgb, var(--green) 35%, var(--border));
+      display: block;
+    }
+    .board-new .pips i.on {
+      background: var(--green);
+      border-color: var(--green);
+    }
+    .board-new .week {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-top: 2px;
+      border-top: 1px solid color-mix(in srgb, var(--text) 8%, transparent);
+    }
+    .board-new .week-label {
+      font-size: .62rem;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: .04em;
+    }
+    .board-new .days {
+      display: flex; gap: 5px;
+    }
+    .board-new .days span {
+      width: 18px;
+      text-align: center;
+      font-size: .55rem;
+      color: var(--muted);
+      font-weight: 650;
+      line-height: 1.2;
+    }
+    .board-new .days span i {
+      display: block;
+      width: 8px; height: 8px;
+      margin: 0 auto 3px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      background: transparent;
+    }
+    .board-new .days span.is-done i {
+      background: var(--green);
+      border-color: var(--green);
+    }
+    .board-new .days span.is-today i {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--brand) 25%, transparent);
+    }
+    .board-new .go {
+      color: var(--muted);
+      font-size: .85rem;
+      opacity: .7;
+    }
+
+    .occ {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid color-mix(in srgb, #c6a24b 28%, var(--border));
+      background: color-mix(in srgb, #c6a24b 7%, var(--surface));
+      font-size: .82rem;
+      position: relative;
+      padding-inline-start: 28px;
+    }
+    .occ::after {
+      content: "›";
+      position: absolute;
+      inset-inline-start: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+    }
+    .occ strong { font-weight: 750; }
+    .occ .sub { display: block; margin-top: 2px; color: var(--text-2); font-size: .72rem; }
+
+    .nav {
+      display: flex; justify-content: space-around;
+      margin-top: 16px; padding-top: 10px;
+      border-top: 1px solid var(--border);
+      font-size: .68rem; color: var(--muted); font-weight: 650;
+    }
+    .nav .on { color: var(--brand); }
+
+    .note {
+      max-width: 720px;
+      font-size: .8rem;
+      color: var(--text-2);
+      line-height: 1.65;
+      text-align: center;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px dashed var(--border);
+      background: color-mix(in srgb, var(--surface) 60%, transparent);
+    }
+    .note b { color: var(--text); font-weight: 700; }
+
+    body.show-one .phone-wrap[data-pane="old"] { display: none; }
+    body.show-old .phone-wrap[data-pane="new"] { display: none; }
+  </style>
+</head>
+<body>
+  <h1>معاينة صندوق الالتزام</h1>
+  <p class="hint">قبل التنفيذ — مقارنة الشكل الحالي بالمقترح المضغوط داخل تبويب الصلاة. المواقيت تفضل البطل، والالتزام صفّين صغيرين قابلين للضغط.</p>
+
+  <div class="toggle" role="group" aria-label="عرض المعاينة">
+    <button type="button" data-mode="both" class="is-on">جنب بعض</button>
+    <button type="button" data-mode="old">الحالي فقط</button>
+    <button type="button" data-mode="new">المقترح فقط</button>
+  </div>
+
+  <div class="phones">
+    <!-- CURRENT -->
+    <div class="phone-wrap" data-pane="old">
+      <span class="label">الحالي (واخد مساحة)</span>
+      <div class="phone" aria-label="الشكل الحالي">
+        <div class="topbar">
+          <span class="icon">☀</span>
+          <strong>الصلاة</strong>
+          <span class="icon">؟</span>
+        </div>
+        <div class="head">
+          <span class="city">القاهرة</span>
+          <span class="clock" dir="ltr">00:14:22</span>
+        </div>
+        <div class="dates">
+          <span>22 يوليو 2026</span>
+          <span class="dot">·</span>
+          <span>8 صفر 1448</span>
+        </div>
+        <div class="plist">
+          <div class="prow"><span class="n">الفجر</span><span class="t" dir="ltr">04:27</span><span></span></div>
+          <div class="prow"><span class="n">الشروق</span><span class="t" dir="ltr">06:08</span><span></span></div>
+          <div class="prow"><span class="n">الظهر</span><span class="t" dir="ltr">13:02</span><span></span></div>
+          <div class="prow is-next"><span class="n">العصر</span><span class="t" dir="ltr">16:39</span><span class="tag">القادمة</span></div>
+          <div class="prow"><span class="n">المغرب</span><span class="t" dir="ltr">19:55</span><span></span></div>
+          <div class="prow"><span class="n">العشاء</span><span class="t" dir="ltr">21:22</span><span></span></div>
+        </div>
+
+        <div class="board-old">
+          <span class="k">الالتزام</span>
+          <p class="dua">اللَّهُمَّ أَعِنَّا عَلَى ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ</p>
+          <div class="status">ابدأ رحلتك اليوم 🌱 · اليوم 0/5</div>
+          <div class="week" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <span class="week-label">آخر ٧ أيام</span>
+        </div>
+
+        <div class="occ">
+          <strong>🌟 المولد النبوي</strong>
+          <span class="sub">بعد 32 يومًا تقريبًا · 25 أغسطس 2026</span>
+        </div>
+        <div class="nav">
+          <span>الرئيسية</span>
+          <span class="on">الصلاة</span>
+          <span>الأذكار</span>
+          <span>أدوات</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROPOSED -->
+    <div class="phone-wrap" data-pane="new">
+      <span class="label">المقترح (مضغوط)</span>
+      <div class="phone" aria-label="الشكل المقترح">
+        <div class="topbar">
+          <span class="icon">☀</span>
+          <strong>الصلاة</strong>
+          <span class="icon">؟</span>
+        </div>
+        <div class="head">
+          <span class="city">القاهرة<span class="hint-chip">تغيير</span></span>
+          <span class="clock" dir="ltr">00:14:22</span>
+        </div>
+        <div class="dates">
+          <span>22 يوليو 2026</span>
+          <span class="dot">·</span>
+          <span>8 صفر 1448</span>
+        </div>
+        <div class="plist">
+          <div class="prow"><span class="n">الفجر</span><span class="t" dir="ltr">04:27</span><span></span></div>
+          <div class="prow"><span class="n">الشروق</span><span class="t" dir="ltr">06:08</span><span></span></div>
+          <div class="prow"><span class="n">الظهر</span><span class="t" dir="ltr">13:02</span><span></span></div>
+          <div class="prow is-next"><span class="n">العصر</span><span class="t" dir="ltr">16:39</span><span class="tag">القادمة</span></div>
+          <div class="prow"><span class="n">المغرب</span><span class="t" dir="ltr">19:55</span><span></span></div>
+          <div class="prow"><span class="n">العشاء</span><span class="t" dir="ltr">21:22</span><span></span></div>
+        </div>
+
+        <button type="button" class="board-new" aria-label="التزامك — اضغط للتفاصيل">
+          <div class="row1">
+            <span class="msg">ابدأ رحلتك اليوم 🌱</span>
+            <span class="score">
+              اليوم 0/5
+              <span class="pips" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+              <span class="go">‹</span>
+            </span>
+          </div>
+          <div class="week">
+            <span class="week-label">آخر ٧ أيام</span>
+            <div class="days" aria-hidden="true">
+              <span>س<i></i></span>
+              <span>ح<i></i></span>
+              <span>ث<i></i></span>
+              <span>ر<i></i></span>
+              <span>خ<i></i></span>
+              <span>ج<i></i></span>
+              <span class="is-today">س<i></i></span>
+            </div>
+          </div>
+        </button>
+
+        <div class="occ">
+          <strong>🌟 المولد النبوي</strong>
+          <span class="sub">بعد 32 يومًا تقريبًا · 25 أغسطس 2026</span>
+        </div>
+        <div class="nav">
+          <span>الرئيسية</span>
+          <span class="on">الصلاة</span>
+          <span>الأذكار</span>
+          <span>أدوات</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="note">
+    <b>الفرق:</b> شلنا عنوان «الالتزام» والدعاء من الصندوق.
+    بقي سطر تشجيع + عدّاد اليوم، وتحته نقاط الأسبوع فقط.
+    الضغط يفتح نفس شاشة التفاصيل زي دلوقتي.
+    وكمان تلميح خفيف <b>تغيير</b> جنب اسم المدينة بدون زر جديد.
+  </p>
+
+  <script>
+    document.querySelector(".toggle").addEventListener("click", function (e) {
+      var btn = e.target.closest("button[data-mode]");
+      if (!btn) return;
+      document.querySelectorAll(".toggle button").forEach(function (b) {
+        b.classList.toggle("is-on", b === btn);
+      });
+      document.body.classList.remove("show-one", "show-old");
+      if (btn.dataset.mode === "new") document.body.classList.add("show-one");
+      if (btn.dataset.mode === "old") document.body.classList.add("show-old");
+    });
+  </script>
+</body>
+</html>

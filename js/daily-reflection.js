@@ -76,6 +76,16 @@
     { ar: "سبعةٌ يُظِلُّهم اللهُ في ظلِّه يومَ لا ظلَّ إلا ظلُّه.", en: "Seven will be shaded by Allah on the Day when there is no shade but His.", sa: "متفق عليه", se: "Bukhari & Muslim" },
     { ar: "خيرُ يومٍ طلعتْ عليه الشمسُ يومُ الجمعةِ.", en: "The best day on which the sun rises is Friday.", sa: "رواه مسلم", se: "Muslim" },
     { ar: "مَن قال: لا إلهَ إلا اللهُ وحدَه لا شريكَ له، له المُلكُ وله الحمدُ، وهو على كلِّ شيءٍ قديرٌ، في يومٍ مئةَ مرّةٍ، كانت له عَدْلَ عشرِ رقابٍ.", en: "Whoever says 'There is no god but Allah alone, without partner; His is the dominion and His is the praise, and He is over all things capable' a hundred times a day, it equals freeing ten slaves.", sa: "متفق عليه", se: "Bukhari & Muslim" },
+    { ar: "لأنْ يمتلئَ جوفُ أحدِكم قيحًا يَرِيهِ، خيرٌ له من أن يمتلئَ شعرًا.", en: "For one of you to have his inside filled with pus that consumes him is better than to have it filled with poetry.", sa: "متفق عليه", se: "Bukhari & Muslim" },
+    { ar: "ما أُعطيَ أحدٌ عطاءً خيرًا وأوسعَ من الصبرِ.", en: "No one is given a gift better and more abundant than patience.", sa: "متفق عليه", se: "Bukhari & Muslim" },
+    { ar: "مَن سترَ مسلمًا سترَه اللهُ في الدنيا والآخرةِ.", en: "Whoever conceals the faults of a Muslim, Allah will conceal his faults in this world and the Hereafter.", sa: "رواه مسلم", se: "Muslim" },
+    { ar: "الدنيا سجنُ المؤمنِ وجنّةُ الكافرِ.", en: "The world is the believer's prison and the disbeliever's paradise.", sa: "رواه مسلم", se: "Muslim" },
+    { ar: "إذا أحبَّ اللهُ العبدَ نادى جبريلَ: إنَّ اللهَ يُحِبُّ فلانًا فأحبِبْه.", en: "When Allah loves a servant, He calls Jibril and says: 'Allah loves so-and-so, so love him.'", sa: "متفق عليه", se: "Bukhari & Muslim" },
+    { ar: "المؤمنُ القويُّ خيرٌ وأحبُّ إلى اللهِ من المؤمنِ الضعيفِ، وفي كلٍّ خيرٌ.", en: "The strong believer is better and dearer to Allah than the weak believer, though in each is good.", sa: "رواه مسلم", se: "Muslim" },
+    { ar: "الظُّلمُ ظلماتٌ يومَ القيامةِ.", en: "Injustice will be darkness on the Day of Resurrection.", sa: "متفق عليه", se: "Bukhari & Muslim" },
+    { ar: "مَن نسيَ صلاةً فليُصلِّها إذا ذكرَها، لا كفّارةَ لها إلا ذلك.", en: "Whoever forgets a prayer should offer it as soon as he remembers it; there is no expiation for it except that.", sa: "متفق عليه", se: "Bukhari & Muslim" },
+    { ar: "سِبابُ المسلمِ فسوقٌ، وقتالُه كفرٌ.", en: "Reviling a Muslim is disobedience, and fighting him is disbelief.", sa: "متفق عليه", se: "Bukhari & Muslim" },
+    { ar: "لا يدخلُ الجنّةَ مَن كان في قلبِه مثقالُ ذرّةٍ من كِبرٍ.", en: "No one who has an atom's weight of arrogance in his heart will enter Paradise.", sa: "رواه مسلم", se: "Muslim" },
   ];
 
   const lang = () => ((document.documentElement.lang || "en").slice(0, 2) === "ar" ? "ar" : "en");
