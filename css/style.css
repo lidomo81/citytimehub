@@ -252,7 +252,7 @@ html.app-mode #stats,
 html.app-mode .explainer-section,
 html.app-mode .site-footer { display: none !important; }
 .app-bar-side { flex: none; display: inline-flex; align-items: center; justify-content: center; min-width: 38px; min-height: 38px; }
-.app-bar-side.lang-switch { min-width: 0; padding: 0 4px; font-size: .82rem; font-weight: 700; text-decoration: none; color: var(--text-2); white-space: nowrap; }
+.app-bar-side.lang-switch { min-width: 0; padding: 0 4px; font-size: .78rem; font-weight: 700; text-decoration: none; color: var(--text-2); white-space: nowrap; }
 .app-bar-side.lang-switch:hover { color: var(--brand); }
 .app-bar-back {
   display: inline-flex; align-items: center; justify-content: center;
@@ -2505,7 +2505,7 @@ html.app-mode .fav-chip-name { font-size: 1rem; }
 .prayer-ac { width: 100%; }
 
 /* ===================== i18n: language switcher + RTL ===================== */
-.lang-switch { display: inline-flex; align-items: center; font-weight: 700; font-size: .9rem; color: var(--text); text-decoration: none; padding: 7px 14px; border: 1.5px solid var(--border); border-radius: 999px; transition: border-color .2s, background .2s; white-space: nowrap; }
+.lang-switch { display: inline-flex; align-items: center; font-weight: 700; font-size: .82rem; color: var(--text); text-decoration: none; padding: 7px 12px; border: 1.5px solid var(--border); border-radius: 999px; transition: border-color .2s, background .2s; white-space: nowrap; }
 .lang-switch:hover { border-color: var(--brand); background: var(--surface-2); }
 
 /* Arabic / RTL: nicer system Arabic fonts, comfortable line-height */

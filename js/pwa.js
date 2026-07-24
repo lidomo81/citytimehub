@@ -325,8 +325,15 @@
       });
     }
   }
-  if (document.readyState !== "loading") { upgradeSiteNav(); wireNavDrops(); applyAppNav(); installToolAppBar(); ensureAppTabs(); }
-  else document.addEventListener("DOMContentLoaded", function () { upgradeSiteNav(); wireNavDrops(); applyAppNav(); installToolAppBar(); ensureAppTabs(); });
+  function normalizeLangSwitchLabels() {
+    try {
+      document.querySelectorAll("a.lang-switch").forEach(function (a) {
+        a.textContent = "EN · العربية";
+      });
+    } catch (e) {}
+  }
+  if (document.readyState !== "loading") { upgradeSiteNav(); wireNavDrops(); applyAppNav(); installToolAppBar(); ensureAppTabs(); normalizeLangSwitchLabels(); }
+  else document.addEventListener("DOMContentLoaded", function () { upgradeSiteNav(); wireNavDrops(); applyAppNav(); installToolAppBar(); ensureAppTabs(); normalizeLangSwitchLabels(); });
 
   /* ----- Universal Share button in the header. Uses the native share sheet
      (WhatsApp / Telegram / etc.) so a visitor can pass the page to family and
