@@ -387,49 +387,60 @@
   }
 
   function wireSearch(inp, list) {
-    let timer = 0;
-    const close = () => { list.hidden = true; list.innerHTML = ""; };
-    const HL = (window.CTH_CITY_INP && window.CTH_CITY_INP.highlight)
-      ? window.CTH_CITY_INP.highlight
-      : t => t;
-    const emptyHtml = () => (window.CTH_CITY_INP && window.CTH_CITY_INP.emptyHtml)
-      ? window.CTH_CITY_INP.emptyHtml()
-      : "";
-
-    inp.addEventListener("input", () => {
-      clearTimeout(timer);
+    let items = [];
+    let active = -1;
+    const close = () => {
+      list.hidden = true;
+      list.innerHTML = "";
+      active = -1;
+      inp.setAttribute("aria-expanded", "false");
+    };
+    function paint() {
       const q = inp.value.trim().toLowerCase();
-      if (q.length < 1) { close(); return; }
-      timer = setTimeout(() => {
-        const hits = CITIES.filter(c => {
-          const blob = (c.name + " " + (c.name_ar || "") + " " + (c.country || "") + " " + (c.country_ar || "")).toLowerCase();
-          return blob.indexOf(q) >= 0;
-        }).slice(0, 8);
-        if (!hits.length) {
-          list.innerHTML = emptyHtml() || ('<li class="suggest-item" style="cursor:default;opacity:.6">' +
-            (LANG === "ar" ? "لا توجد مدينة بهذا الاسم" : "No city found") + "</li>");
-          list.hidden = false;
-          list._items = [];
-          return;
-        }
+      if (!q) { close(); return; }
+      items = CITIES.filter(c => {
+        const blob = (c.name + " " + (c.name_ar || "") + " " + (c.country || "") + " " + (c.country_ar || "")).toLowerCase();
+        return blob.indexOf(q) >= 0;
+      }).slice(0, 8);
+      if (!items.length) {
+        list.innerHTML = window.CTH_CITY_INP
+          ? CTH_CITY_INP.emptyHtml()
+          : '<li class="ac-empty">' + (LANG === "ar" ? "لا توجد مدينة بهذا الاسم" : "No city found") + "</li>";
         list.hidden = false;
-        list.innerHTML = hits.map((c, i) =>
-          '<li class="suggest-item" data-i="' + i + '">' +
-            '<span class="suggest-name">' + HL(cN(c), q) + "</span>" +
-            '<span class="suggest-meta"><span class="suggest-country">' + cC(c) + "</span></span></li>"
-        ).join("");
-        list._items = hits;
-      }, 120);
-    });
-    list.addEventListener("click", e => {
-      const li = e.target.closest(".suggest-item");
-      if (!li || li.dataset.i == null) return;
-      const c = (list._items || [])[+li.dataset.i];
-      if (c) addCity(c);
+        inp.setAttribute("aria-expanded", "true");
+        return;
+      }
+      list.innerHTML = items.map((c, i) =>
+        window.CTH_CITY_INP
+          ? CTH_CITY_INP.optionHtml(cN(c), cC(c), i, active, inp.value)
+          : '<li class="ac-item" data-i="' + i + '"><span>' + cN(c) + '</span><span class="ac-country">' + cC(c) + "</span></li>"
+      ).join("");
+      list.hidden = false;
+      inp.setAttribute("aria-expanded", "true");
+    }
+    function pick(i) {
+      const c = items[i];
+      if (!c) return;
+      addCity(c);
       close();
+    }
+    inp.addEventListener("input", paint);
+    inp.addEventListener("focus", () => { if (inp.value.trim()) paint(); });
+    inp.addEventListener("keydown", e => {
+      if (list.hidden) return;
+      if (e.key === "ArrowDown") { e.preventDefault(); active = Math.min(active + 1, items.length - 1); paint(); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); active = Math.max(active - 1, 0); paint(); }
+      else if (e.key === "Enter") { e.preventDefault(); pick(active < 0 ? 0 : active); }
+      else if (e.key === "Escape") { close(); }
+    });
+    list.addEventListener("mousedown", e => {
+      const li = e.target.closest("[data-i]");
+      if (!li) return;
+      e.preventDefault();
+      pick(+li.dataset.i);
     });
     document.addEventListener("click", e => {
-      if (!e.target.closest(".cb-add")) close();
+      if (e.target !== inp && !list.contains(e.target) && !e.target.closest(".cb-add")) close();
     });
   }
 
