@@ -37,7 +37,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="/css/style.css?v=122" />
+  <link rel="stylesheet" href="/css/style.css?v=123" />
   <link rel="manifest" href="/manifest.ar.webmanifest" />
   <link rel="icon" href="/icons/favicon-64.png" sizes="64x64" type="image/png" />
   <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
@@ -93,7 +93,7 @@
 <script>/* Load AdSense only on the website, NOT inside the native app / installed PWA (AdSense policy compliant) */(function(){try{var q=new URLSearchParams(location.search);var inApp=q.get('app')==='1'||/CityTimeHubApp/i.test(navigator.userAgent||'')||(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true;if(inApp)return;var s=document.createElement('script');s.async=true;s.crossOrigin='anonymous';s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9416184699957518';document.head.appendChild(s);}catch(e){}})();</script>
 </head>
 
-<body>
+<body class="home-web">
 <script>(function(){try{var p=new URLSearchParams(location.search);var s=(matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true;if(p.get('app')==='1'||s){document.documentElement.classList.add('app-mode');var tab=(location.hash||'').replace(/^#/,'');try{if(!tab||['home','prayer','azkar','tools'].indexOf(tab)<0)tab=localStorage.getItem('cth-app-tab')||'home';}catch(e){tab=tab||'home';}if(['home','prayer','azkar','tools'].indexOf(tab)<0)tab='home';document.documentElement.setAttribute('data-app-tab',tab);var st=document.createElement('style');st.textContent='html.app-mode #top>.hero,html.app-mode #tools,html.app-mode #citiesCta,html.app-mode #reflections,html.app-mode #reference,html.app-mode #stats,html.app-mode .explainer-section,html.app-mode .site-footer,html.app-mode .site-header{display:none!important}html.app-mode .app-bar--home{display:flex!important}html.app-mode nav.app-tools,html.app-mode nav.app-legal{display:none!important}html.app-mode[data-app-tab="tools"] nav.app-tools,html.app-mode[data-app-tab="tools"] nav.app-legal{display:block!important}html.app-mode[data-app-tab="prayer"] #cityPanel{display:block!important}html.app-mode:not([data-app-tab="home"]):not([data-app-tab="prayer"]) #cityPanel{display:none!important}html.app-mode:not([data-app-tab="home"]):not([data-app-tab="prayer"]) .cp-toolbar{display:none!important}html.app-mode[data-app-tab="home"] #cthPrayerRemindSlot{display:none!important}';document.head.appendChild(st);}}catch(e){}})();</script>
   <div class="app-bar app-bar--home" role="banner">
     <a class="app-bar-side lang-switch" href="/?app=1" lang="en" hreflang="en" aria-label="تبديل اللغة · English">EN · العربية</a>
@@ -157,7 +157,7 @@
 
   <main id="top">
     <!-- ===================== HERO: THE MERIDIAN ===================== -->
-    <section class="hero">
+    <section class="hero hero--home">
       <div class="container">
         <div class="sky-panel" id="skyPanel">
           <div class="sky-stars" aria-hidden="true"></div>
@@ -170,8 +170,10 @@
 
           <div class="hero-grid">
             <div class="hero-copy">
-            <h1 class="hero-title">الوقت الآن ومواقيت الصلاة<br><span>حول العالم</span></h1>
-            <p class="hero-desc">تابع الوقت ومواقيت الصلاة وفروق التوقيت في جميع أنحاء العالم لحظة بلحظة.</p>
+              <p class="hero-brand" aria-hidden="true">CityTime<span>Hub</span></p>
+              <h1 class="hero-title">الوقت الآن ومواقيت الصلاة<br><span>حول العالم</span></h1>
+              <p class="hero-desc">مدينتك أولًا — ثم مواقيت الصلاة، وأحبابك في الخارج، والأدوات التي تمشي مع كل ثانية.</p>
+              <p class="hero-jump"><a href="#cityPanel">شاهد وقتك المحلي ↓</a></p>
             </div>
             <div class="hero-globe" id="heroGlobe" aria-hidden="true"></div>
           </div>
@@ -256,14 +258,12 @@
 
         <div id="cthPrayerRemindSlot" class="app-remind-slot" hidden></div>
 
-        <a id="cbHomeChip" class="cb-home-chip" href="/ar/cities/board/" aria-label="لوحة المدن">
-          <span class="cb-home-chip-l">لوحة المدن</span>
-          <span class="cb-home-chip-r">حي · حتى 4</span>
-        </a>
-
-        <div class="home-spotlight" id="homeSpotlight">
-          <div id="dailyReflectionSlot" class="home-reflection-slot"></div>
-          <a id="coHomeStrip" class="co-home-strip app-spot-card" href="/ar/close-ones/" aria-label="أحبابك">
+        <nav class="web-doors" aria-label="متابعة">
+          <a id="cbHomeChip" class="cb-home-chip web-door" href="/ar/cities/board/" aria-label="لوحة المدن">
+            <span class="cb-home-chip-l">لوحة المدن</span>
+            <span class="cb-home-chip-r">حي · حتى 4</span>
+          </a>
+          <a id="coHomeStrip" class="co-home-strip app-spot-card web-door" href="/ar/close-ones/" aria-label="أحبابك">
             <span class="co-home-ico" aria-hidden="true">🤍</span>
             <span class="co-home-copy">
               <strong class="co-home-k">أحبابك</strong>
@@ -271,6 +271,18 @@
             </span>
             <span class="co-home-arrow" aria-hidden="true">→</span>
           </a>
+          <a class="web-door web-door--tools" href="#tools">
+            <span class="web-door-ico" aria-hidden="true">✦</span>
+            <span class="web-door-copy">
+              <strong>كل الأدوات</strong>
+              <span>أذكار · قبلة · مقارنة · تخطيط</span>
+            </span>
+            <span class="web-door-go" aria-hidden="true">←</span>
+          </a>
+        </nav>
+
+        <div class="home-spotlight" id="homeSpotlight">
+          <div id="dailyReflectionSlot" class="home-reflection-slot"></div>
         </div>
       </div>
     </section>
@@ -363,7 +375,7 @@
         <header class="section-head">
           <span class="kicker">٠١ — أدوات</span>
           <h2>أدوات الوقت والصلاة</h2>
-          <p class="muted">كل ما تحتاجه لمواقيت الصلاة، ومقارنة التوقيت، والتخطيط بين المدن — في مكانٍ واحد، يواكب الوقت معك لحظةً بلحظة.</p>
+          <p class="muted">افتح أي أداة — الشرح الكامل داخل صفحتها.</p>
         </header>
 
         <div class="tool-cats">
