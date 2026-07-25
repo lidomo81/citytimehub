@@ -2645,7 +2645,10 @@ html.app-mode .fav-chip-name { font-size: 1rem; }
 
 /* ===== Featured reflection — breaks the equal-card grid ===== */
 .guide-list--featured { grid-template-columns: 1fr 1fr; }
+.guide-list--latest { grid-template-columns: 1fr; max-width: 920px; }
 .guide-card--featured { grid-column: 1 / -1; }
+.reflections-more { margin-top: 14px; }
+.reflections-more a { font-weight: 700; }
 .guide-card--featured a { padding: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); overflow: hidden; }
 .gc-visual { position: relative; min-height: 200px; display: flex; align-items: center; justify-content: center;
   background: linear-gradient(135deg, #232C57 0%, #3E3159 55%, #5C3350 100%); }
