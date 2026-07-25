@@ -296,7 +296,7 @@
     if (!inAppMode()) return;
     if (window.CTH_AppTabs || document.querySelector("script[src*='app-tabs.js']")) return;
     var s = document.createElement("script");
-    s.src = "/js/app-tabs.js?v=108";
+    s.src = "/js/app-tabs.js?v=110";
     s.defer = true;
     document.head.appendChild(s);
   }
@@ -304,7 +304,7 @@
     var inApp = inAppMode();
     if (!inApp) return;
     document.documentElement.classList.add("app-mode");
-    document.querySelectorAll("a.lang-switch, nav.app-legal a, .app-tools a.app-tool, .app-tools a.app-cities-hero, #coHomeStrip").forEach(function (a) {
+    document.querySelectorAll("a.lang-switch, nav.app-legal a, .app-tools a.app-tool, .app-tools a.app-cities-hero, #coHomeStrip, #cbHomeChip").forEach(function (a) {
       var href = a.getAttribute("href");
       if (!href || href.charAt(0) === "#") return;
       a.setAttribute("href", withAppParam(href));

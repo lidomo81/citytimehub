@@ -3705,3 +3705,220 @@ html.app-mode .help-fab {
   html.app-mode .app-tool { min-block-size: 74px; padding: 14px 10px; }
   .prayer-azkar { inset-block-start: 7px; inset-inline-end: 7px; }
 }
+
+/* —— Cities board —— */
+.cb-section { padding-block: 8px 40px; }
+.cb-wrap { max-width: 520px; }
+.cb-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.cb-title { margin: 0; font-size: 1.2rem; font-weight: 800; letter-spacing: -.02em; }
+.cb-lead { margin: 4px 0 0; font-size: .82rem; color: var(--text-2); line-height: 1.5; }
+.cb-edit {
+  flex: none;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 7px 14px;
+  font: inherit;
+  font-size: .78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.cb-edit:hover { border-color: var(--brand); }
+.cb-note {
+  margin: 0 0 12px;
+  padding: 9px 12px;
+  border-radius: 12px;
+  border: 1px dashed color-mix(in srgb, #c6a24b 40%, var(--border));
+  background: color-mix(in srgb, #c6a24b 8%, var(--surface));
+  font-size: .74rem;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+.cb-note strong { color: color-mix(in srgb, #c6a24b 85%, var(--text)); font-weight: 750; }
+.cb-list { display: grid; gap: 10px; }
+.cb-empty {
+  margin: 0;
+  padding: 28px 16px;
+  text-align: center;
+  color: var(--text-2);
+  font-size: .9rem;
+  line-height: 1.6;
+  border: 1px dashed var(--border);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--surface-2) 55%, transparent);
+}
+.cb-row {
+  position: relative;
+  display: grid;
+  gap: 4px;
+  padding: 14px 14px 13px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--text) 3%, transparent), transparent),
+    var(--surface);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .cb-row { animation: cbRise .42s ease both; }
+  .cb-row:nth-child(1) { animation-delay: .02s; }
+  .cb-row:nth-child(2) { animation-delay: .07s; }
+  .cb-row:nth-child(3) { animation-delay: .12s; }
+  .cb-row:nth-child(4) { animation-delay: .17s; }
+}
+@keyframes cbRise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+.cb-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.cb-name { font-weight: 800; font-size: .98rem; color: var(--text); }
+.cb-country { margin-top: 1px; font-size: .72rem; color: var(--text-2); font-weight: 600; }
+.cb-clock {
+  font-size: 1.5rem;
+  font-weight: 750;
+  letter-spacing: -.02em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  color: var(--text);
+}
+.cb-next {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 6px;
+  padding-top: 8px;
+  border-top: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
+  font-size: .76rem;
+  color: var(--text-2);
+  font-weight: 600;
+}
+.cb-next em {
+  font-style: normal;
+  color: #2f9e6b;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+html[data-theme="dark"] .cb-next em { color: #34d399; }
+.cb-remove {
+  position: absolute;
+  top: 10px;
+  inset-inline-end: 10px;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 999px;
+  background: color-mix(in srgb, #ef4444 14%, var(--surface));
+  color: #ef4444;
+  font-size: .85rem;
+  cursor: pointer;
+}
+.cb-add { margin-top: 14px; }
+.cb-add.is-full { opacity: .55; pointer-events: none; }
+.cb-add-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: .72rem;
+  font-weight: 750;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+.cb-search { max-width: none; }
+.cb-search .suggest-list {
+  position: absolute;
+  inset-inline: 0;
+  top: calc(100% + 4px);
+  z-index: 20;
+}
+.cb-foot {
+  margin: 22px 0 0;
+  text-align: center;
+  font-size: .8rem;
+  color: var(--text-2);
+}
+.cb-foot a { color: var(--text-2); text-decoration: underline; text-underline-offset: 2px; }
+.cb-foot a:hover { color: var(--brand); }
+
+/* Home shortcut to cities board */
+.cb-home-chip {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: min(400px, 92%);
+  margin: 4px auto 0;
+  padding: 11px 14px;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--brand) 32%, var(--border));
+  background: color-mix(in srgb, var(--brand) 9%, var(--surface));
+  color: var(--text);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+html.app-mode[data-app-tab="home"] .cb-home-chip { display: flex; }
+.cb-home-chip:hover { border-color: var(--brand); }
+.cb-home-chip:active { opacity: .85; }
+.cb-home-chip-l { font-size: .86rem; font-weight: 800; }
+.cb-home-chip-r { font-size: .74rem; color: var(--text-2); font-weight: 600; }
+
+/* Soft compact home (app) — quieter first screen, same flows */
+html.app-mode[data-app-tab="home"] .cp-toolbar { margin: 2px auto 0; width: min(380px, 92%); }
+html.app-mode[data-app-tab="home"] .cp-clock { padding: 10px 16px 2px; }
+html.app-mode[data-app-tab="home"] .cp-clock .lt-time {
+  font-size: clamp(2.85rem, 13.5vw, 3.55rem);
+  margin: 0 0 2px;
+}
+html.app-mode[data-app-tab="home"] .lt-weekday {
+  font-size: 1.02rem;
+  letter-spacing: .06em;
+  opacity: .88;
+}
+html.app-mode[data-app-tab="home"] .datebar--paper {
+  width: min(100%, 340px);
+  margin-top: 6px;
+  gap: 8px;
+}
+html.app-mode[data-app-tab="home"] .datebar--paper .datebar-item {
+  min-height: 64px;
+  padding: 9px 8px 11px;
+}
+html.app-mode[data-app-tab="home"] .datebar--paper .datebar-val { font-size: .92rem; }
+html.app-mode[data-app-tab="home"] #cpNext.cp-home-teaser {
+  margin: 8px auto 10px;
+  padding: 10px 12px 12px;
+  font-size: .88rem;
+}
+html.app-mode[data-app-tab="home"] .home-spotlight {
+  margin-top: 10px;
+  width: min(380px, 92%);
+}
+html.app-mode[data-app-tab="home"] .daily-reflection--home {
+  padding: 12px 6px 2px;
+}
+html.app-mode[data-app-tab="home"] .daily-reflection--home .dr-text {
+  font-size: .94rem;
+  line-height: 1.7;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+html.app-mode[data-app-tab="home"] .daily-reflection--home .dr-otd {
+  margin-top: 10px;
+  padding-top: 10px;
+  font-size: .72rem;
+  line-height: 1.6;
+  opacity: .8;
+}
