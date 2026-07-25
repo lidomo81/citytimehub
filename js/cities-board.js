@@ -80,6 +80,18 @@
     return o;
   }
 
+  function favEntries() {
+    try {
+      const raw = JSON.parse(localStorage.getItem("cth-fav-cities") || "[]");
+      if (!Array.isArray(raw)) return [];
+      return raw.map(e => (typeof e === "string" ? { slug: e } : e)).filter(e => e && e.slug);
+    } catch (e) { return []; }
+  }
+
+  function homeSlug() {
+    try { return localStorage.getItem("cth-home-city") || ""; } catch (e) { return ""; }
+  }
+
   function resolveEntry(entry) {
     if (!entry) return null;
     if (entry.world && entry.lat != null) {
@@ -96,25 +108,67 @@
       };
     }
     const c = CITIES.find(x => x.slug === entry.slug);
-    return c || null;
+    if (c) return c;
+    // World cities saved in favorites carry lat/lng — recover those for board rows.
+    const fav = favEntries().find(e => e.slug === entry.slug && e.world && e.lat != null);
+    if (fav) {
+      return {
+        slug: fav.slug,
+        name: fav.name,
+        country: fav.country || "",
+        lat: fav.lat,
+        lng: fav.lng,
+        method: fav.method || 3,
+        school: fav.school || 0,
+        tz: fav.tz || null,
+        world: true
+      };
+    }
+    return null;
+  }
+
+  /** Drop slots that cannot be shown (e.g. home seeded as a bare world slug). */
+  function pruneBoard() {
+    const next = [];
+    board.forEach(e => {
+      if (!e || !e.slug) return;
+      if (next.some(x => x.slug === e.slug)) return;
+      const city = resolveEntry(e);
+      if (!city) return;
+      if (city.world) {
+        next.push({
+          slug: city.slug, name: city.name, country: city.country,
+          lat: city.lat, lng: city.lng, method: city.method,
+          school: city.school || 0, tz: city.tz || null, world: true
+        });
+      } else {
+        next.push({ slug: city.slug });
+      }
+    });
+    if (next.length !== board.length) {
+      board = next;
+      persist();
+    } else {
+      board = next;
+    }
   }
 
   function seedIfEmpty() {
     if (board.length) return;
     const out = [];
+    const home = homeSlug();
+    // Home city stays on Home & Prayer only — never consumes a board slot.
     try {
-      const home = localStorage.getItem("cth-home-city");
-      if (home) out.push({ slug: home });
-      const favs = JSON.parse(localStorage.getItem("cth-fav-cities") || "[]") || [];
-      favs.forEach(e => {
-        const slug = typeof e === "string" ? e : (e && e.slug);
-        if (!slug || out.some(x => x.slug === slug)) return;
-        if (typeof e === "object" && e.world) out.push(e);
-        else out.push({ slug: slug });
+      favEntries().forEach(e => {
+        const slug = e.slug;
+        if (!slug || slug === home || out.some(x => x.slug === slug)) return;
+        if (e.world && e.lat != null) out.push(e);
+        else if (CITIES.some(c => c.slug === slug)) out.push({ slug: slug });
       });
     } catch (e) {}
     if (!out.length && CITIES.length) {
-      ["cairo", "london", "dubai", "kuala-lumpur"].forEach(s => {
+      ["london", "dubai", "kuala-lumpur", "new-york"].forEach(s => {
+        if (s === home) return;
         if (CITIES.some(c => c.slug === s)) out.push({ slug: s });
       });
     }
@@ -224,12 +278,14 @@
   }
 
   function homeLabel() {
-    try {
-      const slug = localStorage.getItem("cth-home-city");
-      if (!slug) return "";
-      const c = CITIES.find(x => x.slug === slug);
-      return c ? cN(c) : "";
-    } catch (e) { return ""; }
+    const slug = homeSlug();
+    if (!slug) return "";
+    const c = CITIES.find(x => x.slug === slug) || resolveEntry({ slug: slug });
+    return c ? cN(c) : "";
+  }
+
+  function boardCount() {
+    return board.filter(e => resolveEntry(e)).length;
   }
 
   function render() {
@@ -280,9 +336,10 @@
     }
 
     if (addWrap) {
-      const show = editing || resolved.length < MAX;
+      const n = boardCount();
+      const show = editing || n < MAX;
       addWrap.hidden = !show;
-      addWrap.classList.toggle("is-full", resolved.length >= MAX);
+      addWrap.classList.toggle("is-full", n >= MAX);
       const inp = document.getElementById("cbSearch");
       if (inp) inp.placeholder = T.search;
     }
@@ -317,8 +374,9 @@
 
   function addCity(city) {
     if (!city || !city.slug) return;
+    pruneBoard();
     if (board.some(e => e.slug === city.slug)) return;
-    if (board.length >= MAX) {
+    if (boardCount() >= MAX) {
       toast(T.full);
       return;
     }
@@ -451,7 +509,10 @@
       const data = await res.json();
       CITIES = (data && data.cities) || [];
     } catch (e) { CITIES = []; }
+    // Drop ghost slots (unresolvable / old home seed) before seeding or counting.
+    pruneBoard();
     seedIfEmpty();
+    pruneBoard();
     wireUi();
     await refreshAllTimings();
     clearInterval(tickTimer);
