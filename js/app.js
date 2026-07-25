@@ -41,6 +41,10 @@
       legendFull: "Complete", legendPart: "Partial", legendNone: "Missed", statsClose: "Close", statsHint: "Tap for details",
       streakNote: "This counter is only to encourage you to keep your prayers — not to collect any data. Everything stays on your device. Be honest with Allah and with yourself 🤍",
       openPrayer: "Open prayer",
+      checkinAsk: name => `Did you pray ${name}?`,
+      checkinYes: "Yes, I prayed",
+      checkinAlso: "Also pending",
+      checkinMarked: name => `${name} logged — may Allah accept it 🤍`,
     },
     ar: {
       addFav: "أضِف إلى مدني", remFav: "أزِل من مدني",
@@ -75,6 +79,10 @@
       legendFull: "مكتمل", legendPart: "جزئي", legendNone: "فائت", statsClose: "إغلاق", statsHint: "اضغط للتفاصيل",
       streakNote: "هذا العدّاد وسيلة لتحفيزك على المحافظة على صلاتك، وليس لجمع أي معلومات — بياناتك محفوظة على جهازك وحده. فاجعلها صدقًا مع الله ومع نفسك 🤍",
       openPrayer: "افتح الصلاة",
+      checkinAsk: name => `هل صلّيت ${name}؟`,
+      checkinYes: "نعم، صلّيت",
+      checkinAlso: "متبقّي أيضًا",
+      checkinMarked: name => `تم تسجيل ${name} — تقبّل الله 🤍`,
     },
   };
   const T = I18N[LANG];
@@ -1029,6 +1037,19 @@
   function wGetDay(ds) { try { return JSON.parse(localStorage.getItem("cth-worship:" + ds) || "{}") || {}; } catch (e) { return {}; } }
   function wFardCount(ds) { const w = wGetDay(ds); return OBLIG.reduce((n, p) => n + (w[p] && w[p].f ? 1 : 0), 0); }
   const wDayComplete = ds => wFardCount(ds) === 5;
+  /** Mark a fard as prayed (one-way — does not uncheck). Same store as the prayer sheet. */
+  function wMarkFard(prayer) {
+    if (!OBLIG.includes(prayer)) return false;
+    const ds = wDateStr(new Date());
+    const w = wGetDay(ds);
+    const cur = Object.assign({}, w[prayer] || {});
+    if (cur.f) return false;
+    cur.f = true;
+    w[prayer] = cur;
+    try { localStorage.setItem("cth-worship:" + ds, JSON.stringify(w)); } catch (e) {}
+    try { window.dispatchEvent(new CustomEvent("cth-worship")); } catch (e) {}
+    return true;
+  }
   function wStreak() {
     let n = 0, d = new Date();
     if (!wDayComplete(wDateStr(d))) d.setDate(d.getDate() - 1); // today still in progress → count up to yesterday
@@ -1207,18 +1228,70 @@
     board = document.createElement("div");
     board.id = "cpNowBoard";
     board.className = "cp-now-board";
-    board.addEventListener("click", () => {
+    board.addEventListener("click", e => {
+      if (e.target.closest(".cp-checkin")) return;
       if (document.documentElement.getAttribute("data-app-tab") !== "prayer") return;
       const box = document.getElementById("cpNext");
       if (box && box.classList.contains("cp-streak")) openStatsPanel();
     });
     board.addEventListener("keydown", e => {
       if (e.key !== "Enter" && e.key !== " ") return;
+      if (e.target.closest(".cp-checkin")) return;
       if (document.documentElement.getAttribute("data-app-tab") !== "prayer") return;
       const box = document.getElementById("cpNext");
       if (box && box.classList.contains("cp-streak")) { e.preventDefault(); openStatsPanel(); }
     });
     return board;
+  }
+
+  function ensureCheckInEl() {
+    let el = document.getElementById("cpCheckIn");
+    if (el) return el;
+    el = document.createElement("div");
+    el.id = "cpCheckIn";
+    el.className = "cp-checkin";
+    el.hidden = true;
+    el.addEventListener("click", e => {
+      const btn = e.target.closest("[data-checkin-prayer]");
+      if (!btn) return;
+      e.preventDefault();
+      e.stopPropagation();
+      const prayer = btn.getAttribute("data-checkin-prayer");
+      if (!prayer) return;
+      if (wMarkFard(prayer)) {
+        try {
+          if (window.AndroidApp && typeof AndroidApp.hapticLight === "function") AndroidApp.hapticLight();
+        } catch (err) {}
+        if (typeof toast === "function") toast(T.checkinMarked(prayerLabel(prayer)));
+      }
+      updateStatusBox();
+    });
+    return el;
+  }
+
+  function renderCheckIn() {
+    const el = ensureCheckInEl();
+    if (!el) return;
+    if (!currentMine) { el.hidden = true; return; }
+    const pending = pendingFard();
+    if (!pending.length) { el.hidden = true; return; }
+    const first = pending[0];
+    const label = prayerLabel(first);
+    const rest = pending.slice(1);
+    let more = "";
+    if (rest.length) {
+      more = `<div class="cp-checkin-more" aria-label="${T.checkinAlso}">` +
+        rest.map(p =>
+          `<button type="button" class="cp-checkin-chip" data-checkin-prayer="${p}">${prayerLabel(p)}</button>`
+        ).join("") +
+        `</div>`;
+    }
+    el.hidden = false;
+    el.innerHTML =
+      `<div class="cp-checkin-row">` +
+        `<p class="cp-checkin-q">${T.checkinAsk(label)}</p>` +
+        `<button type="button" class="cp-checkin-yes" data-checkin-prayer="${first}">${T.checkinYes}</button>` +
+      `</div>${more}`;
   }
 
   // Keep #cpNext in the right place per surface without breaking streak wiring.
@@ -1253,6 +1326,11 @@
         remind.insertAdjacentElement("beforebegin", board);
       }
       if (el.parentElement !== board) board.appendChild(el);
+      const checkIn = ensureCheckInEl();
+      if (checkIn && checkIn.parentElement !== board) {
+        if (el.nextSibling) board.insertBefore(checkIn, el.nextSibling);
+        else board.appendChild(checkIn);
+      }
       if (week && week.parentElement !== board) board.appendChild(week);
       if (dua && dua.parentElement !== board) board.appendChild(dua);
       return;
@@ -1260,9 +1338,15 @@
 
     if (mid && info) {
       if (el.parentElement !== mid) info.insertAdjacentElement("afterend", el);
+      const checkIn = ensureCheckInEl();
+      if (checkIn) {
+        if (el.nextSibling) mid.insertBefore(checkIn, el.nextSibling);
+        else mid.appendChild(checkIn);
+      }
       if (dua && dua.parentElement !== mid) mid.insertBefore(dua, el);
       if (week && week.parentElement !== mid) {
-        if (el.nextSibling) mid.insertBefore(week, el.nextSibling);
+        if (checkIn && checkIn.parentElement === mid && checkIn.nextSibling) mid.insertBefore(week, checkIn.nextSibling);
+        else if (el.nextSibling) mid.insertBefore(week, el.nextSibling);
         else mid.appendChild(week);
       }
     }
@@ -1305,6 +1389,8 @@
     if (isApp && tab === "home") {
       if (dua) dua.hidden = true;
       hideWeek();
+      const checkIn = document.getElementById("cpCheckIn");
+      if (checkIn) checkIn.hidden = true;
       updateHomeTeaser(el);
       return;
     }
@@ -1316,6 +1402,7 @@
       if (dua) dua.hidden = isApp && tab === "prayer";
       el.classList.add("cp-streak");
       renderStreak(el);
+      renderCheckIn();
       renderWeek();
       const board = document.getElementById("cpNowBoard");
       if (board && isApp && tab === "prayer") {
@@ -1327,6 +1414,8 @@
     else {
       if (dua) dua.hidden = true;
       el.classList.remove("cp-streak", "cp-celebrate", "cp-recover");
+      const checkIn = document.getElementById("cpCheckIn");
+      if (checkIn) checkIn.hidden = true;
       hideWeek();
       updateNextLine();
       const board = document.getElementById("cpNowBoard");
