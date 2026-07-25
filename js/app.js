@@ -111,6 +111,8 @@
      here; it is resolved later from the AlAdhan response (data.meta.timezone).
      A per-country default calculation method mirrors the app's picker. */
   const WORLD_METHOD = { eg: 5, sa: 4, ae: 8, kw: 9, qa: 10, bh: 4, om: 8, jo: 3, ly: 5, sd: 5, pk: 1, in: 1, bd: 1, us: 2, ca: 2, tr: 13, id: 20, my: 3, sg: 3, gb: 3, fr: 12 };
+  // AlAdhan school: 0 = Shafi (standard), 1 = Hanafi Asr — matches cities.json for Hanafi regions.
+  const WORLD_SCHOOL = { pk: 1, in: 1, bd: 1, af: 1, tr: 1, kz: 1, uz: 1, kg: 1, tj: 1, tm: 1 };
   function worldCityFrom(x) {
     const a = x.address || {};
     const name = a.city || a.town || a.village || a.municipality || a.suburb || a.county || a.state || String(x.display_name || "").split(",")[0].trim();
@@ -118,7 +120,13 @@
     if (!country) country = String(x.display_name || "").split(",").slice(-1)[0].trim();
     const cc = String(a.country_code || "").toLowerCase();
     const lat = parseFloat(x.lat), lng = parseFloat(x.lon);
-    return { name, country, lat, lng, method: WORLD_METHOD[cc] || 3, world: true, slug: "w:" + lat.toFixed(4) + "," + lng.toFixed(4) };
+    return {
+      name, country, lat, lng,
+      method: WORLD_METHOD[cc] || 3,
+      school: WORLD_SCHOOL[cc] || 0,
+      world: true,
+      slug: "w:" + lat.toFixed(4) + "," + lng.toFixed(4)
+    };
   }
   function worldSearch(q) {
     const lang = LANG === "ar" ? "ar" : "en";
@@ -274,7 +282,7 @@
   function favEntryFor(cityOrSlug) {
     if (typeof cityOrSlug === "string") return { slug: cityOrSlug };
     const c = cityOrSlug || {};
-    if (c.world) return { slug: c.slug, name: c.name, country: c.country, lat: c.lat, lng: c.lng, method: c.method, tz: c.tz || null, world: true };
+    if (c.world) return { slug: c.slug, name: c.name, country: c.country, lat: c.lat, lng: c.lng, method: c.method, school: c.school || 0, tz: c.tz || null, world: true };
     return { slug: c.slug };
   }
   function toggleFav(cityOrSlug) {
@@ -289,7 +297,7 @@
   // Resolve a stored favorite entry to a usable city object.
   function favToCity(entry) {
     if (!entry) return null;
-    if (entry.world) return { slug: entry.slug, name: entry.name, country: entry.country, lat: entry.lat, lng: entry.lng, method: entry.method, tz: entry.tz || null, world: true };
+    if (entry.world) return { slug: entry.slug, name: entry.name, country: entry.country, lat: entry.lat, lng: entry.lng, method: entry.method, school: entry.school || 0, tz: entry.tz || null, world: true };
     return CITIES.find(c => c.slug === entry.slug) || null;
   }
   function favCities() { return getFavEntries().map(favToCity).filter(Boolean); }
@@ -809,6 +817,7 @@
       lat: city.lat,
       lng: city.lng,
       method: city.method != null ? city.method : 3,
+      school: city.school != null ? city.school : 0,
     };
   }
   // Only the latest user-driven city change may update the Android widget.

@@ -384,6 +384,7 @@
      back through the AndroidApp.onCityPicked bridge. Data: OpenStreetMap
      (Nominatim) so every city on earth is searchable, in Arabic or English. ----- */
   var CTH_METHOD = { eg: 5, sa: 4, ae: 8, kw: 9, qa: 10, bh: 4, om: 8, jo: 3, ly: 5, sd: 5, pk: 1, in: 1, bd: 1, us: 2, ca: 2, tr: 13, id: 20, my: 3, sg: 3, gb: 3, fr: 12 };
+  var CTH_SCHOOL = { pk: 1, in: 1, bd: 1, af: 1, tr: 1, kz: 1, uz: 1, kg: 1, tj: 1, tm: 1 };
   function cthEsc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function cthPickCity(x) {
     var a = x.address || {};
@@ -391,7 +392,14 @@
     var country = [a.state, a.country].filter(Boolean).join("، ".length ? ", " : ", ");
     if (!country) country = String(x.display_name || "").split(",").slice(-1)[0].trim();
     var cc = String(a.country_code || "").toLowerCase();
-    return { name: name, country: country, lat: parseFloat(x.lat), lng: parseFloat(x.lon), method: CTH_METHOD[cc] || 3 };
+    return {
+      name: name,
+      country: country,
+      lat: parseFloat(x.lat),
+      lng: parseFloat(x.lon),
+      method: CTH_METHOD[cc] || 3,
+      school: CTH_SCHOOL[cc] || 0
+    };
   }
   function openPrayerPicker() {
     if (document.getElementById("cthPick")) return;
