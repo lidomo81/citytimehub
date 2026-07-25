@@ -143,7 +143,7 @@
     const today = new Date();
     const ds = `${String(today.getDate()).padStart(2,"0")}-${String(today.getMonth()+1).padStart(2,"0")}-${today.getFullYear()}`;
     try {
-      const res = await fetch(`https://api.aladhan.com/v1/timings/${ds}?latitude=${CITY.lat}&longitude=${CITY.lng}&method=${CITY.method ?? 3}`);
+      const res = await fetch(`https://api.aladhan.com/v1/timings/${ds}?latitude=${CITY.lat}&longitude=${CITY.lng}&method=${CITY.method ?? 3}&school=${CITY.school ?? 0}`);
       if (!res.ok) throw new Error("timings " + res.status);
       const { data } = await res.json();
       const t = data.timings, g = data.date.gregorian, h = data.date.hijri;

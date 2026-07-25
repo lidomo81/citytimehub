@@ -86,7 +86,7 @@
     wrap.innerHTML = "<p class=\"muted\" style=\"text-align:center;padding:24px\">" + T.loading + "</p>";
     var key = "cth-month:" + city.slug + ":" + year + "-" + pad(month);
     var url = "https://api.aladhan.com/v1/calendar/" + year + "/" + month +
-      "?latitude=" + city.lat + "&longitude=" + city.lng + "&method=" + (city.method != null ? city.method : 3);
+      "?latitude=" + city.lat + "&longitude=" + city.lng + "&method=" + (city.method != null ? city.method : 3) + "&school=" + (city.school != null ? city.school : 0);
     fetch(url).then(function (r) { if (!r.ok) throw new Error("cal " + r.status); return r.json(); })
       .then(function (j) {
         var days = j.data;

@@ -921,7 +921,7 @@
     if (!city) return;
     const grid = $("#prayerGrid"), today = new Date();
     const ds = `${String(today.getDate()).padStart(2,"0")}-${String(today.getMonth()+1).padStart(2,"0")}-${today.getFullYear()}`;
-    const url = `https://api.aladhan.com/v1/timings/${ds}?latitude=${city.lat}&longitude=${city.lng}&method=${city.method ?? 3}`;
+    const url = `https://api.aladhan.com/v1/timings/${ds}?latitude=${city.lat}&longitude=${city.lng}&method=${city.method ?? 3}&school=${city.school ?? 0}`;
     const PKEY = "cth-prayer:" + city.slug;
     const maybeSyncWidget = () => {
       if (widgetSyncSeq == null || widgetSyncSeq !== prayerWidgetSyncSeq) return;

@@ -76,7 +76,7 @@
   async function fetchPrayers(city) {
     const d = new Date();
     const ds = `${String(d.getDate()).padStart(2, "0")}-${String(d.getMonth() + 1).padStart(2, "0")}-${d.getFullYear()}`;
-    const url = `https://api.aladhan.com/v1/timings/${ds}?latitude=${city.lat}&longitude=${city.lng}&method=${city.method ?? 3}`;
+    const url = `https://api.aladhan.com/v1/timings/${ds}?latitude=${city.lat}&longitude=${city.lng}&method=${city.method ?? 3}&school=${city.school ?? 0}`;
     const res = await fetch(url, { cache: "default" });
     if (!res.ok) throw new Error("timings " + res.status);
     const { data } = await res.json();

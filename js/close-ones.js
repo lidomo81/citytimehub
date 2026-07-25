@@ -604,7 +604,7 @@
   function fetchMonth(city, y, mo) {
     const key = `${city.slug}:${y}-${mo}`;
     if (prayerCache.has(key)) return prayerCache.get(key);
-    const url = `https://api.aladhan.com/v1/calendar/${y}/${mo}?latitude=${city.lat}&longitude=${city.lng}&method=${city.method ?? 3}`;
+    const url = `https://api.aladhan.com/v1/calendar/${y}/${mo}?latitude=${city.lat}&longitude=${city.lng}&method=${city.method ?? 3}&school=${city.school ?? 0}`;
     const p = (async () => {
       const ctrl = new AbortController();
       const timer = setTimeout(() => ctrl.abort(), 12000);
