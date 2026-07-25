@@ -94,7 +94,7 @@
       ar: { t: "خاطرة اليوم 🤍", b: "في الرئيسية — حديث صحيح أو آية تتجدّد كل يوم، لتبدأ يومك بلمسة إيمانية هادئة." },
       en: { t: "Daily reflection 🤍", b: "On Home — an authentic hadith or verse that changes each day, for a calm spiritual start." } },
     quickToolsApp: { sel: ".app-tools > .app-tools-group", prefer: "above",
-      ar: { t: "باقي الأدوات 🧭", b: "مرتّبة مثل الموقع: الصلاة، الأذكار، الوقت، التخطيط، وخواطر — كل شيء في مكانه." },
+      ar: { t: "باقي الأدوات 🧭", b: "أولها المدن العالمية، وبعدها الصلاة والوقت والتخطيط والخواطر." },
       en: { t: "More tools 🧭", b: "Organized like the website: Prayer, Adhkar, Time, Planning and Reflections — everything in its place." } },
     help: { sel: "#helpBtn", prefer: "above",
       ar: { t: "المساعد وإعادة الجولة ❓", b: "زر «؟» هو مساعدك الدائم: اضغطه في أي وقت لإعادة هذه الجولة، أو لعرض قائمة بكل المميزات." },

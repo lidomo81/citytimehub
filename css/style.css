@@ -1546,25 +1546,160 @@ html.app-mode[data-app-tab="home"] #top {
 .app-azkar-arrow { flex: none; font-size: 1.1rem; font-weight: 700; color: var(--brand); opacity: .75; z-index: 1; }
 [dir="rtl"] .app-azkar-arrow { transform: scaleX(-1); }
 
-/* Tools tab — tighter grid */
-html.app-mode[data-app-tab="tools"] nav.app-tools { margin: 10px auto 8px; }
+/* Tools tab — brand-first cities hero + tinted icon wells */
+html.app-mode[data-app-tab="tools"] nav.app-tools {
+  margin: 10px auto 8px;
+  padding-bottom: 4px;
+}
+html.app-mode[data-app-tab="tools"] .app-tools-label {
+  margin-bottom: 12px;
+}
+html.app-mode[data-app-tab="tools"] .app-cities-hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 2px 16px;
+  padding: 14px 14px;
+  border-radius: 20px;
+  text-decoration: none;
+  color: var(--text);
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--brand) 38%, var(--border));
+  background:
+    linear-gradient(135deg,
+      color-mix(in srgb, var(--brand) 22%, var(--surface)),
+      color-mix(in srgb, #38bdf8 10%, var(--surface)) 48%,
+      var(--surface));
+  box-shadow: 0 18px 40px -26px color-mix(in srgb, var(--brand) 55%, transparent);
+  transition: transform .15s ease, border-color .2s, box-shadow .2s;
+}
+html.app-mode[data-app-tab="tools"] .app-cities-hero::after {
+  content: "";
+  position: absolute;
+  inset-inline-end: -24px;
+  top: -36px;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, color-mix(in srgb, #38bdf8 28%, transparent), transparent 70%);
+}
+html.app-mode[data-app-tab="tools"] .app-cities-hero:hover,
+html.app-mode[data-app-tab="tools"] .app-cities-hero:focus-visible {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--brand) 60%, var(--border));
+  box-shadow: 0 22px 44px -24px color-mix(in srgb, var(--brand) 65%, transparent);
+  outline: none;
+}
+html.app-mode[data-app-tab="tools"] .app-cities-hero:active { transform: scale(.985); }
+html.app-mode[data-app-tab="tools"] .app-cities-orb {
+  flex: none;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: linear-gradient(160deg, #60a5fa, #2563eb);
+  box-shadow: 0 12px 26px -14px rgba(37, 99, 235, .85);
+  z-index: 1;
+}
+html.app-mode[data-app-tab="tools"] .app-cities-orb svg {
+  width: 26px;
+  height: 26px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  color: inherit;
+}
+html.app-mode[data-app-tab="tools"] .app-cities-copy {
+  min-width: 0;
+  flex: 1;
+  z-index: 1;
+}
+html.app-mode[data-app-tab="tools"] .app-cities-copy strong {
+  display: block;
+  font-size: .95rem;
+  font-weight: 800;
+  letter-spacing: -.01em;
+  margin-bottom: 2px;
+}
+html.app-mode[data-app-tab="tools"] .app-cities-copy span {
+  display: block;
+  font-size: .74rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--text-2);
+}
+html.app-mode[data-app-tab="tools"] .app-cities-go {
+  flex: none;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: color-mix(in srgb, var(--brand) 80%, #93c5fd);
+  opacity: .9;
+  z-index: 1;
+}
+[dir="rtl"] html.app-mode[data-app-tab="tools"] .app-cities-go,
+html[dir="rtl"].app-mode[data-app-tab="tools"] .app-cities-go {
+  transform: scaleX(-1);
+}
 html.app-mode[data-app-tab="tools"] .app-tools-cat {
-  margin-top: 14px; font-size: .7rem; letter-spacing: .06em;
+  margin-top: 16px;
+  font-size: .7rem;
+  letter-spacing: .06em;
   color: var(--muted);
 }
-html.app-mode[data-app-tab="tools"] .app-tools-group:first-of-type .app-tools-cat { margin-top: 4px; }
+html.app-mode[data-app-tab="tools"] .app-tools-group:first-of-type .app-tools-cat { margin-top: 2px; }
 html.app-mode[data-app-tab="tools"] .app-tool {
-  padding: 14px 8px; min-block-size: 76px;
+  padding: 14px 6px 12px;
+  min-block-size: 86px;
   border-radius: 18px;
   box-shadow: 0 8px 22px -18px rgba(0,0,0,.35);
-  background: linear-gradient(180deg, color-mix(in srgb, var(--surface) 92%, #fff), var(--surface));
+  background: linear-gradient(180deg, color-mix(in srgb, var(--surface) 88%, #fff), var(--surface));
 }
 html.app-mode[data-app-tab="tools"] .app-tool svg {
-  width: 20px; height: 20px; padding: 10px;
-  border-radius: 14px;
+  width: 22px;
+  height: 22px;
+  padding: 11px;
+  border-radius: 15px;
 }
+html.app-mode[data-app-tab="tools"] .app-tool--prayer svg {
+  color: #059669;
+  background: color-mix(in srgb, #34d399 18%, transparent);
+}
+html.app-mode[data-app-tab="tools"] .app-tool--heart svg {
+  color: #db2777;
+  background: color-mix(in srgb, #f472b6 18%, transparent);
+}
+html.app-mode[data-app-tab="tools"] .app-tool--time svg {
+  color: #0284c7;
+  background: color-mix(in srgb, #38bdf8 18%, transparent);
+}
+html.app-mode[data-app-tab="tools"] .app-tool--plan svg {
+  color: #7c3aed;
+  background: color-mix(in srgb, #a78bfa 20%, transparent);
+}
+html.app-mode[data-app-tab="tools"] .app-tool--note svg {
+  color: #d97706;
+  background: color-mix(in srgb, #fbbf24 20%, transparent);
+}
+html.app-mode[data-theme="dark"][data-app-tab="tools"] .app-tool--prayer svg { color: #34d399; }
+html.app-mode[data-theme="dark"][data-app-tab="tools"] .app-tool--heart svg { color: #f472b6; }
+html.app-mode[data-theme="dark"][data-app-tab="tools"] .app-tool--time svg { color: #38bdf8; }
+html.app-mode[data-theme="dark"][data-app-tab="tools"] .app-tool--plan svg { color: #a78bfa; }
+html.app-mode[data-theme="dark"][data-app-tab="tools"] .app-tool--note svg { color: #fbbf24; }
+html.app-mode[data-app-tab="tools"] .app-tools-more { display: none !important; }
 html.app-mode[data-app-tab="tools"] .daily-reflection { display: none !important; }
 html.app-mode[data-app-tab="tools"] nav.app-legal { margin-bottom: 4px; }
+/* Hide cities hero outside tools tab (nav is only shown there anyway) */
+.app-cities-hero { display: none; }
+html.app-mode[data-app-tab="tools"] .app-cities-hero { display: flex; }
 
 @media (max-width: 380px) {
   .app-tab-label { font-size: .58rem; }
