@@ -2133,21 +2133,33 @@ html.app-mode .prayer-insights { margin-top: 10px; }
 }
 
 @media (max-width: 860px) {
-  .cp-grid { grid-template-columns: 1fr; }
-  /* City + time first — sun chart below so picking a city stays above the fold */
+  .cp-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "clock"
+      "sun"
+      "devotion";
+  }
   .cp-clock {
+    grid-area: clock;
     justify-content: center;
     text-align: center;
     flex-direction: column;
     border-top: 0;
-    order: 0;
+    order: unset;
   }
   .sun-arc {
+    grid-area: sun;
     border-inline-start: none;
-    order: 1;
-    padding: 12px 12px 4px;
+    order: unset;
+    padding: 8px 8px 2px;
   }
-  .cp-devotion { border-inline-start: none; border-top: 1px solid var(--border); order: 2; }
+  .cp-devotion {
+    grid-area: devotion;
+    border-inline-start: none;
+    border-top: 1px solid var(--border);
+    order: unset;
+  }
 }
 @media (max-width: 480px) {
   .cp-devotion .prayer-grid { grid-template-columns: repeat(2, 1fr); }
@@ -5058,15 +5070,44 @@ html:not(.app-mode) body.home-web .home-spotlight {
 @media (max-width: 860px) {
   html:not(.app-mode) body.home-web .cp-grid {
     grid-template-columns: 1fr;
-    gap: 10px;
+    grid-template-areas:
+      "clock"
+      "sun"
+      "devotion";
+    gap: 6px;
   }
-  html:not(.app-mode) body.home-web .cp-clock { order: 0; }
+  html:not(.app-mode) body.home-web .cp-clock {
+    grid-area: clock;
+    order: unset;
+  }
   html:not(.app-mode) body.home-web .sun-arc {
-    order: 1;
+    grid-area: sun;
+    order: unset;
     border: 0;
     padding: 0;
   }
-  html:not(.app-mode) body.home-web .cp-devotion { order: 2; }
+  html:not(.app-mode) body.home-web .cp-grid > .cp-devotion {
+    grid-area: devotion;
+    grid-column: auto;
+    order: unset;
+  }
+  /* Crop empty SVG sky so the arc sits tight under the clock */
+  html:not(.app-mode) body.home-web .sun-arc-stage {
+    max-height: 148px;
+    overflow: hidden;
+  }
+  html:not(.app-mode) body.home-web .sun-arc-svg {
+    display: block;
+    width: 100%;
+    height: 148px;
+    margin-block-start: -18px;
+  }
+  html:not(.app-mode) body.home-web .sun-arc-center {
+    padding: 36px 12px 10px;
+  }
+  html:not(.app-mode) body.home-web .sun-arc-next {
+    font-size: .92rem;
+  }
 }
 
 @media (max-width: 720px) {
