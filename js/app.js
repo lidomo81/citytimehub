@@ -820,28 +820,28 @@
           <stop offset="100%" stop-color="#9a92b8"/>
         </linearGradient>
         <radialGradient id="sunHalo" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#ffe6a8" stop-opacity=".55"/>
-          <stop offset="45%" stop-color="#f0b45a" stop-opacity=".22"/>
-          <stop offset="100%" stop-color="#f0b45a" stop-opacity="0"/>
+          <stop offset="0%" stop-color="#f3d39a" stop-opacity=".28"/>
+          <stop offset="55%" stop-color="#e0ae58" stop-opacity=".08"/>
+          <stop offset="100%" stop-color="#e0ae58" stop-opacity="0"/>
         </radialGradient>
-        <radialGradient id="sunDisc" cx="38%" cy="34%" r="62%">
-          <stop offset="0%" stop-color="#fff6d8"/><stop offset="55%" stop-color="#f2c36a"/>
-          <stop offset="100%" stop-color="#e09a3a" stop-opacity=".92"/>
+        <radialGradient id="sunDisc" cx="40%" cy="36%" r="60%">
+          <stop offset="0%" stop-color="#f7e4b8"/><stop offset="60%" stop-color="#e4b86a"/>
+          <stop offset="100%" stop-color="#c99645" stop-opacity=".9"/>
         </radialGradient>
         <filter id="sunArcSoft" x="-40%" y="-40%" width="180%" height="180%">
-          <feGaussianBlur stdDeviation="4.2"/>
+          <feGaussianBlur stdDeviation="2.6"/>
         </filter>
       </defs>
-      <path class="sun-arc-glow" d="${arcD}" fill="none" stroke="url(#sunArcGrad)" stroke-width="16"
-            stroke-linecap="round" opacity=".2" filter="url(#sunArcSoft)"/>
-      <path class="sun-arc-path" d="${arcD}" fill="none" stroke="url(#sunArcGrad)" stroke-width="1.7"
-            stroke-linecap="round" opacity=".72"/>
+      <path class="sun-arc-glow" d="${arcD}" fill="none" stroke="url(#sunArcGrad)" stroke-width="9"
+            stroke-linecap="round" opacity=".1" filter="url(#sunArcSoft)"/>
+      <path class="sun-arc-path" d="${arcD}" fill="none" stroke="url(#sunArcGrad)" stroke-width="1.55"
+            stroke-linecap="round" opacity=".55"/>
       <line class="sun-arc-horizon" x1="${left.x.toFixed(1)}" y1="${left.y.toFixed(1)}" x2="${right.x.toFixed(1)}" y2="${right.y.toFixed(1)}"
-            stroke="rgba(148,163,184,.22)" stroke-width="1" stroke-dasharray="3 5"/>
+            stroke="rgba(148,163,184,.18)" stroke-width="1" stroke-dasharray="3 5"/>
       ${marks}
       <g id="sunArcSun" class="sun-arc-sun" transform="translate(${ARC_CX}, ${ARC_CY - ARC_R})">
-        <circle class="sun-arc-halo" r="22" fill="url(#sunHalo)"/>
-        <circle class="sun-arc-disc" r="7.2" fill="url(#sunDisc)"/>
+        <circle class="sun-arc-halo" r="14" fill="url(#sunHalo)"/>
+        <circle class="sun-arc-disc" r="6" fill="url(#sunDisc)"/>
       </g>`;
     updateSunPosition();
     updateSunArcNext();

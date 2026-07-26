@@ -4059,12 +4059,96 @@ html.app-mode[data-app-tab="home"] .daily-reflection--home .dr-otd {
    ===================================================================== */
 .home-rail { display: none; }
 
-/* Clearer type on the web homepage */
+/* Clearer type on the web homepage — readable sizes + stronger secondary text */
 html:not(.app-mode) body.home-web {
   font-size: 17px;
-  line-height: 1.6;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+html[lang="ar"]:not(.app-mode) body.home-web {
+  font-size: 17.5px;
+  line-height: 1.7;
+}
+html:not(.app-mode) body.home-web .muted {
+  color: var(--text-2);
+}
+html:not(.app-mode) body.home-web .section-head .muted,
+html:not(.app-mode) body.home-web .explainer-section .prose {
+  font-size: 1.02rem;
+  line-height: 1.75;
+  color: var(--text-2);
+}
+html:not(.app-mode) body.home-web .daily-reflection--home .dr-kicker,
+html:not(.app-mode) body.home-web .daily-reflection--home .dr-src,
+html:not(.app-mode) body.home-web .daily-reflection--home .dr-otd-label {
+  color: var(--text-2);
+  opacity: 1;
+  letter-spacing: .04em;
+}
+html:not(.app-mode) body.home-web .daily-reflection--home .dr-text {
+  font-size: 1.08rem;
+  line-height: 1.85;
+  font-weight: 650;
+  color: var(--text);
+}
+html:not(.app-mode) body.home-web .daily-reflection--home .dr-src {
+  font-size: .86rem;
+}
+html:not(.app-mode) body.home-web .daily-reflection--home .dr-otd {
+  font-size: .86rem;
+  line-height: 1.65;
+  color: var(--text-2);
+  opacity: 1;
+}
+html:not(.app-mode) body.home-web .guide-card--featured h3 {
+  font-size: clamp(1.35rem, 2.4vw, 1.65rem);
+  line-height: 1.35;
+  letter-spacing: -.015em;
+}
+html:not(.app-mode) body.home-web .guide-card--featured p {
+  font-size: 1.02rem;
+  line-height: 1.7;
+  color: var(--text-2);
+}
+html:not(.app-mode) body.home-web .gc-kicker {
+  font-size: .72rem;
+  letter-spacing: .06em;
+}
+html:not(.app-mode) body.home-web .guide-card-meta {
+  font-size: .9rem;
+}
+html:not(.app-mode) body.home-web .hc-name {
+  font-size: .95rem;
+  font-weight: 650;
+  color: var(--text);
+}
+html:not(.app-mode) body.home-web .hc-time {
+  font-size: .88rem;
+  color: var(--text-2);
+}
+html:not(.app-mode) body.home-web .hc-dn {
+  opacity: 1;
+  color: var(--text-2);
+}
+html:not(.app-mode) body.home-web .home-cities-head h2 {
+  font-size: 1.12rem;
+  color: var(--text);
+}
+html:not(.app-mode) body.home-web #cityPanel .cp-dua {
+  font-size: 1.08rem;
+  line-height: 1.9;
+  color: color-mix(in srgb, #c9a46a 35%, var(--text));
+}
+html:not(.app-mode) body.home-web #cityPanel .cp-streak-main,
+html:not(.app-mode) body.home-web #cityPanel .cp-checkin-q {
+  font-size: .98rem;
+  color: var(--text);
+}
+html:not(.app-mode) body.home-web #cityPanel .cp-streak-sub,
+html:not(.app-mode) body.home-web #cityPanel .cp-week {
+  font-size: .86rem;
+  color: var(--text-2);
 }
 html:not(.app-mode) body.home-web .brand-text {
   font-size: 1.12rem;
@@ -4682,9 +4766,9 @@ html:not(.app-mode) body.home-web .sun-arc-stage::before {
   display: none;
 }
 html:not(.app-mode) body.home-web .sun-arc-next {
-  color: color-mix(in srgb, #c9a46a 65%, var(--text));
+  color: var(--text-2);
   text-shadow: none;
-  font-size: clamp(.88rem, 2vw, 1.05rem);
+  font-size: clamp(.92rem, 2vw, 1.06rem);
   font-weight: 650;
 }
 html:not(.app-mode) body.home-web .sun-arc-next strong {
@@ -4692,14 +4776,14 @@ html:not(.app-mode) body.home-web .sun-arc-next strong {
   font-weight: 750;
 }
 html:not(.app-mode) body.home-web .sun-arc-next .sun-arc-in {
-  color: var(--muted);
+  color: var(--text-2);
   font-weight: 550;
 }
 html:not(.app-mode) body.home-web .sun-arc-marker-label {
-  fill: color-mix(in srgb, var(--muted) 88%, var(--text));
-  font-size: 10px;
-  font-weight: 550;
-  opacity: .9;
+  fill: var(--text-2);
+  font-size: 11px;
+  font-weight: 600;
+  opacity: 1;
 }
 html:not(.app-mode) body.home-web .sun-arc-horizon {
   stroke: color-mix(in srgb, var(--text) 12%, transparent);
@@ -4708,10 +4792,10 @@ html:not(.app-mode) body.home-web .sun-arc-sun {
   filter: none;
 }
 html:not(.app-mode) body.home-web .sun-arc-path {
-  opacity: .68;
+  opacity: .5;
 }
 html:not(.app-mode) body.home-web .sun-arc-glow {
-  opacity: .18;
+  opacity: .08;
 }
 html:not(.app-mode) body.home-web .cp-grid > .cp-devotion {
   grid-column: 1 / -1;
@@ -4766,15 +4850,15 @@ html:not(.app-mode) body.home-web .cp-clock .lt-time {
 html:not(.app-mode) body.home-web .cp-clock .lt-time::after { display: none; }
 html:not(.app-mode) body.home-web .cp-clock .lt-weekday {
   margin: 0;
-  font-size: .86rem;
-  color: var(--muted);
+  font-size: .92rem;
+  color: var(--text-2);
   font-weight: 600;
 }
 html:not(.app-mode) body.home-web .cp-clock-info .lt-meta {
   justify-content: center;
   margin-top: 2px;
-  font-size: .78rem;
-  color: var(--muted);
+  font-size: .86rem;
+  color: var(--text-2);
 }
 
 /* Devotion: dates + prayer row + adherence */
@@ -4788,11 +4872,11 @@ html:not(.app-mode) body.home-web .cp-dev-head {
   align-items: center;
 }
 html:not(.app-mode) body.home-web .cp-dev-title {
-  font-size: .72rem;
-  font-weight: 800;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--muted);
+  font-size: .84rem;
+  font-weight: 750;
+  letter-spacing: .04em;
+  text-transform: none;
+  color: var(--text-2);
 }
 html:not(.app-mode) body.home-web .datebar--paper {
   gap: 10px;
@@ -4802,11 +4886,15 @@ html:not(.app-mode) body.home-web .datebar--paper {
   box-shadow: none;
 }
 html:not(.app-mode) body.home-web .datebar--paper .datebar-label {
-  font-size: .62rem;
+  font-size: .74rem;
+  font-weight: 650;
+  color: var(--text-2);
+  letter-spacing: .02em;
 }
 html:not(.app-mode) body.home-web .datebar--paper .datebar-val {
-  font-size: .82rem;
-  font-weight: 700;
+  font-size: .95rem;
+  font-weight: 750;
+  color: var(--text);
 }
 html:not(.app-mode) body.home-web .cp-devotion .prayer-grid {
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -4855,15 +4943,17 @@ html:not(.app-mode) body.home-web .cp-devotion .prayer-card:active {
   box-shadow: 0 4px 12px -10px rgba(0, 0, 0, .5);
 }
 html:not(.app-mode) body.home-web .cp-devotion .prayer-name {
-  font-size: .76rem;
+  font-size: .88rem;
   font-weight: 700;
-  color: var(--muted);
-  margin-bottom: 4px;
+  color: var(--text-2);
+  margin-bottom: 5px;
+  letter-spacing: 0;
 }
 html:not(.app-mode) body.home-web .cp-devotion .prayer-time {
-  font-size: 1rem;
+  font-size: 1.12rem;
   font-weight: 800;
   font-variant-numeric: tabular-nums;
+  color: var(--text);
 }
 html:not(.app-mode) body.home-web .cp-devotion .prayer-card.is-next {
   border-color: color-mix(in srgb, var(--pc, var(--brand)) 58%, var(--border));
@@ -4932,15 +5022,15 @@ html:not(.app-mode) body.home-web #cityPulse.city-pulse {
 html:not(.app-mode) body.home-web #cityPulse .city-pulse-kicker { display: none; }
 html:not(.app-mode) body.home-web #cityPulse .city-pulse-title {
   margin: 0;
-  font-size: .78rem;
+  font-size: .92rem;
   font-weight: 700;
   color: var(--text);
 }
 html:not(.app-mode) body.home-web #cityPulse .city-pulse-line {
-  font-size: .8rem;
-  font-weight: 500;
-  color: var(--muted);
-  line-height: 1.4;
+  font-size: .9rem;
+  font-weight: 550;
+  color: var(--text-2);
+  line-height: 1.5;
 }
 html:not(.app-mode) body.home-web #cityPulse .city-pulse-wx { font-size: 1.2rem; }
 
