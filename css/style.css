@@ -4039,6 +4039,9 @@ html:not(.app-mode) body.home-web .site-header .header-inner {
   justify-content: space-between;
 }
 
+html:not(.app-mode) body.home-web {
+  --home-rail-w: 212px;
+}
 html:not(.app-mode) body.home-web .home-calm {
   padding-top: clamp(14px, 2.5vw, 22px);
   padding-bottom: clamp(8px, 1.5vw, 14px);
@@ -4057,7 +4060,7 @@ html:not(.app-mode) body.home-web .home-rail {
   top: 72px;
   max-height: calc(100vh - 88px);
   overflow: auto;
-  padding: 10px 8px;
+  padding: 12px 10px;
   border-radius: 14px;
   border: 1px solid color-mix(in srgb, var(--chrome-gold) 16%, var(--chrome-2));
   /* Soft logo purple wash at the top — contrast with cyan clock, not a hard band */
@@ -4066,6 +4069,28 @@ html:not(.app-mode) body.home-web .home-rail {
     linear-gradient(180deg, #2a2a6a 0%, var(--chrome) 42%, var(--chrome) 100%);
   color: var(--chrome-text);
   scrollbar-width: thin;
+}
+/* Desktop: dock features rail to the viewport edge (inline-start = right in AR) */
+@media (min-width: 861px) {
+  html:not(.app-mode) body.home-web main#top {
+    padding-inline-start: var(--home-rail-w);
+  }
+  html:not(.app-mode) body.home-web .home-calm-grid {
+    display: block;
+  }
+  html:not(.app-mode) body.home-web .home-rail {
+    position: fixed;
+    z-index: 40;
+    inset-block: 66px 0;
+    inset-inline-start: 0;
+    inset-inline-end: auto;
+    width: var(--home-rail-w);
+    max-height: none;
+    top: auto;
+    border-radius: 0;
+    border: 0;
+    border-inline-end: 1px solid color-mix(in srgb, var(--chrome-gold) 16%, var(--chrome-2));
+  }
 }
 html:not(.app-mode) body.home-web .home-rail-check {
   position: absolute;
