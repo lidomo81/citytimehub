@@ -4041,8 +4041,9 @@ html:not(.app-mode) body.home-web .site-header .header-inner {
 
 html:not(.app-mode) body.home-web {
   --home-rail-w: 212px;
+  --home-header-h: 66px;
 }
-/* Home header toggle for features rail — desktop only */
+/* Home header toggle — desktop only; sits flush above the rail */
 html:not(.app-mode) body.home-web .home-rail-header-btn {
   display: none;
 }
@@ -4051,82 +4052,95 @@ html:not(.app-mode) body.home-web .home-calm {
   padding-bottom: clamp(8px, 1.5vw, 14px);
 }
 html:not(.app-mode) body.home-web .home-calm-grid {
-  display: grid;
-  grid-template-columns: 210px minmax(0, 1fr);
-  gap: clamp(14px, 2.2vw, 22px);
-  align-items: start;
+  display: block;
 }
 html:not(.app-mode) body.home-web .home-rail {
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 4px;
-  position: sticky;
-  top: 72px;
-  max-height: calc(100vh - 88px);
-  overflow: auto;
   padding: 12px 10px;
-  border-radius: 14px;
-  border: 1px solid color-mix(in srgb, var(--chrome-gold) 16%, var(--chrome-2));
-  /* Soft logo purple wash at the top — contrast with cyan clock, not a hard band */
-  background:
-    radial-gradient(140% 90% at 50% -10%, rgba(90, 62, 140, .42) 0%, transparent 58%),
-    linear-gradient(180deg, #2a2a6a 0%, var(--chrome) 42%, var(--chrome) 100%);
   color: var(--chrome-text);
   scrollbar-width: thin;
 }
-/* Desktop: fixed under header (does not scroll with the page) */
+/* Desktop: one continuous chrome column — purple wash flows header → rail, no seam */
 @media (min-width: 861px) {
-  html:not(.app-mode) body.home-web .home-rail-header-btn {
-    display: grid;
-    flex: none;
-    border-color: rgba(255, 212, 134, .4);
-    background: rgba(255, 212, 134, .12);
-    color: var(--chrome-gold);
+  html:not(.app-mode) body.home-web {
+    /* Shared stops so header bottom == rail top (no visual cut) */
+    --home-chrome-purple: #3d2f78;
+    --home-chrome-mid: #243868;
   }
-  html:not(.app-mode) body.home-web .home-rail-header-btn:hover {
-    border-color: var(--chrome-gold);
-    background: rgba(255, 212, 134, .2);
-    color: var(--chrome-text);
-  }
-  html:not(.app-mode) body.home-web .home-rail-header-btn[aria-expanded="false"] {
-    border-color: rgba(255, 255, 255, .22);
-    background: rgba(255, 255, 255, .08);
-    color: var(--chrome-muted);
-  }
-  /* Contrast line where header meets the hanging menu */
   html:not(.app-mode) body.home-web .site-header {
-    border-bottom: 2px solid color-mix(in srgb, var(--chrome-gold) 55%, #5a3e8c);
-    box-shadow: 0 1px 0 rgba(90, 62, 140, .35);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    overflow: visible;
+    padding-inline-start: var(--home-rail-w);
+    /* Soft purple across the bar — ends on mid so the rail can continue seamlessly */
+    border-bottom: none;
+    box-shadow: none;
+    background:
+      radial-gradient(90% 140% at 100% 0%, rgba(90, 62, 140, .55) 0%, transparent 58%),
+      linear-gradient(180deg, var(--home-chrome-purple) 0%, var(--home-chrome-mid) 100%);
   }
-  html:not(.app-mode) body.home-web.home-rail-open main#top {
+  html:not([dir="rtl"]) body.home-web .site-header {
+    background:
+      radial-gradient(90% 140% at 0% 0%, rgba(90, 62, 140, .55) 0%, transparent 58%),
+      linear-gradient(180deg, var(--home-chrome-purple) 0%, var(--home-chrome-mid) 100%);
+  }
+  /* Always reserve rail width — toggle never shoves the page */
+  html:not(.app-mode) body.home-web main#top {
     padding-inline-start: var(--home-rail-w);
   }
-  html:not(.app-mode) body.home-web:not(.home-rail-open) main#top {
-    padding-inline-start: 0;
-  }
-  html:not(.app-mode) body.home-web .home-calm-grid {
-    display: block;
-  }
-  html:not(.app-mode) body.home-web .home-rail {
-    position: fixed !important;
-    z-index: 45;
-    top: 66px !important;
-    bottom: auto !important;
+  html:not(.app-mode) body.home-web .home-rail-header-btn {
+    display: grid;
+    place-items: center;
+    position: absolute;
+    z-index: 60;
+    top: 0;
     inset-inline-start: 0;
     inset-inline-end: auto;
     width: var(--home-rail-w);
-    max-height: calc(100vh - 78px);
+    height: var(--home-header-h);
     margin: 0;
     border-radius: 0;
-    border-end-end-radius: 16px;
     border: 0;
-    border-block-start: 3px solid var(--chrome-gold);
-    border-inline-end: 1px solid color-mix(in srgb, var(--chrome-gold) 18%, transparent);
-    border-block-end: 1px solid color-mix(in srgb, var(--chrome-gold) 14%, transparent);
-    box-shadow: 0 18px 40px -22px rgba(0, 0, 0, .55);
+    /* Transparent so header purple shows through — one piece with the rail */
+    background: transparent;
+    color: var(--chrome-gold);
+    transform: none;
+    transition: background .15s, color .15s;
+  }
+  html:not(.app-mode) body.home-web .home-rail-header-btn:hover,
+  html:not(.app-mode) body.home-web .home-rail-header-btn:focus-visible {
+    transform: none;
+    background: rgba(255, 212, 134, .1);
+    color: var(--chrome-text);
+  }
+  html:not(.app-mode) body.home-web .home-rail-header-btn[aria-expanded="false"] {
+    background: transparent;
+    color: var(--chrome-muted);
+  }
+  html:not(.app-mode) body.home-web.home-rail-open .home-rail {
+    display: flex;
+    position: fixed;
+    z-index: 45;
+    top: var(--home-header-h);
+    inset-inline-start: 0;
+    inset-inline-end: auto;
+    width: var(--home-rail-w);
+    height: calc(100vh - var(--home-header-h));
+    max-height: none;
+    margin: 0;
+    overflow: auto;
+    overscroll-behavior: contain;
+    border-radius: 0;
+    border: 0;
+    border-inline-end: 1px solid color-mix(in srgb, var(--chrome-gold) 14%, transparent);
+    box-shadow: 0 18px 40px -22px rgba(0, 0, 0, .45);
+    /* Continues from header mid stop — no top border / no gap color */
     background:
-      linear-gradient(180deg, rgba(90, 62, 140, .55) 0%, transparent 28%),
-      linear-gradient(180deg, #322a72 0%, var(--chrome) 36%, var(--chrome) 100%);
+      radial-gradient(120% 80% at 50% -5%, rgba(90, 62, 140, .5) 0%, transparent 55%),
+      linear-gradient(180deg, var(--home-chrome-mid) 0%, #1e3060 28%, var(--chrome) 58%, var(--chrome) 100%);
   }
   html:not(.app-mode) body.home-web:not(.home-rail-open) .home-rail {
     display: none !important;
