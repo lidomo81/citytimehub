@@ -3985,6 +3985,22 @@ html:not(.app-mode) body.home-web .home-rail {
   background: var(--surface-2);
   scrollbar-width: thin;
 }
+html:not(.app-mode) body.home-web .home-rail-check {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 1px;
+  height: 1px;
+}
+html:not(.app-mode) body.home-web .home-rail-strip {
+  display: none;
+}
+html:not(.app-mode) body.home-web .home-rail-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
 html:not(.app-mode) body.home-web .home-rail-lab {
   margin: 0 0 2px;
   padding: 2px 8px 6px;
@@ -4173,17 +4189,83 @@ html:not(.app-mode) body.home-web #reflections .section-head {
 
 @media (max-width: 860px) {
   html:not(.app-mode) body.home-web .home-calm-grid {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 10px;
   }
+  /* City panel first — features as a compact strip below */
+  html:not(.app-mode) body.home-web #cityPanel {
+    order: 1;
+  }
   html:not(.app-mode) body.home-web .home-rail {
+    order: 2;
     position: static;
     max-height: none;
     overflow: visible;
-    padding: 8px;
+    padding: 0;
+    gap: 0;
+    border-radius: 14px;
+    background: var(--surface);
+  }
+  html:not(.app-mode) body.home-web .home-rail-strip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin: 0;
+    padding: 12px 14px;
+    border-radius: 14px;
+    cursor: pointer;
+    user-select: none;
+    color: var(--text);
+    -webkit-tap-highlight-color: transparent;
+  }
+  html:not(.app-mode) body.home-web .home-rail-strip-title {
+    font-size: .92rem;
+    font-weight: 800;
+    letter-spacing: -.01em;
+  }
+  html:not(.app-mode) body.home-web .home-rail-strip-hint {
+    flex: 1;
+    min-width: 0;
+    font-size: .78rem;
+    font-weight: 600;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  html:not(.app-mode) body.home-web .home-rail-strip-chev {
+    width: 8px;
+    height: 8px;
+    border-inline-end: 2px solid var(--muted);
+    border-bottom: 2px solid var(--muted);
+    transform: rotate(45deg);
+    transition: transform .18s var(--ease);
+    flex: none;
+    margin-top: -3px;
+  }
+  html:not(.app-mode) body.home-web .home-rail-check:checked ~ .home-rail-strip .home-rail-strip-chev {
+    transform: rotate(-135deg);
+    margin-top: 3px;
+  }
+  html:not(.app-mode) body.home-web .home-rail-check:focus-visible ~ .home-rail-strip {
+    outline: 2px solid color-mix(in srgb, var(--brand) 55%, transparent);
+    outline-offset: 2px;
   }
   html:not(.app-mode) body.home-web .home-rail-lab {
-    padding-bottom: 2px;
+    display: none;
+  }
+  html:not(.app-mode) body.home-web .home-rail-body {
+    display: none;
+    padding: 0 8px 8px;
+    border-top: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
+  }
+  html:not(.app-mode) body.home-web .home-rail-check:checked ~ .home-rail-body {
+    display: flex;
+  }
+  html:not(.app-mode) body.home-web .home-rail-check:checked ~ .home-rail-strip {
+    border-radius: 14px 14px 0 0;
   }
 }
 

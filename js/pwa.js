@@ -171,8 +171,13 @@
         ["prayer-clock/", "ساعة الصلاة"],
         ["qibla/", "القبلة"],
         ["monthly/", "مواقيت الشهر"],
+        ["cities/board/", "لوحة المدن"],
+        ["azkar/", "كل الأذكار"],
         ["azkar/morning/", "أذكار الصباح"],
-        ["azkar/evening/", "أذكار المساء"]
+        ["azkar/evening/", "أذكار المساء"],
+        ["azkar/sleep/", "أذكار النوم"],
+        ["azkar/waking/", "أذكار الاستيقاظ"],
+        ["azkar/ruqyah/", "الرقية الشرعية"]
       ]},
       { href: p + "/cities/", label: "المدن", top: true },
       { href: p + "/guides/", label: "خواطر", top: true }
@@ -186,8 +191,13 @@
         ["prayer-clock/", "Prayer Clock"],
         ["qibla/", "Qibla"],
         ["monthly/", "Monthly Times"],
+        ["cities/board/", "Cities Board"],
+        ["azkar/", "All Adhkar"],
         ["azkar/morning/", "Morning Adhkar"],
-        ["azkar/evening/", "Evening Adhkar"]
+        ["azkar/evening/", "Evening Adhkar"],
+        ["azkar/sleep/", "Bedtime Adhkar"],
+        ["azkar/waking/", "Waking-Up Adhkar"],
+        ["azkar/ruqyah/", "Ruqyah"]
       ]},
       { href: "/cities/", label: "Cities", top: true },
       { href: "/guides/", label: "Reflections", top: true }
