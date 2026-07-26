@@ -767,9 +767,10 @@
 
   /* ---------- Prayer times + Hijri (AlAdhan) ---------- */
   const PRAYERS = ["Fajr","Sunrise","Dhuhr","Asr","Maghrib","Isha"];
+  /* Soft sky tones — dawn gold → noon blue → dusk rose → night indigo */
   const ARC_COLORS = {
-    Fajr: "#d4a574", Sunrise: "#f5c542", Dhuhr: "#7dd3fc",
-    Asr: "#38bdf8", Maghrib: "#f472b6", Isha: "#818cf8",
+    Fajr: "#c9a46a", Sunrise: "#e0ae58", Dhuhr: "#8eb4c8",
+    Asr: "#7aa3b8", Maghrib: "#c98a72", Isha: "#8a8eb0",
   };
   const ARC_CX = 180, ARC_CY = 186, ARC_R = 132;
 
@@ -795,38 +796,52 @@
     const start = parseHM(t.Fajr), end = parseHM(t.Isha);
     if (!Number.isFinite(start) || !Number.isFinite(end)) return;
     const left = arcPoint(Math.PI), right = arcPoint(0);
+    const arcD = `M ${left.x.toFixed(1)} ${left.y.toFixed(1)} A ${ARC_R} ${ARC_R} 0 0 1 ${right.x.toFixed(1)} ${right.y.toFixed(1)}`;
     let marks = "";
     PRAYERS.forEach((key, i) => {
       const mins = parseHM(t[key]);
       if (!Number.isFinite(mins)) return;
       const a = minToArcAngle(mins, start, end);
-      const p = arcPoint(a), lp = arcPoint(a, ARC_R + 16);
+      const p = arcPoint(a), lp = arcPoint(a, ARC_R + 14);
       const color = ARC_COLORS[key] || "#94a3b8";
       let lx = lp.x, anchor = "middle";
       if (a > Math.PI * .82) { lx = lp.x + 2; anchor = "start"; }
       else if (a < Math.PI * .18) { lx = lp.x - 2; anchor = "end"; }
       marks += `<g class="sun-arc-mark" data-key="${key}">
-        <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="4.2" fill="${color}" stroke="rgba(255,255,255,.35)" stroke-width="1"/>
-        <text class="sun-arc-marker-label" x="${lx.toFixed(1)}" y="${(lp.y - 2).toFixed(1)}" text-anchor="${anchor}">${T.prayers[i]}</text>
+        <circle class="sun-arc-dot" cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="2.6" fill="${color}" opacity=".85"/>
+        <text class="sun-arc-marker-label" x="${lx.toFixed(1)}" y="${(lp.y - 1).toFixed(1)}" text-anchor="${anchor}">${T.prayers[i]}</text>
       </g>`;
     });
     svg.innerHTML = `
       <defs>
-        <linearGradient id="sunArcGrad" x1="0%" y1="50%" x2="100%" y2="50%">
-          <stop offset="0%" stop-color="#f5c542"/><stop offset="35%" stop-color="#7dd3fc"/>
-          <stop offset="70%" stop-color="#f472b6"/><stop offset="100%" stop-color="#818cf8"/>
+        <linearGradient id="sunArcGrad" x1="0%" y1="40%" x2="100%" y2="40%">
+          <stop offset="0%" stop-color="#e0ae58"/><stop offset="22%" stop-color="#b9cfe0"/>
+          <stop offset="48%" stop-color="#8eb4c8"/><stop offset="72%" stop-color="#d4a07a"/>
+          <stop offset="100%" stop-color="#9a92b8"/>
         </linearGradient>
-        <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#fff7c2"/><stop offset="45%" stop-color="#fbbf24"/><stop offset="100%" stop-color="#f59e0b"/>
+        <radialGradient id="sunHalo" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ffe6a8" stop-opacity=".55"/>
+          <stop offset="45%" stop-color="#f0b45a" stop-opacity=".22"/>
+          <stop offset="100%" stop-color="#f0b45a" stop-opacity="0"/>
         </radialGradient>
+        <radialGradient id="sunDisc" cx="38%" cy="34%" r="62%">
+          <stop offset="0%" stop-color="#fff6d8"/><stop offset="55%" stop-color="#f2c36a"/>
+          <stop offset="100%" stop-color="#e09a3a" stop-opacity=".92"/>
+        </radialGradient>
+        <filter id="sunArcSoft" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur stdDeviation="4.2"/>
+        </filter>
       </defs>
-      <path d="M ${left.x.toFixed(1)} ${left.y.toFixed(1)} A ${ARC_R} ${ARC_R} 0 0 1 ${right.x.toFixed(1)} ${right.y.toFixed(1)}"
-            fill="none" stroke="url(#sunArcGrad)" stroke-width="2.4" stroke-linecap="round" opacity=".95"/>
+      <path class="sun-arc-glow" d="${arcD}" fill="none" stroke="url(#sunArcGrad)" stroke-width="16"
+            stroke-linecap="round" opacity=".2" filter="url(#sunArcSoft)"/>
+      <path class="sun-arc-path" d="${arcD}" fill="none" stroke="url(#sunArcGrad)" stroke-width="1.7"
+            stroke-linecap="round" opacity=".72"/>
       <line class="sun-arc-horizon" x1="${left.x.toFixed(1)}" y1="${left.y.toFixed(1)}" x2="${right.x.toFixed(1)}" y2="${right.y.toFixed(1)}"
-            stroke="rgba(148,163,184,.35)" stroke-width="1"/>
+            stroke="rgba(148,163,184,.22)" stroke-width="1" stroke-dasharray="3 5"/>
       ${marks}
       <g id="sunArcSun" class="sun-arc-sun" transform="translate(${ARC_CX}, ${ARC_CY - ARC_R})">
-        <circle r="9" fill="url(#sunGlow)"/><circle r="4.5" fill="#fff8dc" opacity=".9"/>
+        <circle class="sun-arc-halo" r="22" fill="url(#sunHalo)"/>
+        <circle class="sun-arc-disc" r="7.2" fill="url(#sunDisc)"/>
       </g>`;
     updateSunPosition();
     updateSunArcNext();
