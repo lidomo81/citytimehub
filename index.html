@@ -37,7 +37,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="css/style.css?v=126" />
+  <link rel="stylesheet" href="css/style.css?v=127" />
   <link rel="manifest" href="/manifest.webmanifest" />
   <link rel="icon" href="/icons/favicon-64.png" sizes="64x64" type="image/png" />
   <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
@@ -184,17 +184,48 @@
       <div class="container home-calm-grid">
         <nav class="home-rail" aria-label="Features">
           <p class="home-rail-lab">Features</p>
-          <a href="/cities/board/">Cities board</a>
-          <a href="/close-ones/">Close Ones</a>
-          <a href="/azkar/morning/">Morning Adhkar</a>
-          <a href="/azkar/evening/">Evening Adhkar</a>
-          <a href="/azkar/sleep/">Sleep Adhkar</a>
-          <a href="/azkar/ruqyah/">Ruqyah</a>
-          <a href="/qibla/">Qibla</a>
-          <a href="/prayer-clock/">Prayer Clock</a>
-          <a href="/time-difference/">Time difference</a>
-          <a href="/monthly/">Monthly times</a>
-          <a href="/guides/">Reflections</a>
+          <details class="home-rail-sec" open>
+            <summary>Essentials</summary>
+            <div class="home-rail-links">
+              <a href="/#cityPanel">Prayer times</a>
+              <a href="/cities/board/">Cities board</a>
+              <a href="/close-ones/">Close Ones</a>
+              <a href="/cities/">Cities</a>
+            </div>
+          </details>
+          <details class="home-rail-sec">
+            <summary>Adhkar</summary>
+            <div class="home-rail-links">
+              <a href="/azkar/morning/">Morning Adhkar</a>
+              <a href="/azkar/evening/">Evening Adhkar</a>
+              <a href="/azkar/sleep/">Sleep Adhkar</a>
+              <a href="/azkar/waking/">Waking Adhkar</a>
+              <a href="/azkar/ruqyah/">Ruqyah</a>
+              <a href="/azkar/">All Adhkar</a>
+            </div>
+          </details>
+          <details class="home-rail-sec">
+            <summary>Prayer</summary>
+            <div class="home-rail-links">
+              <a href="/qibla/">Qibla</a>
+              <a href="/prayer-clock/">Prayer Clock</a>
+              <a href="/monthly/">Monthly times</a>
+            </div>
+          </details>
+          <details class="home-rail-sec">
+            <summary>Time &amp; planning</summary>
+            <div class="home-rail-links">
+              <a href="/time-difference/">Time difference</a>
+              <a href="/best-time-to-call/">Best time to call</a>
+              <a href="/meeting-planner/">Event planner</a>
+            </div>
+          </details>
+          <details class="home-rail-sec">
+            <summary>Reflections</summary>
+            <div class="home-rail-links">
+              <a href="/guides/">All reflections</a>
+            </div>
+          </details>
         </nav>
     <section id="cityPanel" class="section cp-section" aria-labelledby="cp-h">
       <div class="container">

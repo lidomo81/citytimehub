@@ -37,7 +37,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="/css/style.css?v=126" />
+  <link rel="stylesheet" href="/css/style.css?v=127" />
   <link rel="manifest" href="/manifest.ar.webmanifest" />
   <link rel="icon" href="/icons/favicon-64.png" sizes="64x64" type="image/png" />
   <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
@@ -185,17 +185,48 @@
       <div class="container home-calm-grid">
         <nav class="home-rail" aria-label="مزايا">
           <p class="home-rail-lab">مزايا</p>
-          <a href="/ar/cities/board/">لوحة المدن</a>
-          <a href="/ar/close-ones/">أحبابك</a>
-          <a href="/ar/azkar/morning/">أذكار الصباح</a>
-          <a href="/ar/azkar/evening/">أذكار المساء</a>
-          <a href="/ar/azkar/sleep/">أذكار النوم</a>
-          <a href="/ar/azkar/ruqyah/">الرقية الشرعية</a>
-          <a href="/ar/qibla/">القبلة</a>
-          <a href="/ar/prayer-clock/">ساعة الصلاة</a>
-          <a href="/ar/time-difference/">فرق التوقيت</a>
-          <a href="/ar/monthly/">مواقيت الشهر</a>
-          <a href="/ar/guides/">خواطر</a>
+          <details class="home-rail-sec" open>
+            <summary>أساسي</summary>
+            <div class="home-rail-links">
+              <a href="/ar/#cityPanel">مواقيت الصلاة</a>
+              <a href="/ar/cities/board/">لوحة المدن</a>
+              <a href="/ar/close-ones/">أحبابك</a>
+              <a href="/ar/cities/">المدن</a>
+            </div>
+          </details>
+          <details class="home-rail-sec">
+            <summary>الأذكار</summary>
+            <div class="home-rail-links">
+              <a href="/ar/azkar/morning/">أذكار الصباح</a>
+              <a href="/ar/azkar/evening/">أذكار المساء</a>
+              <a href="/ar/azkar/sleep/">أذكار النوم</a>
+              <a href="/ar/azkar/waking/">أذكار الاستيقاظ</a>
+              <a href="/ar/azkar/ruqyah/">الرقية الشرعية</a>
+              <a href="/ar/azkar/">كل الأذكار</a>
+            </div>
+          </details>
+          <details class="home-rail-sec">
+            <summary>الصلاة</summary>
+            <div class="home-rail-links">
+              <a href="/ar/qibla/">القبلة</a>
+              <a href="/ar/prayer-clock/">ساعة الصلاة</a>
+              <a href="/ar/monthly/">مواقيت الشهر</a>
+            </div>
+          </details>
+          <details class="home-rail-sec">
+            <summary>الوقت والتخطيط</summary>
+            <div class="home-rail-links">
+              <a href="/ar/time-difference/">فرق التوقيت</a>
+              <a href="/ar/best-time-to-call/">أفضل وقت للاتصال</a>
+              <a href="/ar/meeting-planner/">مخطّط الأحداث</a>
+            </div>
+          </details>
+          <details class="home-rail-sec">
+            <summary>خواطر</summary>
+            <div class="home-rail-links">
+              <a href="/ar/guides/">كل الخواطر</a>
+            </div>
+          </details>
         </nav>
     <section id="cityPanel" class="section cp-section" aria-labelledby="cp-h">
       <div class="container">

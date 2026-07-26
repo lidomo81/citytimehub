@@ -3916,11 +3916,21 @@ html.app-mode[data-app-tab="home"] .daily-reflection--home .dr-otd {
 
 /* =====================================================================
    Web homepage — calm layout (Direction A)
-   Sidebar features rail + city panel focus. App-mode untouched.
+   Clean header + accordion features rail. App-mode untouched.
    ===================================================================== */
 .home-rail { display: none; }
 
 html:not(.app-mode) body.home-web .hero { display: none; }
+
+/* Header: brand + lang/UTC/theme only — menus live in the rail */
+html:not(.app-mode) body.home-web .site-header .main-nav,
+html:not(.app-mode) body.home-web .site-header .nav-toggle,
+html:not(.app-mode) body.home-web .site-header .nav-burger {
+  display: none !important;
+}
+html:not(.app-mode) body.home-web .site-header .header-inner {
+  justify-content: space-between;
+}
 
 html:not(.app-mode) body.home-web .home-calm {
   padding-top: clamp(14px, 2.5vw, 22px);
@@ -3928,23 +3938,26 @@ html:not(.app-mode) body.home-web .home-calm {
 }
 html:not(.app-mode) body.home-web .home-calm-grid {
   display: grid;
-  grid-template-columns: 188px minmax(0, 1fr);
+  grid-template-columns: 210px minmax(0, 1fr);
   gap: clamp(14px, 2.2vw, 22px);
   align-items: start;
 }
 html:not(.app-mode) body.home-web .home-rail {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
   position: sticky;
   top: 72px;
+  max-height: calc(100vh - 88px);
+  overflow: auto;
   padding: 10px 8px;
   border-radius: 14px;
   border: 1px solid var(--border);
   background: var(--surface-2);
+  scrollbar-width: thin;
 }
 html:not(.app-mode) body.home-web .home-rail-lab {
-  margin: 0 0 4px;
+  margin: 0 0 2px;
   padding: 2px 8px 6px;
   font-size: .66rem;
   font-weight: 800;
@@ -3952,13 +3965,60 @@ html:not(.app-mode) body.home-web .home-rail-lab {
   text-transform: uppercase;
   color: var(--muted);
 }
+html:not(.app-mode) body.home-web .home-rail-sec {
+  border-radius: 10px;
+  border: 1px solid transparent;
+}
+html:not(.app-mode) body.home-web .home-rail-sec[open] {
+  border-color: color-mix(in srgb, var(--border) 80%, transparent);
+  background: color-mix(in srgb, var(--surface) 55%, transparent);
+}
+html:not(.app-mode) body.home-web .home-rail-sec summary {
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 9px 10px;
+  border-radius: 10px;
+  font-size: .82rem;
+  font-weight: 800;
+  color: var(--text);
+}
+html:not(.app-mode) body.home-web .home-rail-sec summary::-webkit-details-marker { display: none; }
+html:not(.app-mode) body.home-web .home-rail-sec summary::after {
+  content: "";
+  width: 0.45em;
+  height: 0.45em;
+  border-inline-end: 2px solid var(--muted);
+  border-block-end: 2px solid var(--muted);
+  transform: rotate(45deg);
+  transition: transform .15s;
+  flex: none;
+  margin-top: -0.2em;
+}
+html:not(.app-mode) body.home-web .home-rail-sec[open] summary::after {
+  transform: rotate(-135deg);
+  margin-top: 0.15em;
+}
+html:not(.app-mode) body.home-web .home-rail-sec summary:hover {
+  background: color-mix(in srgb, var(--brand) 10%, transparent);
+}
+html:not(.app-mode) body.home-web .home-rail-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 0 4px 8px;
+}
 html:not(.app-mode) body.home-web .home-rail a {
   display: block;
-  padding: 8px 10px;
+  padding: 7px 10px;
   border-radius: 8px;
-  font-size: .8rem;
-  font-weight: 700;
-  color: color-mix(in srgb, var(--text) 88%, var(--muted));
+  font-size: .78rem;
+  font-weight: 650;
+  color: color-mix(in srgb, var(--text) 82%, var(--muted));
   text-decoration: none;
   transition: background .15s, color .15s;
 }
@@ -4013,26 +4073,12 @@ html:not(.app-mode) body.home-web #reflections .section-head {
   }
   html:not(.app-mode) body.home-web .home-rail {
     position: static;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    gap: 6px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    max-height: none;
+    overflow: visible;
     padding: 8px;
-    scrollbar-width: thin;
   }
   html:not(.app-mode) body.home-web .home-rail-lab {
-    display: none;
-  }
-  html:not(.app-mode) body.home-web .home-rail a {
-    flex: none;
-    padding: 7px 11px;
-    font-size: .74rem;
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    background: var(--surface);
-    white-space: nowrap;
+    padding-bottom: 2px;
   }
 }
 
