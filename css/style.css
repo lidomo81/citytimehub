@@ -3913,3 +3913,132 @@ html.app-mode[data-app-tab="home"] .daily-reflection--home .dr-otd {
   line-height: 1.6;
   opacity: .8;
 }
+
+/* =====================================================================
+   Web homepage — calm layout (Direction A)
+   Sidebar features rail + city panel focus. App-mode untouched.
+   ===================================================================== */
+.home-rail { display: none; }
+
+html:not(.app-mode) body.home-web .hero { display: none; }
+
+html:not(.app-mode) body.home-web .home-calm {
+  padding-top: clamp(14px, 2.5vw, 22px);
+  padding-bottom: clamp(8px, 1.5vw, 14px);
+}
+html:not(.app-mode) body.home-web .home-calm-grid {
+  display: grid;
+  grid-template-columns: 188px minmax(0, 1fr);
+  gap: clamp(14px, 2.2vw, 22px);
+  align-items: start;
+}
+html:not(.app-mode) body.home-web .home-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  position: sticky;
+  top: 72px;
+  padding: 10px 8px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+}
+html:not(.app-mode) body.home-web .home-rail-lab {
+  margin: 0 0 4px;
+  padding: 2px 8px 6px;
+  font-size: .66rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+html:not(.app-mode) body.home-web .home-rail a {
+  display: block;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: .8rem;
+  font-weight: 700;
+  color: color-mix(in srgb, var(--text) 88%, var(--muted));
+  text-decoration: none;
+  transition: background .15s, color .15s;
+}
+html:not(.app-mode) body.home-web .home-rail a:hover {
+  background: color-mix(in srgb, var(--brand) 12%, transparent);
+  color: var(--text);
+}
+html:not(.app-mode) body.home-web #cityPanel.cp-section {
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+html:not(.app-mode) body.home-web #cityPanel > .container {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: clamp(14px, 2vw, 18px);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+}
+html:not(.app-mode) body.home-web #cbHomeChip,
+html:not(.app-mode) body.home-web #coHomeStrip {
+  display: none !important;
+}
+html:not(.app-mode) body.home-web .home-spotlight {
+  margin-top: 12px;
+  border-top: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
+  padding-top: 10px;
+}
+html:not(.app-mode) body.home-web #tools,
+html:not(.app-mode) body.home-web nav.app-tools,
+html:not(.app-mode) body.home-web #stats,
+html:not(.app-mode) body.home-web #reference,
+html:not(.app-mode) body.home-web #citiesCta {
+  display: none !important;
+}
+html:not(.app-mode) body.home-web .explainer-section {
+  padding-block: clamp(20px, 3vw, 36px);
+}
+html:not(.app-mode) body.home-web #reflections {
+  padding-top: clamp(18px, 2.8vw, 32px);
+}
+html:not(.app-mode) body.home-web #reflections .section-head {
+  margin-bottom: 14px;
+}
+
+@media (max-width: 860px) {
+  html:not(.app-mode) body.home-web .home-calm-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  html:not(.app-mode) body.home-web .home-rail {
+    position: static;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 6px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 8px;
+    scrollbar-width: thin;
+  }
+  html:not(.app-mode) body.home-web .home-rail-lab {
+    display: none;
+  }
+  html:not(.app-mode) body.home-web .home-rail a {
+    flex: none;
+    padding: 7px 11px;
+    font-size: .74rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    white-space: nowrap;
+  }
+}
+
+/* App: wrapper is transparent; rail never shows */
+html.app-mode .home-rail { display: none !important; }
+html.app-mode .home-calm,
+html.app-mode .home-calm-grid {
+  display: contents;
+}
