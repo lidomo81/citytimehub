@@ -657,6 +657,7 @@
       }
     }
     updateSunPosition();
+    if (now.getSeconds() === 0) updateSunArcNext();
     // Soft day-part wash for the app Home tab (once a minute is enough).
     if (now.getSeconds() === 0) updateDayAtmosphere();
   }

@@ -1852,7 +1852,15 @@ html.app-mode[data-app-tab="tools"] .app-cities-hero { display: flex; }
 .cth-ios-x { position: absolute; top: 8px; inset-inline-end: 10px; background: none; border: none; color: var(--muted); font-size: 1.5rem; line-height: 1; cursor: pointer; }
 
 /* AR (rtl): clock right, sun chart left. EN (ltr): clock left, sun chart right. */
-.cp-grid { display: grid; grid-template-columns: minmax(260px, .9fr) minmax(320px, 1.35fr); background: var(--surface); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; box-shadow: 0 24px 60px -40px rgba(0,0,0,.7); }
+.cp-grid {
+  display: grid;
+  grid-template-columns: minmax(240px, .95fr) minmax(280px, 1.2fr);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px -40px rgba(0,0,0,.7);
+}
 .cp-clock { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 14px; padding: 30px 26px; background: radial-gradient(120% 120% at 50% 0%, rgba(37,99,235,.10), transparent 62%); }
 .cp-clock-mid { display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; min-width: 0; }
 .cp-clock .lt-analog { width: 208px; height: 208px; flex: none; }
@@ -1871,8 +1879,8 @@ html.app-mode[data-app-tab="tools"] .app-cities-hero { display: flex; }
 @keyframes cp-pulse { 70% { box-shadow: 0 0 0 6px rgba(245,166,35,0); } 100% { box-shadow: 0 0 0 0 rgba(245,166,35,0); } }
 @media (prefers-reduced-motion: reduce) { .cp-next-dot { animation: none; } }
 
-.cp-sky { display: flex; flex-direction: column; min-width: 0; border-inline-start: 1px solid var(--border); }
-.sun-arc { padding: 14px 16px 6px; }
+.sun-arc { padding: 14px 16px 6px; min-width: 0; border-inline-start: 1px solid var(--border); }
+.cp-grid > .cp-devotion { grid-column: 1 / -1; }
 .sun-arc-stage {
   position: relative; border-radius: 18px; overflow: hidden; min-height: 210px;
   background:
@@ -2015,7 +2023,7 @@ html.app-mode[data-app-tab="prayer"] .cp-progress { width: min(100%, 240px); }
   html:not(.app-mode) .cp-next { flex: none; margin-top: 4px; }
 }
 
-.cp-devotion { padding: 18px 22px 22px; border-inline-start: none; }
+.cp-devotion { padding: 18px 22px 22px; border-inline-start: none; border-top: 1px solid var(--border); }
 .cp-dev-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px 18px; flex-wrap: wrap; margin-bottom: 14px; }
 .cp-dev-title { font-size: 1.05rem; font-weight: 700; }
 .cp-devotion .datebar { margin: 0; }
@@ -2126,10 +2134,19 @@ html.app-mode .prayer-insights { margin-top: 10px; }
 
 @media (max-width: 860px) {
   .cp-grid { grid-template-columns: 1fr; }
-  .cp-sky { border-inline-start: none; order: -1; }
-  .cp-devotion { border-inline-start: none; border-top: 1px solid var(--border); }
-  .cp-clock { justify-content: center; text-align: center; flex-direction: column; border-top: 1px solid var(--border); }
-  .sun-arc { padding: 12px 12px 4px; }
+  .sun-arc {
+    border-inline-start: none;
+    order: -1;
+    padding: 12px 12px 4px;
+  }
+  .cp-devotion { border-inline-start: none; border-top: 1px solid var(--border); order: 2; }
+  .cp-clock {
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    border-top: 1px solid var(--border);
+    order: 1;
+  }
 }
 @media (max-width: 480px) {
   .cp-devotion .prayer-grid { grid-template-columns: repeat(2, 1fr); }
@@ -4627,11 +4644,12 @@ html:not(.app-mode) body.home-web .cp-btn > span {
 }
 html:not(.app-mode) body.home-web .cp-btn svg { flex: none; }
 
-/* Single-column stage — no split card */
+/* Home stage: clock | sun chart (RTL/LTR via document direction), prayers full-width below */
 html:not(.app-mode) body.home-web .cp-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: 14px 20px;
+  align-items: center;
   border: 0;
   border-radius: 0;
   background: transparent;
@@ -4640,18 +4658,29 @@ html:not(.app-mode) body.home-web .cp-grid {
 }
 html:not(.app-mode) body.home-web .cp-clock {
   display: block;
-  padding: 0 0 18px;
+  padding: 0;
   text-align: center;
   background: none;
-  border-bottom: 1px solid color-mix(in srgb, var(--text) 9%, transparent);
+  border: 0;
+  order: 0;
 }
-/* Centered cluster: analog + city/time as one unit (no edge-to-edge gap) */
+html:not(.app-mode) body.home-web .sun-arc {
+  padding: 0;
+  border: 0;
+  min-width: 0;
+  order: 0;
+}
+html:not(.app-mode) body.home-web .cp-grid > .cp-devotion {
+  grid-column: 1 / -1;
+  order: 0;
+}
+/* Clock cluster stays compact (analog + city/time together) */
 html:not(.app-mode) body.home-web .cp-clock-mid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  column-gap: clamp(14px, 2.5vw, 22px);
+  column-gap: clamp(12px, 2vw, 18px);
   row-gap: 8px;
   width: 100%;
 }
@@ -4709,6 +4738,7 @@ html:not(.app-mode) body.home-web .cp-clock-info .lt-meta {
 html:not(.app-mode) body.home-web .cp-devotion {
   padding: 16px 0 0;
   border-inline-start: 0;
+  border-top: 1px solid color-mix(in srgb, var(--text) 9%, transparent);
 }
 html:not(.app-mode) body.home-web .cp-dev-head {
   margin-bottom: 12px;
@@ -4889,6 +4919,16 @@ html:not(.app-mode) body.home-web .home-spotlight {
   html:not(.app-mode) body.home-web .cp-clock .lt-city {
     font-size: clamp(1.45rem, 2.3vw, 1.85rem);
   }
+}
+
+@media (max-width: 860px) {
+  html:not(.app-mode) body.home-web .cp-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  html:not(.app-mode) body.home-web .sun-arc { order: -1; }
+  html:not(.app-mode) body.home-web .cp-clock { order: 1; }
+  html:not(.app-mode) body.home-web .cp-devotion { order: 2; }
 }
 
 @media (max-width: 720px) {
