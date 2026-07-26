@@ -15,6 +15,12 @@ html[lang="ar"] { --font: "IBM Plex Sans Arabic", Inter, system-ui, -apple-syste
 :root {
   --brand: #2563EB;
   --accent: #38BDF8;
+  /* Logo identity — night sky + crescent gold (header / features chrome) */
+  --chrome: #16356b;
+  --chrome-2: #1c2f5c;
+  --chrome-text: #f4f7ff;
+  --chrome-muted: #b7c6e6;
+  --chrome-gold: #ffd486;
   --maxw: 1180px;
   --pad: clamp(16px, 4vw, 30px);
   --gap: clamp(14px, 2vw, 20px);
@@ -116,6 +122,78 @@ svg { display: block; }
 .ico-sun { display: none; }
 [data-theme="dark"] .ico-moon { display: none; }
 [data-theme="dark"] .ico-sun { display: block; }
+
+/* Brand chrome — logo night sky on web header (not app WebView chrome) */
+html:not(.app-mode) .site-header {
+  background: var(--chrome);
+  border-bottom: 1px solid color-mix(in srgb, var(--chrome-gold) 18%, var(--chrome-2));
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+html:not(.app-mode) .site-header .brand { color: var(--chrome-text); }
+html:not(.app-mode) .site-header .brand-text span { color: var(--chrome-gold); }
+html:not(.app-mode) .site-header .brand-mark {
+  box-shadow: 0 8px 20px -10px rgba(0, 0, 0, .45);
+}
+html:not(.app-mode) .site-header .main-nav a,
+html:not(.app-mode) .site-header .nav-drop > summary {
+  color: var(--chrome-muted);
+}
+html:not(.app-mode) .site-header .main-nav a:hover,
+html:not(.app-mode) .site-header .nav-drop[open] > summary,
+html:not(.app-mode) .site-header .nav-drop > summary:hover {
+  background: rgba(255, 255, 255, .1);
+  color: var(--chrome-text);
+}
+html:not(.app-mode) .site-header .lang-switch {
+  color: var(--chrome-text);
+  border-color: rgba(255, 255, 255, .28);
+  background: rgba(255, 255, 255, .06);
+}
+html:not(.app-mode) .site-header .lang-switch:hover {
+  border-color: var(--chrome-gold);
+  background: rgba(255, 212, 134, .12);
+  color: var(--chrome-text);
+}
+html:not(.app-mode) .site-header .header-utc {
+  border-color: rgba(255, 255, 255, .22);
+  background: rgba(255, 255, 255, .08);
+  color: var(--chrome-text);
+}
+html:not(.app-mode) .site-header .hu-label { color: var(--chrome-gold); }
+html:not(.app-mode) .site-header .hu-time { color: var(--chrome-text); }
+html:not(.app-mode) .site-header .icon-btn {
+  border-color: rgba(255, 255, 255, .22);
+  background: rgba(255, 255, 255, .08);
+  color: var(--chrome-muted);
+}
+html:not(.app-mode) .site-header .icon-btn:hover {
+  color: var(--chrome-text);
+  border-color: rgba(255, 212, 134, .45);
+  background: rgba(255, 255, 255, .12);
+}
+html:not(.app-mode) .site-header .nav-burger {
+  border-color: rgba(255, 255, 255, .22);
+  background: rgba(255, 255, 255, .08);
+  color: var(--chrome-text);
+}
+/* Mobile nav panel stays readable on page surface */
+@media (max-width: 900px) {
+  html:not(.app-mode) .site-header .main-nav {
+    background: var(--surface);
+    border-color: var(--border);
+  }
+  html:not(.app-mode) .site-header .main-nav a,
+  html:not(.app-mode) .site-header .nav-drop > summary {
+    color: var(--text-2);
+  }
+  html:not(.app-mode) .site-header .main-nav a:hover,
+  html:not(.app-mode) .site-header .nav-drop[open] > summary,
+  html:not(.app-mode) .site-header .nav-drop > summary:hover {
+    background: var(--surface-2);
+    color: var(--text);
+  }
+}
 
 /* ============ 4. HERO SKY-PANEL ============ */
 .hero { padding-block: clamp(20px, 4vw, 38px) clamp(28px, 5vw, 48px); }
@@ -3981,8 +4059,9 @@ html:not(.app-mode) body.home-web .home-rail {
   overflow: auto;
   padding: 10px 8px;
   border-radius: 14px;
-  border: 1px solid var(--border);
-  background: var(--surface-2);
+  border: 1px solid color-mix(in srgb, var(--chrome-gold) 16%, var(--chrome-2));
+  background: var(--chrome);
+  color: var(--chrome-text);
   scrollbar-width: thin;
 }
 html:not(.app-mode) body.home-web .home-rail-check {
@@ -4014,15 +4093,15 @@ html:not(.app-mode) body.home-web .home-rail-lab {
   font-weight: 800;
   letter-spacing: .08em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--chrome-gold);
 }
 html:not(.app-mode) body.home-web .home-rail-sec {
   border-radius: 10px;
   border: 1px solid transparent;
 }
 html:not(.app-mode) body.home-web .home-rail-sec[open] {
-  border-color: color-mix(in srgb, var(--border) 80%, transparent);
-  background: color-mix(in srgb, var(--surface) 55%, transparent);
+  border-color: rgba(255, 255, 255, .12);
+  background: rgba(255, 255, 255, .08);
 }
 html:not(.app-mode) body.home-web .home-rail-sec summary {
   list-style: none;
@@ -4036,15 +4115,15 @@ html:not(.app-mode) body.home-web .home-rail-sec summary {
   border-radius: 10px;
   font-size: .92rem;
   font-weight: 800;
-  color: var(--text);
+  color: var(--chrome-text);
 }
 html:not(.app-mode) body.home-web .home-rail-sec summary::-webkit-details-marker { display: none; }
 html:not(.app-mode) body.home-web .home-rail-sec summary::after {
   content: "";
   width: 0.45em;
   height: 0.45em;
-  border-inline-end: 2px solid var(--muted);
-  border-block-end: 2px solid var(--muted);
+  border-inline-end: 2px solid var(--chrome-muted);
+  border-block-end: 2px solid var(--chrome-muted);
   transform: rotate(45deg);
   transition: transform .15s;
   flex: none;
@@ -4055,7 +4134,7 @@ html:not(.app-mode) body.home-web .home-rail-sec[open] summary::after {
   margin-top: 0.15em;
 }
 html:not(.app-mode) body.home-web .home-rail-sec summary:hover {
-  background: color-mix(in srgb, var(--brand) 10%, transparent);
+  background: rgba(255, 212, 134, .12);
 }
 html:not(.app-mode) body.home-web .home-rail-links {
   display: flex;
@@ -4070,13 +4149,13 @@ html:not(.app-mode) body.home-web .home-rail a {
   font-size: .88rem;
   font-weight: 650;
   line-height: 1.35;
-  color: color-mix(in srgb, var(--text) 88%, var(--muted));
+  color: var(--chrome-muted);
   text-decoration: none;
   transition: background .15s, color .15s;
 }
 html:not(.app-mode) body.home-web .home-rail a:hover {
-  background: color-mix(in srgb, var(--brand) 12%, transparent);
-  color: var(--text);
+  background: rgba(255, 255, 255, .1);
+  color: var(--chrome-text);
 }
 html:not(.app-mode) body.home-web #cityPanel.cp-section {
   padding: 0;
@@ -4236,13 +4315,13 @@ html:not(.app-mode) body.home-web #reflections .section-head {
     min-height: 72px;
     margin: 0;
     padding: 12px 4px;
-    border: 1px solid color-mix(in srgb, var(--brand) 32%, var(--border));
+    border: 1px solid color-mix(in srgb, var(--chrome-gold) 22%, var(--chrome-2));
     border-inline-start: 0;
     border-radius: 0;
     border-start-end-radius: 12px;
     border-end-end-radius: 12px;
-    background: color-mix(in srgb, var(--brand) 10%, var(--surface));
-    color: var(--text);
+    background: var(--chrome);
+    color: var(--chrome-text);
     box-shadow: 0 10px 22px -14px rgba(0, 0, 0, .4);
     cursor: pointer;
     user-select: none;
@@ -4268,7 +4347,7 @@ html:not(.app-mode) body.home-web #reflections .section-head {
   html:not(.app-mode) body.home-web .home-rail-strip-ico {
     display: grid;
     place-items: center;
-    color: var(--brand);
+    color: var(--chrome-gold);
   }
   html:not(.app-mode) body.home-web .home-rail-strip-title {
     writing-mode: vertical-rl;
@@ -4277,6 +4356,7 @@ html:not(.app-mode) body.home-web #reflections .section-head {
     font-weight: 800;
     letter-spacing: .04em;
     line-height: 1;
+    color: var(--chrome-text);
   }
   html[lang="en"] body.home-web .home-rail-strip-title {
     transform: none;
@@ -4288,7 +4368,7 @@ html:not(.app-mode) body.home-web #reflections .section-head {
     display: none;
   }
   html:not(.app-mode) body.home-web .home-rail-check:focus-visible ~ .home-rail-strip {
-    outline: 2px solid color-mix(in srgb, var(--brand) 55%, transparent);
+    outline: 2px solid color-mix(in srgb, var(--chrome-gold) 55%, transparent);
     outline-offset: 2px;
   }
   html:not(.app-mode) body.home-web .home-rail-drawer-head {
@@ -4310,9 +4390,9 @@ html:not(.app-mode) body.home-web #reflections .section-head {
     height: 36px;
     margin: 0;
     border-radius: 10px;
-    border: 1px solid var(--border);
-    background: var(--surface-2);
-    color: var(--text-2);
+    border: 1px solid rgba(255, 255, 255, .22);
+    background: rgba(255, 255, 255, .1);
+    color: var(--chrome-text);
     font-size: 1.25rem;
     line-height: 1;
     cursor: pointer;
@@ -4329,9 +4409,10 @@ html:not(.app-mode) body.home-web #reflections .section-head {
     margin: 0;
     padding: 14px 10px calc(18px + env(safe-area-inset-bottom));
     border: 0;
-    border-inline-end: 1px solid var(--border);
+    border-inline-end: 1px solid color-mix(in srgb, var(--chrome-gold) 18%, var(--chrome-2));
     border-radius: 0;
-    background: var(--surface);
+    background: var(--chrome);
+    color: var(--chrome-text);
     box-shadow: 0 24px 60px -20px rgba(0, 0, 0, .55);
     overflow: auto;
     overscroll-behavior: contain;
