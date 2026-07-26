@@ -3951,13 +3951,11 @@ html:not(.app-mode) body.home-web .explainer-section .prose {
 
 html:not(.app-mode) body.home-web .hero { display: none; }
 
-/* Desktop home: menus live in the side rail. Mobile keeps the header ☰. */
-@media (min-width: 861px) {
-  html:not(.app-mode) body.home-web .site-header .main-nav,
-  html:not(.app-mode) body.home-web .site-header .nav-toggle,
-  html:not(.app-mode) body.home-web .site-header .nav-burger {
-    display: none !important;
-  }
+/* Home: no header menu — desktop rail / mobile edge drawer cover navigation */
+html:not(.app-mode) body.home-web .site-header .main-nav,
+html:not(.app-mode) body.home-web .site-header .nav-toggle,
+html:not(.app-mode) body.home-web .site-header .nav-burger {
+  display: none !important;
 }
 html:not(.app-mode) body.home-web .site-header .header-inner {
   justify-content: space-between;
