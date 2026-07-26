@@ -2134,19 +2134,20 @@ html.app-mode .prayer-insights { margin-top: 10px; }
 
 @media (max-width: 860px) {
   .cp-grid { grid-template-columns: 1fr; }
-  .sun-arc {
-    border-inline-start: none;
-    order: -1;
-    padding: 12px 12px 4px;
-  }
-  .cp-devotion { border-inline-start: none; border-top: 1px solid var(--border); order: 2; }
+  /* City + time first — sun chart below so picking a city stays above the fold */
   .cp-clock {
     justify-content: center;
     text-align: center;
     flex-direction: column;
-    border-top: 1px solid var(--border);
-    order: 1;
+    border-top: 0;
+    order: 0;
   }
+  .sun-arc {
+    border-inline-start: none;
+    order: 1;
+    padding: 12px 12px 4px;
+  }
+  .cp-devotion { border-inline-start: none; border-top: 1px solid var(--border); order: 2; }
 }
 @media (max-width: 480px) {
   .cp-devotion .prayer-grid { grid-template-columns: repeat(2, 1fr); }
@@ -5057,14 +5058,14 @@ html:not(.app-mode) body.home-web .home-spotlight {
 @media (max-width: 860px) {
   html:not(.app-mode) body.home-web .cp-grid {
     grid-template-columns: 1fr;
-    gap: 8px;
+    gap: 10px;
   }
+  html:not(.app-mode) body.home-web .cp-clock { order: 0; }
   html:not(.app-mode) body.home-web .sun-arc {
-    order: -1;
+    order: 1;
     border: 0;
     padding: 0;
   }
-  html:not(.app-mode) body.home-web .cp-clock { order: 1; }
   html:not(.app-mode) body.home-web .cp-devotion { order: 2; }
 }
 
