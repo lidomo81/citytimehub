@@ -822,7 +822,7 @@
       </defs>
       <path d="M ${left.x.toFixed(1)} ${left.y.toFixed(1)} A ${ARC_R} ${ARC_R} 0 0 1 ${right.x.toFixed(1)} ${right.y.toFixed(1)}"
             fill="none" stroke="url(#sunArcGrad)" stroke-width="2.4" stroke-linecap="round" opacity=".95"/>
-      <line x1="${left.x.toFixed(1)}" y1="${left.y.toFixed(1)}" x2="${right.x.toFixed(1)}" y2="${right.y.toFixed(1)}"
+      <line class="sun-arc-horizon" x1="${left.x.toFixed(1)}" y1="${left.y.toFixed(1)}" x2="${right.x.toFixed(1)}" y2="${right.y.toFixed(1)}"
             stroke="rgba(148,163,184,.35)" stroke-width="1"/>
       ${marks}
       <g id="sunArcSun" class="sun-arc-sun" transform="translate(${ARC_CX}, ${ARC_CY - ARC_R})">
