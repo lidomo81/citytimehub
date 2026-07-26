@@ -4060,7 +4060,10 @@ html:not(.app-mode) body.home-web .home-rail {
   padding: 10px 8px;
   border-radius: 14px;
   border: 1px solid color-mix(in srgb, var(--chrome-gold) 16%, var(--chrome-2));
-  background: var(--chrome);
+  /* Soft logo purple wash at the top — contrast with cyan clock, not a hard band */
+  background:
+    radial-gradient(140% 90% at 50% -10%, rgba(90, 62, 140, .42) 0%, transparent 58%),
+    linear-gradient(180deg, #2a2a6a 0%, var(--chrome) 42%, var(--chrome) 100%);
   color: var(--chrome-text);
   scrollbar-width: thin;
 }
@@ -4411,7 +4414,9 @@ html:not(.app-mode) body.home-web #reflections .section-head {
     border: 0;
     border-inline-end: 1px solid color-mix(in srgb, var(--chrome-gold) 18%, var(--chrome-2));
     border-radius: 0;
-    background: var(--chrome);
+    background:
+      radial-gradient(140% 70% at 50% -8%, rgba(90, 62, 140, .4) 0%, transparent 55%),
+      linear-gradient(180deg, #2a2a6a 0%, var(--chrome) 38%, var(--chrome) 100%);
     color: var(--chrome-text);
     box-shadow: 0 24px 60px -20px rgba(0, 0, 0, .55);
     overflow: auto;
