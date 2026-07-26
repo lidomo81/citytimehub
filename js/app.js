@@ -1306,11 +1306,40 @@
     const dua = document.getElementById("cpDua");
     const week = document.getElementById("cpWeek");
     const board = ensureNowBoard();
+    const isWebHome = !isApp && document.body.classList.contains("home-web");
 
     if (isApp && tab === "home" && head) {
       // Home board: time → dates → next-prayer line (after .cp-dev-head).
       if (head.nextElementSibling !== el) head.insertAdjacentElement("afterend", el);
       return;
+    }
+
+    // Web homepage: adherence / next-prayer sit under the prayer grid (calm stage).
+    if (isWebHome) {
+      const grid = document.getElementById("prayerGrid");
+      const devotion = document.querySelector("#cityPanel .cp-devotion");
+      if (grid && devotion) {
+        if (grid.nextElementSibling !== el) grid.insertAdjacentElement("afterend", el);
+        const checkIn = ensureCheckInEl();
+        if (checkIn) {
+          if (el.nextSibling !== checkIn) {
+            if (el.nextSibling) devotion.insertBefore(checkIn, el.nextSibling);
+            else devotion.appendChild(checkIn);
+          }
+        }
+        if (dua) {
+          if (el.previousSibling !== dua) grid.insertAdjacentElement("afterend", dua);
+          if (dua.nextElementSibling !== el) dua.insertAdjacentElement("afterend", el);
+        }
+        if (week) {
+          const after = checkIn && checkIn.parentElement === devotion ? checkIn : el;
+          if (after.nextSibling !== week) {
+            if (after.nextSibling) devotion.insertBefore(week, after.nextSibling);
+            else devotion.appendChild(week);
+          }
+        }
+        return;
+      }
     }
 
     if (isApp && tab === "prayer" && board) {
