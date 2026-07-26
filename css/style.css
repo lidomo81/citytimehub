@@ -4082,8 +4082,83 @@ html:not(.app-mode) body.home-web .home-spotlight {
 html:not(.app-mode) body.home-web #tools,
 html:not(.app-mode) body.home-web nav.app-tools,
 html:not(.app-mode) body.home-web #stats,
-html:not(.app-mode) body.home-web #reference,
-html:not(.app-mode) body.home-web #citiesCta {
+html:not(.app-mode) body.home-web #reference {
+  display: none !important;
+}
+
+/* Home cities strip — quiet discovery, not a marketing card */
+html:not(.app-mode) body.home-web #citiesCta.home-cities {
+  display: block;
+  padding-block: clamp(10px, 2vw, 22px) clamp(18px, 3vw, 36px);
+}
+html:not(.app-mode) body.home-web .home-cities-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px 20px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+html:not(.app-mode) body.home-web .home-cities-head h2 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  color: color-mix(in srgb, var(--text) 92%, var(--muted));
+}
+html:not(.app-mode) body.home-web .home-cities-all {
+  font-size: .86rem;
+  font-weight: 600;
+  color: var(--brand);
+  text-decoration: none;
+  white-space: nowrap;
+}
+html:not(.app-mode) body.home-web .home-cities-all:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+html:not(.app-mode) body.home-web .home-cities-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+html:not(.app-mode) body.home-web .hc-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--text) 10%, var(--border));
+  background: color-mix(in srgb, var(--surface) 88%, var(--surface-2));
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color .15s, background .15s, transform .15s;
+  min-height: 40px;
+}
+html:not(.app-mode) body.home-web .hc-chip:hover {
+  border-color: color-mix(in srgb, var(--brand) 40%, var(--border));
+  background: color-mix(in srgb, var(--brand) 7%, var(--surface));
+  transform: translateY(-1px);
+}
+html:not(.app-mode) body.home-web .hc-dn {
+  font-size: .78rem;
+  line-height: 1;
+  opacity: .85;
+  color: var(--tint, var(--muted));
+}
+html:not(.app-mode) body.home-web .hc-name {
+  font-size: .9rem;
+  font-weight: 600;
+  letter-spacing: -.01em;
+}
+html:not(.app-mode) body.home-web .hc-time {
+  font-size: .82rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  letter-spacing: -.02em;
+}
+html.app-mode #citiesCta.home-cities {
   display: none !important;
 }
 html:not(.app-mode) body.home-web .explainer-section {

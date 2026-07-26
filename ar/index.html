@@ -37,7 +37,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="/css/style.css?v=129" />
+  <link rel="stylesheet" href="/css/style.css?v=130" />
   <link rel="manifest" href="/manifest.ar.webmanifest" />
   <link rel="icon" href="/icons/favicon-64.png" sizes="64x64" type="image/png" />
   <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
@@ -571,22 +571,14 @@
       <a href="/ar/terms/">الشروط</a>
     </nav>
 
-    <!-- ===================== POPULAR CITIES ===================== -->
-    <!-- ===================== المدن (كارت استكشف → /ar/cities/) ===================== -->
-    <section id="citiesCta" class="section">
+    <!-- ===================== مدن شائعة (شريط ذكي على الرئيسية) ===================== -->
+    <section id="citiesCta" class="section home-cities" aria-labelledby="homeCitiesH">
       <div class="container">
-        <a href="/ar/cities/" class="explore-card" aria-label="استكشف كل المدن">
-          <span class="explore-glow" aria-hidden="true"></span>
-          <span class="explore-ico" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19"/><path d="M12 2.5a14.5 14.5 0 0 1 0 19 14.5 14.5 0 0 1 0-19"/></svg>
-          </span>
-          <span class="explore-body">
-            <span class="kicker">٠٢ — دليل</span>
-            <span class="explore-title">استكشف <span id="browseCount">500</span> مدينة حول العالم</span>
-            <span class="explore-sub">وقت محلي حيّ · مناطق زمنية · شروق · مواقيت صلاة لكل مدينة كبيرة.</span>
-          </span>
-          <span class="explore-cta">تصفّح كل المدن <span class="explore-arrow" aria-hidden="true">←</span></span>
-        </a>
+        <div class="home-cities-head">
+          <h2 id="homeCitiesH">مدن شائعة</h2>
+          <a class="home-cities-all" href="/ar/cities/">كل المدن (<span id="browseCount">500</span>) ←</a>
+        </div>
+        <div id="homeCitiesStrip" class="home-cities-strip" role="list"></div>
       </div>
     </section>
 
@@ -731,7 +723,7 @@
   <script src="/js/daily-reflection.js?v=213" defer></script>
   <script src="/js/on-this-day.js?v=188" defer></script>
   <script src="/js/tour.js" defer></script>
-  <script src="/js/app.js?v=191" defer></script>
+  <script src="/js/app.js?v=192" defer></script>
   <script src="/js/hero-globe.js" defer></script>
   <script src="/js/pwa.js?v=112" defer></script>
   <script src="/js/app-tabs.js?v=110" defer></script>

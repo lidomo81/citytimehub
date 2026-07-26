@@ -867,11 +867,46 @@
     } catch (e) {}
     updateStatusBox();
     tick();
+    renderHomeCities();
     // User-driven only — sync after timings load so Android applies the same city
     // the UI is showing (and so a newer choice cancels an older sync).
     const wantSync = !!(opts && opts.syncApp);
     const syncSeq = wantSync ? ++prayerWidgetSyncSeq : null;
     loadPrayer(city, syncSeq); loadSun(city);
+  }
+
+  /* Featured cities on web home — same country / region first, live HH:MM */
+  function renderHomeCities() {
+    const strip = $("#homeCitiesStrip");
+    if (!strip) return;
+    if (document.documentElement.classList.contains("app-mode")) return;
+    if (!document.body.classList.contains("home-web")) return;
+
+    const cur = currentCity && currentCity.slug;
+    const country = currentCity && currentCity.country;
+    const tzRegion = currentCity && currentCity.tz ? String(currentCity.tz).split("/")[0] : "";
+
+    const score = c => {
+      let s = 0;
+      if (c.page) s += 4;
+      if (country && c.country === country) s += 10;
+      if (tzRegion && c.tz && String(c.tz).startsWith(tzRegion + "/")) s += 3;
+      return s;
+    };
+
+    let list = CITIES.filter(c => c.featured && c.slug !== cur);
+    list.sort((a, b) => score(b) - score(a) || String(a.name).localeCompare(String(b.name)));
+    list = list.slice(0, 12);
+
+    strip.innerHTML = list.map(c => {
+      const nm = cName(c);
+      const co = cCountry(c);
+      return `<a class="hc-chip pin" role="listitem" href="${CITY_BASE}${c.slug}.html" data-tz="${c.tz}" data-slug="${c.slug}" aria-label="${nm}${co ? " — " + co : ""}">` +
+        `<span class="hc-dn" data-daynight aria-hidden="true">·</span>` +
+        `<span class="hc-name">${nm}</span>` +
+        `<span class="hc-time" data-time dir="ltr">--:--</span>` +
+        `</a>`;
+    }).join("");
   }
   function updateSaveStar() {
     const b = $("#cpSave"); if (!b || !currentCity) return;
@@ -1557,6 +1592,7 @@
     initFavorites();
     initSearch();                                   // no-op when there is no #citySearch (homepage)
     initCityPanel();
+    renderHomeCities();
     initHelp();
     startClock();
     applyMood();
