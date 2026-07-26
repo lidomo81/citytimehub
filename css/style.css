@@ -5,11 +5,11 @@
    8. Prayer   9. Sun   10. Footer   11. Skeleton/motion   12. Responsive
    ===================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Amiri+Quran&display=swap');
 
-/* Arabic pages get a dedicated Arabic typeface; Latin stays Inter for bilingual harmony */
-html[lang="ar"] { --font: "Inter", "IBM Plex Sans Arabic", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+/* Arabic pages: IBM Plex first for clearer Arabic shapes; Inter remains for Latin glyphs */
+html[lang="ar"] { --font: "IBM Plex Sans Arabic", Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
 
 /* ============ 1. TOKENS ============ */
 :root {
@@ -2709,7 +2709,7 @@ html.app-mode .fav-chip-name { font-size: 1rem; }
 .lang-switch:hover { border-color: var(--brand); background: var(--surface-2); }
 
 /* Arabic / RTL: nicer system Arabic fonts, comfortable line-height */
-[dir="rtl"] body, body[dir="rtl"], html[dir="rtl"] body { font-family: "Inter", "IBM Plex Sans Arabic", "Segoe UI", Tahoma, "Geeza Pro", "Noto Naskh Arabic", "Noto Sans Arabic", Arial, sans-serif; }
+[dir="rtl"] body, body[dir="rtl"], html[dir="rtl"] body { font-family: "IBM Plex Sans Arabic", Inter, "Segoe UI", Tahoma, "Geeza Pro", "Noto Naskh Arabic", "Noto Sans Arabic", Arial, sans-serif; }
 html[dir="rtl"] .prose { line-height: 1.95; }
 html[dir="rtl"] .prose h2 { letter-spacing: 0; }
 /* keep the UTC clock and any forced-LTR numerals readable in RTL */
@@ -3920,6 +3920,35 @@ html.app-mode[data-app-tab="home"] .daily-reflection--home .dr-otd {
    ===================================================================== */
 .home-rail { display: none; }
 
+/* Clearer type on the web homepage */
+html:not(.app-mode) body.home-web {
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+html:not(.app-mode) body.home-web .brand-text {
+  font-size: 1.12rem;
+  font-weight: 800;
+  letter-spacing: -.02em;
+}
+html:not(.app-mode) body.home-web .header-right,
+html:not(.app-mode) body.home-web .lang-switch {
+  font-size: .9rem;
+  font-weight: 650;
+}
+html:not(.app-mode) body.home-web #reflections .section-head h2,
+html:not(.app-mode) body.home-web .explainer-title {
+  font-size: clamp(1.45rem, 2.8vw, 1.85rem);
+  font-weight: 800;
+  letter-spacing: -.02em;
+}
+html:not(.app-mode) body.home-web #reflections .section-head .muted,
+html:not(.app-mode) body.home-web .explainer-section .prose {
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
 html:not(.app-mode) body.home-web .hero { display: none; }
 
 /* Header: brand + lang/UTC/theme only — menus live in the rail */
@@ -3959,7 +3988,7 @@ html:not(.app-mode) body.home-web .home-rail {
 html:not(.app-mode) body.home-web .home-rail-lab {
   margin: 0 0 2px;
   padding: 2px 8px 6px;
-  font-size: .66rem;
+  font-size: .74rem;
   font-weight: 800;
   letter-spacing: .08em;
   text-transform: uppercase;
@@ -3981,9 +4010,9 @@ html:not(.app-mode) body.home-web .home-rail-sec summary {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  padding: 9px 10px;
+  padding: 10px 10px;
   border-radius: 10px;
-  font-size: .82rem;
+  font-size: .92rem;
   font-weight: 800;
   color: var(--text);
 }
@@ -4014,11 +4043,12 @@ html:not(.app-mode) body.home-web .home-rail-links {
 }
 html:not(.app-mode) body.home-web .home-rail a {
   display: block;
-  padding: 7px 10px;
+  padding: 8px 10px;
   border-radius: 8px;
-  font-size: .78rem;
+  font-size: .88rem;
   font-weight: 650;
-  color: color-mix(in srgb, var(--text) 82%, var(--muted));
+  line-height: 1.35;
+  color: color-mix(in srgb, var(--text) 88%, var(--muted));
   text-decoration: none;
   transition: background .15s, color .15s;
 }
@@ -4188,9 +4218,9 @@ html:not(.app-mode) body.home-web .cp-clock-info {
 html:not(.app-mode) body.home-web .cp-clock .lt-analog,
 html:not(.app-mode) body.home-web #ltAnalog {
   grid-area: analog;
-  width: 104px !important;
-  height: 104px !important;
-  max-width: 104px;
+  width: 128px !important;
+  height: 128px !important;
+  max-width: 128px;
   flex: none;
   justify-self: end;
 }
@@ -4259,35 +4289,67 @@ html:not(.app-mode) body.home-web .cp-devotion .prayer-grid {
   margin-bottom: 4px;
 }
 html:not(.app-mode) body.home-web .cp-devotion .prayer-card {
-  padding: 12px 6px 11px;
+  position: relative;
+  padding: 12px 6px 14px;
   border-radius: 13px;
-  border: 1px solid transparent;
-  background: color-mix(in srgb, var(--surface-2) 88%, transparent);
+  border: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
+  background: color-mix(in srgb, var(--surface-2) 92%, transparent);
   text-align: center;
-  box-shadow: none;
-  transition: border-color .18s, background .18s, transform .18s;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 8px 18px -14px rgba(0, 0, 0, .55);
+  transition: border-color .18s, background .18s, transform .16s var(--ease), box-shadow .18s;
 }
-html:not(.app-mode) body.home-web .cp-devotion .prayer-card:hover {
-  transform: translateY(-1px);
-  border-color: color-mix(in srgb, var(--brand) 28%, var(--border));
+html:not(.app-mode) body.home-web .cp-devotion .prayer-card::after {
+  content: "";
+  display: block;
+  width: 16px;
+  height: 2.5px;
+  margin: 8px auto 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--brand) 55%, transparent);
+  opacity: .45;
+  transition: width .18s, opacity .18s, background .18s;
+}
+html:not(.app-mode) body.home-web .cp-devotion .prayer-card:hover,
+html:not(.app-mode) body.home-web .cp-devotion .prayer-card:focus-visible {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--brand) 42%, var(--border));
+  background: color-mix(in srgb, var(--brand) 10%, var(--surface-2));
+  box-shadow: 0 14px 28px -16px color-mix(in srgb, var(--brand) 55%, transparent);
+  outline: none;
+}
+html:not(.app-mode) body.home-web .cp-devotion .prayer-card:hover::after,
+html:not(.app-mode) body.home-web .cp-devotion .prayer-card:focus-visible::after {
+  width: 28px;
+  opacity: 1;
+  background: var(--brand);
+}
+html:not(.app-mode) body.home-web .cp-devotion .prayer-card:active {
+  transform: translateY(0) scale(.97);
+  box-shadow: 0 4px 12px -10px rgba(0, 0, 0, .5);
 }
 html:not(.app-mode) body.home-web .cp-devotion .prayer-name {
-  font-size: .7rem;
+  font-size: .76rem;
   font-weight: 700;
   color: var(--muted);
   margin-bottom: 4px;
 }
 html:not(.app-mode) body.home-web .cp-devotion .prayer-time {
-  font-size: .95rem;
+  font-size: 1rem;
   font-weight: 800;
   font-variant-numeric: tabular-nums;
 }
 html:not(.app-mode) body.home-web .cp-devotion .prayer-card.is-next {
-  border-color: color-mix(in srgb, var(--accent, #7dd3fc) 45%, var(--border));
+  border-color: color-mix(in srgb, var(--accent, #7dd3fc) 50%, var(--border));
   background: color-mix(in srgb, var(--brand) 14%, var(--surface-2));
 }
 html:not(.app-mode) body.home-web .cp-devotion .prayer-card.is-next .prayer-name {
   color: var(--accent, #7dd3fc);
+}
+html:not(.app-mode) body.home-web .cp-devotion .prayer-card.is-next::after {
+  opacity: .85;
+  background: var(--accent, #7dd3fc);
 }
 html:not(.app-mode) body.home-web .cp-devotion .prayer-card .prayer-azkar-hint,
 html:not(.app-mode) body.home-web .cp-devotion .prayer-card .prayer-tag {
@@ -4361,14 +4423,15 @@ html:not(.app-mode) body.home-web .home-spotlight {
 @media (min-width: 861px) {
   html:not(.app-mode) body.home-web .cp-clock .lt-analog,
   html:not(.app-mode) body.home-web #ltAnalog {
-    width: 112px !important;
-    height: 112px !important;
+    width: 140px !important;
+    height: 140px !important;
+    max-width: 140px;
   }
   html:not(.app-mode) body.home-web .cp-clock .lt-time {
     font-size: clamp(2.5rem, 4.2vw, 3.2rem);
   }
   html:not(.app-mode) body.home-web .cp-clock .lt-city {
-    font-size: clamp(1.4rem, 2.2vw, 1.75rem);
+    font-size: clamp(1.45rem, 2.3vw, 1.85rem);
   }
 }
 
@@ -4378,8 +4441,9 @@ html:not(.app-mode) body.home-web .home-spotlight {
   }
   html:not(.app-mode) body.home-web .cp-clock .lt-analog,
   html:not(.app-mode) body.home-web #ltAnalog {
-    width: 84px !important;
-    height: 84px !important;
+    width: 104px !important;
+    height: 104px !important;
+    max-width: 104px;
   }
 }
 
