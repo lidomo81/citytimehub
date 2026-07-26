@@ -35,7 +35,7 @@ html[lang="ar"] { --font: "IBM Plex Sans Arabic", Inter, system-ui, -apple-syste
 [data-theme="light"] {
   --bg: #F8FAFC; --bg-soft: #EEF2F8;
   --surface: #FFFFFF; --surface-2: #F1F5F9;
-  --text: #0F172A; --text-2: #334155; --muted: #64748B;
+  --text: #0F172A; --text-2: #334155; --muted: #475569;
   --border: #E2E8F0; --border-2: #CBD5E1;
   --shadow: 0 12px 30px -18px rgba(15, 23, 42, .22);
   --shadow-lg: 0 30px 60px -34px rgba(15, 23, 42, .32);
@@ -46,8 +46,8 @@ html[lang="ar"] { --font: "IBM Plex Sans Arabic", Inter, system-ui, -apple-syste
 [data-theme="dark"] {
   --bg: #090e1b; --bg-soft: #070b16;
   --surface: #111a30; --surface-2: #0c1426;
-  --text: #eaf1ff; --text-2: #c3d0ea; --muted: #8295b7;
-  --border: #1e2a44; --border-2: #2c3b5c;
+  --text: #eaf1ff; --text-2: #c3d0ea; --muted: #9aacc8;
+  --border: #2a3a58; --border-2: #3a4d72;
   --shadow: 0 16px 36px -20px rgba(0, 0, 0, .8);
   --shadow-lg: 0 36px 70px -34px rgba(0, 0, 0, .85);
   --header-bg: rgba(9, 14, 27, .82);
@@ -4416,15 +4416,19 @@ html:not(.app-mode) body.home-web .cp-devotion .prayer-time {
   font-variant-numeric: tabular-nums;
 }
 html:not(.app-mode) body.home-web .cp-devotion .prayer-card.is-next {
-  border-color: color-mix(in srgb, var(--accent, #7dd3fc) 50%, var(--border));
-  background: color-mix(in srgb, var(--brand) 14%, var(--surface-2));
+  border-color: color-mix(in srgb, var(--pc, var(--brand)) 58%, var(--border));
+  background: color-mix(in srgb, var(--pc, var(--brand)) 11%, var(--surface));
+  box-shadow: 0 12px 26px -20px color-mix(in srgb, var(--pc, var(--brand)) 50%, transparent);
 }
 html:not(.app-mode) body.home-web .cp-devotion .prayer-card.is-next .prayer-name {
-  color: var(--accent, #7dd3fc);
+  color: var(--pc, var(--brand));
+}
+html:not(.app-mode) body.home-web .cp-devotion .prayer-card.is-next .prayer-time {
+  color: var(--text);
 }
 html:not(.app-mode) body.home-web .cp-devotion .prayer-card.is-next::after {
-  opacity: .85;
-  background: var(--accent, #7dd3fc);
+  opacity: 1;
+  background: var(--pc, var(--brand));
 }
 html:not(.app-mode) body.home-web .cp-devotion .prayer-card .prayer-azkar-hint,
 html:not(.app-mode) body.home-web .cp-devotion .prayer-card .prayer-tag {
