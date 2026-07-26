@@ -875,10 +875,36 @@
     loadPrayer(city, syncSeq); loadSun(city);
   }
 
-  /* Mobile edge tab: tuck away while scrolling or using the city panel */
+  /* Home features rail: desktop toggle under header + mobile edge-tab smart tuck */
   function initHomeRailSmart() {
     if (document.documentElement.classList.contains("app-mode")) return;
     if (!document.body.classList.contains("home-web")) return;
+
+    const btn = document.getElementById("homeRailBtn");
+    const deskMq = window.matchMedia("(min-width: 861px)");
+    const syncBtn = () => {
+      if (!btn) return;
+      const open = document.body.classList.contains("home-rail-open");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+    };
+    if (btn) {
+      // Desktop default open; keep class from HTML. Mobile ignores this class for the edge tab.
+      if (deskMq.matches && !document.body.classList.contains("home-rail-open")) {
+        document.body.classList.add("home-rail-open");
+      }
+      syncBtn();
+      btn.addEventListener("click", () => {
+        document.body.classList.toggle("home-rail-open");
+        syncBtn();
+      });
+      deskMq.addEventListener("change", () => {
+        if (deskMq.matches && !document.body.classList.contains("home-rail-open")) {
+          document.body.classList.add("home-rail-open");
+          syncBtn();
+        }
+      });
+    }
+
     const strip = document.querySelector(".home-rail-strip");
     const check = document.getElementById("homeRailToggle");
     if (!strip || !check) return;

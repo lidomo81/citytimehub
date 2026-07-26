@@ -4042,6 +4042,10 @@ html:not(.app-mode) body.home-web .site-header .header-inner {
 html:not(.app-mode) body.home-web {
   --home-rail-w: 212px;
 }
+/* Home header toggle for features rail — desktop only */
+html:not(.app-mode) body.home-web .home-rail-header-btn {
+  display: none;
+}
 html:not(.app-mode) body.home-web .home-calm {
   padding-top: clamp(14px, 2.5vw, 22px);
   padding-bottom: clamp(8px, 1.5vw, 14px);
@@ -4070,30 +4074,62 @@ html:not(.app-mode) body.home-web .home-rail {
   color: var(--chrome-text);
   scrollbar-width: thin;
 }
-/* Desktop: features menu hangs from the header corner (inline-start), not a full-height dock */
+/* Desktop: fixed under header (does not scroll with the page) */
 @media (min-width: 861px) {
-  html:not(.app-mode) body.home-web main#top {
+  html:not(.app-mode) body.home-web .home-rail-header-btn {
+    display: grid;
+    flex: none;
+    border-color: rgba(255, 212, 134, .4);
+    background: rgba(255, 212, 134, .12);
+    color: var(--chrome-gold);
+  }
+  html:not(.app-mode) body.home-web .home-rail-header-btn:hover {
+    border-color: var(--chrome-gold);
+    background: rgba(255, 212, 134, .2);
+    color: var(--chrome-text);
+  }
+  html:not(.app-mode) body.home-web .home-rail-header-btn[aria-expanded="false"] {
+    border-color: rgba(255, 255, 255, .22);
+    background: rgba(255, 255, 255, .08);
+    color: var(--chrome-muted);
+  }
+  /* Contrast line where header meets the hanging menu */
+  html:not(.app-mode) body.home-web .site-header {
+    border-bottom: 2px solid color-mix(in srgb, var(--chrome-gold) 55%, #5a3e8c);
+    box-shadow: 0 1px 0 rgba(90, 62, 140, .35);
+  }
+  html:not(.app-mode) body.home-web.home-rail-open main#top {
     padding-inline-start: var(--home-rail-w);
+  }
+  html:not(.app-mode) body.home-web:not(.home-rail-open) main#top {
+    padding-inline-start: 0;
   }
   html:not(.app-mode) body.home-web .home-calm-grid {
     display: block;
   }
   html:not(.app-mode) body.home-web .home-rail {
-    position: fixed;
+    position: fixed !important;
     z-index: 45;
-    top: 66px;
-    bottom: auto;
+    top: 66px !important;
+    bottom: auto !important;
     inset-inline-start: 0;
     inset-inline-end: auto;
     width: var(--home-rail-w);
     max-height: calc(100vh - 78px);
-    margin-top: -1px; /* seamless join with header chrome */
+    margin: 0;
     border-radius: 0;
     border-end-end-radius: 16px;
     border: 0;
-    border-inline-end: 1px solid color-mix(in srgb, var(--chrome-gold) 14%, transparent);
+    border-block-start: 3px solid var(--chrome-gold);
+    border-inline-end: 1px solid color-mix(in srgb, var(--chrome-gold) 18%, transparent);
     border-block-end: 1px solid color-mix(in srgb, var(--chrome-gold) 14%, transparent);
     box-shadow: 0 18px 40px -22px rgba(0, 0, 0, .55);
+    background:
+      linear-gradient(180deg, rgba(90, 62, 140, .55) 0%, transparent 28%),
+      linear-gradient(180deg, #322a72 0%, var(--chrome) 36%, var(--chrome) 100%);
+  }
+  html:not(.app-mode) body.home-web:not(.home-rail-open) .home-rail {
+    display: none !important;
   }
 }
 html:not(.app-mode) body.home-web .home-rail-check {
