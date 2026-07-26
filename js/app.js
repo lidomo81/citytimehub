@@ -875,6 +875,54 @@
     loadPrayer(city, syncSeq); loadSun(city);
   }
 
+  /* Mobile edge tab: tuck away while scrolling or using the city panel */
+  function initHomeRailSmart() {
+    if (document.documentElement.classList.contains("app-mode")) return;
+    if (!document.body.classList.contains("home-web")) return;
+    const strip = document.querySelector(".home-rail-strip");
+    const check = document.getElementById("homeRailToggle");
+    if (!strip || !check) return;
+
+    const mq = window.matchMedia("(max-width: 860px)");
+    let lastY = window.scrollY || 0;
+    let showTimer = 0;
+
+    const clearAway = () => strip.classList.remove("is-away");
+    const tuckAway = () => {
+      if (!mq.matches || check.checked) return;
+      strip.classList.add("is-away");
+    };
+    const scheduleShow = () => {
+      window.clearTimeout(showTimer);
+      showTimer = window.setTimeout(() => {
+        if (!check.checked) clearAway();
+      }, 850);
+    };
+
+    window.addEventListener("scroll", () => {
+      if (!mq.matches || check.checked) { clearAway(); return; }
+      const y = window.scrollY || 0;
+      if (y > lastY + 6 && y > 48) tuckAway();
+      else if (y < lastY - 6) clearAway();
+      lastY = y;
+      scheduleShow();
+    }, { passive: true });
+
+    check.addEventListener("change", () => {
+      if (check.checked) clearAway();
+    });
+    strip.addEventListener("pointerenter", clearAway);
+    strip.addEventListener("focus", clearAway);
+
+    const panel = document.getElementById("cityPanel");
+    if (panel) {
+      panel.addEventListener("pointerdown", tuckAway, { passive: true });
+      panel.addEventListener("focusin", tuckAway);
+    }
+
+    mq.addEventListener("change", () => { if (!mq.matches) clearAway(); });
+  }
+
   /* Featured cities on web home — same country / region first, live HH:MM */
   function renderHomeCities() {
     const strip = $("#homeCitiesStrip");
@@ -1593,6 +1641,7 @@
     initSearch();                                   // no-op when there is no #citySearch (homepage)
     initCityPanel();
     renderHomeCities();
+    initHomeRailSmart();
     initHelp();
     startClock();
     applyMood();

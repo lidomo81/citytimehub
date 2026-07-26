@@ -4226,27 +4226,44 @@ html:not(.app-mode) body.home-web #reflections .section-head {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
     position: fixed;
     z-index: 85;
     inset-block-start: 42%;
     inset-inline-start: 0;
     transform: translateY(-50%);
-    width: 42px;
-    min-height: 112px;
+    width: 34px;
+    min-height: 72px;
     margin: 0;
-    padding: 14px 6px;
+    padding: 12px 4px;
     border: 1px solid color-mix(in srgb, var(--brand) 32%, var(--border));
     border-inline-start: 0;
     border-radius: 0;
-    border-start-end-radius: 14px;
-    border-end-end-radius: 14px;
+    border-start-end-radius: 12px;
+    border-end-end-radius: 12px;
     background: color-mix(in srgb, var(--brand) 10%, var(--surface));
     color: var(--text);
-    box-shadow: 0 12px 28px -16px rgba(0, 0, 0, .45);
+    box-shadow: 0 10px 22px -14px rgba(0, 0, 0, .4);
     cursor: pointer;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
+    transition:
+      inset-inline-start .22s var(--ease),
+      width .2s var(--ease),
+      min-height .2s var(--ease),
+      opacity .2s var(--ease),
+      box-shadow .2s var(--ease);
+  }
+  /* Tucked away while scrolling / using the city panel — thin peek remains */
+  html:not(.app-mode) body.home-web .home-rail-strip.is-away {
+    inset-inline-start: calc(-1 * (100% - 8px));
+    width: 34px;
+    min-height: 56px;
+    box-shadow: none;
+    opacity: .92;
+  }
+  html:not(.app-mode) body.home-web .home-rail-strip.is-away .home-rail-strip-title {
+    display: none;
   }
   html:not(.app-mode) body.home-web .home-rail-strip-ico {
     display: grid;
@@ -4256,14 +4273,14 @@ html:not(.app-mode) body.home-web #reflections .section-head {
   html:not(.app-mode) body.home-web .home-rail-strip-title {
     writing-mode: vertical-rl;
     transform: rotate(180deg);
-    font-size: .78rem;
+    font-size: .7rem;
     font-weight: 800;
-    letter-spacing: .06em;
+    letter-spacing: .04em;
     line-height: 1;
   }
   html[lang="en"] body.home-web .home-rail-strip-title {
     transform: none;
-    letter-spacing: .08em;
+    letter-spacing: .06em;
     text-transform: uppercase;
   }
   html:not(.app-mode) body.home-web .home-rail-strip-hint,
@@ -4353,6 +4370,12 @@ html:not(.app-mode) body.home-web #cityPanel > .container {
     radial-gradient(900px 280px at 100% 0%, color-mix(in srgb, var(--brand) 10%, transparent), transparent 60%),
     var(--surface);
   box-shadow: 0 28px 60px -40px rgba(0, 0, 0, .65);
+}
+@media (max-width: 860px) {
+  /* Leave a little room so the edge peek never sits on search / actions */
+  html:not(.app-mode) body.home-web #cityPanel > .container {
+    padding-inline-start: max(22px, calc(env(safe-area-inset-inline-start, 0px) + 12px));
+  }
 }
 
 /* Toolbar: search + compact icon actions */
