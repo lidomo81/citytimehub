@@ -20,6 +20,9 @@
       dayLen: (h, m) => `${h}h ${m}m`,
       localEyebrow: "Your local time", homeEyebrow: "Your city", save: "My favorite city", saved: "Favorite ✓",
       inHM: (h, m) => h ? `in ${h}h ${m}m` : `in ${m}m`, tomorrow: "tomorrow",
+      arcNext: (name, h, m) => h
+        ? `<strong>${name}</strong> <span class="sun-arc-in">in ${h}h ${m}m</span>`
+        : `<strong>${name}</strong> <span class="sun-arc-in">in ${String(m).padStart(2, "0")} min</span>`,
       savedToast: "Saved to My Cities.", removedToast: "Removed from My Cities.", favFull: n => `You can save up to ${n} cities.`,
       myFav: "My favorite cities", favShort: "Cities",
       favEmpty: "Save a city with the star above — it will appear here.",
@@ -57,6 +60,9 @@
       dayLen: (h, m) => `${h}h ${m}m`,
       localEyebrow: "وقتك المحلي", homeEyebrow: "مدينتك", save: "مدينتي المفضلة", saved: "مفضلة ✓",
       inHM: (h, m) => h ? `بعد ${h} س ${m} د` : `بعد ${m} د`, tomorrow: "غدًا",
+      arcNext: (name, h, m) => h
+        ? `<strong>${name}</strong> <span class="sun-arc-in">بعد ${h} س و ${m} د</span>`
+        : `<strong>${name}</strong> <span class="sun-arc-in">بعد ${String(m).padStart(2, "0")} دقيقة</span>`,
       savedToast: "تم الحفظ في مدني.", removedToast: "تمت الإزالة من مدني.", favFull: n => `تقدر تحفظ حتى ${n} مدن.`,
       myFav: "مدني المفضلة", favShort: "مدني",
       favEmpty: "احفظ مدينة بالنجمة في الأعلى — ستظهر هنا.",
@@ -650,6 +656,7 @@
         ltOffsetMs = offsetHours(ctz, now) * 3600000;
       }
     }
+    updateSunPosition();
     // Soft day-part wash for the app Home tab (once a minute is enough).
     if (now.getSeconds() === 0) updateDayAtmosphere();
   }
@@ -759,6 +766,90 @@
 
   /* ---------- Prayer times + Hijri (AlAdhan) ---------- */
   const PRAYERS = ["Fajr","Sunrise","Dhuhr","Asr","Maghrib","Isha"];
+  const ARC_COLORS = {
+    Fajr: "#d4a574", Sunrise: "#f5c542", Dhuhr: "#7dd3fc",
+    Asr: "#38bdf8", Maghrib: "#f472b6", Isha: "#818cf8",
+  };
+  const ARC_CX = 180, ARC_CY = 186, ARC_R = 132;
+
+  function parseHM(s) {
+    const [hh, mm] = (s || "0:0").split(":");
+    return (+hh) * 60 + (+mm);
+  }
+  function arcPoint(angle, r = ARC_R) {
+    return { x: ARC_CX + r * Math.cos(angle), y: ARC_CY - r * Math.sin(angle) };
+  }
+  function minToArcAngle(min, start, end) {
+    let span = end - start;
+    if (span <= 0) span += 1440;
+    let t = min - start;
+    if (t < 0) t += 1440;
+    const u = Math.max(0, Math.min(1, t / span));
+    return Math.PI * (1 - u);
+  }
+  function renderSunArc() {
+    const svg = $("#sunArcSvg");
+    if (!svg || !prayerState || !prayerState.timings) return;
+    const t = prayerState.timings;
+    const start = parseHM(t.Fajr), end = parseHM(t.Isha);
+    if (!Number.isFinite(start) || !Number.isFinite(end)) return;
+    const left = arcPoint(Math.PI), right = arcPoint(0);
+    let marks = "";
+    PRAYERS.forEach((key, i) => {
+      const mins = parseHM(t[key]);
+      if (!Number.isFinite(mins)) return;
+      const a = minToArcAngle(mins, start, end);
+      const p = arcPoint(a), lp = arcPoint(a, ARC_R + 16);
+      const color = ARC_COLORS[key] || "#94a3b8";
+      let lx = lp.x, anchor = "middle";
+      if (a > Math.PI * .82) { lx = lp.x + 2; anchor = "start"; }
+      else if (a < Math.PI * .18) { lx = lp.x - 2; anchor = "end"; }
+      marks += `<g class="sun-arc-mark" data-key="${key}">
+        <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="4.2" fill="${color}" stroke="rgba(255,255,255,.35)" stroke-width="1"/>
+        <text class="sun-arc-marker-label" x="${lx.toFixed(1)}" y="${(lp.y - 2).toFixed(1)}" text-anchor="${anchor}">${T.prayers[i]}</text>
+      </g>`;
+    });
+    svg.innerHTML = `
+      <defs>
+        <linearGradient id="sunArcGrad" x1="0%" y1="50%" x2="100%" y2="50%">
+          <stop offset="0%" stop-color="#f5c542"/><stop offset="35%" stop-color="#7dd3fc"/>
+          <stop offset="70%" stop-color="#f472b6"/><stop offset="100%" stop-color="#818cf8"/>
+        </linearGradient>
+        <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#fff7c2"/><stop offset="45%" stop-color="#fbbf24"/><stop offset="100%" stop-color="#f59e0b"/>
+        </radialGradient>
+      </defs>
+      <path d="M ${left.x.toFixed(1)} ${left.y.toFixed(1)} A ${ARC_R} ${ARC_R} 0 0 1 ${right.x.toFixed(1)} ${right.y.toFixed(1)}"
+            fill="none" stroke="url(#sunArcGrad)" stroke-width="2.4" stroke-linecap="round" opacity=".95"/>
+      <line x1="${left.x.toFixed(1)}" y1="${left.y.toFixed(1)}" x2="${right.x.toFixed(1)}" y2="${right.y.toFixed(1)}"
+            stroke="rgba(148,163,184,.35)" stroke-width="1"/>
+      ${marks}
+      <g id="sunArcSun" class="sun-arc-sun" transform="translate(${ARC_CX}, ${ARC_CY - ARC_R})">
+        <circle r="9" fill="url(#sunGlow)"/><circle r="4.5" fill="#fff8dc" opacity=".9"/>
+      </g>`;
+    updateSunPosition();
+    updateSunArcNext();
+  }
+  function updateSunPosition() {
+    const sun = $("#sunArcSun");
+    if (!sun || !prayerState || !prayerState.city || !prayerState.timings) return;
+    const t = prayerState.timings;
+    const start = parseHM(t.Fajr), end = parseHM(t.Isha);
+    if (!Number.isFinite(start) || !Number.isFinite(end)) return;
+    const off = offsetHours(prayerState.city.tz) * 3600000;
+    const d = new Date(Date.now() + off);
+    const nowMin = d.getUTCHours() * 60 + d.getUTCMinutes() + d.getUTCSeconds() / 60;
+    const p = arcPoint(minToArcAngle(nowMin, start, end));
+    sun.setAttribute("transform", `translate(${p.x.toFixed(2)}, ${p.y.toFixed(2)})`);
+  }
+  function updateSunArcNext() {
+    const el = $("#sunArcNext"); if (!el) return;
+    const n = nextPrayerCountdown();
+    if (!n) { el.hidden = true; return; }
+    const name = T.prayers[n.idx] + (n.tomorrow ? " " + T.tomorrow : "");
+    el.hidden = false;
+    el.innerHTML = T.arcNext(name, n.dh, n.dm);
+  }
 
   function attachAutocomplete(input, listEl, onChoose, opts) {
     opts = opts || {};
@@ -1081,6 +1172,7 @@
           <span class="prayer-tag">${p === next ? T.next : ""}</span>
         </article>`).join("");
       updateStatusBox();
+      renderSunArc();
       if (t.Sunrise && t.Sunset) fillSun(clean(t.Sunrise), clean(t.Sunset));
       refreshCityPulse(city, prayerState.timings);
       updateDayAtmosphere();
@@ -1110,13 +1202,13 @@
     const nowMin = d.getUTCHours() * 60 + d.getUTCMinutes();
     let idx = -1, nextMin = 0;
     for (let i = 0; i < PRAYERS.length; i++) {
-      const [hh, mm] = (prayerState.timings[PRAYERS[i]] || "0:0").split(":");
-      const pm = (+hh) * 60 + (+mm);
+      if (PRAYERS[i] === "Sunrise") continue; // countdown is for prayers only
+      const pm = parseHM(prayerState.timings[PRAYERS[i]]);
       if (pm > nowMin) { idx = i; nextMin = pm; break; }
     }
     let tomorrow = false;
-    if (idx < 0) { idx = 0; const [hh, mm] = (prayerState.timings.Fajr || "0:0").split(":"); nextMin = (+hh) * 60 + (+mm) + 1440; tomorrow = true; }
-    const diff = nextMin - nowMin;
+    if (idx < 0) { idx = 0; nextMin = parseHM(prayerState.timings.Fajr) + 1440; tomorrow = true; }
+    const diff = Math.max(0, nextMin - nowMin);
     return { idx, tomorrow, dh: Math.floor(diff / 60), dm: diff % 60 };
   }
 
@@ -1135,9 +1227,10 @@
   function updateNextLine() {
     const el = $("#cpNext"); if (!el) return;
     const n = nextPrayerCountdown();
-    if (!n) { el.hidden = true; return; }
+    if (!n) { el.hidden = true; updateSunArcNext(); return; }
     el.hidden = false;
     el.innerHTML = `<span class="cp-next-dot" aria-hidden="true"></span>${T.next}: <strong>${T.prayers[n.idx]}${n.tomorrow ? " " + T.tomorrow : ""}</strong> · <span class="mono">${prayerState.timings[PRAYERS[n.idx]]}</span> <span class="cp-next-in">${T.inHM(n.dh, n.dm)}</span>`;
+    updateSunArcNext();
   }
 
   /* ---------- Prayer streak (reads the same worship record the sheet writes) ---------- */

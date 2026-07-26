@@ -1851,7 +1851,8 @@ html.app-mode[data-app-tab="tools"] .app-cities-hero { display: flex; }
 .cth-ios-t { margin: 0; color: var(--text); font-size: .96rem; line-height: 1.7; }
 .cth-ios-x { position: absolute; top: 8px; inset-inline-end: 10px; background: none; border: none; color: var(--muted); font-size: 1.5rem; line-height: 1; cursor: pointer; }
 
-.cp-grid { display: grid; grid-template-columns: minmax(270px, .95fr) 1.3fr; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; box-shadow: 0 24px 60px -40px rgba(0,0,0,.7); }
+/* AR (rtl): clock right, sun chart left. EN (ltr): clock left, sun chart right. */
+.cp-grid { display: grid; grid-template-columns: minmax(260px, .9fr) minmax(320px, 1.35fr); background: var(--surface); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; box-shadow: 0 24px 60px -40px rgba(0,0,0,.7); }
 .cp-clock { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 14px; padding: 30px 26px; background: radial-gradient(120% 120% at 50% 0%, rgba(37,99,235,.10), transparent 62%); }
 .cp-clock-mid { display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; min-width: 0; }
 .cp-clock .lt-analog { width: 208px; height: 208px; flex: none; }
@@ -1869,6 +1870,47 @@ html.app-mode[data-app-tab="tools"] .app-cities-hero { display: flex; }
 .cp-next-dot { width: 7px; height: 7px; border-radius: 50%; background: #f5a623; flex: none; box-shadow: 0 0 0 0 rgba(245,166,35,.5); animation: cp-pulse 2.4s infinite; }
 @keyframes cp-pulse { 70% { box-shadow: 0 0 0 6px rgba(245,166,35,0); } 100% { box-shadow: 0 0 0 0 rgba(245,166,35,0); } }
 @media (prefers-reduced-motion: reduce) { .cp-next-dot { animation: none; } }
+
+.cp-sky { display: flex; flex-direction: column; min-width: 0; border-inline-start: 1px solid var(--border); }
+.sun-arc { padding: 14px 16px 6px; }
+.sun-arc-stage {
+  position: relative; border-radius: 18px; overflow: hidden; min-height: 210px;
+  background:
+    radial-gradient(120% 90% at 50% 110%, rgba(56,189,248,.14), transparent 55%),
+    radial-gradient(90% 70% at 18% 20%, rgba(245,166,35,.10), transparent 50%),
+    linear-gradient(180deg, #0b1428 0%, #0a1020 55%, #070c18 100%);
+  border: 1px solid rgba(148,163,184,.16);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+}
+.sun-arc-stage::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .85;
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,.55), transparent),
+    radial-gradient(1px 1px at 78% 22%, rgba(255,255,255,.4), transparent),
+    radial-gradient(1.2px 1.2px at 62% 12%, rgba(255,255,255,.35), transparent),
+    radial-gradient(1px 1px at 30% 28%, rgba(255,255,255,.3), transparent),
+    radial-gradient(1px 1px at 88% 36%, rgba(255,255,255,.25), transparent);
+}
+.sun-arc-svg { display: block; width: 100%; height: auto; position: relative; z-index: 1; }
+.sun-arc-center {
+  position: absolute; inset: 0; z-index: 2;
+  display: flex; align-items: center; justify-content: center;
+  padding: 52px 18px 28px; pointer-events: none; text-align: center;
+}
+.sun-arc-next {
+  margin: 0; max-width: 92%;
+  font-size: clamp(.95rem, 2.4vw, 1.15rem);
+  font-weight: 700; line-height: 1.45; color: #f0c27a;
+  text-shadow: 0 1px 10px rgba(0,0,0,.45);
+}
+.sun-arc-next strong { color: #f6d7a2; font-weight: 800; }
+.sun-arc-next .sun-arc-in { color: #e8c48a; font-weight: 650; }
+.sun-arc-marker-label { font-size: 11px; font-weight: 700; fill: rgba(226,232,240,.88); font-family: inherit; }
+.sun-arc-sun { filter: drop-shadow(0 0 8px rgba(251,191,36,.85)) drop-shadow(0 0 18px rgba(245,158,11,.45)); }
+/* Website: next-prayer lives in the sun arc; keep streak/status under the clock. */
+html:not(.app-mode) .cp-clock .cp-next:not(.cp-streak):not(.cp-celebrate):not(.cp-recover) { display: none; }
+/* App keeps its tuned home layout — sun arc is a website homepage feature. */
+html.app-mode .sun-arc { display: none; }
 
 /* Supplication above the streak box */
 .cp-dua { margin: 6px 0 2px; text-align: center; max-inline-size: 34ch; font-size: 1rem; line-height: 1.95; font-weight: 600; color: color-mix(in srgb, #f5a623 52%, var(--text)); }
@@ -1973,7 +2015,7 @@ html.app-mode[data-app-tab="prayer"] .cp-progress { width: min(100%, 240px); }
   html:not(.app-mode) .cp-next { flex: none; margin-top: 4px; }
 }
 
-.cp-devotion { padding: 24px 26px; border-inline-start: 1px solid var(--border); }
+.cp-devotion { padding: 18px 22px 22px; border-inline-start: none; }
 .cp-dev-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px 18px; flex-wrap: wrap; margin-bottom: 14px; }
 .cp-dev-title { font-size: 1.05rem; font-weight: 700; }
 .cp-devotion .datebar { margin: 0; }
@@ -2084,8 +2126,10 @@ html.app-mode .prayer-insights { margin-top: 10px; }
 
 @media (max-width: 860px) {
   .cp-grid { grid-template-columns: 1fr; }
+  .cp-sky { border-inline-start: none; order: -1; }
   .cp-devotion { border-inline-start: none; border-top: 1px solid var(--border); }
-  .cp-clock { justify-content: center; text-align: center; flex-direction: column; }
+  .cp-clock { justify-content: center; text-align: center; flex-direction: column; border-top: 1px solid var(--border); }
+  .sun-arc { padding: 12px 12px 4px; }
 }
 @media (max-width: 480px) {
   .cp-devotion .prayer-grid { grid-template-columns: repeat(2, 1fr); }

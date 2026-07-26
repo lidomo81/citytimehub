@@ -285,37 +285,47 @@
             </div>
           </div>
 
-          <div class="cp-devotion">
-            <div class="cp-dev-head">
-              <h3 class="cp-dev-title">مواقيت الصلاة</h3>
-              <div class="datebar datebar--paper" role="group" aria-label="التاريخ">
-                <span class="datebar-item datebar-item--greg">
-                  <span class="muted datebar-label">ميلادي</span>
-                  <strong id="gregDate" class="mono datebar-val">—</strong>
-                </span>
-                <span class="datebar-sep" aria-hidden="true"></span>
-                <span class="datebar-item datebar-item--hijri">
-                  <span class="muted datebar-label">هجري</span>
-                  <strong id="hijriDate" class="mono datebar-val">—</strong>
-                </span>
-              </div>
-            </div>
-            <div id="prayerGrid" class="prayer-grid" aria-live="polite">
-              <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
-              <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
-              <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
-            </div>
-            <div id="cityPulse" class="city-pulse" hidden aria-live="polite">
-              <div class="city-pulse-head">
-                <span class="city-pulse-wx" id="cityPulseWx" aria-hidden="true">🌤️</span>
-                <div class="city-pulse-body">
-                  <span class="city-pulse-kicker" id="cityPulseKicker">نبض المدينة</span>
-                  <p class="city-pulse-title" id="cityPulseTitle"></p>
-                  <p class="city-pulse-line" id="cityPulseLine">نجهّز نبض المدينة…</p>
+          <div class="cp-sky">
+            <div class="sun-arc" id="sunArc" aria-label="مخطط الشمس ومواقيت الصلاة">
+              <div class="sun-arc-stage">
+                <svg id="sunArcSvg" class="sun-arc-svg" viewBox="0 0 360 220" role="img" aria-hidden="true"></svg>
+                <div class="sun-arc-center">
+                  <p id="sunArcNext" class="sun-arc-next" hidden></p>
                 </div>
               </div>
-              <div class="city-pulse-chips">
-                <span class="city-pulse-chip" id="cityPulseTemp" hidden></span>
+            </div>
+            <div class="cp-devotion">
+              <div class="cp-dev-head">
+                <h3 class="cp-dev-title">مواقيت الصلاة</h3>
+                <div class="datebar datebar--paper" role="group" aria-label="التاريخ">
+                  <span class="datebar-item datebar-item--greg">
+                    <span class="muted datebar-label">ميلادي</span>
+                    <strong id="gregDate" class="mono datebar-val">—</strong>
+                  </span>
+                  <span class="datebar-sep" aria-hidden="true"></span>
+                  <span class="datebar-item datebar-item--hijri">
+                    <span class="muted datebar-label">هجري</span>
+                    <strong id="hijriDate" class="mono datebar-val">—</strong>
+                  </span>
+                </div>
+              </div>
+              <div id="prayerGrid" class="prayer-grid" aria-live="polite">
+                <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
+                <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
+                <div class="skeleton prayer-skel"></div><div class="skeleton prayer-skel"></div>
+              </div>
+              <div id="cityPulse" class="city-pulse" hidden aria-live="polite">
+                <div class="city-pulse-head">
+                  <span class="city-pulse-wx" id="cityPulseWx" aria-hidden="true">🌤️</span>
+                  <div class="city-pulse-body">
+                    <span class="city-pulse-kicker" id="cityPulseKicker">نبض المدينة</span>
+                    <p class="city-pulse-title" id="cityPulseTitle"></p>
+                    <p class="city-pulse-line" id="cityPulseLine">نجهّز نبض المدينة…</p>
+                  </div>
+                </div>
+                <div class="city-pulse-chips">
+                  <span class="city-pulse-chip" id="cityPulseTemp" hidden></span>
+                </div>
               </div>
             </div>
           </div>
