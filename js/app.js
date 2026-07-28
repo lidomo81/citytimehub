@@ -1062,6 +1062,7 @@
           if (!check) return;
           const y = window.scrollY || window.pageYOffset || 0;
           check.checked = !!open;
+          document.body.classList.toggle("home-dayboard-rail-open", !!open);
           // Keep focus off the hidden checkbox — labels used to scroll the page to top.
           if (document.activeElement === check) {
             try { check.blur(); } catch (_) {}
@@ -1072,7 +1073,7 @@
             window.scrollTo(0, y);
           }
         };
-        syncBtn();
+        setRailOpen(!!(check && check.checked));
         btn.addEventListener("click", (e) => {
           e.preventDefault();
           setRailOpen(!(check && check.checked));
@@ -1088,6 +1089,7 @@
           check.addEventListener("change", () => {
             // Ignore scroll-into-view side effects from any leftover labels.
             const y = window.scrollY || 0;
+            document.body.classList.toggle("home-dayboard-rail-open", !!check.checked);
             syncBtn();
             requestAnimationFrame(() => {
               if (Math.abs((window.scrollY || 0) - y) > 1) window.scrollTo(0, y);
