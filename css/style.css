@@ -5255,19 +5255,7 @@ html:not(.app-mode) body.home-web.home-dayboard:not(.home-rail-open) .home-rail 
   display: contents !important;
 }
 html:not(.app-mode) body.home-web.home-dayboard .home-rail-backdrop {
-  display: block;
-  position: fixed;
-  inset: 0;
-  z-index: 80;
-  margin: 0;
-  background: rgba(6, 10, 20, .5);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .2s ease;
-}
-html:not(.app-mode) body.home-web.home-dayboard .home-rail-check:checked ~ .home-rail-backdrop {
-  opacity: 1;
-  pointer-events: auto;
+  display: none !important;
 }
 html:not(.app-mode) body.home-web.home-dayboard .home-rail-strip {
   display: none !important;
@@ -5281,13 +5269,13 @@ html:not(.app-mode) body.home-web.home-dayboard .home-rail-body {
   top: 0;
   bottom: 0;
   inset-inline-start: 0;
-  width: min(300px, 88vw);
+  width: min(280px, 82vw);
   margin: 0;
   padding: 18px 14px 24px;
   background: linear-gradient(180deg, #152038 0%, #0c1424 100%);
   color: #f4efe6;
   border-inline-end: 1px solid rgba(232, 196, 138, .2);
-  box-shadow: 12px 0 40px rgba(0, 0, 0, .35);
+  box-shadow: 12px 0 40px rgba(0, 0, 0, .28);
   transform: translateX(-105%);
   transition: transform .22s ease;
   overflow: auto;
@@ -5297,6 +5285,16 @@ html[dir="rtl"]:not(.app-mode) body.home-web.home-dayboard .home-rail-body {
 }
 html:not(.app-mode) body.home-web.home-dayboard .home-rail-check:checked ~ .home-rail-body {
   transform: translateX(0);
+}
+/* Keep page content clear of the open side panel ù no screen dimming */
+html:not(.app-mode) body.home-web.home-dayboard.home-dayboard-rail-open main#top {
+  padding-inline-start: min(280px, 82vw) !important;
+  transition: padding-inline-start .22s ease;
+}
+@media (max-width: 720px) {
+  html:not(.app-mode) body.home-web.home-dayboard.home-dayboard-rail-open main#top {
+    padding-inline-start: 0 !important;
+  }
 }
 html:not(.app-mode) body.home-web.home-dayboard .home-rail-close {
   display: grid;
@@ -5498,29 +5496,111 @@ html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .datebar-val {
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-grid {
   display: flex;
   flex-direction: column;
-  gap: 0;
-  margin-top: 8px;
+  gap: 10px;
+  margin-top: 10px;
 }
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-card {
+  position: relative;
   display: grid;
-  grid-template-columns: 1fr auto auto;
+  grid-template-columns: 1fr auto auto auto;
   grid-template-rows: auto auto;
   gap: 2px 10px;
   align-items: center;
   margin: 0;
-  padding: 12px 4px;
-  border: 0;
-  border-bottom: 1px solid var(--db-line);
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
+  padding: 14px 14px 14px 16px;
+  border: 1px solid color-mix(in srgb, var(--db-gold) 22%, var(--db-line));
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg,
+      color-mix(in srgb, #fff 10%, transparent) 0%,
+      transparent 38%),
+    linear-gradient(165deg,
+      color-mix(in srgb, var(--db-panel) 92%, #1a2438) 0%,
+      color-mix(in srgb, var(--db-panel) 70%, #0a101c) 100%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #fff 14%, transparent),
+    inset 0 -1px 0 color-mix(in srgb, #000 22%, transparent),
+    0 1px 0 color-mix(in srgb, var(--db-gold) 12%, transparent),
+    0 8px 18px -12px rgba(0, 0, 0, .55);
   color: var(--db-ink);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transform: translateY(0);
+  transition:
+    transform .16s ease,
+    box-shadow .16s ease,
+    border-color .16s ease,
+    background .16s ease;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-card::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: 10px;
+  bottom: 10px;
+  width: 3px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--db-gold) 80%, #fff), color-mix(in srgb, var(--db-gold) 35%, transparent));
+  opacity: .75;
+  pointer-events: none;
 }
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-card::after {
-  display: none;
+  content: "";
+  display: block;
+  width: 7px;
+  height: 7px;
+  margin: 0;
+  border-inline-end: 2px solid color-mix(in srgb, var(--db-gold) 55%, transparent);
+  border-block-end: 2px solid color-mix(in srgb, var(--db-gold) 55%, transparent);
+  transform: rotate(-45deg);
+  justify-self: end;
+  align-self: center;
+  grid-column: 4;
+  grid-row: 1;
+  opacity: .55;
+  transition: opacity .16s ease, transform .16s ease;
+}
+html[dir="rtl"]:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-card::after {
+  transform: rotate(135deg);
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-card:hover,
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-card:focus-visible {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--db-gold) 48%, var(--db-line));
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #fff 18%, transparent),
+    inset 0 -1px 0 color-mix(in srgb, #000 18%, transparent),
+    0 2px 0 color-mix(in srgb, var(--db-gold) 18%, transparent),
+    0 14px 26px -14px rgba(0, 0, 0, .6);
+  outline: none;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-card:hover::after,
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-card:focus-visible::after {
+  opacity: .95;
+  transform: translateX(2px) rotate(-45deg);
+}
+html[dir="rtl"]:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-card:hover::after,
+html[dir="rtl"]:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-card:focus-visible::after {
+  transform: translateX(-2px) rotate(135deg);
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-card:active {
+  transform: translateY(1px) scale(.985);
+  box-shadow:
+    inset 0 2px 6px rgba(0, 0, 0, .28),
+    inset 0 1px 0 color-mix(in srgb, #000 12%, transparent),
+    0 1px 0 color-mix(in srgb, var(--db-gold) 10%, transparent),
+    0 3px 8px -6px rgba(0, 0, 0, .45);
 }
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-card[data-p="Sunrise"] {
-  opacity: .72;
+  opacity: .78;
+  cursor: default;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-card[data-p="Sunrise"]::after {
+  display: none;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-card[data-p="Sunrise"]:hover,
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-card[data-p="Sunrise"]:active {
+  transform: none;
 }
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-name {
   grid-column: 1;
@@ -5547,16 +5627,25 @@ html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .pw-seal {
   align-self: center;
 }
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-tag {
-  grid-column: 1 / -1;
+  grid-column: 1 / 4;
   color: var(--db-gold);
   font-size: .82rem;
   font-weight: 700;
 }
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-card.is-next {
-  background: color-mix(in srgb, var(--db-gold) 12%, transparent);
-  border-radius: 10px;
-  padding-inline: 10px;
-  border-bottom-color: transparent;
+  border-color: color-mix(in srgb, var(--db-gold) 55%, var(--db-line));
+  background:
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--db-gold) 18%, transparent) 0%,
+      transparent 42%),
+    linear-gradient(165deg,
+      color-mix(in srgb, var(--db-gold) 14%, var(--db-panel)) 0%,
+      color-mix(in srgb, var(--db-panel) 75%, #0a101c) 100%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--db-gold) 28%, transparent),
+    inset 0 -1px 0 color-mix(in srgb, #000 18%, transparent),
+    0 1px 0 color-mix(in srgb, var(--db-gold) 22%, transparent),
+    0 12px 24px -14px color-mix(in srgb, var(--db-gold) 35%, rgba(0, 0, 0, .55));
 }
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .cp-next {
   margin-top: 12px;

@@ -1035,7 +1035,7 @@
     };
     if (btn) {
       if (dayboard) {
-        // Dayboard: header button opens the overlay tools drawer (checkbox).
+        // Dayboard: header button toggles overlay tools drawer (open by default).
         document.body.classList.remove("home-rail-open");
         btn.classList.remove("dayboard-tools-fab");
         btn.classList.add("dayboard-tools-btn");
@@ -1052,13 +1052,22 @@
         lab.textContent = LANG === "ar" ? "أدوات" : "Tools";
         btn.setAttribute("aria-label", LANG === "ar" ? "فتح قائمة الأدوات" : "Open tools menu");
         btn.setAttribute("title", LANG === "ar" ? "الأدوات" : "Tools");
-        syncBtn();
+        if (check && !check.dataset.dayboardInit) {
+          // Desktop: open by default. Mobile: start closed so content isn't covered.
+          check.checked = window.matchMedia("(min-width: 721px)").matches;
+          check.dataset.dayboardInit = "1";
+        }
+        const syncDayboardRail = () => {
+          document.body.classList.toggle("home-dayboard-rail-open", !!(check && check.checked));
+          syncBtn();
+        };
+        syncDayboardRail();
         btn.addEventListener("click", () => {
           if (!check) return;
           check.checked = !check.checked;
-          syncBtn();
+          syncDayboardRail();
         });
-        if (check) check.addEventListener("change", syncBtn);
+        if (check) check.addEventListener("change", syncDayboardRail);
       } else {
         // Desktop default open; keep class from HTML. Mobile ignores this class for the edge tab.
         if (deskMq.matches && !document.body.classList.contains("home-rail-open")) {
