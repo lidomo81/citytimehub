@@ -5793,6 +5793,14 @@ html:not(.app-mode) body.home-web.home-dayboard .muted {
   color: var(--db-ink-2);
 }
 html:not(.app-mode) body.home-web.home-dayboard .guide-card--featured {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  color: inherit;
+}
+html:not(.app-mode) body.home-web.home-dayboard .guide-card--featured > a {
+  border-radius: 18px;
+  overflow: hidden;
   background: var(--db-panel);
   border: 1px solid var(--db-line);
   box-shadow: none;
@@ -5990,8 +5998,17 @@ html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .sun-arc-mar
 html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .dayboard-countdown strong {
   color: #7a4e0f;
 }
-html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .hc-chip,
+html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .hc-chip {
+  background: #fff;
+  border-color: rgba(20, 32, 51, .12);
+  box-shadow: 0 10px 24px -18px rgba(20, 32, 51, .3);
+}
 html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .guide-card--featured {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .guide-card--featured > a {
   background: #fff;
   border-color: rgba(20, 32, 51, .12);
   box-shadow: 0 10px 24px -18px rgba(20, 32, 51, .3);
