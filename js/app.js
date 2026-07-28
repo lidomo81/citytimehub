@@ -20,9 +20,13 @@
       dayLen: (h, m) => `${h}h ${m}m`,
       localEyebrow: "Your local time", homeEyebrow: "Your city", save: "My favorite city", saved: "Favorite ✓",
       inHM: (h, m) => h ? `in ${h}h ${m}m` : `in ${m}m`, tomorrow: "tomorrow",
-      arcNext: (name, h, m) => h
-        ? `<strong>${name}</strong> <span class="sun-arc-in">in ${h}h ${m}m</span>`
-        : `<strong>${name}</strong> <span class="sun-arc-in">in ${String(m).padStart(2, "0")} min</span>`,
+      arcNext: (name, h, m, whenLabel) => {
+        const when = whenLabel ? `<span class="sun-arc-when">${whenLabel}</span>` : "";
+        const eta = h
+          ? `<span class="sun-arc-in">in ${h}h ${m}m</span>`
+          : `<span class="sun-arc-in">in ${String(m).padStart(2, "0")} min</span>`;
+        return `<strong>${name}</strong>${when}${eta}`;
+      },
       savedToast: "Saved to My Cities.", removedToast: "Removed from My Cities.", favFull: n => `You can save up to ${n} cities.`,
       myFav: "My favorite cities", favShort: "Cities",
       favEmpty: "Save a city with the star above — it will appear here.",
@@ -60,9 +64,13 @@
       dayLen: (h, m) => `${h}h ${m}m`,
       localEyebrow: "وقتك المحلي", homeEyebrow: "مدينتك", save: "مدينتي المفضلة", saved: "مفضلة ✓",
       inHM: (h, m) => h ? `بعد ${h} س ${m} د` : `بعد ${m} د`, tomorrow: "غدًا",
-      arcNext: (name, h, m) => h
-        ? `<strong>${name}</strong> <span class="sun-arc-in">بعد ${h} س و ${m} د</span>`
-        : `<strong>${name}</strong> <span class="sun-arc-in">بعد ${String(m).padStart(2, "0")} دقيقة</span>`,
+      arcNext: (name, h, m, whenLabel) => {
+        const when = whenLabel ? `<span class="sun-arc-when">${whenLabel}</span>` : "";
+        const eta = h
+          ? `<span class="sun-arc-in">بعد ${h} س و ${m} د</span>`
+          : `<span class="sun-arc-in">بعد ${String(m).padStart(2, "0")} دقيقة</span>`;
+        return `<strong>${name}</strong>${when}${eta}`;
+      },
       savedToast: "تم الحفظ في مدني.", removedToast: "تمت الإزالة من مدني.", favFull: n => `تقدر تحفظ حتى ${n} مدن.`,
       myFav: "مدني المفضلة", favShort: "مدني",
       favEmpty: "احفظ مدينة بالنجمة في الأعلى — ستظهر هنا.",
@@ -862,9 +870,8 @@
     const el = $("#sunArcNext"); if (!el) return;
     const n = nextPrayerCountdown();
     if (!n) { el.hidden = true; return; }
-    const name = T.prayers[n.idx] + (n.tomorrow ? " " + T.tomorrow : "");
     el.hidden = false;
-    el.innerHTML = T.arcNext(name, n.dh, n.dm);
+    el.innerHTML = T.arcNext(T.prayers[n.idx], n.dh, n.dm, n.tomorrow ? T.tomorrow : "");
     syncDayboardSky();
   }
 

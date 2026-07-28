@@ -5249,8 +5249,10 @@ html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn[aria-expande
   border-color: color-mix(in srgb, var(--db-gold) 70%, #fff);
   background: color-mix(in srgb, var(--db-gold) 16%, transparent) !important;
 }
-html:not(.app-mode) body.home-web.home-dayboard .home-rail {
-  display: contents;
+/* Must beat desktop `home-web:not(.home-rail-open) .home-rail { display:none !important }` */
+html:not(.app-mode) body.home-web.home-dayboard .home-rail,
+html:not(.app-mode) body.home-web.home-dayboard:not(.home-rail-open) .home-rail {
+  display: contents !important;
 }
 html:not(.app-mode) body.home-web.home-dayboard .home-rail-backdrop {
   display: block;
@@ -5420,7 +5422,7 @@ html:not(.app-mode) body.home-web.home-dayboard .dayboard-horizon .sun-arc-stage
   background: transparent;
   border: 0;
   box-shadow: none;
-  overflow: visible;
+  overflow: hidden;
 }
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-horizon .sun-arc-stage::before {
   opacity: .25;
@@ -5431,28 +5433,42 @@ html:not(.app-mode) body.home-web.home-dayboard .dayboard-horizon .sun-arc-svg {
   max-height: 220px;
 }
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-horizon .sun-arc-center {
-  padding: 48px 16px 12px;
+  padding: 44px 12% 10px;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-countdown,
 html:not(.app-mode) body.home-web.home-dayboard #sunArcNext {
-  font-size: clamp(1.35rem, 3.8vw, 2rem);
-  line-height: 1.25;
-  font-weight: 750;
+  max-width: 100%;
+  margin: 0 auto;
+  font-size: clamp(.95rem, 2.2vw, 1.2rem);
+  line-height: 1.3;
+  font-weight: 700;
   color: var(--db-ink);
   text-align: center;
+  overflow-wrap: anywhere;
   animation: dayboardIn .55s ease both;
 }
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-countdown strong {
   display: block;
   font-family: "Literata", "IBM Plex Sans Arabic", serif;
-  font-size: 1.15em;
+  font-size: 1.05em;
+  font-weight: 750;
   color: var(--db-gold);
-  margin-bottom: 4px;
+  margin-bottom: 2px;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-countdown .sun-arc-when {
+  display: block;
+  font-size: .82em;
+  font-weight: 650;
+  color: var(--db-ink-2);
+  margin-bottom: 2px;
 }
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-countdown .sun-arc-in {
+  display: block;
   color: var(--db-ink);
-  font-weight: 700;
-  font-size: .92em;
+  font-weight: 650;
+  font-size: .88em;
 }
 @keyframes dayboardIn {
   from { opacity: 0; transform: translateY(8px); }
@@ -5487,10 +5503,10 @@ html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-grid {
 }
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-card {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr auto auto;
   grid-template-rows: auto auto;
-  gap: 2px 12px;
-  align-items: baseline;
+  gap: 2px 10px;
+  align-items: center;
   margin: 0;
   padding: 12px 4px;
   border: 0;
@@ -5500,18 +5516,35 @@ html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-card {
   box-shadow: none;
   color: var(--db-ink);
 }
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-card::after {
+  display: none;
+}
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-card[data-p="Sunrise"] {
   opacity: .72;
 }
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-name {
+  grid-column: 1;
   font-size: 1rem;
   font-weight: 700;
 }
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-time {
+  grid-column: 2;
   font-size: 1.05rem;
   font-weight: 750;
   font-variant-numeric: tabular-nums;
   color: var(--db-ink);
+}
+/* Commitment seal sits beside the time ù never over it */
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .pw-seal {
+  position: static;
+  inset: auto;
+  grid-column: 3;
+  grid-row: 1;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  flex-shrink: 0;
+  align-self: center;
 }
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-tag {
   grid-column: 1 / -1;
@@ -5667,5 +5700,5 @@ html:not(.app-mode) body.home-web.home-dayboard .sun-arc-marker-label {
   fill: color-mix(in srgb, var(--db-ink) 88%, transparent);
 }
 
-/* (FAB styles removed ó tools button lives in the header) */
+/* (FAB styles removed ù tools button lives in the header) */
 
