@@ -865,6 +865,34 @@
     const name = T.prayers[n.idx] + (n.tomorrow ? " " + T.tomorrow : "");
     el.hidden = false;
     el.innerHTML = T.arcNext(name, n.dh, n.dm);
+    syncDayboardSky();
+  }
+
+  /** Living sky phase for City Dayboard (web homepage only). */
+  function syncDayboardSky() {
+    if (document.documentElement.classList.contains("app-mode")) return;
+    if (!document.body.classList.contains("home-dayboard")) return;
+    if (!prayerState || !prayerState.timings || !prayerState.city || !prayerState.city.tz) return;
+    const t = prayerState.timings;
+    const off = offsetHours(prayerState.city.tz) * 3600000;
+    const d = new Date(Date.now() + off);
+    const now = d.getUTCHours() * 60 + d.getUTCMinutes();
+    const fajr = parseHM(t.Fajr), sunrise = parseHM(t.Sunrise);
+    const asr = parseHM(t.Asr), maghrib = parseHM(t.Maghrib), isha = parseHM(t.Isha);
+    let phase = "night";
+    if (now >= fajr && now < sunrise) phase = "dawn";
+    else if (now >= sunrise && now < asr) phase = "day";
+    else if (now >= asr && now < maghrib) phase = "asr";
+    else if (now >= maghrib && now < isha) phase = "maghrib";
+    else phase = "night";
+    if (document.body.getAttribute("data-sky-phase") !== phase) {
+      document.body.setAttribute("data-sky-phase", phase);
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) {
+        const colors = { dawn: "#6b4a5c", day: "#5b8fc7", asr: "#c4895a", maghrib: "#6a3350", night: "#0b1224" };
+        meta.setAttribute("content", colors[phase] || "#0b1224");
+      }
+    }
   }
 
   function attachAutocomplete(input, listEl, onChoose, opts) {
@@ -988,33 +1016,64 @@
     if (!document.body.classList.contains("home-web")) return;
 
     const btn = document.getElementById("homeRailBtn");
+    const check = document.getElementById("homeRailToggle");
+    const dayboard = document.body.classList.contains("home-dayboard");
     const deskMq = window.matchMedia("(min-width: 861px)");
     const syncBtn = () => {
       if (!btn) return;
-      const open = document.body.classList.contains("home-rail-open");
+      const open = dayboard
+        ? !!(check && check.checked)
+        : document.body.classList.contains("home-rail-open");
       btn.setAttribute("aria-expanded", open ? "true" : "false");
     };
     if (btn) {
-      // Desktop default open; keep class from HTML. Mobile ignores this class for the edge tab.
-      if (deskMq.matches && !document.body.classList.contains("home-rail-open")) {
-        document.body.classList.add("home-rail-open");
-      }
-      syncBtn();
-      btn.addEventListener("click", () => {
-        document.body.classList.toggle("home-rail-open");
+      if (dayboard) {
+        // Dayboard: header button opens the overlay tools drawer (checkbox).
+        document.body.classList.remove("home-rail-open");
+        btn.classList.remove("dayboard-tools-fab");
+        btn.classList.add("dayboard-tools-btn");
+        const right = document.querySelector(".site-header .header-right");
+        if (right && btn.parentElement !== right) {
+          right.insertBefore(btn, right.firstChild);
+        }
+        let lab = btn.querySelector(".dayboard-tools-btn-label");
+        if (!lab) {
+          lab = document.createElement("span");
+          lab.className = "dayboard-tools-btn-label";
+          btn.appendChild(lab);
+        }
+        lab.textContent = LANG === "ar" ? "أدوات" : "Tools";
+        btn.setAttribute("aria-label", LANG === "ar" ? "فتح قائمة الأدوات" : "Open tools menu");
+        btn.setAttribute("title", LANG === "ar" ? "الأدوات" : "Tools");
         syncBtn();
-      });
-      deskMq.addEventListener("change", () => {
+        btn.addEventListener("click", () => {
+          if (!check) return;
+          check.checked = !check.checked;
+          syncBtn();
+        });
+        if (check) check.addEventListener("change", syncBtn);
+      } else {
+        // Desktop default open; keep class from HTML. Mobile ignores this class for the edge tab.
         if (deskMq.matches && !document.body.classList.contains("home-rail-open")) {
           document.body.classList.add("home-rail-open");
-          syncBtn();
         }
-      });
+        syncBtn();
+        btn.addEventListener("click", () => {
+          document.body.classList.toggle("home-rail-open");
+          syncBtn();
+        });
+        deskMq.addEventListener("change", () => {
+          if (deskMq.matches && !document.body.classList.contains("home-rail-open")) {
+            document.body.classList.add("home-rail-open");
+            syncBtn();
+          }
+        });
+      }
     }
 
     const strip = document.querySelector(".home-rail-strip");
-    const check = document.getElementById("homeRailToggle");
     if (!strip || !check) return;
+    if (dayboard) return; // strip hidden; drawer is header-driven
 
     const mq = window.matchMedia("(max-width: 860px)");
     let lastY = window.scrollY || 0;

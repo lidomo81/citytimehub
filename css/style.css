@@ -1,5 +1,5 @@
 /* =====================================================================
-   CityTimeHub â€” style.css  (The Meridian)
+   CityTimeHub  style.css  (The Meridian)
    1. Tokens   2. Base   3. Header   4. Hero sky-panel + globe
    5. Sections / kickers   6. City grid   7. Reference clocks
    8. Prayer   9. Sun   10. Footer   11. Skeleton/motion   12. Responsive
@@ -15,7 +15,7 @@ html[lang="ar"] { --font: "IBM Plex Sans Arabic", Inter, system-ui, -apple-syste
 :root {
   --brand: #2563EB;
   --accent: #38BDF8;
-  /* Logo identity â€” night sky + crescent gold (header / features chrome) */
+  /* Logo identity  night sky + crescent gold (header / features chrome) */
   --chrome: #16356b;
   --chrome-2: #1c2f5c;
   --chrome-text: #f4f7ff;
@@ -103,7 +103,7 @@ svg { display: block; }
   font-family: inherit;
 }
 .nav-drop > summary::-webkit-details-marker { display: none; }
-.nav-drop > summary::after { content: "â–¾"; display: inline-block; margin-inline-start: 5px; font-size: .72rem; opacity: .72; transition: transform .15s; }
+.nav-drop > summary::after { content: "?"; display: inline-block; margin-inline-start: 5px; font-size: .72rem; opacity: .72; transition: transform .15s; }
 .nav-drop[open] > summary, .nav-drop > summary:hover { background: var(--surface-2); color: var(--text); }
 .nav-drop[open] > summary::after { transform: rotate(180deg); }
 .nav-drop-menu {
@@ -123,7 +123,7 @@ svg { display: block; }
 [data-theme="dark"] .ico-moon { display: none; }
 [data-theme="dark"] .ico-sun { display: block; }
 
-/* Brand chrome â€” logo night sky on web header (not app WebView chrome) */
+/* Brand chrome  logo night sky on web header (not app WebView chrome) */
 html:not(.app-mode) .site-header {
   background: var(--chrome);
   border-bottom: 1px solid color-mix(in srgb, var(--chrome-gold) 18%, var(--chrome-2));
@@ -373,9 +373,9 @@ html.app-mode .app-legal {
 html.app-mode .app-legal a { font-size: .74rem; font-weight: 600; color: var(--muted); text-decoration: none; }
 html.app-mode .app-legal a:hover { color: var(--brand); }
 .app-legal { display: none; }
-/* quick tools bar â€” visible only inside the installed app */
+/* quick tools bar  visible only inside the installed app */
 .app-tools { display: none; }
-/* Website (legacy markup): strip may still live inside the hidden app-tools nav â€” surface it alone */
+/* Website (legacy markup): strip may still live inside the hidden app-tools nav  surface it alone */
 html:not(.app-mode) .app-tools:has(#coHomeStrip) {
   display: block !important;
   width: min(960px, 92%);
@@ -423,7 +423,7 @@ html.app-mode .app-tools { display: block; width: min(960px, 92%); margin: 14px 
 .dr-src { margin: 9px 0 0; padding-top: 8px; border-top: 1px solid var(--border);
   font-size: .74rem; font-weight: 600; color: var(--text-2); }
 
-/* ===== On this day â€” a quieter line inside the reflection card, so a day
+/* ===== On this day  a quieter line inside the reflection card, so a day
    without an entry shows the reflection alone instead of leaving a gap ===== */
 .dr-otd {
   margin: 10px 0 0; padding-top: 9px; border-top: 1px solid var(--border);
@@ -437,11 +437,11 @@ html.app-mode .app-tools { display: block; width: min(960px, 92%); margin: 14px 
   text-transform: uppercase; color: var(--text-2); opacity: .8; margin-bottom: 5px;
 }
 .dr-otd-year { margin-inline-start: 4px; color: var(--brand); opacity: .95; letter-spacing: .04em; }
-/* Second beat of the entry â€” what it led to â€” on its own line, a shade back. */
+/* Second beat of the entry  what it led to  on its own line, a shade back. */
 .dr-otd-then { display: block; margin-top: 3px; opacity: .82; }
 .dr-otd-em { margin-inline-end: 5px; font-size: .9rem; }
 
-/* ===== App tools â€” category groups ===== */
+/* ===== App tools  category groups ===== */
 .app-tools-group { margin-bottom: 4px; }
 .app-tools-cat {
   display: block; font-size: .72rem; font-weight: 800; letter-spacing: .04em;
@@ -449,7 +449,7 @@ html.app-mode .app-tools { display: block; width: min(960px, 92%); margin: 14px 
 }
 .app-tools-group:first-of-type .app-tools-cat { margin-top: 2px; }
 
-/* Spotlight â€” daily priorities (Close Ones + Reminders); visible on website + app */
+/* Spotlight  daily priorities (Close Ones + Reminders); visible on website + app */
 .home-spotlight {
   display: grid; grid-template-columns: 1fr; gap: 10px;
   width: min(960px, 92%); margin: 0 auto 16px; padding: 0 2px;
@@ -624,7 +624,7 @@ html.app-mode main:not(#top) {
   padding-bottom: calc(var(--app-nav-h) + 16px + env(safe-area-inset-bottom, 0px));
 }
 
-/* â€”â€” Tab visibility â€”â€” */
+/*  Tab visibility  */
 html.app-mode:not([data-app-tab="home"]) #cityPanel { display: none !important; }
 html.app-mode[data-app-tab="prayer"] #cityPanel { display: block !important; }
 html.app-mode:not([data-app-tab="tools"]) nav.app-tools { display: none !important; }
@@ -635,7 +635,7 @@ html.app-mode:not([data-app-tab="home"]) #myCities { display: none !important; }
 html.app-mode:not([data-app-tab="home"]) .daily-reflection { display: none !important; }
 html.app-mode[data-app-tab="tools"] .app-tools-group--azkar { display: none !important; }
 
-/* â€”â€” Home tab: Ù†ØªÙŠØ¬Ø© Ø²Ù…Ø§Ù† (quiet board) â€”â€” */
+/*  Home tab: ????? ???? (quiet board)  */
 html.app-mode[data-app-tab="home"] #cpWeek,
 html.app-mode[data-app-tab="home"] #cpDua { display: none !important; }
 html.app-mode[data-app-tab="home"] .cp-devotion .cp-dev-title,
@@ -720,7 +720,7 @@ html.app-mode[data-app-tab="home"] .daily-reflection--home .dr-otd-label {
 }
 html.app-mode[data-app-tab="home"] .home-reflection-slot:empty { display: none; }
 
-/* â€”â€” Prayer tab: centered dates + reminder slot â€”â€” */
+/*  Prayer tab: centered dates + reminder slot  */
 html.app-mode[data-app-tab="prayer"] .cp-dev-head {
   flex-direction: column;
   align-items: center;
@@ -729,12 +729,12 @@ html.app-mode[data-app-tab="prayer"] .cp-dev-head {
 }
 html.app-mode[data-app-tab="prayer"] .cp-devotion .datebar { margin-inline: auto; }
 
-/* â€”â€”â€” Prayer tab, tightened â€”â€”â€”
+/*  Prayer tab, tightened 
    Seven separate boxes stacked down the tab, each with its own heading, border
    and padding; the padding alone was eating a quarter of the screen. What is
    needed daily stays in view, what is needed monthly moves behind a tap. */
 
-/* "Ù…ÙˆØ§Ù‚ÙŠØª Ø§Ù„ØµÙ„Ø§Ø©" â€” the tab bar already says Prayer. */
+/* "?????? ??????"  the tab bar already says Prayer. */
 html.app-mode[data-app-tab="prayer"] .cp-dev-title { display: none; }
 
 /* The two dates read as one line rather than two bordered cells. */
@@ -775,7 +775,7 @@ html.app-mode[data-app-tab="prayer"] .datebar--paper .datebar-val {
   max-width: none;
 }
 html.app-mode[data-app-tab="prayer"] .datebar--paper .datebar-item--hijri::before {
-  content: "Â·";
+  content: "";
   color: var(--muted);
   margin-inline-end: 6px;
 }
@@ -800,7 +800,7 @@ html.app-mode[data-app-tab="prayer"] .occasions {
 }
 html.app-mode[data-app-tab="prayer"] .occasions-kicker { display: none; }
 html.app-mode[data-app-tab="prayer"] .occasions::after {
-  content: "â€º";
+  content: "";
   position: absolute;
   inset-inline-start: 12px;
   top: 50%;
@@ -808,7 +808,7 @@ html.app-mode[data-app-tab="prayer"] .occasions::after {
   color: var(--muted);
   font-size: 1.1rem;
 }
-html.app-mode[data-app-tab="prayer"] .occasions.is-open::after { content: "Ã—"; font-size: .95rem; }
+html.app-mode[data-app-tab="prayer"] .occasions.is-open::after { content: ""; font-size: .95rem; }
 html.app-mode[data-app-tab="prayer"] .occasions { position: relative; }
 
 /* The search opens from the city name rather than holding the top of the tab. */
@@ -818,7 +818,7 @@ html.app-mode[data-app-tab="prayer"] #lt-h {
   -webkit-tap-highlight-color: transparent;
 }
 html.app-mode[data-app-tab="prayer"] #lt-h::after {
-  content: "ØªØºÙŠÙŠØ± â–¾";
+  content: "????? ?";
   margin-inline-start: 6px;
   font-size: .62em;
   font-weight: 700;
@@ -827,16 +827,16 @@ html.app-mode[data-app-tab="prayer"] #lt-h::after {
   vertical-align: middle;
   opacity: .85;
 }
-html[lang="en"].app-mode[data-app-tab="prayer"] #lt-h::after { content: "Change â–¾"; }
-html.app-mode[data-app-tab="prayer"].cp-search-open #lt-h::after { content: "ØªØºÙŠÙŠØ± â–´"; }
-html[lang="en"].app-mode[data-app-tab="prayer"].cp-search-open #lt-h::after { content: "Change â–´"; }
+html[lang="en"].app-mode[data-app-tab="prayer"] #lt-h::after { content: "Change ?"; }
+html.app-mode[data-app-tab="prayer"].cp-search-open #lt-h::after { content: "????? ?"; }
+html[lang="en"].app-mode[data-app-tab="prayer"].cp-search-open #lt-h::after { content: "Change ?"; }
 html.app-mode[data-app-tab="prayer"] #lt-h:focus-visible {
   outline: 2px solid var(--brand);
   outline-offset: 3px;
   border-radius: 8px;
 }
 
-/* One note, once, at the foot of the Prayer tab â€” and nowhere else. It lives
+/* One note, once, at the foot of the Prayer tab  and nowhere else. It lives
    inside the shared devotion block, which the Home tab also shows. */
 .cp-tab-note {
   display: none;
@@ -859,7 +859,7 @@ html.app-mode[data-app-tab="azkar"] #cthAzkarRemindSlot:not(:empty) {
   margin-top: 12px;
 }
 
-/* Reminder cards (injected by Android app) â€” tab-scoped only */
+/* Reminder cards (injected by Android app)  tab-scoped only */
 .app-remind-slot { display: none; }
 html.app-mode[data-app-tab="home"] #cthPrayerRemindSlot,
 html.app-mode[data-app-tab="home"] #cthAzkarRemindSlot,
@@ -886,7 +886,7 @@ html.app-mode[data-app-tab="azkar"] #cthAzkarRemindSlot .app-spot-card:only-chil
   grid-column: 1 / -1;
 }
 
-/* Home: Ù†ØªÙŠØ¬Ø© Ø²Ù…Ø§Ù† â€” digital board */
+/* Home: ????? ????  digital board */
 html.app-mode[data-app-tab="home"] .cp-grid { grid-template-columns: 1fr; gap: 0; }
 html.app-mode[data-app-tab="home"] .cp-toolbar {
   display: flex !important;
@@ -965,7 +965,7 @@ html.app-mode[data-app-tab="home"] .cp-clock .lt-time {
   color: var(--text);
 }
 html.app-mode[data-app-tab="home"] .cp-clock .lt-time::after { display: none; }
-/* Weekday under the clock â€” classic Ù†ØªÙŠØ¬Ø© cue */
+/* Weekday under the clock  classic ????? cue */
 .lt-weekday { display: none; margin: 0; }
 html.app-mode[data-app-tab="home"] .lt-weekday {
   display: block;
@@ -981,7 +981,7 @@ html.app-mode[data-app-tab="home"] .cp-devotion {
   padding: 2px 16px 0;
   border-inline-start: none;
 }
-/* Dual date cells â€” Ù…ÙŠÙ„Ø§Ø¯ÙŠ | Ù‡Ø¬Ø±ÙŠ like old wall calendars */
+/* Dual date cells  ?????? | ???? like old wall calendars */
 html.app-mode[data-app-tab="home"] .datebar--paper {
   width: min(100%, 372px);
   margin: 10px auto 0;
@@ -1074,7 +1074,7 @@ html.app-mode[data-app-tab="home"] #top {
   justify-content: center;
 }
 
-/* Favorite cities â€” quiet strip under the home board (fills empty space) */
+/* Favorite cities  quiet strip under the home board (fills empty space) */
 html.app-mode[data-app-tab="home"] #myCities:not([hidden]) {
   display: block !important;
   width: min(400px, 92%);
@@ -1191,7 +1191,7 @@ html.app-mode[data-app-tab="home"] #myCities.is-fav-collapsible .fav-app-label {
   display: none;
 }
 
-/* Prayer: Ù„ÙˆØ­Ø© Ø§Ù„ÙŠÙˆÙ… â€” clear quiet sections (match approved mockup) */
+/* Prayer: ???? ?????  clear quiet sections (match approved mockup) */
 html.app-mode[data-app-tab="prayer"] .cp-grid { grid-template-columns: 1fr; gap: 12px; }
 html.app-mode[data-app-tab="prayer"] .cp-toolbar {
   display: flex !important;
@@ -1233,7 +1233,7 @@ html.app-mode[data-app-tab="prayer"] .cp-clock-info .lt-time {
 }
 html.app-mode[data-app-tab="prayer"] .cp-clock-info .lt-meta { display: none; }
 
-/* Section 2 â€” Ø§Ù„Ø§Ù„ØªØ²Ø§Ù… compact strip (approved preview) */
+/* Section 2  ???????? compact strip (approved preview) */
 html.app-mode[data-app-tab="prayer"] .cp-now-board {
   display: flex;
   flex-direction: column;
@@ -1253,7 +1253,7 @@ html.app-mode[data-app-tab="prayer"] .cp-now-board:has(.cp-checkin:active) { opa
 html.app-mode[data-app-tab="prayer"] .cp-now-board::before { content: none; }
 html.app-mode[data-app-tab="prayer"] .cp-dua { display: none !important; }
 
-/* One-tap â€œDid you pray?â€ â€” feeds the same worship streak store */
+/* One-tap Did you pray?  feeds the same worship streak store */
 .cp-checkin {
   display: flex;
   flex-direction: column;
@@ -1392,7 +1392,7 @@ html.app-mode[data-app-tab="prayer"] .cp-week .cp-wk-pip {
   height: 8px;
 }
 
-/* Section 3 â€” Ø§Ù„Ù…ÙˆØ§Ù‚ÙŠØª */
+/* Section 3  ???????? */
 html.app-mode[data-app-tab="prayer"] .cp-devotion {
   border: none;
   padding: 6px 4px 8px;
@@ -1442,7 +1442,7 @@ html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-grid {
 html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card {
   position: relative;
   /* A grid, not flex. Each row is its own grid, so the third column must be a
-     fixed width, not auto â€” otherwise the countdown row sizes it to its text
+     fixed width, not auto  otherwise the countdown row sizes it to its text
      and the empty rows collapse it, and the times stop lining up. The fixed
      reserve keeps column one identical on every row, so the times share an edge. */
   display: grid;
@@ -1477,7 +1477,7 @@ html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-time {
   font-size: .92rem;
   font-weight: 800;
 }
-/* The countdown sits in the third column, which is empty on every other row â€”
+/* The countdown sits in the third column, which is empty on every other row 
    so it never shifts the time. */
 html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-tag {
   grid-column: 3;
@@ -1488,8 +1488,8 @@ html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-tag {
 }
 
 /* The seal and the misbaha were pinned to the card corners. They are decoration,
-   not part of the row's rhythm, so they stay out of the flex flow â€” pinned to
-   the trailing edge â€” and never nudge the time out of its column. */
+   not part of the row's rhythm, so they stay out of the flex flow  pinned to
+   the trailing edge  and never nudge the time out of its column. */
 html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card .prayer-azkar-hint {
   position: absolute;
   inset-block-start: 50%;
@@ -1521,10 +1521,10 @@ html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card.is-next .prayer-t
   color: #34d399;
 }
 
-/* Sunrise is not a prayer â€” dimmed so the eye passes over it. */
+/* Sunrise is not a prayer  dimmed so the eye passes over it. */
 html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card[data-p="Sunrise"] { opacity: .55; }
 
-/* Section 4/5 â€” reminder + occasions as calm rows */
+/* Section 4/5  reminder + occasions as calm rows */
 html.app-mode[data-app-tab="prayer"] #cthPrayerRemindSlot {
   display: block !important;
   width: 100%;
@@ -1686,7 +1686,7 @@ html.app-mode[data-app-tab="home"] #top {
 .app-azkar-arrow { flex: none; font-size: 1.1rem; font-weight: 700; color: var(--brand); opacity: .75; z-index: 1; }
 [dir="rtl"] .app-azkar-arrow { transform: scaleX(-1); }
 
-/* Tools tab â€” brand-first cities hero + tinted icon wells */
+/* Tools tab  brand-first cities hero + tinted icon wells */
 html.app-mode[data-app-tab="tools"] nav.app-tools {
   margin: 10px auto 8px;
   padding-bottom: 4px;
@@ -1917,7 +1917,7 @@ html.app-mode[data-app-tab="tools"] .app-cities-hero { display: flex; }
 .sun-arc-sun { filter: drop-shadow(0 0 8px rgba(251,191,36,.85)) drop-shadow(0 0 18px rgba(245,158,11,.45)); }
 /* Website: next-prayer lives in the sun arc; keep streak/status under the clock. */
 html:not(.app-mode) .cp-clock .cp-next:not(.cp-streak):not(.cp-celebrate):not(.cp-recover) { display: none; }
-/* App keeps its tuned home layout â€” sun arc is a website homepage feature. */
+/* App keeps its tuned home layout  sun arc is a website homepage feature. */
 html.app-mode .sun-arc { display: none; }
 
 /* Supplication above the streak box */
@@ -1993,7 +1993,7 @@ html.app-mode[data-app-tab="prayer"] .cp-progress { width: min(100%, 240px); }
 .cp-stats-legend span { display: inline-flex; align-items: center; gap: 5px; }
 .cp-stats-note { margin: 14px 0 0; padding-top: 13px; border-top: 1px solid var(--border); font-size: .74rem; line-height: 1.75; color: var(--text-2); text-align: center; }
 
-/* Desktop homepage clock â€” fill the column height (site only, not app / mobile) */
+/* Desktop homepage clock  fill the column height (site only, not app / mobile) */
 @media (min-width: 861px) {
   html:not(.app-mode) .cp-grid { align-items: stretch; }
   html:not(.app-mode) .cp-clock {
@@ -2237,7 +2237,7 @@ html.app-mode .prayer-insights { margin-top: 10px; }
 .datebar-label { display: inline; }
 .datebar-val { font-weight: 700; }
 
-/* App: dual "report paper" dates â€” Gregorian | Hijri */
+/* App: dual "report paper" dates  Gregorian | Hijri */
 html.app-mode .datebar--paper {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -2312,7 +2312,7 @@ html.app-mode[data-app-tab="prayer"] .datebar--paper {
   margin-inline: auto;
 }
 
-/* Home occasions teaser â†’ opens Prayer tab */
+/* Home occasions teaser ? opens Prayer tab */
 .occ-home-teaser {
   display: none;
   align-items: center;
@@ -2370,7 +2370,7 @@ html.app-mode.app-tab-switching nav.app-tools {
 .prayer-name { font-weight: 700; font-size: .92rem; color: var(--text-2); }
 .prayer-card.is-next .prayer-name { color: var(--pc); }
 .prayer-card.is-next .prayer-tag { color: var(--pc); }
-/* Subtle depth on the dark background â€” barely felt, but richer. */
+/* Subtle depth on the dark background  barely felt, but richer. */
 [data-theme="dark"] body {
   background:
     radial-gradient(1100px 620px at 50% -8%, #14203a 0%, rgba(20,32,58,0) 62%),
@@ -2378,7 +2378,7 @@ html.app-mode.app-tab-switching nav.app-tools {
   background-attachment: fixed;
 }
 .prayer-time { font-family: var(--mono); font-size: 1.3rem; font-weight: 700; font-variant-numeric: tabular-nums; margin-top: 6px; }
-/* Holds the countdown to the next prayer, so it carries digits now â€” no
+/* Holds the countdown to the next prayer, so it carries digits now  no
    uppercasing, and lining figures so it does not jitter as it counts down. */
 .prayer-tag { display: block; margin-top: 6px; font-size: .64rem; font-weight: 800; color: var(--brand); letter-spacing: .04em; min-height: 13px; font-variant-numeric: tabular-nums; }
 
@@ -2524,7 +2524,7 @@ html[dir="rtl"] .tool-card--featured h3 { padding-inline-end: 0; padding-inline-
 .dir-search-input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand) 18%, transparent); }
 #dirCount { margin: 0 0 16px; }
 
-/* ===================== Compare Cities â€” interactive tool ===================== */
+/* ===================== Compare Cities  interactive tool ===================== */
 .compare-form { display: grid; grid-template-columns: 1fr auto 1fr auto; gap: 14px; align-items: end; }
 .cmp-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .cmp-field label { font-size: .82rem; font-weight: 700; color: var(--text-2); }
@@ -2538,11 +2538,11 @@ html[dir="rtl"] .tool-card--featured h3 { padding-inline-end: 0; padding-inline-
 .ac-name { font-weight: 600; color: var(--text); }
 .ac-country { font-size: .82rem; color: var(--text-2); }
 .ac-empty { padding: 12px; color: var(--text-2); font-size: .9rem; }
-/* The matched run in a city search result â€” same accent for every search box. */
+/* The matched run in a city search result  same accent for every search box. */
 .ac-hl { background: none; color: var(--brand); font-weight: 700; }
 .ac-sep { padding: 8px 12px 4px; margin-top: 4px; border-top: 1px solid var(--border); font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--text-2); opacity: .7; pointer-events: none; }
 
-/* ===== My favorite cities â€” clickable name chips (site + app) ===== */
+/* ===== My favorite cities  clickable name chips (site + app) ===== */
 .fav-app-label { display: none; }
 html.app-mode .fav-app-label { display: block; font-size: .72rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--text-2); margin: 16px 4px 9px; }
 html[dir="rtl"] .fav-app-label { letter-spacing: 0; }
@@ -2641,7 +2641,7 @@ html.app-mode .fav-chip-name { font-size: 1rem; }
   .cmp-clock { font-size: 1.7rem; }
 }
 
-/* ===================== Compare page â€” day/night + meeting planner ===================== */
+/* ===================== Compare page  day/night + meeting planner ===================== */
 .city-daynight { display: flex; align-items: center; gap: 7px; margin: 6px 0 0; font-size: .9rem; font-weight: 600; color: var(--text-2); }
 .dn-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--text-2); flex: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--text-2) 18%, transparent); }
 .dn--morning .dn-dot { background: #f59e0b; box-shadow: 0 0 0 3px #f59e0b30; }
@@ -2694,7 +2694,7 @@ html.app-mode .fav-chip-name { font-size: 1rem; }
 .explainer-faq { margin-top: 24px; }
 .explainer-faq-title { font-size: 1.1rem; margin: 0 0 12px; }
 
-/* ===================== FAQ (details/summary) â€” used across FAQ & explainer sections ===================== */
+/* ===================== FAQ (details/summary)  used across FAQ & explainer sections ===================== */
 .faq { display: flex; flex-direction: column; gap: 10px; }
 .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 0 18px; box-shadow: var(--shadow); overflow: hidden; }
 .faq-item summary { list-style: none; cursor: pointer; padding: 16px 0; font-weight: 700; color: var(--text); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
@@ -2795,7 +2795,7 @@ html.app-mode .fav-chip-name { font-size: 1rem; }
 .guide-card p { font-size: .92rem; color: var(--text-2); line-height: 1.55; margin: 0 0 14px; }
 .guide-card-meta { font-size: .82rem; font-weight: 700; color: var(--brand); }
 
-/* ===== Featured reflection â€” breaks the equal-card grid ===== */
+/* ===== Featured reflection  breaks the equal-card grid ===== */
 .guide-list--featured { grid-template-columns: 1fr 1fr; }
 .guide-list--latest { grid-template-columns: 1fr; max-width: 920px; }
 .guide-card--featured { grid-column: 1 / -1; }
@@ -2836,7 +2836,7 @@ html.app-mode .fav-chip-name { font-size: 1rem; }
 .guide-card:nth-child(4n+3) .gc-cov { --cov-a: #182448; --cov-b: #2b6a8f; --cov-orb: #bfe6ff; }
 .guide-card:nth-child(4n+4) .gc-cov { --cov-a: #241a3a; --cov-b: #7a4a5a; --cov-orb: #f2c78a; }
 
-/* ===== Stats band â€” a non-card row that breaks the grid ===== */
+/* ===== Stats band  a non-card row that breaks the grid ===== */
 .stats-band { padding-block: 6px; }
 .stats-row { list-style: none; margin: 0; padding: 24px 12px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
   border-radius: var(--radius); border: 1px solid var(--border);
@@ -2867,7 +2867,7 @@ html[dir="rtl"] .prose h2 { letter-spacing: 0; }
 /* keep the UTC clock and any forced-LTR numerals readable in RTL */
 html[dir="rtl"] .hu-time, html[dir="rtl"] [dir="ltr"] { direction: ltr; unicode-bidi: isolate; }
 
-/* ===================== Your local time â€” panel + analog clock ===================== */
+/* ===================== Your local time  panel + analog clock ===================== */
 .lt-section { padding-top: 14px; }
 .lt-panel {
   display: flex; align-items: center; gap: clamp(20px, 5vw, 56px);
@@ -2966,7 +2966,7 @@ html[dir="rtl"] .hu-time, html[dir="rtl"] [dir="ltr"] { direction: ltr; unicode-
   .btc-tick { font-size: .66rem; }
 }
 
-/* Best Time to Call â€” readout line + hovered column */
+/* Best Time to Call  readout line + hovered column */
 .btc-readout { display: flex; flex-wrap: wrap; align-items: center; gap: 5px 8px; margin-bottom: 14px; font-size: .92rem; color: var(--text-2); min-height: 24px; }
 .btc-ro-from { font-weight: 700; color: var(--text); }
 .btc-ro-from b, .btc-ro-item b { font-variant-numeric: tabular-nums; }
@@ -3001,7 +3001,7 @@ html[dir="rtl"] .hu-time, html[dir="rtl"] [dir="ltr"] { direction: ltr; unicode-
   .pc-slot { flex-basis: 100%; max-width: 100%; }
 }
 
-/* ===================== Close Ones / Ø£Ø­Ø¨Ø§Ø¨Ùƒ ===================== */
+/* ===================== Close Ones / ?????? ===================== */
 .co-page-head { margin-bottom: 8px; }
 .co-page-head .muted { display: none; }
 .co-tabs {
@@ -3029,7 +3029,7 @@ html[dir="rtl"] .hu-time, html[dir="rtl"] [dir="ltr"] { direction: ltr; unicode-
   padding: 20px 22px; border-radius: 16px;
   background: var(--surface); border: 1px solid var(--border);
 }
-/* An open window is the one moment the tool exists for â€” let it glow, gently. */
+/* An open window is the one moment the tool exists for  let it glow, gently. */
 .co-hero--open {
   background: linear-gradient(135deg, rgba(37,99,235,.14), rgba(96,165,200,.10));
   border-color: color-mix(in srgb, var(--brand) 55%, transparent);
@@ -3045,7 +3045,7 @@ html[dir="rtl"] .hu-time, html[dir="rtl"] [dir="ltr"] { direction: ltr; unicode-
 }
 @media (prefers-reduced-motion: reduce) { .co-hero--open { animation: none; } }
 
-/* Your clock and theirs, side by side â€” the whole answer in one glance. */
+/* Your clock and theirs, side by side  the whole answer in one glance. */
 .co-hero-clocks {
   display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 0 12px;
 }
@@ -3169,8 +3169,8 @@ html.app-mode .co-home-strip:not(.app-spot-card) { margin-inline: 12px; }
   margin-top: 4px; padding: 14px 16px; border-radius: 14px;
   border: 1px dashed rgba(96,165,200,.45); background: var(--surface);
 }
-/* The reminders toggle is app-only. Hard-hide it on the website â€” independent of
-   any cached JS â€” and let it show inside the app only when JS un-hides it. */
+/* The reminders toggle is app-only. Hard-hide it on the website  independent of
+   any cached JS  and let it show inside the app only when JS un-hides it. */
 .co-notify-bar { display: none !important; }
 html.app-mode .co-notify-bar:not([hidden]) { display: flex !important; }
 .co-notify-ico {
@@ -3269,7 +3269,7 @@ html.app-mode .co-notify-bar:not([hidden]) { display: flex !important; }
 .co-dial-hint { margin: 6px 0 0; font-size: .8rem; line-height: 1.4; }
 .co-ac { position: relative; }
 
-/* Person vs group â€” a small segmented control at the top of the add sheet. */
+/* Person vs group  a small segmented control at the top of the add sheet. */
 .co-kind-field { grid-column: 1 / -1; border: 0; padding: 0; margin: 0; min-width: 0; }
 .co-kind-q { padding: 0; margin: 0 0 8px; font-weight: 600; color: var(--text); }
 .co-kind { display: inline-grid; grid-auto-flow: column; gap: 4px; padding: 4px;
@@ -3291,7 +3291,7 @@ html.app-mode .co-notify-bar:not([hidden]) { display: flex !important; }
 }
 
 /* Choosing the first reminder while adding someone: tappable cards, not a
-   dropdown â€” the whole point is that it takes one glance and one tap. */
+   dropdown  the whole point is that it takes one glance and one tap. */
 .co-preset-field { grid-column: 1 / -1; border: 0; padding: 0; margin: 2px 0 0; min-width: 0; }
 .co-preset-q { padding: 0; margin: 0 0 10px; font-weight: 600; color: var(--text); }
 .co-presets { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; }
@@ -3446,7 +3446,7 @@ html.app-mode .co-notify-bar:not([hidden]) { display: flex !important; }
 .bb-empty { padding: 14px; text-align: center; color: var(--muted); font-size: .9rem; border: 0.5px dashed var(--border-2); border-radius: 10px; }
 .bb-frame { height: 580px; }
 
-/* Branches builder â€” phone field */
+/* Branches builder  phone field */
 .bb-phone { display: grid; grid-template-columns: 90px 1fr; gap: 8px; }
 .bb-dial { text-align: center; }
 .bb-hint { display: block; margin-top: 4px; font-size: .78rem; color: var(--muted); }
@@ -3550,7 +3550,7 @@ html.app-mode .cp-install { display: none !important; }
 @keyframes tourRing { 0% { transform: scale(1); opacity: .9; } 70% { transform: scale(1.06); opacity: 0; } 100% { transform: scale(1.06); opacity: 0; } }
 .cth-tour.is-center .cth-tour-mask { background: rgba(2, 6, 23, .05); }
 
-/* Glass card â€” site shows through; copy island keeps text crisp */
+/* Glass card  site shows through; copy island keeps text crisp */
 .cth-tour-pop { position: fixed; top: 0; left: 0; width: min(360px, calc(100vw - 28px)); box-sizing: border-box; pointer-events: auto;
   display: flex; flex-direction: column; padding: 0 16px 14px; border-radius: 20px; overflow: hidden;
   transform: translate(var(--tx, 0px), var(--ty, 0px));
@@ -3672,7 +3672,7 @@ html[dir="rtl"] .prose blockquote { border-radius: 14px 0 0 14px; }
 .az-bar { height: 6px; border-radius: 999px; background: var(--surface-2); overflow: hidden; margin-bottom: 16px; }
 .az-bar > i { display: block; block-size: 100%; inline-size: 0; background: linear-gradient(90deg, var(--accent), var(--brand)); border-radius: 999px; transition: inline-size .35s ease; }
 .az-card { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 30px 26px; box-shadow: var(--shadow); text-align: center; }
-/* "Share this dhikr" â€” a quiet control in the toolbar, away from the sacred text. */
+/* "Share this dhikr"  a quiet control in the toolbar, away from the sacred text. */
 .az-share { display: inline-flex; align-items: center; justify-content: center; inline-size: 34px; block-size: 34px; padding: 0; border: 1px solid var(--border-2); border-radius: 50%; background: transparent; color: var(--text-2); cursor: pointer; transition: color .18s ease, border-color .18s ease, transform .18s ease; }
 .az-share:hover { color: var(--brand); border-color: var(--brand); transform: translateY(-1px); }
 .az-share:active { transform: scale(.94); }
@@ -3713,7 +3713,7 @@ html[dir="rtl"] .prayer-azkar-tx { letter-spacing: 0; }
 .prayer-card.has-azkar-due { border-color: color-mix(in srgb, #ffd486 60%, var(--border)); }
 @media (prefers-reduced-motion: reduce) { .prayer-azkar.is-due { animation: none; } }
 
-/* Whole prayer tile is tappable â†’ opens the post-prayer adhkar sheet */
+/* Whole prayer tile is tappable ? opens the post-prayer adhkar sheet */
 .prayer-card.is-tappable { cursor: pointer; }
 .prayer-azkar-hint { position: absolute; inset-block-start: 10px; inset-inline-start: 10px; display: inline-flex; line-height: 0; color: var(--brand); opacity: .55; pointer-events: none; transition: opacity .2s; }
 .prayer-card.is-tappable:hover .prayer-azkar-hint { opacity: .8; }
@@ -3732,14 +3732,14 @@ html[dir="rtl"] .prayer-azkar-tx { letter-spacing: 0; }
 .pa-fk { font-weight: 800; color: var(--text); }
 .pa-sec-label { display: block; font-size: .66rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0 2px 12px; }
 
-/* "Virtue of this prayer" â€” an authentic hadith, gently set apart (shown for every city) */
+/* "Virtue of this prayer"  an authentic hadith, gently set apart (shown for every city) */
 .pa-fadl { position: relative; margin: 0 0 18px; padding: 18px 20px; border-radius: 14px; text-align: center;
   border: 1px solid color-mix(in srgb, var(--brand) 26%, var(--border));
   background: linear-gradient(180deg, color-mix(in srgb, var(--brand) 8%, var(--surface-2)), var(--surface-2)); }
 .pa-fadl-label { display: block; font-size: .68rem; font-weight: 800; letter-spacing: .08em; color: var(--brand); margin-bottom: 9px; }
 .pa-fadl-text { margin: 0 0 8px; font-size: 1.04rem; line-height: 1.95; font-weight: 700; color: var(--text); }
 .pa-fadl-src { display: inline-block; font-size: .72rem; color: var(--muted); }
-.pa-fadl-src::before { content: "â€” "; }
+.pa-fadl-src::before { content: " "; }
 
 /* ---- Worship tracking: colours shared by sheet trackers + card seal ---- */
 :root { --pw-fard: #22c55e; --pw-sunnah: #f5a623; --pw-azkar: #8b5cf6; --pw-faint: color-mix(in srgb, var(--border-2) 55%, transparent); }
@@ -3861,7 +3861,7 @@ html.app-mode .help-fab {
   .prayer-azkar { inset-block-start: 7px; inset-inline-end: 7px; }
 }
 
-/* â€”â€” Cities board â€”â€” */
+/*  Cities board  */
 .cb-section { padding-block: 8px 40px; }
 .cb-wrap { max-width: 520px; }
 .cb-head {
@@ -4016,7 +4016,7 @@ html.app-mode[data-app-tab="home"] .cb-home-chip { display: flex; }
 .cb-home-chip-l { font-size: .86rem; font-weight: 800; }
 .cb-home-chip-r { font-size: .74rem; color: var(--text-2); font-weight: 600; }
 
-/* Soft compact home (app) â€” quieter first screen, same flows */
+/* Soft compact home (app)  quieter first screen, same flows */
 html.app-mode[data-app-tab="home"] .cp-toolbar { margin: 2px auto 0; width: min(380px, 92%); }
 html.app-mode[data-app-tab="home"] .cp-clock { padding: 10px 16px 2px; }
 html.app-mode[data-app-tab="home"] .cp-clock .lt-time {
@@ -4067,12 +4067,12 @@ html.app-mode[data-app-tab="home"] .daily-reflection--home .dr-otd {
 }
 
 /* =====================================================================
-   Web homepage â€” calm layout (Direction A)
+   Web homepage  calm layout (Direction A)
    Clean header + accordion features rail. App-mode untouched.
    ===================================================================== */
 .home-rail { display: none; }
 
-/* Clearer type on the web homepage â€” readable sizes + stronger secondary text */
+/* Clearer type on the web homepage  readable sizes + stronger secondary text */
 html:not(.app-mode) body.home-web {
   font-size: 17px;
   line-height: 1.65;
@@ -4187,7 +4187,7 @@ html:not(.app-mode) body.home-web .explainer-section .prose {
 
 html:not(.app-mode) body.home-web .hero { display: none; }
 
-/* Home: no header menu â€” desktop rail / mobile edge drawer cover navigation */
+/* Home: no header menu  desktop rail / mobile edge drawer cover navigation */
 html:not(.app-mode) body.home-web .site-header .main-nav,
 html:not(.app-mode) body.home-web .site-header .nav-toggle,
 html:not(.app-mode) body.home-web .site-header .nav-burger {
@@ -4201,7 +4201,7 @@ html:not(.app-mode) body.home-web {
   --home-rail-w: 212px;
   --home-header-h: 66px;
 }
-/* Home header toggle â€” desktop only; sits flush above the rail */
+/* Home header toggle  desktop only; sits flush above the rail */
 html:not(.app-mode) body.home-web .home-rail-header-btn {
   display: none;
 }
@@ -4220,7 +4220,7 @@ html:not(.app-mode) body.home-web .home-rail {
   color: var(--chrome-text);
   scrollbar-width: thin;
 }
-/* Desktop: one continuous chrome column â€” purple wash flows header â†’ rail, no seam */
+/* Desktop: one continuous chrome column  purple wash flows header ? rail, no seam */
 @media (min-width: 861px) {
   html:not(.app-mode) body.home-web {
     /* Shared stops so header bottom == rail top (no visual cut) */
@@ -4233,7 +4233,7 @@ html:not(.app-mode) body.home-web .home-rail {
     z-index: 50;
     overflow: visible;
     padding-inline-start: var(--home-rail-w);
-    /* Soft purple across the bar â€” ends on mid so the rail can continue seamlessly */
+    /* Soft purple across the bar  ends on mid so the rail can continue seamlessly */
     border-bottom: none;
     box-shadow: none;
     background:
@@ -4245,7 +4245,7 @@ html:not(.app-mode) body.home-web .home-rail {
       radial-gradient(90% 140% at 0% 0%, rgba(90, 62, 140, .55) 0%, transparent 58%),
       linear-gradient(180deg, var(--home-chrome-purple) 0%, var(--home-chrome-mid) 100%);
   }
-  /* Always reserve rail width â€” toggle never shoves the page */
+  /* Always reserve rail width  toggle never shoves the page */
   html:not(.app-mode) body.home-web main#top {
     padding-inline-start: var(--home-rail-w);
   }
@@ -4262,7 +4262,7 @@ html:not(.app-mode) body.home-web .home-rail {
     margin: 0;
     border-radius: 0;
     border: 0;
-    /* Transparent so header purple shows through â€” one piece with the rail */
+    /* Transparent so header purple shows through  one piece with the rail */
     background: transparent;
     color: var(--chrome-gold);
     transform: none;
@@ -4295,7 +4295,7 @@ html:not(.app-mode) body.home-web .home-rail {
     border: 0;
     border-inline-end: 1px solid color-mix(in srgb, var(--chrome-gold) 14%, transparent);
     box-shadow: 0 18px 40px -22px rgba(0, 0, 0, .45);
-    /* Continues from header mid stop â€” no top border / no gap color */
+    /* Continues from header mid stop  no top border / no gap color */
     background:
       radial-gradient(120% 80% at 50% -5%, rgba(90, 62, 140, .5) 0%, transparent 55%),
       linear-gradient(180deg, var(--home-chrome-mid) 0%, #1e3060 28%, var(--chrome) 58%, var(--chrome) 100%);
@@ -4427,7 +4427,7 @@ html:not(.app-mode) body.home-web #reference {
   display: none !important;
 }
 
-/* Home cities strip â€” quiet discovery, not a marketing card */
+/* Home cities strip  quiet discovery, not a marketing card */
 html:not(.app-mode) body.home-web #citiesCta.home-cities {
   display: block;
   padding-block: clamp(10px, 2vw, 22px) clamp(18px, 3vw, 36px);
@@ -4516,7 +4516,7 @@ html:not(.app-mode) body.home-web #reflections .section-head {
   html:not(.app-mode) body.home-web .home-calm-grid {
     display: block;
   }
-  /* Edge tab: inline-start (right in AR, left in EN) â†’ opens a features drawer */
+  /* Edge tab: inline-start (right in AR, left in EN) ? opens a features drawer */
   html:not(.app-mode) body.home-web .home-rail {
     display: contents;
     border: 0;
@@ -4573,7 +4573,7 @@ html:not(.app-mode) body.home-web #reflections .section-head {
       opacity .2s var(--ease),
       box-shadow .2s var(--ease);
   }
-  /* Tucked away while scrolling / using the city panel â€” thin peek remains */
+  /* Tucked away while scrolling / using the city panel  thin peek remains */
   html:not(.app-mode) body.home-web .home-rail-strip.is-away {
     inset-inline-start: calc(-1 * (100% - 8px));
     width: 34px;
@@ -4683,8 +4683,8 @@ html.app-mode .home-calm-grid {
 }
 
 /* -----------------------------------------------------------------
-   City panel â€” refined web stage (home-web only)
-   Time first Â· prayers in one row Â· adherence under the grid
+   City panel  refined web stage (home-web only)
+   Time first  prayers in one row  adherence under the grid
    ----------------------------------------------------------------- */
 html:not(.app-mode) body.home-web #cityPanel > .container {
   padding: clamp(16px, 2.4vw, 24px);
@@ -4988,7 +4988,7 @@ html:not(.app-mode) body.home-web .cp-devotion .prayer-card .prayer-tag {
   display: none;
 }
 
-/* Adherence / next-prayer â€” full width under prayers */
+/* Adherence / next-prayer  full width under prayers */
 html:not(.app-mode) body.home-web #cityPanel .cp-devotion > #cpNext,
 html:not(.app-mode) body.home-web #cityPanel .cp-devotion > #cpDua,
 html:not(.app-mode) body.home-web #cityPanel .cp-devotion > #cpWeek,
@@ -5132,3 +5132,540 @@ html:not(.app-mode) body.home-web .home-spotlight {
     display: none !important;
   }
 }
+
+/* =====================================================================
+   City Dayboard  web homepage only (body.home-dayboard)
+   Living sky, next-prayer hero, sun horizon, prayer timeline.
+   App-mode untouched.
+   ===================================================================== */
+html:not(.app-mode) body.home-web.home-dayboard {
+  --db-ink: #f4efe6;
+  --db-ink-2: rgba(244, 239, 230, .78);
+  --db-gold: #e8c48a;
+  --db-line: rgba(244, 239, 230, .16);
+  --db-panel: rgba(8, 14, 28, .28);
+  --font: "Manrope", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  font-family: var(--font);
+  color: var(--db-ink);
+  background:
+    radial-gradient(120% 80% at 50% -10%, var(--sky-glow, rgba(232, 196, 138, .22)) 0%, transparent 55%),
+    linear-gradient(180deg, var(--sky-top, #1a2744) 0%, var(--sky-mid, #0d1528) 42%, var(--sky-bot, #070b14) 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  --home-rail-w: 0px;
+}
+html[lang="ar"]:not(.app-mode) body.home-web.home-dayboard {
+  --font: "IBM Plex Sans Arabic", "Manrope", system-ui, sans-serif;
+}
+html:not(.app-mode) body.home-web.home-dayboard[data-sky-phase="dawn"] {
+  --sky-top: #3a2a4a; --sky-mid: #6b4a5c; --sky-bot: #c4a07a; --sky-glow: rgba(255, 186, 140, .35);
+}
+html:not(.app-mode) body.home-web.home-dayboard[data-sky-phase="day"] {
+  --sky-top: #5b8fc7; --sky-mid: #8eb8e0; --sky-bot: #d8e8f6; --sky-glow: rgba(255, 255, 255, .35);
+  --db-ink: #122033; --db-ink-2: rgba(18, 32, 51, .72); --db-gold: #8a6418;
+  --db-line: rgba(18, 32, 51, .14); --db-panel: rgba(255, 255, 255, .38);
+}
+html:not(.app-mode) body.home-web.home-dayboard[data-sky-phase="asr"] {
+  --sky-top: #4a6fa5; --sky-mid: #c4895a; --sky-bot: #e8c9a0; --sky-glow: rgba(255, 200, 120, .4);
+  --db-ink: #1a2030; --db-ink-2: rgba(26, 32, 48, .75); --db-gold: #7a4e14;
+  --db-line: rgba(26, 32, 48, .14); --db-panel: rgba(255, 248, 236, .35);
+}
+html:not(.app-mode) body.home-web.home-dayboard[data-sky-phase="maghrib"] {
+  --sky-top: #1c1630; --sky-mid: #6a3350; --sky-bot: #c45a3a; --sky-glow: rgba(255, 140, 80, .35);
+}
+html:not(.app-mode) body.home-web.home-dayboard[data-sky-phase="night"] {
+  --sky-top: #121a32; --sky-mid: #0b1224; --sky-bot: #060910; --sky-glow: rgba(160, 180, 255, .12);
+}
+
+html:not(.app-mode) body.home-web.home-dayboard .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding-inline-start: 0 !important;
+  border-bottom: 1px solid var(--db-line);
+  box-shadow: none;
+  background: color-mix(in srgb, var(--sky-top) 72%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+html:not(.app-mode) body.home-web.home-dayboard .site-header .brand-text,
+html:not(.app-mode) body.home-web.home-dayboard .site-header .lang-switch,
+html:not(.app-mode) body.home-web.home-dayboard .site-header .header-right,
+html:not(.app-mode) body.home-web.home-dayboard .site-header .hu-label,
+html:not(.app-mode) body.home-web.home-dayboard .site-header .hu-time,
+html:not(.app-mode) body.home-web.home-dayboard .site-header .icon-btn {
+  color: var(--db-ink);
+}
+html:not(.app-mode) body.home-web.home-dayboard .brand-text {
+  font-family: "Literata", "IBM Plex Sans Arabic", serif;
+  font-size: clamp(1.2rem, 2.2vw, 1.55rem);
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+html:not(.app-mode) body.home-web.home-dayboard .brand-text span {
+  color: var(--db-gold);
+}
+
+/* Tools: overlay drawer  trigger lives in the header */
+html:not(.app-mode) body.home-web.home-dayboard main#top {
+  padding-inline-start: 0 !important;
+}
+html:not(.app-mode) body.home-web.home-dayboard .home-rail-header-btn,
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn,
+html:not(.app-mode) body.home-web.home-dayboard #homeRailBtn.dayboard-tools-btn {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  position: static !important;
+  inset: auto !important;
+  top: auto !important;
+  bottom: auto !important;
+  width: auto !important;
+  height: auto !important;
+  min-width: 0;
+  min-height: 36px;
+  margin: 0;
+  padding: 6px 12px !important;
+  border-radius: 999px !important;
+  border: 1px solid color-mix(in srgb, var(--db-gold) 40%, transparent) !important;
+  background: color-mix(in srgb, var(--db-panel) 80%, transparent) !important;
+  color: var(--db-gold) !important;
+  box-shadow: none !important;
+  transform: none !important;
+  cursor: pointer;
+}
+html:not(.app-mode) body.home-web.home-dayboard .home-rail-header-btn::after,
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn::after {
+  content: none !important;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn-label {
+  font-size: .82rem;
+  font-weight: 800;
+  letter-spacing: .02em;
+  color: inherit;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn[aria-expanded="true"] {
+  border-color: color-mix(in srgb, var(--db-gold) 70%, #fff);
+  background: color-mix(in srgb, var(--db-gold) 16%, transparent) !important;
+}
+html:not(.app-mode) body.home-web.home-dayboard .home-rail {
+  display: contents;
+}
+html:not(.app-mode) body.home-web.home-dayboard .home-rail-backdrop {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  margin: 0;
+  background: rgba(6, 10, 20, .5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease;
+}
+html:not(.app-mode) body.home-web.home-dayboard .home-rail-check:checked ~ .home-rail-backdrop {
+  opacity: 1;
+  pointer-events: auto;
+}
+html:not(.app-mode) body.home-web.home-dayboard .home-rail-strip {
+  display: none !important;
+}
+html:not(.app-mode) body.home-web.home-dayboard .home-rail-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: fixed;
+  z-index: 95;
+  top: 0;
+  bottom: 0;
+  inset-inline-start: 0;
+  width: min(300px, 88vw);
+  margin: 0;
+  padding: 18px 14px 24px;
+  background: linear-gradient(180deg, #152038 0%, #0c1424 100%);
+  color: #f4efe6;
+  border-inline-end: 1px solid rgba(232, 196, 138, .2);
+  box-shadow: 12px 0 40px rgba(0, 0, 0, .35);
+  transform: translateX(-105%);
+  transition: transform .22s ease;
+  overflow: auto;
+}
+html[dir="rtl"]:not(.app-mode) body.home-web.home-dayboard .home-rail-body {
+  transform: translateX(105%);
+}
+html:not(.app-mode) body.home-web.home-dayboard .home-rail-check:checked ~ .home-rail-body {
+  transform: translateX(0);
+}
+html:not(.app-mode) body.home-web.home-dayboard .home-rail-close {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid rgba(244, 239, 230, .2);
+  cursor: pointer;
+}
+html:not(.app-mode) body.home-web.home-dayboard .home-rail-drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+html:not(.app-mode) body.home-web.home-dayboard .home-rail-lab {
+  font-weight: 800;
+  color: var(--db-gold);
+}
+
+/* Stage */
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-stage,
+html:not(.app-mode) body.home-web.home-dayboard .home-calm {
+  padding-top: clamp(10px, 2vw, 18px);
+  padding-bottom: clamp(20px, 4vw, 40px);
+}
+html:not(.app-mode) body.home-web.home-dayboard #cityPanel.cp-section,
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-panel {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding-inline: 0;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-toolbar {
+  margin-bottom: 18px;
+  gap: 10px;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-toolbar .ac-input,
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-toolbar .cp-btn {
+  background: var(--db-panel);
+  border-color: var(--db-line);
+  color: var(--db-ink);
+  backdrop-filter: blur(10px);
+}
+
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "hero"
+    "sun"
+    "devotion";
+  gap: 8px 20px;
+  align-items: start;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-hero { grid-area: hero; }
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-horizon { grid-area: sun; }
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments { grid-area: devotion; }
+
+@media (min-width: 900px) {
+  html:not(.app-mode) body.home-web.home-dayboard .dayboard-grid {
+    grid-template-columns: minmax(280px, .9fr) minmax(340px, 1.1fr);
+    grid-template-areas:
+      "hero sun"
+      "devotion devotion";
+    min-height: min(62vh, 560px);
+  }
+}
+
+/* Hero: city + time */
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-hero,
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-hero .cp-clock-mid {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-hero .lt-analog,
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-hero #ltAnalog {
+  display: none !important;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-hero .eyebrow {
+  color: var(--db-ink-2);
+  margin-bottom: 8px;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-hero .lt-city {
+  display: block;
+  font-family: "Literata", "IBM Plex Sans Arabic", serif;
+  font-size: clamp(2.6rem, 8vw, 4.4rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -.03em;
+  color: var(--db-ink);
+  margin: 0 0 6px;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-hero .lt-time {
+  display: block;
+  font-size: clamp(1.55rem, 3.6vw, 2.15rem);
+  font-weight: 650;
+  color: color-mix(in srgb, var(--db-ink) 78%, var(--db-gold));
+  letter-spacing: -.02em;
+  text-shadow: none;
+  opacity: .92;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-hero .lt-weekday,
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-hero .lt-meta {
+  color: var(--db-ink-2);
+  font-size: .95rem;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-hero .cp-next {
+  display: none !important;
+}
+
+/* Sun horizon + hero countdown */
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-horizon {
+  border: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-horizon .sun-arc-stage {
+  max-height: none;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-horizon .sun-arc-stage::before {
+  opacity: .25;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-horizon .sun-arc-svg {
+  height: auto;
+  margin: 0;
+  max-height: 220px;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-horizon .sun-arc-center {
+  padding: 48px 16px 12px;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-countdown,
+html:not(.app-mode) body.home-web.home-dayboard #sunArcNext {
+  font-size: clamp(1.35rem, 3.8vw, 2rem);
+  line-height: 1.25;
+  font-weight: 750;
+  color: var(--db-ink);
+  text-align: center;
+  animation: dayboardIn .55s ease both;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-countdown strong {
+  display: block;
+  font-family: "Literata", "IBM Plex Sans Arabic", serif;
+  font-size: 1.15em;
+  color: var(--db-gold);
+  margin-bottom: 4px;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-countdown .sun-arc-in {
+  color: var(--db-ink);
+  font-weight: 700;
+  font-size: .92em;
+}
+@keyframes dayboardIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Prayer timeline */
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments {
+  margin-top: clamp(18px, 3vw, 32px);
+  padding: 18px 16px 8px;
+  border-radius: 18px;
+  background: var(--db-panel);
+  border: 1px solid var(--db-line);
+  backdrop-filter: blur(12px);
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .cp-dev-title {
+  color: var(--db-ink);
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: .02em;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .datebar,
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .muted,
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .datebar-val {
+  color: var(--db-ink-2);
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 8px;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  gap: 2px 12px;
+  align-items: baseline;
+  margin: 0;
+  padding: 12px 4px;
+  border: 0;
+  border-bottom: 1px solid var(--db-line);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--db-ink);
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-card[data-p="Sunrise"] {
+  opacity: .72;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-name {
+  font-size: 1rem;
+  font-weight: 700;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-time {
+  font-size: 1.05rem;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+  color: var(--db-ink);
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-tag {
+  grid-column: 1 / -1;
+  color: var(--db-gold);
+  font-size: .82rem;
+  font-weight: 700;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-card.is-next {
+  background: color-mix(in srgb, var(--db-gold) 12%, transparent);
+  border-radius: 10px;
+  padding-inline: 10px;
+  border-bottom-color: transparent;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .cp-next {
+  margin-top: 12px;
+  background: transparent;
+  border: 0;
+  color: var(--db-ink-2);
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .cp-streak,
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .cp-checkin-q,
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .cp-streak-main,
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .cp-week,
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .cp-dua,
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .city-pulse {
+  color: var(--db-ink);
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .cp-week {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--db-line);
+}
+
+/* Spotlight / reflection editorial */
+html:not(.app-mode) body.home-web.home-dayboard .home-spotlight {
+  margin-top: 22px;
+  border-top: 1px solid var(--db-line);
+  padding-top: 22px;
+}
+html:not(.app-mode) body.home-web.home-dayboard .daily-reflection--home {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 8px 0;
+}
+html:not(.app-mode) body.home-web.home-dayboard .daily-reflection--home .dr-text {
+  font-family: "Literata", "IBM Plex Sans Arabic", serif;
+  font-size: clamp(1.2rem, 2.6vw, 1.55rem);
+  line-height: 1.7;
+  color: var(--db-ink);
+  font-weight: 500;
+}
+html:not(.app-mode) body.home-web.home-dayboard .daily-reflection--home .dr-src,
+html:not(.app-mode) body.home-web.home-dayboard .daily-reflection--home .dr-kicker {
+  color: var(--db-ink-2);
+}
+
+/* City constellation */
+html:not(.app-mode) body.home-web.home-dayboard #citiesCta.home-cities,
+html:not(.app-mode) body.home-web.home-dayboard #myCities {
+  color: var(--db-ink);
+}
+html:not(.app-mode) body.home-web.home-dayboard .home-cities-head h2,
+html:not(.app-mode) body.home-web.home-dayboard #myCities .section-head h2 {
+  color: var(--db-ink);
+}
+html:not(.app-mode) body.home-web.home-dayboard .home-cities-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+html:not(.app-mode) body.home-web.home-dayboard .hc-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 92px;
+  min-height: 92px;
+  padding: 12px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--db-line);
+  background: var(--db-panel);
+  box-shadow: none;
+  text-align: center;
+}
+html:not(.app-mode) body.home-web.home-dayboard .hc-name,
+html:not(.app-mode) body.home-web.home-dayboard .hc-time,
+html:not(.app-mode) body.home-web.home-dayboard .hc-dn {
+  color: var(--db-ink);
+}
+html:not(.app-mode) body.home-web.home-dayboard .hc-time {
+  color: var(--db-gold);
+  font-weight: 750;
+}
+
+html:not(.app-mode) body.home-web.home-dayboard .explainer-section,
+html:not(.app-mode) body.home-web.home-dayboard #reflections,
+html:not(.app-mode) body.home-web.home-dayboard .site-footer {
+  color: var(--db-ink);
+}
+html:not(.app-mode) body.home-web.home-dayboard .explainer-title,
+html:not(.app-mode) body.home-web.home-dayboard #reflections .section-head h2 {
+  color: var(--db-ink);
+}
+html:not(.app-mode) body.home-web.home-dayboard .explainer-section .prose,
+html:not(.app-mode) body.home-web.home-dayboard .muted {
+  color: var(--db-ink-2);
+}
+html:not(.app-mode) body.home-web.home-dayboard .guide-card--featured {
+  background: var(--db-panel);
+  border: 1px solid var(--db-line);
+  box-shadow: none;
+  color: var(--db-ink);
+}
+html:not(.app-mode) body.home-web.home-dayboard .site-footer {
+  border-top: 1px solid var(--db-line);
+  background: transparent;
+}
+html:not(.app-mode) body.home-web.home-dayboard .site-footer a {
+  color: var(--db-ink-2);
+}
+
+@media (max-width: 860px) {
+  html:not(.app-mode) body.home-web.home-dayboard .dayboard-horizon .sun-arc-svg {
+    max-height: 168px;
+  }
+  html:not(.app-mode) body.home-web.home-dayboard .dayboard-horizon .sun-arc-center {
+    padding-top: 40px;
+  }
+  html:not(.app-mode) body.home-web.home-dayboard main#top {
+    padding-inline-start: 0 !important;
+  }
+}
+
+/* Dayboard polish: kill legacy glow / surface cards fighting the sky */
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-hero .lt-time,
+html:not(.app-mode) body.home-web.home-dayboard #ltTime {
+  color: color-mix(in srgb, var(--db-ink) 82%, var(--db-gold)) !important;
+  text-shadow: none !important;
+  filter: none !important;
+  background: none !important;
+  -webkit-text-fill-color: unset;
+}
+html:not(.app-mode) body.home-web.home-dayboard .cp-section > .container,
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-panel {
+  max-width: 920px;
+}
+html:not(.app-mode) body.home-web.home-dayboard .help-fab {
+  inset-inline-start: max(14px, env(safe-area-inset-left));
+  bottom: max(18px, env(safe-area-inset-bottom));
+}
+html:not(.app-mode) body.home-web.home-dayboard .sun-arc-marker-label {
+  fill: color-mix(in srgb, var(--db-ink) 88%, transparent);
+}
+
+/* (FAB styles removed — tools button lives in the header) */
+

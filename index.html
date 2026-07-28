@@ -35,9 +35,9 @@
   <!-- ===== Fonts ===== -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="css/style.css?v=150" />
+  <link rel="stylesheet" href="css/style.css?v=154" />
   <link rel="manifest" href="/manifest.webmanifest" />
   <link rel="icon" href="/icons/favicon-64.png" sizes="64x64" type="image/png" />
   <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
@@ -92,7 +92,7 @@
 <script>/* Load AdSense only on the website, NOT inside the native app / installed PWA (AdSense policy compliant) */(function(){try{var q=new URLSearchParams(location.search);var inApp=q.get('app')==='1'||/CityTimeHubApp/i.test(navigator.userAgent||'')||(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true;if(inApp)return;var s=document.createElement('script');s.async=true;s.crossOrigin='anonymous';s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9416184699957518';document.head.appendChild(s);}catch(e){}})();</script>
 </head>
 
-<body class="home-web home-rail-open">
+<body class="home-web home-dayboard" data-sky-phase="night">
 <script>(function(){try{var p=new URLSearchParams(location.search);var s=(matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true;if(p.get('app')==='1'||s){document.documentElement.classList.add('app-mode');var tab=(location.hash||'').replace(/^#/,'');try{if(!tab||['home','prayer','azkar','tools'].indexOf(tab)<0)tab=localStorage.getItem('cth-app-tab')||'home';}catch(e){tab=tab||'home';}if(['home','prayer','azkar','tools'].indexOf(tab)<0)tab='home';document.documentElement.setAttribute('data-app-tab',tab);var st=document.createElement('style');st.textContent='html.app-mode #top>.hero,html.app-mode #tools,html.app-mode #citiesCta,html.app-mode #reflections,html.app-mode #reference,html.app-mode #stats,html.app-mode .explainer-section,html.app-mode .site-footer,html.app-mode .site-header{display:none!important}html.app-mode .app-bar--home{display:flex!important}html.app-mode nav.app-tools,html.app-mode nav.app-legal{display:none!important}html.app-mode[data-app-tab="tools"] nav.app-tools,html.app-mode[data-app-tab="tools"] nav.app-legal{display:block!important}html.app-mode[data-app-tab="prayer"] #cityPanel{display:block!important}html.app-mode:not([data-app-tab="home"]):not([data-app-tab="prayer"]) #cityPanel{display:none!important}html.app-mode:not([data-app-tab="home"]):not([data-app-tab="prayer"]) .cp-toolbar{display:none!important}html.app-mode[data-app-tab="home"] #cthPrayerRemindSlot{display:none!important}';document.head.appendChild(st);}}catch(e){}})();</script>
   <div class="app-bar app-bar--home" role="banner">
     <a class="app-bar-side lang-switch" href="/ar/?app=1" lang="ar" hreflang="ar" aria-label="Switch language · العربية">EN · العربية</a>
@@ -104,9 +104,6 @@
   </div>
   <!-- ===================== HEADER ===================== -->
   <header class="site-header" role="banner">
-    <button type="button" id="homeRailBtn" class="icon-btn home-rail-header-btn" aria-expanded="true" aria-controls="homeRailPanel" aria-label="Show or hide features" title="Features">
-      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="7" height="16" rx="1.5"/><path d="M14 7h7M14 12h7M14 17h5"/></svg>
-    </button>
     <div class="container header-inner">
       <a class="brand" href="index.html" aria-label="CityTimeHub home">
         <span class="brand-mark" aria-hidden="true">
@@ -145,6 +142,10 @@
       </nav>
 
       <div class="header-right">
+        <button type="button" id="homeRailBtn" class="icon-btn home-rail-header-btn dayboard-tools-btn" aria-expanded="false" aria-controls="homeRailPanel" aria-label="Open tools menu" title="Tools">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="4" width="7" height="16" rx="1.5"/><path d="M14 7h7M14 12h7M14 17h5"/></svg>
+          <span class="dayboard-tools-btn-label">Tools</span>
+        </button>
         <a class="lang-switch" href="/ar/" lang="ar" hreflang="ar" aria-label="Switch language · العربية">EN · العربية</a>
         <span class="header-utc" aria-label="Coordinated Universal Time">
           <span class="hu-label">UTC</span>
@@ -165,8 +166,8 @@
       <span class="home-rail-strip-ico" aria-hidden="true">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
       </span>
-      <span class="home-rail-strip-title">Features</span>
-      <span class="home-rail-strip-hint">Tools · Adhkar · Cities</span>
+      <span class="home-rail-strip-title">Tools</span>
+      <span class="home-rail-strip-hint">All features</span>
       <span class="home-rail-strip-chev" aria-hidden="true"></span>
     </label>
     <div class="home-rail-body">
@@ -245,11 +246,11 @@
 
     <!-- ===================== YOUR LOCAL TIME ===================== -->
     <!-- ===================== CITY PANEL (time + prayer + sun) ===================== -->
-    <div class="home-calm">
+    <div class="home-calm dayboard-stage">
       <div class="container home-calm-grid">
     <section id="cityPanel" class="section cp-section" aria-labelledby="cp-h">
-      <div class="container">
-        <div class="cp-toolbar">
+      <div class="container dayboard-panel">
+        <div class="cp-toolbar dayboard-toolbar">
           <div class="ac cp-ac">
             <svg class="cp-search-ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
             <input id="cpSearch" class="ac-input" type="text" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="cpAcList" placeholder="Search by city name" aria-label="Search a city to view its time, prayer times and sunrise" />
@@ -269,8 +270,8 @@
           </button>
         </div>
 
-        <div class="cp-grid">
-          <div class="cp-clock">
+        <div class="cp-grid dayboard-grid">
+          <div class="cp-clock dayboard-hero">
             <div class="cp-clock-mid">
               <span class="eyebrow"><span class="live-dot" aria-hidden="true"></span> <span id="cpEyebrow">Your local time</span></span>
               <div id="ltAnalog" class="lt-analog" role="img" aria-label="Analog clock"></div>
@@ -284,18 +285,18 @@
             </div>
           </div>
 
-          <div class="sun-arc" id="sunArc" aria-label="Sun path and prayer times">
+          <div class="sun-arc dayboard-horizon" id="sunArc" aria-label="Sun path and prayer times">
             <div class="sun-arc-stage">
               <svg id="sunArcSvg" class="sun-arc-svg" viewBox="0 0 360 220" role="img" aria-hidden="true"></svg>
               <div class="sun-arc-center">
-                <p id="sunArcNext" class="sun-arc-next" hidden></p>
+                <p id="sunArcNext" class="sun-arc-next dayboard-countdown" hidden></p>
               </div>
             </div>
           </div>
 
-          <div class="cp-devotion">
+          <div class="cp-devotion dayboard-moments">
             <div class="cp-dev-head">
-              <h3 class="cp-dev-title">Prayer times</h3>
+              <h3 class="cp-dev-title">Moments of the day</h3>
               <div class="datebar datebar--paper" role="group" aria-label="Date">
                 <span class="datebar-item datebar-item--greg">
                   <span class="muted datebar-label">Gregorian</span>
@@ -751,7 +752,7 @@
   <script src="js/daily-reflection.js?v=213" defer></script>
   <script src="js/on-this-day.js?v=188" defer></script>
   <script src="js/tour.js" defer></script>
-  <script src="js/app.js?v=198" defer></script>
+  <script src="js/app.js?v=201" defer></script>
   <script src="/js/hero-globe.js" defer></script>
   <script src="/js/pwa.js?v=113" defer></script>
   <script src="/js/app-tabs.js?v=110" defer></script>
