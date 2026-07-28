@@ -5249,6 +5249,43 @@ html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn[aria-expande
   border-color: color-mix(in srgb, var(--db-gold) 70%, #fff);
   background: color-mix(in srgb, var(--db-gold) 16%, transparent) !important;
 }
+@media (max-width: 720px) {
+  html:not(.app-mode) body.home-web.home-dayboard .site-header .header-inner {
+    gap: 6px;
+    min-width: 0;
+  }
+  html:not(.app-mode) body.home-web.home-dayboard .site-header .header-right {
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  html:not(.app-mode) body.home-web.home-dayboard .site-header .brand-text {
+    font-size: 1.02rem;
+    max-width: 42vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn,
+  html:not(.app-mode) body.home-web.home-dayboard #homeRailBtn.dayboard-tools-btn {
+    min-width: 36px;
+    min-height: 36px;
+    padding: 6px 8px !important;
+    gap: 0;
+  }
+  html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn-label {
+    display: none;
+  }
+  html:not(.app-mode) body.home-web.home-dayboard .site-header .lang-switch {
+    padding: 5px 8px;
+    font-size: .72rem;
+    max-width: 7.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  html:not(.app-mode) body.home-web.home-dayboard .site-header .header-utc {
+    display: none !important;
+  }
+}
 /* Must beat desktop `home-web:not(.home-rail-open) .home-rail { display:none !important }` */
 html:not(.app-mode) body.home-web.home-dayboard .home-rail,
 html:not(.app-mode) body.home-web.home-dayboard:not(.home-rail-open) .home-rail {
@@ -5256,6 +5293,16 @@ html:not(.app-mode) body.home-web.home-dayboard:not(.home-rail-open) .home-rail 
 }
 html:not(.app-mode) body.home-web.home-dayboard .home-rail-backdrop {
   display: none !important;
+}
+html:not(.app-mode) body.home-web.home-dayboard .home-rail-check {
+  position: fixed !important;
+  top: 0;
+  inset-inline-start: 0;
+  width: 1px !important;
+  height: 1px !important;
+  margin: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 html:not(.app-mode) body.home-web.home-dayboard .home-rail-strip {
   display: none !important;
@@ -5269,9 +5316,10 @@ html:not(.app-mode) body.home-web.home-dayboard .home-rail-body {
   top: 0;
   bottom: 0;
   inset-inline-start: 0;
-  width: min(280px, 82vw);
+  width: min(280px, 86vw);
   margin: 0;
   padding: 18px 14px 24px;
+  padding-top: max(18px, env(safe-area-inset-top));
   background: linear-gradient(180deg, #152038 0%, #0c1424 100%);
   color: #f4efe6;
   border-inline-end: 1px solid rgba(232, 196, 138, .2);
@@ -5279,22 +5327,14 @@ html:not(.app-mode) body.home-web.home-dayboard .home-rail-body {
   transform: translateX(-105%);
   transition: transform .22s ease;
   overflow: auto;
+  overscroll-behavior: contain;
 }
 html[dir="rtl"]:not(.app-mode) body.home-web.home-dayboard .home-rail-body {
   transform: translateX(105%);
+  box-shadow: -12px 0 40px rgba(0, 0, 0, .28);
 }
 html:not(.app-mode) body.home-web.home-dayboard .home-rail-check:checked ~ .home-rail-body {
   transform: translateX(0);
-}
-/* Keep page content clear of the open side panel ù no screen dimming */
-html:not(.app-mode) body.home-web.home-dayboard.home-dayboard-rail-open main#top {
-  padding-inline-start: min(280px, 82vw) !important;
-  transition: padding-inline-start .22s ease;
-}
-@media (max-width: 720px) {
-  html:not(.app-mode) body.home-web.home-dayboard.home-dayboard-rail-open main#top {
-    padding-inline-start: 0 !important;
-  }
 }
 html:not(.app-mode) body.home-web.home-dayboard .home-rail-close {
   display: grid;
@@ -5303,7 +5343,17 @@ html:not(.app-mode) body.home-web.home-dayboard .home-rail-close {
   height: 36px;
   border-radius: 999px;
   border: 1px solid rgba(244, 239, 230, .2);
+  background: rgba(255, 255, 255, .06);
+  color: inherit;
+  font: inherit;
+  font-size: 1.2rem;
+  line-height: 1;
   cursor: pointer;
+}
+html:not(.app-mode) body.home-web.home-dayboard .home-rail-close:hover,
+html:not(.app-mode) body.home-web.home-dayboard .home-rail-close:focus-visible {
+  background: rgba(255, 255, 255, .12);
+  outline: none;
 }
 html:not(.app-mode) body.home-web.home-dayboard .home-rail-drawer-head {
   display: flex;

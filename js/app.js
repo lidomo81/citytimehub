@@ -1035,8 +1035,9 @@
     };
     if (btn) {
       if (dayboard) {
-        // Dayboard: header button toggles overlay tools drawer (open by default).
+        // Dayboard: header button toggles overlay tools drawer (no page shift / no scroll jump).
         document.body.classList.remove("home-rail-open");
+        document.body.classList.remove("home-dayboard-rail-open");
         btn.classList.remove("dayboard-tools-fab");
         btn.classList.add("dayboard-tools-btn");
         const right = document.querySelector(".site-header .header-right");
@@ -1053,21 +1054,46 @@
         btn.setAttribute("aria-label", LANG === "ar" ? "فتح قائمة الأدوات" : "Open tools menu");
         btn.setAttribute("title", LANG === "ar" ? "الأدوات" : "Tools");
         if (check && !check.dataset.dayboardInit) {
-          // Desktop: open by default. Mobile: start closed so content isn't covered.
-          check.checked = window.matchMedia("(min-width: 721px)").matches;
+          // Desktop: open by default. Mobile: start closed.
+          check.checked = window.matchMedia("(min-width: 861px)").matches;
           check.dataset.dayboardInit = "1";
         }
-        const syncDayboardRail = () => {
-          document.body.classList.toggle("home-dayboard-rail-open", !!(check && check.checked));
-          syncBtn();
-        };
-        syncDayboardRail();
-        btn.addEventListener("click", () => {
+        const setRailOpen = (open) => {
           if (!check) return;
-          check.checked = !check.checked;
-          syncDayboardRail();
+          const y = window.scrollY || window.pageYOffset || 0;
+          check.checked = !!open;
+          // Keep focus off the hidden checkbox — labels used to scroll the page to top.
+          if (document.activeElement === check) {
+            try { check.blur(); } catch (_) {}
+          }
+          syncBtn();
+          // Restore scroll if anything still nudged the viewport.
+          if (Math.abs((window.scrollY || 0) - y) > 1) {
+            window.scrollTo(0, y);
+          }
+        };
+        syncBtn();
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          setRailOpen(!(check && check.checked));
         });
-        if (check) check.addEventListener("change", syncDayboardRail);
+        const closeBtn = document.getElementById("homeRailClose");
+        if (closeBtn) {
+          closeBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            setRailOpen(false);
+          });
+        }
+        if (check) {
+          check.addEventListener("change", () => {
+            // Ignore scroll-into-view side effects from any leftover labels.
+            const y = window.scrollY || 0;
+            syncBtn();
+            requestAnimationFrame(() => {
+              if (Math.abs((window.scrollY || 0) - y) > 1) window.scrollTo(0, y);
+            });
+          });
+        }
       } else {
         // Desktop default open; keep class from HTML. Mobile ignores this class for the edge tab.
         if (deskMq.matches && !document.body.classList.contains("home-rail-open")) {
