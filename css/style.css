@@ -5259,34 +5259,43 @@ html:not(.app-mode) body.home-web.home-dayboard .brand-text span {
   color: var(--db-gold);
 }
 
-/* Tools: overlay drawer � trigger lives in the header */
+/* Tools: control sits on the rail edge (same side as the drawer) */
 html:not(.app-mode) body.home-web.home-dayboard main#top {
   padding-inline-start: 0 !important;
 }
-html:not(.app-mode) body.home-web.home-dayboard .home-rail-header-btn,
-html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn,
-html:not(.app-mode) body.home-web.home-dayboard #homeRailBtn.dayboard-tools-btn {
+html:not(.app-mode) body.home-web.home-dayboard .home-rail > .dayboard-tools-btn,
+html:not(.app-mode) body.home-web.home-dayboard .home-rail > #homeRailBtn.dayboard-tools-btn {
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  position: static !important;
-  inset: auto !important;
-  top: auto !important;
+  gap: 7px;
+  position: fixed !important;
+  z-index: 96;
+  top: calc(58px + env(safe-area-inset-top, 0px));
+  inset-inline-start: 10px;
+  inset-inline-end: auto !important;
   bottom: auto !important;
   width: auto !important;
   height: auto !important;
-  min-width: 0;
-  min-height: 36px;
+  min-width: 42px;
+  min-height: 42px;
   margin: 0;
-  padding: 6px 12px !important;
-  border-radius: 999px !important;
-  border: 1px solid color-mix(in srgb, var(--db-gold) 40%, transparent) !important;
-  background: color-mix(in srgb, var(--db-panel) 80%, transparent) !important;
-  color: var(--db-gold) !important;
-  box-shadow: none !important;
+  padding: 8px 12px !important;
+  border-radius: 14px !important;
+  border: 1px solid color-mix(in srgb, var(--db-gold) 42%, var(--db-line)) !important;
+  background: color-mix(in srgb, var(--db-panel) 88%, transparent) !important;
+  color: var(--db-ink) !important;
+  box-shadow: 0 10px 28px -16px rgba(0, 0, 0, .45) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   transform: none !important;
   cursor: pointer;
+  transition: background .18s ease, border-color .18s ease, box-shadow .18s ease, inset-inline-start .22s ease;
+}
+html:not(.app-mode) body.home-web.home-dayboard .home-rail > .dayboard-tools-btn .dayboard-tools-ico {
+  flex: none;
+  display: block;
+  color: var(--db-gold);
 }
 html:not(.app-mode) body.home-web.home-dayboard .home-rail-header-btn::after,
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn::after {
@@ -5299,8 +5308,14 @@ html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn-label {
   color: inherit;
 }
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn[aria-expanded="true"] {
-  border-color: color-mix(in srgb, var(--db-gold) 70%, #fff);
-  background: color-mix(in srgb, var(--db-gold) 16%, transparent) !important;
+  border-color: color-mix(in srgb, var(--db-gold) 65%, var(--db-line));
+  background: color-mix(in srgb, var(--db-panel) 96%, var(--db-gold)) !important;
+  box-shadow: 0 12px 30px -14px rgba(0, 0, 0, .4) !important;
+}
+/* Sit on top of the open drawer */
+html:not(.app-mode) body.home-web.home-dayboard.home-dayboard-rail-open .home-rail > .dayboard-tools-btn {
+  inset-inline-start: 14px;
+  top: calc(58px + env(safe-area-inset-top, 0px));
 }
 @media (max-width: 720px) {
   html:not(.app-mode) body.home-web.home-dayboard .site-header .header-inner {
@@ -5313,17 +5328,18 @@ html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn[aria-expande
   }
   html:not(.app-mode) body.home-web.home-dayboard .site-header .brand-text {
     font-size: 1.02rem;
-    max-width: 42vw;
+    max-width: 52vw;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn,
-  html:not(.app-mode) body.home-web.home-dayboard #homeRailBtn.dayboard-tools-btn {
-    min-width: 36px;
-    min-height: 36px;
-    padding: 6px 8px !important;
+  html:not(.app-mode) body.home-web.home-dayboard .home-rail > .dayboard-tools-btn,
+  html:not(.app-mode) body.home-web.home-dayboard .home-rail > #homeRailBtn.dayboard-tools-btn {
+    min-width: 40px;
+    min-height: 40px;
+    padding: 8px !important;
     gap: 0;
+    border-radius: 12px !important;
   }
   html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn-label {
     display: none;
@@ -5372,19 +5388,26 @@ html:not(.app-mode) body.home-web.home-dayboard .home-rail-body {
   width: min(280px, 86vw);
   margin: 0;
   padding: 18px 14px 24px;
-  padding-top: max(18px, env(safe-area-inset-top));
-  background: linear-gradient(180deg, #152038 0%, #0c1424 100%);
-  color: #f4efe6;
-  border-inline-end: 1px solid rgba(232, 196, 138, .2);
-  box-shadow: 12px 0 40px rgba(0, 0, 0, .28);
+  padding-top: max(18px, calc(env(safe-area-inset-top, 0px) + 12px));
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--db-panel) 94%, var(--sky-top, #1a2744)) 0%,
+      color-mix(in srgb, var(--db-panel) 90%, var(--sky-mid, #0d1528)) 100%
+    );
+  color: var(--db-ink);
+  border-inline-end: 1px solid var(--db-line);
+  box-shadow: 12px 0 40px rgba(0, 0, 0, .22);
   transform: translateX(-105%);
-  transition: transform .22s ease;
+  transition: transform .22s ease, background .2s ease, color .2s ease, border-color .2s ease;
   overflow: auto;
   overscroll-behavior: contain;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 html[dir="rtl"]:not(.app-mode) body.home-web.home-dayboard .home-rail-body {
   transform: translateX(105%);
-  box-shadow: -12px 0 40px rgba(0, 0, 0, .28);
+  box-shadow: -12px 0 40px rgba(0, 0, 0, .22);
 }
 html:not(.app-mode) body.home-web.home-dayboard .home-rail-check:checked ~ .home-rail-body {
   transform: translateX(0);
@@ -5395,9 +5418,9 @@ html:not(.app-mode) body.home-web.home-dayboard .home-rail-close {
   width: 36px;
   height: 36px;
   border-radius: 999px;
-  border: 1px solid rgba(244, 239, 230, .2);
-  background: rgba(255, 255, 255, .06);
-  color: inherit;
+  border: 1px solid var(--db-line);
+  background: color-mix(in srgb, var(--db-ink) 6%, transparent);
+  color: var(--db-ink);
   font: inherit;
   font-size: 1.2rem;
   line-height: 1;
@@ -5405,7 +5428,7 @@ html:not(.app-mode) body.home-web.home-dayboard .home-rail-close {
 }
 html:not(.app-mode) body.home-web.home-dayboard .home-rail-close:hover,
 html:not(.app-mode) body.home-web.home-dayboard .home-rail-close:focus-visible {
-  background: rgba(255, 255, 255, .12);
+  background: color-mix(in srgb, var(--db-gold) 16%, transparent);
   outline: none;
 }
 html:not(.app-mode) body.home-web.home-dayboard .home-rail-drawer-head {
@@ -5417,6 +5440,27 @@ html:not(.app-mode) body.home-web.home-dayboard .home-rail-drawer-head {
 html:not(.app-mode) body.home-web.home-dayboard .home-rail-lab {
   font-weight: 800;
   color: var(--db-gold);
+}
+html:not(.app-mode) body.home-web.home-dayboard .home-rail-sec[open] {
+  border-color: var(--db-line);
+  background: color-mix(in srgb, var(--db-ink) 4%, transparent);
+}
+html:not(.app-mode) body.home-web.home-dayboard .home-rail-sec summary {
+  color: var(--db-ink);
+}
+html:not(.app-mode) body.home-web.home-dayboard .home-rail-sec summary::after {
+  border-inline-end-color: color-mix(in srgb, var(--db-ink) 45%, transparent);
+  border-block-end-color: color-mix(in srgb, var(--db-ink) 45%, transparent);
+}
+html:not(.app-mode) body.home-web.home-dayboard .home-rail-sec summary:hover {
+  background: color-mix(in srgb, var(--db-gold) 12%, transparent);
+}
+html:not(.app-mode) body.home-web.home-dayboard .home-rail a {
+  color: var(--db-ink-2);
+}
+html:not(.app-mode) body.home-web.home-dayboard .home-rail a:hover {
+  background: color-mix(in srgb, var(--db-gold) 12%, transparent);
+  color: var(--db-ink);
 }
 
 /* Stage */
@@ -5998,6 +6042,24 @@ html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .site-header
   background: color-mix(in srgb, #ffffff 82%, transparent);
   border-bottom: 1px solid var(--db-line);
   color: var(--db-ink);
+}
+html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .home-rail-body {
+  background: linear-gradient(180deg, #ffffff 0%, #f2f5f9 100%);
+  color: var(--db-ink);
+  border-inline-end: 1px solid rgba(20, 32, 51, .12);
+  box-shadow: 12px 0 36px rgba(20, 32, 51, .14);
+}
+html[dir="rtl"][data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .home-rail-body {
+  box-shadow: -12px 0 36px rgba(20, 32, 51, .14);
+}
+html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .home-rail > .dayboard-tools-btn {
+  background: rgba(255, 255, 255, .92) !important;
+  border-color: rgba(20, 32, 51, .14) !important;
+  color: #142033 !important;
+  box-shadow: 0 10px 24px -14px rgba(20, 32, 51, .35) !important;
+}
+html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .home-rail > .dayboard-tools-btn .dayboard-tools-ico {
+  color: #8f5f12;
 }
 html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .dayboard-moments {
   background: var(--db-panel);
