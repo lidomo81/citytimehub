@@ -5259,7 +5259,7 @@ html:not(.app-mode) body.home-web.home-dayboard .brand-text span {
   color: var(--db-gold);
 }
 
-/* Tools: header control beside the brand (same side as the drawer) */
+/* Tools: fixed in the header corner above the rail (far inline-start) */
 html:not(.app-mode) body.home-web.home-dayboard main#top {
   padding-inline-start: 0 !important;
 }
@@ -5268,6 +5268,7 @@ html:not(.app-mode) body.home-web.home-dayboard .site-header {
 }
 html:not(.app-mode) body.home-web.home-dayboard .site-header .header-inner {
   gap: 10px;
+  padding-inline-start: 52px;
 }
 html:not(.app-mode) body.home-web.home-dayboard .home-rail-header-btn,
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn,
@@ -5275,24 +5276,27 @@ html:not(.app-mode) body.home-web.home-dayboard #homeRailBtn.dayboard-tools-btn 
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
-  position: static !important;
-  inset: auto !important;
+  position: fixed !important;
+  z-index: 110;
+  top: calc(13px + env(safe-area-inset-top, 0px));
+  inset-inline-start: max(12px, env(safe-area-inset-inline-start, 0px));
+  inset-inline-end: auto !important;
+  bottom: auto !important;
   flex: none;
   width: 40px !important;
   height: 40px !important;
   min-width: 40px;
   min-height: 40px;
-  margin: 0;
-  margin-inline-start: 2px;
+  margin: 0 !important;
   padding: 0 !important;
   border-radius: 12px !important;
   border: 1px solid color-mix(in srgb, var(--db-ink) 14%, transparent) !important;
-  background: color-mix(in srgb, var(--db-panel) 70%, transparent) !important;
+  background: color-mix(in srgb, var(--db-panel) 82%, #fff) !important;
   color: var(--db-ink) !important;
-  box-shadow: none !important;
+  box-shadow: 0 8px 20px -14px rgba(0, 0, 0, .35) !important;
   transform: none !important;
   cursor: pointer;
-  transition: background .18s ease, border-color .18s ease, color .18s ease;
+  transition: background .18s ease, border-color .18s ease, color .18s ease, box-shadow .18s ease;
 }
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn .dayboard-tools-ico {
   display: block;
@@ -5307,19 +5311,21 @@ html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn-label {
 }
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn:hover,
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn:focus-visible {
-  background: color-mix(in srgb, var(--db-gold) 14%, transparent) !important;
-  border-color: color-mix(in srgb, var(--db-gold) 40%, transparent) !important;
+  background: color-mix(in srgb, var(--db-gold) 16%, #fff) !important;
+  border-color: color-mix(in srgb, var(--db-gold) 45%, transparent) !important;
   outline: none;
 }
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn[aria-expanded="true"] {
-  background: color-mix(in srgb, var(--db-gold) 18%, transparent) !important;
+  background: color-mix(in srgb, var(--db-gold) 20%, #fff) !important;
   border-color: color-mix(in srgb, var(--db-gold) 55%, transparent) !important;
   color: var(--db-gold) !important;
+  box-shadow: 0 10px 22px -12px rgba(0, 0, 0, .4) !important;
 }
 @media (max-width: 720px) {
   html:not(.app-mode) body.home-web.home-dayboard .site-header .header-inner {
     gap: 6px;
     min-width: 0;
+    padding-inline-start: 46px;
   }
   html:not(.app-mode) body.home-web.home-dayboard .site-header .header-right {
     gap: 6px;
@@ -5339,6 +5345,7 @@ html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn[aria-expande
     min-width: 36px;
     min-height: 36px;
     border-radius: 10px !important;
+    top: calc(15px + env(safe-area-inset-top, 0px));
   }
   html:not(.app-mode) body.home-web.home-dayboard .site-header .lang-switch {
     padding: 5px 8px;
@@ -5392,16 +5399,16 @@ html:not(.app-mode) body.home-web.home-dayboard .home-rail-body {
   background: var(--db-chrome);
   color: var(--db-ink);
   border: none;
-  border-inline-end: 1px solid color-mix(in srgb, var(--db-line) 70%, transparent);
-  box-shadow: 12px 0 40px rgba(0, 0, 0, .18);
+  border-inline-end: none;
+  box-shadow: none;
   transform: translateX(-105%);
-  transition: transform .22s ease, background .2s ease, color .2s ease, border-color .2s ease;
+  transition: transform .22s ease, background .2s ease, color .2s ease;
   overflow: auto;
   overscroll-behavior: contain;
 }
 html[dir="rtl"]:not(.app-mode) body.home-web.home-dayboard .home-rail-body {
   transform: translateX(105%);
-  box-shadow: -12px 0 40px rgba(0, 0, 0, .18);
+  box-shadow: none;
 }
 html:not(.app-mode) body.home-web.home-dayboard .home-rail-check:checked ~ .home-rail-body {
   transform: translateX(0);
@@ -6044,7 +6051,7 @@ html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .site-header
   color: var(--db-ink);
 }
 html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard {
-  --db-chrome: #f4f6fa;
+  --db-chrome: #ffffff;
 }
 html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard.home-dayboard-rail-open .site-header {
   background: var(--db-chrome);
@@ -6053,19 +6060,20 @@ html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard.home-dayboar
 html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .home-rail-body {
   background: var(--db-chrome);
   color: var(--db-ink);
-  border-inline-end: 1px solid rgba(20, 32, 51, .1);
-  box-shadow: 12px 0 36px rgba(20, 32, 51, .1);
+  border-inline-end: none;
+  box-shadow: none;
 }
 html[dir="rtl"][data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .home-rail-body {
-  box-shadow: -12px 0 36px rgba(20, 32, 51, .1);
+  box-shadow: none;
 }
 html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn {
-  background: rgba(255, 255, 255, .88) !important;
-  border-color: rgba(20, 32, 51, .12) !important;
+  background: #ffffff !important;
+  border-color: rgba(20, 32, 51, .14) !important;
   color: #142033 !important;
+  box-shadow: 0 6px 16px -10px rgba(20, 32, 51, .28) !important;
 }
 html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn .dayboard-tools-ico {
-  color: #8f5f12;
+  color: #7a4e14;
 }
 html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .dayboard-moments {
   background: var(--db-panel);
