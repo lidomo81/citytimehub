@@ -5335,36 +5335,40 @@ html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn[aria-expande
   html:not(.app-mode) body.home-web.home-dayboard .site-header .header-inner {
     gap: 6px;
     min-width: 0;
-    padding-inline-start: 108px;
+    padding-inline-start: 48px;
   }
   html:not(.app-mode) body.home-web.home-dayboard .site-header .header-right {
     gap: 6px;
     flex-shrink: 0;
   }
+  /* Free space on the phone header */
+  html:not(.app-mode) body.home-web.home-dayboard .site-share-btn {
+    display: none !important;
+  }
   html:not(.app-mode) body.home-web.home-dayboard .site-header .brand-text {
     font-size: 1.02rem;
-    max-width: 34vw;
+    max-width: 42vw;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
   html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn,
   html:not(.app-mode) body.home-web.home-dayboard #homeRailBtn.dayboard-tools-btn {
-    width: auto !important;
-    height: 36px !important;
-    min-width: 96px;
-    min-height: 36px;
-    padding: 0 12px !important;
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px;
+    min-height: 34px;
+    padding: 0 !important;
     border-radius: 10px !important;
-    top: calc(15px + env(safe-area-inset-top, 0px));
-    gap: 6px;
+    top: calc(16px + env(safe-area-inset-top, 0px));
+    gap: 0;
   }
   html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn .dayboard-tools-ico {
-    width: 20px;
-    height: 20px;
+    width: 17px;
+    height: 17px;
   }
   html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn-label {
-    font-size: .82rem;
+    display: none !important;
   }
   html:not(.app-mode) body.home-web.home-dayboard .site-header .lang-switch {
     padding: 5px 8px;
