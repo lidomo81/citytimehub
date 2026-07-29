@@ -1035,32 +1035,28 @@
     };
     if (btn) {
       if (dayboard) {
-        // Dayboard: tools control sits on the rail edge (same side as the drawer).
+        // Dayboard: tools control lives in the header beside the brand (rail side).
         document.body.classList.remove("home-rail-open");
         document.body.classList.remove("home-dayboard-rail-open");
         btn.classList.remove("dayboard-tools-fab");
         btn.classList.add("dayboard-tools-btn");
-        const rail = document.getElementById("homeRailPanel");
-        const railBody = rail && rail.querySelector(".home-rail-body");
-        if (rail && railBody && btn.parentElement !== rail) {
-          rail.insertBefore(btn, railBody);
+        const brand = document.querySelector(".site-header .brand");
+        if (brand && btn.parentElement !== brand.parentElement) {
+          brand.insertAdjacentElement("afterend", btn);
+        } else if (brand && btn.previousElementSibling !== brand) {
+          brand.insertAdjacentElement("afterend", btn);
         }
-        let lab = btn.querySelector(".dayboard-tools-btn-label");
-        if (!lab) {
-          lab = document.createElement("span");
-          lab.className = "dayboard-tools-btn-label";
-          btn.appendChild(lab);
-        }
-        lab.textContent = LANG === "ar" ? "أدوات" : "Tools";
+        const lab = btn.querySelector(".dayboard-tools-btn-label");
+        if (lab) lab.remove();
         btn.setAttribute("aria-label", LANG === "ar" ? "فتح قائمة الأدوات" : "Open tools menu");
         btn.setAttribute("title", LANG === "ar" ? "الأدوات" : "Tools");
-        if (!btn.querySelector(".dayboard-tools-ico")) {
-          btn.insertAdjacentHTML(
-            "afterbegin",
-            '<svg class="dayboard-tools-ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.8"/><rect x="13" y="4" width="7" height="7" rx="1.8"/><rect x="4" y="13" width="7" height="7" rx="1.8"/><rect x="13" y="13" width="7" height="7" rx="1.8"/></svg>'
-          );
-          const oldSvg = btn.querySelector("svg:not(.dayboard-tools-ico)");
-          if (oldSvg) oldSvg.remove();
+        const ico = '<svg class="dayboard-tools-ico" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><path d="M9.5 4.5v15"/></svg>';
+        const existing = btn.querySelector(".dayboard-tools-ico");
+        if (existing) {
+          existing.outerHTML = ico;
+        } else {
+          btn.querySelectorAll("svg").forEach((s) => s.remove());
+          btn.insertAdjacentHTML("afterbegin", ico);
         }
         if (check && !check.dataset.dayboardInit) {
           // Desktop: open by default. Mobile: start closed.

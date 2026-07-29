@@ -5259,41 +5259,42 @@ html:not(.app-mode) body.home-web.home-dayboard .brand-text span {
   color: var(--db-gold);
 }
 
-/* Tools: control sits on the rail edge (same side as the drawer) */
+/* Tools: header control beside the brand (same side as the drawer) */
 html:not(.app-mode) body.home-web.home-dayboard main#top {
   padding-inline-start: 0 !important;
 }
-html:not(.app-mode) body.home-web.home-dayboard .home-rail > .dayboard-tools-btn,
-html:not(.app-mode) body.home-web.home-dayboard .home-rail > #homeRailBtn.dayboard-tools-btn {
+html:not(.app-mode) body.home-web.home-dayboard .site-header {
+  z-index: 100;
+}
+html:not(.app-mode) body.home-web.home-dayboard .site-header .header-inner {
+  gap: 10px;
+}
+html:not(.app-mode) body.home-web.home-dayboard .home-rail-header-btn,
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn,
+html:not(.app-mode) body.home-web.home-dayboard #homeRailBtn.dayboard-tools-btn {
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
-  gap: 7px;
-  position: fixed !important;
-  z-index: 96;
-  top: calc(58px + env(safe-area-inset-top, 0px));
-  inset-inline-start: 10px;
-  inset-inline-end: auto !important;
-  bottom: auto !important;
-  width: auto !important;
-  height: auto !important;
-  min-width: 42px;
-  min-height: 42px;
+  position: static !important;
+  inset: auto !important;
+  flex: none;
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px;
+  min-height: 40px;
   margin: 0;
-  padding: 8px 12px !important;
-  border-radius: 14px !important;
-  border: 1px solid color-mix(in srgb, var(--db-gold) 42%, var(--db-line)) !important;
-  background: color-mix(in srgb, var(--db-panel) 88%, transparent) !important;
+  margin-inline-start: 2px;
+  padding: 0 !important;
+  border-radius: 12px !important;
+  border: 1px solid color-mix(in srgb, var(--db-ink) 14%, transparent) !important;
+  background: color-mix(in srgb, var(--db-panel) 70%, transparent) !important;
   color: var(--db-ink) !important;
-  box-shadow: 0 10px 28px -16px rgba(0, 0, 0, .45) !important;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  box-shadow: none !important;
   transform: none !important;
   cursor: pointer;
-  transition: background .18s ease, border-color .18s ease, box-shadow .18s ease, inset-inline-start .22s ease;
+  transition: background .18s ease, border-color .18s ease, color .18s ease;
 }
-html:not(.app-mode) body.home-web.home-dayboard .home-rail > .dayboard-tools-btn .dayboard-tools-ico {
-  flex: none;
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn .dayboard-tools-ico {
   display: block;
   color: var(--db-gold);
 }
@@ -5302,20 +5303,18 @@ html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn::after {
   content: none !important;
 }
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn-label {
-  font-size: .82rem;
-  font-weight: 800;
-  letter-spacing: .02em;
-  color: inherit;
+  display: none !important;
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn:hover,
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn:focus-visible {
+  background: color-mix(in srgb, var(--db-gold) 14%, transparent) !important;
+  border-color: color-mix(in srgb, var(--db-gold) 40%, transparent) !important;
+  outline: none;
 }
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn[aria-expanded="true"] {
-  border-color: color-mix(in srgb, var(--db-gold) 65%, var(--db-line));
-  background: color-mix(in srgb, var(--db-panel) 96%, var(--db-gold)) !important;
-  box-shadow: 0 12px 30px -14px rgba(0, 0, 0, .4) !important;
-}
-/* Sit on top of the open drawer */
-html:not(.app-mode) body.home-web.home-dayboard.home-dayboard-rail-open .home-rail > .dayboard-tools-btn {
-  inset-inline-start: 14px;
-  top: calc(58px + env(safe-area-inset-top, 0px));
+  background: color-mix(in srgb, var(--db-gold) 18%, transparent) !important;
+  border-color: color-mix(in srgb, var(--db-gold) 55%, transparent) !important;
+  color: var(--db-gold) !important;
 }
 @media (max-width: 720px) {
   html:not(.app-mode) body.home-web.home-dayboard .site-header .header-inner {
@@ -5328,21 +5327,18 @@ html:not(.app-mode) body.home-web.home-dayboard.home-dayboard-rail-open .home-ra
   }
   html:not(.app-mode) body.home-web.home-dayboard .site-header .brand-text {
     font-size: 1.02rem;
-    max-width: 52vw;
+    max-width: 38vw;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  html:not(.app-mode) body.home-web.home-dayboard .home-rail > .dayboard-tools-btn,
-  html:not(.app-mode) body.home-web.home-dayboard .home-rail > #homeRailBtn.dayboard-tools-btn {
-    min-width: 40px;
-    min-height: 40px;
-    padding: 8px !important;
-    gap: 0;
-    border-radius: 12px !important;
-  }
-  html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn-label {
-    display: none;
+  html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn,
+  html:not(.app-mode) body.home-web.home-dayboard #homeRailBtn.dayboard-tools-btn {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px;
+    min-height: 36px;
+    border-radius: 10px !important;
   }
   html:not(.app-mode) body.home-web.home-dayboard .site-header .lang-switch {
     padding: 5px 8px;
@@ -5376,41 +5372,45 @@ html:not(.app-mode) body.home-web.home-dayboard .home-rail-check {
 html:not(.app-mode) body.home-web.home-dayboard .home-rail-strip {
   display: none !important;
 }
+/* Rail merges under the header — one continuous surface, no seam line */
+html:not(.app-mode) body.home-web.home-dayboard {
+  --db-chrome: color-mix(in srgb, var(--sky-top, #1a2744) 82%, #070b14);
+}
 html:not(.app-mode) body.home-web.home-dayboard .home-rail-body {
   display: flex;
   flex-direction: column;
   gap: 8px;
   position: fixed;
-  z-index: 95;
+  z-index: 90;
   top: 0;
   bottom: 0;
   inset-inline-start: 0;
   width: min(280px, 86vw);
   margin: 0;
-  padding: 18px 14px 24px;
-  padding-top: max(18px, calc(env(safe-area-inset-top, 0px) + 12px));
-  background:
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--db-panel) 94%, var(--sky-top, #1a2744)) 0%,
-      color-mix(in srgb, var(--db-panel) 90%, var(--sky-mid, #0d1528)) 100%
-    );
+  padding: 14px 14px 24px;
+  padding-top: calc(66px + env(safe-area-inset-top, 0px) + 10px);
+  background: var(--db-chrome);
   color: var(--db-ink);
-  border-inline-end: 1px solid var(--db-line);
-  box-shadow: 12px 0 40px rgba(0, 0, 0, .22);
+  border: none;
+  border-inline-end: 1px solid color-mix(in srgb, var(--db-line) 70%, transparent);
+  box-shadow: 12px 0 40px rgba(0, 0, 0, .18);
   transform: translateX(-105%);
   transition: transform .22s ease, background .2s ease, color .2s ease, border-color .2s ease;
   overflow: auto;
   overscroll-behavior: contain;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
 }
 html[dir="rtl"]:not(.app-mode) body.home-web.home-dayboard .home-rail-body {
   transform: translateX(105%);
-  box-shadow: -12px 0 40px rgba(0, 0, 0, .22);
+  box-shadow: -12px 0 40px rgba(0, 0, 0, .18);
 }
 html:not(.app-mode) body.home-web.home-dayboard .home-rail-check:checked ~ .home-rail-body {
   transform: translateX(0);
+}
+html:not(.app-mode) body.home-web.home-dayboard.home-dayboard-rail-open .site-header {
+  border-bottom-color: transparent;
+  background: var(--db-chrome);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 html:not(.app-mode) body.home-web.home-dayboard .home-rail-close {
   display: grid;
@@ -6043,22 +6043,28 @@ html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .site-header
   border-bottom: 1px solid var(--db-line);
   color: var(--db-ink);
 }
+html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard {
+  --db-chrome: #f4f6fa;
+}
+html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard.home-dayboard-rail-open .site-header {
+  background: var(--db-chrome);
+  border-bottom-color: transparent;
+}
 html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .home-rail-body {
-  background: linear-gradient(180deg, #ffffff 0%, #f2f5f9 100%);
+  background: var(--db-chrome);
   color: var(--db-ink);
-  border-inline-end: 1px solid rgba(20, 32, 51, .12);
-  box-shadow: 12px 0 36px rgba(20, 32, 51, .14);
+  border-inline-end: 1px solid rgba(20, 32, 51, .1);
+  box-shadow: 12px 0 36px rgba(20, 32, 51, .1);
 }
 html[dir="rtl"][data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .home-rail-body {
-  box-shadow: -12px 0 36px rgba(20, 32, 51, .14);
+  box-shadow: -12px 0 36px rgba(20, 32, 51, .1);
 }
-html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .home-rail > .dayboard-tools-btn {
-  background: rgba(255, 255, 255, .92) !important;
-  border-color: rgba(20, 32, 51, .14) !important;
+html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn {
+  background: rgba(255, 255, 255, .88) !important;
+  border-color: rgba(20, 32, 51, .12) !important;
   color: #142033 !important;
-  box-shadow: 0 10px 24px -14px rgba(20, 32, 51, .35) !important;
 }
-html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .home-rail > .dayboard-tools-btn .dayboard-tools-ico {
+html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn .dayboard-tools-ico {
   color: #8f5f12;
 }
 html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .dayboard-moments {
