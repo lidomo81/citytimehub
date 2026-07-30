@@ -270,6 +270,13 @@
         document.documentElement.setAttribute("data-theme", next);
         localStorage.setItem("cth-theme", next);
         syncTheme(next);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute("content", next === "dark" ? "#16356b" : "#5b8fc7");
+        // Re-apply sky phase so light theme gets living colors again after a toggle.
+        try {
+          document.body.removeAttribute("data-sky-phase");
+          syncDayboardSky();
+        } catch (e) {}
       });
     });
   }
@@ -896,8 +903,14 @@
       document.body.setAttribute("data-sky-phase", phase);
       const meta = document.querySelector('meta[name="theme-color"]');
       if (meta) {
-        const colors = { dawn: "#6b4a5c", day: "#5b8fc7", asr: "#c4895a", maghrib: "#6a3350", night: "#0b1224" };
-        meta.setAttribute("content", colors[phase] || "#0b1224");
+        const theme = document.documentElement.getAttribute("data-theme");
+        // Dark theme keeps a stable night-blue chrome; living sky colors are light-only.
+        if (theme === "dark") {
+          meta.setAttribute("content", "#16356b");
+        } else {
+          const colors = { dawn: "#6b4a5c", day: "#5b8fc7", asr: "#c4895a", maghrib: "#6a3350", night: "#0b1224" };
+          meta.setAttribute("content", colors[phase] || "#0b1224");
+        }
       }
     }
   }
