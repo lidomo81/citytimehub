@@ -5327,7 +5327,7 @@ html[data-theme="dark"]:not(.app-mode) body.home-web.home-dayboard #homeRailBtn.
   box-shadow: 0 8px 20px -14px rgba(0, 0, 0, .7) !important;
 }
 html[data-theme="dark"]:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn .dayboard-tools-ico {
-  color: #ffd486;
+  color: var(--db-ink);
 }
 html[data-theme="dark"]:not(.app-mode) body.home-web.home-dayboard .home-rail {
   background: #111a30;
@@ -5343,10 +5343,9 @@ html[data-theme="dark"]:not(.app-mode) body.home-web.home-dayboard .guide-card--
   color: #eaf1ff;
 }
 html[data-theme="dark"]:not(.app-mode) body.home-web.home-dayboard .dayboard-horizon .sun-arc-stage {
-  background:
-    radial-gradient(120% 90% at 50% 110%, rgba(56, 189, 248, .12), transparent 55%),
-    linear-gradient(180deg, rgba(22, 53, 107, .35) 0%, rgba(14, 23, 48, .2) 100%);
-  border: 1px solid rgba(120, 160, 230, .18);
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
 }
 
 html:not(.app-mode) body.home-web.home-dayboard .site-header {
@@ -5423,7 +5422,7 @@ html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn .dayboard-to
   flex: none;
   width: 22px;
   height: 22px;
-  color: var(--db-gold);
+  color: currentColor;
 }
 html:not(.app-mode) body.home-web.home-dayboard .home-rail-header-btn::after,
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn::after {
@@ -5713,13 +5712,14 @@ html:not(.app-mode) body.home-web.home-dayboard .dayboard-horizon {
 }
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-horizon .sun-arc-stage {
   max-height: none;
-  background: transparent;
-  border: 0;
-  box-shadow: none;
-  overflow: hidden;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  overflow: visible;
 }
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-horizon .sun-arc-stage::before {
-  opacity: .25;
+  display: none !important;
 }
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-horizon .sun-arc-svg {
   height: auto;
@@ -6275,7 +6275,7 @@ html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .dayboard-to
   box-shadow: 0 6px 16px -10px rgba(20, 32, 51, .28) !important;
 }
 html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn .dayboard-tools-ico {
-  color: #7a4e14;
+  color: currentColor;
 }
 html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .dayboard-moments {
   background: var(--db-panel);
@@ -6306,10 +6306,9 @@ html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .dayboard-to
   box-shadow: 0 6px 16px -12px rgba(20, 32, 51, .3);
 }
 html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .dayboard-horizon .sun-arc-stage {
-  background:
-    radial-gradient(120% 90% at 50% 110%, rgba(56, 189, 248, .1), transparent 55%),
-    linear-gradient(180deg, rgba(255, 255, 255, .55) 0%, rgba(232, 240, 248, .35) 100%);
-  border: 1px solid rgba(20, 32, 51, .1);
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
 }
 html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .sun-arc-path {
   opacity: 1;
