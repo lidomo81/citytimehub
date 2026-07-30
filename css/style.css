@@ -5844,6 +5844,61 @@ html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .cp-week {
   border-top: 1px solid var(--db-line);
 }
 
+/* Nested cards must follow Dayboard ink/panel — never dark-theme --text on --surface */
+html:not(.app-mode) body.home-web.home-dayboard #cityPulse.city-pulse,
+html:not(.app-mode) body.home-web.home-dayboard #occasions.occasions,
+html:not(.app-mode) body.home-web.home-dayboard #prayerInsights.prayer-insights,
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .city-pulse,
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .occasions,
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .prayer-insights {
+  background: var(--db-panel);
+  border: 1px solid var(--db-line);
+  box-shadow: none;
+  color: var(--db-ink);
+}
+html:not(.app-mode) body.home-web.home-dayboard #cityPulse .city-pulse-title,
+html:not(.app-mode) body.home-web.home-dayboard #cityPulse .city-pulse-line,
+html:not(.app-mode) body.home-web.home-dayboard #cityPulse .city-pulse-kicker,
+html:not(.app-mode) body.home-web.home-dayboard #cityPulse .city-pulse-chip,
+html:not(.app-mode) body.home-web.home-dayboard #occasions .occasions-kicker,
+html:not(.app-mode) body.home-web.home-dayboard #occasions .occ-name,
+html:not(.app-mode) body.home-web.home-dayboard #occasions .occ-when,
+html:not(.app-mode) body.home-web.home-dayboard #occasions .occasions-note,
+html:not(.app-mode) body.home-web.home-dayboard #prayerInsights .pi-kicker,
+html:not(.app-mode) body.home-web.home-dayboard #prayerInsights .pi-headline,
+html:not(.app-mode) body.home-web.home-dayboard #prayerInsights .pi-chip,
+html:not(.app-mode) body.home-web.home-dayboard #prayerInsights .pi-note {
+  color: var(--db-ink);
+  opacity: 1;
+}
+html:not(.app-mode) body.home-web.home-dayboard #cityPulse .city-pulse-line,
+html:not(.app-mode) body.home-web.home-dayboard #occasions .occ-when,
+html:not(.app-mode) body.home-web.home-dayboard #occasions .occasions-note,
+html:not(.app-mode) body.home-web.home-dayboard #prayerInsights .pi-note,
+html:not(.app-mode) body.home-web.home-dayboard #prayerInsights .pi-kicker,
+html:not(.app-mode) body.home-web.home-dayboard #cityPulse .city-pulse-kicker {
+  color: var(--db-ink-2);
+}
+html:not(.app-mode) body.home-web.home-dayboard #cityPulse .city-pulse-chips,
+html:not(.app-mode) body.home-web.home-dayboard #occasions .occasions-note,
+html:not(.app-mode) body.home-web.home-dayboard #prayerInsights .pi-note {
+  border-color: var(--db-line);
+}
+html:not(.app-mode) body.home-web.home-dayboard #cityPulse .city-pulse-chip,
+html:not(.app-mode) body.home-web.home-dayboard #prayerInsights .pi-chip {
+  background: color-mix(in srgb, var(--db-ink) 8%, transparent);
+  border-color: var(--db-line);
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .cp-checkin-q,
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .cp-streak-main,
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .cp-streak-sub,
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .cp-dua {
+  color: var(--db-ink);
+}
+html:not(.app-mode) body.home-web.home-dayboard .dayboard-moments .cp-streak-sub {
+  color: var(--db-ink-2);
+}
+
 /* Spotlight / reflection editorial */
 html:not(.app-mode) body.home-web.home-dayboard .home-spotlight {
   margin-top: 22px;
@@ -5851,10 +5906,11 @@ html:not(.app-mode) body.home-web.home-dayboard .home-spotlight {
   padding-top: 22px;
 }
 html:not(.app-mode) body.home-web.home-dayboard .daily-reflection--home {
-  background: transparent;
-  border: 0;
+  background: var(--db-panel);
+  border: 1px solid var(--db-line);
   box-shadow: none;
-  padding: 8px 0;
+  padding: 14px 16px;
+  border-radius: 16px;
 }
 html:not(.app-mode) body.home-web.home-dayboard .daily-reflection--home .dr-text {
   font-family: "Literata", "IBM Plex Sans Arabic", serif;
@@ -5864,8 +5920,12 @@ html:not(.app-mode) body.home-web.home-dayboard .daily-reflection--home .dr-text
   font-weight: 500;
 }
 html:not(.app-mode) body.home-web.home-dayboard .daily-reflection--home .dr-src,
-html:not(.app-mode) body.home-web.home-dayboard .daily-reflection--home .dr-kicker {
+html:not(.app-mode) body.home-web.home-dayboard .daily-reflection--home .dr-kicker,
+html:not(.app-mode) body.home-web.home-dayboard .daily-reflection--home .dr-otd,
+html:not(.app-mode) body.home-web.home-dayboard .daily-reflection--home .dr-otd-label {
   color: var(--db-ink-2);
+  opacity: 1;
+  border-color: var(--db-line);
 }
 
 /* City constellation */
@@ -6169,7 +6229,15 @@ html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .guide-card-
 /* Also harden day/asr sky phases when dark-theme surfaces would clash */
 html:not(.app-mode) body.home-web.home-dayboard[data-sky-phase="day"],
 html:not(.app-mode) body.home-web.home-dayboard[data-sky-phase="asr"] {
-  --db-panel: rgba(255, 255, 255, .55);
+  --db-panel: rgba(255, 255, 255, .72);
+  --db-ink: #142033;
+  --db-ink-2: rgba(20, 32, 51, .78);
+  --db-line: rgba(20, 32, 51, .14);
+}
+html:not(.app-mode) body.home-web.home-dayboard[data-sky-phase="night"],
+html:not(.app-mode) body.home-web.home-dayboard[data-sky-phase="maghrib"],
+html:not(.app-mode) body.home-web.home-dayboard[data-sky-phase="dawn"] {
+  --db-panel: rgba(10, 16, 32, .55);
 }
 html:not(.app-mode) body.home-web.home-dayboard[data-sky-phase="day"] .dayboard-moments .prayer-card,
 html:not(.app-mode) body.home-web.home-dayboard[data-sky-phase="asr"] .dayboard-moments .prayer-card {
@@ -6182,5 +6250,5 @@ html:not(.app-mode) body.home-web.home-dayboard[data-sky-phase="asr"] .dayboard-
   color: var(--db-ink);
 }
 
-/* (FAB styles removed � tools button lives in the header) */
+/* (FAB styles removed — tools button lives in the header) */
 

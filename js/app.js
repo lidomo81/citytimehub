@@ -976,6 +976,11 @@
   let prayerWidgetSyncSeq = 0;
   function syncPrayerCityToApp(city, timings) {
     if (!window.AndroidApp || typeof AndroidApp.syncPrayerCity !== "function") return;
+    // Adhan reminder city is set only from the reminder dialog — not when browsing
+    // cities on the Prayer tab. Skip the bridge while reminders are already on.
+    try {
+      if (typeof AndroidApp.isPrayerRemindersEnabled === "function" && AndroidApp.isPrayerRemindersEnabled()) return;
+    } catch (e) {}
     const payload = cityPayload(city);
     if (!payload) return;
     if (timings && typeof timings === "object") payload.timings = timings;
