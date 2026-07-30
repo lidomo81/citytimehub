@@ -4106,10 +4106,6 @@ html.app-mode[data-app-tab="home"] .daily-reflection--home {
 html.app-mode[data-app-tab="home"] .daily-reflection--home .dr-text {
   font-size: .94rem;
   line-height: 1.7;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 html.app-mode[data-app-tab="home"] .daily-reflection--home .dr-otd {
   margin-top: 10px;
