@@ -5320,14 +5320,19 @@ html[data-theme="dark"]:not(.app-mode) body.home-web.home-dayboard #prayerInsigh
   color: #eaf1ff;
 }
 html[data-theme="dark"]:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn,
-html[data-theme="dark"]:not(.app-mode) body.home-web.home-dayboard #homeRailBtn.dayboard-tools-btn {
-  background: rgba(17, 26, 48, .95) !important;
-  border-color: rgba(120, 160, 230, .28) !important;
+html[data-theme="dark"]:not(.app-mode) body.home-web.home-dayboard #homeRailBtn.dayboard-tools-btn,
+html[data-theme="dark"]:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn:hover,
+html[data-theme="dark"]:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn:focus-visible,
+html[data-theme="dark"]:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn[aria-expanded="true"] {
+  background: rgba(255, 255, 255, .08) !important;
+  border-color: rgba(255, 255, 255, .22) !important;
   color: #eaf1ff !important;
-  box-shadow: 0 8px 20px -14px rgba(0, 0, 0, .7) !important;
+  box-shadow: none !important;
 }
-html[data-theme="dark"]:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn .dayboard-tools-ico {
-  color: var(--db-ink);
+html[data-theme="dark"]:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn .dayboard-tools-ico,
+html[data-theme="dark"]:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn[aria-expanded="true"] .dayboard-tools-ico {
+  color: #eaf1ff !important;
+  stroke: #eaf1ff !important;
 }
 html[data-theme="dark"]:not(.app-mode) body.home-web.home-dayboard .home-rail {
   background: #111a30;
@@ -5409,10 +5414,10 @@ html:not(.app-mode) body.home-web.home-dayboard #homeRailBtn.dayboard-tools-btn 
   margin: 0 !important;
   padding: 0 14px !important;
   border-radius: 12px !important;
-  border: 1px solid color-mix(in srgb, var(--db-ink) 14%, transparent) !important;
-  background: color-mix(in srgb, var(--db-panel) 82%, #fff) !important;
+  border: 1px solid rgba(255, 255, 255, .22) !important;
+  background: rgba(255, 255, 255, .08) !important;
   color: var(--db-ink) !important;
-  box-shadow: 0 8px 20px -14px rgba(0, 0, 0, .35) !important;
+  box-shadow: none !important;
   transform: none !important;
   cursor: pointer;
   transition: background .18s ease, border-color .18s ease, color .18s ease, box-shadow .18s ease;
@@ -5422,7 +5427,8 @@ html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn .dayboard-to
   flex: none;
   width: 22px;
   height: 22px;
-  color: currentColor;
+  color: inherit;
+  stroke: currentColor;
 }
 html:not(.app-mode) body.home-web.home-dayboard .home-rail-header-btn::after,
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn::after {
@@ -5439,15 +5445,16 @@ html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn-label {
 }
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn:hover,
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn:focus-visible {
-  background: color-mix(in srgb, var(--db-gold) 16%, #fff) !important;
-  border-color: color-mix(in srgb, var(--db-gold) 45%, transparent) !important;
+  background: rgba(255, 255, 255, .12) !important;
+  border-color: rgba(255, 212, 134, .45) !important;
+  color: var(--db-ink) !important;
   outline: none;
 }
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn[aria-expanded="true"] {
-  background: color-mix(in srgb, var(--db-gold) 20%, #fff) !important;
-  border-color: color-mix(in srgb, var(--db-gold) 55%, transparent) !important;
-  color: var(--db-gold) !important;
-  box-shadow: 0 10px 22px -12px rgba(0, 0, 0, .4) !important;
+  background: rgba(255, 255, 255, .12) !important;
+  border-color: rgba(255, 255, 255, .28) !important;
+  color: var(--db-ink) !important;
+  box-shadow: none !important;
 }
 @media (max-width: 720px) {
   html:not(.app-mode) body.home-web.home-dayboard .site-header .header-inner {
@@ -6268,14 +6275,20 @@ html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .home-rail-b
 html[dir="rtl"][data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .home-rail-body {
   box-shadow: none;
 }
-html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn {
-  background: #ffffff !important;
-  border-color: rgba(20, 32, 51, .14) !important;
+html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn,
+html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard #homeRailBtn.dayboard-tools-btn,
+html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn:hover,
+html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn:focus-visible,
+html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn[aria-expanded="true"] {
+  background: rgba(255, 255, 255, .55) !important;
+  border-color: rgba(20, 32, 51, .18) !important;
   color: #142033 !important;
-  box-shadow: 0 6px 16px -10px rgba(20, 32, 51, .28) !important;
+  box-shadow: none !important;
 }
-html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn .dayboard-tools-ico {
-  color: currentColor;
+html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn .dayboard-tools-ico,
+html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .dayboard-tools-btn[aria-expanded="true"] .dayboard-tools-ico {
+  color: #142033 !important;
+  stroke: #142033 !important;
 }
 html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .dayboard-moments {
   background: var(--db-panel);
