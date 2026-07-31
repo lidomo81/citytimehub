@@ -1043,7 +1043,6 @@
     const btn = document.getElementById("homeRailBtn");
     const check = document.getElementById("homeRailToggle");
     const dayboard = document.body.classList.contains("home-dayboard");
-    const deskMq = window.matchMedia("(min-width: 861px)");
     const syncBtn = () => {
       if (!btn) return;
       const open = dayboard
@@ -1082,8 +1081,8 @@
           btn.insertAdjacentHTML("afterbegin", ico);
         }
         if (check && !check.dataset.dayboardInit) {
-          // Desktop: open by default. Mobile: start closed.
-          check.checked = window.matchMedia("(min-width: 861px)").matches;
+          // Start closed on desktop and mobile; user opens via Tools.
+          check.checked = false;
           check.dataset.dayboardInit = "1";
         }
         const setRailOpen = (open) => {
@@ -1125,20 +1124,12 @@
           });
         }
       } else {
-        // Desktop default open; keep class from HTML. Mobile ignores this class for the edge tab.
-        if (deskMq.matches && !document.body.classList.contains("home-rail-open")) {
-          document.body.classList.add("home-rail-open");
-        }
+        // Start closed; user opens via the tools control.
+        document.body.classList.remove("home-rail-open");
         syncBtn();
         btn.addEventListener("click", () => {
           document.body.classList.toggle("home-rail-open");
           syncBtn();
-        });
-        deskMq.addEventListener("change", () => {
-          if (deskMq.matches && !document.body.classList.contains("home-rail-open")) {
-            document.body.classList.add("home-rail-open");
-            syncBtn();
-          }
         });
       }
     }
