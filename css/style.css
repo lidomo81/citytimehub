@@ -5534,20 +5534,9 @@ html:not(.app-mode) body.home-web.home-dayboard .home-rail,
 html:not(.app-mode) body.home-web.home-dayboard:not(.home-rail-open) .home-rail {
   display: contents !important;
 }
+/* No page dim — keep the dayboard bright while the rail slides in */
 html:not(.app-mode) body.home-web.home-dayboard .home-rail-backdrop {
-  display: block !important;
-  position: fixed;
-  inset: 0;
-  z-index: 85;
-  margin: 0;
-  background: rgba(6, 10, 20, .4);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .4s cubic-bezier(0.32, 0.72, 0, 1);
-}
-html:not(.app-mode) body.home-web.home-dayboard .home-rail-check:checked ~ .home-rail-backdrop {
-  opacity: 1;
-  pointer-events: auto;
+  display: none !important;
 }
 html:not(.app-mode) body.home-web.home-dayboard .home-rail-check {
   position: fixed !important;
@@ -5586,12 +5575,12 @@ html:not(.app-mode) body.home-web.home-dayboard .home-rail-body {
   border-inline-end: none;
   box-shadow: none;
   transform: translate3d(-105%, 0, 0);
-  transition:
-    transform .42s var(--db-rail-ease),
-    box-shadow .42s var(--db-rail-ease);
+  transition: transform .42s var(--db-rail-ease);
   will-change: transform;
   overflow: auto;
   overscroll-behavior: contain;
+  /* Closed rail must not steal clicks from the dayboard */
+  pointer-events: none;
 }
 html[dir="rtl"]:not(.app-mode) body.home-web.home-dayboard .home-rail-body {
   transform: translate3d(105%, 0, 0);
@@ -5599,10 +5588,7 @@ html[dir="rtl"]:not(.app-mode) body.home-web.home-dayboard .home-rail-body {
 }
 html:not(.app-mode) body.home-web.home-dayboard .home-rail-check:checked ~ .home-rail-body {
   transform: translate3d(0, 0, 0);
-  box-shadow: 18px 0 48px -18px rgba(0, 0, 0, .45);
-}
-html[dir="rtl"]:not(.app-mode) body.home-web.home-dayboard .home-rail-check:checked ~ .home-rail-body {
-  box-shadow: -18px 0 48px -18px rgba(0, 0, 0, .45);
+  pointer-events: auto;
 }
 html:not(.app-mode) body.home-web.home-dayboard .site-header {
   transition:
@@ -5611,15 +5597,8 @@ html:not(.app-mode) body.home-web.home-dayboard .site-header {
     backdrop-filter .42s var(--db-rail-ease),
     -webkit-backdrop-filter .42s var(--db-rail-ease);
 }
-html:not(.app-mode) body.home-web.home-dayboard.home-dayboard-rail-open .site-header {
-  border-bottom-color: transparent;
-  background: var(--db-chrome);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-}
 @media (prefers-reduced-motion: reduce) {
   html:not(.app-mode) body.home-web.home-dayboard .home-rail-body,
-  html:not(.app-mode) body.home-web.home-dayboard .home-rail-backdrop,
   html:not(.app-mode) body.home-web.home-dayboard .site-header {
     transition-duration: .01ms !important;
   }
@@ -6320,10 +6299,6 @@ html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .site-header
 }
 html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard {
   --db-chrome: #ffffff;
-}
-html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard.home-dayboard-rail-open .site-header {
-  background: var(--db-chrome);
-  border-bottom-color: transparent;
 }
 html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard .home-rail-body {
   background: var(--db-chrome);
