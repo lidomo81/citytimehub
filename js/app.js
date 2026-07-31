@@ -52,6 +52,10 @@
       checkinYes: "Yes, I prayed",
       checkinAlso: "Also pending",
       checkinMarked: name => `${name} logged — may Allah accept it 🤍`,
+      tipFav: "Your favorite city",
+      tipFavPrimary: "Your primary favorite city",
+      tipLocalCity: "Back to your local city",
+      tipInstall: "Install this city as an app",
     },
     ar: {
       addFav: "أضِف إلى مدني", remFav: "أزِل من مدني",
@@ -97,6 +101,10 @@
       checkinYes: "نعم، صلّيت",
       checkinAlso: "متبقّي أيضًا",
       checkinMarked: name => `تم تسجيل ${name} — تقبّل الله 🤍`,
+      tipFav: "مدينتك المفضلة",
+      tipFavPrimary: "مدينتك المفضلة الأساسية",
+      tipLocalCity: "العودة إلى مدينتك المحلية",
+      tipInstall: "ثبّت هذه المدينة كتطبيق",
     },
   };
   const T = I18N[LANG];
@@ -113,6 +121,12 @@
 
   const $  = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+
+  /** Native hover tip only — no extra DOM that could shift icon layout. */
+  function setHoverTip(el, text) {
+    if (!el || !text) return;
+    el.setAttribute("title", text);
+  }
 
   /* ---------- Search normalize (Arabic + English friendly) ---------- */
   // lowercases, unifies common Arabic letter variants and strips diacritics,
@@ -438,10 +452,12 @@
     const favs = getFavSlugs();
     $$(".fav-star").forEach(s => {
       const on = favs.includes(s.dataset.fav);
+      const primary = on && getHomeSlug() === s.dataset.fav;
       s.classList.toggle("is-fav", on);
       s.setAttribute("aria-pressed", on);
-      s.setAttribute("aria-label", on ? "Remove from My Cities" : "Add to My Cities");
-      s.setAttribute("title", on ? "Remove from My Cities" : "Add to My Cities");
+      const tip = primary ? T.tipFavPrimary : (on ? T.tipFav : T.addFav);
+      s.setAttribute("aria-label", tip);
+      setHoverTip(s, tip);
       const svg = s.querySelector("svg"); if (svg) svg.setAttribute("fill", on ? "currentColor" : "none");
     });
   }
@@ -1013,7 +1029,11 @@
     const onDefault = !!(homeSlug && city.slug === homeSlug);
     const eb = $("#cpEyebrow"); if (eb) eb.textContent = onLocal ? T.localEyebrow : (onDefault ? T.homeEyebrow : `${nm}، ${cCountry(city)}`);
     // "My city" returns to the detected local city — show it whenever we're NOT already on local
-    const hb = $("#cpHome"); if (hb) hb.hidden = onLocal;
+    const hb = $("#cpHome");
+    if (hb) {
+      hb.hidden = onLocal;
+      if (T.tipLocalCity) setHoverTip(hb, T.tipLocalCity);
+    }
     const inp = $("#cpSearch");
     if (inp && document.activeElement !== inp) {
       if (onLocal || onDefault) window.CTH_CITY_INP && window.CTH_CITY_INP.reset(inp);
@@ -1214,9 +1234,10 @@
   function updateSaveStar() {
     const b = $("#cpSave"); if (!b || !currentCity) return;
     const on = isFav(currentCity.slug);
+    const primary = on && getHomeSlug() === currentCity.slug;
     b.classList.toggle("is-fav", on);
     b.setAttribute("aria-pressed", on ? "true" : "false");
-    b.setAttribute("title", on ? T.remFav : T.addFav);
+    setHoverTip(b, primary ? T.tipFavPrimary : T.tipFav);
     const t = b.querySelector(".cp-save-txt"); if (t) t.textContent = on ? T.saved : T.save;
   }
   function initCityPanel() {
@@ -1259,6 +1280,7 @@
 
     const inst = $("#cpInstall");
     if (inst) {
+      if (T.tipInstall) setHoverTip(inst, T.tipInstall);
       const syncInstall = () => {
         // In an installed app already → no need to show install
         inst.hidden = !!(window.CTH_PWA && window.CTH_PWA.inStandalone);

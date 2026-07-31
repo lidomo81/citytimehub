@@ -4749,6 +4749,11 @@ html:not(.app-mode) body.home-web #cityPanel > .container {
   html:not(.app-mode) body.home-web #cityPanel > .container {
     padding-inline-start: max(22px, calc(env(safe-area-inset-inline-start, 0px) + 12px));
   }
+  /* Dayboard has no edge rail — keep horizontal padding symmetric */
+  html:not(.app-mode) body.home-web.home-dayboard #cityPanel > .container,
+  html:not(.app-mode) body.home-web.home-dayboard .dayboard-panel {
+    padding-inline: clamp(14px, 2vw, 18px);
+  }
 }
 
 /* Toolbar: search + compact icon actions */
@@ -5682,6 +5687,7 @@ html:not(.app-mode) body.home-web.home-dayboard .dayboard-panel {
   border: 0;
   box-shadow: none;
   padding-inline: 0;
+  margin-inline: auto;
 }
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-toolbar {
   margin-bottom: 18px;
@@ -6204,6 +6210,7 @@ html:not(.app-mode) body.home-web.home-dayboard #cityPanel > .container,
 html:not(.app-mode) body.home-web.home-dayboard .cp-section > .container,
 html:not(.app-mode) body.home-web.home-dayboard .dayboard-panel {
   max-width: 920px;
+  margin-inline: auto;
   background: transparent !important;
   box-shadow: none !important;
   border: 0 !important;

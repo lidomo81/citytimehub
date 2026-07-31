@@ -14,12 +14,16 @@
 
   const lang = document.documentElement.lang === "ar" ? "ar" : "en";
   const T = lang === "ar"
-    ? { title: "أذكار ما بعد الصلاة", aria: "افتح أذكار ما بعد الصلاة ومعلومات الصلاة", close: "إغلاق",
+    ? { title: "أذكار ما بعد الصلاة",
+        tip: "اضغط هنا لقراءة أذكار بعد الصلاة",
+        aria: "اضغط هنا لقراءة أذكار بعد الصلاة", close: "إغلاق",
         fTime: "يبدأ وقتها:", fFard: "فرضها:", fSunnah: "السنة الراتبة:", sec: "الأذكار المأثورة",
         trackTitle: "سجِّل التزامك", trackHint: "لمدينتك — يظهر إنجازك على البطاقة",
         tFard: "صلّيت الفرض", tSunnah: "صلّيت السنة", tAzkar: "قلت الأذكار",
         celebrate: ["تقبّل الله 🤍", "أحسنتَ 🌙", "نورٌ على نور ✨", "بُوركتَ ❤️"] }
-    : { title: "Post-Prayer Adhkar", aria: "Open post-prayer adhkar and prayer info", close: "Close",
+    : { title: "Post-Prayer Adhkar",
+        tip: "Click here to read the post-prayer adhkar",
+        aria: "Click here to read the post-prayer adhkar", close: "Close",
         fTime: "Its time:", fFard: "Obligatory:", fSunnah: "Regular sunnah:", sec: "The adhkar",
         trackTitle: "Log your adherence", trackHint: "For your city — shown on the card",
         tFard: "Prayed the fard", tSunnah: "Prayed the sunnah", tAzkar: "Said the adhkar",
@@ -311,10 +315,11 @@
       card.setAttribute("role", "button");
       card.setAttribute("tabindex", "0");
       card.setAttribute("aria-label", T.aria);
+      card.setAttribute("title", T.tip);
       const hint = document.createElement("span");
       hint.className = "prayer-azkar-hint";
       hint.setAttribute("aria-hidden", "true");
-      hint.title = T.title; // whisper the misbaha's meaning on hover: "أذكار ما بعد الصلاة"
+      hint.title = T.tip;
       hint.innerHTML = '<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><circle cx="12" cy="4.2" r="1.35"/><circle cx="17.5" cy="6.5" r="1.35"/><circle cx="19.8" cy="12" r="1.35"/><circle cx="17.5" cy="17.5" r="1.35"/><circle cx="12" cy="19.8" r="1.35"/><circle cx="6.5" cy="17.5" r="1.35"/><circle cx="4.2" cy="12" r="1.35"/><circle cx="6.5" cy="6.5" r="1.35"/></svg>';
       card.appendChild(hint);
       const open = () => openSheet(name);
