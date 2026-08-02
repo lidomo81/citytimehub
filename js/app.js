@@ -1802,6 +1802,10 @@
     const tab = document.documentElement.getAttribute("data-app-tab") || "home";
     const dua = ensureDuaEl();
     if (isApp && tab === "home") {
+      // The compact commitment strip belongs only to Prayer. Hide the whole
+      // mount here so returning Home cannot leave its previous content visible.
+      const board = document.getElementById("cpNowBoard");
+      if (board) board.classList.add("is-empty");
       if (dua) dua.hidden = true;
       hideWeek();
       const checkIn = document.getElementById("cpCheckIn");
