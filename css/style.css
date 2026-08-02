@@ -1477,19 +1477,47 @@ html.app-mode[data-app-tab="prayer"] .prayer-reminder-card.is-on .prayer-reminde
   color: #34d399;
 }
 html.app-mode[data-app-tab="prayer"] .cp-now-board {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
   margin-top: 10px;
-  padding: 10px 12px;
+  padding: 8px 12px;
   border-color: var(--border);
   background: var(--surface);
 }
+html.app-mode[data-app-tab="prayer"] .cp-now-board.is-empty { display: none !important; }
 html.app-mode[data-app-tab="prayer"] .cp-now-board #cpNext,
 html.app-mode[data-app-tab="prayer"] .cp-now-board .cp-checkin { display: none !important; }
+html.app-mode[data-app-tab="prayer"] .cp-commitment-status {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 1px;
+  text-align: start;
+}
+html.app-mode[data-app-tab="prayer"] .cp-commitment-status strong {
+  color: var(--text);
+  font-size: .78rem;
+  font-weight: 800;
+}
+html.app-mode[data-app-tab="prayer"] .cp-commitment-status span {
+  overflow: hidden;
+  color: var(--text-2);
+  font-size: .67rem;
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 html.app-mode[data-app-tab="prayer"] .cp-now-board .cp-week {
+  width: auto;
   padding: 0;
   border-top: 0;
-  font-size: .72rem;
   color: var(--text-2);
 }
+html.app-mode[data-app-tab="prayer"] .cp-now-board .cp-week .cp-wk-label { display: none; }
+html.app-mode[data-app-tab="prayer"] .cp-now-board .cp-week .cp-wk-row { gap: 4px; }
 
 /* Section 3 � ???????? */
 html.app-mode[data-app-tab="prayer"] .cp-devotion {

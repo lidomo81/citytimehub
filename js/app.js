@@ -44,7 +44,7 @@
       recoverSeveral: n => n === 5
         ? "Today's prayers await you — start with what you can, one step at a time 🤍"
         : `${n} prayers await you — start with what you can, one step at a time 🤍`,
-      weekTitle: "Last 7 days", statsTitle: "Your adherence", currentStreak: "Current streak", bestStreak: "Best streak",
+      weekTitle: "Last 7 days", commitmentTitle: "Prayer commitment", commitmentStart: "Start with the next prayer", commitmentStreak: n => `${n} day${n === 1 ? "" : "s"} in a row`, statsTitle: "Your adherence", currentStreak: "Current streak", bestStreak: "Best streak",
       legendFull: "Complete", legendPart: "Partial", legendNone: "Missed", statsClose: "Close", statsHint: "Tap for details",
       streakNote: "This counter is only to encourage you to keep your prayers — not to collect any data. Everything stays on your device. Be honest with Allah and with yourself 🤍",
       openPrayer: "Open prayer",
@@ -93,7 +93,7 @@
       recoverSeveral: n => n === 5
         ? "صلوات اليوم بانتظارك — ابدأ بما تستطيع، خطوةً خطوة 🤍"
         : `${n} صلوات بانتظارك — ابدأ بما تستطيع، خطوةً خطوة 🤍`,
-      weekTitle: "آخر ٧ أيام", statsTitle: "التزامك", currentStreak: "سلسلتك الحالية", bestStreak: "أطول سلسلة",
+      weekTitle: "آخر ٧ أيام", commitmentTitle: "التزامك بالصلاة", commitmentStart: "ابدأ بالصلاة القادمة", commitmentStreak: n => n === 1 ? "يوم واحد متتالٍ" : n === 2 ? "يومان متتاليان" : `${n} أيام متتالية`, statsTitle: "التزامك", currentStreak: "سلسلتك الحالية", bestStreak: "أطول سلسلة",
       legendFull: "مكتمل", legendPart: "جزئي", legendNone: "فائت", statsClose: "إغلاق", statsHint: "اضغط للتفاصيل",
       streakNote: "هذا العدّاد وسيلة لتحفيزك على المحافظة على صلاتك، وليس لجمع أي معلومات — بياناتك محفوظة على جهازك وحده. فاجعلها صدقًا مع الله ومع نفسك 🤍",
       openPrayer: "افتح الصلاة",
@@ -1535,6 +1535,27 @@
   }
   function hideWeek() { const wk = $("#cpWeek"); if (wk) wk.hidden = true; }
 
+  // A single compact, tappable prayer-tab line. It shows the real streak while
+  // the seven dots remain the quick visual history; the full record stays on tap.
+  function renderPrayerCommitment() {
+    const isPrayerTab = document.documentElement.classList.contains("app-mode") &&
+      document.documentElement.getAttribute("data-app-tab") === "prayer";
+    const board = document.getElementById("cpNowBoard");
+    if (!board) return;
+    const shouldShow = isPrayerTab && currentMine;
+    board.classList.toggle("is-empty", !shouldShow);
+    if (!shouldShow) return;
+    let status = document.getElementById("cpCommitmentStatus");
+    if (!status) {
+      status = document.createElement("span");
+      status.id = "cpCommitmentStatus";
+      status.className = "cp-commitment-status";
+      board.insertBefore(status, board.firstChild);
+    }
+    const streak = wStreak();
+    status.innerHTML = `<strong>${T.commitmentTitle}</strong><span>${streak > 0 ? T.commitmentStreak(streak) : T.commitmentStart}</span>`;
+  }
+
   function bestStreak(daysBack = 120) {
     let best = 0, run = 0;
     const now = new Date();
@@ -1798,6 +1819,7 @@
       renderStreak(el);
       renderCheckIn();
       renderWeek();
+      renderPrayerCommitment();
       const board = document.getElementById("cpNowBoard");
       if (board && isApp && tab === "prayer") {
         board.setAttribute("role", "button");
@@ -1814,6 +1836,7 @@
       updateNextLine();
       const board = document.getElementById("cpNowBoard");
       if (board) {
+        board.classList.add("is-empty");
         board.removeAttribute("role");
         board.removeAttribute("tabindex");
         board.removeAttribute("aria-label");
