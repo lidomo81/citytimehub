@@ -1705,16 +1705,19 @@
     }
 
     if (isApp && tab === "prayer" && board) {
-      // Prayer tab: times grid first, adherence board below it.
+      // Prayer tab: times → after-prayer adhkar hint → reminder → weekly adherence.
       const grid = document.getElementById("prayerGrid");
       const devotion = document.querySelector("#cityPanel .cp-devotion");
       const remind = document.getElementById("cthPrayerRemindSlot");
+      const azkarHint = document.getElementById("prayerAzkarTabHint");
       if (grid) {
-        if (grid.nextElementSibling !== board) grid.insertAdjacentElement("afterend", board);
+        if (azkarHint && azkarHint.parentElement !== devotion) grid.insertAdjacentElement("afterend", azkarHint);
+        const afterGrid = azkarHint || grid;
+        if (remind && remind.previousElementSibling !== afterGrid) afterGrid.insertAdjacentElement("afterend", remind);
+        const afterReminder = remind || afterGrid;
+        if (afterReminder.nextElementSibling !== board) afterReminder.insertAdjacentElement("afterend", board);
       } else if (devotion && board.parentElement !== devotion) {
         devotion.appendChild(board);
-      } else if (remind && board.nextElementSibling !== remind) {
-        remind.insertAdjacentElement("beforebegin", board);
       }
       if (el.parentElement !== board) board.appendChild(el);
       const checkIn = ensureCheckInEl();
@@ -2032,33 +2035,48 @@
     tick();
   }
 
-  // Reminder cards for app mode (Android injects the same IDs; skip if already present).
+  // Reminder cards for app mode. The native app may inject the shell first, so this
+  // function refreshes its contents every time rather than depending on creation order.
   function ensureAppRemindCards() {
     if (!document.documentElement.classList.contains("app-mode")) return;
     const ar = LANG === "ar";
     const hasAndroid = !!(window.AndroidApp && typeof AndroidApp.openPrayerReminders === "function");
 
     const prayerSlot = document.getElementById("cthPrayerRemindSlot");
-    if (prayerSlot && !document.getElementById("cthRemindTool")) {
-      const b = document.createElement("button");
-      b.type = "button";
-      b.id = "cthRemindTool";
-      b.className = "app-spot-card app-spot-remind";
+    if (prayerSlot) {
+      let b = document.getElementById("cthRemindTool");
+      if (!b) {
+        b = document.createElement("button");
+        b.type = "button";
+        b.id = "cthRemindTool";
+        prayerSlot.appendChild(b);
+      }
+      let enabled = false, label = "";
+      try {
+        enabled = hasAndroid && typeof AndroidApp.isPrayerRemindersEnabled === "function" && !!AndroidApp.isPrayerRemindersEnabled();
+        label = enabled && typeof AndroidApp.prayerRemindersCityLabel === "function" ? (AndroidApp.prayerRemindersCityLabel() || "") : "";
+      } catch (e) {}
+      b.className = "app-spot-card app-spot-remind prayer-reminder-card" + (enabled ? " is-on" : "");
       b.setAttribute("aria-label", ar ? "تذكير الأذان" : "Prayer reminders");
+      const title = ar ? "تذكير الأذان" : "Prayer reminders";
+      const status = enabled
+        ? (label || (ar ? "مفعّل لكل صلاة" : "Enabled for every prayer"))
+        : (ar ? "استقبل تنبيهًا عند كل صلاة" : "Get an alert at every prayer");
+      const action = enabled ? (ar ? "إعداد" : "Manage") : (ar ? "تفعيل" : "Enable");
       b.innerHTML =
         '<span class="app-spot-ico" aria-hidden="true">🔔</span>' +
-        '<span class="app-spot-copy"><strong class="app-spot-k">' +
-        (ar ? "تذكير الأذان" : "Reminders") +
-        '</strong><span class="app-spot-sub">' +
-        (ar ? "تنبيه عند كل صلاة" : "Alert at each prayer") +
-        "</span></span>";
+        '<span class="app-spot-copy"><strong class="app-spot-k">' + title +
+        '</strong><span class="app-spot-sub">' + status +
+        '</span></span><span class="prayer-reminder-action" aria-hidden="true">' + action + "</span>";
+      if (!b.dataset.reminderWired) {
+        b.dataset.reminderWired = "1";
       b.addEventListener("click", () => {
         try {
           if (hasAndroid) AndroidApp.openPrayerReminders();
           else toast(ar ? "تفعيل التذكير من تطبيق أندرويد" : "Enable reminders in the Android app");
         } catch (e) {}
       });
-      prayerSlot.appendChild(b);
+      }
       prayerSlot.removeAttribute("hidden");
     }
 
@@ -2089,6 +2107,10 @@
       azkarSlot.removeAttribute("hidden");
     }
   }
+
+  // Called by the Android bridge after its early injection, which can happen
+  // after this script has loaded. It normalizes the native shell to this UI.
+  window.cthRefreshPrayerReminderCard = ensureAppRemindCards;
 
   window.cthGetPrayerCity = function () {
     const payload = cityPayload(currentCity);

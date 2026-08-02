@@ -1416,6 +1416,81 @@ html.app-mode[data-app-tab="prayer"] .cp-week .cp-wk-pip {
   height: 8px;
 }
 
+/* Final prayer-tab hierarchy: the table stays primary; supporting actions stay quiet. */
+html.app-mode[data-app-tab="prayer"] .prayer-azkar-tab-hint {
+  display: block;
+  margin: 9px 0 0;
+  color: var(--muted);
+  font-size: .72rem;
+  font-weight: 650;
+  line-height: 1.45;
+  text-align: center;
+}
+.prayer-azkar-tab-hint { display: none; }
+html.app-mode[data-app-tab="prayer"] #cthPrayerRemindSlot {
+  margin: 10px 0 0;
+}
+html.app-mode[data-app-tab="prayer"] #cthPrayerRemindSlot .prayer-reminder-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  min-height: 64px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: none;
+  color: var(--text);
+  text-align: start;
+}
+html.app-mode[data-app-tab="prayer"] #cthPrayerRemindSlot .prayer-reminder-card .app-spot-ico {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  background: color-mix(in srgb, var(--brand) 13%, transparent);
+  font-size: 1rem;
+}
+html.app-mode[data-app-tab="prayer"] #cthPrayerRemindSlot .prayer-reminder-card .app-spot-copy { min-width: 0; }
+html.app-mode[data-app-tab="prayer"] #cthPrayerRemindSlot .prayer-reminder-card .app-spot-k {
+  font-size: .87rem;
+  font-weight: 800;
+}
+html.app-mode[data-app-tab="prayer"] #cthPrayerRemindSlot .prayer-reminder-card .app-spot-sub {
+  margin-top: 2px;
+  font-size: .71rem;
+  color: var(--muted);
+}
+.prayer-reminder-action {
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--brand) 18%, transparent);
+  color: var(--brand);
+  font-size: .72rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+html.app-mode[data-app-tab="prayer"] .prayer-reminder-card.is-on .prayer-reminder-action {
+  background: color-mix(in srgb, #34d399 15%, transparent);
+  color: #34d399;
+}
+html.app-mode[data-app-tab="prayer"] .cp-now-board {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-color: var(--border);
+  background: var(--surface);
+}
+html.app-mode[data-app-tab="prayer"] .cp-now-board #cpNext,
+html.app-mode[data-app-tab="prayer"] .cp-now-board .cp-checkin { display: none !important; }
+html.app-mode[data-app-tab="prayer"] .cp-now-board .cp-week {
+  padding: 0;
+  border-top: 0;
+  font-size: .72rem;
+  color: var(--text-2);
+}
+
 /* Section 3 � ???????? */
 html.app-mode[data-app-tab="prayer"] .cp-devotion {
   border: none;
@@ -6411,4 +6486,3 @@ html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard[data-sky-pha
 }
 
 /* (FAB styles removed — tools button lives in the header) */
-
