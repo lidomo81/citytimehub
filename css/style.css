@@ -1487,7 +1487,9 @@ html.app-mode[data-app-tab="prayer"] .cp-now-board {
   border-color: var(--border);
   background: var(--surface);
 }
-html.app-mode[data-app-tab="prayer"] .cp-now-board.is-empty { display: none !important; }
+/* The status mount can be emptied when moving away from Prayer; never leave
+   its previous Prayer-only content visible on another app tab. */
+html.app-mode .cp-now-board.is-empty { display: none !important; }
 html.app-mode[data-app-tab="prayer"] .cp-now-board #cpNext,
 html.app-mode[data-app-tab="prayer"] .cp-now-board .cp-checkin { display: none !important; }
 html.app-mode[data-app-tab="prayer"] .cp-commitment-status {
