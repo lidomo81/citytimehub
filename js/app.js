@@ -56,6 +56,13 @@
       tipFavPrimary: "Your primary favorite city",
       tipLocalCity: "Back to your local city",
       tipInstall: "Install this city as an app",
+      tipLocate: "Detect my location",
+      locateBusy: "Detecting your city…",
+      locateOk: name => `Showing prayer times for ${name}.`,
+      locateDenied: "Location permission was denied. You can still search by city name.",
+      locateUnavailable: "Couldn't detect your location. Check GPS or try again.",
+      locateUnsupported: "This browser doesn't support location detection.",
+      locateNear: "Near you",
     },
     ar: {
       addFav: "أضِف إلى مدني", remFav: "أزِل من مدني",
@@ -105,6 +112,13 @@
       tipFavPrimary: "مدينتك المفضلة الأساسية",
       tipLocalCity: "العودة إلى مدينتك المحلية",
       tipInstall: "ثبّت هذه المدينة كتطبيق",
+      tipLocate: "تحديد موقعي",
+      locateBusy: "جارٍ تحديد مدينتك…",
+      locateOk: name => `مواقيت الصلاة لـ ${name}.`,
+      locateDenied: "تم رفض إذن الموقع. يمكنك البحث باسم المدينة.",
+      locateUnavailable: "تعذّر تحديد موقعك. تحقّق من GPS أو حاول مرة أخرى.",
+      locateUnsupported: "هذا المتصفح لا يدعم تحديد الموقع.",
+      locateNear: "قرب موقعك",
     },
   };
   const T = I18N[LANG];
@@ -178,6 +192,99 @@
         });
         return out;
       });
+  }
+
+  /* Haversine distance in km — used to snap GPS to the nearest curated city. */
+  function distKm(lat1, lng1, lat2, lng2) {
+    const R = 6371, toRad = d => d * Math.PI / 180;
+    const dLat = toRad(lat2 - lat1), dLng = toRad(lng2 - lng1);
+    const a = Math.sin(dLat / 2) ** 2 +
+      Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) ** 2;
+    return 2 * R * Math.asin(Math.min(1, Math.sqrt(a)));
+  }
+  function nearestCuratedCity(lat, lng, maxKm) {
+    let best = null, bestD = Infinity;
+    for (const c of CITIES) {
+      if (c.lat == null || c.lng == null) continue;
+      const d = distKm(lat, lng, c.lat, c.lng);
+      if (d < bestD) { bestD = d; best = c; }
+    }
+    if (!best || bestD > (maxKm == null ? 45 : maxKm)) return null;
+    return best;
+  }
+  function reverseGeocode(lat, lng) {
+    const lang = LANG === "ar" ? "ar" : "en";
+    return fetch(
+      "https://nominatim.openstreetmap.org/reverse?format=jsonv2&addressdetails=1&zoom=10&accept-language=" +
+      lang + "&lat=" + encodeURIComponent(lat) + "&lon=" + encodeURIComponent(lng)
+    )
+      .then(r => r.ok ? r.json() : null)
+      .then(x => {
+        if (!x || !x.lat) return null;
+        const c = worldCityFrom(x);
+        if (!c.name || isNaN(c.lat) || isNaN(c.lng)) return null;
+        return c;
+      })
+      .catch(() => null);
+  }
+  function cityFromCoords(lat, lng) {
+    const near = nearestCuratedCity(lat, lng, 45);
+    if (near) return Promise.resolve(near);
+    return reverseGeocode(lat, lng).then(c => c || {
+      name: T.locateNear,
+      name_ar: T.locateNear,
+      country: "",
+      country_ar: "",
+      lat, lng,
+      method: 3,
+      school: 0,
+      world: true,
+      slug: "w:" + lat.toFixed(4) + "," + lng.toFixed(4)
+    });
+  }
+  function wireLocateButton() {
+    const btn = $("#cpLocate");
+    if (!btn || btn.dataset.wired) return;
+    btn.dataset.wired = "1";
+    if (T.tipLocate) {
+      btn.setAttribute("title", T.tipLocate);
+      btn.setAttribute("aria-label", T.tipLocate);
+    }
+    btn.addEventListener("click", () => {
+      if (btn.classList.contains("is-busy")) return;
+      if (!("geolocation" in navigator)) {
+        toast(T.locateUnsupported);
+        return;
+      }
+      btn.classList.add("is-busy");
+      btn.setAttribute("aria-busy", "true");
+      toast(T.locateBusy);
+      navigator.geolocation.getCurrentPosition(
+        pos => {
+          const lat = pos.coords.latitude, lng = pos.coords.longitude;
+          cityFromCoords(lat, lng).then(city => {
+            btn.classList.remove("is-busy");
+            btn.removeAttribute("aria-busy");
+            if (!city) { toast(T.locateUnavailable); return; }
+            // GPS becomes the "local city" so the home chip returns here.
+            detectedHome = city;
+            setCity(city, { syncApp: true });
+            toast(T.locateOk(cName(city)));
+          }).catch(() => {
+            btn.classList.remove("is-busy");
+            btn.removeAttribute("aria-busy");
+            toast(T.locateUnavailable);
+          });
+        },
+        err => {
+          btn.classList.remove("is-busy");
+          btn.removeAttribute("aria-busy");
+          if (err && err.code === 1) toast(T.locateDenied);
+          else toast(T.locateUnavailable);
+        },
+        { enableHighAccuracy: false, timeout: 12000, maximumAge: 60000 }
+      );
+    });
   }
 
   /* ---------- Time-of-day colour ramp (24 anchors, interpolated) ---------- */
@@ -1258,6 +1365,7 @@
 
     const inp = $("#cpSearch"), list = $("#cpAcList");
     if (inp && list) attachAutocomplete(inp, list, c => setCity(c, { syncApp: true }), { worldwide: true });
+    wireLocateButton();
 
     const sv = $("#cpSave");
     if (sv) sv.addEventListener("click", () => {
