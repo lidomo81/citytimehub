@@ -329,6 +329,8 @@ html.app-mode .site-header { display: none !important; }
 html.app-mode #stats,
 html.app-mode .explainer-section,
 html.app-mode .site-footer { display: none !important; }
+html.app-mode .play-store-cta,
+html.app-mode .play-store-badge { display: none !important; }
 .app-bar-side { flex: none; display: inline-flex; align-items: center; justify-content: center; min-width: 38px; min-height: 38px; }
 .app-bar-side.lang-switch { min-width: 0; padding: 0 4px; font-size: .78rem; font-weight: 700; text-decoration: none; color: var(--text-2); white-space: nowrap; }
 .app-bar-side.lang-switch:hover { color: var(--brand); }
@@ -2526,6 +2528,72 @@ html.app-mode.app-tab-switching nav.app-tools {
 .footer-nav a { color: var(--text-2); font-weight: 600; font-size: .9rem; }
 .footer-nav a:hover { color: var(--brand); }
 .copyright { flex-basis: 100%; margin: 8px 0 0; }
+
+/* Google Play store CTAs (hidden in WebView via html.app-mode) */
+.play-store-cta {
+  padding-block: 18px 8px;
+}
+.play-store-cta-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 16px 28px;
+  text-align: center;
+}
+.play-store-cta-copy {
+  max-width: 36rem;
+}
+.play-store-kicker {
+  margin: 0 0 6px;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+.play-store-lead {
+  margin: 0;
+  font-size: .95rem;
+  line-height: 1.55;
+  color: var(--text-2);
+}
+.play-store-lead strong {
+  color: var(--text);
+  font-weight: 700;
+}
+.play-store-badge {
+  display: inline-flex;
+  line-height: 0;
+  text-decoration: none;
+  transition: opacity .18s ease;
+}
+.play-store-badge:hover { opacity: .88; }
+.play-store-badge img {
+  height: 44px;
+  width: auto;
+  display: block;
+}
+.play-store-badge--footer {
+  margin-top: 12px;
+  display: inline-flex;
+}
+.play-store-badge--footer img {
+  height: 40px;
+}
+.play-store-about {
+  margin: 14px 0 0;
+}
+html:not(.app-mode) body.home-web.home-dayboard .play-store-cta {
+  color: var(--db-ink);
+}
+html:not(.app-mode) body.home-web.home-dayboard .play-store-kicker,
+html:not(.app-mode) body.home-web.home-dayboard .play-store-lead {
+  color: var(--db-ink-2);
+}
+html:not(.app-mode) body.home-web.home-dayboard .play-store-lead strong {
+  color: var(--db-ink);
+}
 
 /* ============ 11. SKELETON / MOTION ============ */
 .skeleton { position: relative; overflow: hidden; background: var(--skel); border-radius: var(--radius); }
