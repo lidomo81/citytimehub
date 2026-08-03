@@ -1805,28 +1805,47 @@
       return;
     }
 
-    // Web homepage: adherence / next-prayer sit under the prayer grid (calm stage).
+    // Web homepage: keep the most useful reading order after the timetable.
+    // The city pulse answers "what is happening now" before the optional
+    // commitment controls, while the latter stay together as one quiet stage.
     if (isWebHome) {
       const grid = document.getElementById("prayerGrid");
       const devotion = document.querySelector("#cityPanel .cp-devotion");
       if (grid && devotion) {
-        if (grid.nextElementSibling !== el) grid.insertAdjacentElement("afterend", el);
+        const azkarHint = document.getElementById("prayerAzkarTabHint");
+        const pulse = document.getElementById("cityPulse");
+        let anchor = grid;
+
+        if (azkarHint && azkarHint.parentElement === devotion) {
+          if (grid.nextElementSibling !== azkarHint) grid.insertAdjacentElement("afterend", azkarHint);
+          anchor = azkarHint;
+        }
+        if (pulse && pulse.parentElement === devotion) {
+          if (anchor.nextElementSibling !== pulse) anchor.insertAdjacentElement("afterend", pulse);
+          anchor = pulse;
+        }
+        if (anchor.nextElementSibling !== el) anchor.insertAdjacentElement("afterend", el);
         const checkIn = ensureCheckInEl();
         if (checkIn) {
-          if (el.nextSibling !== checkIn) {
-            if (el.nextSibling) devotion.insertBefore(checkIn, el.nextSibling);
+          if (el.nextElementSibling !== checkIn) {
+            if (el.nextElementSibling) devotion.insertBefore(checkIn, el.nextElementSibling);
             else devotion.appendChild(checkIn);
           }
         }
-        if (dua) {
-          if (el.previousSibling !== dua) grid.insertAdjacentElement("afterend", dua);
-          if (dua.nextElementSibling !== el) dua.insertAdjacentElement("afterend", el);
-        }
         if (week) {
           const after = checkIn && checkIn.parentElement === devotion ? checkIn : el;
-          if (after.nextSibling !== week) {
-            if (after.nextSibling) devotion.insertBefore(week, after.nextSibling);
+          if (after.nextElementSibling !== week) {
+            if (after.nextElementSibling) devotion.insertBefore(week, after.nextElementSibling);
             else devotion.appendChild(week);
+          }
+        }
+        if (dua) {
+          const after = week && week.parentElement === devotion
+            ? week
+            : (checkIn && checkIn.parentElement === devotion ? checkIn : el);
+          if (after.nextElementSibling !== dua) {
+            if (after.nextElementSibling) devotion.insertBefore(dua, after.nextElementSibling);
+            else devotion.appendChild(dua);
           }
         }
         return;

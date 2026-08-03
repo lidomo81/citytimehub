@@ -2898,6 +2898,8 @@ html.app-mode .fav-chip-name { font-size: 1rem; }
 .prose a:hover { color: var(--accent); }
 .prose strong { color: var(--text); font-weight: 700; }
 .prose .muted { color: var(--text-2); }
+.city-method-note { margin: 12px 0 0; text-align: center; }
+.city-method-note a { color: var(--brand); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
 
 /* ===================== Educational explainer blocks (under tools) ===================== */
 .explainer-section { padding-block: clamp(28px, 5vw, 52px); border-top: 1px solid var(--border); }
@@ -3011,6 +3013,10 @@ html.app-mode .fav-chip-name { font-size: 1rem; }
 .guide-list--featured { grid-template-columns: 1fr 1fr; }
 .guide-list--latest { grid-template-columns: 1fr; max-width: 920px; }
 .guide-card--featured { grid-column: 1 / -1; }
+.home-latest-list { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: none; }
+.home-latest-list .guide-card--featured { grid-column: auto; }
+.home-latest-list .guide-card--featured a { grid-template-columns: 1fr; }
+.home-latest-list .gc-visual { min-height: 142px; }
 .reflections-more { margin-top: 14px; }
 .reflections-more a { font-weight: 700; }
 .guide-card--featured a { padding: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); overflow: hidden; }
@@ -3023,6 +3029,7 @@ html.app-mode .fav-chip-name { font-size: 1rem; }
 .guide-card--featured p { font-size: 1rem; margin-bottom: 16px; }
 @media (max-width: 760px) {
   .guide-list--featured { grid-template-columns: 1fr; }
+  .home-latest-list { grid-template-columns: 1fr; }
   .guide-card--featured a { grid-template-columns: 1fr; }
   .gc-visual { min-height: 116px; }
   .gc-visual svg { width: 64px; height: 64px; }
@@ -5247,7 +5254,8 @@ html:not(.app-mode) body.home-web #cityPanel .cp-devotion > #cpNext {
 }
 html:not(.app-mode) body.home-web #cityPanel .cp-devotion > #cpNext.cp-streak,
 html:not(.app-mode) body.home-web #cityPanel .cp-devotion > #cpNext.cp-recover {
-  padding: 12px 16px 14px;
+  min-height: 44px;
+  padding: 9px 14px 10px;
   border-radius: 14px;
 }
 html:not(.app-mode) body.home-web #cityPanel .cp-devotion > #cpWeek {
