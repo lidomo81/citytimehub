@@ -11,6 +11,7 @@
   const $  = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
   let CITY = null, CITIES = [];
+  let nextStripTimings = null;
 
   /* ---------- Language (reads <html lang>) ---------- */
   const LANG = (document.documentElement.lang || "en").slice(0, 2) === "ar" ? "ar" : "en";
@@ -22,6 +23,8 @@
       ah: "AH", na: "n/a",
       dayLen: (h, m) => `${h}h ${m}m`,
       dayIn: n => `Daytime in ${n}`, nightIn: n => `Night in ${n}`,
+      nextStrip: (name, countdown) => `Next prayer: ${name} · in ${countdown}`,
+      countdownHM: (h, m) => h ? `${h}h ${m}m` : `${m}m`,
     },
     ar: {
       next: "التالية",
@@ -31,6 +34,8 @@
       dayLen: (h, m) => `${h}h ${m}m`,
       dayIn: n => `نهارٌ في ${n}`, nightIn: n => `ليلٌ في ${n}`,
       gregMonths: ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"],
+      nextStrip: (name, countdown) => `الصلاة القادمة: ${name} · بعد ${countdown}`,
+      countdownHM: (h, m) => h ? `${h} س ${m} د` : `${m} د`,
     },
   };
   const T = I18N[LANG];
@@ -129,6 +134,7 @@
     // header UTC readout
     const hu = $("#headerUtc");
     if (hu) hu.textContent = new Intl.DateTimeFormat("en-GB", { timeZone: "UTC", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false }).format(now);
+    updateNextPrayerStrip();
   }
   function startClock() {
     tick();
@@ -165,6 +171,10 @@
         </article>`).join("");
       if (t.Sunrise && t.Sunset) fillSun(clean(t.Sunrise), clean(t.Sunset));
       refreshCityPulse(timings);
+      if ($("#cityNextPrayer")) {
+        nextStripTimings = timings;
+        updateNextPrayerStrip();
+      }
     } catch {
       grid.innerHTML = `<p class="no-results" style="grid-column:1/-1">${T.prayerErr}</p>`;
     }
@@ -176,6 +186,43 @@
       if ((+hh)*60 + (+mm) > mins) return p;
     }
     return "Fajr";
+  }
+
+  /* Optional hero strip (#cityNextPrayer) — no-op on pages without the element. */
+  function cityLocalMins(when = new Date()) {
+    if (!CITY || !CITY.tz) return when.getHours() * 60 + when.getMinutes();
+    const parts = new Intl.DateTimeFormat("en-GB", {
+      timeZone: CITY.tz, hour: "2-digit", minute: "2-digit", hour12: false
+    }).formatToParts(when);
+    const hh = +((parts.find(p => p.type === "hour") || {}).value || 0);
+    const mm = +((parts.find(p => p.type === "minute") || {}).value || 0);
+    return hh * 60 + mm;
+  }
+  function prayerMins(t, key) {
+    const [hh, mm] = String((t && t[key]) || "0:0").split(" ")[0].split(":");
+    return (+hh) * 60 + (+mm);
+  }
+  function updateNextPrayerStrip() {
+    const el = $("#cityNextPrayer");
+    if (!el || !CITY || !nextStripTimings) return;
+    const nowMins = cityLocalMins();
+    const keys = PRAYERS.filter(p => p !== "Sunrise");
+    let key = null, target = null;
+    for (const p of keys) {
+      const m = prayerMins(nextStripTimings, p);
+      if (m > nowMins) { key = p; target = m; break; }
+    }
+    if (!key) {
+      key = "Fajr";
+      target = prayerMins(nextStripTimings, "Fajr") + 1440;
+    }
+    let diff = target - nowMins;
+    if (diff < 0) diff += 1440;
+    const h = Math.floor(diff / 60), m = diff % 60;
+    const name = T.prayers[PRAYERS.indexOf(key)] || key;
+    const countdown = T.countdownHM(h, m);
+    el.textContent = T.nextStrip(name, countdown);
+    el.hidden = false;
   }
 
   /* ---------- day length + city pulse ---------- */

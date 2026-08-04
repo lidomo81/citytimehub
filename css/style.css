@@ -2645,8 +2645,64 @@ html:not(.app-mode) body.home-web.home-dayboard .play-store-lead strong {
   font-size: clamp(3.4rem, 12vw, 6.4rem); line-height: 1; letter-spacing: -.02em;
   margin: 6px 0 10px; text-shadow: 0 8px 40px rgba(0,0,0,.4);
 }
+.city-next-prayer {
+  margin: -2px 0 12px;
+  font-size: clamp(.95rem, 2.5vw, 1.12rem);
+  font-weight: 650;
+  color: rgba(255, 236, 200, .95);
+  letter-spacing: .01em;
+}
 .city-hero-meta { display: flex; flex-wrap: wrap; gap: 8px 18px; color: rgba(255,255,255,.82); font-weight: 500; }
 .city-hero-meta .mono { color: #fff; }
+
+.city-essentials { padding-block: 8px 4px; }
+.city-essentials-lead {
+  margin: 0 0 14px;
+  font-size: .98rem;
+  line-height: 1.65;
+  color: var(--text-2);
+  max-width: 42rem;
+}
+.city-tool-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.city-tool-row .city-tool-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  flex: 0 1 auto;
+  min-height: 42px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  font-weight: 650;
+  font-size: .9rem;
+  line-height: 1.25;
+  text-decoration: none;
+  white-space: nowrap;
+  max-width: 100%;
+  box-shadow: none;
+}
+.city-tool-row .city-tool-link:hover,
+.city-tool-row .city-tool-link:focus-visible {
+  border-color: var(--border-2);
+  color: var(--text);
+  background: var(--surface);
+  outline: none;
+}
+@media (max-width: 540px) {
+  .city-tool-row .city-tool-link {
+    flex: 1 1 calc(50% - 10px);
+    white-space: normal;
+    text-align: center;
+    padding-block: 11px;
+  }
+}
 
 .facts-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); }
 .fact-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); }
