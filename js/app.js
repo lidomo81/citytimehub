@@ -61,6 +61,8 @@
       locateOk: name => `Showing prayer times for ${name}.`,
       locateDenied: "Location permission was denied. You can still search by city name.",
       locateUnavailable: "Couldn't detect your location. Check GPS or try again.",
+      locateTimeout: "Location took too long. Enable location services and try again.",
+      locateInsecure: "Location needs a secure connection (HTTPS).",
       locateUnsupported: "This browser doesn't support location detection.",
       locateNear: "Near you",
     },
@@ -117,6 +119,8 @@
       locateOk: name => `مواقيت الصلاة لـ ${name}.`,
       locateDenied: "تم رفض إذن الموقع. يمكنك البحث باسم المدينة.",
       locateUnavailable: "تعذّر تحديد موقعك. تحقّق من GPS أو حاول مرة أخرى.",
+      locateTimeout: "استغرق تحديد الموقع وقتاً طويلاً. فعّل خدمات الموقع وحاول مرة أخرى.",
+      locateInsecure: "تحديد الموقع يتطلب اتصالاً آمناً (HTTPS).",
       locateUnsupported: "هذا المتصفح لا يدعم تحديد الموقع.",
       locateNear: "قرب موقعك",
     },
@@ -167,7 +171,7 @@
      "Alexandria" not "Smouha", while prayer times use the user's actual coords. */
   function cityLevelNameFromAddress(a) {
     if (!a) return "";
-    return a.city || a.town || a.municipality || a.village || a.county || a.state || "";
+    return a.city || a.town || a.municipality || a.village || a.state_district || a.county || a.state || "";
   }
   function locatedCityFromGeocode(x, gpsLat, gpsLng) {
     if (!x) return null;
@@ -243,8 +247,9 @@
   function reverseGeocode(lat, lng) {
     const lang = LANG === "ar" ? "ar" : "en";
     return fetch(
-      "https://nominatim.openstreetmap.org/reverse?format=jsonv2&addressdetails=1&zoom=10&accept-language=" +
-      lang + "&lat=" + encodeURIComponent(lat) + "&lon=" + encodeURIComponent(lng)
+      "https://nominatim.openstreetmap.org/reverse?format=jsonv2&addressdetails=1&zoom=12&accept-language=" +
+      lang + "&lat=" + encodeURIComponent(lat) + "&lon=" + encodeURIComponent(lng) +
+      "&email=contact@citytimehub.com"
     )
       .then(r => r.ok ? r.json() : null)
       .then(x => locatedCityFromGeocode(x, lat, lng))
@@ -268,6 +273,43 @@
       };
     });
   }
+  function geoErrorMessage(err) {
+    if (!err || typeof err.code !== "number") return T.locateUnavailable;
+    if (err.code === 1) return T.locateDenied;
+    if (err.code === 3) return T.locateTimeout;
+    return T.locateUnavailable;
+  }
+  function requestGeoPosition() {
+    return new Promise((resolve, reject) => {
+      if (!window.isSecureContext) {
+        reject({ code: "insecure" });
+        return;
+      }
+      if (!("geolocation" in navigator)) {
+        reject({ code: "unsupported" });
+        return;
+      }
+      const attempts = [
+        { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 },
+        { enableHighAccuracy: false, timeout: 15000, maximumAge: 120000 }
+      ];
+      const run = i => {
+        navigator.geolocation.getCurrentPosition(
+          resolve,
+          err => {
+            if (i + 1 < attempts.length) run(i + 1);
+            else reject(err);
+          },
+          attempts[i]
+        );
+      };
+      run(0);
+    });
+  }
+  function finishLocateButton(btn) {
+    btn.classList.remove("is-busy");
+    btn.removeAttribute("aria-busy");
+  }
   function wireLocateButton() {
     const btn = $("#cpLocate");
     if (!btn || btn.dataset.wired) return;
@@ -278,38 +320,47 @@
     }
     btn.addEventListener("click", () => {
       if (btn.classList.contains("is-busy")) return;
-      if (!("geolocation" in navigator)) {
-        toast(T.locateUnsupported);
+      const startLocate = () => {
+        btn.classList.add("is-busy");
+        btn.setAttribute("aria-busy", "true");
+        toast(T.locateBusy);
+        requestGeoPosition()
+          .then(pos => {
+            const lat = pos.coords.latitude, lng = pos.coords.longitude;
+            return cityFromCoords(lat, lng);
+          })
+          .then(city => {
+            finishLocateButton(btn);
+            if (!city) { toast(T.locateUnavailable); return; }
+            try {
+              // GPS becomes the "local city" so the home chip returns here.
+              detectedHome = city;
+              setCity(city, { syncApp: true });
+              toast(T.locateOk(cName(city)));
+            } catch (e) {
+              toast(T.locateUnavailable);
+            }
+          })
+          .catch(err => {
+            finishLocateButton(btn);
+            if (err && err.code === "insecure") toast(T.locateInsecure);
+            else if (err && err.code === "unsupported") toast(T.locateUnsupported);
+            else toast(geoErrorMessage(err));
+          });
+      };
+      if (navigator.permissions && navigator.permissions.query) {
+        navigator.permissions.query({ name: "geolocation" })
+          .then(st => {
+            if (st && st.state === "denied") {
+              toast(T.locateDenied);
+              return;
+            }
+            startLocate();
+          })
+          .catch(() => startLocate());
         return;
       }
-      btn.classList.add("is-busy");
-      btn.setAttribute("aria-busy", "true");
-      toast(T.locateBusy);
-      navigator.geolocation.getCurrentPosition(
-        pos => {
-          const lat = pos.coords.latitude, lng = pos.coords.longitude;
-          cityFromCoords(lat, lng).then(city => {
-            btn.classList.remove("is-busy");
-            btn.removeAttribute("aria-busy");
-            if (!city) { toast(T.locateUnavailable); return; }
-            // GPS becomes the "local city" so the home chip returns here.
-            detectedHome = city;
-            setCity(city, { syncApp: true });
-            toast(T.locateOk(cName(city)));
-          }).catch(() => {
-            btn.classList.remove("is-busy");
-            btn.removeAttribute("aria-busy");
-            toast(T.locateUnavailable);
-          });
-        },
-        err => {
-          btn.classList.remove("is-busy");
-          btn.removeAttribute("aria-busy");
-          if (err && err.code === 1) toast(T.locateDenied);
-          else toast(T.locateUnavailable);
-        },
-        { enableHighAccuracy: false, timeout: 12000, maximumAge: 60000 }
-      );
+      startLocate();
     });
   }
 
