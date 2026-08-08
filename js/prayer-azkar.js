@@ -3,7 +3,13 @@
    header titled "Post-Prayer Adhkar", a short piece about that prayer
    (its meaning, time, obligatory and regular sunnah rak'ahs), and the
    adhkar reader (CTHAzkar engine). Sunrise is not a prayer, so it is not
-   tappable. Fully client-side; nothing here touches the native app. */
+   tappable. Fully client-side; nothing here touches the native app.
+
+   The one exception is the small notification bell pinned to each tile
+   (added below): it only appears inside the Android app (when the native
+   AndroidApp bridge is present) and opens that prayer's own reminder
+   settings natively. It reuses this file's per-card loop purely so the
+   bell can be pinned without a second script/tag on every page. */
 (function () {
   "use strict";
   const dataEl = document.getElementById("prayerAzkarData");
@@ -31,6 +37,54 @@
 
   // Asr has no confirmed regular sunnah → no sunnah tracker for it.
   const HAS_SUNNAH = { Fajr: true, Dhuhr: true, Asr: false, Maghrib: true, Isha: true };
+
+  // ---- per-prayer notification bell (Android app only) ----
+  const hasBellBridge = !!(window.AndroidApp && window.AndroidApp.openPrayerRowSettings);
+  const BELL_NAME = lang === "ar"
+    ? { Fajr: "الفجر", Dhuhr: "الظهر", Asr: "العصر", Maghrib: "المغرب", Isha: "العشاء" }
+    : { Fajr: "Fajr", Dhuhr: "Dhuhr", Asr: "Asr", Maghrib: "Maghrib", Isha: "Isha" };
+  function bellLabel(name, on) {
+    const n = BELL_NAME[name] || name;
+    if (lang === "ar") return on ? `إشعار ${n} مفعّل — اضغط للإعدادات` : `فعّل إشعار ${n}`;
+    return on ? `${n} reminder on — tap for settings` : `Turn on ${n} reminder`;
+  }
+  function setBellState(btn, on) {
+    btn.classList.toggle("is-on", !!on);
+    btn.textContent = on ? "🔔" : "🔕";
+    btn.setAttribute("aria-pressed", on ? "true" : "false");
+    btn.setAttribute("aria-label", bellLabel(btn.dataset.p, on));
+  }
+  function wireBell(card, name) {
+    if (!hasBellBridge) return;
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "prayer-bell-btn";
+    btn.dataset.p = name;
+    let on = false;
+    try { on = !!(window.AndroidApp.isPrayerAlarmEnabled && window.AndroidApp.isPrayerAlarmEnabled(name)); } catch (e) {}
+    setBellState(btn, on);
+    // Its own click must never bubble to the card's "open azkar sheet" listener.
+    btn.addEventListener("click", e => {
+      e.preventDefault();
+      e.stopPropagation();
+      try { window.AndroidApp.openPrayerRowSettings(name); } catch (err) {}
+    });
+    btn.addEventListener("keydown", e => { e.stopPropagation(); });
+    card.appendChild(btn);
+  }
+  // Android pushes fresh per-prayer state here after any settings change, so the
+  // bell updates instantly without the page reloading or re-querying the bridge.
+  if (hasBellBridge) {
+    window.cthUpdatePrayerBells = function (states) {
+      if (!states) return;
+      const grid = document.getElementById("prayerGrid");
+      if (!grid) return;
+      grid.querySelectorAll(".prayer-bell-btn").forEach(btn => {
+        const name = btn.dataset.p;
+        if (Object.prototype.hasOwnProperty.call(states, name)) setBellState(btn, states[name]);
+      });
+    };
+  }
 
   // A short, human piece about each obligatory prayer (Sunrise excluded).
   const INFO = {
@@ -322,6 +376,7 @@
       hint.title = T.tip;
       hint.innerHTML = '<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><circle cx="12" cy="4.2" r="1.35"/><circle cx="17.5" cy="6.5" r="1.35"/><circle cx="19.8" cy="12" r="1.35"/><circle cx="17.5" cy="17.5" r="1.35"/><circle cx="12" cy="19.8" r="1.35"/><circle cx="6.5" cy="17.5" r="1.35"/><circle cx="4.2" cy="12" r="1.35"/><circle cx="6.5" cy="6.5" r="1.35"/></svg>';
       card.appendChild(hint);
+      wireBell(card, name);
       const open = () => openSheet(name);
       card.addEventListener("click", open);
       card.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });

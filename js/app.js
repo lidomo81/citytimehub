@@ -163,6 +163,34 @@
   const WORLD_METHOD = { eg: 5, sa: 4, ae: 8, kw: 9, qa: 10, bh: 4, om: 8, jo: 3, ly: 5, sd: 5, pk: 1, in: 1, bd: 1, us: 2, ca: 2, tr: 13, id: 20, my: 3, sg: 3, gb: 3, fr: 12 };
   // AlAdhan school: 0 = Shafi (standard), 1 = Hanafi Asr — matches cities.json for Hanafi regions.
   const WORLD_SCHOOL = { pk: 1, in: 1, bd: 1, af: 1, tr: 1, kz: 1, uz: 1, kg: 1, tj: 1, tm: 1 };
+  /* City-level label for GPS locate — skips suburb/neighbourhood so the UI shows
+     "Alexandria" not "Smouha", while prayer times use the user's actual coords. */
+  function cityLevelNameFromAddress(a) {
+    if (!a) return "";
+    return a.city || a.town || a.municipality || a.village || a.county || a.state || "";
+  }
+  function locatedCityFromGeocode(x, gpsLat, gpsLng) {
+    if (!x) return null;
+    const a = x.address || {};
+    const name = cityLevelNameFromAddress(a) ||
+      String(x.display_name || "").split(",")[0].trim();
+    if (!name || isNaN(gpsLat) || isNaN(gpsLng)) return null;
+    let country = [a.state, a.country].filter(Boolean).join(", ");
+    if (!country) country = String(x.display_name || "").split(",").slice(-1)[0].trim();
+    const cc = String(a.country_code || "").toLowerCase();
+    return {
+      name,
+      name_ar: name,
+      country,
+      country_ar: country,
+      lat: gpsLat,
+      lng: gpsLng,
+      method: WORLD_METHOD[cc] || 3,
+      school: WORLD_SCHOOL[cc] || 0,
+      world: true,
+      slug: "w:" + gpsLat.toFixed(4) + "," + gpsLng.toFixed(4)
+    };
+  }
   function worldCityFrom(x) {
     const a = x.address || {};
     const name = a.city || a.town || a.village || a.municipality || a.suburb || a.county || a.state || String(x.display_name || "").split(",")[0].trim();
@@ -219,27 +247,25 @@
       lang + "&lat=" + encodeURIComponent(lat) + "&lon=" + encodeURIComponent(lng)
     )
       .then(r => r.ok ? r.json() : null)
-      .then(x => {
-        if (!x || !x.lat) return null;
-        const c = worldCityFrom(x);
-        if (!c.name || isNaN(c.lat) || isNaN(c.lng)) return null;
-        return c;
-      })
+      .then(x => locatedCityFromGeocode(x, lat, lng))
       .catch(() => null);
   }
   function cityFromCoords(lat, lng) {
-    const near = nearestCuratedCity(lat, lng, 45);
-    if (near) return Promise.resolve(near);
-    return reverseGeocode(lat, lng).then(c => c || {
-      name: T.locateNear,
-      name_ar: T.locateNear,
-      country: "",
-      country_ar: "",
-      lat, lng,
-      method: 3,
-      school: 0,
-      world: true,
-      slug: "w:" + lat.toFixed(4) + "," + lng.toFixed(4)
+    return reverseGeocode(lat, lng).then(c => {
+      if (c) return c;
+      const near = nearestCuratedCity(lat, lng, 45);
+      if (near) return Object.assign({}, near, { lat, lng });
+      return {
+        name: T.locateNear,
+        name_ar: T.locateNear,
+        country: "",
+        country_ar: "",
+        lat, lng,
+        method: 3,
+        school: 0,
+        world: true,
+        slug: "w:" + lat.toFixed(4) + "," + lng.toFixed(4)
+      };
     });
   }
   function wireLocateButton() {
@@ -2189,78 +2215,12 @@
     tick();
   }
 
-  // Reminder cards for app mode. The native app may inject the shell first, so this
-  // function refreshes its contents every time rather than depending on creation order.
-  function ensureAppRemindCards() {
-    if (!document.documentElement.classList.contains("app-mode")) return;
-    const ar = LANG === "ar";
-    const hasAndroid = !!(window.AndroidApp && typeof AndroidApp.openPrayerReminders === "function");
-
-    const prayerSlot = document.getElementById("cthPrayerRemindSlot");
-    if (prayerSlot) {
-      let b = document.getElementById("cthRemindTool");
-      if (!b) {
-        b = document.createElement("button");
-        b.type = "button";
-        b.id = "cthRemindTool";
-        prayerSlot.appendChild(b);
-      }
-      let enabled = false, label = "";
-      try {
-        enabled = hasAndroid && typeof AndroidApp.isPrayerRemindersEnabled === "function" && !!AndroidApp.isPrayerRemindersEnabled();
-        label = enabled && typeof AndroidApp.prayerRemindersCityLabel === "function" ? (AndroidApp.prayerRemindersCityLabel() || "") : "";
-      } catch (e) {}
-      b.className = "app-spot-card app-spot-remind prayer-reminder-card" + (enabled ? " is-on" : "");
-      b.setAttribute("aria-label", ar ? "تذكير الأذان" : "Prayer reminders");
-      const title = ar ? "تذكير الأذان" : "Prayer reminders";
-      const status = enabled
-        ? (label || (ar ? "مفعّل لكل صلاة" : "Enabled for every prayer"))
-        : (ar ? "استقبل تنبيهًا عند كل صلاة" : "Get an alert at every prayer");
-      const action = enabled ? (ar ? "إعداد" : "Manage") : (ar ? "تفعيل" : "Enable");
-      b.innerHTML =
-        '<span class="app-spot-ico" aria-hidden="true">🔔</span>' +
-        '<span class="app-spot-copy"><strong class="app-spot-k">' + title +
-        '</strong><span class="app-spot-sub">' + status +
-        '</span></span><span class="prayer-reminder-action" aria-hidden="true">' + action + "</span>";
-      if (!b.dataset.reminderWired) {
-        b.dataset.reminderWired = "1";
-      b.addEventListener("click", () => {
-        try {
-          if (hasAndroid) AndroidApp.openPrayerReminders();
-          else toast(ar ? "تفعيل التذكير من تطبيق أندرويد" : "Enable reminders in the Android app");
-        } catch (e) {}
-      });
-      }
-      prayerSlot.removeAttribute("hidden");
-    }
-
-    const azkarSlot = document.getElementById("cthAzkarRemindSlot");
-    if (azkarSlot && !document.getElementById("cthSpiritualTool")) {
-      const s = document.createElement("button");
-      s.type = "button";
-      s.id = "cthSpiritualTool";
-      s.className = "app-spot-card app-spot-remind";
-      s.setAttribute("aria-label", ar ? "تذكير الأذكار" : "Adhkar reminders");
-      s.innerHTML =
-        '<span class="app-spot-ico" aria-hidden="true">📿</span>' +
-        '<span class="app-spot-copy"><strong class="app-spot-k">' +
-        (ar ? "تذكير الأذكار" : "Adhkar reminders") +
-        '</strong><span class="app-spot-sub">' +
-        (ar ? "صباح، مساء، وجمعة" : "Morning, evening & Friday") +
-        "</span></span>";
-      s.addEventListener("click", () => {
-        try {
-          if (window.AndroidApp && typeof AndroidApp.openSpiritualReminders === "function") {
-            AndroidApp.openSpiritualReminders();
-          } else {
-            toast(ar ? "تفعيل تذكير الأذكار من تطبيق أندرويد" : "Enable adhkar reminders in the Android app");
-          }
-        } catch (e) {}
-      });
-      azkarSlot.appendChild(s);
-      azkarSlot.removeAttribute("hidden");
-    }
-  }
+  // The old per-tab reminder cards (Prayer-tab "تذكير الأذان" and Azkar-tab
+  // "تذكير الأذكار") were retired: both actions now live in the single tab-aware
+  // header bell (#notifCenterBtn, wired in js/pwa.js), so the slots stay empty
+  // and hidden. Kept as a no-op — and window.cthRefreshPrayerReminderCard below
+  // still exported — so existing calls from the Android side stay harmless.
+  function ensureAppRemindCards() {}
 
   // Called by the Android bridge after its early injection, which can happen
   // after this script has loaded. It normalizes the native shell to this UI.
@@ -2268,6 +2228,13 @@
 
   window.cthGetPrayerCity = function () {
     const payload = cityPayload(currentCity);
+    return payload ? JSON.stringify(payload) : null;
+  };
+
+  // The Android Notification Center's "Favorite city" option — reuses the same
+  // pinned home city as the site's star button, never a separate store.
+  window.cthGetHomeCity = function () {
+    const payload = cityPayload(getHomeCity());
     return payload ? JSON.stringify(payload) : null;
   };
 

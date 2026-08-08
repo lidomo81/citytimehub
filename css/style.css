@@ -347,6 +347,11 @@ html.app-mode .site-footer { display: none !important; }
 html.app-mode .play-store-cta,
 html.app-mode .play-store-badge { display: none !important; }
 .app-bar-side { flex: none; display: inline-flex; align-items: center; justify-content: center; min-width: 38px; min-height: 38px; }
+/* .app-bar-side sets display:inline-flex, which otherwise beats the browser's
+   default [hidden]{display:none} rule (equal specificity, later in source) —
+   so the app-only notification bell would render even before the Android
+   bridge reveals it. Keep it truly hidden until JS removes the attribute. */
+.app-bar-side.notif-center-btn[hidden] { display: none !important; }
 .app-bar-side.lang-switch { min-width: 0; padding: 0 4px; font-size: .78rem; font-weight: 700; text-decoration: none; color: var(--text-2); white-space: nowrap; }
 .app-bar-side.lang-switch:hover { color: var(--brand); }
 .app-bar-back {
@@ -1596,7 +1601,8 @@ html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card {
   align-items: center;
   gap: 10px;
   padding: 11px 14px;
-  padding-inline-start: 34px;   /* room for the icons pinned at the trailing edge */
+  padding-inline-start: 34px;   /* room for the icons pinned at the leading edge */
+  padding-inline-end: 34px;     /* room for the bell pinned at the trailing edge */
   border: none;
   border-bottom: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
   border-radius: 0;
@@ -1654,6 +1660,19 @@ html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card .pw-seal {
 }
 /* When a prayer is done its seal shows there; the misbaha hint steps aside. */
 html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card.pw-done .prayer-azkar-hint { display: none; }
+
+/* The bell stays pinned to the trailing edge too, vertically centred like the
+   leading-edge icons, so it reads as part of the row rather than a tile badge. */
+html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card .prayer-bell-btn {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: 6px;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  background: none;
+  opacity: .6;
+}
 
 /* Next prayer: a soft green wash on the row, not a bordered tile. */
 html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card.is-next {
@@ -4027,6 +4046,15 @@ html[dir="rtl"] .prayer-azkar-tx { letter-spacing: 0; }
 .prayer-card.is-tappable:hover .prayer-azkar-hint { opacity: .8; }
 .prayer-card.has-azkar-due .prayer-azkar-hint { opacity: 1; animation: azPulse 2s ease-out infinite; }
 @media (prefers-reduced-motion: reduce) { .prayer-card.has-azkar-due .prayer-azkar-hint { animation: none; } }
+
+/* Per-prayer notification bell — Android app only (js/prayer-azkar.js only creates
+   it when the native AndroidApp bridge is present). Tapping it opens that prayer's
+   own reminder settings; it must never trigger the tile's own azkar-sheet click. */
+.prayer-bell-btn { position: absolute; inset-block-end: 8px; inset-inline-end: 8px; display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; padding: 0; border: none; border-radius: 50%; background: color-mix(in srgb, var(--surface) 75%, transparent); color: var(--text-2); font-size: .8rem; line-height: 1; cursor: pointer; opacity: .55; transition: opacity .2s, transform .08s; z-index: 2; -webkit-tap-highlight-color: transparent; }
+.prayer-bell-btn:hover { opacity: .9; }
+.prayer-bell-btn:active { transform: scale(.9); }
+.prayer-bell-btn.is-on { color: var(--brand); opacity: .9; }
+.prayer-card[data-p="Sunrise"] .prayer-bell-btn { display: none; }
 
 /* Post-prayer sheet: misbaha header + prayer info */
 .pa-hero { text-align: center; padding: 4px 0 16px; }

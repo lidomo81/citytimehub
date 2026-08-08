@@ -15,7 +15,7 @@
 
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("/service-worker.js").catch(() => {});
+      navigator.serviceWorker.register("/service-worker.js?v=275").catch(() => {});
     });
   }
 
@@ -388,6 +388,52 @@
   }
   if (document.readyState !== "loading") insertShareButton();
   else document.addEventListener("DOMContentLoaded", insertShareButton);
+
+  /* ----- Reminders bell — app-only header icon next to the day/night toggle.
+     Detected purely via the Android bridge (not a User-Agent sniff or the ?app=1
+     flag), so it can never appear in a regular browser: a website visitor never
+     has window.AndroidApp, only the installed app does. Tab-aware: hidden on
+     Home, opens the Prayer Notification Center on the Prayer tab, and opens the
+     existing Adhkar reminder settings on the Adhkar tab — replacing the old
+     inline "تذكير الأذان" / "تذكير الأذكار" cards on those tabs. ----- */
+  function wireNotifCenterButton() {
+    var btn = document.getElementById("notifCenterBtn");
+    if (!btn) return;
+    var hasPrayer = !!(window.AndroidApp && typeof AndroidApp.openNotificationSettings === "function");
+    var hasAzkar = !!(window.AndroidApp && typeof AndroidApp.openSpiritualReminders === "function");
+    if (!hasPrayer && !hasAzkar) return;
+    var ar = (document.documentElement.getAttribute("lang") || "en").slice(0, 2) === "ar";
+
+    function refresh() {
+      var tab = document.documentElement.getAttribute("data-app-tab") || "home";
+      if (tab === "prayer" && hasPrayer) {
+        btn.dataset.notifTarget = "prayer";
+        btn.setAttribute("aria-label", ar ? "إشعارات الصلاة" : "Prayer notifications");
+        btn.hidden = false;
+      } else if (tab === "azkar" && hasAzkar) {
+        btn.dataset.notifTarget = "azkar";
+        btn.setAttribute("aria-label", ar ? "تذكيرات الأذكار" : "Adhkar reminders");
+        btn.hidden = false;
+      } else {
+        btn.dataset.notifTarget = "";
+        btn.hidden = true;
+      }
+    }
+
+    if (!btn.dataset.notifWired) {
+      btn.dataset.notifWired = "1";
+      btn.addEventListener("click", function () {
+        try {
+          if (btn.dataset.notifTarget === "azkar") AndroidApp.openSpiritualReminders();
+          else if (btn.dataset.notifTarget === "prayer") AndroidApp.openNotificationSettings();
+        } catch (e) {}
+      });
+      document.addEventListener("cth-app-tab", refresh);
+    }
+    refresh();
+  }
+  if (document.readyState !== "loading") wireNotifCenterButton();
+  else document.addEventListener("DOMContentLoaded", wireNotifCenterButton);
 
   /* ----- Prayer-city picker: a worldwide, site-styled city search opened by
      the Android app via window.cthPrayerPicker(). The chosen city is handed
