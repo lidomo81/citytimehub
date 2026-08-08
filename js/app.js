@@ -1178,6 +1178,8 @@
     try {
       window.dispatchEvent(new CustomEvent("cth-city", { detail: { slug: city.slug, mine: currentMine } }));
     } catch (e) {}
+    const cityPanel = document.getElementById("cityPanel");
+    if (cityPanel) cityPanel.dataset.tz = city.tz || "";
     updateStatusBox();
     tick();
     renderHomeCities();
@@ -1471,6 +1473,11 @@
       refreshCityPulse(city, prayerState.timings);
       updateDayAtmosphere();
       maybeSyncWidget();
+      try {
+        window.dispatchEvent(new CustomEvent("cth-prayer-timings", {
+          detail: { timings: prayerState.timings, tz: city.tz || null }
+        }));
+      } catch (e) {}
     };
     try {
       const res = await fetch(url);

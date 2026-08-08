@@ -175,6 +175,11 @@
         nextStripTimings = timings;
         updateNextPrayerStrip();
       }
+      try {
+        window.dispatchEvent(new CustomEvent("cth-prayer-timings", {
+          detail: { timings, tz: CITY.tz || null }
+        }));
+      } catch (e) {}
     } catch {
       grid.innerHTML = `<p class="no-results" style="grid-column:1/-1">${T.prayerErr}</p>`;
     }

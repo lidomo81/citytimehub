@@ -26,6 +26,7 @@
         fTime: "يبدأ وقتها:", fFard: "فرضها:", fSunnah: "السنة الراتبة:", sec: "الأذكار المأثورة",
         trackTitle: "سجِّل التزامك", trackHint: "لمدينتك — يظهر إنجازك على البطاقة",
         tFard: "صلّيت الفرض", tSunnah: "صلّيت السنة", tAzkar: "قلت الأذكار",
+        notYet: "لم يحن وقتها بعد", needFard: "سجّل الفرض أولًا",
         celebrate: ["تقبّل الله 🤍", "أحسنتَ 🌙", "نورٌ على نور ✨", "بُوركتَ ❤️"] }
     : { title: "Post-Prayer Adhkar",
         tip: "Click here to read the post-prayer adhkar",
@@ -33,6 +34,7 @@
         fTime: "Its time:", fFard: "Obligatory:", fSunnah: "Regular sunnah:", sec: "The adhkar",
         trackTitle: "Log your adherence", trackHint: "For your city — shown on the card",
         tFard: "Prayed the fard", tSunnah: "Prayed the sunnah", tAzkar: "Said the adhkar",
+        notYet: "Not yet time", needFard: "Log the fard first",
         celebrate: ["Accepted 🤍", "Well done 🌙", "Light upon light ✨", "Blessed ❤️"] };
 
   // Asr has no confirmed regular sunnah → no sunnah tracker for it.
@@ -160,8 +162,73 @@
   function wToggle(name, kind) {
     const w = getWorship(), cur = w[name] || {}, k = KIND_KEY[kind];
     if (!k) return;
+    const turningOn = !cur[k];
+    if (turningOn && !canMark(name, kind)) return;
     cur[k] = !cur[k]; w[name] = cur; setWorship(w);
     try { window.dispatchEvent(new CustomEvent("cth-worship")); } catch (e) {}
+  }
+
+  /* ---- prayer-time context for tracker gating (read-only; never blocks the sheet) ---- */
+  let ctxTimings = null;
+  let ctxTz = null;
+  let openPrayerName = null;
+
+  function toMin(s) {
+    const a = String(s || "0:0").split(" ")[0].split(":");
+    return (+a[0]) * 60 + (+a[1]);
+  }
+  function offsetHours(tz, when) {
+    if (!tz) return 0;
+    try {
+      const p = new Intl.DateTimeFormat("en-GB", {
+        timeZone: tz, timeZoneName: "shortOffset", hour: "2-digit", minute: "2-digit", hour12: false
+      }).formatToParts(when || new Date());
+      const off = (p.find(x => x.type === "timeZoneName") || {}).value || "";
+      const m = off.match(/GMT([+-])(\d+)(?::(\d+))?/i) || off.match(/UTC([+-])(\d+)/i);
+      if (!m) return 0;
+      const sign = m[1] === "-" ? -1 : 1;
+      return sign * (+m[2] + (+(m[3] || 0) / 60));
+    } catch (e) { return 0; }
+  }
+  function nowMinsInTz(tz) {
+    if (!tz) {
+      const d = new Date();
+      return d.getHours() * 60 + d.getMinutes();
+    }
+    const d = new Date(Date.now() + offsetHours(tz) * 3600000);
+    return d.getUTCHours() * 60 + d.getUTCMinutes();
+  }
+  function syncTimingsFromGrid() {
+    const grid = document.getElementById("prayerGrid");
+    if (!grid) return;
+    const cards = grid.querySelectorAll(".prayer-card");
+    const t = {};
+    ORDER.forEach((name, i) => {
+      const card = cards[i];
+      if (!card) return;
+      const tm = card.querySelector(".prayer-time");
+      if (tm && tm.textContent) t[name] = tm.textContent.trim();
+    });
+    if (Object.keys(t).length >= 5) ctxTimings = t;
+    if (window.CITY && window.CITY.tz) ctxTz = window.CITY.tz;
+    const panel = document.getElementById("cityPanel");
+    if (panel && panel.dataset.tz) ctxTz = panel.dataset.tz;
+  }
+  function prayerTimeEntered(name) {
+    if (!ctxTimings || !ctxTimings[name] || !ctxTz) return true;
+    return nowMinsInTz(ctxTz) >= toMin(ctxTimings[name]);
+  }
+  function canMark(name, kind) {
+    if (!prayerTimeEntered(name)) return false;
+    if (kind === "azkar" && !wState(name).fard) return false;
+    return true;
+  }
+  function trackGate(name, kind) {
+    const done = wState(name)[kind];
+    if (done) return { ok: true, reason: "" };
+    if (!prayerTimeEntered(name)) return { ok: false, reason: T.notYet };
+    if (kind === "azkar" && !wState(name).fard) return { ok: false, reason: T.needFard };
+    return { ok: true, reason: "" };
   }
 
   // Is the shown city the user's own city (saved favorite / home / detected local)?
@@ -205,7 +272,7 @@
     document.body.appendChild(sheet);
     sheetBody = sheet.querySelector("#prayerAzkarTool");
     sheetTitle = sheet.querySelector(".pa-head-title");
-    const close = () => { sheet.hidden = true; document.documentElement.style.overflow = ""; setPullToRefresh(true); decorate(); };
+    const close = () => { openPrayerName = null; sheet.hidden = true; document.documentElement.style.overflow = ""; setPullToRefresh(true); decorate(); };
     sheet.addEventListener("click", e => { if (e.target === sheet) close(); });
     sheet.querySelector(".az-sheet-close").addEventListener("click", close);
     document.addEventListener("keydown", e => { if (e.key === "Escape" && !sheet.hidden) close(); });
@@ -213,8 +280,25 @@
 
   function trackBtn(name, kind) {
     const done = wState(name)[kind];
+    const gate = trackGate(name, kind);
     const label = kind === "fard" ? T.tFard : kind === "sunnah" ? T.tSunnah : T.tAzkar;
-    return `<button type="button" class="pw-toggle pw-${kind}${done ? " is-done" : ""}" data-pw="${kind}" data-p="${name}" aria-pressed="${done ? "true" : "false"}"><span class="pw-check" aria-hidden="true">✓</span><span class="pw-tx">${label}</span></button>`;
+    const locked = !done && !gate.ok;
+    return `<button type="button" class="pw-toggle pw-${kind}${done ? " is-done" : ""}${locked ? " is-locked" : ""}" data-pw="${kind}" data-p="${name}" aria-pressed="${done ? "true" : "false"}"${locked ? ` disabled aria-disabled="true" title="${gate.reason}"` : ""}><span class="pw-check" aria-hidden="true">✓</span><span class="pw-tx">${label}</span></button>`;
+  }
+
+  function refreshTrackerButtons(prayerName) {
+    if (!sheetBody || !prayerName) return;
+    sheetBody.querySelectorAll(".pw-toggle").forEach(btn => {
+      const kind = btn.dataset.pw;
+      const done = wState(prayerName)[kind];
+      const gate = trackGate(prayerName, kind);
+      const locked = !done && !gate.ok;
+      btn.disabled = locked;
+      btn.setAttribute("aria-disabled", locked ? "true" : "false");
+      btn.classList.toggle("is-locked", locked);
+      if (locked && gate.reason) btn.title = gate.reason;
+      else btn.removeAttribute("title");
+    });
   }
 
   function trackerHtml(prayerName) {
@@ -270,20 +354,25 @@
 
   function openSheet(prayerName) {
     if (!sheet) buildSheet();
+    openPrayerName = prayerName || null;
+    syncTimingsFromGrid();
     const info = INFO[prayerName];
     if (sheetTitle) sheetTitle.textContent = info ? (info[lang] || info.en).emoji + " " + (info[lang] || info.en).name : T.title;
     sheetBody.innerHTML = heroInfoHtml(prayerName) + '<div class="pa-reader">' + SKELETON + "</div>";
     const storeKey = `cth-azkar:prayer:${prayerName || "x"}`;
     window.CTHAzkar.mount(sheetBody.querySelector(".pa-reader"), items, { lang, storeKey, daily: true });
     if (prayerName) {
+      refreshTrackerButtons(prayerName);
       sheetBody.querySelectorAll(".pw-toggle").forEach(btn => {
         btn.addEventListener("click", () => {
+          if (btn.disabled) return;
           const kind = btn.dataset.pw;
           wToggle(prayerName, kind);
           const done = wState(prayerName)[kind];
           btn.classList.toggle("is-done", done);
           btn.setAttribute("aria-pressed", done ? "true" : "false");
           if (done) { btn.classList.remove("pw-bump"); void btn.offsetWidth; btn.classList.add("pw-bump"); }
+          refreshTrackerButtons(prayerName);
         });
       });
     }
@@ -308,6 +397,8 @@
 
   // ---- make the prayer tiles tappable + show the "due" glow ----
   function decorate() {
+    syncTimingsFromGrid();
+    if (sheet && !sheet.hidden && openPrayerName) refreshTrackerButtons(openPrayerName);
     const grid = document.getElementById("prayerGrid");
     if (!grid) return;
     const cards = Array.from(grid.querySelectorAll(".prayer-card"));
@@ -387,6 +478,11 @@
   window.addEventListener("cth-city", e => {
     ctxMine = !!(e.detail && e.detail.mine);
     decorate();
+  });
+  window.addEventListener("cth-prayer-timings", e => {
+    if (e.detail && e.detail.timings) ctxTimings = e.detail.timings;
+    if (e.detail && e.detail.tz) ctxTz = e.detail.tz;
+    if (sheet && !sheet.hidden && openPrayerName) refreshTrackerButtons(openPrayerName);
   });
   // A tracker toggled anywhere → refresh the card badges.
   window.addEventListener("cth-worship", () => decorate());

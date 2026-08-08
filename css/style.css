@@ -4097,6 +4097,9 @@ html[dir="rtl"] .prayer-azkar-tx { letter-spacing: 0; }
 .pw-toggle.pw-sunnah.is-done .pw-check { border-color: rgba(58,38,0,.55); background: rgba(58,38,0,.12); }
 .pw-toggle.pw-azkar.is-done  { background: var(--pw-azkar); }
 
+.pw-toggle.is-locked,
+.pw-toggle:disabled:not(.is-done) { opacity: .48; cursor: not-allowed; }
+
 .pw-toggle.pw-bump { animation: pwBump .32s cubic-bezier(.2,.8,.2,1); }
 @keyframes pwBump { 0% { transform: scale(1); } 45% { transform: scale(1.12); } 100% { transform: scale(1); } }
 
