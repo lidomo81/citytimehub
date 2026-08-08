@@ -255,12 +255,21 @@
       .then(x => locatedCityFromGeocode(x, lat, lng))
       .catch(() => null);
   }
+  function enrichLocatedCity(c, lat, lng) {
+    if (!c || c.tz) return c;
+    const near = nearestCuratedCity(lat, lng, 80);
+    if (!near) return c;
+    if (near.tz) c.tz = near.tz;
+    if (near.method != null) c.method = near.method;
+    if (near.school != null) c.school = near.school;
+    return c;
+  }
   function cityFromCoords(lat, lng) {
     return reverseGeocode(lat, lng).then(c => {
-      if (c) return c;
+      if (c) return enrichLocatedCity(c, lat, lng);
       const near = nearestCuratedCity(lat, lng, 45);
       if (near) return Object.assign({}, near, { lat, lng });
-      return {
+      return enrichLocatedCity({
         name: T.locateNear,
         name_ar: T.locateNear,
         country: "",
@@ -270,7 +279,7 @@
         school: 0,
         world: true,
         slug: "w:" + lat.toFixed(4) + "," + lng.toFixed(4)
-      };
+      }, lat, lng);
     });
   }
   function geoErrorMessage(err) {
@@ -289,16 +298,25 @@
         reject({ code: "unsupported" });
         return;
       }
-      const attempts = [
-        { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 },
-        { enableHighAccuracy: false, timeout: 15000, maximumAge: 120000 }
-      ];
+      // Browsers on desktop rarely have GPS — network/WiFi location works better
+      // with enableHighAccuracy:false. Reserve high accuracy for phones/tablets.
+      const mobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent || "");
+      const attempts = mobile
+        ? [
+            { enableHighAccuracy: false, timeout: 12000, maximumAge: 120000 },
+            { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+          ]
+        : [
+            { enableHighAccuracy: false, timeout: 15000, maximumAge: 300000 }
+          ];
+      let settled = false;
+      const done = (fn, val) => { if (!settled) { settled = true; fn(val); } };
       const run = i => {
         navigator.geolocation.getCurrentPosition(
-          resolve,
+          pos => done(resolve, pos),
           err => {
             if (i + 1 < attempts.length) run(i + 1);
-            else reject(err);
+            else done(reject, err);
           },
           attempts[i]
         );
@@ -320,9 +338,9 @@
     }
     btn.addEventListener("click", () => {
       if (btn.classList.contains("is-busy")) return;
-      const startLocate = () => {
-        btn.classList.add("is-busy");
-        btn.setAttribute("aria-busy", "true");
+      btn.classList.add("is-busy");
+      btn.setAttribute("aria-busy", "true");
+      const runLocate = () => {
         toast(T.locateBusy);
         requestGeoPosition()
           .then(pos => {
@@ -332,14 +350,10 @@
           .then(city => {
             finishLocateButton(btn);
             if (!city) { toast(T.locateUnavailable); return; }
-            try {
-              // GPS becomes the "local city" so the home chip returns here.
-              detectedHome = city;
-              setCity(city, { syncApp: true });
-              toast(T.locateOk(cName(city)));
-            } catch (e) {
-              toast(T.locateUnavailable);
-            }
+            // GPS becomes the "local city" so the home chip returns here.
+            detectedHome = city;
+            setCity(city, { syncApp: true });
+            toast(T.locateOk(cName(city)));
           })
           .catch(err => {
             finishLocateButton(btn);
@@ -352,15 +366,16 @@
         navigator.permissions.query({ name: "geolocation" })
           .then(st => {
             if (st && st.state === "denied") {
+              finishLocateButton(btn);
               toast(T.locateDenied);
               return;
             }
-            startLocate();
+            runLocate();
           })
-          .catch(() => startLocate());
+          .catch(() => runLocate());
         return;
       }
-      startLocate();
+      runLocate();
     });
   }
 
@@ -418,6 +433,7 @@
 
   /* ---------- Formatters (one per timezone, reused) ---------- */
   function formatters(tz) {
+    if (!tz) tz = "UTC";
     if (fmtCache.has(tz)) return fmtCache.get(tz);
     const pair = {
       time: new Intl.DateTimeFormat("en-GB", { timeZone: tz, hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false }),
@@ -431,6 +447,7 @@
 
   /* ---------- UTC offset (float hours) + pretty label ---------- */
   function offsetHours(tz, when = new Date()) {
+    if (!tz) return 0;
     const dtf = new Intl.DateTimeFormat("en-US", { timeZone: tz, timeZoneName: "shortOffset", hour: "2-digit" });
     const p = dtf.formatToParts(when).find(x => x.type === "timeZoneName");
     if (!p) return 0;
@@ -824,7 +841,9 @@
   function tick() {
     const now = new Date();
     $$("[data-tz]").forEach(el => {
-      const f = formatters(el.dataset.tz);
+      const tz = el.dataset.tz;
+      if (!tz) return;
+      const f = formatters(tz);
       const t = el.querySelector("[data-time]");
       const d = el.querySelector("[data-date]");
       const dn = el.querySelector("[data-daynight]");
@@ -1230,7 +1249,10 @@
       window.dispatchEvent(new CustomEvent("cth-city", { detail: { slug: city.slug, mine: currentMine } }));
     } catch (e) {}
     const cityPanel = document.getElementById("cityPanel");
-    if (cityPanel) cityPanel.dataset.tz = city.tz || "";
+    if (cityPanel) {
+      if (city.tz) cityPanel.dataset.tz = city.tz;
+      else delete cityPanel.dataset.tz;
+    }
     updateStatusBox();
     tick();
     renderHomeCities();
@@ -1500,6 +1522,8 @@
         if (currentCity === city) {
           ltTz = city.tz;
           ltOffsetMs = offsetHours(city.tz) * 3600000;
+          const cityPanel = document.getElementById("cityPanel");
+          if (cityPanel) cityPanel.dataset.tz = city.tz;
           tick();
         }
       }
