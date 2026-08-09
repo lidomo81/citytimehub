@@ -152,92 +152,41 @@
     <loc>https://citytimehub.com/ar/our-branches</loc>
     <lastmod>2026-06-28</lastmod>
   </url>
+  <!-- cth:guide-sitemap:start -->
   <url>
-    <loc>https://citytimehub.com/guides/how-islam-transforms-time-into-life</loc>
-    <lastmod>2026-07-08</lastmod>
+    <loc>https://citytimehub.com/guides/time-passing-faster-barakah</loc>
+    <lastmod>2026-08-10</lastmod>
   </url>
   <url>
-    <loc>https://citytimehub.com/guides/between-two-timezones</loc>
-    <lastmod>2026-06-28</lastmod>
+    <loc>https://citytimehub.com/ar/guides/time-passing-faster-barakah</loc>
+    <lastmod>2026-08-10</lastmod>
   </url>
   <url>
-    <loc>https://citytimehub.com/guides/best-times-to-call-family-from-the-gulf</loc>
-    <lastmod>2026-06-28</lastmod>
+    <loc>https://citytimehub.com/guides/choosing-a-city-for-prayer-times-while-traveling</loc>
+    <lastmod>2026-08-03</lastmod>
   </url>
   <url>
-    <loc>https://citytimehub.com/guides/praying-on-time-when-you-live-abroad</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://citytimehub.com/ar/guides/choosing-a-city-for-prayer-times-while-traveling</loc>
+    <lastmod>2026-08-03</lastmod>
   </url>
   <url>
-    <loc>https://citytimehub.com/guides/how-to-find-the-qibla-anywhere</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://citytimehub.com/guides/how-to-check-prayer-times</loc>
+    <lastmod>2026-08-03</lastmod>
+  </url>
+  <url>
+    <loc>https://citytimehub.com/ar/guides/how-to-check-prayer-times</loc>
+    <lastmod>2026-08-03</lastmod>
   </url>
   <url>
     <loc>https://citytimehub.com/guides/prayer-while-traveling</loc>
     <lastmod>2026-07-15</lastmod>
   </url>
   <url>
-    <loc>https://citytimehub.com/guides/the-journey-of-the-adhan</loc>
-    <lastmod>2026-07-09</lastmod>
-  </url>
-  <url>
-    <loc>https://citytimehub.com/guides/the-journey-of-time-in-islam</loc>
-    <lastmod>2026-07-09</lastmod>
-  </url>
-  <url>
-    <loc>https://citytimehub.com/guides/why-prayer-times-change-daily</loc>
-    <lastmod>2026-07-09</lastmod>
-  </url>
-  <url>
-    <loc>https://citytimehub.com/guides/morning-and-evening-adhkar</loc>
-    <lastmod>2026-07-09</lastmod>
-  </url>
-  <url>
-    <loc>https://citytimehub.com/guides/the-last-third-of-the-night</loc>
-    <lastmod>2026-07-09</lastmod>
-  </url>
-  <url>
-    <loc>https://citytimehub.com/guides/times-when-prayer-is-disliked</loc>
-    <lastmod>2026-07-09</lastmod>
-  </url>
-  <url>
-    <loc>https://citytimehub.com/ar/guides</loc>
-    <lastmod>2026-06-28</lastmod>
-  </url>
-  <url>
-    <loc>https://citytimehub.com/ar/guides/how-islam-transforms-time-into-life</loc>
-    <lastmod>2026-07-08</lastmod>
-  </url>
-  <url>
-    <loc>https://citytimehub.com/ar/guides/between-two-timezones</loc>
-    <lastmod>2026-06-28</lastmod>
-  </url>
-  <url>
-    <loc>https://citytimehub.com/ar/guides/best-times-to-call-family-from-the-gulf</loc>
-    <lastmod>2026-06-28</lastmod>
-  </url>
-  <url>
-    <loc>https://citytimehub.com/ar/guides/praying-on-time-when-you-live-abroad</loc>
-    <lastmod>2026-07-02</lastmod>
-  </url>
-  <url>
-    <loc>https://citytimehub.com/ar/guides/how-to-find-the-qibla-anywhere</loc>
-    <lastmod>2026-07-02</lastmod>
-  </url>
-  <url>
     <loc>https://citytimehub.com/ar/guides/prayer-while-traveling</loc>
     <lastmod>2026-07-15</lastmod>
   </url>
   <url>
-    <loc>https://citytimehub.com/ar/guides/the-journey-of-the-adhan</loc>
-    <lastmod>2026-07-09</lastmod>
-  </url>
-  <url>
-    <loc>https://citytimehub.com/ar/guides/the-journey-of-time-in-islam</loc>
-    <lastmod>2026-07-09</lastmod>
-  </url>
-  <url>
-    <loc>https://citytimehub.com/ar/guides/why-prayer-times-change-daily</loc>
+    <loc>https://citytimehub.com/guides/morning-and-evening-adhkar</loc>
     <lastmod>2026-07-09</lastmod>
   </url>
   <url>
@@ -245,13 +194,86 @@
     <lastmod>2026-07-09</lastmod>
   </url>
   <url>
+    <loc>https://citytimehub.com/guides/the-journey-of-the-adhan</loc>
+    <lastmod>2026-07-09</lastmod>
+  </url>
+  <url>
+    <loc>https://citytimehub.com/ar/guides/the-journey-of-the-adhan</loc>
+    <lastmod>2026-07-09</lastmod>
+  </url>
+  <url>
+    <loc>https://citytimehub.com/guides/the-journey-of-time-in-islam</loc>
+    <lastmod>2026-07-09</lastmod>
+  </url>
+  <url>
+    <loc>https://citytimehub.com/ar/guides/the-journey-of-time-in-islam</loc>
+    <lastmod>2026-07-09</lastmod>
+  </url>
+  <url>
+    <loc>https://citytimehub.com/guides/the-last-third-of-the-night</loc>
+    <lastmod>2026-07-09</lastmod>
+  </url>
+  <url>
     <loc>https://citytimehub.com/ar/guides/the-last-third-of-the-night</loc>
+    <lastmod>2026-07-09</lastmod>
+  </url>
+  <url>
+    <loc>https://citytimehub.com/guides/times-when-prayer-is-disliked</loc>
     <lastmod>2026-07-09</lastmod>
   </url>
   <url>
     <loc>https://citytimehub.com/ar/guides/times-when-prayer-is-disliked</loc>
     <lastmod>2026-07-09</lastmod>
   </url>
+  <url>
+    <loc>https://citytimehub.com/guides/why-prayer-times-change-daily</loc>
+    <lastmod>2026-07-09</lastmod>
+  </url>
+  <url>
+    <loc>https://citytimehub.com/ar/guides/why-prayer-times-change-daily</loc>
+    <lastmod>2026-07-09</lastmod>
+  </url>
+  <url>
+    <loc>https://citytimehub.com/guides/how-islam-transforms-time-into-life</loc>
+    <lastmod>2026-08-03</lastmod>
+  </url>
+  <url>
+    <loc>https://citytimehub.com/ar/guides/how-islam-transforms-time-into-life</loc>
+    <lastmod>2026-08-03</lastmod>
+  </url>
+  <url>
+    <loc>https://citytimehub.com/guides/how-to-find-the-qibla-anywhere</loc>
+    <lastmod>2026-07-02</lastmod>
+  </url>
+  <url>
+    <loc>https://citytimehub.com/ar/guides/how-to-find-the-qibla-anywhere</loc>
+    <lastmod>2026-07-02</lastmod>
+  </url>
+  <url>
+    <loc>https://citytimehub.com/guides/praying-on-time-when-you-live-abroad</loc>
+    <lastmod>2026-07-02</lastmod>
+  </url>
+  <url>
+    <loc>https://citytimehub.com/ar/guides/praying-on-time-when-you-live-abroad</loc>
+    <lastmod>2026-07-02</lastmod>
+  </url>
+  <url>
+    <loc>https://citytimehub.com/guides/between-two-timezones</loc>
+    <lastmod>2026-06-27</lastmod>
+  </url>
+  <url>
+    <loc>https://citytimehub.com/ar/guides/between-two-timezones</loc>
+    <lastmod>2026-06-27</lastmod>
+  </url>
+  <url>
+    <loc>https://citytimehub.com/guides/best-times-to-call-family-from-the-gulf</loc>
+    <lastmod>2026-06-19</lastmod>
+  </url>
+  <url>
+    <loc>https://citytimehub.com/ar/guides/best-times-to-call-family-from-the-gulf</loc>
+    <lastmod>2026-06-19</lastmod>
+  </url>
+<!-- cth:guide-sitemap:end -->
   <url>
     <loc>https://citytimehub.com/about</loc>
     <lastmod>2026-06-28</lastmod>

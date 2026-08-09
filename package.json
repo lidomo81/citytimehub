@@ -1,0 +1,8 @@
+{
+  "name": "citytimehub",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:articles": "node scripts/build-articles.mjs"
+  }
+}
