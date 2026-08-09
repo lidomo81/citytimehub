@@ -2225,6 +2225,7 @@
 
     if (app) {
       const remind = document.getElementById("cthRemindHelp");
+      const perPrayer = document.getElementById("cthPerPrayerHelp");
       if (remind) {
         remind.hidden = false;
         const ic = remind.querySelector(".help-ic");
@@ -2233,14 +2234,15 @@
         const body = remind.querySelector("div > span");
         if (strong && body) {
           if (ar) {
-            strong.textContent = "تذكير الأذان والأذكار";
-            body.textContent = "تذكير الأذان في تبويب الصلاة — وتذكير أذكار الصباح والمساء في تبويب الأذكار.";
+            strong.textContent = "مركز الإشعارات";
+            body.textContent = "زر الجرس أعلى الصفحة: مركز إشعارات الصلاة في تبويب الصلاة، وتذكيرات الأذكار في تبويب الأذكار. ثلاث نغمات أذان مع معاينة عند الاختيار.";
           } else {
-            strong.textContent = "Prayer & adhkar reminders";
-            body.textContent = "Adhan reminder on the Prayer tab — morning/evening adhkar on the Adhkar tab.";
+            strong.textContent = "Notification Center";
+            body.textContent = "The bell at the top: Prayer Notification Center on the Prayer tab, adhkar reminders on the Adhkar tab. Three adhan sounds with preview when you pick one.";
           }
         }
       }
+      if (perPrayer) perPrayer.hidden = false;
       overlay.querySelectorAll(".help-list li").forEach(li => {
         const t = (li.querySelector("strong") || {}).textContent || "";
         if (/Install|التثبيت/.test(t)) li.hidden = true;

@@ -28,8 +28,11 @@
       ar: { t: "التبويبات السفلية 📱", b: "الرئيسية: وقتك ومدينتك. الصلاة: المواقيت والتذكير. الأذكار: استيقاظ وصباح ومساء ونوم ورقية. الأدوات: باقي الميزات." },
       en: { t: "Bottom tabs 📱", b: "Home: your time and city. Prayer: times and reminders. Adhkar: waking, morning, evening, bedtime and ruqyah. Tools: everything else." } },
     search: { sel: "#cpSearch", tab: "home",
-      ar: { t: "ابحث عن مدينتك 🔍", b: "في تبويب الرئيسية — اكتب اسم أي مدينة وشاهد وقتها ومواقيت صلاتها فورًا." },
-      en: { t: "Search your city 🔍", b: "On the Home tab — type any city to see its time and prayer times instantly." } },
+      ar: { t: "ابحث عن مدينتك 🔍", b: "في تبويب الرئيسية — اكتب اسم أي مدينة من 500 مدينة أو أي مكان في العالم." },
+      en: { t: "Search your city 🔍", b: "On the Home tab — type any of 500 cities or anywhere in the world." } },
+    locate: { sel: "#cpLocate", tab: "home", prefer: "below",
+      ar: { t: "تحديد موقعك 📍", b: "اضغط أيقونة الموقع بجانب البحث لاكتشاف مدينتك تلقائياً وعرض مواقيت صلاتها — بدون كتابة الاسم." },
+      en: { t: "Detect your location 📍", b: "Tap the location icon beside search to find your city automatically and show its prayer times — no typing needed." } },
     favorite: { sel: "#cpSave", tab: "home",
       ar: { t: "مدينتي المفضّلة ⭐", b: "اضغط النجمة لتحفظ المدينة في قسم «مدني» — تبقى محفوظة كل مرة تفتح التطبيق." },
       en: { t: "My favorite city ⭐", b: "Tap the star to save the city in “My cities” — kept every time you open the app." } },
@@ -46,8 +49,11 @@
       ar: { t: "مواقيت الصلاة 🕌", b: "في تبويب الصلاة — صلوات اليوم الخمسة مع الشروق. الصلاة الحالية تتحدّد بلمسة ضوئية." },
       en: { t: "Prayer times 🕌", b: "On the Prayer tab — today's five prayers plus sunrise. The current prayer is gently highlighted." } },
     tapCard: { sel: "#prayerGrid", tab: "prayer",
-      ar: { t: "اضغط أي بطاقة صلاة 📿", b: "كل بطاقة قابلة للضغط: تفتح أذكار ما بعد الصلاة وفضلها، وتسجّل الفرض والسنة والأذكار — والختم على البطاقة يمتلئ مع التزامك." },
-      en: { t: "Tap any prayer card 📿", b: "Every card is tappable: it opens post-prayer adhkar and the prayer’s virtue, and lets you log fard, sunnah and adhkar — the seal on the card fills as you keep up." } },
+      ar: { t: "اضغط أي بطاقة صلاة 📿", b: "كل بطاقة تفتح أذكار ما بعد الصلاة وفضلها. بعد وقت الأذان يمكنك تسجيل الفرض والسنة والأذكار — والختم على البطاقة يمتلئ مع التزامك." },
+      en: { t: "Tap any prayer card 📿", b: "Each card opens post-prayer adhkar and its virtue. After adhan time you can log fard, sunnah and adhkar — the seal fills as you keep up." } },
+    prayerBell: { sel: "#prayerGrid .prayer-bell-btn", tab: "prayer", prefer: "above",
+      ar: { t: "جرس كل صلاة 🔔", b: "الجرس الصغير على البطاقة يفتح إعدادات هذه الصلاة وحدها: تفعيل التذكير، نغمة الأذان (٣ أصوات مع معاينة في التطبيق)، والتنبيه قبل أو عند الأذان." },
+      en: { t: "Per-prayer bell 🔔", b: "The small bell on each card opens settings for that prayer alone: enable alerts, pick an adhan sound (3 choices with preview in the app), and notify before or at adhan." } },
     adherence: { sel: "#cpNext", tab: "prayer",
       ar: { t: "التزامك اليومي 🌙", b: "عندما تسجّل صلواتك تظهر هنا كلمة تشجيع وسلسلة أيامك — بياناتك على جهازك وحده." },
       en: { t: "Your daily adherence 🌙", b: "As you log prayers, a gentle word and your streak appear here — saved on your device only." } },
@@ -58,8 +64,8 @@
       ar: { t: "لمحات الصلاة ✨", b: "عدّ تنازلي للصلاة القادمة، والثلث الأخير من الليل، وأوقات الكراهة — محسوبة لمدينتك." },
       en: { t: "Prayer insights ✨", b: "Countdown to the next prayer, the last third of the night, and disliked times — for your city." } },
     prayerRemind: { sel: "#notifCenterBtn", tab: "prayer", prefer: "below",
-      ar: { t: "تذكير الأذان 🔔", b: "اضغط زر الجرس أعلى الصفحة لاختيار نغمة الإشعار وتفعيل تنبيه كل صلاة." },
-      en: { t: "Adhan reminder 🔔", b: "Tap the bell icon at the top to pick a notification sound and get alerted at each prayer." } },
+      ar: { t: "مركز الإشعارات 🔔", b: "زر الجرس أعلى الصفحة يفتح مركز إشعارات الصلاة: اختيار المدينة، تفعيل الصلوات، نغمة الأذان، والعداد في شريط الحالة." },
+      en: { t: "Notification Center 🔔", b: "The bell at the top opens the Prayer Notification Center: pick your city, enable prayers, choose an adhan sound, and the status-bar countdown." } },
     azkarHub: { sel: ".app-azkar-grid", tab: "azkar", prefer: "below",
       ar: { t: "تبويب الأذكار 📿", b: "هنا أذكار الاستيقاظ والصباح والمساء وقبل النوم والرقية الشرعية — كل مجموعة بعدّاد تكرار وحفظ تلقائي على جهازك." },
       en: { t: "Adhkar tab 📿", b: "Waking, morning, evening, bedtime and ruqyah — each set has a tap counter and auto-save on your device." } },
@@ -109,15 +115,15 @@
   function buildSteps() {
     const app = document.documentElement.classList.contains("app-mode");
     if (!app) {
-      const list = [S.welcome, S.search, S.favorite, S.myCities, S.prayerTimes, S.tapCard, S.adherence, S.week, S.insights];
+      const list = [S.welcome, S.search, S.locate, S.favorite, S.myCities, S.prayerTimes, S.tapCard, S.adherence, S.week, S.insights];
       list.push(S.spotlightSite, S.toolsSite);
       list.push(S.help, S.ready);
       return list;
     }
     return [
       S.welcomeApp, S.appNav,
-      S.search, S.favorite, S.myCities, S.homeClock, S.cityPulse, S.homeNext, S.dailyReflection, S.closeOnesHome,
-      S.prayerTimes, S.tapCard, S.adherence, S.week, S.insights, S.prayerRemind,
+      S.search, S.locate, S.favorite, S.myCities, S.homeClock, S.cityPulse, S.homeNext, S.dailyReflection, S.closeOnesHome,
+      S.prayerTimes, S.tapCard, S.prayerBell, S.adherence, S.week, S.insights, S.prayerRemind,
       S.azkarHub, S.azkarRemind, S.widgetsApp,
       S.appTools,
       S.help, S.ready,
