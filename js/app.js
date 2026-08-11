@@ -1427,7 +1427,7 @@
 
     let list = CITIES.filter(c => c.featured && c.slug !== cur);
     list.sort((a, b) => score(b) - score(a) || String(a.name).localeCompare(String(b.name)));
-    list = list.slice(0, 12);
+    list = list.slice(0, 20);
 
     strip.innerHTML = list.map(c => {
       const nm = cName(c);
