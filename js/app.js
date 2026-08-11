@@ -1406,7 +1406,9 @@
     mq.addEventListener("change", () => { if (!mq.matches) clearAway(); });
   }
 
-  /* Featured cities on web home — same country / region first, live HH:MM */
+  /* Featured cities on web home — Mecca, Medina, Cairo first; then region/country */
+  const HOME_CITIES_PIN = ["mecca", "medina", "cairo"];
+
   function renderHomeCities() {
     const strip = $("#homeCitiesStrip");
     if (!strip) return;
@@ -1425,11 +1427,16 @@
       return s;
     };
 
-    let list = CITIES.filter(c => c.featured && c.slug !== cur);
-    list.sort((a, b) => score(b) - score(a) || String(a.name).localeCompare(String(b.name)));
-    list = list.slice(0, 20);
+    const list = CITIES.filter(c => c.featured && c.slug !== cur);
+    const bySlug = Object.fromEntries(list.map(c => [c.slug, c]));
+    const pinned = HOME_CITIES_PIN.map(slug => bySlug[slug]).filter(Boolean);
+    const rest = list
+      .filter(c => !HOME_CITIES_PIN.includes(c.slug))
+      .sort((a, b) => score(b) - score(a) || String(a.name).localeCompare(String(b.name)));
 
-    strip.innerHTML = list.map(c => {
+    const ordered = [...pinned, ...rest].slice(0, 20);
+
+    strip.innerHTML = ordered.map(c => {
       const nm = cName(c);
       const co = cCountry(c);
       return `<a class="hc-chip pin" role="listitem" href="${CITY_BASE}${c.slug}.html" data-tz="${c.tz}" data-slug="${c.slug}" aria-label="${nm}${co ? " — " + co : ""}">` +
