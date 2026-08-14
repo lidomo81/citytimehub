@@ -302,6 +302,72 @@
     }
   }
 
+  /* The soft keyboard shortens the viewport, and a tab bar pinned to the bottom
+     then sits on top of the keyboard and takes the room the field being typed
+     into needs — on the tool pages the field is pushed up behind the app bar and
+     has to be scrolled back to. So the tabs step aside while typing, and the
+     field is carried into the space that is left. */
+  function wireKeyboard() {
+    var root = document.documentElement;
+    var timers = [];
+
+    function isField(el) {
+      if (!el) return false;
+      if (el.isContentEditable) return true;
+      var tag = (el.tagName || "").toLowerCase();
+      if (tag === "textarea") return true;
+      if (tag !== "input") return false;
+      return !/^(button|submit|reset|checkbox|radio|range|color|file|image|hidden)$/i
+        .test(el.getAttribute("type") || "text");
+    }
+
+    function reveal() {
+      var el = document.activeElement;
+      if (!isField(el)) return;
+      var vv = window.visualViewport;
+      var vh = (vv && vv.height) || window.innerHeight;
+      var bar = document.querySelector(".app-bar");
+      var ceiling = bar ? bar.getBoundingClientRect().bottom : 0;
+      var box = el.getBoundingClientRect();
+      if (box.top > ceiling + 8 && box.bottom < vh - 8) return;
+      try { el.scrollIntoView({ block: "center", behavior: "auto" }); }
+      catch (e) { el.scrollIntoView(false); }
+    }
+
+    function clear() {
+      timers.forEach(function (t) { clearTimeout(t); });
+      timers = [];
+    }
+
+    function open() {
+      if (!window.matchMedia("(max-width: 900px)").matches) return;
+      clear();
+      root.classList.add("kb-open");
+      // The keyboard slides in, and the viewport settles a moment after it.
+      [80, 260, 480].forEach(function (ms) { timers.push(setTimeout(reveal, ms)); });
+    }
+
+    function close() {
+      clear();
+      timers.push(setTimeout(function () {
+        if (isField(document.activeElement)) return;
+        root.classList.remove("kb-open");
+      }, 120));
+    }
+
+    document.addEventListener("focusin", function (e) { if (isField(e.target)) open(); });
+    document.addEventListener("focusout", function (e) {
+      if (!isField(e.target)) return;
+      if (isField(e.relatedTarget)) return;
+      close();
+    });
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", function () {
+        if (root.classList.contains("kb-open")) reveal();
+      });
+    }
+  }
+
   function init() {
     if (!inAppMode()) return;
     document.documentElement.classList.add("app-mode");
@@ -310,6 +376,7 @@
     installBottomNav(active || "home");
     if (isAppHome()) initHomeTabs();
     wireCitySearch();
+    wireKeyboard();
     // The occasions card and the insights card are injected after load.
     wirePrayerRows();
     setTimeout(wirePrayerRows, 1200);

@@ -631,6 +631,15 @@ html.app-mode .app-bottom-nav {
 .app-tab.is-active[data-tab="home"] svg { fill: color-mix(in srgb, var(--brand) 22%, transparent); }
 .app-tab:active { transform: scale(.94); }
 
+/* The keyboard shortens the viewport, so the tabs would otherwise perch on top
+   of it and crowd out the field being typed into. They step aside until done. */
+html.app-mode .app-bottom-nav { transition: transform .18s var(--ease, ease), opacity .18s ease; }
+html.app-mode.kb-open .app-bottom-nav { transform: translateY(100%); opacity: 0; pointer-events: none; }
+html.app-mode.kb-open .help-fab { opacity: 0; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) {
+  html.app-mode .app-bottom-nav { transition: none; }
+}
+
 html.app-mode body { padding-top: calc(var(--app-bar-h) + env(safe-area-inset-top, 0px)); }
 html.app-mode .app-bar--home .app-bar-title {
   font-size: .98rem; letter-spacing: -.02em;
