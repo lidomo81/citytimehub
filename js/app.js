@@ -2242,7 +2242,7 @@
         if (strong && body) {
           if (ar) {
             strong.textContent = "إعدادات التطبيق";
-            body.textContent = "زر الإعدادات ⚙️ أعلى الشاشة يفتح قائمة واحدة من كل التبويبات: إشعارات الصلاة (المدينة، الأذان، العداد)، تذكيرات الأذكار (صباح، مساء، جمعة)، وإعدادات عرض الساعة (12 أو 24 ساعة).";
+            body.textContent = "زر الإعدادات ⚙️ أعلى الشاشة يفتح قائمة واحدة من كل التبويبات: إشعارات الصلاة (المدينة، الأذان، العداد)، تذكيرات الأذكار (صباح، مساء، وذكر الجمعة)، وإعدادات عرض الساعة (12 أو 24 ساعة).";
           } else {
             strong.textContent = "App settings";
             body.textContent = "The ⚙️ gear at the top opens the same menu from every tab: prayer notifications (city, adhan, status countdown), adhkar reminders (morning, evening, Friday), and clock display (12- or 24-hour).";
