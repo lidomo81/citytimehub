@@ -391,7 +391,7 @@
 
   /* ----- App settings gear — replaces the old header bell + separate display button.
      Prayer tab: hub -> prayer notifications + display. Azkar tab: hub -> adhkar + display.
-     Other tabs: display only. Wired from Android via #cthAppSettingsBtn injection. ----- */
+     All tabs: same three-item settings menu (prayer, adhkar, display). ----- */
   function wireNotifCenterButton() {
     var btn = document.getElementById("notifCenterBtn");
     if (btn) btn.hidden = true;

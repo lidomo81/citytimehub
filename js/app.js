@@ -2236,16 +2236,16 @@
       if (remind) {
         remind.hidden = false;
         const ic = remind.querySelector(".help-ic");
-        if (ic) ic.textContent = "🔔";
+        if (ic) ic.textContent = "⚙️";
         const strong = remind.querySelector("div > strong");
         const body = remind.querySelector("div > span");
         if (strong && body) {
           if (ar) {
-            strong.textContent = "مركز الإشعارات";
-            body.textContent = "زر الجرس أعلى الصفحة: مركز إشعارات الصلاة في تبويب الصلاة، وتذكيرات الأذكار في تبويب الأذكار. ثلاث نغمات أذان مع معاينة عند الاختيار.";
+            strong.textContent = "إعدادات التطبيق";
+            body.textContent = "زر الإعدادات ⚙️ أعلى الشاشة يفتح قائمة واحدة من كل التبويبات: إشعارات الصلاة (المدينة، الأذان، العداد)، تذكيرات الأذكار (صباح، مساء، جمعة)، وإعدادات عرض الساعة (12 أو 24 ساعة).";
           } else {
-            strong.textContent = "Notification Center";
-            body.textContent = "The bell at the top: Prayer Notification Center on the Prayer tab, adhkar reminders on the Adhkar tab. Three adhan sounds with preview when you pick one.";
+            strong.textContent = "App settings";
+            body.textContent = "The ⚙️ gear at the top opens the same menu from every tab: prayer notifications (city, adhan, status countdown), adhkar reminders (morning, evening, Friday), and clock display (12- or 24-hour).";
           }
         }
       }
