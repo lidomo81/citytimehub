@@ -174,8 +174,22 @@
   let openPrayerName = null;
 
   function toMin(s) {
-    const a = String(s || "0:0").split(" ")[0].split(":");
-    return (+a[0]) * 60 + (+a[1]);
+    const raw = String(s || "0:0")
+      .replace(/[\u0660-\u0669\u06F0-\u06F9]/g, c => String.fromCharCode((c.charCodeAt(0) & 15) + 48))
+      .replace(/[\u200e\u200f\u202a-\u202e\u00a0\u202f]/g, " ")
+      .trim();
+    const m = raw.match(/^(\d{1,2}):(\d{2})(?::\d{2})?\s*(AM|PM|\u0635|\u0645)?$/i);
+    if (!m) {
+      const a = raw.split(" ")[0].split(":");
+      return (+a[0]) * 60 + (+a[1] || 0);
+    }
+    let h = +m[1], min = +m[2], sfx = m[3];
+    if (sfx) {
+      const pm = /^p/i.test(sfx) || sfx === "\u0645";
+      if (pm && h < 12) h += 12;
+      if (!pm && h === 12) h = 0;
+    }
+    return h * 60 + min;
   }
   function offsetHours(tz, when) {
     if (!tz) return 0;
@@ -207,7 +221,11 @@
       const card = cards[i];
       if (!card) return;
       const tm = card.querySelector(".prayer-time");
-      if (tm && tm.textContent) t[name] = tm.textContent.trim();
+      if (!tm) return;
+      // Keep the raw 24h value — the app may rewrite the visible text to 12h.
+      const hm = tm.dataset.hm;
+      if (hm) t[name] = hm;
+      else if (tm.textContent) t[name] = tm.textContent.trim();
     });
     if (Object.keys(t).length >= 5) ctxTimings = t;
     if (window.CITY && window.CITY.tz) ctxTz = window.CITY.tz;

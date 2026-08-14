@@ -166,7 +166,7 @@
       grid.innerHTML = PRAYERS.map((p, i) => `
         <article class="prayer-card${p === next ? " is-next" : ""}">
           <div class="prayer-name">${T.prayers[i]}</div>
-          <div class="prayer-time">${clean(t[p])}</div>
+          <div class="prayer-time" data-hm="${clean(t[p])}">${clean(t[p])}</div>
           <span class="prayer-tag">${p === next ? T.next : ""}</span>
         </article>`).join("");
       if (t.Sunrise && t.Sunset) fillSun(clean(t.Sunrise), clean(t.Sunset));
