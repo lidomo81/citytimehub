@@ -817,16 +817,24 @@ html.app-mode[data-app-tab="prayer"] .prayer-insights {
 }
 html.app-mode[data-app-tab="prayer"] .pi-chips { justify-content: center; }
 
-/* Occasions: the nearest one is enough on the tab; the rest open on a tap. */
-html.app-mode[data-app-tab="prayer"] .occasions:not(.is-open) .occ-item:not(:first-child) {
+/* Occasions: card links to the full occasions page. */
+html.app-mode[data-app-tab="prayer"] .occasions-link {
+  padding: 10px 36px 10px 12px;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+html.app-mode[data-app-tab="prayer"] .occasions-link .occasions-kicker { display: none; }
+html.app-mode[data-app-tab="prayer"] .occasions-link::after { display: none; }
+html.app-mode[data-app-tab="prayer"] .occasions:not(.occasions-link):not(.is-open) .occ-item:not(:first-child) {
   display: none;
 }
-html.app-mode[data-app-tab="prayer"] .occasions {
+html.app-mode[data-app-tab="prayer"] .occasions:not(.occasions-link) {
   padding: 10px 12px;
   cursor: pointer;
 }
-html.app-mode[data-app-tab="prayer"] .occasions-kicker { display: none; }
-html.app-mode[data-app-tab="prayer"] .occasions::after {
+html.app-mode[data-app-tab="prayer"] .occasions:not(.occasions-link) .occasions-kicker { display: none; }
+html.app-mode[data-app-tab="prayer"] .occasions:not(.occasions-link)::after {
   content: "›";
   position: absolute;
   inset-inline-start: 12px;
@@ -835,8 +843,8 @@ html.app-mode[data-app-tab="prayer"] .occasions::after {
   color: var(--muted);
   font-size: 1.1rem;
 }
-html.app-mode[data-app-tab="prayer"] .occasions.is-open::after { content: "×"; font-size: .95rem; }
-html.app-mode[data-app-tab="prayer"] .occasions { position: relative; }
+html.app-mode[data-app-tab="prayer"] .occasions:not(.occasions-link).is-open::after { content: "×"; font-size: .95rem; }
+html.app-mode[data-app-tab="prayer"] .occasions:not(.occasions-link) { position: relative; }
 
 /* The search opens from the city name rather than holding the top of the tab. */
 html.app-mode[data-app-tab="prayer"]:not(.cp-search-open) .cp-toolbar { display: none !important; }
@@ -2254,7 +2262,26 @@ html.app-mode .city-pulse { margin-top: 10px; }
   margin: 11px 0 0; padding-top: 9px; border-top: 1px solid var(--border);
   font-size: .72rem; font-weight: 500; color: var(--text-2); opacity: .85;
 }
-html.app-mode .occasions { margin-top: 10px; }
+a.occasions-link {
+  display: block; text-decoration: none; color: inherit;
+  position: relative; -webkit-tap-highlight-color: transparent;
+  transition: transform .12s, border-color .2s, box-shadow .2s;
+}
+a.occasions-link:hover { border-color: color-mix(in srgb, var(--brand) 48%, var(--border)); }
+a.occasions-link:active { transform: scale(.985); }
+a.occasions-link:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+.occasions-go {
+  position: absolute; inset-inline-end: 12px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--brand); font-weight: 800; font-size: 1.05rem; opacity: .85;
+  pointer-events: none;
+}
+[dir="rtl"] .occasions-go { transform: translateY(-50%) scaleX(-1); }
+html.app-mode[data-app-tab="prayer"] .occasions-link { padding-inline-end: 36px; }
+html.app-mode .occasions-link { margin-top: 10px; }
 
 /* ===== Prayer insights (matches the city-pulse card) ===== */
 .prayer-insights {
@@ -2486,7 +2513,7 @@ html.app-mode[data-app-tab="prayer"] .datebar--paper {
   margin-inline: auto;
 }
 
-/* Home occasions teaser ? opens Prayer tab */
+/* Home occasions teaser — links to occasions page */
 .occ-home-teaser {
   display: none;
   align-items: center;
@@ -2501,8 +2528,13 @@ html.app-mode[data-app-tab="prayer"] .datebar--paper {
   font: inherit;
   cursor: pointer;
   text-align: start;
+  text-decoration: none;
   -webkit-tap-highlight-color: transparent;
   transition: transform .12s, border-color .2s, background .2s;
+}
+a.occ-home-link:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
 }
 .occ-home-teaser:active { transform: scale(.98); }
 .occ-home-em { font-size: 1.15rem; flex: none; line-height: 1; }
@@ -3817,6 +3849,73 @@ html.app-mode .co-notify-bar:not([hidden]) { display: flex !important; }
   .mo-tablewrap { border: none; }
   .mo-table th, .mo-table td { color: #000 !important; }
 }
+
+/* ---------- Upcoming Hijri occasions page ---------- */
+.occ-page-tool .occ-intro { max-width: 62ch; margin-bottom: 22px; line-height: 1.75; }
+.occ-page-tool .occ-intro p { margin: 0 0 12px; }
+.occ-page-tool .occ-intro p:last-child { margin-bottom: 0; }
+.occ-hero-wrap { margin-bottom: 18px; }
+.occ-hero-card {
+  margin: 0; padding: 22px 20px 20px; border-radius: 18px;
+  border: 1px solid color-mix(in srgb, var(--brand) 32%, var(--border));
+  background: linear-gradient(135deg, color-mix(in srgb, var(--brand) 11%, var(--surface)), var(--surface));
+  box-shadow: 0 18px 40px -24px color-mix(in srgb, var(--brand) 50%, transparent);
+}
+.occ-hero-em { display: block; font-size: 2rem; line-height: 1; margin-bottom: 8px; }
+.occ-hero-kicker {
+  margin: 0 0 4px; font-size: .68rem; font-weight: 800; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--brand);
+}
+html[dir="rtl"] .occ-hero-kicker { letter-spacing: 0; text-transform: none; }
+.occ-hero-name { margin: 0 0 8px; font-size: clamp(1.35rem, 3vw, 1.75rem); font-weight: 900; color: var(--text); }
+.occ-hero-obs, .occ-entry-obs {
+  margin: 0 0 12px; font-size: .82rem; font-weight: 600; color: var(--text-2); font-style: italic;
+}
+html[dir="rtl"] .occ-hero-obs, html[dir="rtl"] .occ-entry-obs { font-style: normal; }
+.occ-hero-dates, .occ-tl-dates {
+  display: grid; gap: 10px; margin: 0;
+}
+@media (min-width: 560px) {
+  .occ-hero-dates { grid-template-columns: repeat(3, 1fr); }
+}
+.occ-hero-dates div, .occ-tl-dates div {
+  padding: 10px 12px; border-radius: 12px;
+  background: var(--surface-2); border: 1px solid var(--border);
+}
+.occ-hero-dates dt, .occ-tl-dates dt {
+  margin: 0 0 4px; font-size: .68rem; font-weight: 800; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--muted);
+}
+html[dir="rtl"] .occ-hero-dates dt, html[dir="rtl"] .occ-tl-dates dt {
+  letter-spacing: 0; text-transform: none;
+}
+.occ-hero-dates dd, .occ-tl-dates dd { margin: 0; font-size: .92rem; font-weight: 700; color: var(--text); line-height: 1.45; }
+.occ-disclaimer {
+  margin: 0 0 22px; padding: 12px 14px; border-radius: 12px;
+  border: 1px solid color-mix(in srgb, #e0a53a 35%, var(--border));
+  background: color-mix(in srgb, #e0a53a 8%, var(--surface));
+  color: var(--text-2); font-size: .86rem; font-weight: 600; line-height: 1.65;
+}
+.occ-list-head {
+  margin: 0 0 14px; font-size: 1.05rem; font-weight: 800; color: var(--text);
+}
+.occ-timeline {
+  list-style: none; margin: 0 0 28px; padding: 0;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.occ-timeline-item {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 14px 14px 12px; border-radius: 16px;
+  border: 1px solid var(--border); background: var(--surface);
+}
+.occ-tl-em { font-size: 1.35rem; line-height: 1.2; flex: none; }
+.occ-tl-body { min-width: 0; flex: 1; }
+.occ-tl-name { margin: 0 0 6px; font-size: 1rem; font-weight: 800; color: var(--text); }
+.occ-app-cta {
+  margin-top: 8px; padding-top: 24px; border-top: 1px solid var(--border);
+  text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px;
+}
+.occ-app-copy { margin: 0; max-width: 42ch; line-height: 1.65; }
 
 /* ---------- RTL/Arabic legibility: never space-out or uppercase connected Arabic ---------- */
 html[dir="rtl"] .kicker,

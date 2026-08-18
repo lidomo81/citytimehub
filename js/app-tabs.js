@@ -276,7 +276,7 @@
     var ar = (document.documentElement.getAttribute("lang") || "en").slice(0, 2) === "ar";
 
     var occ = document.getElementById("occasions");
-    if (occ && !occ.dataset.rowWired) {
+    if (occ && !occ.dataset.rowWired && occ.tagName !== "A" && !occ.classList.contains("occasions-link")) {
       occ.dataset.rowWired = "1";
       occ.setAttribute("role", "button");
       occ.setAttribute("tabindex", "0");
