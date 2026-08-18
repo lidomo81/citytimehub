@@ -66,6 +66,9 @@
     insights: { sel: ".prayer-insights", tab: "prayer",
       ar: { t: "إضاءات الصلاة ✨", b: "متى يبدأ الثلث الأخير من الليل، وتنبيه إذا كان الوقت الحالي وقت كراهة — محسوبة لمدينتك." },
       en: { t: "Prayer insights ✨", b: "When the last third of the night begins, and alerts for disliked (karahah) times — for your city." } },
+    occasions: { sel: "#occasions", tab: "prayer", prefer: "below",
+      ar: { t: "المناسبات الهجرية 🌙", b: "اضغط بطاقة المناسبات لاستعراض جميع المناسبات الإسلامية خلال العام الهجري، مع تواريخ ميلادية تقريبية وعدّ تنازلي." },
+      en: { t: "Islamic occasions 🌙", b: "Tap the occasions card to browse all Islamic occasions in the Hijri year, with approximate Gregorian dates and a countdown." } },
     azkarHub: { sel: ".app-azkar-grid", tab: "azkar", prefer: "below",
       ar: { t: "تبويب الأذكار 📿", b: "هنا أذكار الاستيقاظ والصباح والمساء وقبل النوم والرقية الشرعية — كل مجموعة بعدّاد تكرار وحفظ تلقائي على جهازك." },
       en: { t: "Adhkar tab 📿", b: "Waking, morning, evening, bedtime and ruqyah — each set has a tap counter and auto-save on your device." } },
@@ -112,7 +115,7 @@
   function buildSteps() {
     const app = document.documentElement.classList.contains("app-mode");
     if (!app) {
-      const list = [S.welcome, S.search, S.locate, S.favorite, S.myCities, S.prayerTimes, S.tapCard, S.adherence, S.week, S.insights];
+      const list = [S.welcome, S.search, S.locate, S.favorite, S.myCities, S.prayerTimes, S.tapCard, S.adherence, S.week, S.insights, S.occasions];
       list.push(S.spotlightSite, S.toolsSite);
       list.push(S.help, S.ready);
       return list;
@@ -120,7 +123,7 @@
     return [
       S.welcomeApp, S.appNav, S.appSettings,
       S.search, S.locate, S.favorite, S.myCities, S.homeClock, S.cityPulse, S.homeNext, S.dailyReflection, S.closeOnesHome,
-      S.prayerTimes, S.tapCard, S.prayerBell, S.adherence, S.week, S.insights,
+      S.prayerTimes, S.tapCard, S.prayerBell, S.adherence, S.week, S.insights, S.occasions,
       S.azkarHub, S.widgetsApp,
       S.appTools,
       S.help, S.ready,
@@ -269,7 +272,7 @@
       ensureTab(s.tab || (isApp() ? "home" : null)).then(() => {
         const runStep = (attempt) => {
           const target = resolve(idx);
-          if (s.sel === "#dailyReflection" && !shown(target) && attempt < 24) {
+          if ((s.sel === "#dailyReflection" || s.sel === "#occasions") && !shown(target) && attempt < 24) {
             scrollTimer = setTimeout(() => runStep(attempt + 1), 200);
             return;
           }
@@ -310,7 +313,7 @@
   function avoidZones(skipSel) {
     const zones = [];
     const insideTools = skipSel && (skipSel.includes("app-tools") || skipSel === "#dailyReflection");
-    const list = ["#prayerGrid", "#cpNext", "#cpWeek", ".prayer-insights", "#ltAnalog", "#dailyReflection"];
+    const list = ["#prayerGrid", "#cpNext", "#cpWeek", ".prayer-insights", "#occasions", "#ltAnalog", "#dailyReflection"];
     if (isApp() && !insideTools) list.push(".app-bottom-nav");
     if (isApp() && skipSel !== ".app-bottom-nav" && !insideTools) list.push("nav.app-tools");
     if (isApp() && skipSel !== "#helpBtn") list.push("#helpBtn");
