@@ -10,16 +10,15 @@
    Never wipe runtime/API caches on activate — that made the app feel slow
    after a site deploy.
    ===================================================================== */
-const CACHE_VERSION = "cth-v293";
+const CACHE_VERSION = "cth-v294";
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 const API_CACHE = `${CACHE_VERSION}-api`;
 
 const CRITICAL = [
-  "/", "/ar",
+  "/", "/ar", "/ar/",
   "/css/style.css",
   "/js/app.js", "/js/city.js", "/js/city-input.js", "/js/pwa.js", "/js/app-tabs.js",
-  "/data/cities.json",
   "/icons/favicon-64.png", "/icons/logo.svg",
 ];
 
@@ -51,8 +50,24 @@ function putRuntime(req, res) {
   return res;
 }
 
+function matchAny(req) {
+  return caches.match(req).then((hit) => hit || caches.match(req, { ignoreSearch: true }));
+}
+
+function matchHome(url) {
+  const p = url.pathname;
+  const alts =
+    p === "/" || p === "/index.html" ? ["/", "/index.html"] :
+    p === "/ar" || p === "/ar/" || p === "/ar/index.html" ? ["/ar", "/ar/", "/ar/index.html"] :
+    [];
+  return alts.reduce(
+    (prev, u) => prev.then((hit) => hit || caches.match(u)),
+    Promise.resolve(null)
+  );
+}
+
 function staleWhileRevalidate(req) {
-  return caches.match(req).then((cached) => {
+  return matchAny(req).then((cached) => {
     const network = fetch(req)
       .then((res) => putRuntime(req, res))
       .catch(() => cached);
@@ -69,11 +84,11 @@ function apiNetworkFirst(req) {
       }
       return res;
     })
-    .catch(() => caches.match(req));
+    .catch(() => matchAny(req));
 }
 
-function navigateApp(req) {
-  return caches.match(req).then((cached) => {
+function navigateApp(req, url) {
+  return matchAny(req).then((hit) => hit || matchHome(url)).then((cached) => {
     const network = fetch(req)
       .then((res) => putRuntime(req, res))
       .catch(() => cached || caches.match("/ar").then((a) => a || caches.match("/")));
@@ -88,7 +103,7 @@ function navigateSite(req, url) {
       return res;
     })
     .catch(() =>
-      caches.match(req).then((c) =>
+      matchAny(req).then((c) =>
         c || caches.match(url.pathname.startsWith("/ar") ? "/ar" : "/")
       )
     );
@@ -108,7 +123,7 @@ self.addEventListener("fetch", (event) => {
 
   if (req.mode === "navigate") {
     const isApp = url.searchParams.get("app") === "1";
-    event.respondWith(isApp ? navigateApp(req) : navigateSite(req, url));
+    event.respondWith(isApp ? navigateApp(req, url) : navigateSite(req, url));
     return;
   }
 
