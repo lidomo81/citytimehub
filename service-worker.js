@@ -10,7 +10,7 @@
      (language-aware), so installed city apps open offline.
    Bump CACHE_VERSION to invalidate old caches on the next visit.
    ===================================================================== */
-const CACHE_VERSION = "cth-v291";
+const CACHE_VERSION = "cth-v292";
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 const API_CACHE = `${CACHE_VERSION}-api`;
@@ -18,7 +18,7 @@ const API_CACHE = `${CACHE_VERSION}-api`;
 const SHELL = [
   "/", "/ar", "/occasions/", "/ar/occasions/",
   "/css/style.css",
-  "/js/app.js", "/js/city.js", "/js/city-input.js", "/js/city-pulse.js", "/js/hijri-occasions.js", "/js/occasions.js", "/js/occasions-page.js", "/js/prayer-insights.js", "/js/daily-reflection.js", "/js/on-this-day.js", "/js/tour.js", "/js/compare-tool.js", "/js/meeting-planner.js",
+  "/js/app.js", "/js/city.js", "/js/city-input.js", "/js/city-pulse.js", "/js/hijri-occasions.js", "/js/year-calendar.js", "/js/occasions.js", "/js/occasions-page.js", "/js/prayer-insights.js", "/js/daily-reflection.js", "/js/on-this-day.js", "/js/tour.js", "/js/compare-tool.js", "/js/meeting-planner.js",
   "/js/best-time-to-call.js", "/js/prayer-clock.js", "/js/close-ones.js", "/js/prayer-widget.js",
   "/js/prayer-widget-builder.js", "/js/branches-builder.js", "/js/branches-widget.js",
   "/js/hero-globe.js", "/js/pwa.js", "/js/app-tabs.js", "/js/qibla.js", "/js/monthly.js", "/js/azkar.js", "/js/tasbeeh.js", "/js/prayer-azkar.js",

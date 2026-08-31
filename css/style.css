@@ -1070,6 +1070,13 @@ html.app-mode[data-app-tab="home"] .datebar--paper .datebar-item--hijri .datebar
   font-weight: 700;
   color: var(--text);
 }
+html.app-mode[data-app-tab="home"] .datebar--paper .datebar-item {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+html.app-mode[data-app-tab="home"] .datebar--paper .datebar-item:active {
+  transform: scale(.985);
+}
 html.app-mode[data-app-tab="home"] #cpNext.cp-home-teaser {
   display: flex !important;
   align-items: center;
@@ -4096,6 +4103,88 @@ html.app-mode .cp-install { display: none !important; }
 .help-backdrop { position: absolute; inset: 0; background: rgba(4, 8, 18, .45); backdrop-filter: blur(2px); }
 .help-sheet { position: relative; width: min(440px, 100%); max-height: 86vh; overflow-y: auto; background: linear-gradient(155deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, 0) 55%), color-mix(in srgb, var(--surface) 48%, transparent); -webkit-backdrop-filter: blur(24px) saturate(1.5) brightness(1.28); backdrop-filter: blur(24px) saturate(1.5) brightness(1.28); color: var(--text); border: 1px solid rgba(255, 255, 255, .24); border-radius: 22px; padding: 24px 22px 22px; box-shadow: 0 30px 80px -30px #000; animation: helpIn .22s ease-out; }
 @keyframes helpIn { from { opacity: 0; transform: translateY(14px) scale(.98); } to { opacity: 1; transform: none; } }
+.yc-overlay { position: fixed; inset: 0; z-index: 210; display: flex; align-items: flex-end; justify-content: center; padding: 0; }
+.yc-overlay[hidden] { display: none; }
+.yc-backdrop { position: absolute; inset: 0; background: rgba(4, 8, 18, .48); }
+.yc-sheet {
+  position: relative;
+  width: min(560px, 100%);
+  max-height: min(90vh, 90dvh);
+  overflow: auto;
+  background: var(--surface);
+  color: var(--text);
+  border-radius: 22px 22px 0 0;
+  padding: 16px 14px calc(16px + env(safe-area-inset-bottom, 0px));
+  box-shadow: 0 -18px 50px -24px #000;
+}
+.yc-x {
+  position: absolute; top: 10px; inset-inline-end: 12px;
+  width: 32px; height: 32px; border: none; border-radius: 10px;
+  background: var(--surface-2); color: var(--text-2); font-size: 1.4rem; line-height: 1; cursor: pointer;
+}
+.yc-head { padding: 2px 36px 10px 4px; }
+html[dir="rtl"] .yc-head, html[lang="ar"] .yc-head { padding: 2px 4px 10px 36px; }
+.yc-title { margin: 0 0 8px; font-size: 1.05rem; font-weight: 800; }
+.yc-nav { display: flex; align-items: center; justify-content: center; gap: 14px; }
+.yc-shift {
+  width: 34px; height: 34px; border: 1px solid var(--border); border-radius: 10px;
+  background: var(--surface-2); color: var(--text); font-size: 1.25rem; cursor: pointer;
+}
+.yc-year-num { min-width: 5.5rem; text-align: center; font-weight: 800; font-size: 1.05rem; }
+.yc-year {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 10px;
+}
+.yc-month {
+  padding: 8px 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--surface-2) 70%, transparent);
+}
+.yc-month h3 {
+  margin: 0 0 6px;
+  font-size: .72rem;
+  font-weight: 800;
+  text-align: center;
+  color: var(--text);
+}
+.yc-dows, .yc-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  text-align: center;
+}
+.yc-dows span {
+  font-size: .58rem;
+  font-weight: 700;
+  color: var(--muted);
+  padding: 1px 0 3px;
+}
+.yc-day {
+  font-size: .62rem;
+  font-weight: 650;
+  line-height: 1.7;
+  border-radius: 6px;
+  color: var(--text);
+}
+.yc-day.is-today {
+  background: color-mix(in srgb, var(--brand) 22%, transparent);
+  color: var(--brand);
+  font-weight: 800;
+}
+.yc-note {
+  margin: 12px 4px 0;
+  font-size: .72rem;
+  line-height: 1.45;
+  color: var(--text-2);
+}
+[data-theme="dark"] .yc-day.is-today { color: #93c5fd; }
+@media (min-width: 520px) {
+  .yc-overlay { align-items: center; padding: 18px; }
+  .yc-sheet { border-radius: 22px; max-height: 86vh; }
+  .yc-year { grid-template-columns: 1fr 1fr 1fr; }
+}
 .help-x { position: absolute; top: 12px; inset-inline-end: 14px; width: 34px; height: 34px; border: none; background: var(--surface-2); color: var(--text-2); border-radius: 10px; font-size: 1.5rem; line-height: 1; cursor: pointer; }
 .help-x:hover { color: var(--text); }
 .help-title { margin: 0 0 4px; font-size: 1.3rem; color: var(--text); }
