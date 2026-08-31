@@ -628,6 +628,14 @@ html.app-mode .app-bottom-nav {
   transform: translateY(-1px);
 }
 .app-tab.is-active svg { opacity: 1; stroke-width: 2.15; }
+.app-tab[data-tab="prayer"] svg,
+.app-tab[data-tab="azkar"] svg,
+.app-tab[data-tab="tools"] svg,
+.app-tab--quran svg { stroke: none; }
+.app-tab.is-active[data-tab="prayer"] svg,
+.app-tab.is-active[data-tab="azkar"] svg,
+.app-tab.is-active[data-tab="tools"] svg,
+.app-tab.is-active.app-tab--quran svg { stroke-width: 0; }
 .app-tab.is-active[data-tab="home"] svg { fill: color-mix(in srgb, var(--brand) 22%, transparent); }
 .app-tab:active { transform: scale(.94); }
 
@@ -1856,6 +1864,18 @@ html.app-mode[data-app-tab="home"] #top {
   box-shadow: 0 8px 20px -12px rgba(5, 150, 105, .45);
 }
 .app-azkar-card--ruqyah .app-azkar-arrow { color: #059669; }
+.app-azkar-card--tasbeeh {
+  border-color: color-mix(in srgb, #c4a35a 42%, var(--border));
+  background: linear-gradient(135deg, color-mix(in srgb, #c4a35a 16%, var(--surface)), var(--surface) 58%);
+}
+.app-azkar-card--tasbeeh .app-azkar-glow {
+  background: radial-gradient(110% 120% at 0% 0%, color-mix(in srgb, #c4a35a 32%, transparent), transparent 58%);
+}
+.app-azkar-card--tasbeeh .app-azkar-ico {
+  background: color-mix(in srgb, #c4a35a 20%, var(--surface-2));
+  box-shadow: 0 8px 20px -12px rgba(196, 163, 90, .5);
+}
+.app-azkar-card--tasbeeh .app-azkar-arrow { color: #c4a35a; }
 .app-azkar-ico {
   font-size: 1.55rem; flex: none; line-height: 1; z-index: 1;
   width: 48px; height: 48px; border-radius: 14px;
@@ -4098,7 +4118,33 @@ html[dir="rtl"] .prose blockquote { border-radius: 14px 0 0 14px; }
 .prose blockquote cite { display: block; margin-top: 8px; font-size: .86rem; font-style: normal; font-weight: 700; color: var(--brand); letter-spacing: 0; }
 
 /* ---------------- Morning / Evening Adhkar ---------------- */
-#azkarTool { max-width: 640px; margin: 0 auto; }
+#azkarTool, #tasbeehTool { max-width: 640px; margin: 0 auto; }
+.tb-chips { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin: 0 0 14px; }
+.tb-chip {
+  border: 1px solid var(--border-2); background: var(--surface); color: var(--text);
+  border-radius: 999px; padding: 6px 11px; font: inherit; font-size: .78rem; font-weight: 700; cursor: pointer;
+}
+.tb-chip.is-on {
+  background: color-mix(in srgb, var(--brand) 18%, var(--surface));
+  border-color: var(--brand); color: var(--brand);
+}
+.tb-seq { margin: 0 0 2px; font-size: .82rem; font-weight: 800; color: var(--brand); }
+.tb-seq-n { margin: 0 0 10px; font-size: .78rem; font-weight: 700; color: var(--brand); opacity: .9; unicode-bidi: isolate; }
+.tb-goals { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 16px 0 8px; }
+.tb-goal {
+  border: 1px solid var(--border-2); background: var(--surface); color: var(--text-2);
+  border-radius: 12px; padding: 9px 12px; font: inherit; font-size: .86rem; font-weight: 700; cursor: pointer;
+}
+.tb-goal.is-on { border-color: var(--brand); color: var(--text); background: var(--surface-2); }
+.tb-goal--seq { flex: 1 1 100%; max-width: 320px; }
+.tb-custom {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  margin: 8px 0 0; color: var(--text-2); font-size: .86rem; font-weight: 600;
+}
+.tb-custom-n {
+  width: 76px; text-align: center; font: inherit; font-weight: 800; padding: 7px 6px;
+  border-radius: 10px; border: 1px solid var(--border-2); background: var(--surface-2); color: var(--text);
+}
 .az-topbar { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
 /* progress stays at the start; the share + reset controls group at the end */
 .az-progress { font-weight: 700; color: var(--text-2); font-variant-numeric: tabular-nums; margin-inline-end: auto; }

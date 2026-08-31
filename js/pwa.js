@@ -177,7 +177,8 @@
         ["azkar/evening/", "أذكار المساء"],
         ["azkar/sleep/", "أذكار النوم"],
         ["azkar/waking/", "أذكار الاستيقاظ"],
-        ["azkar/ruqyah/", "الرقية الشرعية"]
+        ["azkar/ruqyah/", "الرقية الشرعية"],
+        ["azkar/tasbeeh/", "التسبيح"]
       ]},
       { href: p + "/cities/", label: "المدن", top: true },
       { href: p + "/guides/", label: "خواطر", top: true }
@@ -197,7 +198,8 @@
         ["azkar/evening/", "Evening Adhkar"],
         ["azkar/sleep/", "Bedtime Adhkar"],
         ["azkar/waking/", "Waking-Up Adhkar"],
-        ["azkar/ruqyah/", "Ruqyah"]
+        ["azkar/ruqyah/", "Ruqyah"],
+        ["azkar/tasbeeh/", "Tasbeeh"]
       ]},
       { href: "/cities/", label: "Cities", top: true },
       { href: "/guides/", label: "Reflections", top: true }
@@ -306,7 +308,7 @@
     if (!inAppMode()) return;
     if (window.CTH_AppTabs || document.querySelector("script[src*='app-tabs.js']")) return;
     var s = document.createElement("script");
-    s.src = "/js/app-tabs.js?v=111";
+    s.src = "/js/app-tabs.js?v=112";
     s.defer = true;
     document.head.appendChild(s);
   }

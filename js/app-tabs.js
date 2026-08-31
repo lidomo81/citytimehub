@@ -45,15 +45,17 @@
       ? { home: "الرئيسية", prayer: "الصلاة", azkar: "الأذكار", tools: "أدوات",
           brand: "CityTimeHub", azkarHub: "اختر مجموعة الأذكار",
           azWaking: "أذكار الاستيقاظ", azMorning: "أذكار الصباح", azEvening: "أذكار المساء", azSleep: "أذكار النوم",
-          azRuqyah: "الرقية الشرعية",
+          azRuqyah: "الرقية الشرعية", azTasbeeh: "التسبيح",
           azWakingSub: "أول ما تصحى من النوم", azMorningSub: "ابدأ يومك بالذكر", azEveningSub: "ختم المساء بالحفظ",
-          azSleepSub: "قبل النوم بسكينة", azRuqyahSub: "من القرآن والسنة للتحصّن" }
+          azSleepSub: "قبل النوم بسكينة", azRuqyahSub: "من القرآن والسنة للتحصّن",
+          azTasbeehSub: "تسابيح ثابتة بعدّاد" }
       : { home: "Home", prayer: "Prayer", azkar: "Adhkar", tools: "Tools",
           brand: "CityTimeHub", azkarHub: "Choose your adhkar",
           azWaking: "Waking", azMorning: "Morning", azEvening: "Evening", azSleep: "Bedtime",
-          azRuqyah: "Ruqyah",
+          azRuqyah: "Ruqyah", azTasbeeh: "Tasbeeh",
           azWakingSub: "The moment you wake", azMorningSub: "Start the day with dhikr", azEveningSub: "Close the evening in remembrance",
-          azSleepSub: "Peace before sleep", azRuqyahSub: "Quran & Sunnah for healing" };
+          azSleepSub: "Peace before sleep", azRuqyahSub: "Quran & Sunnah for healing",
+          azTasbeehSub: "Sunnah phrases with a counter" };
   }
 
   function tabFromHash() {
@@ -73,9 +75,9 @@
   function iconSvg(name) {
     var icons = {
       home: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5L12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z"/></svg>',
-      prayer: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v3"/><path d="M8 6a4 4 0 0 0 8 0"/><path d="M6 21h12"/><path d="M9 21v-4a3 3 0 0 1 6 0v4"/></svg>',
-      azkar: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/><path d="M8 7h8M8 11h6"/></svg>',
-      tools: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>'
+      prayer: '<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M3.55 21.8V11.5C3.55 6.35 7.2 2.35 12 2.35s8.45 4 8.45 9.15v10.3h-3.85V12.15c0-3.2-2.05-5.75-4.6-5.75s-4.6 2.55-4.6 5.75v9.65H3.55z"/><path d="M11.4 8.05h1.2v2.15h-1.2z"/><path d="M12 10.85a1.7 1.7 0 1 1 0 3.4 1.7 1.7 0 1 1 0-3.4z"/></svg>',
+      azkar: '<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><circle cx="5.33" cy="12.32" r="1.28"/><circle cx="4.91" cy="10.58" r="1.28"/><circle cx="5.08" cy="8.81" r="1.28"/><circle cx="5.82" cy="7.15" r="1.28"/><circle cx="7.07" cy="5.74" r="1.28"/><circle cx="8.72" cy="4.70" r="1.28"/><circle cx="10.65" cy="4.11" r="1.28"/><circle cx="12.68" cy="4.03" r="1.28"/><circle cx="14.66" cy="4.45" r="1.28"/><circle cx="16.42" cy="5.35" r="1.28"/><circle cx="17.82" cy="6.64" r="1.28"/><circle cx="18.73" cy="8.23" r="1.28"/><circle cx="19.10" cy="9.98" r="1.28"/><circle cx="18.87" cy="11.75" r="1.28"/><circle cx="18.09" cy="13.39" r="1.28"/><circle cx="9.17" cy="15.89" r="1.28"/><circle cx="16.15" cy="16.15" r="1.55"/><circle cx="16.15" cy="18.85" r="1.05"/><path d="M14.55 19.95h3.2L16.15 23z"/></svg>',
+      tools: '<svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8.1 3.85a1.15 1.15 0 0 1 2.3 0V5h3.2V3.85a1.15 1.15 0 0 1 2.3 0V5H17.7A2.3 2.3 0 0 1 20 7.3v12.4A2.3 2.3 0 0 1 17.7 22H6.3A2.3 2.3 0 0 1 4 19.7V7.3A2.3 2.3 0 0 1 6.3 5h1.8V3.85zM5.2 8.35h13.6v1.4H5.2v-1.4zm1.7 3.15h3.05v3.05H6.9v-3.05zm4.55 0h3.05v3.05h-3.05v-3.05zm4.55 0H19.1v3.05h-3.05v-3.05zM6.9 15.7h3.05v3.05H6.9V15.7zm4.55 0h3.05v3.05h-3.05V15.7zm4.55 0H19.1v3.05h-3.05V15.7z"/></svg>'
     };
     return icons[name] || icons.home;
   }
@@ -163,6 +165,12 @@
             '<span class="app-azkar-glow" aria-hidden="true"></span>' +
             '<span class="app-azkar-ico" aria-hidden="true">💚</span>' +
             '<span class="app-azkar-body"><strong>' + L.azRuqyah + '</strong><span>' + L.azRuqyahSub + '</span></span>' +
+            '<span class="app-azkar-arrow" aria-hidden="true">→</span>' +
+          '</a>' +
+          '<a class="app-azkar-card app-azkar-card--tasbeeh" href="' + withAppParam(p + "/azkar/tasbeeh/") + '">' +
+            '<span class="app-azkar-glow" aria-hidden="true"></span>' +
+            '<span class="app-azkar-ico" aria-hidden="true">📿</span>' +
+            '<span class="app-azkar-body"><strong>' + L.azTasbeeh + '</strong><span>' + L.azTasbeehSub + '</span></span>' +
             '<span class="app-azkar-arrow" aria-hidden="true">→</span>' +
           '</a>' +
         '</div>' +
