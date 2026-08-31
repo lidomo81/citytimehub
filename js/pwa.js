@@ -15,7 +15,7 @@
 
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("/service-worker.js?v=278").catch(() => {});
+      navigator.serviceWorker.register("/service-worker.js?v=279").catch(() => {});
     });
   }
 
