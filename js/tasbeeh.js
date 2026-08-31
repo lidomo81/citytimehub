@@ -95,6 +95,8 @@
         g33: "٣٣",
         g100: "١٠٠",
         custom: "عدد مخصص",
+        share: "شارك هذا الذِّكر",
+        copied: "تم نسخ الذِّكر ✓",
         step: function (i) { return "الذكر " + i + " من 3"; }
       }
     : {
@@ -109,8 +111,52 @@
         g33: "33",
         g100: "100",
         custom: "Custom count",
+        share: "Share this dhikr",
+        copied: "Dhikr copied ✓",
         step: function (i) { return "Phrase " + i + " of 3"; }
       };
+
+  function copyFallback(text) {
+    try {
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      document.execCommand("copy"); document.body.removeChild(ta);
+    } catch (e) {}
+  }
+  function azToast(msg) {
+    var t = document.getElementById("azShareToast");
+    if (!t) {
+      t = document.createElement("div"); t.id = "azShareToast"; t.className = "az-toast";
+      document.body.appendChild(t);
+    }
+    t.textContent = msg; t.classList.add("is-shown");
+    clearTimeout(t._h); t._h = setTimeout(function () { t.classList.remove("is-shown"); }, 1800);
+  }
+  function shareDhikr(item) {
+    if (!item) return;
+    var canon = document.querySelector('link[rel="canonical"]');
+    var url = (canon && canon.href) || location.href;
+    var title = (document.title || "CityTimeHub").split(/\s*[|—]\s*/)[0].trim() || "CityTimeHub";
+    var text = "«" + item.text + "»\n— " + title + " · CityTimeHub";
+    var full = text + "\n" + url;
+    try {
+      if (window.AndroidApp && typeof AndroidApp.shareText === "function") {
+        AndroidApp.shareText(full);
+        return;
+      }
+    } catch (e) {}
+    if (navigator.share) {
+      navigator.share({ title: title, text: text, url: url }).catch(function () {});
+    } else {
+      var done = function () { azToast(T.copied); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(full).then(done, function () { copyFallback(full); done(); });
+      } else { copyFallback(full); done(); }
+    }
+  }
+
+  var SHARE_SVG = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>';
 
   function phraseById(id) {
     for (var i = 0; i < PHRASES.length; i++) if (PHRASES[i].id === id) return PHRASES[i];
@@ -198,6 +244,7 @@
         '<span class="az-progress" aria-live="polite">' +
           (done ? T.done : state.rem + " " + T.of + " " + state.goal) +
         "</span>" +
+        '<button class="az-share" type="button" aria-label="' + T.share + '" title="' + T.share + '">' + SHARE_SVG + "</button>" +
         '<button class="az-reset" type="button">' + T.reset + "</button>" +
       "</div>" +
       '<article class="az-card" aria-live="polite">' +
@@ -237,6 +284,9 @@
       setSingle(state.phraseId, inp.value);
     });
     root.querySelector(".az-counter").addEventListener("click", tap);
+    root.querySelector(".az-share").addEventListener("click", function () {
+      shareDhikr(currentPhrase());
+    });
     root.querySelector(".az-reset").addEventListener("click", function () {
       if (state.mode === "seq") setSeq();
       else setSingle(state.phraseId, state.goal);
