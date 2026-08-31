@@ -37,19 +37,14 @@
     t.textContent = msg; t.classList.add("is-shown");
     clearTimeout(t._h); t._h = setTimeout(function () { t.classList.remove("is-shown"); }, 1800);
   }
-  // Share the current dhikr text itself (with source + link), so a forwarded
-  // message is the dhikr — not a bare link nobody opens.
+  // Share the dhikr itself, then a quiet Play Store listing — not a sales pitch.
+  var PLAY_URL = "https://play.google.com/store/apps/details?id=com.citytimehub.app";
   function shareDhikr(item, T) {
     if (!item) return;
-    var canon = document.querySelector('link[rel="canonical"]');
-    var url = (canon && canon.href) || location.href;
-    // Just the page's own name ("Morning Adhkar" / "أذكار الصباح"), before any
-    // tagline or the site name.
+    var plain = String(item.text || "").replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
     var title = (document.title || "CityTimeHub").split(/\s*[|—]\s*/)[0].trim() || "CityTimeHub";
-    var text = "«" + item.text + "»\n— " + title + " · CityTimeHub";
-    var full = text + "\n" + url;
-    // In the app the WebView has no navigator.share, so open the native share
-    // sheet through the bridge; then the mobile Web Share sheet; then copy.
+    var text = "«" + plain + "»\n\n— " + title + "\nCityTimeHub";
+    var full = text + "\n" + PLAY_URL;
     try {
       if (window.AndroidApp && typeof AndroidApp.shareText === "function") {
         AndroidApp.shareText(full);
@@ -57,7 +52,7 @@
       }
     } catch (e) {}
     if (navigator.share) {
-      navigator.share({ title: title, text: text, url: url }).catch(function () {});
+      navigator.share({ title: title, text: text, url: PLAY_URL }).catch(function () {});
     } else {
       var done = function () { azToast(T.copied); };
       if (navigator.clipboard && navigator.clipboard.writeText) {
