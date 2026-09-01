@@ -45,6 +45,9 @@
     homeClock: { sel: ".cp-clock", tab: "home",
       ar: { t: "وقت مدينتك 🕐", b: "الساعة الحية لمدينتك المختارة — في تبويب الرئيسية." },
       en: { t: "Your city time 🕐", b: "The live clock for your chosen city — on the Home tab." } },
+    yearCal: { sel: ".cp-devotion .datebar", tab: "home", prefer: "below",
+      ar: { t: "التقويم الميلادي والهجري 📅", b: "المربعان دول تاريخ اليوم. اضغط الميلادي يفتح تقويم السنة الميلادية، واضغط الهجري يفتح تقويم السنة الهجرية — تقدر تتنقّل بين الشهور والسنين." },
+      en: { t: "Gregorian and Hijri calendars 📅", b: "These two boxes are today’s dates. Tap Gregorian for the year calendar, and Hijri for the Hijri year — then browse months and years." } },
     cityPulse: { sel: "#cityPulse", tab: "home", prefer: "below",
       ar: { t: "نبض المدينة 🌤️", b: "لمحة عن الطقس والجو في مدينتك — تظهر تلقائيًا في الرئيسية." },
       en: { t: "City pulse 🌤️", b: "A quick weather snapshot for your city — shown automatically on Home." } },
@@ -125,7 +128,7 @@
     }
     return [
       S.welcomeApp, S.appNav, S.quranApp, S.appSettings,
-      S.search, S.locate, S.favorite, S.myCities, S.homeClock, S.cityPulse, S.homeNext, S.dailyReflection, S.closeOnesHome,
+      S.search, S.locate, S.favorite, S.myCities, S.homeClock, S.yearCal, S.cityPulse, S.homeNext, S.dailyReflection, S.closeOnesHome,
       S.prayerTimes, S.tapCard, S.prayerBell, S.adherence, S.week, S.insights, S.occasions,
       S.azkarHub, S.widgetsApp,
       S.appTools,

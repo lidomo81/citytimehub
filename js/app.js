@@ -2252,6 +2252,8 @@
       if (perPrayer) perPrayer.hidden = false;
       const quranHelp = document.getElementById("cthQuranHelp");
       if (quranHelp) quranHelp.hidden = false;
+      const calHelp = document.getElementById("cthCalHelp");
+      if (calHelp) calHelp.hidden = false;
       overlay.querySelectorAll(".help-list li").forEach(li => {
         const t = (li.querySelector("strong") || {}).textContent || "";
         if (/Install|التثبيت/.test(t)) li.hidden = true;
