@@ -2250,6 +2250,8 @@
         }
       }
       if (perPrayer) perPrayer.hidden = false;
+      const quranHelp = document.getElementById("cthQuranHelp");
+      if (quranHelp) quranHelp.hidden = false;
       overlay.querySelectorAll(".help-list li").forEach(li => {
         const t = (li.querySelector("strong") || {}).textContent || "";
         if (/Install|التثبيت/.test(t)) li.hidden = true;

@@ -22,11 +22,14 @@
       ar: { t: "أهلًا بك في CityTimeHub 🌙", b: "جولة سريعة تعرّفك بأهم المميزات في أقل من دقيقة. تقدر تتخطاها في أي وقت." },
       en: { t: "Welcome to CityTimeHub 🌙", b: "A quick tour of the main features in under a minute. You can skip anytime." } },
     welcomeApp: { sel: null,
-      ar: { t: "أهلًا بك في تطبيق CityTimeHub 🌙", b: "جولة سريعة على التبويبات الأربعة: الرئيسية، الصلاة، الأذكار، والأدوات — في أقل من دقيقة." },
-      en: { t: "Welcome to the CityTimeHub app 🌙", b: "A quick tour of the four tabs — Home, Prayer, Adhkar, and Tools — in under a minute." } },
+      ar: { t: "أهلًا بك في تطبيق CityTimeHub 🌙", b: "جولة سريعة على التبويبات الخمسة: الرئيسية، الصلاة، القرآن الكريم، الأذكار، والأدوات — في أقل من دقيقة." },
+      en: { t: "Welcome to the CityTimeHub app 🌙", b: "A quick tour of the five tabs — Home, Prayer, Quran, Adhkar, and Tools — in under a minute." } },
     appNav: { sel: ".app-bottom-nav", tab: "home", prefer: "above",
-      ar: { t: "التبويبات السفلية 📱", b: "الرئيسية: وقتك ومدينتك. الصلاة: المواقيت والتزام. الأذكار: صباح ومساء ونوم ورقية. الأدوات: باقي الميزات." },
-      en: { t: "Bottom tabs 📱", b: "Home: your time and city. Prayer: times and tracking. Adhkar: morning, evening, bedtime and ruqyah. Tools: everything else." } },
+      ar: { t: "التبويبات السفلية 📱", b: "الرئيسية: وقتك ومدينتك. الصلاة: المواقيت والتزام. القرآن الكريم: فهرس السور وصفحات المصحف. الأذكار: صباح ومساء ونوم ورقية. الأدوات: باقي الميزات." },
+      en: { t: "Bottom tabs 📱", b: "Home: your time and city. Prayer: times and tracking. Quran: surah index and mushaf pages. Adhkar: morning, evening, bedtime and ruqyah. Tools: everything else." } },
+    quranApp: { sel: null,
+      ar: { t: "تبويب القرآن الكريم 📖", b: "المحراب الذهبي في وسط الشريط يفتح فهرس السور والأجزاء والصفحات، ومنه تدخل قراءة المصحف. تقدر تبحث وترجع لآخر موضع حفظته — والثيم واللغة يتبعوا التطبيق." },
+      en: { t: "The Quran tab 📖", b: "The gold mihrab in the middle of the bar opens the surah, juz and page index, then the mushaf reader. You can search and return to your saved place — theme and language follow the rest of the app." } },
     search: { sel: "#cpSearch", tab: "home",
       ar: { t: "ابحث عن مدينتك 🔍", b: "في تبويب الرئيسية — اكتب اسم أي مدينة من 500 مدينة أو أي مكان في العالم." },
       en: { t: "Search your city 🔍", b: "On the Home tab — type any of 500 cities or anywhere in the world." } },
@@ -121,7 +124,7 @@
       return list;
     }
     return [
-      S.welcomeApp, S.appNav, S.appSettings,
+      S.welcomeApp, S.appNav, S.quranApp, S.appSettings,
       S.search, S.locate, S.favorite, S.myCities, S.homeClock, S.cityPulse, S.homeNext, S.dailyReflection, S.closeOnesHome,
       S.prayerTimes, S.tapCard, S.prayerBell, S.adherence, S.week, S.insights, S.occasions,
       S.azkarHub, S.widgetsApp,
