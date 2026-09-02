@@ -4108,13 +4108,13 @@ html.app-mode .cp-install { display: none !important; }
 .yc-backdrop { position: absolute; inset: 0; background: rgba(4, 8, 18, .48); }
 .yc-sheet {
   position: relative;
-  width: min(560px, 100%);
-  max-height: min(90vh, 90dvh);
+  width: min(420px, 100%);
+  max-height: min(92vh, 92dvh);
   overflow: auto;
   background: var(--surface);
   color: var(--text);
   border-radius: 22px 22px 0 0;
-  padding: 16px 14px calc(16px + env(safe-area-inset-bottom, 0px));
+  padding: 14px 16px calc(18px + env(safe-area-inset-bottom, 0px));
   box-shadow: 0 -18px 50px -24px #000;
 }
 .yc-x {
@@ -4122,68 +4122,74 @@ html.app-mode .cp-install { display: none !important; }
   width: 32px; height: 32px; border: none; border-radius: 10px;
   background: var(--surface-2); color: var(--text-2); font-size: 1.4rem; line-height: 1; cursor: pointer;
 }
-.yc-head { padding: 2px 36px 10px 4px; }
-html[dir="rtl"] .yc-head, html[lang="ar"] .yc-head { padding: 2px 4px 10px 36px; }
-.yc-title { margin: 0 0 8px; font-size: 1.05rem; font-weight: 800; }
-.yc-nav { display: flex; align-items: center; justify-content: center; gap: 14px; }
+.yc-head { padding: 2px 36px 6px 2px; }
+html[dir="rtl"] .yc-head, html[lang="ar"] .yc-head { padding: 2px 2px 6px 36px; }
+.yc-title { margin: 0 0 10px; font-size: .82rem; font-weight: 700; color: var(--text-2); letter-spacing: .02em; }
+.yc-nav { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .yc-shift {
-  width: 34px; height: 34px; border: 1px solid var(--border); border-radius: 10px;
-  background: var(--surface-2); color: var(--text); font-size: 1.25rem; cursor: pointer;
+  width: 40px; height: 40px; border: none; border-radius: 50%;
+  background: transparent; color: var(--text); font-size: 1.55rem; cursor: pointer;
 }
-.yc-year-num { min-width: 5.5rem; text-align: center; font-weight: 800; font-size: 1.05rem; }
-.yc-year {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px 10px;
+.yc-shift:active { background: var(--surface-2); }
+.yc-stamp-btn {
+  flex: 1; min-width: 0; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  border: none; background: transparent; color: var(--text); cursor: pointer; padding: 6px 4px;
 }
-.yc-month {
-  padding: 8px 6px 10px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: color-mix(in srgb, var(--surface-2) 70%, transparent);
-}
-.yc-month h3 {
-  margin: 0 0 6px;
-  font-size: .72rem;
-  font-weight: 800;
-  text-align: center;
-  color: var(--text);
-}
+.yc-stamp { font-weight: 800; font-size: 1.22rem; line-height: 1.2; }
+.yc-caret { font-size: .7rem; color: var(--muted); transform: translateY(-1px); }
+.yc-overlay[data-view="months"] .yc-caret { transform: rotate(180deg); }
 .yc-dows, .yc-days {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 1px;
+  gap: 2px 0;
   text-align: center;
 }
+.yc-dows { margin: 8px 0 4px; }
 .yc-dows span {
-  font-size: .58rem;
+  font-size: .72rem;
   font-weight: 700;
   color: var(--muted);
-  padding: 1px 0 3px;
+  padding: 6px 0;
 }
 .yc-day {
-  font-size: .62rem;
+  appearance: none; border: none; background: transparent;
+  width: 100%; aspect-ratio: 1;
+  font-size: .95rem;
   font-weight: 650;
-  line-height: 1.7;
-  border-radius: 6px;
+  border-radius: 50%;
   color: var(--text);
+  cursor: default;
 }
+.yc-day.is-out { color: var(--muted); opacity: .45; cursor: pointer; }
 .yc-day.is-today {
-  background: color-mix(in srgb, var(--brand) 22%, transparent);
-  color: var(--brand);
+  background: var(--brand);
+  color: #fff;
   font-weight: 800;
 }
+.yc-months {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  padding: 12px 0 4px;
+}
+.yc-pick-m {
+  appearance: none; border: none;
+  min-height: 48px; padding: 10px 6px; border-radius: 14px;
+  background: var(--surface-2); color: var(--text);
+  font-weight: 700; font-size: .88rem; cursor: pointer;
+}
+.yc-pick-m.is-cur { outline: 2px solid color-mix(in srgb, var(--brand) 55%, transparent); }
+.yc-pick-m.is-now { background: color-mix(in srgb, var(--brand) 18%, var(--surface-2)); color: var(--brand); }
 .yc-note {
   margin: 12px 4px 0;
   font-size: .72rem;
   line-height: 1.45;
   color: var(--text-2);
 }
-[data-theme="dark"] .yc-day.is-today { color: #93c5fd; }
+[data-theme="dark"] .yc-day.is-today { color: #0b1220; }
 @media (min-width: 520px) {
   .yc-overlay { align-items: center; padding: 18px; }
   .yc-sheet { border-radius: 22px; max-height: 86vh; }
-  .yc-year { grid-template-columns: 1fr 1fr 1fr; }
 }
 .help-x { position: absolute; top: 12px; inset-inline-end: 14px; width: 34px; height: 34px; border: none; background: var(--surface-2); color: var(--text-2); border-radius: 10px; font-size: 1.5rem; line-height: 1; cursor: pointer; }
 .help-x:hover { color: var(--text); }

@@ -85,6 +85,11 @@
   function setActiveTab(tab, opts) {
     opts = opts || {};
     if (TAB_IDS.indexOf(tab) < 0) tab = "home";
+    if (!isAppHome()) {
+      try { localStorage.setItem(STORAGE_KEY, tab); } catch (e) {}
+      location.href = withAppParam(homeBase() + (tab === "home" ? "" : "#" + tab));
+      return;
+    }
     var prev = document.documentElement.getAttribute("data-app-tab") || "home";
     document.documentElement.setAttribute("data-app-tab", tab);
     try { localStorage.setItem(STORAGE_KEY, tab); } catch (e) {}

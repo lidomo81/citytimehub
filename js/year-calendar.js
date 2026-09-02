@@ -1,6 +1,7 @@
 /* =====================================================================
    CityTimeHub — js/year-calendar.js
-   Home-tab date boxes open a year calendar (Gregorian / Hijri).
+   Date boxes open a month calendar (Gregorian / Hijri), Samsung-style:
+   one month, adjacent days faded, arrows + month/year pickers.
    Hijri months use the same Umm al-Qura calendar as occasions.
    Does not change prayer times, date text, or other tabs.
    ===================================================================== */
@@ -10,7 +11,8 @@
   var KIND_GREG = "greg";
   var KIND_HIJRI = "hijri";
   var overlay = null;
-  var state = { kind: KIND_GREG, year: 0 };
+  var state = { kind: KIND_GREG, year: 0, month: 1, view: "days" };
+  var touch = { x: 0, y: 0 };
 
   function isAr() {
     return (document.documentElement.getAttribute("lang") || "").slice(0, 2) === "ar"
@@ -113,6 +115,10 @@
     ).format(start);
   }
 
+  function monthName(y, m) {
+    return state.kind === KIND_HIJRI ? monthNameHijri(y, m) : monthNameGreg(y, m);
+  }
+
   function num(n) {
     return new Intl.NumberFormat(isAr() ? "ar-EG-u-nu-latn" : "en", { useGrouping: false }).format(n);
   }
@@ -121,55 +127,86 @@
     return (jsWeekday - start + 7) % 7;
   }
 
-  function monthGrid(daysInMonth, firstJsWeekday, todayDay, isCurrentMonth) {
+  function shiftMonth(delta) {
+    var m = state.month + delta;
+    var y = state.year;
+    while (m < 1) { m += 12; y -= 1; }
+    while (m > 12) { m -= 12; y += 1; }
+    state.month = m;
+    state.year = y;
+  }
+
+  function todayParts() {
+    if (state.kind === KIND_HIJRI) return hijriParts(new Date());
+    var n = new Date();
+    return { y: n.getFullYear(), m: n.getMonth() + 1, d: n.getDate() };
+  }
+
+  function monthMeta(y, m) {
+    if (state.kind === KIND_HIJRI) {
+      var start = startOfHijriMonth(y, m);
+      return {
+        len: hijriMonthLength(y, m),
+        first: start ? start.getDay() : 0
+      };
+    }
+    return {
+      len: gregMonthLength(y, m),
+      first: new Date(y, m - 1, 1).getDay()
+    };
+  }
+
+  function neighbor(y, m, delta) {
+    var nm = m + delta;
+    var ny = y;
+    if (nm < 1) { nm = 12; ny -= 1; }
+    if (nm > 12) { nm = 1; ny += 1; }
+    return { y: ny, m: nm, len: monthMeta(ny, nm).len };
+  }
+
+  function renderDays() {
+    var y = state.year;
+    var m = state.month;
+    var meta = monthMeta(y, m);
     var start = weekStart();
-    var pad = firstWeekdayOffset(firstJsWeekday, start);
+    var pad = firstWeekdayOffset(meta.first, start);
+    var today = todayParts();
+    var prev = neighbor(y, m, -1);
+    var next = neighbor(y, m, 1);
     var html = '<div class="yc-dows" aria-hidden="true">';
     weekdayLabels().forEach(function (w) {
       html += "<span>" + w + "</span>";
     });
     html += '</div><div class="yc-days">';
     var i;
-    for (i = 0; i < pad; i++) html += "<span></span>";
-    for (i = 1; i <= daysInMonth; i++) {
-      var on = isCurrentMonth && i === todayDay;
-      html += '<span class="yc-day' + (on ? " is-today" : "") + '">' + num(i) + "</span>";
+    for (i = 0; i < pad; i++) {
+      var pd = prev.len - pad + 1 + i;
+      html += '<button type="button" class="yc-day is-out" data-yc-jump="-1" data-day="' + pd + '">' + num(pd) + "</button>";
+    }
+    for (i = 1; i <= meta.len; i++) {
+      var on = today.y === y && today.m === m && today.d === i;
+      html += '<button type="button" class="yc-day' + (on ? " is-today" : "") + '">' + num(i) + "</button>";
+    }
+    var used = pad + meta.len;
+    var fill = used <= 35 ? 35 - used : 42 - used;
+    for (i = 1; i <= fill; i++) {
+      html += '<button type="button" class="yc-day is-out" data-yc-jump="1" data-day="' + i + '">' + num(i) + "</button>";
     }
     html += "</div>";
     return html;
   }
 
-  function renderGregYear(year) {
-    var now = new Date();
-    var ty = now.getFullYear();
-    var tm = now.getMonth() + 1;
-    var td = now.getDate();
-    var html = "";
+  function renderMonths() {
+    var today = todayParts();
+    var html = '<div class="yc-months">';
     var m;
     for (m = 1; m <= 12; m++) {
-      var first = new Date(year, m - 1, 1).getDay();
-      var len = gregMonthLength(year, m);
-      html += '<section class="yc-month" data-month="' + m + '">';
-      html += "<h3>" + monthNameGreg(year, m) + "</h3>";
-      html += monthGrid(len, first, td, year === ty && m === tm);
-      html += "</section>";
+      var cur = state.month === m;
+      var now = today.y === state.year && today.m === m;
+      html += '<button type="button" class="yc-pick-m' + (cur ? " is-cur" : "") + (now ? " is-now" : "") + '" data-yc-month="' + m + '">' +
+        monthName(state.year, m) + "</button>";
     }
-    return html;
-  }
-
-  function renderHijriYear(year) {
-    var today = hijriParts(new Date());
-    var html = "";
-    var m;
-    for (m = 1; m <= 12; m++) {
-      var start = startOfHijriMonth(year, m);
-      var len = hijriMonthLength(year, m);
-      var first = start ? start.getDay() : 0;
-      html += '<section class="yc-month" data-month="' + m + '">';
-      html += "<h3>" + monthNameHijri(year, m) + "</h3>";
-      html += monthGrid(len, first, today.d, year === today.y && m === today.m);
-      html += "</section>";
-    }
+    html += "</div>";
     return html;
   }
 
@@ -177,8 +214,9 @@
     var ar = isAr();
     return {
       close: ar ? "إغلاق" : "Close",
-      prev: ar ? "السنة السابقة" : "Previous year",
-      next: ar ? "السنة التالية" : "Next year",
+      prev: ar ? "السابق" : "Previous",
+      next: ar ? "التالي" : "Next",
+      pick: ar ? "اختيار الشهر والسنة" : "Choose month and year",
       gregTitle: ar ? "التقويم الميلادي" : "Gregorian calendar",
       hijriTitle: ar ? "التقويم الهجري" : "Hijri calendar",
       hijriNote: ar
@@ -191,27 +229,28 @@
     if (!overlay) return;
     var S = strings();
     var title = overlay.querySelector(".yc-title");
-    var grid = overlay.querySelector(".yc-year");
+    var grid = overlay.querySelector(".yc-body");
     var note = overlay.querySelector(".yc-note");
-    var yearLabel = overlay.querySelector(".yc-year-num");
+    var stamp = overlay.querySelector(".yc-stamp");
+    var pick = overlay.querySelector(".yc-stamp-btn");
+    title.textContent = state.kind === KIND_HIJRI ? S.hijriTitle : S.gregTitle;
+    if (state.view === "months") {
+      stamp.textContent = num(state.year) + (state.kind === KIND_HIJRI ? (isAr() ? " هـ" : " AH") : "");
+      grid.innerHTML = renderMonths();
+    } else {
+      stamp.textContent = monthName(state.year, state.month) + "  " + num(state.year) +
+        (state.kind === KIND_HIJRI ? (isAr() ? " هـ" : " AH") : "");
+      grid.innerHTML = renderDays();
+    }
+    if (pick) pick.setAttribute("aria-label", S.pick);
     if (state.kind === KIND_HIJRI) {
-      title.textContent = S.hijriTitle;
-      yearLabel.textContent = num(state.year) + (isAr() ? " هـ" : " AH");
-      grid.innerHTML = renderHijriYear(state.year);
       note.hidden = false;
       note.textContent = S.hijriNote;
     } else {
-      title.textContent = S.gregTitle;
-      yearLabel.textContent = num(state.year);
-      grid.innerHTML = renderGregYear(state.year);
       note.hidden = true;
       note.textContent = "";
     }
-    var todayMonth = grid.querySelector(".yc-day.is-today");
-    if (todayMonth) {
-      var sec = todayMonth.closest(".yc-month");
-      if (sec) sec.scrollIntoView({ block: "nearest", behavior: "auto" });
-    }
+    overlay.dataset.view = state.view;
   }
 
   function setPull(on) {
@@ -224,15 +263,18 @@
     if (!overlay) return;
     overlay.hidden = true;
     overlay.setAttribute("aria-hidden", "true");
+    state.view = "days";
     setPull(true);
   }
 
   function open(kind) {
     if (!isAppHome()) return;
     ensureOverlay();
-    var now = new Date();
+    var now = todayPartsFor(kind);
     state.kind = kind;
-    state.year = kind === KIND_HIJRI ? hijriParts(now).y : now.getFullYear();
+    state.year = now.y;
+    state.month = now.m;
+    state.view = "days";
     overlay.hidden = false;
     overlay.setAttribute("aria-hidden", "false");
     overlay.dataset.kind = kind;
@@ -240,6 +282,12 @@
     setPull(false);
     var x = overlay.querySelector(".yc-x");
     if (x) x.focus();
+  }
+
+  function todayPartsFor(kind) {
+    if (kind === KIND_HIJRI) return hijriParts(new Date());
+    var n = new Date();
+    return { y: n.getFullYear(), m: n.getMonth() + 1, d: n.getDate() };
   }
 
   function ensureOverlay() {
@@ -261,28 +309,71 @@
           '<h2 id="ycTitle" class="yc-title"></h2>' +
           '<div class="yc-nav">' +
             '<button type="button" class="yc-shift" data-yc-shift="-1" aria-label="' + S.prev + '">‹</button>' +
-            '<span class="yc-year-num"></span>' +
+            '<button type="button" class="yc-stamp-btn" data-yc-pick>' +
+              '<span class="yc-stamp"></span>' +
+              '<span class="yc-caret" aria-hidden="true">▾</span>' +
+            "</button>" +
             '<button type="button" class="yc-shift" data-yc-shift="1" aria-label="' + S.next + '">›</button>' +
-          '</div>' +
-        '</header>' +
-        '<div class="yc-year"></div>' +
+          "</div>" +
+        "</header>" +
+        '<div class="yc-body"></div>' +
         '<p class="yc-note" hidden></p>' +
       "</div>";
     overlay.addEventListener("click", function (e) {
       if (e.target.closest("[data-yc-close]")) {
         e.preventDefault();
         close();
+        return;
+      }
+      var shift = e.target.closest("[data-yc-shift]");
+      if (shift) {
+        e.preventDefault();
+        if (state.view === "months") state.year += +shift.getAttribute("data-yc-shift");
+        else shiftMonth(+shift.getAttribute("data-yc-shift"));
+        paint();
+        return;
+      }
+      if (e.target.closest("[data-yc-pick]")) {
+        e.preventDefault();
+        state.view = state.view === "months" ? "days" : "months";
+        paint();
+        return;
+      }
+      var monthBtn = e.target.closest("[data-yc-month]");
+      if (monthBtn) {
+        e.preventDefault();
+        state.month = +monthBtn.getAttribute("data-yc-month");
+        state.view = "days";
+        paint();
+        return;
+      }
+      var jump = e.target.closest("[data-yc-jump]");
+      if (jump) {
+        e.preventDefault();
+        shiftMonth(+jump.getAttribute("data-yc-jump"));
+        paint();
       }
     });
-    overlay.addEventListener("click", function (e) {
-      var btn = e.target.closest("[data-yc-shift]");
-      if (!btn) return;
-      e.preventDefault();
-      state.year += +btn.getAttribute("data-yc-shift");
+    var bodySwipe = overlay.querySelector(".yc-body");
+    bodySwipe.addEventListener("touchstart", function (e) {
+      if (!e.changedTouches || !e.changedTouches[0]) return;
+      touch.x = e.changedTouches[0].clientX;
+      touch.y = e.changedTouches[0].clientY;
+    }, { passive: true });
+    bodySwipe.addEventListener("touchend", function (e) {
+      if (state.view !== "days" || !e.changedTouches || !e.changedTouches[0]) return;
+      var dx = e.changedTouches[0].clientX - touch.x;
+      var dy = e.changedTouches[0].clientY - touch.y;
+      if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy)) return;
+      var rtl = isAr();
+      shiftMonth((dx < 0) === rtl ? -1 : 1);
       paint();
-    });
+    }, { passive: true });
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && overlay && !overlay.hidden) close();
+      if (!overlay || overlay.hidden) return;
+      if (e.key === "Escape") { e.preventDefault(); close(); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); shiftMonth(isAr() ? 1 : -1); paint(); }
+      if (e.key === "ArrowRight") { e.preventDefault(); shiftMonth(isAr() ? -1 : 1); paint(); }
     });
     document.body.appendChild(overlay);
     return overlay;
