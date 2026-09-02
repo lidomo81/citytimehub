@@ -119,9 +119,9 @@
     "رمضان", "شوال", "ذو القعدة", "ذو الحجة"
   ];
   var HIJRI_EN = [
-    "Muharram", "Safar", "Rabiʿ al-Awwal", "Rabiʿ al-Thani",
-    "Jumada al-Ula", "Jumada al-Thania", "Rajab", "Shaʿban",
-    "Ramadan", "Shawwal", "Dhu al-Qaʿdah", "Dhu al-Hijjah"
+    "Muharram", "Safar", "Rabi-ul-Awwal", "Rabi-ul-Akhir",
+    "Jumada-ul-Awwal", "Jumada-ul-Akhir", "Rajab", "Sha'ban",
+    "Ramadan", "Shawwal", "Dhul-Qa'dah", "Dhul-Hijjah"
   ];
 
   function monthNameHijri(hy, hm) {
