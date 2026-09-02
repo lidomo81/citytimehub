@@ -49,16 +49,22 @@
     return d;
   }
 
+  function approxGregYear(hy) {
+    return Math.round(hy * 0.970224 + 621.577);
+  }
+
   function startOfHijriMonth(hy, hm) {
+    if (hy < 1 || hm < 1 || hm > 12) return null;
     var target = hy * 12 + hm;
-    var lo = Date.UTC(hy - 590, 0, 1);
-    var hi = Date.UTC(hy - 568, 11, 31);
+    var g = approxGregYear(hy);
+    var lo = Date.UTC(g - 3, 0, 1);
+    var hi = Date.UTC(g + 3, 11, 31);
     var guard = 0;
-    while (hijriIndex(hijriParts(new Date(lo))) > target && guard++ < 10) {
+    while (hijriIndex(hijriParts(new Date(lo))) > target && guard++ < 20) {
       lo -= 400 * 86400000;
     }
     guard = 0;
-    while (hijriIndex(hijriParts(new Date(hi))) < target && guard++ < 10) {
+    while (hijriIndex(hijriParts(new Date(hi))) < target && guard++ < 20) {
       hi += 400 * 86400000;
     }
     while (hi - lo > 86400000) {
@@ -107,12 +113,20 @@
     return new Intl.DateTimeFormat(isAr() ? "ar" : "en", { month: "long" }).format(new Date(y, m - 1, 1));
   }
 
+  var HIJRI_AR = [
+    "محرم", "صفر", "ربيع الأول", "ربيع الآخر",
+    "جمادى الأولى", "جمادى الآخرة", "رجب", "شعبان",
+    "رمضان", "شوال", "ذو القعدة", "ذو الحجة"
+  ];
+  var HIJRI_EN = [
+    "Muharram", "Safar", "Rabiʿ al-Awwal", "Rabiʿ al-Thani",
+    "Jumada al-Ula", "Jumada al-Thania", "Rajab", "Shaʿban",
+    "Ramadan", "Shawwal", "Dhu al-Qaʿdah", "Dhu al-Hijjah"
+  ];
+
   function monthNameHijri(hy, hm) {
-    var start = startOfHijriMonth(hy, hm) || new Date();
-    return new Intl.DateTimeFormat(
-      isAr() ? "ar-u-ca-islamic-umalqura" : "en-u-ca-islamic-umalqura",
-      { month: "long" }
-    ).format(start);
+    var names = isAr() ? HIJRI_AR : HIJRI_EN;
+    return names[hm - 1] || names[0];
   }
 
   function monthName(y, m) {
