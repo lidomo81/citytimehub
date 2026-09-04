@@ -7064,16 +7064,33 @@ html.app-mode[data-app-tab="prayer"] #occasions.occasions-link {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
   margin-top: 12px;
-  padding: 8px 4px;
-  border: none;
-  background: transparent;
+  padding: 11px 14px;
+  border: 1px solid color-mix(in srgb, var(--brand) 22%, var(--border));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--brand) 7%, var(--surface));
   box-shadow: none;
   text-align: center;
-  color: var(--text-2);
-  font-size: .82rem;
-  font-weight: 650;
+  color: var(--text);
+  font-size: .84rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease, transform .12s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+html.app-mode[data-app-tab="prayer"] #occasions.occasions-link:hover {
+  border-color: color-mix(in srgb, var(--brand) 45%, var(--border));
+  background: color-mix(in srgb, var(--brand) 11%, var(--surface));
+}
+html.app-mode[data-app-tab="prayer"] #occasions.occasions-link:active {
+  transform: scale(.985);
+  background: color-mix(in srgb, var(--brand) 14%, var(--surface));
+}
+html.app-mode[data-app-tab="prayer"] #occasions.occasions-link:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--brand) 55%, transparent);
+  outline-offset: 2px;
 }
 html.app-mode[data-app-tab="prayer"] #occasions .occasions-kicker,
 html.app-mode[data-app-tab="prayer"] #occasions .occasions-note,
@@ -7098,8 +7115,11 @@ html.app-mode[data-app-tab="prayer"] #occasions .occ-when {
 html.app-mode[data-app-tab="prayer"] #occasions .occ-when::before { content: " · "; }
 html.app-mode[data-app-tab="prayer"] #occasions.occasions-link::after {
   content: "‹";
-  color: var(--muted);
-  font-size: .95rem;
+  color: var(--brand);
+  font-size: 1.05rem;
+  font-weight: 800;
+  opacity: .85;
+  line-height: 1;
 }
 html.app-mode[data-app-tab="prayer"] .prayer-insights {
   margin-top: 10px;
