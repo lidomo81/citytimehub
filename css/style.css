@@ -6943,3 +6943,214 @@ html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard[data-sky-pha
 }
 
 /* (FAB styles removed — tools button lives in the header) */
+
+/* =====================================================================
+   Prayer tab V3 layout (app-mode only) — visual hierarchy from mockup.
+   Does not change prayer math, reminders, or worship logging behavior.
+   ===================================================================== */
+.prayer-hero { display: none; }
+html.app-mode[data-app-tab="prayer"] .prayer-hero:not([hidden]) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  margin: 8px auto 18px;
+  padding: 22px 16px 18px;
+  text-align: center;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 40%,
+      color-mix(in srgb, #C9A36A 22%, transparent),
+      transparent 70%);
+  border: none;
+  box-shadow: none;
+}
+html.app-mode[data-app-tab="prayer"] .prayer-hero-name {
+  margin: 0;
+  font-size: clamp(2rem, 8vw, 2.55rem);
+  font-weight: 800;
+  line-height: 1.15;
+  color: #1F3A2E;
+  letter-spacing: -.02em;
+}
+html.app-mode[data-theme="dark"][data-app-tab="prayer"] .prayer-hero-name {
+  color: #E8F0E6;
+}
+html.app-mode[data-app-tab="prayer"] .prayer-hero-count {
+  margin: 0;
+  font-size: clamp(2.1rem, 9vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: .04em;
+  font-variant-numeric: tabular-nums;
+  color: #1F3A2E;
+  line-height: 1;
+}
+html.app-mode[data-theme="dark"][data-app-tab="prayer"] .prayer-hero-count {
+  color: #F4E7D3;
+}
+html.app-mode[data-app-tab="prayer"] .prayer-hero-cap {
+  margin: 2px 0 0;
+  font-size: .78rem;
+  font-weight: 650;
+  color: var(--muted);
+}
+html.app-mode[data-app-tab="prayer"] .cp-clock-info .lt-time,
+html.app-mode[data-app-tab="prayer"] .cp-clock-info .lt-weekday,
+html.app-mode[data-app-tab="prayer"] .cp-devotion .datebar,
+html.app-mode[data-app-tab="prayer"] .cp-devotion .cp-dev-title {
+  display: none !important;
+}
+html.app-mode[data-app-tab="prayer"] .cp-clock {
+  padding: 4px 14px 0;
+}
+html.app-mode[data-app-tab="prayer"] .cp-clock-info {
+  justify-content: center;
+  padding: 0;
+}
+html.app-mode[data-app-tab="prayer"] .cp-clock-info .lt-city {
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--text);
+}
+html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-tag {
+  display: none !important;
+}
+html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card {
+  grid-template-columns: 1fr auto;
+  padding-inline-start: 34px;
+  padding-inline-end: 34px;
+}
+html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-name { grid-column: 1; }
+html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-time {
+  grid-column: 2;
+  text-align: end;
+}
+html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card.is-next {
+  background: color-mix(in srgb, #C9A36A 12%, transparent);
+  box-shadow: inset 3px 0 0 #C9A36A, inset -3px 0 0 #C9A36A;
+}
+html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card.is-next .prayer-name,
+html.app-mode[data-app-tab="prayer"] .cp-devotion .prayer-card.is-next .prayer-time {
+  color: #1F3A2E;
+  font-weight: 800;
+}
+html.app-mode[data-theme="dark"][data-app-tab="prayer"] .cp-devotion .prayer-card.is-next .prayer-name,
+html.app-mode[data-theme="dark"][data-app-tab="prayer"] .cp-devotion .prayer-card.is-next .prayer-time {
+  color: #F0D060;
+}
+html.app-mode[data-app-tab="prayer"] .cp-now-board {
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 12px;
+}
+html.app-mode[data-app-tab="prayer"] .cp-now-board .cp-commitment-status strong {
+  font-size: .8rem;
+}
+html.app-mode[data-app-tab="prayer"] .cp-now-board .cp-week {
+  border-top: none;
+  padding: 0;
+  margin: 0;
+  width: auto;
+}
+html.app-mode[data-app-tab="prayer"] #occasions.occasions-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 8px 4px;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  text-align: center;
+  color: var(--text-2);
+  font-size: .82rem;
+  font-weight: 650;
+}
+html.app-mode[data-app-tab="prayer"] #occasions .occasions-kicker,
+html.app-mode[data-app-tab="prayer"] #occasions .occasions-note,
+html.app-mode[data-app-tab="prayer"] #occasions .occ-em,
+html.app-mode[data-app-tab="prayer"] #occasions .occasions-go {
+  display: none !important;
+}
+html.app-mode[data-app-tab="prayer"] #occasions .occasions-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+html.app-mode[data-app-tab="prayer"] #occasions .occ-item { display: inline; }
+html.app-mode[data-app-tab="prayer"] #occasions .occ-main { display: inline; }
+html.app-mode[data-app-tab="prayer"] #occasions .occ-name,
+html.app-mode[data-app-tab="prayer"] #occasions .occ-when {
+  display: inline;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+}
+html.app-mode[data-app-tab="prayer"] #occasions .occ-when::before { content: " · "; }
+html.app-mode[data-app-tab="prayer"] #occasions.occasions-link::after {
+  content: "‹";
+  color: var(--muted);
+  font-size: .95rem;
+}
+html.app-mode[data-app-tab="prayer"] .prayer-insights {
+  margin-top: 10px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+html.app-mode[data-app-tab="prayer"] .prayer-insights .pi-kicker,
+html.app-mode[data-app-tab="prayer"] .prayer-insights .pi-note {
+  display: none !important;
+}
+html.app-mode[data-app-tab="prayer"] .pi-chips {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+html.app-mode[data-app-tab="prayer"] .pi-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  min-height: 72px;
+}
+html.app-mode[data-app-tab="prayer"] .pi-card.is-warn {
+  border-color: color-mix(in srgb, #d97706 45%, var(--border));
+  background: color-mix(in srgb, #f59e0b 8%, var(--surface));
+}
+html.app-mode[data-app-tab="prayer"] .pi-card-ico {
+  font-size: .9rem;
+  opacity: .7;
+  line-height: 1;
+}
+html.app-mode[data-app-tab="prayer"] .pi-card-label {
+  font-size: .68rem;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: .02em;
+}
+html.app-mode[data-app-tab="prayer"] .pi-card-val {
+  font-size: .88rem;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.25;
+}
+html.app-mode[data-app-tab="prayer"] .prayer-azkar-tab-hint {
+  margin-top: 8px;
+  font-size: .68rem;
+  opacity: .75;
+}

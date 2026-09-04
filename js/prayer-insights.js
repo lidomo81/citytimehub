@@ -16,14 +16,20 @@
   const I = {
     en: {
       kicker: "Prayer insights",
-      lastThird: t => `🕋 Last third of the night from ${t}`,
-      karahah: "⚠️ Disliked time now",
+      lastThirdTitle: "Last third",
+      lastThirdFrom: t => t,
+      karahahTitle: "Disliked time",
+      karahahNow: "Now",
+      karahahClear: "Outside disliked times",
       note: "Times are approximate, for guidance. Detailed rulings on the disliked times are best confirmed with people of knowledge.",
     },
     ar: {
       kicker: "إضاءات الصلاة",
-      lastThird: t => `🕋 الثلث الأخير من الليل يبدأ ${t}`,
-      karahah: "⚠️ وقت كراهة الآن",
+      lastThirdTitle: "الثلث الأخير",
+      lastThirdFrom: t => t,
+      karahahTitle: "وقت الكراهة",
+      karahahNow: "الآن",
+      karahahClear: "خارج أوقات النهي",
       note: "الأوقات تقديرية للاسترشاد، وتفاصيل أوقات الكراهة تُراجع من أهل العلم.",
     },
   };
@@ -45,8 +51,6 @@
     return { min: d.getUTCHours() * 60 + d.getUTCMinutes(), sec: d.getUTCHours() * 3600 + d.getUTCMinutes() * 60 + d.getUTCSeconds() };
   }
 
-  // The three well-known times when voluntary prayer is disliked, approximated
-  // with short windows around sunrise, the zenith (just before Dhuhr) and sunset.
   function isKarahah(t, tz) {
     const { min } = nowLocal(tz);
     const sr = toMin(t.Sunrise), dh = toMin(t.Dhuhr), mg = toMin(t.Maghrib);
@@ -65,19 +69,24 @@
     if (!chipsEl) return;
 
     const mg = toMin(t.Maghrib);
-
-    // No day/night chip: the reader can see out of a window, and the clock is
-    // right above it. No "night length" either — it was a step in working out
-    // the last third, not something to act on; the reader wants when to rise,
-    // which the last-third chip already gives.
-    const chips = [];
-    if (isKarahah(t, tz)) chips.push(`<span class="pi-chip is-warn">${T.karahah}</span>`);
+    let lastThirdLabel = "—";
     if (t.Maghrib && t.Fajr) {
-      const nightMin = (toMin(t.Fajr) + 1440) - mg;         // sunset → next dawn
-      const lastThird = mg + Math.round(nightMin * 2 / 3);   // start of last third
-      chips.push(`<span class="pi-chip">${T.lastThird(hhmm(lastThird))}</span>`);
+      const nightMin = (toMin(t.Fajr) + 1440) - mg;
+      const lastThird = mg + Math.round(nightMin * 2 / 3);
+      lastThirdLabel = T.lastThirdFrom(hhmm(lastThird));
     }
-    chipsEl.innerHTML = chips.join("");
+    const warn = isKarahah(t, tz);
+    chipsEl.innerHTML =
+      '<div class="pi-card">'
+      + '<span class="pi-card-ico" aria-hidden="true">☽</span>'
+      + '<span class="pi-card-label">' + T.lastThirdTitle + "</span>"
+      + '<strong class="pi-card-val mono">' + lastThirdLabel + "</strong>"
+      + "</div>"
+      + '<div class="pi-card' + (warn ? " is-warn" : "") + '">'
+      + '<span class="pi-card-ico" aria-hidden="true">⊘</span>'
+      + '<span class="pi-card-label">' + T.karahahTitle + "</span>"
+      + '<strong class="pi-card-val">' + (warn ? T.karahahNow : T.karahahClear) + "</strong>"
+      + "</div>";
   }
 
   function anchor() {
@@ -109,8 +118,6 @@
       if (tries++ < 25) setTimeout(tick, 300);
     })();
     if (timer) clearInterval(timer);
-    // The chips turn over on the minute, not the second — the per-second tick
-    // existed only for the countdown that now lives on the prayer card.
     timer = setInterval(render, 20000);
   }
 

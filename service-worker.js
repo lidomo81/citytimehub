@@ -9,7 +9,7 @@
    Bump CACHE_VERSION only when the shell list itself must be replaced.
    Never wipe runtime/API caches on activate.
    ===================================================================== */
-const CACHE_VERSION = "cth-v295";
+const CACHE_VERSION = "cth-v296";
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 const API_CACHE = `${CACHE_VERSION}-api`;

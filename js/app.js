@@ -20,6 +20,7 @@
       dayLen: (h, m) => `${h}h ${m}m`,
       localEyebrow: "Your local time", homeEyebrow: "Your city", save: "My favorite city", saved: "Favorite ✓",
       inHM: (h, m) => h ? `in ${h}h ${m}m` : `in ${m}m`, tomorrow: "tomorrow",
+      heroRemain: name => `Time remaining until ${name}`,
       arcNext: (name, h, m, whenLabel) => {
         const when = whenLabel ? `<span class="sun-arc-when">${whenLabel}</span>` : "";
         const eta = h
@@ -77,6 +78,7 @@
       dayLen: (h, m) => `${h}h ${m}m`,
       localEyebrow: "وقتك المحلي", homeEyebrow: "مدينتك", save: "مدينتي المفضلة", saved: "مفضلة ✓",
       inHM: (h, m) => h ? `بعد ${h} س ${m} د` : `بعد ${m} د`, tomorrow: "غدًا",
+      heroRemain: name => `المتبقي إلى ${name}`,
       arcNext: (name, h, m, whenLabel) => {
         const when = whenLabel ? `<span class="sun-arc-when">${whenLabel}</span>` : "";
         const eta = h
@@ -1605,6 +1607,59 @@
       const tag = card.querySelector(".prayer-tag");
       if (tag) tag.textContent = isNext ? T.inHM(n.dh, n.dm) : "";
     });
+    updatePrayerHero();
+  }
+
+  /** Prayer-tab hero only — presentation. Same countdown source as the list. */
+  function updatePrayerHero() {
+    const hero = $("#prayerHero");
+    if (!hero) return;
+    const root = document.documentElement;
+    const onPrayer = root.classList.contains("app-mode")
+      && (root.getAttribute("data-app-tab") || "home") === "prayer";
+    if (!onPrayer || !prayerState || !prayerState.city) {
+      hero.hidden = true;
+      return;
+    }
+    const n = nextPrayerCountdownExact();
+    if (!n) {
+      hero.hidden = true;
+      return;
+    }
+    const name = T.prayers[n.idx] + (n.tomorrow ? " " + T.tomorrow : "");
+    const pad = x => String(x).padStart(2, "0");
+    $("#prayerHeroName").textContent = T.prayers[n.idx];
+    $("#prayerHeroCount").textContent = `${pad(n.h)}:${pad(n.m)}:${pad(n.s)}`;
+    $("#prayerHeroCap").textContent = T.heroRemain(name);
+    hero.hidden = false;
+  }
+
+  function nextPrayerCountdownExact() {
+    if (!prayerState || !prayerState.city) return null;
+    const off = offsetHours(prayerState.city.tz) * 3600000;
+    const d = new Date(Date.now() + off);
+    const nowSec = d.getUTCHours() * 3600 + d.getUTCMinutes() * 60 + d.getUTCSeconds();
+    let idx = -1, nextSec = 0;
+    for (let i = 0; i < PRAYERS.length; i++) {
+      if (PRAYERS[i] === "Sunrise") continue;
+      const pm = parseHM(prayerState.timings[PRAYERS[i]]);
+      const ps = pm * 60;
+      if (ps > nowSec) { idx = i; nextSec = ps; break; }
+    }
+    let tomorrow = false;
+    if (idx < 0) {
+      idx = 0;
+      nextSec = parseHM(prayerState.timings.Fajr) * 60 + 86400;
+      tomorrow = true;
+    }
+    const diff = Math.max(0, nextSec - nowSec);
+    return {
+      idx,
+      tomorrow,
+      h: Math.floor(diff / 3600),
+      m: Math.floor((diff % 3600) / 60),
+      s: diff % 60
+    };
   }
 
   function updateNextLine() {
