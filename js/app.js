@@ -1628,6 +1628,8 @@
     }
     const name = T.prayers[n.idx] + (n.tomorrow ? " " + T.tomorrow : "");
     const pad = x => String(x).padStart(2, "0");
+    const skyKey = PRAYERS[n.idx] || "Dhuhr";
+    hero.setAttribute("data-prayer-sky", skyKey);
     $("#prayerHeroName").textContent = T.prayers[n.idx];
     $("#prayerHeroCount").textContent = `${pad(n.h)}:${pad(n.m)}:${pad(n.s)}`;
     $("#prayerHeroCap").textContent = T.heroRemain(name);

@@ -6986,32 +6986,132 @@ html[data-theme="light"]:not(.app-mode) body.home-web.home-dayboard[data-sky-pha
    ===================================================================== */
 .prayer-hero { display: none; }
 html.app-mode[data-app-tab="prayer"] .prayer-hero:not([hidden]) {
+  --ph-sky:
+    radial-gradient(ellipse 70% 55% at 50% 40%,
+      color-mix(in srgb, #C9A36A 22%, transparent),
+      transparent 70%);
+  --ph-veil: linear-gradient(180deg, rgba(255,255,255,.06), rgba(20,28,24,.10));
+  --ph-fg: #1F3A2E;
+  --ph-cap: color-mix(in srgb, var(--muted) 90%, var(--ph-fg));
+  --ph-glow: none;
+  position: relative;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 6px;
   width: 100%;
+  min-height: 148px;
   margin: 8px auto 18px;
-  padding: 22px 16px 18px;
+  padding: 26px 16px 22px;
   text-align: center;
-  background:
-    radial-gradient(ellipse 70% 55% at 50% 40%,
-      color-mix(in srgb, #C9A36A 22%, transparent),
-      transparent 70%);
+  overflow: hidden;
+  border-radius: 20px;
   border: none;
   box-shadow: none;
+  background: transparent;
+}
+html.app-mode[data-app-tab="prayer"] .prayer-hero:not([hidden])::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: var(--ph-sky);
+  transition: background .45s ease;
+}
+html.app-mode[data-app-tab="prayer"] .prayer-hero:not([hidden])::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--ph-veil);
+  transition: background .45s ease;
+}
+/* Fajr — dawn twilight */
+html.app-mode[data-app-tab="prayer"] .prayer-hero[data-prayer-sky="Fajr"] {
+  --ph-sky:
+    radial-gradient(ellipse 100% 60% at 50% 120%, #ffd7a3 0%, transparent 52%),
+    linear-gradient(185deg, #121c33 0%, #2f3d66 26%, #7d5f86 50%, #d98970 72%, #f2c08c 100%);
+  --ph-veil: linear-gradient(180deg, rgba(12,18,32,.16), rgba(255,240,220,.10) 55%, rgba(20,24,20,.22));
+  --ph-fg: #fff8f0;
+  --ph-cap: rgba(255,248,240,.82);
+  --ph-glow: 0 1px 12px rgba(20, 24, 40, .35);
+}
+/* Dhuhr — midday sun */
+html.app-mode[data-app-tab="prayer"] .prayer-hero[data-prayer-sky="Dhuhr"] {
+  --ph-sky:
+    radial-gradient(circle at 50% 28%, #fff7d6 0%, #ffe08a 12%, transparent 28%),
+    linear-gradient(180deg, #5eb0e8 0%, #87c8f2 40%, #cfe9fb 72%, #eef6ff 100%);
+  --ph-veil: linear-gradient(180deg, rgba(255,255,255,.08), rgba(20,50,80,.10));
+  --ph-fg: #0f2740;
+  --ph-cap: rgba(15, 39, 64, .72);
+  --ph-glow: 0 1px 0 rgba(255,255,255,.35);
+}
+/* Asr — warm slanted light */
+html.app-mode[data-app-tab="prayer"] .prayer-hero[data-prayer-sky="Asr"] {
+  --ph-sky:
+    radial-gradient(circle at 72% 30%, #ffe6a8 0%, transparent 26%),
+    linear-gradient(180deg, #4f8fc9 0%, #7aaed6 28%, #d4b07a 68%, #e8c79a 100%);
+  --ph-veil: linear-gradient(180deg, rgba(255,255,255,.05), rgba(40,30,20,.14));
+  --ph-fg: #1a2a28;
+  --ph-cap: rgba(26, 42, 40, .75);
+  --ph-glow: 0 1px 8px rgba(255, 230, 180, .2);
+}
+/* Maghrib — sunset */
+html.app-mode[data-app-tab="prayer"] .prayer-hero[data-prayer-sky="Maghrib"] {
+  --ph-sky:
+    radial-gradient(ellipse 80% 50% at 50% 78%, #ffb06a 0%, transparent 55%),
+    linear-gradient(180deg, #1d2a4a 0%, #5a3d6e 32%, #c45d4a 58%, #f0a05a 82%, #f6c98a 100%);
+  --ph-veil: linear-gradient(180deg, rgba(10,14,30,.18), rgba(255,200,140,.08) 60%, rgba(20,16,12,.24));
+  --ph-fg: #fff6ee;
+  --ph-cap: rgba(255,246,238,.8);
+  --ph-glow: 0 1px 14px rgba(40, 20, 30, .4);
+}
+/* Isha — night */
+html.app-mode[data-app-tab="prayer"] .prayer-hero[data-prayer-sky="Isha"] {
+  --ph-sky:
+    radial-gradient(circle at 78% 22%, rgba(255,255,255,.55) 0 1.2px, transparent 2px),
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,.4) 0 1px, transparent 2px),
+    radial-gradient(circle at 55% 18%, rgba(255,255,255,.35) 0 1px, transparent 2px),
+    linear-gradient(180deg, #070b18 0%, #121a33 42%, #1c2748 78%, #243156 100%);
+  --ph-veil: linear-gradient(180deg, rgba(0,0,0,.08), rgba(30,40,70,.16));
+  --ph-fg: #eef3ff;
+  --ph-cap: rgba(220, 230, 255, .78);
+  --ph-glow: 0 0 16px rgba(120, 160, 255, .2);
+}
+/* App dark theme: deepen veil slightly; keep prayer mood, ensure readable type */
+html[data-theme="dark"].app-mode[data-app-tab="prayer"] .prayer-hero[data-prayer-sky="Fajr"],
+html[data-theme="dark"].app-mode[data-app-tab="prayer"] .prayer-hero[data-prayer-sky="Maghrib"],
+html[data-theme="dark"].app-mode[data-app-tab="prayer"] .prayer-hero[data-prayer-sky="Isha"] {
+  --ph-veil: linear-gradient(180deg, rgba(0,0,0,.22), rgba(0,0,0,.10) 50%, rgba(0,0,0,.28));
+  --ph-fg: #fff8f0;
+  --ph-cap: rgba(255,248,240,.8);
+  --ph-glow: 0 0 14px rgba(0, 0, 0, .35);
+}
+html[data-theme="dark"].app-mode[data-app-tab="prayer"] .prayer-hero[data-prayer-sky="Dhuhr"] {
+  --ph-veil: linear-gradient(180deg, rgba(8,18,32,.28), rgba(8,18,32,.18));
+  --ph-fg: #eef6ff;
+  --ph-cap: rgba(220, 235, 255, .8);
+  --ph-glow: 0 0 12px rgba(0, 20, 40, .35);
+}
+html[data-theme="dark"].app-mode[data-app-tab="prayer"] .prayer-hero[data-prayer-sky="Asr"] {
+  --ph-veil: linear-gradient(180deg, rgba(20,16,10,.26), rgba(20,16,10,.16));
+  --ph-fg: #fff6e8;
+  --ph-cap: rgba(255, 240, 220, .8);
+  --ph-glow: 0 0 12px rgba(40, 20, 0, .3);
 }
 html.app-mode[data-app-tab="prayer"] .prayer-hero-name {
   margin: 0;
   font-size: clamp(2rem, 8vw, 2.55rem);
   font-weight: 800;
   line-height: 1.15;
-  color: #1F3A2E;
+  color: var(--ph-fg);
+  text-shadow: var(--ph-glow);
   letter-spacing: -.02em;
-}
-html.app-mode[data-theme="dark"][data-app-tab="prayer"] .prayer-hero-name {
-  color: #E8F0E6;
+  position: relative;
+  z-index: 1;
 }
 html.app-mode[data-app-tab="prayer"] .prayer-hero-count {
   margin: 0;
@@ -7019,17 +7119,25 @@ html.app-mode[data-app-tab="prayer"] .prayer-hero-count {
   font-weight: 800;
   letter-spacing: .04em;
   font-variant-numeric: tabular-nums;
-  color: #1F3A2E;
+  color: var(--ph-fg);
+  text-shadow: var(--ph-glow);
   line-height: 1;
-}
-html.app-mode[data-theme="dark"][data-app-tab="prayer"] .prayer-hero-count {
-  color: #F4E7D3;
+  position: relative;
+  z-index: 1;
 }
 html.app-mode[data-app-tab="prayer"] .prayer-hero-cap {
   margin: 2px 0 0;
   font-size: .78rem;
   font-weight: 650;
-  color: var(--muted);
+  color: var(--ph-cap);
+  position: relative;
+  z-index: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  html.app-mode[data-app-tab="prayer"] .prayer-hero:not([hidden])::before,
+  html.app-mode[data-app-tab="prayer"] .prayer-hero:not([hidden])::after {
+    transition: none;
+  }
 }
 html.app-mode[data-app-tab="prayer"] .cp-clock-info .lt-time,
 html.app-mode[data-app-tab="prayer"] .cp-clock-info .lt-weekday,
