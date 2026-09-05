@@ -1073,10 +1073,53 @@ html.app-mode[data-app-tab="home"] .datebar--paper .datebar-item--hijri .datebar
 html.app-mode[data-app-tab="home"] .datebar--paper .datebar-item {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  transition: transform .12s ease, border-color .15s ease, background .15s ease;
+}
+html.app-mode[data-app-tab="home"] .datebar--paper .datebar-item:hover {
+  border-color: color-mix(in srgb, var(--brand) 35%, var(--border));
+}
+html.app-mode[data-app-tab="home"] .datebar--paper .datebar-item--hijri:hover {
+  border-color: color-mix(in srgb, #c6a24b 55%, var(--border));
 }
 html.app-mode[data-app-tab="home"] .datebar--paper .datebar-item:active {
   transform: scale(.985);
 }
+html.app-mode[data-app-tab="home"] .datebar--paper .datebar-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+}
+html.app-mode[data-app-tab="home"] .datebar--paper .datebar-cal-ic {
+  display: block;
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+  opacity: .72;
+  color: var(--brand);
+}
+html.app-mode[data-app-tab="home"] .datebar--paper .datebar-item--hijri .datebar-cal-ic {
+  color: color-mix(in srgb, #c6a24b 70%, var(--text));
+}
+html.app-mode[data-app-tab="home"] .datebar--paper .datebar-hint {
+  display: block;
+  margin: 0;
+  font-size: .62rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--brand);
+  opacity: .85;
+  letter-spacing: .02em;
+}
+html.app-mode[data-app-tab="home"] .datebar--paper .datebar-item--hijri .datebar-hint {
+  color: color-mix(in srgb, #c6a24b 55%, var(--text));
+}
+/* Keep prayer / other tabs visually unchanged: hide calendar affordance chrome */
+.datebar-cal-ic,
+.datebar-hint { display: none; }
+.datebar-top { display: contents; }
+
 html.app-mode[data-app-tab="home"] #cpNext.cp-home-teaser {
   display: flex !important;
   align-items: center;
