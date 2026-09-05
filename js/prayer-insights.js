@@ -18,6 +18,7 @@
       kicker: "Prayer insights",
       lastThirdTitle: "Last third",
       lastThirdFrom: t => t,
+      lastThirdNow: "Now",
       karahahTitle: "Disliked time",
       karahahNow: "Now",
       karahahClear: "Outside disliked times",
@@ -27,6 +28,7 @@
       kicker: "إضاءات الصلاة",
       lastThirdTitle: "الثلث الأخير",
       lastThirdFrom: t => t,
+      lastThirdNow: "الآن",
       karahahTitle: "وقت الكراهة",
       karahahNow: "الآن",
       karahahClear: "خارج أوقات النهي",
@@ -38,6 +40,7 @@
   const pad = n => String(n).padStart(2, "0");
   const toMin = s => { const a = (s || "").split(":"); return (+a[0]) * 60 + (+a[1]); };
   const hhmm = m => { m = ((m % 1440) + 1440) % 1440; return pad(Math.floor(m / 60)) + ":" + pad(m % 60); };
+  const normMin = m => ((m % 1440) + 1440) % 1440;
   function offsetHours(tz, when = new Date()) {
     const p = new Intl.DateTimeFormat("en-US", { timeZone: tz, timeZoneName: "shortOffset", hour: "2-digit" })
       .formatToParts(when).find(x => x.type === "timeZoneName");
@@ -51,6 +54,14 @@
     return { min: d.getUTCHours() * 60 + d.getUTCMinutes(), sec: d.getUTCHours() * 3600 + d.getUTCMinutes() * 60 + d.getUTCSeconds() };
   }
 
+  /** True if [start, end) spans midnight (start >= end after normalize). */
+  function inMinWindow(min, start, end) {
+    const s = normMin(start), e = normMin(end), m = normMin(min);
+    if (s === e) return false;
+    if (s < e) return m >= s && m < e;
+    return m >= s || m < e;
+  }
+
   function isKarahah(t, tz) {
     const { min } = nowLocal(tz);
     const sr = toMin(t.Sunrise), dh = toMin(t.Dhuhr), mg = toMin(t.Maghrib);
@@ -58,6 +69,16 @@
     if (t.Dhuhr && min >= dh - 10 && min < dh) return true;
     if (t.Maghrib && min >= mg - 15 && min < mg) return true;
     return false;
+  }
+
+  /** Active from last-third start until Fajr (exclusive). */
+  function isLastThirdNow(t, tz) {
+    if (!t.Maghrib || !t.Fajr) return false;
+    const mg = toMin(t.Maghrib);
+    const fajr = toMin(t.Fajr);
+    const nightMin = (fajr + 1440) - mg;
+    const start = mg + Math.round(nightMin * 2 / 3);
+    return inMinWindow(nowLocal(tz).min, start, fajr);
   }
 
   let ctx = null, timer = null;
@@ -75,14 +96,16 @@
       const lastThird = mg + Math.round(nightMin * 2 / 3);
       lastThirdLabel = T.lastThirdFrom(hhmm(lastThird));
     }
+    const lastThirdLit = isLastThirdNow(t, tz);
     const warn = isKarahah(t, tz);
     chipsEl.innerHTML =
-      '<div class="pi-card">'
+      '<div class="pi-card' + (lastThirdLit ? " is-lit" : "") + '">'
       + '<span class="pi-card-ico" aria-hidden="true">☽</span>'
       + '<span class="pi-card-label">' + T.lastThirdTitle + "</span>"
-      + '<strong class="pi-card-val mono">' + lastThirdLabel + "</strong>"
+      + '<strong class="pi-card-val' + (lastThirdLit ? "" : " mono") + '">'
+      + (lastThirdLit ? T.lastThirdNow : lastThirdLabel) + "</strong>"
       + "</div>"
-      + '<div class="pi-card' + (warn ? " is-warn" : "") + '">'
+      + '<div class="pi-card' + (warn ? " is-warn is-lit" : "") + '">'
       + '<span class="pi-card-ico" aria-hidden="true">⊘</span>'
       + '<span class="pi-card-label">' + T.karahahTitle + "</span>"
       + '<strong class="pi-card-val">' + (warn ? T.karahahNow : T.karahahClear) + "</strong>"
