@@ -27,6 +27,14 @@
         trackTitle: "سجِّل التزامك", trackHint: "لمدينتك — يظهر إنجازك على البطاقة",
         tFard: "صلّيت الفرض", tSunnah: "صلّيت السنة", tAzkar: "قلت الأذكار",
         notYet: "لم يحن وقتها بعد", needFard: "سجّل الفرض أولًا",
+        // 3–10 take the plural, 11 and up take the singular accusative.
+        streakDays: n => n === 1 ? "يومًا واحدًا"
+          : n === 2 ? "يومين متتاليين"
+          : n <= 10 ? `${n} أيام متتالية`
+          : `${n} يومًا متتاليًا`,
+        streakLine: (prayer, days) => `صلّيت ${prayer} ${days}`,
+        streakNone: prayer => `سجّل ${prayer} لتبدأ سلسلتك 🌱`,
+        streakAll: "التزامك الكامل",
         celebrate: ["تقبّل الله 🤍", "أحسنتَ 🌙", "نورٌ على نور ✨", "بُوركتَ ❤️"] }
     : { title: "Post-Prayer Adhkar",
         tip: "Click here to read the post-prayer adhkar",
@@ -35,6 +43,10 @@
         trackTitle: "Log your adherence", trackHint: "For your city — shown on the card",
         tFard: "Prayed the fard", tSunnah: "Prayed the sunnah", tAzkar: "Said the adhkar",
         notYet: "Not yet time", needFard: "Log the fard first",
+        streakDays: n => `${n} day${n === 1 ? "" : "s"} in a row`,
+        streakLine: (prayer, days) => `You have prayed ${prayer} ${days}`,
+        streakNone: prayer => `Log ${prayer} to begin your streak 🌱`,
+        streakAll: "Full record",
         celebrate: ["Accepted 🤍", "Well done 🌙", "Light upon light ✨", "Blessed ❤️"] };
 
   // Asr has no confirmed regular sunnah → no sunnah tracker for it.
@@ -159,6 +171,26 @@
   function setWorship(o) { try { localStorage.setItem(worshipKey(), JSON.stringify(o)); } catch (e) {} }
   function wState(name) { const w = getWorship()[name] || {}; return { fard: !!w.f, sunnah: !!w.s, azkar: !!w.a }; }
   const KIND_KEY = { fard: "f", sunnah: "s", azkar: "a" };
+
+  /* ---- per-prayer streak: consecutive days this fard was logged ----
+     Same per-day records the trackers above write, so a reader who has been
+     logging for weeks sees a real count the first time this line appears. */
+  const dayStoreKey = d =>
+    `cth-worship:${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  function fardLogged(name, d) {
+    try {
+      const w = JSON.parse(localStorage.getItem(dayStoreKey(d)) || "{}") || {};
+      return !!(w[name] && w[name].f);
+    } catch (e) { return false; }
+  }
+  function prayerStreak(name) {
+    const d = new Date();
+    // Today is still ahead of the reader, so an unlogged today does not break a run.
+    if (!fardLogged(name, d)) d.setDate(d.getDate() - 1);
+    let n = 0;
+    while (n < 3650 && fardLogged(name, d)) { n++; d.setDate(d.getDate() - 1); }
+    return n;
+  }
   function wToggle(name, kind) {
     const w = getWorship(), cur = w[name] || {}, k = KIND_KEY[kind];
     if (!k) return;
@@ -292,6 +324,11 @@
     sheetTitle = sheet.querySelector(".pa-head-title");
     const close = () => { openPrayerName = null; sheet.hidden = true; document.documentElement.style.overflow = ""; setPullToRefresh(true); decorate(); };
     sheet.addEventListener("click", e => { if (e.target === sheet) close(); });
+    // Delegated so the streak line can be re-rendered without losing its handler.
+    sheetBody.addEventListener("click", e => {
+      if (!e.target.closest || !e.target.closest(".pw-streak-all")) return;
+      try { if (window.CTHPrayerStats && window.CTHPrayerStats.open) window.CTHPrayerStats.open(); } catch (err) {}
+    });
     sheet.querySelector(".az-sheet-close").addEventListener("click", close);
     document.addEventListener("keydown", e => { if (e.key === "Escape" && !sheet.hidden) close(); });
   }
@@ -319,6 +356,28 @@
     });
   }
 
+  // How long this one prayer has been kept, plus a way into the full day-level
+  // record (the prayer tab no longer carries a commitment card of its own).
+  function streakHtml(prayerName) {
+    const n = prayerStreak(prayerName);
+    const who = BELL_NAME[prayerName] || prayerName;
+    const main = n > 0
+      ? `<span aria-hidden="true">🌙</span><span>${T.streakLine(who, `<b class="pw-streak-n">${T.streakDays(n)}</b>`)}</span>`
+      : `<span>${T.streakNone(who)}</span>`;
+    const all = window.CTHPrayerStats && window.CTHPrayerStats.open
+      ? `<button type="button" class="pw-streak-all">${T.streakAll} <span aria-hidden="true">${lang === "ar" ? "←" : "→"}</span></button>`
+      : "";
+    return `<div class="pw-streak"><span class="pw-streak-main">${main}</span>${all}</div>`;
+  }
+
+  function refreshStreak(prayerName) {
+    if (!sheetBody || !prayerName) return;
+    const row = sheetBody.querySelector(".pw-streak");
+    if (!row) return;
+    const next = document.createRange().createContextualFragment(streakHtml(prayerName)).firstElementChild;
+    if (next) row.replaceWith(next);
+  }
+
   function trackerHtml(prayerName) {
     if (!ctxMine || !INFO[prayerName]) return "";
     const hasS = HAS_SUNNAH[prayerName];
@@ -330,6 +389,7 @@
           ${hasS ? trackBtn(prayerName, "sunnah") : ""}
           ${trackBtn(prayerName, "azkar")}
         </div>
+        ${streakHtml(prayerName)}
       </div>`;
   }
 
@@ -391,6 +451,7 @@
           btn.setAttribute("aria-pressed", done ? "true" : "false");
           if (done) { btn.classList.remove("pw-bump"); void btn.offsetWidth; btn.classList.add("pw-bump"); }
           refreshTrackerButtons(prayerName);
+          if (kind === "fard") refreshStreak(prayerName);
         });
       });
     }

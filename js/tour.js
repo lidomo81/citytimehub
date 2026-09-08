@@ -57,6 +57,11 @@
     tapCard: { sel: "#prayerGrid", tab: "prayer",
       ar: { t: "اضغط أي بطاقة صلاة 📿", b: "كل بطاقة تفتح أذكار ما بعد الصلاة وفضلها. بعد وقت الأذان يمكنك تسجيل الفرض والسنة والأذكار — والختم على البطاقة يمتلئ مع التزامك." },
       en: { t: "Tap any prayer card 📿", b: "Each card opens post-prayer adhkar and its virtue. After adhan time you can log fard, sunnah and adhkar — the seal fills as you keep up." } },
+    // The app keeps the streak inside each sheet, so its version of this step
+    // has to carry what the removed commitment card used to explain.
+    tapCardApp: { sel: "#prayerGrid", tab: "prayer",
+      ar: { t: "اضغط أي بطاقة صلاة 📿", b: "كل بطاقة تفتح أذكار ما بعد الصلاة وفضلها، وتسجيل الفرض والسنة والأذكار بعد وقت الأذان. وتحتها تجد سلسلة أيامك في هذه الصلاة وحدها، ومنها مدخل لسجل التزامك الكامل — بياناتك على جهازك وحده." },
+      en: { t: "Tap any prayer card 📿", b: "Each card opens post-prayer adhkar and its virtue, and lets you log fard, sunnah and adhkar after adhan time. Below them is your streak for that prayer alone, with a way into your full record — saved on your device only." } },
     prayerBell: { sel: "#prayerGrid .prayer-bell-btn", tab: "prayer", prefer: "above",
       ar: { t: "جرس كل صلاة 🔔", b: "الجرس الصغير على البطاقة يفتح إعدادات هذه الصلاة وحدها: تفعيل التذكير، نغمة الأذان (٣ أصوات مع معاينة)، والتنبيه قبل أو عند الأذان." },
       en: { t: "Per-prayer bell 🔔", b: "The small bell on each card opens settings for that prayer alone: enable alerts, pick an adhan sound (3 choices with preview), and notify before or at adhan." } },
@@ -129,7 +134,7 @@
     return [
       S.welcomeApp, S.appNav, S.quranApp, S.appSettings,
       S.search, S.locate, S.favorite, S.myCities, S.homeClock, S.yearCal, S.cityPulse, S.homeNext, S.dailyReflection, S.closeOnesHome,
-      S.prayerTimes, S.tapCard, S.prayerBell, S.adherence, S.week, S.insights, S.occasions,
+      S.prayerTimes, S.tapCardApp, S.prayerBell, S.insights, S.occasions,
       S.azkarHub, S.widgetsApp,
       S.appTools,
       S.help, S.ready,

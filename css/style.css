@@ -7425,3 +7425,59 @@ html.app-mode[data-theme="light"] .help-fab:focus-visible {
   background: transparent;
   opacity: .95;
 }
+
+/* Prayer tab (app only): the day-level commitment strip moved into each
+   prayer's sheet, where the count is for that prayer alone. Without it the
+   insight and occasion cards sit straight under the times, and the tab stops
+   ending in a screenful of nothing but the "?" glyph. */
+html.app-mode[data-app-tab="prayer"] #cpNowBoard {
+  display: none;
+}
+html.app-mode[data-app-tab="prayer"] #top {
+  /* The flex min-height padded the page out to a full viewport even when the
+     cards ran shorter, which is where the dead space came from. */
+  min-height: 0;
+  padding-bottom: calc(var(--app-nav-h, 62px) + 8px + env(safe-area-inset-bottom, 0px));
+}
+html.app-mode[data-app-tab="prayer"] .help-fab {
+  margin-block: 0 4px;
+}
+
+/* How long this one prayer has been kept, inside its own sheet. */
+.pw-streak {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid color-mix(in srgb, var(--text, #fff) 10%, transparent);
+}
+.pw-streak-main {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: .86rem;
+  color: var(--text-2, inherit);
+}
+.pw-streak-n {
+  font-weight: 700;
+  color: var(--brand);
+}
+.pw-streak-all {
+  font: inherit;
+  font-size: .74rem;
+  padding: 4px 6px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-2, inherit);
+  opacity: .7;
+  cursor: pointer;
+}
+.pw-streak-all:hover,
+.pw-streak-all:focus-visible {
+  opacity: 1;
+  color: var(--brand);
+}

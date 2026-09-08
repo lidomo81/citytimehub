@@ -49,6 +49,7 @@
       legendFull: "Complete", legendPart: "Partial", legendNone: "Missed", statsClose: "Close", statsHint: "Tap for details",
       streakNote: "This counter is only to encourage you to keep your prayers — not to collect any data. Everything stays on your device. Be honest with Allah and with yourself 🤍",
       openPrayer: "Open prayer",
+      appAzkarHint: "Tap a prayer for its after-prayer adhkar and to log your adherence",
       checkinAsk: name => `Did you pray ${name}?`,
       checkinYes: "Yes, I prayed",
       checkinAlso: "Also pending",
@@ -108,6 +109,7 @@
       legendFull: "مكتمل", legendPart: "جزئي", legendNone: "فائت", statsClose: "إغلاق", statsHint: "اضغط للتفاصيل",
       streakNote: "هذا العدّاد وسيلة لتحفيزك على المحافظة على صلاتك، وليس لجمع أي معلومات — بياناتك محفوظة على جهازك وحده. فاجعلها صدقًا مع الله ومع نفسك 🤍",
       openPrayer: "افتح الصلاة",
+      appAzkarHint: "اضغط على الصلاة لفتح أذكار ما بعدها وتسجيل التزامك",
       checkinAsk: name => `هل صلّيت ${name}؟`,
       checkinYes: "نعم، صلّيت",
       checkinAlso: "متبقّي أيضًا",
@@ -1884,6 +1886,10 @@
     document.body.style.overflow = "hidden";
   }
 
+  // The prayer sheet (js/prayer-azkar.js) is the way into the full record now
+  // that the prayer tab shows a per-prayer count instead of a day-level card.
+  window.CTHPrayerStats = { open: openStatsPanel };
+
   // Quiet "الآن" board on the Prayer tab (streak + week + dua).
   function ensureNowBoard() {
     let board = document.getElementById("cpNowBoard");
@@ -2030,6 +2036,8 @@
       const devotion = document.querySelector("#cityPanel .cp-devotion");
       const remind = document.getElementById("cthPrayerRemindSlot");
       const azkarHint = document.getElementById("prayerAzkarTabHint");
+      // Logging now lives entirely inside the sheet, so the hint has to say so.
+      if (azkarHint) azkarHint.textContent = T.appAzkarHint;
       if (grid) {
         if (azkarHint && azkarHint.parentElement !== devotion) grid.insertAdjacentElement("afterend", azkarHint);
         const afterGrid = azkarHint || grid;
@@ -2312,8 +2320,17 @@
       const calHelp = document.getElementById("cthCalHelp");
       if (calHelp) calHelp.hidden = false;
       overlay.querySelectorAll(".help-list li").forEach(li => {
-        const t = (li.querySelector("strong") || {}).textContent || "";
-        if (/Install|التثبيت/.test(t)) li.hidden = true;
+        const strong = li.querySelector("strong");
+        const t = (strong || {}).textContent || "";
+        if (/Install|التثبيت/.test(t)) { li.hidden = true; return; }
+        // The streak is per prayer in the app, inside each prayer's own sheet.
+        if (!/Daily adherence|التزامك اليومي/.test(t)) return;
+        const body = li.querySelector("div > span");
+        if (!strong || !body) return;
+        strong.textContent = ar ? "سلسلة كل صلاة" : "Per-prayer streak";
+        body.textContent = ar
+          ? "افتح بطاقة أي صلاة لترى منذ كم يوم متتالٍ وأنت محافظ عليها، ومن السطر نفسه تفتح سجل التزامك الكامل: سلسلتك الحالية، وأطول سلسلة، وآخر ١٤ يومًا."
+          : "Open any prayer's card to see how many days in a row you have kept it, and from that same line open your full record: current streak, best streak, and the last 14 days.";
       });
       const sub = overlay.querySelector(".help-sub");
       if (sub) sub.textContent = ar
