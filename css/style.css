@@ -1073,6 +1073,13 @@ html.app-mode[data-app-tab="home"] .datebar--paper .datebar-val {
   font-weight: 750;
   line-height: 1.35;
   color: var(--text);
+  /* Six of the twelve Hijri months have a name long enough to wrap onto a
+     second line while the Gregorian date still fits on one, and each cell
+     centres on its own content — so for half the year the two dates, and the
+     two labels under them, sat eleven pixels apart. Both cells reserve the
+     two lines in rem (not em, which the smaller Hijri size would shorten) so
+     the pair stays level whatever the month is called. */
+  min-height: calc(1.02rem * 1.35 * 2);
 }
 html.app-mode[data-app-tab="home"] .datebar--paper .datebar-item--hijri .datebar-val {
   font-size: .98rem;
@@ -2360,7 +2367,7 @@ html.app-mode .occasions-link { margin-top: 10px; }
   margin: 0 0 10px; font-size: 1.06rem; font-weight: 800; color: var(--text);
   font-variant-numeric: tabular-nums; direction: ltr; text-align: start;
 }
-.pi-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.pi-chips { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .pi-chip {
   display: inline-flex; align-items: center; gap: 5px; padding: 5px 11px; border-radius: 999px;
   background: var(--surface-2); border: 1px solid var(--border);
@@ -6598,6 +6605,7 @@ html:not(.app-mode) body.home-web.home-dayboard #occasions .occasions-note,
 html:not(.app-mode) body.home-web.home-dayboard #prayerInsights .pi-kicker,
 html:not(.app-mode) body.home-web.home-dayboard #prayerInsights .pi-headline,
 html:not(.app-mode) body.home-web.home-dayboard #prayerInsights .pi-chip,
+html:not(.app-mode) body.home-web.home-dayboard #prayerInsights .pi-card:not(.is-lit) .pi-card-val,
 html:not(.app-mode) body.home-web.home-dayboard #prayerInsights .pi-note {
   color: var(--db-ink);
   opacity: 1;
@@ -6607,6 +6615,8 @@ html:not(.app-mode) body.home-web.home-dayboard #occasions .occ-when,
 html:not(.app-mode) body.home-web.home-dayboard #occasions .occasions-note,
 html:not(.app-mode) body.home-web.home-dayboard #prayerInsights .pi-note,
 html:not(.app-mode) body.home-web.home-dayboard #prayerInsights .pi-kicker,
+html:not(.app-mode) body.home-web.home-dayboard #prayerInsights .pi-card:not(.is-lit) .pi-card-label,
+html:not(.app-mode) body.home-web.home-dayboard #prayerInsights .pi-card:not(.is-lit) .pi-card-ico,
 html:not(.app-mode) body.home-web.home-dayboard #cityPulse .city-pulse-kicker {
   color: var(--db-ink-2);
 }
@@ -6616,7 +6626,8 @@ html:not(.app-mode) body.home-web.home-dayboard #prayerInsights .pi-note {
   border-color: var(--db-line);
 }
 html:not(.app-mode) body.home-web.home-dayboard #cityPulse .city-pulse-chip,
-html:not(.app-mode) body.home-web.home-dayboard #prayerInsights .pi-chip {
+html:not(.app-mode) body.home-web.home-dayboard #prayerInsights .pi-chip,
+html:not(.app-mode) body.home-web.home-dayboard #prayerInsights .pi-card:not(.is-lit) {
   background: color-mix(in srgb, var(--db-ink) 8%, transparent);
   border-color: var(--db-line);
 }
@@ -7276,12 +7287,12 @@ html.app-mode[data-app-tab="prayer"] .prayer-insights .pi-kicker,
 html.app-mode[data-app-tab="prayer"] .prayer-insights .pi-note {
   display: none !important;
 }
-html.app-mode[data-app-tab="prayer"] .pi-chips {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-html.app-mode[data-app-tab="prayer"] .pi-card {
+/* These two windows are drawn as cards rather than the pill chips the markup
+   used to carry (.pi-chip, above, is what they replaced). The rules are
+   unscoped on purpose: prayer-insights.js emits .pi-card on the website too,
+   and while they lived under html.app-mode the website got the bare spans —
+   icon, label and value all one size, run together with no card around them. */
+.pi-card {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -7292,75 +7303,75 @@ html.app-mode[data-app-tab="prayer"] .pi-card {
   background: var(--surface);
   min-height: 72px;
 }
-html.app-mode[data-app-tab="prayer"] .pi-card.is-warn {
+.pi-card.is-warn {
   border-color: color-mix(in srgb, #d97706 45%, var(--border));
   background: color-mix(in srgb, #f59e0b 8%, var(--surface));
 }
 /* Lit while the window is active ("now") — soft glow on copy until it ends */
-html.app-mode[data-app-tab="prayer"] .pi-card.is-lit {
+.pi-card.is-lit {
   border-color: color-mix(in srgb, var(--brand) 42%, var(--border));
   background: color-mix(in srgb, var(--brand) 9%, var(--surface));
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--brand) 12%, transparent) inset,
     0 0 18px color-mix(in srgb, var(--brand) 16%, transparent);
 }
-html.app-mode[data-app-tab="prayer"] .pi-card.is-lit.is-warn {
+.pi-card.is-lit.is-warn {
   border-color: color-mix(in srgb, #d97706 50%, var(--border));
   background: color-mix(in srgb, #f59e0b 12%, var(--surface));
   box-shadow:
     0 0 0 1px color-mix(in srgb, #f59e0b 18%, transparent) inset,
     0 0 18px color-mix(in srgb, #f59e0b 22%, transparent);
 }
-html.app-mode[data-app-tab="prayer"] .pi-card.is-lit .pi-card-ico {
+.pi-card.is-lit .pi-card-ico {
   opacity: 1;
   filter: drop-shadow(0 0 4px color-mix(in srgb, var(--brand) 45%, transparent));
 }
-html.app-mode[data-app-tab="prayer"] .pi-card.is-lit.is-warn .pi-card-ico {
+.pi-card.is-lit.is-warn .pi-card-ico {
   filter: drop-shadow(0 0 4px color-mix(in srgb, #f59e0b 55%, transparent));
 }
-html.app-mode[data-app-tab="prayer"] .pi-card.is-lit .pi-card-label {
+.pi-card.is-lit .pi-card-label {
   color: color-mix(in srgb, var(--brand) 55%, var(--text));
   opacity: 1;
 }
-html.app-mode[data-app-tab="prayer"] .pi-card.is-lit.is-warn .pi-card-label {
+.pi-card.is-lit.is-warn .pi-card-label {
   color: color-mix(in srgb, #b45309 50%, var(--text));
 }
-html.app-mode[data-app-tab="prayer"] .pi-card.is-lit .pi-card-val {
+.pi-card.is-lit .pi-card-val {
   color: color-mix(in srgb, var(--brand) 35%, var(--text));
   text-shadow:
     0 0 10px color-mix(in srgb, var(--brand) 35%, transparent),
     0 0 2px color-mix(in srgb, var(--brand) 20%, transparent);
 }
-html.app-mode[data-app-tab="prayer"] .pi-card.is-lit.is-warn .pi-card-val {
+.pi-card.is-lit.is-warn .pi-card-val {
   color: color-mix(in srgb, #b45309 40%, var(--text));
   text-shadow:
     0 0 10px color-mix(in srgb, #f59e0b 40%, transparent),
     0 0 2px color-mix(in srgb, #f59e0b 25%, transparent);
 }
-html[data-theme="dark"].app-mode[data-app-tab="prayer"] .pi-card.is-lit .pi-card-val {
+html[data-theme="dark"] .pi-card.is-lit .pi-card-val {
   color: color-mix(in srgb, #86efac 55%, #fff);
   text-shadow:
     0 0 12px color-mix(in srgb, #4ade80 45%, transparent),
     0 0 3px color-mix(in srgb, #22c55e 30%, transparent);
 }
-html[data-theme="dark"].app-mode[data-app-tab="prayer"] .pi-card.is-lit.is-warn .pi-card-val {
+html[data-theme="dark"] .pi-card.is-lit.is-warn .pi-card-val {
   color: color-mix(in srgb, #fcd34d 60%, #fff);
   text-shadow:
     0 0 12px color-mix(in srgb, #fbbf24 50%, transparent),
     0 0 3px color-mix(in srgb, #f59e0b 35%, transparent);
 }
-html.app-mode[data-app-tab="prayer"] .pi-card-ico {
+.pi-card-ico {
   font-size: .9rem;
   opacity: .7;
   line-height: 1;
 }
-html.app-mode[data-app-tab="prayer"] .pi-card-label {
+.pi-card-label {
   font-size: .68rem;
   font-weight: 700;
   color: var(--muted);
   letter-spacing: .02em;
 }
-html.app-mode[data-app-tab="prayer"] .pi-card-val {
+.pi-card-val {
   font-size: .88rem;
   font-weight: 800;
   color: var(--text);
