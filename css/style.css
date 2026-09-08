@@ -7371,3 +7371,57 @@ html.app-mode[data-app-tab="prayer"] .prayer-azkar-tab-hint {
   font-size: .68rem;
   opacity: .75;
 }
+
+/* Prayer tab (app only) - close the dead band under the countdown card.
+   The section head is empty here (title and datebar are hidden), so its
+   margin plus the stacked grid gaps pushed the prayer list ~58px down on a
+   screen that already gives up room to the native tab bar and the ad banner. */
+html.app-mode[data-app-tab="prayer"] #prayerHero:not([hidden]) {
+  margin-bottom: 8px;
+}
+html.app-mode[data-app-tab="prayer"] .cp-grid {
+  row-gap: 8px;
+}
+html.app-mode[data-app-tab="prayer"] .cp-devotion {
+  padding-top: 0;
+}
+html.app-mode[data-app-tab="prayer"] .cp-devotion .cp-dev-head {
+  margin-bottom: 0;
+}
+
+/* App mode zeroes --app-nav-h, so the floating "?" landed a few pixels above
+   the WebView edge and sat on top of the last row of content — sometimes a
+   tappable one. Drop it into the flow at the end of the page instead: it is
+   out of sight until the reader gets there, and it cannot cover anything. */
+html.app-mode .help-fab,
+html.app-mode[data-theme="light"] .help-fab {
+  position: static;
+  width: 40px;
+  height: 40px;
+  margin-block: 0 10px;
+  margin-inline-start: auto;
+  margin-inline-end: max(12px, env(safe-area-inset-inline-end, 0px));
+  /* The glyph already draws its own ring — a chip around it made two circles. */
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  opacity: .6;
+  color: var(--text-2);
+}
+html.app-mode .help-fab svg {
+  width: 22px;
+  height: 22px;
+}
+html.app-mode .help-fab:hover,
+html.app-mode .help-fab:active,
+html.app-mode .help-fab:focus,
+html.app-mode .help-fab:focus-visible,
+html.app-mode[data-theme="light"] .help-fab:hover,
+html.app-mode[data-theme="light"] .help-fab:active,
+html.app-mode[data-theme="light"] .help-fab:focus,
+html.app-mode[data-theme="light"] .help-fab:focus-visible {
+  background: transparent;
+  opacity: .95;
+}
