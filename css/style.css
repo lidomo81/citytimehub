@@ -1041,6 +1041,11 @@ html.app-mode[data-app-tab="home"] .datebar--paper .datebar-sep { display: none;
 html.app-mode[data-app-tab="home"] .datebar--paper .datebar-item {
   gap: 7px;
   min-height: 84px;
+  /* The two cells are stretched to a common height by the grid, so anchoring
+     the date to the top and the label to the bottom (below) keeps the pair
+     level no matter how many lines each side needs — centring each cell on its
+     own content is what put them on different lines. */
+  justify-content: flex-start;
   padding: 14px 10px 13px;
   border-radius: 16px;
   cursor: pointer;
@@ -1071,14 +1076,12 @@ html.app-mode[data-app-tab="home"] .datebar--paper .datebar-label { display: non
 html.app-mode[data-app-tab="home"] .datebar--paper .datebar-val {
   font-size: 1.02rem;
   font-weight: 750;
-  line-height: 1.35;
+  /* One rem step for both cells. The Hijri value is set slightly smaller, so a
+     proportional line-height gave it shorter lines than the Gregorian and the
+     same number of lines no longer measured the same on the two sides. */
+  line-height: calc(1.02rem * 1.35);
   color: var(--text);
-  /* Six of the twelve Hijri months have a name long enough to wrap onto a
-     second line while the Gregorian date still fits on one, and each cell
-     centres on its own content — so for half the year the two dates, and the
-     two labels under them, sat eleven pixels apart. Both cells reserve the
-     two lines in rem (not em, which the smaller Hijri size would shorten) so
-     the pair stays level whatever the month is called. */
+  /* Keeps a one-line date from making its cell shorter than the pair. */
   min-height: calc(1.02rem * 1.35 * 2);
 }
 html.app-mode[data-app-tab="home"] .datebar--paper .datebar-item--hijri .datebar-val {
@@ -1105,7 +1108,9 @@ html.app-mode[data-app-tab="home"] .datebar--paper .datebar-item:active {
 }
 html.app-mode[data-app-tab="home"] .datebar--paper .datebar-hint {
   display: block;
-  margin: 0;
+  /* Sits on the floor of the cell, so both labels rest on the same line even
+     when the dates above them run to a different number of lines. */
+  margin: auto 0 0;
   font-size: .72rem;
   font-weight: 750;
   line-height: 1.2;
