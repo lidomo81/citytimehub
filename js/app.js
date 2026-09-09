@@ -46,7 +46,7 @@
         ? "Today's prayers await you — start with what you can, one step at a time 🤍"
         : `${n} prayers await you — start with what you can, one step at a time 🤍`,
       weekTitle: "Last 7 days", commitmentTitle: "Prayer commitment", commitmentStart: "Start with the next prayer", commitmentStreak: n => `${n} day${n === 1 ? "" : "s"} in a row`, statsTitle: "Your adherence", currentStreak: "Current streak", bestStreak: "Best streak",
-      legendFull: "Complete", legendPart: "Partial", legendNone: "Missed", statsClose: "Close", statsHint: "Tap for details",
+      legendFull: "Complete", legendPart: "Partial", legendNone: "Missed", statsClose: "Back", statsHint: "Tap for details",
       streakNote: "This counter is only to encourage you to keep your prayers — not to collect any data. Everything stays on your device. Be honest with Allah and with yourself 🤍",
       openPrayer: "Open prayer",
       appAzkarHint: "Tap a prayer for its after-prayer adhkar and to log your adherence",
@@ -106,7 +106,7 @@
         ? "صلوات اليوم بانتظارك — ابدأ بما تستطيع، خطوةً خطوة 🤍"
         : `${n} صلوات بانتظارك — ابدأ بما تستطيع، خطوةً خطوة 🤍`,
       weekTitle: "آخر ٧ أيام", commitmentTitle: "التزامك بالصلاة", commitmentStart: "ابدأ بالصلاة القادمة", commitmentStreak: n => n === 1 ? "يوم واحد متتالٍ" : n === 2 ? "يومان متتاليان" : `${n} أيام متتالية`, statsTitle: "التزامك", currentStreak: "سلسلتك الحالية", bestStreak: "أطول سلسلة",
-      legendFull: "مكتمل", legendPart: "جزئي", legendNone: "فائت", statsClose: "إغلاق", statsHint: "اضغط للتفاصيل",
+      legendFull: "مكتمل", legendPart: "جزئي", legendNone: "فائت", statsClose: "رجوع", statsHint: "اضغط للتفاصيل",
       streakNote: "هذا العدّاد وسيلة لتحفيزك على المحافظة على صلاتك، وليس لجمع أي معلومات — بياناتك محفوظة على جهازك وحده. فاجعلها صدقًا مع الله ومع نفسك 🤍",
       openPrayer: "افتح الصلاة",
       appAzkarHint: "اضغط على الصلاة لفتح أذكار ما بعدها وتسجيل التزامك",
@@ -1849,12 +1849,32 @@
   }
 
   let statsOverlay = null;
+  function hideStatsPanel() {
+    if (!statsOverlay || statsOverlay.hidden) return;
+    statsOverlay.hidden = true;
+    document.body.style.overflow = "";
+  }
+  function closeStatsPanel() {
+    try {
+      if (history.state && history.state.cth === "prayer-stats") {
+        history.back();
+        return;
+      }
+    } catch (e) {}
+    hideStatsPanel();
+  }
   function openStatsPanel() {
     if (!statsOverlay) {
       statsOverlay = document.createElement("div");
-      statsOverlay.className = "cp-stats-overlay"; statsOverlay.hidden = true;
+      statsOverlay.className = "cp-stats-overlay cp-stats-page"; statsOverlay.hidden = true;
       statsOverlay.innerHTML = `<div class="cp-stats" role="dialog" aria-modal="true" aria-label="${T.statsTitle}">
-        <div class="cp-stats-head"><strong>${T.statsTitle}</strong><button class="cp-stats-close" type="button" aria-label="${T.statsClose}">✕</button></div>
+        <div class="cp-stats-head">
+          <button class="cp-stats-back" type="button" aria-label="${T.statsClose}">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+            <span>${T.statsClose}</span>
+          </button>
+          <strong>${T.statsTitle}</strong>
+        </div>
         <div class="cp-stats-nums"></div>
         <div class="cp-stats-grid"></div>
         <div class="cp-stats-legend">
@@ -1864,10 +1884,14 @@
         </div>
         <p class="cp-stats-note">${T.streakNote}</p></div>`;
       document.body.appendChild(statsOverlay);
-      const close = () => { statsOverlay.hidden = true; document.body.style.overflow = ""; };
-      statsOverlay.addEventListener("click", e => { if (e.target === statsOverlay) close(); });
-      statsOverlay.querySelector(".cp-stats-close").addEventListener("click", close);
-      document.addEventListener("keydown", e => { if (e.key === "Escape" && !statsOverlay.hidden) close(); });
+      statsOverlay.querySelector(".cp-stats-back").addEventListener("click", closeStatsPanel);
+      document.addEventListener("keydown", e => { if (e.key === "Escape" && !statsOverlay.hidden) closeStatsPanel(); });
+      window.addEventListener("popstate", () => {
+        const st = history.state;
+        if (st && st.cth === "prayer-stats") return;
+        hideStatsPanel();
+      });
+      document.addEventListener("cth-app-tab", hideStatsPanel);
     }
     // numbers
     statsOverlay.querySelector(".cp-stats-nums").innerHTML =
@@ -1882,8 +1906,12 @@
       grid += `<div class="cp-stats-day${i === 0 ? " is-today" : ""}"><span class="cp-sd-wd">${wdFmt.format(d)}</span><i class="cp-wk-pip cp-wk-${st}"></i><span class="cp-sd-n">${c}/5</span></div>`;
     }
     statsOverlay.querySelector(".cp-stats-grid").innerHTML = grid;
+    const wasHidden = statsOverlay.hidden;
     statsOverlay.hidden = false;
     document.body.style.overflow = "hidden";
+    if (wasHidden) {
+      try { history.pushState({ cth: "prayer-stats" }, ""); } catch (e) {}
+    }
   }
 
   // The prayer sheet (js/prayer-azkar.js) is the way into the full record now

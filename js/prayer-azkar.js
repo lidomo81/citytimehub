@@ -22,7 +22,7 @@
   const T = lang === "ar"
     ? { title: "أذكار ما بعد الصلاة",
         tip: "اضغط هنا لقراءة أذكار بعد الصلاة",
-        aria: "اضغط هنا لقراءة أذكار بعد الصلاة", close: "إغلاق",
+        aria: "اضغط هنا لقراءة أذكار بعد الصلاة", close: "إغلاق", back: "رجوع",
         fTime: "يبدأ وقتها:", fFard: "فرضها:", fSunnah: "السنة الراتبة:", sec: "الأذكار المأثورة",
         trackTitle: "سجِّل التزامك", trackHint: "لمدينتك — يظهر إنجازك على البطاقة",
         tFard: "صلّيت الفرض", tSunnah: "صلّيت السنة", tAzkar: "قلت الأذكار",
@@ -38,7 +38,7 @@
         celebrate: ["تقبّل الله 🤍", "أحسنتَ 🌙", "نورٌ على نور ✨", "بُوركتَ ❤️"] }
     : { title: "Post-Prayer Adhkar",
         tip: "Click here to read the post-prayer adhkar",
-        aria: "Click here to read the post-prayer adhkar", close: "Close",
+        aria: "Click here to read the post-prayer adhkar", close: "Close", back: "Back",
         fTime: "Its time:", fFard: "Obligatory:", fSunnah: "Regular sunnah:", sec: "The adhkar",
         trackTitle: "Log your adherence", trackHint: "For your city — shown on the card",
         tFard: "Prayed the fard", tSunnah: "Prayed the sunnah", tAzkar: "Said the adhkar",
@@ -306,31 +306,58 @@
     try { if (window.AndroidApp && AndroidApp.setPullToRefresh) AndroidApp.setPullToRefresh(enabled); } catch (e) {}
   }
 
+  function hideSheet() {
+    if (!sheet || sheet.hidden) return;
+    openPrayerName = null;
+    sheet.hidden = true;
+    document.documentElement.style.overflow = "";
+    setPullToRefresh(true);
+    decorate();
+  }
+  function closeSheet() {
+    try {
+      if (history.state && history.state.cth === "prayer-azkar") {
+        history.back();
+        return;
+      }
+    } catch (e) {}
+    hideSheet();
+  }
+
   function buildSheet() {
     sheet = document.createElement("div");
     sheet.id = "prayerAzkarSheet";
-    sheet.className = "az-sheet-overlay";
+    sheet.className = "az-sheet-overlay az-page";
     sheet.hidden = true;
     sheet.innerHTML = `
       <div class="az-sheet" role="dialog" aria-modal="true" aria-label="${T.title}">
         <div class="az-sheet-head">
+          <button class="az-sheet-back" type="button" aria-label="${T.back}">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+            <span>${T.back}</span>
+          </button>
           <strong class="pa-head-title">${T.title}</strong>
-          <button class="az-sheet-close" type="button" aria-label="${T.close}">✕</button>
         </div>
         <div class="az-sheet-body" id="prayerAzkarTool"></div>
       </div>`;
     document.body.appendChild(sheet);
     sheetBody = sheet.querySelector("#prayerAzkarTool");
     sheetTitle = sheet.querySelector(".pa-head-title");
-    const close = () => { openPrayerName = null; sheet.hidden = true; document.documentElement.style.overflow = ""; setPullToRefresh(true); decorate(); };
-    sheet.addEventListener("click", e => { if (e.target === sheet) close(); });
     // Delegated so the streak line can be re-rendered without losing its handler.
     sheetBody.addEventListener("click", e => {
       if (!e.target.closest || !e.target.closest(".pw-streak-all")) return;
       try { if (window.CTHPrayerStats && window.CTHPrayerStats.open) window.CTHPrayerStats.open(); } catch (err) {}
     });
-    sheet.querySelector(".az-sheet-close").addEventListener("click", close);
-    document.addEventListener("keydown", e => { if (e.key === "Escape" && !sheet.hidden) close(); });
+    sheet.querySelector(".az-sheet-back").addEventListener("click", closeSheet);
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && !sheet.hidden) closeSheet(); });
+    window.addEventListener("popstate", () => {
+      const st = history.state;
+      if (st && st.cth === "prayer-azkar") return;
+      hideSheet();
+    });
+    document.addEventListener("cth-app-tab", () => {
+      if (sheet && !sheet.hidden) hideSheet();
+    });
   }
 
   function trackBtn(name, kind) {
@@ -456,9 +483,13 @@
       });
     }
     if (prayerName) { markRead(prayerName); decorate(); }
+    const wasHidden = sheet.hidden;
     sheet.hidden = false;
     document.documentElement.style.overflow = "hidden";
     setPullToRefresh(false);
+    if (wasHidden) {
+      try { history.pushState({ cth: "prayer-azkar", p: prayerName }, ""); } catch (e) {}
+    }
   }
 
   const reduceMotion = () => { try { return matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) { return false; } };
