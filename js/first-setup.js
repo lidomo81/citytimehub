@@ -33,6 +33,7 @@
         w1: "اضغط مطولًا على مساحة فاضية في الشاشة الرئيسية",
         w2: "اختر «ويدجت» أو Widgets",
         w3: "ابحث عن «مواقيت الصلاة» وأضفها",
+        langAria: "تبديل اللغة · English",
       }
     : {
         title: "Ready in three steps",
@@ -57,6 +58,7 @@
         w1: "Long-press an empty spot on your home screen",
         w2: "Tap Widgets",
         w3: "Find “Prayer times” and add it",
+        langAria: "Switch language · العربية",
       };
 
   function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
@@ -89,6 +91,15 @@
     return inApp() && isHome() && !isDone() && !isReturning();
   }
   function holdTour() { return shouldShow(); }
+
+  function langHref() {
+    const qs = new URLSearchParams(location.search);
+    if (inApp() || qs.get("app") === "1") qs.set("app", "1");
+    if (forcePreview()) qs.set("setup", "1");
+    const q = qs.toString();
+    const hash = location.hash || "";
+    return (ar ? "/?" : "/ar/?") + q + hash;
+  }
 
   window.CTH_FirstSetup = { holdTour, done: isDone, markDone, forcePreview };
 
@@ -262,6 +273,7 @@
 
   function close(finish) {
     if (finish && !forcePreview()) markDone();
+    try { sessionStorage.removeItem("cth-setup-step"); } catch (e) {}
     if (root) root.hidden = true;
     document.documentElement.style.overflow = "";
     setPull(true);
@@ -279,6 +291,10 @@
       try { history.pushState({ cth: "first-setup" }, ""); pushed = true; } catch (e) {}
     }
     cityLabel = currentCityLabel();
+    try {
+      const saved = parseInt(sessionStorage.getItem("cth-setup-step") || "", 10);
+      if (saved >= 1 && saved <= 3) step = saved;
+    } catch (e) {}
     render();
   }
 
@@ -299,7 +315,10 @@
             <strong id="fsTitle">${T.title}</strong>
             <span class="fs-sub">${T.sub}</span>
           </div>
-          <button type="button" class="fs-skip" id="fsSkip">${T.skip}</button>
+          <div class="fs-head-actions">
+            <a class="lang-switch fs-lang" id="fsLang" href="${esc(langHref())}" lang="${ar ? "en" : "ar"}" hreflang="${ar ? "en" : "ar"}" aria-label="${T.langAria}">EN · العربية</a>
+            <button type="button" class="fs-skip" id="fsSkip">${T.skip}</button>
+          </div>
         </div>
         <div class="fs-dots" id="fsDots" aria-hidden="true"></div>
         <div class="fs-body" id="fsBody"></div>
@@ -309,6 +328,12 @@
       </div>`;
     document.body.appendChild(root);
     root.querySelector("#fsSkip").addEventListener("click", () => close(true));
+    const langBtn = root.querySelector("#fsLang");
+    if (langBtn) {
+      langBtn.addEventListener("click", () => {
+        try { sessionStorage.setItem("cth-setup-step", String(step)); } catch (e) {}
+      });
+    }
     root.querySelector("#fsBack").addEventListener("click", () => {
       if (step > 1) { step -= 1; render(); }
     });
