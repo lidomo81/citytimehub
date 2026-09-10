@@ -80,8 +80,12 @@
     return catalogWait;
   }
 
+  function canSync() {
+    try { return !!(window.AndroidApp && AndroidApp.syncCitiesBoard); } catch (e) { return false; }
+  }
+
   async function sync() {
-    if (!window.AndroidApp || typeof AndroidApp.syncCitiesBoard !== "function") return;
+    if (!canSync()) return;
     const map = await loadCatalog();
     const rows = loadBoard().map(e => {
       const city = map[e.slug] || {};
@@ -102,6 +106,16 @@
   }
 
   window.cthSyncCitiesBoard = sync;
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", sync);
-  else sync();
+  function kick() {
+    sync();
+    if (!canSync()) {
+      var n = 0;
+      var t = setInterval(function () {
+        n += 1;
+        if (canSync() || n > 8) { clearInterval(t); if (canSync()) sync(); }
+      }, 400);
+    }
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", kick);
+  else kick();
 })();
