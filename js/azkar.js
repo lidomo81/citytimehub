@@ -20,6 +20,42 @@
 
   var SHARE_SVG = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>';
 
+  // Same uthmani spelling and ayah marker as the in-app mushaf
+  // (Amiri Quran + NBSP + U+06DD + Eastern digits).
+  var ISTIADHA = "أَعُوذُ بِٱللَّهِ مِنَ ٱلشَّيْطَانِ ٱلرَّجِيمِ";
+  var BASMALA = "بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ";
+  var AYAH_ONE = "\u00A0\u06DD\u0661";
+
+  function isQuran(it) {
+    return !!(it && (it.quran || it.istiadha || it.basmala));
+  }
+  function quranLeadsHtml(it) {
+    var html = "";
+    if (it.istiadha) {
+      html += '<p class="az-quran-lead" dir="rtl" lang="ar">' + ISTIADHA + "</p>";
+    }
+    if (it.basmala === "ayah") {
+      html += '<p class="az-quran-lead" dir="rtl" lang="ar">' + BASMALA + AYAH_ONE + "</p>";
+    } else if (it.basmala) {
+      html += '<p class="az-quran-lead" dir="rtl" lang="ar">' + BASMALA + "</p>";
+    }
+    return html;
+  }
+  function stripQuranLeads(html) {
+    return String(html || "").replace(/<span class="az-quran-lead">[\s\S]*?<\/span>/g, "").trim();
+  }
+  function dhikrPlain(it) {
+    if (!it) return "";
+    var body = stripQuranLeads(it.text).replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
+    if (!isQuran(it)) return String(it.text || "").replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
+    var parts = [];
+    if (it.istiadha) parts.push(ISTIADHA);
+    if (it.basmala === "ayah") parts.push(BASMALA + AYAH_ONE);
+    else if (it.basmala) parts.push(BASMALA);
+    if (body) parts.push(body);
+    return parts.join(" ");
+  }
+
   function copyFallback(text) {
     try {
       var ta = document.createElement("textarea");
@@ -41,7 +77,7 @@
   var PLAY_URL = "https://play.google.com/store/apps/details?id=com.citytimehub.app";
   function shareDhikr(item, T) {
     if (!item) return;
-    var plain = String(item.text || "").replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
+    var plain = dhikrPlain(item);
     var title = (document.title || "CityTimeHub").split(/\s*[|—]\s*/)[0].trim() || "CityTimeHub";
     var text = "«" + plain + "»\n\n— " + title + "\nCityTimeHub";
     var full = text + "\n" + PLAY_URL;
@@ -93,8 +129,11 @@
       const sub = lang === "ar"
         ? (it.virtue ? `<p class="az-virtue"><strong>${T.virtue}:</strong> ${it.virtue}</p>` : "")
         : `${it.translit ? `<p class="az-translit">${it.translit}</p>` : ""}${it.translation ? `<p class="az-translation">${it.translation}</p>` : ""}${it.virtueEn ? `<p class="az-virtue"><strong>${T.virtue}:</strong> ${it.virtueEn}</p>` : ""}`;
+      const quran = isQuran(it);
+      const arabic = quran ? (quranLeadsHtml(it) ? stripQuranLeads(it.text) : it.text) : it.text;
       card.innerHTML = `
-        <p class="az-arabic${it.quran ? " az-arabic--quran" : ""}" dir="rtl" lang="ar">${it.text}</p>
+        ${quran ? quranLeadsHtml(it) : ""}
+        <p class="az-arabic${quran ? " az-arabic--quran" : ""}" dir="rtl" lang="ar">${arabic}</p>
         ${sub}
         <button class="az-counter${done ? " is-done" : ""}" type="button" aria-label="${T.tap}">
           <span class="az-counter-num">${done ? "✓" : rem}</span>
@@ -106,7 +145,7 @@
       if (prevB) prevB.disabled = i === 0;
       if (nextB) nextB.textContent = i === items.length - 1 ? T.restart : T.next;
       card.querySelector(".az-counter").addEventListener("click", tap);
-      reportProgress(i + 1, items.length, it.text);
+      reportProgress(i + 1, items.length, dhikrPlain(it));
       if (state.idx === items.length - 1 && done && typeof opts.onComplete === "function") opts.onComplete();
     }
 
