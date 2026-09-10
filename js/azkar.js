@@ -20,11 +20,16 @@
 
   var SHARE_SVG = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>';
 
-  // Same uthmani spelling and ayah marker as the in-app mushaf
-  // (Amiri Quran + NBSP + U+06DD + Eastern digits).
+  // Same uthmani spelling as the in-app mushaf. Chrome's Amiri Quran
+  // leaves ١ outside ۝ when the mark is preceded by NBSP or split into
+  // its own element; a normal space in the same run as the basmala works.
   var ISTIADHA = "أَعُوذُ بِٱللَّهِ مِنَ ٱلشَّيْطَانِ ٱلرَّجِيمِ";
   var BASMALA = "بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ";
-  var AYAH_ONE = "\u00A0\u06DD\u0661";
+  var AYAH_ONE = " \u06DD\u0661";
+
+  function fixAyahOne(s) {
+    return String(s || "").replace(/\u00A0(\u06DD\u0661)/g, " $1");
+  }
 
   function isQuran(it) {
     return !!(it && (it.quran || it.istiadha || it.basmala));
@@ -133,7 +138,7 @@
       const arabic = quran ? (quranLeadsHtml(it) ? stripQuranLeads(it.text) : it.text) : it.text;
       card.innerHTML = `
         ${quran ? quranLeadsHtml(it) : ""}
-        <p class="az-arabic${quran ? " az-arabic--quran" : ""}" dir="rtl" lang="ar">${arabic}</p>
+        <p class="az-arabic${quran ? " az-arabic--quran" : ""}" dir="rtl" lang="ar">${quran ? fixAyahOne(arabic) : arabic}</p>
         ${sub}
         <button class="az-counter${done ? " is-done" : ""}" type="button" aria-label="${T.tap}">
           <span class="az-counter-num">${done ? "✓" : rem}</span>

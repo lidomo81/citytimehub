@@ -9,7 +9,7 @@
    Bump CACHE_VERSION only when the shell list itself must be replaced.
    Never wipe runtime/API caches on activate.
    ===================================================================== */
-const CACHE_VERSION = "cth-v312";
+const CACHE_VERSION = "cth-v313";
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 const API_CACHE = `${CACHE_VERSION}-api`;
@@ -18,7 +18,7 @@ const CRITICAL = [
   "/", "/ar",
   "/css/style.css",
   "/js/app.js", "/js/city.js", "/js/city-input.js", "/js/pwa.js", "/js/app-tabs.js",
-  "/js/first-setup.js", "/js/cities-board-widget.js",
+  "/js/first-setup.js", "/js/cities-board-widget.js", "/js/azkar.js",
   "/icons/favicon-64.png", "/icons/logo.svg",
 ];
 
@@ -48,6 +48,19 @@ self.addEventListener("activate", (event) => {
         keys
           .filter((k) => k.endsWith("-shell") && k !== SHELL_CACHE)
           .map((k) => caches.delete(k))
+      ))
+      .then(() => caches.keys())
+      .then((keys) => Promise.all(
+        keys.filter((k) => k.endsWith("-runtime")).map((k) =>
+          caches.open(k).then((c) => c.keys().then((reqs) => Promise.all(
+            reqs
+              .filter((r) => {
+                const p = new URL(r.url).pathname;
+                return p === "/js/azkar.js" || p === "/css/style.css";
+              })
+              .map((r) => c.delete(r))
+          )))
+        )
       ))
       .then(() => self.clients.claim())
   );
