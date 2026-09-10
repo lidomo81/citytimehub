@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>معاينة الويدجت — CityTimeHub</title>
+  <style>
+    :root {
+      --bg: #0a0e17;
+      --ink: #e8eef8;
+      --muted: #9aacc8;
+      --card: #121826;
+      --line: #2a3550;
+      --gold: #fbbf24;
+      --green: #34d399;
+      --soft: #c3d0ea;
+      --dim: #8295b7;
+      --widget: #0f172a;
+      --widget-line: #334155;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 22px 16px 48px;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Segoe UI", Tahoma, system-ui, sans-serif;
+    }
+    .top { max-width: 1280px; margin: 0 auto 18px; text-align: center; }
+    .top h1 { font-size: 1.15rem; margin: 0 0 6px; }
+    .top p { margin: 0 auto 14px; max-width: 56ch; color: var(--muted); font-size: .9rem; line-height: 1.55; }
+    .tools { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+    .tools button {
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font: inherit;
+      font-size: .85rem;
+      font-weight: 650;
+      cursor: pointer;
+    }
+    .tools button.is-on { border-color: #60a5fa; color: #93c5fd; }
+    .row {
+      display: flex;
+      gap: 22px;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+    .col { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .cap { font-size: .8rem; font-weight: 700; color: #93a4c8; }
+    .phone {
+      width: 360px;
+      height: 760px;
+      border-radius: 28px;
+      border: 2px solid var(--line);
+      overflow: hidden;
+      background: #0b1224 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='760'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop stop-color='%2314223c'/%3E%3Cstop offset='1' stop-color='%23080c16'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23g)' width='360' height='760'/%3E%3C/svg%3E") center/cover;
+      box-shadow: 0 30px 80px -30px #000;
+      position: relative;
+      padding: 18px 14px 16px;
+    }
+    .status {
+      display: flex; justify-content: space-between; color: #dbe7ff;
+      font-size: 12px; font-weight: 700; margin-bottom: 14px; padding: 0 4px;
+    }
+    .sheet {
+      background: #111827;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 14px 12px 12px;
+    }
+    .sheet h2 { margin: 0 0 4px; font-size: 1rem; }
+    .sheet .sub { margin: 0 0 12px; color: var(--muted); font-size: .78rem; }
+    .pick {
+      display: flex; gap: 10px; align-items: center;
+      padding: 10px; border-radius: 14px; margin-bottom: 8px;
+      background: #0d1526; border: 1px solid #243049;
+    }
+    .pick:last-child { margin-bottom: 0; }
+    .thumb {
+      width: 92px; height: 58px; border-radius: 10px;
+      background: var(--widget); border: 1px solid var(--widget-line);
+      flex: 0 0 auto; overflow: hidden; padding: 6px 7px;
+      display: flex; flex-direction: column; justify-content: center; gap: 3px;
+    }
+    .thumb .t-line { height: 4px; border-radius: 99px; background: #334155; }
+    .thumb .t-gold { height: 7px; width: 58%; border-radius: 99px; background: var(--gold); }
+    .thumb .t-soft { height: 3px; border-radius: 99px; background: #1e3a4c; }
+    .thumb .t-row { display: flex; gap: 4px; align-items: center; }
+    .thumb .t-row i { flex: 1; height: 3px; background: #334155; border-radius: 99px; }
+    .thumb .t-row b { width: 14px; height: 3px; background: var(--gold); border-radius: 99px; }
+    .thumb .t-row em { width: 18px; height: 3px; background: var(--green); border-radius: 99px; font-style: normal; }
+    .pick b { display: block; font-size: .86rem; }
+    .pick span { display: block; color: var(--muted); font-size: .72rem; margin-top: 2px; line-height: 1.35; }
+    .badge {
+      display: inline-block; margin-top: 5px; font-size: .65rem; font-weight: 800;
+      color: #93c5fd; background: #1e3a5f; border-radius: 999px; padding: 2px 7px;
+    }
+    .w {
+      background: var(--widget);
+      border: 1px solid var(--widget-line);
+      border-radius: 18px;
+      padding: 11px 12px;
+      color: #eaf1ff;
+    }
+    .w-head { display: flex; align-items: center; gap: 6px; color: var(--soft); font-size: 11px; font-weight: 600; }
+    .logo { width: 16px; height: 16px; border-radius: 4px; object-fit: cover; flex: 0 0 auto; }
+    .w-head .end { margin-inline-start: auto; color: var(--dim); font-weight: 500; }
+    .prayer-main { display: flex; align-items: baseline; gap: 10px; margin-top: 9px; }
+    .prayer-main .name, .prayer-main .time { color: var(--gold); font-size: 21px; font-weight: 800; }
+    .prayer-main .time { flex: 1; }
+    .prayer-main .left { color: var(--green); font-size: 13px; font-weight: 800; }
+    .bar { height: 4px; border-radius: 99px; background: #1e293b; margin-top: 8px; overflow: hidden; }
+    .bar i { display: block; height: 100%; width: 62%; background: linear-gradient(90deg,#fbbf24,#34d399); }
+    .ticks { display: flex; margin-top: 8px; }
+    .ticks div { flex: 1; text-align: center; padding: 6px 0; }
+    .ticks em { display: block; font-style: normal; color: var(--dim); font-size: 11px; }
+    .ticks b { display: block; color: var(--soft); font-size: 13px; font-weight: 650; }
+    .ticks .on em, .ticks .on b { color: var(--gold); }
+    .ticks .gone em, .ticks .gone b { opacity: .45; }
+    .cb-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 4.7em 6.8em;
+      column-gap: 8px;
+      align-items: center;
+      min-height: 32px;
+      border-bottom: 1px solid #22334155;
+    }
+    .cb-row:last-child { border-bottom: 0; }
+    .cb-row .city { font-size: 13px; font-weight: 650; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cb-row .clk { color: var(--gold); font-size: 15px; font-weight: 800; text-align: end; font-variant-numeric: tabular-nums; }
+    .cb-row .nx { color: var(--green); font-size: 11px; white-space: nowrap; text-align: end; font-variant-numeric: tabular-nums; overflow: hidden; text-overflow: ellipsis; }
+    .azkar-text { color: var(--soft); font-size: 13px; line-height: 1.55; margin-top: 8px; min-height: 62px; display: flex; align-items: center; }
+    .azkar-bar { height: 3px; border-radius: 99px; background: #1e293b; margin-top: 8px; overflow: hidden; }
+    .azkar-bar i { display: block; height: 100%; width: 28%; background: #34d399; }
+    .empty { text-align: center; padding: 22px 8px; }
+    .empty b { display: block; color: var(--gold); font-size: 15px; }
+    .empty span { display: block; color: var(--dim); font-size: 12px; margin-top: 4px; }
+    .home-stack { display: flex; flex-direction: column; gap: 12px; overflow-y: auto; height: calc(100% - 28px); padding-bottom: 8px; }
+    html[lang="en"] body { font-family: "Segoe UI", system-ui, sans-serif; }
+  </style>
+</head>
+<body>
+  <div class="top">
+    <h1 id="title">ويدجت الشاشة الرئيسية</h1>
+    <p id="sub">مواقيت الصلاة تطلع أول واحدة في قائمة الإضافة. لوحة المدن ويدجت جديدة للمدن الأربع. الأذكار والصلاة زي ما هما.</p>
+    <div class="tools">
+      <button type="button" class="is-on" data-lang="ar">عربي</button>
+      <button type="button" data-lang="en">English</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="cap" id="cap1">قائمة إضافة الويدجت</div>
+      <div class="phone" id="phone1"></div>
+    </div>
+    <div class="col">
+      <div class="cap" id="cap2">الشاشة بعد التثبيت</div>
+      <div class="phone" id="phone2"></div>
+    </div>
+  </div>
+  <script>
+    const T = {
+      ar: {
+        title: "ويدجت الشاشة الرئيسية",
+        sub: "مواقيت الصلاة أول واحدة في القائمة. لوحة المدن للمدن الأربع. الأذكار: ذكر ثابت حسب الوقت، والضغط يفتح صفحة الذكر.",
+        cap1: "قائمة إضافة الويدجت",
+        cap2: "الشاشة بعد التثبيت",
+        pickTitle: "ويدجت CityTimeHub",
+        pickSub: "اضغط مطولاً على الشاشة الرئيسية ← ويدجت",
+        first: "الأولى",
+        prayer: "مواقيت الصلاة",
+        prayerD: "الصلاة القادمة وعدّ تنازلي وتاريخ اليوم",
+        cities: "لوحة المدن",
+        citiesD: "الوقت الحي والصلاة القادمة حتى 4 مدن",
+        azkar: "الأذكار",
+        azkarD: "أذكار الصباح حتى العصر، والمساء بعده",
+        city: "القاهرة",
+        date: "18 ربيع الأول 1448",
+        next: "العصر",
+        nextT: "15:41",
+        left: "بعد 42 د",
+        ticks: [["الفجر","04:52","gone"],["الشروق","06:18","gone"],["الظهر","12:54","gone"],["العصر","15:41","on"],["المغرب","18:29",""],["العشاء","19:46",""]],
+        rows: [
+          ["لندن","06:51","الظهر 12:08"],
+          ["دبي","09:51","العصر 16:22"],
+          ["كوالالمبور","13:51","المغرب 19:18"],
+          ["نيويورك","01:51","الفجر 05:12"]
+        ],
+        emptyT: "لا مدن بعد",
+        emptyH: "افتح التطبيق وأضف مدنًا للوحة",
+        azkarNow: "",
+        azkarMorningTitle: "أذكار الصباح",
+        azkarEveningTitle: "أذكار المساء",
+        azkarMorning: "اللَّهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُورُ",
+        azkarEvening: "اللَّهمَّ بِكَ أمسَينا وبِكَ أصبَحنا وبِكَ نَحيا وبِكَ نموتُ، وإليكَ المصيرُ"
+      },
+      en: {
+        title: "Home screen widgets",
+        sub: "Prayer times is first in the picker. Cities board is the 4-city widget. Adhkar shows one fixed dhikr and opens that page.",
+        cap1: "Widget picker",
+        cap2: "After pinning",
+        pickTitle: "CityTimeHub widgets",
+        pickSub: "Long-press the home screen → Widgets",
+        first: "First",
+        prayer: "Prayer times",
+        prayerD: "Next prayer, live countdown, and today's date",
+        cities: "Cities board",
+        citiesD: "Live time and next prayer for up to 4 cities",
+        azkar: "Adhkar",
+        azkarD: "Morning adhkar until Asr, evening after Asr",
+        city: "Cairo",
+        date: "18 Rabiʻ I 1448",
+        next: "Asr",
+        nextT: "3:41 PM",
+        left: "in 42 min",
+        ticks: [["Fajr","4:52","gone"],["Sunrise","6:18","gone"],["Dhuhr","12:54","gone"],["Asr","3:41","on"],["Maghrib","6:29",""],["Isha","7:46",""]],
+        rows: [
+          ["London","6:51 AM","Dhuhr 12:08"],
+          ["Dubai","9:51 AM","Asr 4:22 PM"],
+          ["Kuala Lumpur","1:51 PM","Maghrib 7:18 PM"],
+          ["New York","1:51 AM","Fajr 5:12 AM"]
+        ],
+        emptyT: "No cities yet",
+        emptyH: "Open the app and add cities to the board",
+        azkarNow: "",
+        azkarMorningTitle: "Morning adhkar",
+        azkarEveningTitle: "Evening adhkar",
+        azkarMorning: "اللَّهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُورُ",
+        azkarEvening: "اللَّهمَّ بِكَ أمسَينا وبِكَ أصبَحنا وبِكَ نَحيا وبِكَ نموتُ، وإليكَ المصيرُ"
+      }
+    };
+
+    function prayerWidget(t, mini) {
+      const ticks = t.ticks.map(([n, tm, k]) =>
+        `<div class="${k || ""}"><em>${n}</em><b>${tm}</b></div>`).join("");
+      return `<div class="w"${mini ? ' style="width:280px"' : ""}>
+        <div class="w-head"><img class="logo" src="/icons/logo.svg" alt=""><span>${t.city}</span><span class="end">${t.date}</span></div>
+        <div class="prayer-main"><span class="name">${t.next}</span><span class="time">${t.nextT}</span><span class="left">${t.left}</span></div>
+        <div class="bar"><i></i></div>
+        <div class="ticks">${ticks}</div>
+      </div>`;
+    }
+    function citiesWidget(t, empty) {
+      if (empty) {
+        return `<div class="w">
+          <div class="w-head"><img class="logo" src="/icons/logo.svg" alt=""><span>${t.cities}</span></div>
+          <div class="empty"><b>${t.emptyT}</b><span>${t.emptyH}</span></div>
+        </div>`;
+      }
+      const rows = t.rows.map(([c, clk, nx]) =>
+        `<div class="cb-row"><span class="city">${c}</span><span class="clk">${clk}</span><span class="nx">${nx}</span></div>`).join("");
+      return `<div class="w"><div class="w-head"><img class="logo" src="/icons/logo.svg" alt=""><span>${t.cities}</span></div>${rows}</div>`;
+    }
+    function azkarWidget(t, evening) {
+      const title = evening ? t.azkarEveningTitle : t.azkarMorningTitle;
+      const txt = evening ? t.azkarEvening : t.azkarMorning;
+      return `<div class="w">
+        <div class="w-head"><img class="logo" src="/icons/logo.svg" alt=""><span>${title}</span></div>
+        <div class="azkar-text">${txt}</div>
+      </div>`;
+    }
+    function thumb(kind) {
+      if (kind === "prayer") {
+        return `<div class="thumb"><div class="t-line" style="width:70%"></div><div class="t-gold"></div><div class="t-soft"></div></div>`;
+      }
+      if (kind === "cities") {
+        return `<div class="thumb">${[0,1,2,3].map(() =>
+          `<div class="t-row"><i></i><b></b><em></em></div>`).join("")}</div>`;
+      }
+      return `<div class="thumb"><div class="t-line" style="width:46%"></div><div class="t-soft"></div><div class="t-soft" style="width:80%"></div><div class="t-soft" style="width:64%"></div></div>`;
+    }
+
+    function render(lang) {
+      const t = T[lang];
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+      document.getElementById("title").textContent = t.title;
+      document.getElementById("sub").textContent = t.sub;
+      document.getElementById("cap1").textContent = t.cap1;
+      document.getElementById("cap2").textContent = t.cap2;
+      document.getElementById("phone1").innerHTML = `
+        <div class="status"><span>9:41</span><span>CTH</span></div>
+        <div class="sheet">
+          <h2>${t.pickTitle}</h2>
+          <p class="sub">${t.pickSub}</p>
+          <div class="pick">${thumb("prayer")}<div><b>${t.prayer}</b><span>${t.prayerD}</span><em class="badge">${t.first}</em></div></div>
+          <div class="pick">${thumb("cities")}<div><b>${t.cities}</b><span>${t.citiesD}</span></div></div>
+          <div class="pick">${thumb("azkar")}<div><b>${t.azkar}</b><span>${t.azkarD}</span></div></div>
+        </div>`;
+      document.getElementById("phone2").innerHTML = `
+        <div class="status"><span>9:41</span><span>CTH</span></div>
+        <div class="home-stack">
+          ${prayerWidget(t)}
+          ${citiesWidget(t)}
+          ${azkarWidget(t, false)}
+          ${azkarWidget(t, true)}
+        </div>`;
+    }
+
+    document.querySelectorAll("[data-lang]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("[data-lang]").forEach(b => b.classList.toggle("is-on", b === btn));
+        render(btn.getAttribute("data-lang"));
+      });
+    });
+    render("ar");
+  </script>
+</body>
+</html>

@@ -7498,3 +7498,76 @@ html.app-mode[data-app-tab="prayer"] .help-fab {
   opacity: 1;
   color: var(--brand);
 }
+
+/* First-open setup (city → adhan → widget) */
+.fs-overlay {
+  position: fixed; inset: 0; z-index: 1400;
+  display: flex; align-items: stretch; justify-content: stretch;
+  background: var(--bg, #0b1120);
+}
+.fs-overlay[hidden] { display: none !important; }
+.fs-page {
+  flex: 1; display: flex; flex-direction: column;
+  background: var(--surface); color: var(--text);
+  padding-block-end: env(safe-area-inset-bottom, 0);
+}
+.fs-head {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 12px 16px; padding-top: max(12px, env(safe-area-inset-top, 0px));
+  border-block-end: 1px solid var(--border);
+}
+.fs-head .az-sheet-back[hidden] { display: none !important; }
+.fs-head-copy { flex: 1; min-width: 0; }
+.fs-head-copy strong { display: block; font-size: 1.05rem; line-height: 1.3; }
+.fs-sub { display: block; margin-top: 3px; font-size: .78rem; color: var(--text-2); line-height: 1.4; }
+.fs-skip {
+  margin: 0; padding: 8px 10px; border: 0; border-radius: 10px;
+  background: transparent; color: var(--text-2);
+  font: inherit; font-size: .86rem; font-weight: 700; cursor: pointer;
+}
+.fs-skip:hover { color: var(--text); }
+.fs-dots { display: flex; justify-content: center; gap: 8px; padding: 16px 16px 0; }
+.fs-dot {
+  width: 8px; height: 8px; border-radius: 99px;
+  background: var(--border-2); display: block;
+}
+.fs-dot.is-on { width: 22px; background: var(--brand); }
+.fs-dot.is-done { background: color-mix(in srgb, var(--brand) 55%, var(--border-2)); }
+.fs-body { flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: 18px 22px 12px; width: min(520px, 100%); margin-inline: auto; }
+.fs-icon { font-size: 2.1rem; line-height: 1; margin-bottom: 10px; }
+.fs-h { margin: 0 0 8px; font-size: 1.45rem; font-weight: 800; letter-spacing: -.02em; }
+.fs-p { margin: 0 0 18px; color: var(--text-2); line-height: 1.55; font-size: .98rem; }
+.fs-hint { margin: 14px 0 0; color: var(--text-2); font-size: .86rem; line-height: 1.5; }
+.fs-btn { width: 100%; }
+.fs-city {
+  margin: 12px 0 0; padding: 10px 12px; border-radius: 12px;
+  background: color-mix(in srgb, var(--brand) 10%, var(--surface-2));
+  color: var(--text); font-size: .9rem; font-weight: 700;
+}
+.fs-body .ac-input { margin-top: 14px; }
+.fs-list {
+  list-style: none; margin: 8px 0 0; padding: 6px;
+  border: 1px solid var(--border); border-radius: 12px;
+  background: var(--surface); max-height: 36vh; overflow: auto;
+}
+.fs-steps {
+  margin: 8px 0 0; padding: 0; list-style: none;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.fs-steps li {
+  counter-increment: fs;
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 12px 14px; border-radius: 14px;
+  border: 1px solid var(--border); background: var(--surface-2);
+  line-height: 1.45; font-size: .95rem;
+}
+.fs-steps li::before {
+  content: counter(fs);
+  flex: none; width: 26px; height: 26px; border-radius: 99px;
+  display: grid; place-items: center;
+  background: color-mix(in srgb, var(--brand) 16%, transparent);
+  color: var(--brand); font-size: .8rem; font-weight: 800;
+}
+.fs-steps { counter-reset: fs; }
+.fs-foot { padding: 12px 22px 18px; width: min(520px, 100%); margin-inline: auto; }
+html.app-mode .fs-overlay { padding-bottom: 0; }

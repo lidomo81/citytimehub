@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>معاينة ويدجت المدن — CityTimeHub</title>
+  <style>
+    :root {
+      --bg: #0a0e17;
+      --ink: #e8eef8;
+      --muted: #9aacc8;
+      --card: #121826;
+      --line: #2a3550;
+      --gold: #fbbf24;
+      --green: #34d399;
+      --soft: #c3d0ea;
+      --dim: #8295b7;
+      --widget: #0f172a;
+      --widget-line: #334155;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 22px 16px 48px;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Segoe UI", Tahoma, system-ui, sans-serif;
+    }
+    .top { max-width: 1100px; margin: 0 auto 18px; text-align: center; }
+    .top h1 { font-size: 1.2rem; margin: 0 0 6px; }
+    .top p { margin: 0 auto 14px; max-width: 52ch; color: var(--muted); font-size: .9rem; line-height: 1.55; }
+    .tools { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+    .tools button {
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font: inherit;
+      font-size: .85rem;
+      font-weight: 650;
+      cursor: pointer;
+    }
+    .tools button.is-on { border-color: #60a5fa; color: #93c5fd; }
+    .row {
+      display: flex;
+      gap: 28px;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+    .col { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .cap { font-size: .8rem; font-weight: 700; color: #93a4c8; }
+    .phone {
+      width: 360px;
+      height: 760px;
+      border-radius: 28px;
+      border: 2px solid var(--line);
+      overflow: hidden;
+      background:
+        radial-gradient(120% 70% at 50% 0%, #1a2a4a 0%, transparent 55%),
+        linear-gradient(180deg, #14223c, #080c16);
+      box-shadow: 0 30px 80px -30px #000;
+      padding: 18px 14px 16px;
+    }
+    .status {
+      display: flex; justify-content: space-between; color: #dbe7ff;
+      font-size: 12px; font-weight: 700; margin-bottom: 16px; padding: 0 4px;
+    }
+    .wallpaper-clock {
+      text-align: center;
+      color: #dbe7ff;
+      margin: 18px 0 22px;
+    }
+    .wallpaper-clock b { display: block; font-size: 52px; letter-spacing: -1px; line-height: 1; }
+    .wallpaper-clock span { color: #93a4c8; font-size: 13px; font-weight: 600; }
+    .w {
+      background: var(--widget);
+      border: 1px solid var(--widget-line);
+      border-radius: 18px;
+      padding: 11px 12px 10px;
+      color: #eaf1ff;
+      width: 100%;
+      min-height: 148px;
+      display: flex;
+      flex-direction: column;
+    }
+    .w-head {
+      display: flex; align-items: center; gap: 6px;
+      color: var(--soft); font-size: 11px; font-weight: 600;
+    }
+    .logo {
+      width: 16px; height: 16px; border-radius: 4px;
+      object-fit: cover; flex: 0 0 auto;
+    }
+    .rows { flex: 1; display: flex; flex-direction: column; margin-top: 4px; }
+    .cb-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 4.7em 6.8em;
+      column-gap: 8px;
+      align-items: center;
+      flex: 1;
+      min-height: 28px;
+      border-bottom: 1px solid #22334155;
+    }
+    .cb-row:last-child { border-bottom: 0; }
+    .cb-row .city {
+      font-size: 13px; font-weight: 650;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .cb-row .clk {
+      color: var(--gold); font-size: 15px; font-weight: 800;
+      text-align: end; font-variant-numeric: tabular-nums;
+    }
+    .cb-row .nx {
+      color: var(--green); font-size: 11px; white-space: nowrap;
+      text-align: end; font-variant-numeric: tabular-nums;
+      overflow: hidden; text-overflow: ellipsis;
+    }
+    .empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+    .empty b { color: var(--gold); font-size: 15px; }
+    .empty span { color: var(--dim); font-size: 12px; margin-top: 4px; }
+    .note {
+      margin-top: 16px; color: #93a4c8; font-size: 12px; line-height: 1.5; text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="top">
+    <h1 id="title">ويدجت لوحة المدن</h1>
+    <p id="sub">التوقيت يتبع إعداد العرض في التطبيق: تلقائي = نظام الموبايل، أو 12 / 24. نفس ويدجت الصلاة.</p>
+    <div class="tools">
+      <button type="button" class="is-on" data-lang="ar">عربي</button>
+      <button type="button" data-lang="en">English</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="cap" id="cap1">12 ساعة — زي معظم الموبايلات</div>
+      <div class="phone" id="phone1"></div>
+    </div>
+    <div class="col">
+      <div class="cap" id="cap2">24 ساعة</div>
+      <div class="phone" id="phone2"></div>
+    </div>
+  </div>
+  <script>
+    const T = {
+      ar: {
+        title: "ويدجت لوحة المدن",
+        sub: "التوقيت يتبع إعداد العرض في التطبيق: تلقائي = نظام الموبايل، أو 12 / 24. نفس ويدجت الصلاة.",
+        cap1: "12 ساعة — زي إعداد الموبايل",
+        cap2: "24 ساعة",
+        name: "لوحة المدن",
+        date: "الخميس 10 سبتمبر",
+        note: "نفس إعداد التوقيت في التطبيق: تلقائي = نظام الموبايل، أو 12 / 24.",
+        rows: [
+          ["لندن", "06:51", "الظهر", "12:08"],
+          ["دبي", "09:51", "العصر", "16:22"],
+          ["كوالالمبور", "13:51", "المغرب", "19:18"],
+          ["نيويورك", "01:51", "الفجر", "05:12"]
+        ]
+      },
+      en: {
+        title: "Cities board widget",
+        sub: "Times follow the app display setting: Auto = phone system, or lock 12 / 24. Same as the prayer widget.",
+        cap1: "12-hour — follows the phone",
+        cap2: "24-hour",
+        name: "Cities board",
+        date: "Thursday 10 September",
+        note: "Same display setting as the app: Auto = phone system, or lock 12 / 24.",
+        rows: [
+          ["London", "06:51", "Dhuhr", "12:08"],
+          ["Dubai", "09:51", "Asr", "16:22"],
+          ["Kuala Lumpur", "13:51", "Maghrib", "19:18"],
+          ["New York", "01:51", "Fajr", "05:12"]
+        ]
+      }
+    };
+
+    function clock(hm, use12, ar) {
+      if (!use12) return hm;
+      const p = String(hm).split(":");
+      const h24 = +p[0];
+      const m = p[1] || "00";
+      const am = h24 < 12;
+      const h12 = h24 === 0 ? 12 : (h24 > 12 ? h24 - 12 : h24);
+      return h12 + ":" + m + " " + (ar ? (am ? "ص" : "م") : (am ? "AM" : "PM"));
+    }
+
+    function widget(t, use12, ar) {
+      const rows = t.rows.map(([c, clk, prayer, hm]) =>
+        `<div class="cb-row"><span class="city">${c}</span><span class="clk">${clock(clk, use12, ar)}</span><span class="nx">${prayer} ${clock(hm, use12, ar)}</span></div>`
+      ).join("");
+      return `<div class="w">
+        <div class="w-head"><img class="logo" src="/icons/logo.svg" alt=""><span>${t.name}</span></div>
+        <div class="rows">${rows}</div>
+      </div>`;
+    }
+
+    function phone(t, use12, ar) {
+      const wall = use12 ? (ar ? "9:41 ص" : "9:41 AM") : "09:41";
+      return `<div class="status"><span>${wall}</span><span>CTH</span></div>
+        <div class="wallpaper-clock"><b>${wall}</b><span>${t.date}</span></div>
+        ${widget(t, use12, ar)}
+        <p class="note">${t.note}</p>`;
+    }
+
+    function render(lang) {
+      const t = T[lang];
+      const ar = lang === "ar";
+      document.documentElement.lang = lang;
+      document.documentElement.dir = ar ? "rtl" : "ltr";
+      document.getElementById("title").textContent = t.title;
+      document.getElementById("sub").textContent = t.sub;
+      document.getElementById("cap1").textContent = t.cap1;
+      document.getElementById("cap2").textContent = t.cap2;
+      document.getElementById("phone1").innerHTML = phone(t, true, ar);
+      document.getElementById("phone2").innerHTML = phone(t, false, ar);
+    }
+
+    document.querySelectorAll("[data-lang]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("[data-lang]").forEach(b => b.classList.toggle("is-on", b === btn));
+        render(btn.getAttribute("data-lang"));
+      });
+    });
+    render("ar");
+  </script>
+</body>
+</html>

@@ -59,6 +59,7 @@
     <button type="button" data-tab="prayer">الصلاة</button>
     <button type="button" data-tab="azkar">الأذكار</button>
     <button type="button" data-tab="tools">الأدوات</button>
+    <button type="button" data-tab="setup">إعداد أول فتح</button>
   </div>
   <div class="phone" aria-label="إطار معاينة الموبايل">
     <iframe id="frame" title="CityTimeHub app preview" src="/ar/?app=1&preview=1#home"></iframe>
@@ -67,7 +68,9 @@
     const frame = document.getElementById("frame");
     const bust = Date.now();
     function go(tab) {
-      frame.src = "/ar/?app=1&preview=" + bust + "#" + tab;
+      frame.src = tab === "setup"
+        ? "/ar/?app=1&preview=" + bust + "&setup=1"
+        : "/ar/?app=1&preview=" + bust + "#" + tab;
       document.querySelectorAll(".tabs button").forEach(function (b) {
         b.classList.toggle("is-on", b.dataset.tab === tab);
       });

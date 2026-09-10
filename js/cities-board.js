@@ -61,6 +61,7 @@
     try {
       localStorage.setItem(STORE, JSON.stringify(board.map(stripRuntime)));
     } catch (e) {}
+    try { if (window.cthSyncCitiesBoard) window.cthSyncCitiesBoard(); } catch (err) {}
   }
 
   function stripRuntime(e) {
@@ -370,6 +371,7 @@
     }
     render();
     tick();
+    try { if (window.cthSyncCitiesBoard) window.cthSyncCitiesBoard(); } catch (e) {}
   }
 
   function addCity(city) {

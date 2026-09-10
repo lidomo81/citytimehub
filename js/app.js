@@ -2380,7 +2380,8 @@
     // "All features" button. If the tour engine is unavailable, fall back to the sheet.
     if (tour) {
       btn.addEventListener("click", () => tour.start());
-      if (!tour.seen()) {
+      const holdTour = window.CTH_FirstSetup && typeof CTH_FirstSetup.holdTour === "function" && CTH_FirstSetup.holdTour();
+      if (!tour.seen() && !holdTour) {
         const app = document.documentElement.classList.contains("app-mode");
         if (app) {
           let visits = 0;
@@ -2426,6 +2427,29 @@
   window.cthGetPrayerCity = function () {
     const payload = cityPayload(currentCity);
     return payload ? JSON.stringify(payload) : null;
+  };
+
+  window.cthSetPrayerCity = function (city) {
+    if (typeof city === "string") {
+      try { city = JSON.parse(city); } catch (e) { return false; }
+    }
+    if (!city || city.lat == null || city.lng == null) return false;
+    const lat = parseFloat(city.lat), lng = parseFloat(city.lng);
+    if (isNaN(lat) || isNaN(lng)) return false;
+    const name = city.name || city.name_ar || "";
+    setCity({
+      name,
+      name_ar: city.name_ar || name,
+      country: city.country || "",
+      country_ar: city.country_ar || city.country || "",
+      lat, lng,
+      method: city.method != null ? city.method : 3,
+      school: city.school != null ? city.school : 0,
+      world: city.world != null ? city.world : true,
+      slug: city.slug || ("w:" + lat.toFixed(4) + "," + lng.toFixed(4)),
+      tz: city.tz || ""
+    }, { syncApp: true });
+    return true;
   };
 
   // The Android Notification Center's "Favorite city" option — reuses the same

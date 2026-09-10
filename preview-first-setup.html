@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>معاينة إعداد أول فتح — CityTimeHub</title>
+  <link rel="stylesheet" href="css/style.css?v=187" />
+  <style>
+    body.fs-preview {
+      margin: 0;
+      min-height: 100vh;
+      padding: 22px 16px 40px;
+      background: #0a0e17;
+      color: #e8eef8;
+      font-family: var(--font, system-ui, sans-serif);
+    }
+    .pv-top { max-width: 1280px; margin: 0 auto 18px; text-align: center; }
+    .pv-top h1 { font-size: 1.15rem; margin-bottom: 6px; }
+    .pv-top p { margin: 0 auto 14px; max-width: 52ch; color: #9aacc8; font-size: .9rem; line-height: 1.55; }
+    .pv-tools { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+    .pv-tools button, .pv-tools a {
+      border: 1px solid #2a3550;
+      background: #121826;
+      color: #e8eef8;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font: inherit;
+      font-size: .85rem;
+      font-weight: 650;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .pv-tools button.is-on { border-color: #60a5fa; color: #93c5fd; }
+    .pv-row {
+      display: flex;
+      gap: 22px;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+    .pv-col { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .pv-cap { font-size: .8rem; font-weight: 700; color: #93a4c8; }
+    .phone {
+      width: 360px;
+      height: 760px;
+      border-radius: 28px;
+      border: 2px solid #2a3550;
+      overflow: hidden;
+      background: var(--surface);
+      box-shadow: 0 30px 80px -30px #000;
+      position: relative;
+    }
+    .phone .fs-overlay { position: absolute; }
+    .phone .fs-body, .phone .fs-foot { width: auto; margin-inline: 0; }
+  </style>
+</head>
+<body class="fs-preview" data-theme="light">
+  <div class="pv-top">
+    <h1>معاينة إعداد أول فتح</h1>
+    <p>الشاشات الثلاث زي ما هتظهر في التطبيق. غيّر اللغة أو الثيم، أو افتحها جوّه إطار الموبايل الحقيقي.</p>
+    <div class="pv-tools">
+      <button type="button" class="is-on" data-lang="ar">عربي</button>
+      <button type="button" data-lang="en">English</button>
+      <button type="button" class="is-on" data-theme="light">فاتح</button>
+      <button type="button" data-theme="dark">داكن</button>
+      <a href="/ar/?app=1&amp;setup=1">جرّبها في التطبيق</a>
+    </div>
+  </div>
+  <div class="pv-row" id="phones"></div>
+  <script>
+    const COPY = {
+      ar: {
+        title: "جاهز في ثلاث خطوات",
+        sub: "عشان المواقيت والأذان يشتغلوا صح من أول يوم",
+        skip: "تخطي", back: "رجوع", next: "التالي", done: "ابدأ",
+        s1t: "مدينتك",
+        s1b: "حدد موقعك عشان مواقيت الصلاة تكون لمدينتك، مش لمدينة تانية.",
+        locate: "استخدم موقعي", searchPh: "أو ابحث باسم المدينة", cityOk: "تم اختيار القاهرة، مصر",
+        s2t: "الأذان",
+        s2b: "فعّل تنبيه الصلاة — يوصل حتى لو قفلت التطبيق.",
+        adhanBtn: "فتح إعدادات الأذان",
+        adhanHint: "اختَر الصلوات اللي عايز أذانها، واسمح بالإشعارات لو الجهاز سألك.",
+        s3t: "ويدجت الشاشة الرئيسية",
+        s3b: "مواقيت اليوم على شاشتك — من غير ما تفتح التطبيق.",
+        w1: "اضغط مطولًا على مساحة فاضية في الشاشة الرئيسية",
+        w2: "اختر «ويدجت» أو Widgets",
+        w3: "ابحث عن «مواقيت الصلاة» وأضفها"
+      },
+      en: {
+        title: "Ready in three steps",
+        sub: "So prayer times and the adhan work for you from day one",
+        skip: "Skip", back: "Back", next: "Next", done: "Start",
+        s1t: "Your city",
+        s1b: "Set your location so prayer times are for your city, not someone else’s.",
+        locate: "Use my location", searchPh: "Or search by city name", cityOk: "Selected: Cairo, Egypt",
+        s2t: "Adhan",
+        s2b: "Turn on prayer alerts — they arrive even when the app is closed.",
+        adhanBtn: "Open adhan settings",
+        adhanHint: "Pick the prayers you want called, and allow notifications if your phone asks.",
+        s3t: "Home screen widget",
+        s3b: "Today’s prayer times on your home screen — without opening the app.",
+        w1: "Long-press an empty spot on your home screen",
+        w2: "Tap Widgets",
+        w3: "Find “Prayer times” and add it"
+      }
+    };
+    const caps = { ar: ["١ — المدينة", "٢ — الأذان", "٣ — الويدجت"], en: ["1 — City", "2 — Adhan", "3 — Widget"] };
+    const backSvg = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>';
+
+    function page(T, step, body, foot) {
+      const dots = [1, 2, 3].map(n =>
+        '<i class="fs-dot' + (n === step ? ' is-on' : '') + (n < step ? ' is-done' : '') + '"></i>'
+      ).join("");
+      return '<div class="fs-overlay">' +
+        '<div class="fs-page">' +
+          '<div class="fs-head">' +
+            (step > 1 ? '<button type="button" class="az-sheet-back">' + backSvg + '<span>' + T.back + '</span></button>' : '') +
+            '<div class="fs-head-copy"><strong>' + T.title + '</strong><span class="fs-sub">' + T.sub + '</span></div>' +
+            '<button type="button" class="fs-skip">' + T.skip + '</button>' +
+          '</div>' +
+          '<div class="fs-dots">' + dots + '</div>' +
+          '<div class="fs-body">' + body + '</div>' +
+          '<div class="fs-foot"><button type="button" class="btn-primary fs-btn">' + foot + '</button></div>' +
+        '</div></div>';
+    }
+
+    function bodies(T) {
+      return [
+        '<div class="fs-icon" aria-hidden="true">📍</div>' +
+        '<h2 class="fs-h">' + T.s1t + '</h2><p class="fs-p">' + T.s1b + '</p>' +
+        '<button type="button" class="btn-primary fs-btn">' + T.locate + '</button>' +
+        '<p class="fs-city">' + T.cityOk + '</p>' +
+        '<input class="ac-input" type="text" placeholder="' + T.searchPh + '" readonly>',
+        '<div class="fs-icon" aria-hidden="true">🔔</div>' +
+        '<h2 class="fs-h">' + T.s2t + '</h2><p class="fs-p">' + T.s2b + '</p>' +
+        '<button type="button" class="btn-primary fs-btn">' + T.adhanBtn + '</button>' +
+        '<p class="fs-hint">' + T.adhanHint + '</p>',
+        '<div class="fs-icon" aria-hidden="true">📲</div>' +
+        '<h2 class="fs-h">' + T.s3t + '</h2><p class="fs-p">' + T.s3b + '</p>' +
+        '<ol class="fs-steps"><li>' + T.w1 + '</li><li>' + T.w2 + '</li><li>' + T.w3 + '</li></ol>'
+      ];
+    }
+
+    let lang = "ar";
+    function render() {
+      const T = COPY[lang];
+      const b = bodies(T);
+      const feet = [T.next, T.next, T.done];
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+      document.getElementById("phones").innerHTML = [1, 2, 3].map(function (step, i) {
+        return '<div class="pv-col"><div class="pv-cap">' + caps[lang][i] + '</div>' +
+          '<div class="phone" data-theme="' + document.body.getAttribute("data-theme") + '">' +
+          page(T, step, b[i], feet[i]) + '</div></div>';
+      }).join("");
+    }
+
+    document.querySelector(".pv-tools").addEventListener("click", function (e) {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      if (btn.dataset.lang) {
+        lang = btn.dataset.lang;
+        document.querySelectorAll("[data-lang]").forEach(b => b.classList.toggle("is-on", b === btn));
+        render();
+      }
+      if (btn.dataset.theme) {
+        document.body.setAttribute("data-theme", btn.dataset.theme);
+        document.querySelectorAll("[data-theme]").forEach(function (el) {
+          if (el.tagName === "BUTTON") el.classList.toggle("is-on", el === btn);
+          else el.setAttribute("data-theme", btn.dataset.theme);
+        });
+      }
+    });
+    render();
+  </script>
+</body>
+</html>

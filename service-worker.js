@@ -9,7 +9,7 @@
    Bump CACHE_VERSION only when the shell list itself must be replaced.
    Never wipe runtime/API caches on activate.
    ===================================================================== */
-const CACHE_VERSION = "cth-v306";
+const CACHE_VERSION = "cth-v308";
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 const API_CACHE = `${CACHE_VERSION}-api`;
@@ -18,6 +18,7 @@ const CRITICAL = [
   "/", "/ar",
   "/css/style.css",
   "/js/app.js", "/js/city.js", "/js/city-input.js", "/js/pwa.js", "/js/app-tabs.js",
+  "/js/first-setup.js", "/js/cities-board-widget.js",
   "/icons/favicon-64.png", "/icons/logo.svg",
 ];
 
