@@ -955,7 +955,7 @@ html.app-mode[data-app-tab="home"] .cp-city-row {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 12px;
   width: 100%;
   max-width: 100%;
 }
@@ -1002,7 +1002,7 @@ html.app-mode[data-app-tab="home"] .cp-clock-info {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
   width: 100%;
 }
 html.app-mode[data-app-tab="home"] .cp-clock-info .lt-meta { display: none; }
@@ -4670,34 +4670,35 @@ html.app-mode[data-app-tab="home"] .cb-home-chip { display: flex; }
 .cb-home-chip-l { font-size: .86rem; font-weight: 800; }
 .cb-home-chip-r { font-size: .74rem; color: var(--text-2); font-weight: 600; }
 
-/* Soft compact home (app) � quieter first screen, same flows */
+/* Soft compact home (app) — quieter first screen, same flows */
 html.app-mode[data-app-tab="home"] .cp-toolbar { margin: 2px auto 0; width: min(380px, 92%); }
-html.app-mode[data-app-tab="home"] .cp-clock { padding: 10px 16px 2px; }
+html.app-mode[data-app-tab="home"] .cp-clock { padding: 16px 16px 10px; }
 html.app-mode[data-app-tab="home"] .cp-clock .lt-time {
   font-size: clamp(2.85rem, 13.5vw, 3.55rem);
-  margin: 0 0 2px;
+  margin: 4px 0 8px;
 }
 html.app-mode[data-app-tab="home"] .lt-weekday {
   font-size: 1.02rem;
   letter-spacing: .06em;
   opacity: .88;
+  margin: 0 0 4px;
 }
 html.app-mode[data-app-tab="home"] .datebar--paper {
   width: min(100%, 380px);
-  margin-top: 10px;
-  gap: 10px;
+  margin-top: 18px;
+  gap: 12px;
 }
 html.app-mode[data-app-tab="home"] .datebar--paper .datebar-item {
   min-height: 96px;
   padding: 16px 12px 15px;
 }
 html.app-mode[data-app-tab="home"] #cpNext.cp-home-teaser {
-  margin: 8px auto 10px;
-  padding: 10px 12px 12px;
+  margin: 18px auto 16px;
+  padding: 14px 12px 12px;
   font-size: .88rem;
 }
 html.app-mode[data-app-tab="home"] .home-spotlight {
-  margin-top: 10px;
+  margin-top: 16px;
   width: min(380px, 92%);
 }
 html.app-mode[data-app-tab="home"] .daily-reflection--home {
