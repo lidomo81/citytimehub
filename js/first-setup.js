@@ -13,6 +13,7 @@
     ? {
         title: "جاهز في ثلاث خطوات",
         sub: "عشان المواقيت والأذان يشتغلوا صح من أول يوم",
+        tag: "الوقت · الصلاة · أدواتك الإسلامية",
         skip: "تخطي",
         next: "التالي",
         done: "ابدأ",
@@ -40,6 +41,7 @@
     : {
         title: "Ready in three steps",
         sub: "So prayer times and the adhan work for you from day one",
+        tag: "World Clock · Prayer Times · Islamic Tools",
         skip: "Skip",
         next: "Next",
         done: "Start",
@@ -334,21 +336,24 @@
     root.setAttribute("dir", ar ? "rtl" : "ltr");
     root.innerHTML = `
       <div class="fs-page" role="dialog" aria-modal="true" aria-labelledby="fsTitle">
-        <div class="fs-head">
-          <button type="button" class="az-sheet-back" id="fsBack" hidden>
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
-            <span>${T.back}</span>
-          </button>
-          <div class="fs-head-copy">
-            <strong id="fsTitle">${T.title}</strong>
-            <span class="fs-sub">${T.sub}</span>
+        <div class="fs-hero">
+          <div class="fs-head">
+            <button type="button" class="az-sheet-back" id="fsBack" hidden>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+              <span>${T.back}</span>
+            </button>
+            <div class="fs-head-actions">
+              <a class="lang-switch fs-lang" id="fsLang" href="${esc(langHref())}" lang="${ar ? "en" : "ar"}" hreflang="${ar ? "en" : "ar"}" aria-label="${T.langAria}">EN · العربية</a>
+              <button type="button" class="fs-skip" id="fsSkip">${T.skip}</button>
+            </div>
           </div>
-          <div class="fs-head-actions">
-            <a class="lang-switch fs-lang" id="fsLang" href="${esc(langHref())}" lang="${ar ? "en" : "ar"}" hreflang="${ar ? "en" : "ar"}" aria-label="${T.langAria}">EN · العربية</a>
-            <button type="button" class="fs-skip" id="fsSkip">${T.skip}</button>
-          </div>
+          <img class="fs-logo" src="/icons/logo.svg" width="72" height="72" alt="">
+          <p class="fs-brand">CityTimeHub</p>
+          <strong id="fsTitle">${T.title}</strong>
+          <span class="fs-sub">${T.sub}</span>
+          <span class="fs-tag">${T.tag}</span>
+          <div class="fs-dots" id="fsDots" aria-hidden="true"></div>
         </div>
-        <div class="fs-dots" id="fsDots" aria-hidden="true"></div>
         <div class="fs-body" id="fsBody"></div>
         <div class="fs-foot">
           <button type="button" class="btn-primary fs-btn" id="fsNext">${T.next}</button>
