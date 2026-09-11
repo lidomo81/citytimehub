@@ -95,6 +95,7 @@
     try { localStorage.setItem(STORAGE_KEY, tab); } catch (e) {}
 
     if (prev !== tab) {
+      document.documentElement.classList.remove("cp-search-open");
       document.documentElement.classList.add("app-tab-switching");
       clearTimeout(setActiveTab._fadeT);
       setActiveTab._fadeT = setTimeout(function () {
@@ -245,9 +246,19 @@
     setActiveTab(tab, { pushHash: false });
   }
 
-  /* Prayer tab: changing city is the rarest thing done here, so the search box
-     does not sit across the top of the screen. The city name is the control —
-     tap it and the search opens beneath, tap away or pick a city and it closes. */
+  /* Home + Prayer: the city name opens search. The favorite star stays on the
+     city row on Home so it is never trapped inside the hidden toolbar. */
+  function placeHomeFavorite() {
+    var h2 = document.getElementById("cp-h");
+    var save = document.getElementById("cpSave");
+    if (!h2 || !save || save.closest(".cp-city-row")) return;
+    var row = document.createElement("div");
+    row.className = "cp-city-row";
+    h2.parentNode.insertBefore(row, h2);
+    row.appendChild(h2);
+    row.appendChild(save);
+  }
+
   function wireCitySearch() {
     var root = document.documentElement;
     var city = document.getElementById("lt-h");
@@ -263,8 +274,12 @@
       var input = bar.querySelector("input");
       if (input) setTimeout(function () { input.focus(); }, 60);
     }
+    function canToggle() {
+      var tab = root.getAttribute("data-app-tab");
+      return tab === "prayer" || tab === "home";
+    }
     function toggle() {
-      if (root.getAttribute("data-app-tab") !== "prayer") return;
+      if (!canToggle()) return;
       root.classList.contains("cp-search-open") ? close() : open();
     }
 
@@ -273,11 +288,11 @@
       if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
     });
     document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
-    // A city was chosen, or the reader moved to another tab.
     window.addEventListener("cth-city", close);
     document.addEventListener("click", function (e) {
       if (!root.classList.contains("cp-search-open")) return;
       if (bar.contains(e.target) || city.contains(e.target)) return;
+      if (e.target.closest && e.target.closest(".cp-save")) return;
       close();
     });
   }
@@ -388,6 +403,7 @@
     var active = isAppHome() ? readTab() : (detectToolTabActive() || "");
     installBottomNav(active || "home");
     if (isAppHome()) initHomeTabs();
+    placeHomeFavorite();
     wireCitySearch();
     wireKeyboard();
     // The occasions card and the insights card are injected after load.

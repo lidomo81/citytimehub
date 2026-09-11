@@ -33,6 +33,9 @@
     search: { sel: "#cpSearch", tab: "home",
       ar: { t: "ابحث عن مدينتك 🔍", b: "في تبويب الرئيسية — اكتب اسم أي مدينة من 500 مدينة أو أي مكان في العالم." },
       en: { t: "Search your city 🔍", b: "On the Home tab — type any of 500 cities or anywhere in the world." } },
+    searchApp: { sel: "#lt-h", tab: "home",
+      ar: { t: "مدينتك 🔍", b: "اضغط الاسم أو «تغيير» لفتح البحث — اكتب أي مدينة أو استخدم أيقونة الموقع. النجمة جنب الاسم تحفظها في «مدني»." },
+      en: { t: "Your city 🔍", b: "Tap the name or Change to open search — type any city or use the location icon. The star beside the name saves it in My cities." } },
     locate: { sel: "#cpLocate", tab: "home", prefer: "below",
       ar: { t: "تحديد موقعك 📍", b: "اضغط أيقونة الموقع بجانب البحث لاكتشاف مدينتك تلقائياً وعرض مواقيت صلاتها — بدون كتابة الاسم." },
       en: { t: "Detect your location 📍", b: "Tap the location icon beside search to find your city automatically and show its prayer times — no typing needed." } },
@@ -133,7 +136,7 @@
     }
     return [
       S.welcomeApp, S.appNav, S.quranApp, S.appSettings,
-      S.search, S.locate, S.favorite, S.myCities, S.homeClock, S.yearCal, S.cityPulse, S.homeNext, S.dailyReflection, S.closeOnesHome,
+      S.searchApp, S.favorite, S.myCities, S.homeClock, S.yearCal, S.cityPulse, S.homeNext, S.dailyReflection, S.closeOnesHome,
       S.prayerTimes, S.tapCardApp, S.prayerBell, S.insights, S.occasions,
       S.azkarHub, S.widgetsApp,
       S.appTools,

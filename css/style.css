@@ -691,7 +691,7 @@ html.app-mode[data-app-tab="home"] .cp-devotion .cp-dev-head {
   margin: 0;
   padding: 4px 20px 0;
 }
-html.app-mode[data-app-tab="home"] .cp-devotion .datebar { margin: 0 auto; width: min(100%, 360px); }
+html.app-mode[data-app-tab="home"] .cp-devotion .datebar { margin: 0 auto; width: min(100%, 380px); }
 html.app-mode:not([data-app-tab="home"]) #occHomeTeaser { display: none !important; }
 html.app-mode[data-app-tab="prayer"] #occHomeTeaser { display: none !important; }
 html.app-mode:not([data-app-tab="home"]) #coHomeStrip { display: none !important; }
@@ -855,12 +855,15 @@ html.app-mode[data-app-tab="prayer"] .occasions:not(.occasions-link).is-open::af
 html.app-mode[data-app-tab="prayer"] .occasions:not(.occasions-link) { position: relative; }
 
 /* The search opens from the city name rather than holding the top of the tab. */
-html.app-mode[data-app-tab="prayer"]:not(.cp-search-open) .cp-toolbar { display: none !important; }
-html.app-mode[data-app-tab="prayer"] #lt-h {
+html.app-mode[data-app-tab="prayer"]:not(.cp-search-open) .cp-toolbar,
+html.app-mode[data-app-tab="home"]:not(.cp-search-open) .cp-toolbar { display: none !important; }
+html.app-mode[data-app-tab="prayer"] #lt-h,
+html.app-mode[data-app-tab="home"] #lt-h {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
-html.app-mode[data-app-tab="prayer"] #lt-h::after {
+html.app-mode[data-app-tab="prayer"] #lt-h::after,
+html.app-mode[data-app-tab="home"] #lt-h::after {
   content: "تغيير ▾";
   margin-inline-start: 6px;
   font-size: .62em;
@@ -870,10 +873,14 @@ html.app-mode[data-app-tab="prayer"] #lt-h::after {
   vertical-align: middle;
   opacity: .85;
 }
-html[lang="en"].app-mode[data-app-tab="prayer"] #lt-h::after { content: "Change ▾"; }
-html.app-mode[data-app-tab="prayer"].cp-search-open #lt-h::after { content: "تغيير ▴"; }
-html[lang="en"].app-mode[data-app-tab="prayer"].cp-search-open #lt-h::after { content: "Change ▴"; }
-html.app-mode[data-app-tab="prayer"] #lt-h:focus-visible {
+html[lang="en"].app-mode[data-app-tab="prayer"] #lt-h::after,
+html[lang="en"].app-mode[data-app-tab="home"] #lt-h::after { content: "Change ▾"; }
+html.app-mode[data-app-tab="prayer"].cp-search-open #lt-h::after,
+html.app-mode[data-app-tab="home"].cp-search-open #lt-h::after { content: "تغيير ▴"; }
+html[lang="en"].app-mode[data-app-tab="prayer"].cp-search-open #lt-h::after,
+html[lang="en"].app-mode[data-app-tab="home"].cp-search-open #lt-h::after { content: "Change ▴"; }
+html.app-mode[data-app-tab="prayer"] #lt-h:focus-visible,
+html.app-mode[data-app-tab="home"] #lt-h:focus-visible {
   outline: 2px solid var(--brand);
   outline-offset: 3px;
   border-radius: 8px;
@@ -944,18 +951,29 @@ html.app-mode[data-app-tab="home"] .cp-toolbar:hover { opacity: 1; }
 html.app-mode[data-app-tab="home"] .cp-toolbar .cp-home,
 html.app-mode[data-app-tab="home"] .cp-toolbar .cp-install { display: none !important; }
 html.app-mode[data-app-tab="home"] .cp-toolbar .cp-ac { flex: 1; min-width: 0; }
-html.app-mode[data-app-tab="home"] .cp-toolbar .cp-save {
+html.app-mode[data-app-tab="home"] .cp-city-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 100%;
+}
+html.app-mode[data-app-tab="home"] .cp-city-row h2 { margin: 0; min-width: 0; }
+html.app-mode[data-app-tab="prayer"] .cp-city-row { display: contents; }
+html.app-mode[data-app-tab="prayer"] .cp-city-row .cp-save { display: none !important; }
+html.app-mode[data-app-tab="home"] .cp-city-row .cp-save {
   display: inline-flex !important;
   flex: none;
-  width: 42px;
-  min-width: 42px;
-  height: 42px;
+  width: 36px;
+  min-width: 36px;
+  height: 36px;
   padding: 0;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
+  border-radius: 10px;
 }
-html.app-mode[data-app-tab="home"] .cp-toolbar .cp-save .cp-save-txt {
+html.app-mode[data-app-tab="home"] .cp-city-row .cp-save .cp-save-txt {
   position: absolute;
   width: 1px; height: 1px;
   overflow: hidden;
@@ -1026,7 +1044,7 @@ html.app-mode[data-app-tab="home"] .cp-devotion {
 }
 /* Dual date cells � ?????? | ???? like old wall calendars */
 html.app-mode[data-app-tab="home"] .datebar--paper {
-  width: min(100%, 372px);
+  width: min(100%, 380px);
   margin: 10px auto 0;
   padding: 0;
   gap: 10px;
@@ -1040,13 +1058,13 @@ html.app-mode[data-app-tab="home"] .datebar--paper {
 html.app-mode[data-app-tab="home"] .datebar--paper .datebar-sep { display: none; }
 html.app-mode[data-app-tab="home"] .datebar--paper .datebar-item {
   gap: 7px;
-  min-height: 84px;
+  min-height: 96px;
   /* The two cells are stretched to a common height by the grid, so anchoring
      the date to the top and the label to the bottom (below) keeps the pair
      level no matter how many lines each side needs — centring each cell on its
      own content is what put them on different lines. */
   justify-content: flex-start;
-  padding: 14px 10px 13px;
+  padding: 16px 12px 15px;
   border-radius: 16px;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -4665,16 +4683,14 @@ html.app-mode[data-app-tab="home"] .lt-weekday {
   opacity: .88;
 }
 html.app-mode[data-app-tab="home"] .datebar--paper {
-  width: min(100%, 340px);
-  margin-top: 6px;
-  gap: 8px;
+  width: min(100%, 380px);
+  margin-top: 10px;
+  gap: 10px;
 }
 html.app-mode[data-app-tab="home"] .datebar--paper .datebar-item {
-  min-height: 78px;
-  padding: 12px 8px 11px;
+  min-height: 96px;
+  padding: 16px 12px 15px;
 }
-html.app-mode[data-app-tab="home"] .datebar--paper .datebar-val { font-size: .92rem; }
-html.app-mode[data-app-tab="home"] .datebar--paper .datebar-hint { font-size: .68rem; }
 html.app-mode[data-app-tab="home"] #cpNext.cp-home-teaser {
   margin: 8px auto 10px;
   padding: 10px 12px 12px;
