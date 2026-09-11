@@ -25,8 +25,10 @@
         cityOk: "تم اختيار",
         s2t: "الأذان",
         s2b: "فعّل تنبيه الصلاة — يوصل حتى لو قفلت التطبيق.",
-        adhanBtn: "فتح إعدادات الأذان",
-        adhanHint: "اختَر الصلوات اللي عايز أذانها، واسمح بالإشعارات لو الجهاز سألك.",
+        adhanBtn: "تفعيل الأذان",
+        adhanOn: "الأذان شغّال",
+        adhanMore: "تخصيص الصلوات",
+        adhanHint: "تفعيل واحد لكل الصلوات. بعدها تقدر تخصّص من الجرس.",
         s3t: "ويدجت الشاشة الرئيسية",
         s3b: "مواقيت اليوم على شاشتك — من غير ما تفتح التطبيق.",
         pinBtn: "إضافة الويدجت",
@@ -50,8 +52,10 @@
         cityOk: "Selected",
         s2t: "Adhan",
         s2b: "Turn on prayer alerts — they arrive even when the app is closed.",
-        adhanBtn: "Open adhan settings",
-        adhanHint: "Pick the prayers you want called, and allow notifications if your phone asks.",
+        adhanBtn: "Turn on adhan",
+        adhanOn: "Adhan is on",
+        adhanMore: "Customize prayers",
+        adhanHint: "One tap enables all five. You can fine-tune later from the bell.",
         s3t: "Home screen widget",
         s3b: "Today’s prayer times on your home screen — without opening the app.",
         pinBtn: "Add widget",
@@ -103,7 +107,14 @@
 
   window.CTH_FirstSetup = { holdTour, done: isDone, markDone, forcePreview };
 
+  function tellAndroid(state) {
+    try {
+      if (window.AndroidApp && AndroidApp.onFirstSetupState) AndroidApp.onFirstSetupState(state);
+    } catch (e) {}
+  }
+
   if (isReturning() && !isDone() && !forcePreview()) markDone();
+  tellAndroid(shouldShow() ? "showing" : "idle");
 
   let root, step = 1, pushed = false, cityLabel = "";
 
@@ -154,12 +165,16 @@
         <ul class="fs-list" id="fsList" hidden></ul>`;
     }
     if (step === 2) {
-      const has = !!(window.AndroidApp && AndroidApp.openPrayerReminders);
+      const native = !!(window.AndroidApp);
+      const canEnable = !!(native && AndroidApp.enableAdhanFromSetup);
+      const canOpen = !!(native && AndroidApp.openPrayerReminders);
+      const on = !!(native && AndroidApp.isPrayerRemindersEnabled && AndroidApp.isPrayerRemindersEnabled());
       return `
         <div class="fs-icon" aria-hidden="true">🔔</div>
         <h2 class="fs-h">${T.s2t}</h2>
         <p class="fs-p">${T.s2b}</p>
-        ${has ? `<button type="button" class="btn-primary fs-btn" id="fsAdhan">${T.adhanBtn}</button>` : ""}
+        ${canEnable ? `<button type="button" class="btn-primary fs-btn" id="fsAdhan">${on ? T.adhanOn : T.adhanBtn}</button>` : ""}
+        ${canOpen ? `<button type="button" class="fs-skip" id="fsAdhanMore" style="margin-top:10px">${T.adhanMore}</button>` : ""}
         <p class="fs-hint">${T.adhanHint}</p>`;
     }
     const canPin = !!(window.AndroidApp && AndroidApp.pinPrayerWidget);
@@ -209,6 +224,14 @@
     if (search && list) wireSearch(search, list);
     const adhan = root.querySelector("#fsAdhan");
     if (adhan) adhan.addEventListener("click", () => {
+      try {
+        if (window.AndroidApp && AndroidApp.enableAdhanFromSetup) AndroidApp.enableAdhanFromSetup();
+        else if (window.AndroidApp && AndroidApp.openPrayerReminders) AndroidApp.openPrayerReminders();
+      } catch (e) {}
+      setTimeout(() => { if (step === 2) render(); }, 700);
+    });
+    const adhanMore = root.querySelector("#fsAdhanMore");
+    if (adhanMore) adhanMore.addEventListener("click", () => {
       try { window.AndroidApp.openPrayerReminders(); } catch (e) {}
     });
     const pin = root.querySelector("#fsPin");
@@ -271,8 +294,9 @@
     });
   }
 
-  function close(finish) {
+  function close(finish, goPrayer) {
     if (finish && !forcePreview()) markDone();
+    tellAndroid("done");
     try { sessionStorage.removeItem("cth-setup-step"); } catch (e) {}
     if (root) root.hidden = true;
     document.documentElement.style.overflow = "";
@@ -281,9 +305,13 @@
       pushed = false;
       try { history.back(); } catch (e) {}
     }
+    if (goPrayer && !forcePreview()) {
+      try { if (window.AndroidApp && AndroidApp.openPrayerTab) AndroidApp.openPrayerTab(); } catch (e) {}
+    }
   }
   function open() {
     if (!root) return;
+    tellAndroid("showing");
     root.hidden = false;
     document.documentElement.style.overflow = "hidden";
     setPull(false);
@@ -327,7 +355,7 @@
         </div>
       </div>`;
     document.body.appendChild(root);
-    root.querySelector("#fsSkip").addEventListener("click", () => close(true));
+    root.querySelector("#fsSkip").addEventListener("click", () => close(true, false));
     const langBtn = root.querySelector("#fsLang");
     if (langBtn) {
       langBtn.addEventListener("click", () => {
@@ -339,14 +367,14 @@
     });
     root.querySelector("#fsNext").addEventListener("click", () => {
       if (step < 3) { step += 1; render(); }
-      else close(true);
+      else close(true, true);
     });
     window.addEventListener("popstate", () => {
       const st = history.state;
       if (st && st.cth === "first-setup") return;
       if (!root || root.hidden) return;
       pushed = false;
-      close(true);
+      close(true, false);
     });
     window.addEventListener("cth-city", () => {
       cityLabel = currentCityLabel();
@@ -357,7 +385,11 @@
   }
 
   function boot() {
-    if (!shouldShow()) return;
+    if (!shouldShow()) {
+      tellAndroid("idle");
+      return;
+    }
+    tellAndroid("showing");
     build();
     const start = () => open();
     if (document.getElementById("prayerGrid")) setTimeout(start, 280);

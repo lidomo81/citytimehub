@@ -9,7 +9,7 @@
    Bump CACHE_VERSION only when the shell list itself must be replaced.
    Never wipe runtime/API caches on activate.
    ===================================================================== */
-const CACHE_VERSION = "cth-v313";
+const CACHE_VERSION = "cth-v314";
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 const API_CACHE = `${CACHE_VERSION}-api`;
@@ -56,7 +56,7 @@ self.addEventListener("activate", (event) => {
             reqs
               .filter((r) => {
                 const p = new URL(r.url).pathname;
-                return p === "/js/azkar.js" || p === "/css/style.css";
+                return p === "/js/azkar.js" || p === "/js/first-setup.js" || p === "/css/style.css";
               })
               .map((r) => c.delete(r))
           )))
