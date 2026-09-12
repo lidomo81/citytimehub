@@ -274,7 +274,7 @@
     clearTimeout(scrollTimer);
     hidePop(() => {
       const s = STEPS[idx], x = s[lang] || s.en;
-      popTitle.textContent = x.t;
+      popTitle.textContent = String(x.t || "").replace(/\s+(?:[\u{1F300}-\u{1FAFF}]|[\u2600-\u27BF]|[\uFE0F])+$/u, "");
       if (s.icon) popTitle.insertAdjacentHTML("beforeend", s.icon);
       popBody.textContent = x.b;
       popCount.textContent = (idx + 1) + " " + UI.of + " " + STEPS.length;

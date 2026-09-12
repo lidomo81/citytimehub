@@ -1204,6 +1204,7 @@
       lng: city.lng,
       method: city.method != null ? city.method : 3,
       school: city.school != null ? city.school : 0,
+      tz: city.tz || ""
     };
   }
   // Only the latest user-driven city change may update the Android widget.
