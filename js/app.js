@@ -1526,7 +1526,9 @@
       if (currentCity !== city || !prayerState || prayerState.city !== city) return;
       syncPrayerCityToApp(city, prayerState.timings);
     };
-    const render = (data, stale) => {
+    const clean = s => (s || "").split(" ")[0];
+    const render = (data) => {
+      if (currentCity !== city || !data || !data.timings) return;
       // Worldwide cities arrive without a timezone; AlAdhan returns it in meta.
       // Resolve it before anything that needs it (next-prayer, the live clock).
       if (!city.tz && data.meta && data.meta.timezone) {
@@ -1543,7 +1545,6 @@
       const g_d = new Date(Date.UTC(+g.year, (+(g.month && g.month.number) || 1) - 1, +g.day));
       $("#gregDate").textContent  = new Intl.DateTimeFormat(LANG === "ar" ? "ar-EG-u-nu-latn" : "en-GB", { timeZone: "UTC", day: "numeric", month: "long", year: "numeric" }).format(g_d);
       $("#hijriDate").textContent = `${h.day} ${LANG === "ar" ? h.month.ar : h.month.en} ${h.year} ${T.ah}`;
-      const clean = s => (s || "").split(" ")[0];
       const next = nextPrayer(t, city);
       prayerState = { city, timings: {} };
       PRAYERS.forEach(p => prayerState.timings[p] = clean(t[p]));
@@ -1566,17 +1567,20 @@
         }));
       } catch (e) {}
     };
+    let cached = null;
+    try { cached = JSON.parse(localStorage.getItem(PKEY) || "null"); } catch (e) {}
+    const todayCache = cached && cached.ds === ds && cached.data && cached.data.timings;
+    // Slow/offline: paint today's last good times immediately, then refresh.
+    if (todayCache) render(cached.data);
     try {
       const res = await fetch(url);
       if (!res.ok) throw new Error("timings " + res.status);
       const { data } = await res.json();
-      render(data, false);
+      render(data);
       try { localStorage.setItem(PKEY, JSON.stringify({ ds, data })); } catch (e) {}
     } catch {
-      // Offline / failed → show the last saved times for this city if we have them
-      let cached = null;
-      try { cached = JSON.parse(localStorage.getItem(PKEY) || "null"); } catch (e) {}
-      if (cached && cached.data) { render(cached.data, true); }
+      if (todayCache) return;
+      if (cached && cached.data) { render(cached.data); }
       else { grid.innerHTML = `<p class="no-results" style="grid-column:1/-1">${T.prayerErr}</p>`; }
     }
   }

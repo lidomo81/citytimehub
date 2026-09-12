@@ -148,10 +148,9 @@
     const grid = $("#prayerGrid"); if (!grid) return;
     const today = new Date();
     const ds = `${String(today.getDate()).padStart(2,"0")}-${String(today.getMonth()+1).padStart(2,"0")}-${today.getFullYear()}`;
-    try {
-      const res = await fetch(`https://api.aladhan.com/v1/timings/${ds}?latitude=${CITY.lat}&longitude=${CITY.lng}&method=${CITY.method ?? 3}&school=${CITY.school ?? 0}`);
-      if (!res.ok) throw new Error("timings " + res.status);
-      const { data } = await res.json();
+    const PKEY = "cth-prayer:" + (CITY.slug || "");
+    const apply = (data) => {
+      if (!data || !data.timings) return;
       const t = data.timings, g = data.date.gregorian, h = data.date.hijri;
       const gd = $("#gregDate");
       if (gd) {
@@ -180,8 +179,21 @@
           detail: { timings, tz: CITY.tz || null }
         }));
       } catch (e) {}
+    };
+    let cached = null;
+    try { cached = JSON.parse(localStorage.getItem(PKEY) || "null"); } catch (e) {}
+    const todayCache = cached && cached.ds === ds && cached.data && cached.data.timings;
+    if (todayCache) apply(cached.data);
+    try {
+      const res = await fetch(`https://api.aladhan.com/v1/timings/${ds}?latitude=${CITY.lat}&longitude=${CITY.lng}&method=${CITY.method ?? 3}&school=${CITY.school ?? 0}`);
+      if (!res.ok) throw new Error("timings " + res.status);
+      const { data } = await res.json();
+      apply(data);
+      try { localStorage.setItem(PKEY, JSON.stringify({ ds, data })); } catch (e) {}
     } catch {
-      grid.innerHTML = `<p class="no-results" style="grid-column:1/-1">${T.prayerErr}</p>`;
+      if (todayCache) return;
+      if (cached && cached.data) apply(cached.data);
+      else grid.innerHTML = `<p class="no-results" style="grid-column:1/-1">${T.prayerErr}</p>`;
     }
   }
   function nextPrayer(t) {
