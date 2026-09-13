@@ -139,6 +139,7 @@
   const fmtCache = new Map();
   let currentCity = null, homeCity = null, detectedHome = null, prayerState = null;
   let currentMine = false;
+  let lastCityDayKey = "";
 
 
   const $  = (s, c = document) => c.querySelector(s);
@@ -898,6 +899,7 @@
     if (now.getSeconds() === 0) updateSunArcNext();
     // Soft day-part wash for the app Home tab (once a minute is enough).
     if (now.getSeconds() === 0) updateDayAtmosphere();
+    checkCityDayRollover();
   }
 
   /* App Home atmosphere: tint the clock by local prayer-day segment. */
@@ -996,15 +998,47 @@
     setTimeout(() => { tick(); setInterval(tick, 1000); }, delay);
     setInterval(updateStatusBox, 30000);
     window.addEventListener("cth-worship", updateStatusBox);
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") checkCityDayRollover();
+    });
+    window.addEventListener("pageshow", () => checkCityDayRollover());
     document.addEventListener("cth-app-tab", () => {
       updateStatusBox();
       updateDayAtmosphere();
       ensureAppRemindCards();
+      checkCityDayRollover();
     });
   }
 
   /* ---------- Prayer times + Hijri (AlAdhan) ---------- */
   const PRAYERS = ["Fajr","Sunrise","Dhuhr","Asr","Maghrib","Isha"];
+  function cityDateParts(city) {
+    const tz = (city && city.tz) || ltTz || Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
+    const opts = { year: "numeric", month: "2-digit", day: "2-digit" };
+    if (tz && String(tz).includes("/")) opts.timeZone = tz;
+    const parts = new Intl.DateTimeFormat("en-US", opts).formatToParts(new Date());
+    const g = t => (parts.find(p => p.type === t) || {}).value || "";
+    return { y: g("year"), m: g("month"), d: g("day") };
+  }
+  function cityDayKey(city) {
+    const p = cityDateParts(city || currentCity);
+    return p.y && p.m && p.d ? `${p.y}-${p.m}-${p.d}` : "";
+  }
+  function prayerApiDate(city) {
+    const p = cityDateParts(city);
+    return `${p.d}-${p.m}-${p.y}`;
+  }
+  function checkCityDayRollover() {
+    const key = cityDayKey(currentCity);
+    if (!key) return;
+    if (!lastCityDayKey) { lastCityDayKey = key; return; }
+    if (key === lastCityDayKey) return;
+    lastCityDayKey = key;
+    if (currentCity) {
+      loadPrayer(currentCity);
+      loadSun(currentCity);
+    }
+  }
   /* Soft sky tones — dawn gold → noon blue → dusk rose → night indigo */
   const ARC_COLORS = {
     Fajr: "#c9a46a", Sunrise: "#e0ae58", Dhuhr: "#8eb4c8",
@@ -1259,6 +1293,7 @@
       else delete cityPanel.dataset.tz;
     }
     updateStatusBox();
+    lastCityDayKey = cityDayKey(city);
     tick();
     renderHomeCities();
     // User-driven only — sync after timings load so Android applies the same city
@@ -1517,8 +1552,8 @@
 
   async function loadPrayer(city, widgetSyncSeq) {
     if (!city) return;
-    const grid = $("#prayerGrid"), today = new Date();
-    const ds = `${String(today.getDate()).padStart(2,"0")}-${String(today.getMonth()+1).padStart(2,"0")}-${today.getFullYear()}`;
+    const grid = $("#prayerGrid");
+    const ds = prayerApiDate(city);
     const url = `https://api.aladhan.com/v1/timings/${ds}?latitude=${city.lat}&longitude=${city.lng}&method=${city.method ?? 3}&school=${city.school ?? 0}`;
     const PKEY = "cth-prayer:" + city.slug;
     const maybeSyncWidget = () => {

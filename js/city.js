@@ -12,6 +12,7 @@
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
   let CITY = null, CITIES = [];
   let nextStripTimings = null;
+  let lastCityDayKey = "";
 
   /* ---------- Language (reads <html lang>) ---------- */
   const LANG = (document.documentElement.lang || "en").slice(0, 2) === "ar" ? "ar" : "en";
@@ -135,19 +136,49 @@
     const hu = $("#headerUtc");
     if (hu) hu.textContent = new Intl.DateTimeFormat("en-GB", { timeZone: "UTC", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false }).format(now);
     updateNextPrayerStrip();
+    checkCityDayRollover();
   }
   function startClock() {
     tick();
     const delay = 1000 - (Date.now() % 1000);
     setTimeout(() => { tick(); setInterval(tick, 1000); }, delay);
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") checkCityDayRollover();
+    });
+    window.addEventListener("pageshow", () => checkCityDayRollover());
   }
 
   /* ---------- prayer + Hijri / Gregorian (AlAdhan) ---------- */
   const PRAYERS = ["Fajr","Sunrise","Dhuhr","Asr","Maghrib","Isha"];
+  function cityDateParts() {
+    const tz = (CITY && CITY.tz) || Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
+    const opts = { year: "numeric", month: "2-digit", day: "2-digit" };
+    if (tz && String(tz).includes("/")) opts.timeZone = tz;
+    const parts = new Intl.DateTimeFormat("en-US", opts).formatToParts(new Date());
+    const g = t => (parts.find(p => p.type === t) || {}).value || "";
+    return { y: g("year"), m: g("month"), d: g("day") };
+  }
+  function cityDayKey() {
+    const p = cityDateParts();
+    return p.y && p.m && p.d ? `${p.y}-${p.m}-${p.d}` : "";
+  }
+  function prayerApiDate() {
+    const p = cityDateParts();
+    return `${p.d}-${p.m}-${p.y}`;
+  }
+  function checkCityDayRollover() {
+    if (!CITY) return;
+    const key = cityDayKey();
+    if (!key) return;
+    if (!lastCityDayKey) { lastCityDayKey = key; return; }
+    if (key === lastCityDayKey) return;
+    lastCityDayKey = key;
+    loadPrayer();
+    loadSun();
+  }
   async function loadPrayer() {
     const grid = $("#prayerGrid"); if (!grid) return;
-    const today = new Date();
-    const ds = `${String(today.getDate()).padStart(2,"0")}-${String(today.getMonth()+1).padStart(2,"0")}-${today.getFullYear()}`;
+    const ds = prayerApiDate();
     const PKEY = "cth-prayer:" + (CITY.slug || "");
     const apply = (data) => {
       if (!data || !data.timings) return;
@@ -320,6 +351,7 @@
     // fill any data-bound static spots (kept minimal; SEO text stays in HTML)
     $$("[data-city-name]").forEach(el => el.textContent = CITY.name);
 
+    lastCityDayKey = cityDayKey();
     startClock();
     loadPrayer();
     loadSun();
