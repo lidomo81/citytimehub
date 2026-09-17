@@ -308,7 +308,7 @@
     if (!inAppMode()) return;
     if (window.CTH_AppTabs || document.querySelector("script[src*='app-tabs.js']")) return;
     var s = document.createElement("script");
-    s.src = "/js/app-tabs.js?v=114";
+    s.src = "/js/app-tabs.js?v=115";
     s.defer = true;
     document.head.appendChild(s);
   }

@@ -48,14 +48,14 @@
           azRuqyah: "الرقية الشرعية", azTasbeeh: "التسبيح",
           azWakingSub: "أول ما تصحى من النوم", azMorningSub: "ابدأ يومك بالذكر", azEveningSub: "ختم المساء بالحفظ",
           azSleepSub: "قبل النوم بسكينة", azRuqyahSub: "من القرآن والسنة للتحصّن",
-          azTasbeehSub: "تسابيح ثابتة بعدّاد" }
+          azTasbeehSub: "تسابيح واستغفار بعدّاد" }
       : { home: "Home", prayer: "Prayer", azkar: "Adhkar", tools: "Tools",
           brand: "CityTimeHub", azkarHub: "Choose your adhkar",
           azWaking: "Waking", azMorning: "Morning", azEvening: "Evening", azSleep: "Bedtime",
           azRuqyah: "Ruqyah", azTasbeeh: "Tasbeeh",
           azWakingSub: "The moment you wake", azMorningSub: "Start the day with dhikr", azEveningSub: "Close the evening in remembrance",
           azSleepSub: "Peace before sleep", azRuqyahSub: "Quran & Sunnah for healing",
-          azTasbeehSub: "Sunnah phrases with a counter" };
+          azTasbeehSub: "Sunnah phrases and istighfar with a counter" };
   }
 
   function tabFromHash() {

@@ -73,6 +73,17 @@
       def: 100,
       virtueAr: "كلمتان خفيفتان على اللسان، حبيبتان إلى الرحمن — متفق عليه",
       virtueEn: "Two words light on the tongue, beloved to the Most Merciful — agreed upon (Bukhari & Muslim)"
+    },
+    {
+      id: "istighfar",
+      text: "أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ",
+      chipAr: "أَسْتَغْفِرُ اللَّهَ",
+      chipEn: "Astaghfirullāh",
+      translit: "Astaghfirullāh wa atūbu ilayh",
+      translation: "I seek Allah’s forgiveness and I repent to Him.",
+      def: 100,
+      virtueAr: "كان النبي ﷺ يستغفر الله ويتوب إليه في اليوم أكثر من سبعين مرة — البخاري. العدد ١٠٠ هدف عملي، ويمكن تغييره.",
+      virtueEn: "The Prophet ﷺ sought Allah’s forgiveness and turned to Him in repentance more than seventy times a day — Bukhari. 100 is a practical target you can change."
     }
   ];
   var SEQ = [
