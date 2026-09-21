@@ -189,6 +189,12 @@
       if (state.mode === "seq") {
         state.goal = SEQ[state.seqI].n;
         if (state.rem > state.goal) state.rem = state.goal;
+        if (state.rem <= 0 && state.seqI < SEQ.length - 1) {
+          state.seqI++;
+          state.phraseId = SEQ[state.seqI].id;
+          state.goal = SEQ[state.seqI].n;
+          state.rem = SEQ[state.seqI].n;
+        }
       }
     }
   } catch (e) {}
@@ -209,7 +215,14 @@
     return n;
   }
 
+  var advanceT = 0, advancing = false;
+  function stopAdvance() {
+    advancing = false;
+    clearTimeout(advanceT);
+  }
+
   function setSingle(phraseId, goal) {
+    stopAdvance();
     state.mode = "single";
     state.phraseId = phraseId || state.phraseId;
     state.goal = clampGoal(goal != null ? goal : phraseById(state.phraseId).def);
@@ -220,6 +233,7 @@
   }
 
   function setSeq() {
+    stopAdvance();
     state.mode = "seq";
     state.seqI = 0;
     state.phraseId = SEQ[0].id;
@@ -227,6 +241,20 @@
     state.rem = SEQ[0].n;
     save();
     render();
+  }
+
+  function nextSeqStep() {
+    state.seqI++;
+    state.phraseId = SEQ[state.seqI].id;
+    state.goal = SEQ[state.seqI].n;
+    state.rem = SEQ[state.seqI].n;
+    save();
+    render();
+  }
+
+  function restartRound() {
+    if (state.mode === "seq") setSeq();
+    else setSingle(state.phraseId, state.goal);
   }
 
   function render() {
@@ -300,10 +328,7 @@
     root.querySelector(".az-share").addEventListener("click", function () {
       shareDhikr(currentPhrase());
     });
-    root.querySelector(".az-reset").addEventListener("click", function () {
-      if (state.mode === "seq") setSeq();
-      else setSingle(state.phraseId, state.goal);
-    });
+    root.querySelector(".az-reset").addEventListener("click", restartRound);
   }
 
   function countHaptic() {
@@ -317,23 +342,26 @@
   }
 
   function tap() {
-    if (state.rem <= 0) return;
-    state.rem--;
-    save();
-    countHaptic();
-    if (state.rem === 0) {
-      if (state.mode === "seq" && state.seqI < SEQ.length - 1) {
-        setTimeout(function () {
-          state.seqI++;
-          state.phraseId = SEQ[state.seqI].id;
-          state.goal = SEQ[state.seqI].n;
-          state.rem = SEQ[state.seqI].n;
-          save();
-          render();
-        }, 480);
+    if (advancing) return;
+    if (state.rem > 0) {
+      state.rem--;
+      save();
+      countHaptic();
+      if (state.rem === 0 && state.mode === "seq" && state.seqI < SEQ.length - 1) {
+        advancing = true;
+        advanceT = setTimeout(function () {
+          advancing = false;
+          nextSeqStep();
+        }, 520);
       }
+      render();
+      return;
     }
-    render();
+    if (state.mode === "seq" && state.seqI < SEQ.length - 1) {
+      nextSeqStep();
+      return;
+    }
+    restartRound();
   }
 
   render();

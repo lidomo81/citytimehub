@@ -4338,8 +4338,7 @@ html[dir="rtl"] .prose blockquote { border-radius: 14px 0 0 14px; }
   font: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent;
 }
 .az-count-zone:active .az-counter { transform: scale(.94); }
-.az-count-zone.is-done { cursor: default; }
-.az-count-zone.is-done:active .az-counter { transform: none; }
+.az-count-zone.is-done { cursor: pointer; }
 .az-counter { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; inline-size: 132px; block-size: 132px; margin: 0 auto 8px; border-radius: 50%; border: none; pointer-events: none; background: radial-gradient(circle at 50% 38%, color-mix(in srgb, var(--brand) 88%, #fff), var(--brand)); color: #fff; box-shadow: 0 14px 30px -12px color-mix(in srgb, var(--brand) 70%, transparent); transition: transform .08s ease, box-shadow .2s ease; user-select: none; }
 .az-counter.is-done { background: radial-gradient(circle at 50% 38%, #34d399, #059669); box-shadow: 0 14px 30px -12px rgba(5,150,105,.6); cursor: default; }
 .az-counter-num { font-size: 2.7rem; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }

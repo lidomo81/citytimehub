@@ -118,19 +118,58 @@
       const d = new Date();
       return `${storeKey}:${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
     };
-    let state = { idx: 0, rem: items.map(x => x.count || 1) };
+    const capAt = i => items[i].count || 1;
+    const freshRem = () => items.map((_, i) => capAt(i));
+    const clampRem = (n, i) => {
+      n = parseInt(n, 10);
+      if (!Number.isFinite(n)) n = capAt(i);
+      return Math.max(0, Math.min(capAt(i), n));
+    };
+    let state = { idx: 0, rem: freshRem() };
     if (storeKey) try {
       const s = JSON.parse(localStorage.getItem(key()) || "null");
-      if (s && Array.isArray(s.rem) && s.rem.length === items.length) state = s;
+      if (s && Array.isArray(s.rem) && s.rem.length === items.length) {
+        state.rem = s.rem.map(clampRem);
+        state.idx = Math.min(Math.max(0, s.idx | 0), items.length - 1);
+      }
     } catch (e) {}
     const save = () => { if (storeKey) try { localStorage.setItem(key(), JSON.stringify(state)); } catch (e) {} };
+    function firstOpenFrom(from) {
+      for (let i = Math.max(0, from | 0); i < items.length; i++) if (state.rem[i] > 0) return i;
+      return -1;
+    }
+    if (state.rem[state.idx] <= 0) {
+      const n = firstOpenFrom(state.idx);
+      if (n >= 0) state.idx = n;
+    }
 
     const $ = s => root.querySelector(s);
     const card = $(".az-card"), prevB = $(".az-prev"), nextB = $(".az-next"),
           prog = $(".az-progress"), bar = $(".az-bar > i"), resetB = $(".az-reset");
+    let advanceT = 0, advancing = false, completeSent = false;
+
+    function doneCount() { return state.rem.reduce((n, v) => n + (v <= 0 ? 1 : 0), 0); }
+    function allDone() { return doneCount() === items.length; }
+    function stopAdvance() {
+      advancing = false;
+      clearTimeout(advanceT);
+    }
+    function goNextCard() {
+      if (state.idx < items.length - 1) {
+        state.idx++;
+        save();
+        render();
+        return;
+      }
+      const n = firstOpenFrom(0);
+      if (n >= 0) { state.idx = n; save(); render(); }
+      else resetAll();
+    }
 
     function render() {
-      const i = state.idx, it = items[i], rem = state.rem[i], count = it.count || 1, done = rem <= 0;
+      const i = state.idx, it = items[i], rem = state.rem[i], count = capAt(i), done = rem <= 0;
+      const finished = allDone();
+      const zoneLabel = done ? (finished ? T.reset : T.next) : T.tap;
       const sub = lang === "ar"
         ? (it.virtue ? `<p class="az-virtue"><strong>${T.virtue}:</strong> ${it.virtue}</p>` : "")
         : `${it.translit ? `<p class="az-translit">${it.translit}</p>` : ""}${it.translation ? `<p class="az-translation">${it.translation}</p>` : ""}${it.virtueEn ? `<p class="az-virtue"><strong>${T.virtue}:</strong> ${it.virtueEn}</p>` : ""}`;
@@ -140,7 +179,7 @@
         ${quran ? quranLeadsHtml(it) : ""}
         <p class="az-arabic${quran ? " az-arabic--quran" : ""}" dir="rtl" lang="ar">${quran ? fixAyahOne(arabic) : arabic}</p>
         ${sub}
-        <button type="button" class="az-count-zone${done ? " is-done" : ""}" aria-label="${T.tap}">
+        <button type="button" class="az-count-zone${done ? " is-done" : ""}" aria-label="${zoneLabel}">
           <span class="az-counter${done ? " is-done" : ""}">
             <span class="az-counter-num">${done ? "✓" : rem}</span>
             <span class="az-counter-cap">${done ? T.done : T.tap}</span>
@@ -148,12 +187,19 @@
           <span class="az-times">${lang === "ar" ? (it.countAr || T.times(count)) : T.times(count)}</span>
         </button>`;
       if (prog) prog.textContent = `${i + 1} ${T.of} ${items.length}`;
-      if (bar) bar.style.inlineSize = `${Math.round(((i + (done ? 1 : 0)) / items.length) * 100)}%`;
+      if (bar) bar.style.inlineSize = `${Math.round((doneCount() / items.length) * 100)}%`;
       if (prevB) prevB.disabled = i === 0;
-      if (nextB) nextB.textContent = i === items.length - 1 ? T.restart : T.next;
+      if (nextB) {
+        nextB.textContent = T.next;
+        nextB.disabled = i === items.length - 1;
+      }
       card.querySelector(".az-count-zone").addEventListener("click", tap);
       reportProgress(i + 1, items.length, dhikrPlain(it));
-      if (state.idx === items.length - 1 && done && typeof opts.onComplete === "function") opts.onComplete();
+      if (finished && !completeSent && typeof opts.onComplete === "function") {
+        completeSent = true;
+        opts.onComplete();
+      }
+      if (!finished) completeSent = false;
     }
 
     // The home-screen widget lives outside the browser and cannot read this
@@ -179,25 +225,40 @@
       } catch (e) {}
       if (navigator.vibrate) try { navigator.vibrate(12); } catch (e) {}
     }
+    function resetAll() {
+      stopAdvance();
+      completeSent = false;
+      state = { idx: 0, rem: freshRem() };
+      save();
+      render();
+    }
     function tap() {
+      if (advancing) return;
       const i = state.idx;
       if (state.rem[i] > 0) {
         state.rem[i]--; save();
         countHaptic();
         if (state.rem[i] === 0) {
-          setTimeout(() => { if (state.idx < items.length - 1) { state.idx++; save(); } render(); }, 520);
+          advancing = true;
+          advanceT = setTimeout(() => {
+            advancing = false;
+            if (state.idx < items.length - 1) { state.idx++; save(); }
+            render();
+          }, 520);
         }
         render();
+        return;
       }
+      goNextCard();
     }
     function go(d) {
-      if (d > 0 && state.idx === items.length - 1) { state.idx = 0; render(); return; }
+      stopAdvance();
       const n = state.idx + d; if (n < 0 || n >= items.length) return;
       state.idx = n; save(); render();
     }
     if (prevB) prevB.addEventListener("click", () => go(-1));
     if (nextB) nextB.addEventListener("click", () => go(1));
-    if (resetB) resetB.addEventListener("click", () => { state = { idx: 0, rem: items.map(x => x.count || 1) }; save(); render(); });
+    if (resetB) resetB.addEventListener("click", resetAll);
 
     // Share sits in the controls row, not on the sacred text — shares the dhikr
     // that's currently open.
@@ -214,7 +275,7 @@
       else topbar.appendChild(sb);
     }
     render();
-    return { render, reset: () => { state = { idx: 0, rem: items.map(x => x.count || 1) }; save(); render(); } };
+    return { render, reset: resetAll };
   }
 
   window.CTHAzkar = { mount };
