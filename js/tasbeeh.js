@@ -331,14 +331,20 @@
     root.querySelector(".az-reset").addEventListener("click", restartRound);
   }
 
-  function countHaptic() {
+  function countHaptic(step) {
     try {
-      if (window.AndroidApp && typeof AndroidApp.hapticLight === "function") {
-        AndroidApp.hapticLight();
-        return;
+      if (window.AndroidApp) {
+        if (step && typeof AndroidApp.hapticStep === "function") {
+          AndroidApp.hapticStep();
+          return;
+        }
+        if (typeof AndroidApp.hapticLight === "function") {
+          AndroidApp.hapticLight();
+          return;
+        }
       }
     } catch (e) {}
-    if (navigator.vibrate) try { navigator.vibrate(12); } catch (e) {}
+    if (navigator.vibrate) try { navigator.vibrate(step ? [28, 72, 48] : 28); } catch (e) {}
   }
 
   function tap() {
@@ -346,7 +352,7 @@
     if (state.rem > 0) {
       state.rem--;
       save();
-      countHaptic();
+      countHaptic(state.rem === 0);
       if (state.rem === 0 && state.mode === "seq" && state.seqI < SEQ.length - 1) {
         advancing = true;
         advanceT = setTimeout(function () {

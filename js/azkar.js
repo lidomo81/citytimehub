@@ -216,14 +216,20 @@
         }
       } catch (e) { /* older app build without the bridge */ }
     }
-    function countHaptic() {
+    function countHaptic(step) {
       try {
-        if (window.AndroidApp && typeof AndroidApp.hapticLight === "function") {
-          AndroidApp.hapticLight();
-          return;
+        if (window.AndroidApp) {
+          if (step && typeof AndroidApp.hapticStep === "function") {
+            AndroidApp.hapticStep();
+            return;
+          }
+          if (typeof AndroidApp.hapticLight === "function") {
+            AndroidApp.hapticLight();
+            return;
+          }
         }
       } catch (e) {}
-      if (navigator.vibrate) try { navigator.vibrate(12); } catch (e) {}
+      if (navigator.vibrate) try { navigator.vibrate(step ? [28, 72, 48] : 28); } catch (e) {}
     }
     function resetAll() {
       stopAdvance();
@@ -237,7 +243,7 @@
       const i = state.idx;
       if (state.rem[i] > 0) {
         state.rem[i]--; save();
-        countHaptic();
+        countHaptic(state.rem[i] === 0);
         if (state.rem[i] === 0) {
           advancing = true;
           advanceT = setTimeout(() => {
