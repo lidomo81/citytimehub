@@ -140,16 +140,18 @@
         ${quran ? quranLeadsHtml(it) : ""}
         <p class="az-arabic${quran ? " az-arabic--quran" : ""}" dir="rtl" lang="ar">${quran ? fixAyahOne(arabic) : arabic}</p>
         ${sub}
-        <button class="az-counter${done ? " is-done" : ""}" type="button" aria-label="${T.tap}">
-          <span class="az-counter-num">${done ? "✓" : rem}</span>
-          <span class="az-counter-cap">${done ? T.done : T.tap}</span>
-        </button>
-        <p class="az-times">${lang === "ar" ? (it.countAr || T.times(count)) : T.times(count)}</p>`;
+        <button type="button" class="az-count-zone${done ? " is-done" : ""}" aria-label="${T.tap}">
+          <span class="az-counter${done ? " is-done" : ""}">
+            <span class="az-counter-num">${done ? "✓" : rem}</span>
+            <span class="az-counter-cap">${done ? T.done : T.tap}</span>
+          </span>
+          <span class="az-times">${lang === "ar" ? (it.countAr || T.times(count)) : T.times(count)}</span>
+        </button>`;
       if (prog) prog.textContent = `${i + 1} ${T.of} ${items.length}`;
       if (bar) bar.style.inlineSize = `${Math.round(((i + (done ? 1 : 0)) / items.length) * 100)}%`;
       if (prevB) prevB.disabled = i === 0;
       if (nextB) nextB.textContent = i === items.length - 1 ? T.restart : T.next;
-      card.querySelector(".az-counter").addEventListener("click", tap);
+      card.querySelector(".az-count-zone").addEventListener("click", tap);
       reportProgress(i + 1, items.length, dhikrPlain(it));
       if (state.idx === items.length - 1 && done && typeof opts.onComplete === "function") opts.onComplete();
     }
@@ -168,12 +170,21 @@
         }
       } catch (e) { /* older app build without the bridge */ }
     }
+    function countHaptic() {
+      try {
+        if (window.AndroidApp && typeof AndroidApp.hapticLight === "function") {
+          AndroidApp.hapticLight();
+          return;
+        }
+      } catch (e) {}
+      if (navigator.vibrate) try { navigator.vibrate(12); } catch (e) {}
+    }
     function tap() {
       const i = state.idx;
       if (state.rem[i] > 0) {
         state.rem[i]--; save();
+        countHaptic();
         if (state.rem[i] === 0) {
-          if (navigator.vibrate) try { navigator.vibrate(30); } catch (e) {}
           setTimeout(() => { if (state.idx < items.length - 1) { state.idx++; save(); } render(); }, 520);
         }
         render();

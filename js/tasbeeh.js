@@ -263,11 +263,13 @@
         '<p class="az-arabic" dir="rtl" lang="ar">' + p.text + "</p>" +
         sub +
         '<p class="az-virtue"><strong>' + T.virtue + ":</strong> " + (ar ? p.virtueAr : p.virtueEn) + "</p>" +
-        '<button class="az-counter' + (done ? " is-done" : "") + '" type="button" aria-label="' + T.tap + '">' +
-          '<span class="az-counter-num">' + (done ? "✓" : state.rem) + "</span>" +
-          '<span class="az-counter-cap">' + (done ? T.done : T.tap) + "</span>" +
+        '<button type="button" class="az-count-zone' + (done ? " is-done" : "") + '" aria-label="' + T.tap + '">' +
+          '<span class="az-counter' + (done ? " is-done" : "") + '">' +
+            '<span class="az-counter-num">' + (done ? "✓" : state.rem) + "</span>" +
+            '<span class="az-counter-cap">' + (done ? T.done : T.tap) + "</span>" +
+          "</span>" +
+          '<span class="az-times">' + T.target + ": " + state.goal + "</span>" +
         "</button>" +
-        '<p class="az-times">' + T.target + ": " + state.goal + "</p>" +
       "</article>" +
       '<div class="tb-goals">' +
         '<button type="button" class="tb-goal' + g33on + '" data-g="33">' + T.g33 + "</button>" +
@@ -294,7 +296,7 @@
     inp.addEventListener("change", function () {
       setSingle(state.phraseId, inp.value);
     });
-    root.querySelector(".az-counter").addEventListener("click", tap);
+    root.querySelector(".az-count-zone").addEventListener("click", tap);
     root.querySelector(".az-share").addEventListener("click", function () {
       shareDhikr(currentPhrase());
     });
@@ -304,12 +306,22 @@
     });
   }
 
+  function countHaptic() {
+    try {
+      if (window.AndroidApp && typeof AndroidApp.hapticLight === "function") {
+        AndroidApp.hapticLight();
+        return;
+      }
+    } catch (e) {}
+    if (navigator.vibrate) try { navigator.vibrate(12); } catch (e) {}
+  }
+
   function tap() {
     if (state.rem <= 0) return;
     state.rem--;
     save();
+    countHaptic();
     if (state.rem === 0) {
-      if (navigator.vibrate) try { navigator.vibrate(30); } catch (e) {}
       if (state.mode === "seq" && state.seqI < SEQ.length - 1) {
         setTimeout(function () {
           state.seqI++;
