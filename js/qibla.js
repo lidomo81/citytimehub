@@ -70,8 +70,10 @@
     function onOrient(e) {
       var h = null;
       if (typeof e.webkitCompassHeading === "number") h = e.webkitCompassHeading; // iOS: already vs north
-      else if (e.absolute && typeof e.alpha === "number") h = 360 - e.alpha;       // Android absolute
-      else if (typeof e.alpha === "number") h = 360 - e.alpha;
+      // Android alpha is 180° off the top of the phone, which sent the arrowhead
+      // away from the Kaaba and left the tail pointing at it.
+      else if (e.absolute && typeof e.alpha === "number") h = (540 - e.alpha) % 360;
+      else if (typeof e.alpha === "number") h = (540 - e.alpha) % 360;
       if (h != null && !isNaN(h)) { heading = (h + 360) % 360; render(); }
     }
     // iOS 13+ needs permission
