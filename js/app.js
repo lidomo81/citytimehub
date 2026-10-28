@@ -1652,6 +1652,48 @@
     updatePrayerHero();
   }
 
+  /** Installed apps can stamp the wrong sky photo. Keep the site's prayer. */
+  function applySkyPhoto(hero, skyKey) {
+    if (!hero || !skyKey) return;
+    hero.setAttribute("data-cth-real-sky", skyKey);
+    if (hero.getAttribute("data-prayer-sky") !== skyKey) {
+      hero.setAttribute("data-prayer-sky", skyKey);
+    }
+    const file = skyKey.toLowerCase();
+    const url = "https://citytimehub.com/cth-app-sky/" + file + ".jpg";
+    if ((hero.style.backgroundImage || "").toLowerCase().indexOf(file + ".jpg") === -1) {
+      hero.style.setProperty("background-image", 'url("' + url + '")', "important");
+      hero.style.setProperty("background-size", "cover", "important");
+      hero.style.setProperty("background-position", "center", "important");
+    }
+    if (hero.getAttribute("data-cth-photo") !== skyKey) {
+      hero.setAttribute("data-cth-photo", skyKey);
+    }
+  }
+
+  function guardSkyPhoto(hero) {
+    if (!hero || hero.__cthSkyGuard) return;
+    hero.__cthSkyGuard = true;
+    let fixing = false;
+    const fix = () => {
+      if (fixing) return;
+      const real = hero.getAttribute("data-cth-real-sky");
+      if (!real) return;
+      const file = real.toLowerCase() + ".jpg";
+      const imageOk = (hero.style.backgroundImage || "").toLowerCase().indexOf(file) !== -1;
+      if (hero.getAttribute("data-prayer-sky") === real
+          && hero.getAttribute("data-cth-photo") === real
+          && imageOk) return;
+      fixing = true;
+      applySkyPhoto(hero, real);
+      fixing = false;
+    };
+    new MutationObserver(fix).observe(hero, {
+      attributes: true,
+      attributeFilter: ["data-prayer-sky", "data-cth-photo", "style"]
+    });
+  }
+
   /** Prayer-tab hero only — presentation. Same countdown source as the list. */
   function updatePrayerHero() {
     const hero = $("#prayerHero");
@@ -1671,7 +1713,8 @@
     const name = T.prayers[n.idx] + (n.tomorrow ? " " + T.tomorrow : "");
     const pad = x => String(x).padStart(2, "0");
     const skyKey = PRAYERS[n.idx] || "Dhuhr";
-    hero.setAttribute("data-prayer-sky", skyKey);
+    applySkyPhoto(hero, skyKey);
+    guardSkyPhoto(hero);
     $("#prayerHeroName").textContent = T.prayers[n.idx];
     $("#prayerHeroCount").textContent = `${pad(n.h)}:${pad(n.m)}`;
     $("#prayerHeroCap").textContent = T.heroRemain(name);
