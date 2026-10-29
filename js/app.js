@@ -1276,6 +1276,7 @@
     return g("year") && g("month") && g("day") ? `${g("year")}-${g("month")}-${g("day")}` : "";
   }
   function syncWinterNote() {
+    try {
     const host = document.querySelector(".cp-clock-info");
     if (!host) return;
     let note = document.getElementById("cthWinterNote");
@@ -1307,6 +1308,7 @@
       host.appendChild(note);
     }
     note.hidden = false;
+    } catch (e) {}
   }
 
   function setCity(city, opts) {
