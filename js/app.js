@@ -1277,37 +1277,57 @@
   }
   function syncWinterNote() {
     try {
-    const host = document.querySelector(".cp-clock-info");
-    if (!host) return;
-    let note = document.getElementById("cthWinterNote");
-    const root = document.documentElement;
-    const tab = root.getAttribute("data-app-tab") || "home";
-    const show = root.classList.contains("app-mode")
-      && (tab === "home" || tab === "prayer")
-      && cityInEgypt(currentCity)
-      && egyptDayKey() === "2026-10-30";
-    if (!show) {
-      if (note) note.hidden = true;
-      return;
-    }
-    if (!note) {
-      if (!document.getElementById("cthWinterNoteCss")) {
-        const st = document.createElement("style");
-        st.id = "cthWinterNoteCss";
-        st.textContent =
-          "#cthWinterNote{margin:0;padding:8px 14px;border-radius:12px;" +
-          "background:rgba(201,163,106,.16);border:1px solid rgba(201,163,106,.4);" +
-          "color:inherit;font-size:.92rem;font-weight:700;line-height:1.45;text-align:center}";
-        document.head.appendChild(st);
+      const old = document.getElementById("cthWinterNote");
+      if (old) old.remove();
+      const root = document.documentElement;
+      const tab = root.getAttribute("data-app-tab") || "home";
+      const day = egyptDayKey();
+      let dismissed = false;
+      try { dismissed = localStorage.getItem("cth-winter-note") === day; } catch (e) {}
+      const show = root.classList.contains("app-mode")
+        && (tab === "home" || tab === "prayer")
+        && cityInEgypt(currentCity)
+        && day === "2026-10-30"
+        && !dismissed;
+      let pop = document.getElementById("cthWinterPop");
+      if (!show) {
+        if (pop) pop.hidden = true;
+        return;
       }
-      note = document.createElement("p");
-      note.id = "cthWinterNote";
-      note.textContent = LANG === "ar" ? "أهلاً بكم في التوقيت الشتوي" : "Welcome to winter time.";
-      host.appendChild(note);
-    } else if (note.parentElement !== host) {
-      host.appendChild(note);
-    }
-    note.hidden = false;
+      if (!pop) {
+        if (!document.getElementById("cthWinterPopCss")) {
+          const st = document.createElement("style");
+          st.id = "cthWinterPopCss";
+          st.textContent =
+            "#cthWinterPop{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:24px;" +
+            "background:rgba(15,23,42,.45)}" +
+            "#cthWinterPop[hidden]{display:none!important}" +
+            "#cthWinterPop .cth-winter-card{width:min(100%,320px);margin:0;padding:22px 18px 16px;border-radius:18px;" +
+            "background:var(--surface,#fff);color:var(--text,#1c2433);text-align:center;" +
+            "box-shadow:0 18px 40px rgba(15,23,42,.28)}" +
+            "#cthWinterPop .cth-winter-card p{margin:0 0 16px;font-size:1.05rem;font-weight:800;line-height:1.5}" +
+            "#cthWinterPop .cth-winter-x{border:0;border-radius:999px;padding:8px 22px;font:inherit;font-weight:800;" +
+            "background:#C9A36A;color:#2a1c0c;cursor:pointer}";
+          document.head.appendChild(st);
+        }
+        pop = document.createElement("div");
+        pop.id = "cthWinterPop";
+        pop.setAttribute("role", "dialog");
+        pop.setAttribute("aria-modal", "true");
+        const msg = LANG === "ar" ? "أهلاً بكم في التوقيت الشتوي" : "Welcome to winter time.";
+        const closeLabel = LANG === "ar" ? "إغلاق" : "Close";
+        pop.innerHTML =
+          '<div class="cth-winter-card"><p>' + msg + '</p>' +
+          '<button type="button" class="cth-winter-x">' + closeLabel + '</button></div>';
+        const shut = () => {
+          pop.hidden = true;
+          try { localStorage.setItem("cth-winter-note", "2026-10-30"); } catch (e) {}
+        };
+        pop.querySelector("button").addEventListener("click", shut);
+        pop.addEventListener("click", (e) => { if (e.target === pop) shut(); });
+        document.body.appendChild(pop);
+      }
+      pop.hidden = false;
     } catch (e) {}
   }
 
