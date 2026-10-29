@@ -899,6 +899,7 @@
     if (now.getSeconds() === 0) updateSunArcNext();
     // Soft day-part wash for the app Home tab (once a minute is enough).
     if (now.getSeconds() === 0) updateDayAtmosphere();
+    if (now.getSeconds() === 0) syncWinterNote();
     checkCityDayRollover();
   }
 
@@ -1007,6 +1008,7 @@
       updateDayAtmosphere();
       ensureAppRemindCards();
       checkCityDayRollover();
+      syncWinterNote();
     });
   }
 
@@ -1257,6 +1259,56 @@
     if (timings && typeof timings === "object") payload.timings = timings;
     try { AndroidApp.syncPrayerCity(JSON.stringify(payload)); } catch (e) {}
   }
+  /** One note on 30 Oct 2026, Egypt cities only, Home and Prayer tabs. */
+  function cityInEgypt(c) {
+    if (!c) return false;
+    const country = String(c.country || "").toLowerCase();
+    const countryAr = String(c.country_ar || "");
+    if (country === "egypt" || country.includes("egypt")) return true;
+    if (countryAr === "مصر" || countryAr.includes("مصر")) return true;
+    return c.tz === "Africa/Cairo";
+  }
+  function egyptDayKey(when = new Date()) {
+    const parts = new Intl.DateTimeFormat("en-US", {
+      timeZone: "Africa/Cairo", year: "numeric", month: "2-digit", day: "2-digit"
+    }).formatToParts(when);
+    const g = t => (parts.find(p => p.type === t) || {}).value || "";
+    return g("year") && g("month") && g("day") ? `${g("year")}-${g("month")}-${g("day")}` : "";
+  }
+  function syncWinterNote() {
+    const host = document.querySelector(".cp-clock-info");
+    if (!host) return;
+    let note = document.getElementById("cthWinterNote");
+    const root = document.documentElement;
+    const tab = root.getAttribute("data-app-tab") || "home";
+    const show = root.classList.contains("app-mode")
+      && (tab === "home" || tab === "prayer")
+      && cityInEgypt(currentCity)
+      && egyptDayKey() === "2026-10-30";
+    if (!show) {
+      if (note) note.hidden = true;
+      return;
+    }
+    if (!note) {
+      if (!document.getElementById("cthWinterNoteCss")) {
+        const st = document.createElement("style");
+        st.id = "cthWinterNoteCss";
+        st.textContent =
+          "#cthWinterNote{margin:0;padding:8px 14px;border-radius:12px;" +
+          "background:rgba(201,163,106,.16);border:1px solid rgba(201,163,106,.4);" +
+          "color:inherit;font-size:.92rem;font-weight:700;line-height:1.45;text-align:center}";
+        document.head.appendChild(st);
+      }
+      note = document.createElement("p");
+      note.id = "cthWinterNote";
+      note.textContent = LANG === "ar" ? "أهلاً بكم في التوقيت الشتوي" : "Welcome to winter time.";
+      host.appendChild(note);
+    } else if (note.parentElement !== host) {
+      host.appendChild(note);
+    }
+    note.hidden = false;
+  }
+
   function setCity(city, opts) {
     if (!city) return;
     currentCity = city;
@@ -1294,6 +1346,7 @@
     }
     updateStatusBox();
     lastCityDayKey = cityDayKey(city);
+    syncWinterNote();
     tick();
     renderHomeCities();
     // User-driven only — sync after timings load so Android applies the same city
@@ -1571,6 +1624,7 @@
         if (currentCity === city) {
           ltTz = city.tz;
           ltOffsetMs = offsetHours(city.tz) * 3600000;
+          syncWinterNote();
           const cityPanel = document.getElementById("cityPanel");
           if (cityPanel) cityPanel.dataset.tz = city.tz;
           tick();
