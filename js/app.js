@@ -899,7 +899,6 @@
     if (now.getSeconds() === 0) updateSunArcNext();
     // Soft day-part wash for the app Home tab (once a minute is enough).
     if (now.getSeconds() === 0) updateDayAtmosphere();
-    if (now.getSeconds() === 0) syncWinterNote();
     checkCityDayRollover();
   }
 
@@ -1008,7 +1007,6 @@
       updateDayAtmosphere();
       ensureAppRemindCards();
       checkCityDayRollover();
-      syncWinterNote();
     });
   }
 
@@ -1259,77 +1257,6 @@
     if (timings && typeof timings === "object") payload.timings = timings;
     try { AndroidApp.syncPrayerCity(JSON.stringify(payload)); } catch (e) {}
   }
-  /** One note on 30 Oct 2026, Egypt cities only, Home and Prayer tabs. */
-  function cityInEgypt(c) {
-    if (!c) return false;
-    const country = String(c.country || "").toLowerCase();
-    const countryAr = String(c.country_ar || "");
-    if (country === "egypt" || country.includes("egypt")) return true;
-    if (countryAr === "مصر" || countryAr.includes("مصر")) return true;
-    return c.tz === "Africa/Cairo";
-  }
-  function egyptDayKey(when = new Date()) {
-    const parts = new Intl.DateTimeFormat("en-US", {
-      timeZone: "Africa/Cairo", year: "numeric", month: "2-digit", day: "2-digit"
-    }).formatToParts(when);
-    const g = t => (parts.find(p => p.type === t) || {}).value || "";
-    return g("year") && g("month") && g("day") ? `${g("year")}-${g("month")}-${g("day")}` : "";
-  }
-  function syncWinterNote() {
-    try {
-      const old = document.getElementById("cthWinterNote");
-      if (old) old.remove();
-      const root = document.documentElement;
-      const tab = root.getAttribute("data-app-tab") || "home";
-      const day = egyptDayKey();
-      let dismissed = false;
-      try { dismissed = localStorage.getItem("cth-winter-note") === day; } catch (e) {}
-      const show = root.classList.contains("app-mode")
-        && (tab === "home" || tab === "prayer")
-        && cityInEgypt(currentCity)
-        && day === "2026-10-30"
-        && !dismissed;
-      let pop = document.getElementById("cthWinterPop");
-      if (!show) {
-        if (pop) pop.hidden = true;
-        return;
-      }
-      if (!pop) {
-        if (!document.getElementById("cthWinterPopCss")) {
-          const st = document.createElement("style");
-          st.id = "cthWinterPopCss";
-          st.textContent =
-            "#cthWinterPop{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:24px;" +
-            "background:rgba(15,23,42,.45)}" +
-            "#cthWinterPop[hidden]{display:none!important}" +
-            "#cthWinterPop .cth-winter-card{width:min(100%,320px);margin:0;padding:22px 18px 16px;border-radius:18px;" +
-            "background:var(--surface,#fff);color:var(--text,#1c2433);text-align:center;" +
-            "box-shadow:0 18px 40px rgba(15,23,42,.28)}" +
-            "#cthWinterPop .cth-winter-card p{margin:0 0 16px;font-size:1.05rem;font-weight:800;line-height:1.5}" +
-            "#cthWinterPop .cth-winter-x{border:0;border-radius:999px;padding:8px 22px;font:inherit;font-weight:800;" +
-            "background:#C9A36A;color:#2a1c0c;cursor:pointer}";
-          document.head.appendChild(st);
-        }
-        pop = document.createElement("div");
-        pop.id = "cthWinterPop";
-        pop.setAttribute("role", "dialog");
-        pop.setAttribute("aria-modal", "true");
-        const msg = LANG === "ar" ? "أهلاً بكم في التوقيت الشتوي" : "Welcome to winter time.";
-        const closeLabel = LANG === "ar" ? "إغلاق" : "Close";
-        pop.innerHTML =
-          '<div class="cth-winter-card"><p>' + msg + '</p>' +
-          '<button type="button" class="cth-winter-x">' + closeLabel + '</button></div>';
-        const shut = () => {
-          pop.hidden = true;
-          try { localStorage.setItem("cth-winter-note", "2026-10-30"); } catch (e) {}
-        };
-        pop.querySelector("button").addEventListener("click", shut);
-        pop.addEventListener("click", (e) => { if (e.target === pop) shut(); });
-        document.body.appendChild(pop);
-      }
-      pop.hidden = false;
-    } catch (e) {}
-  }
 
   function setCity(city, opts) {
     if (!city) return;
@@ -1368,7 +1295,6 @@
     }
     updateStatusBox();
     lastCityDayKey = cityDayKey(city);
-    syncWinterNote();
     tick();
     renderHomeCities();
     // User-driven only — sync after timings load so Android applies the same city
@@ -1646,7 +1572,6 @@
         if (currentCity === city) {
           ltTz = city.tz;
           ltOffsetMs = offsetHours(city.tz) * 3600000;
-          syncWinterNote();
           const cityPanel = document.getElementById("cityPanel");
           if (cityPanel) cityPanel.dataset.tz = city.tz;
           tick();

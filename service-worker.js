@@ -78,8 +78,7 @@ function matchUsable(req) {
   return caches.match(req).then((hit) => {
     if (usable(hit)) return hit;
     try {
-      const path = new URL(req.url).pathname;
-      if (path === "/js/app.js" || path === "/js/winter-note.js") return null;
+      if (new URL(req.url).pathname === "/js/app.js") return null;
     } catch (e) {}
     return caches.match(req, { ignoreSearch: true }).then((alt) => (usable(alt) ? alt : null));
   });
