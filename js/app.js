@@ -1551,6 +1551,88 @@
     }
   }
 
+  // Angle methods that match the current source on a normal day. Other methods
+  // (official minute tables) stay on the network so their numbers are not guessed.
+  const PRAYER_ANGLE = {
+    1: { fajr: 18, isha: 18 },
+    2: { fajr: 15, isha: 15 },
+    3: { fajr: 18, isha: 17 },
+    4: { fajr: 18.5, ishaMin: 90 },
+    5: { fajr: 19.5, isha: 17.5 },
+    8: { fajr: 19.5, ishaMin: 90 },
+    9: { fajr: 18, isha: 17.5 },
+    10: { fajr: 18, ishaMin: 90 },
+    11: { fajr: 20, isha: 18 },
+    12: { fajr: 12, isha: 12 }
+  };
+
+  function localPrayerData(city) {
+    const spec = PRAYER_ANGLE[city && city.method != null ? city.method : 3];
+    if (!spec || city.lat == null || city.lng == null || !city.tz) return null;
+    const parts = cityDateParts(city);
+    const y = +parts.y, m = +parts.m, d = +parts.d;
+    if (!y || !m || !d) return null;
+    const timings = computePrayerTimes(y, m, d, +city.lat, +city.lng, offsetHours(city.tz), spec, city.school === 1 ? 2 : 1);
+    return timings ? { timings } : null;
+  }
+
+  function computePrayerTimes(y, m, d, lat, lng, tz, spec, asrFactor) {
+    const sin = x => Math.sin(x * Math.PI / 180);
+    const cos = x => Math.cos(x * Math.PI / 180);
+    const asin = x => Math.asin(Math.max(-1, Math.min(1, x))) * 180 / Math.PI;
+    const acos = x => Math.acos(Math.max(-1, Math.min(1, x))) * 180 / Math.PI;
+    const atan2 = (yy, xx) => Math.atan2(yy, xx) * 180 / Math.PI;
+    const fix = (a, b) => { a = a % b; return a < 0 ? a + b : a; };
+    const julian = (yy, mm, dd) => {
+      if (mm <= 2) { yy -= 1; mm += 12; }
+      const A = Math.floor(yy / 100);
+      const B = 2 - A + Math.floor(A / 4);
+      return Math.floor(365.25 * (yy + 4716)) + Math.floor(30.6001 * (mm + 1)) + dd + B - 1524.5;
+    };
+    const sun = (jd) => {
+      const D = jd - 2451545.0;
+      const g = fix(357.529 + 0.98560028 * D, 360);
+      const q = fix(280.459 + 0.98564736 * D, 360);
+      const L = fix(q + 1.915 * sin(g) + 0.020 * sin(2 * g), 360);
+      const e = 23.439 - 0.00000036 * D;
+      const RA = atan2(cos(e) * sin(L), cos(L)) / 15;
+      return [asin(sin(e) * sin(L)), q / 15 - fix(RA, 24)];
+    };
+    const jdate = (t) => julian(y, m, d) - lng / 360 + t / 24;
+    const midday = (t) => fix(12 - sun(jdate(t))[1], 24);
+    const angleTime = (angle, t, ccw) => {
+      const decl = sun(jdate(t))[0];
+      const cosH = (-sin(angle) - sin(lat) * sin(decl)) / (cos(lat) * cos(decl));
+      if (cosH < -1 || cosH > 1) return null;
+      const h = acos(cosH) / 15;
+      return midday(t) + (ccw ? -h : h);
+    };
+    const asrTime = (t) => {
+      const decl = sun(jdate(t))[0];
+      const angle = -atan2(1, asrFactor + Math.tan(Math.abs(lat - decl) * Math.PI / 180));
+      return angleTime(angle, t, false);
+    };
+    const times = { fajr: 5, sunrise: 6, dhuhr: 12, asr: 13, maghrib: 18, isha: 18 };
+    for (let i = 0; i < 2; i++) {
+      times.fajr = angleTime(spec.fajr, times.fajr, true);
+      times.sunrise = angleTime(0.833, times.sunrise, true);
+      times.dhuhr = midday(times.dhuhr);
+      times.asr = asrTime(times.asr);
+      times.maghrib = angleTime(0.833, times.maghrib, false);
+      times.isha = spec.ishaMin ? times.maghrib + spec.ishaMin / 60 : angleTime(spec.isha, times.isha, false);
+      if (Object.values(times).some(v => v == null || Number.isNaN(v))) return null;
+    }
+    const hm = (v) => {
+      const mins = Math.floor(fix(v + tz - lng / 15, 24) * 60 + 0.5);
+      const wrapped = ((mins % 1440) + 1440) % 1440;
+      return String(Math.floor(wrapped / 60)).padStart(2, "0") + ":" + String(wrapped % 60).padStart(2, "0");
+    };
+    return {
+      Fajr: hm(times.fajr), Sunrise: hm(times.sunrise), Dhuhr: hm(times.dhuhr),
+      Asr: hm(times.asr), Sunset: hm(times.maghrib), Maghrib: hm(times.maghrib), Isha: hm(times.isha)
+    };
+  }
+
   async function loadPrayer(city, widgetSyncSeq) {
     if (!city) return;
     const grid = $("#prayerGrid");
@@ -1577,10 +1659,14 @@
           tick();
         }
       }
-      const t = data.timings, g = data.date.gregorian, h = data.date.hijri;
-      const g_d = new Date(Date.UTC(+g.year, (+(g.month && g.month.number) || 1) - 1, +g.day));
-      $("#gregDate").textContent  = new Intl.DateTimeFormat(LANG === "ar" ? "ar-EG-u-nu-latn" : "en-GB", { timeZone: "UTC", day: "numeric", month: "long", year: "numeric" }).format(g_d);
-      $("#hijriDate").textContent = `${h.day} ${LANG === "ar" ? h.month.ar : h.month.en} ${h.year} ${T.ah}`;
+      const t = data.timings;
+      const g = data.date && data.date.gregorian;
+      const h = data.date && data.date.hijri;
+      if (g && h) {
+        const g_d = new Date(Date.UTC(+g.year, (+(g.month && g.month.number) || 1) - 1, +g.day));
+        $("#gregDate").textContent  = new Intl.DateTimeFormat(LANG === "ar" ? "ar-EG-u-nu-latn" : "en-GB", { timeZone: "UTC", day: "numeric", month: "long", year: "numeric" }).format(g_d);
+        $("#hijriDate").textContent = `${h.day} ${LANG === "ar" ? h.month.ar : h.month.en} ${h.year} ${T.ah}`;
+      }
       const next = nextPrayer(t, city);
       prayerState = { city, timings: {} };
       PRAYERS.forEach(p => prayerState.timings[p] = clean(t[p]));
@@ -1606,18 +1692,30 @@
     let cached = null;
     try { cached = JSON.parse(localStorage.getItem(PKEY) || "null"); } catch (e) {}
     const todayCache = cached && cached.ds === ds && cached.data && cached.data.timings;
-    // Slow/offline: paint today's last good times immediately, then refresh.
-    if (todayCache) render(cached.data);
+    let reloaded = false;
     try {
-      const res = await fetch(url);
+      const nav = performance.getEntriesByType("navigation")[0];
+      reloaded = !!(nav && nav.type === "reload");
+    } catch (e) {}
+    // Today's confirmed times stay on the phone. A normal open does not ask the network.
+    // Pull-to-refresh still asks once, after the saved times are already on screen.
+    if (todayCache) render(cached.data);
+    if (todayCache && !reloaded) return;
+    const local = todayCache ? null : localPrayerData(city);
+    if (local) render(local);
+    try {
+      const ctrl = typeof AbortController === "function" ? new AbortController() : null;
+      const timer = ctrl ? setTimeout(() => ctrl.abort(), 8000) : null;
+      const res = await fetch(url, ctrl ? { signal: ctrl.signal } : undefined);
+      if (timer) clearTimeout(timer);
       if (!res.ok) throw new Error("timings " + res.status);
       const { data } = await res.json();
       render(data);
       try { localStorage.setItem(PKEY, JSON.stringify({ ds, data })); } catch (e) {}
     } catch {
-      if (todayCache) return;
+      if (local) return;
       if (cached && cached.data) { render(cached.data); }
-      else { grid.innerHTML = `<p class="no-results" style="grid-column:1/-1">${T.prayerErr}</p>`; }
+      else if (grid) { grid.innerHTML = `<p class="no-results" style="grid-column:1/-1">${T.prayerErr}</p>`; }
     }
   }
   // Which prayer is next, and how long until it. One calculation feeding the

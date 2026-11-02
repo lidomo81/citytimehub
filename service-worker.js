@@ -4,8 +4,10 @@
    - Precache a small home shell so the app opens quickly.
    - Same-origin assets → stale-while-revalidate (search every cache).
    - Prayer-times / sunrise-sunset APIs → network-first, fall back to cache.
-   - HTML (site + app) → network-first. Never serve a redirected cached
-     document — WebView treats that as "page unavailable".
+   - HTML (site + app) → network when it answers quickly. If a usable cached
+     document exists and the network is still pending after 2s, open that
+     copy and keep the network response for the next open. Never serve a
+     redirected cached document — WebView treats that as "page unavailable".
    Bump CACHE_VERSION only when the shell list itself must be replaced.
    Never wipe runtime/API caches on activate.
    ===================================================================== */
@@ -120,21 +122,43 @@ function apiNetworkFirst(req) {
     .catch(() => matchUsable(req));
 }
 
-function navigateNetworkFirst(req, url) {
-  return fetch(req)
-    .then((res) => {
-      if (usable(res) && url.origin === self.location.origin) putRuntime(req, res);
-      return res;
-    })
-    .catch(() =>
-      matchUsable(req).then((c) =>
-        c || matchHome(url).then((h) =>
-          h || caches.match(url.pathname.startsWith("/ar") ? "/ar" : "/").then((f) =>
-            usable(f) ? f : undefined
-          )
-        )
+function navigateFallback(req, url) {
+  return matchUsable(req).then((c) =>
+    c || matchHome(url).then((h) =>
+      h || caches.match(url.pathname.startsWith("/ar") ? "/ar" : "/").then((f) =>
+        usable(f) ? f : undefined
       )
-    );
+    )
+  );
+}
+
+function navigateNetworkFirst(req, url) {
+  const fromNetwork = () => fetch(req).then((res) => {
+    if (usable(res) && url.origin === self.location.origin) putRuntime(req, res);
+    return res;
+  });
+  return matchUsable(req).then((cached) => {
+    if (!cached) {
+      return fromNetwork().catch(() => navigateFallback(req, url));
+    }
+    return new Promise((resolve) => {
+      let done = false;
+      const finish = (res) => {
+        if (done) return;
+        done = true;
+        resolve(res);
+      };
+      // Weak network must not keep the last good page behind a blank splash.
+      const timer = setTimeout(() => finish(cached), 2000);
+      fromNetwork().then((res) => {
+        clearTimeout(timer);
+        finish(res);
+      }).catch(() => {
+        clearTimeout(timer);
+        finish(cached);
+      });
+    });
+  });
 }
 
 self.addEventListener("fetch", (event) => {
