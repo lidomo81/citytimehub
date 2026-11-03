@@ -80,7 +80,8 @@ function matchUsable(req) {
   return caches.match(req).then((hit) => {
     if (usable(hit)) return hit;
     try {
-      if (new URL(req.url).pathname === "/js/app.js") return null;
+      var path = new URL(req.url).pathname;
+      if (path === "/js/app.js" || path === "/css/style.css") return null;
     } catch (e) {}
     return caches.match(req, { ignoreSearch: true }).then((alt) => (usable(alt) ? alt : null));
   });

@@ -1817,7 +1817,40 @@
     $("#prayerHeroName").textContent = T.prayers[n.idx];
     $("#prayerHeroCount").textContent = `${pad(n.h)}:${pad(n.m)}`;
     $("#prayerHeroCap").textContent = T.heroRemain(name);
+    paintHeroBar(hero, n);
     hero.hidden = false;
+  }
+
+  /** Same elapsed share the countdown ring used. Presentation only. */
+  function heroElapsedPct(n) {
+    const order = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
+    const key = PRAYERS[n.idx];
+    const i = order.indexOf(key);
+    if (i < 0 || !prayerState || !prayerState.timings) return null;
+    let next = parseHM(prayerState.timings[key]);
+    let prev = parseHM(prayerState.timings[order[(i + 4) % 5]]);
+    if (isNaN(next) || isNaN(prev)) return null;
+    if (i === 0) next += 1440;
+    const total = next - prev;
+    const rem = n.h * 60 + n.m;
+    if (!(total > 0) || rem < 0 || rem > total) return null;
+    return Math.round((1 - rem / total) * 100);
+  }
+
+  function paintHeroBar(hero, n) {
+    let bar = hero.querySelector(".prayer-hero-bar");
+    if (!bar) {
+      bar = document.createElement("div");
+      bar.className = "prayer-hero-bar";
+      bar.setAttribute("aria-hidden", "true");
+      const fill = document.createElement("i");
+      bar.appendChild(fill);
+      hero.appendChild(bar);
+    }
+    const pct = heroElapsedPct(n);
+    if (pct == null) { bar.hidden = true; return; }
+    bar.hidden = false;
+    bar.firstChild.style.width = pct + "%";
   }
 
   function nextPrayerCountdownExact() {

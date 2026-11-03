@@ -7038,12 +7038,12 @@ html.app-mode[data-app-tab="prayer"] .prayer-hero:not([hidden]) {
   justify-content: center;
   gap: 6px;
   width: 100%;
-  min-height: 148px;
+  min-height: 210px;
   margin: 8px auto 18px;
-  padding: 26px 16px 22px;
+  padding: 54px 20px 36px;
   text-align: center;
   overflow: hidden;
-  border-radius: 20px;
+  border-radius: 50% 50% 0 0;
   border: none;
   box-shadow: none;
   background: transparent;
@@ -7151,7 +7151,7 @@ html.app-mode[data-app-tab="prayer"] .prayer-hero-name {
 }
 html.app-mode[data-app-tab="prayer"] .prayer-hero-count {
   margin: 0;
-  font-size: clamp(2.1rem, 9vw, 2.8rem);
+  font-size: 1.35rem;
   font-weight: 800;
   letter-spacing: .04em;
   font-variant-numeric: tabular-nums;
@@ -7161,13 +7161,29 @@ html.app-mode[data-app-tab="prayer"] .prayer-hero-count {
   position: relative;
   z-index: 1;
 }
-html.app-mode[data-app-tab="prayer"] .prayer-hero-cap {
-  margin: 2px 0 0;
-  font-size: .78rem;
-  font-weight: 650;
-  color: var(--ph-cap);
-  position: relative;
-  z-index: 1;
+html.app-mode[data-app-tab="prayer"] .prayer-hero-cap { display: none !important; }
+html.app-mode[data-app-tab="prayer"] .cth-ring { display: none !important; }
+html.app-mode[data-app-tab="prayer"] #prayerHero:not([hidden]) {
+  border-radius: 50% 50% 0 0 !important;
+  overflow: hidden !important;
+}
+html.app-mode[data-app-tab="prayer"] .prayer-hero-bar {
+  position: absolute;
+  left: 28px;
+  right: 28px;
+  bottom: 14px;
+  height: 4px;
+  border-radius: 4px;
+  background: rgba(0,0,0,.28);
+  z-index: 2;
+  pointer-events: none;
+}
+html.app-mode[data-app-tab="prayer"] .prayer-hero-bar i {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: 4px;
+  background: #ffe08a;
 }
 @media (prefers-reduced-motion: reduce) {
   html.app-mode[data-app-tab="prayer"] .prayer-hero:not([hidden])::before,
