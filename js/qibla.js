@@ -36,6 +36,12 @@
 
   var qiblaBearing = null;     // bearing from north to Qibla (deg, 0..360)
   var heading = 0;             // current device heading (deg)
+  var needleTurn = null;       // needle angle as applied, unwrapped past 360
+  var hasReading = false;
+  var compassOn = false;
+
+  /** Signed shortest turn from a to b, in -180..180. */
+  function shortest(a, b) { return ((b - a) % 360 + 540) % 360 - 180; }
 
   function bearingTo(lat, lng) {
     var p1 = toRad(lat), p2 = toRad(KAABA_LAT);
@@ -56,7 +62,10 @@
     // Needle should point to (qiblaBearing - heading) relative to the screen's up.
     if (qiblaBearing == null) return;
     var rel = (qiblaBearing - heading + 360) % 360;
-    if (needleEl) needleEl.style.transform = "rotate(" + rel.toFixed(1) + "deg)";
+    // Step the shortest way from the last angle; a wrapped 359°→1° made the
+    // CSS transition spin the needle a full turn right as it reached the Qibla.
+    needleTurn = needleTurn == null ? rel : needleTurn + shortest(needleTurn, rel);
+    if (needleEl) needleEl.style.transform = "rotate(" + needleTurn.toFixed(1) + "deg)";
     // Rotate the cardinal ring opposite to heading so N points to real north.
     if (dialEl) dialEl.style.setProperty("--heading", (-heading).toFixed(1) + "deg");
   }
@@ -67,6 +76,7 @@
   }
 
   function startCompass() {
+    if (compassOn) return;
     function onOrient(e) {
       var h = null;
       if (typeof e.webkitCompassHeading === "number") h = e.webkitCompassHeading; // iOS: already vs north
@@ -74,25 +84,43 @@
       // away from the Kaaba and left the tail pointing at it.
       else if (e.absolute && typeof e.alpha === "number") h = (540 - e.alpha) % 360;
       else if (typeof e.alpha === "number") h = (540 - e.alpha) % 360;
-      if (h != null && !isNaN(h)) { heading = (h + 360) % 360; render(); }
+      if (h == null || isNaN(h)) return;
+      h = (h + 360) % 360;
+      if (!hasReading) {
+        hasReading = true;
+        heading = h;
+        if (compassHint && compassHint.textContent === T.noCompass) compassHint.textContent = T.calib;
+      } else {
+        // Ease toward each reading: a noisy magnetometer (S Pen magnet, cases)
+        // otherwise shakes the needle. Big turns still land within a few frames.
+        heading = (heading + shortest(heading, h) * 0.3 + 360) % 360;
+      }
+      render();
+    }
+    function listen(type) {
+      if (compassOn) return;
+      compassOn = true;
+      window.addEventListener(type, onOrient, true);
+      if (compassHint) { compassHint.hidden = false; compassHint.textContent = T.calib; }
+      // Some phones expose the event but never send a heading; say so instead
+      // of leaving a needle that silently stays put.
+      setTimeout(function () {
+        if (!hasReading && compassHint) { compassHint.hidden = false; compassHint.textContent = T.noCompass; }
+      }, 4000);
     }
     // iOS 13+ needs permission
     if (typeof DeviceOrientationEvent !== "undefined" &&
         typeof DeviceOrientationEvent.requestPermission === "function") {
       DeviceOrientationEvent.requestPermission().then(function (st) {
-        if (st === "granted") {
-          window.addEventListener("deviceorientation", onOrient, true);
-          if (compassHint) { compassHint.hidden = false; compassHint.textContent = T.calib; }
-        } else if (compassHint) { compassHint.hidden = false; compassHint.textContent = T.noCompass; }
+        if (st === "granted") listen("deviceorientation");
+        else if (compassHint) { compassHint.hidden = false; compassHint.textContent = T.noCompass; }
       }).catch(function () {
         if (compassHint) { compassHint.hidden = false; compassHint.textContent = T.noCompass; }
       });
     } else if ("ondeviceorientationabsolute" in window) {
-      window.addEventListener("deviceorientationabsolute", onOrient, true);
-      if (compassHint) { compassHint.hidden = false; compassHint.textContent = T.calib; }
+      listen("deviceorientationabsolute");
     } else if ("ondeviceorientation" in window) {
-      window.addEventListener("deviceorientation", onOrient, true);
-      if (compassHint) { compassHint.hidden = false; compassHint.textContent = T.calib; }
+      listen("deviceorientation");
     } else if (compassHint) {
       compassHint.hidden = false; compassHint.textContent = T.noCompass;
     }
