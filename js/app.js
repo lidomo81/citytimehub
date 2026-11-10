@@ -1900,17 +1900,23 @@
   }
 
   /** Follows the app's own 12/24h choice, the same flags its clock uses. */
+  function fastUse12() {
+    const f = window.__cthTimeFmt;
+    return f === "12" || (f === "auto" && !!window.__cthDevice12);
+  }
+
   function fastTimeHTML(min) {
     const h = Math.floor(min / 60) % 24, m = String(min % 60).padStart(2, "0");
-    const f = window.__cthTimeFmt;
-    if (f === "12" || (f === "auto" && window.__cthDevice12)) {
+    if (fastUse12()) {
       return `${h % 12 || 12}:${m}<span class="lt-ampm">${h < 12 ? T.am : T.pm}</span>`;
     }
     return `${String(h).padStart(2, "0")}:${m}`;
   }
 
+  let lastFast = null;
   function paintFastTimes(hero, fast) {
     let box = document.getElementById("prayerFast");
+    lastFast = fast;
     if (!fast) { if (box) box.hidden = true; return; }
     if (!box) {
       box = document.createElement("div");
@@ -1918,7 +1924,14 @@
       box.className = "prayer-fast";
       box.innerHTML = `<div data-k="imsak"><em></em><span class="mono" dir="ltr"></span></div><div data-k="iftar"><em></em><span class="mono" dir="ltr"></span></div>`;
       hero.insertAdjacentElement("afterend", box);
+      // The app flips its 12/24h flags without telling the site; the prayer
+      // list follows at once, so these two must not wait for the next refresh.
+      setInterval(() => {
+        if (box.hidden || !lastFast || box.dataset.fmt === (fastUse12() ? "12" : "24")) return;
+        paintFastTimes(hero, lastFast);
+      }, 1000);
     }
+    box.dataset.fmt = fastUse12() ? "12" : "24";
     box.querySelectorAll("[data-k]").forEach((cell) => {
       const k = cell.dataset.k;
       cell.querySelector("em").textContent = T[k];
