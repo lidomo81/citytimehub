@@ -7185,6 +7185,81 @@ html.app-mode[data-app-tab="prayer"] .prayer-hero-bar i {
   border-radius: 4px;
   background: #ffe08a;
 }
+html.app-mode[data-app-tab="prayer"] .prayer-hero-tag {
+  position: relative;
+  z-index: 1;
+  padding: 2px 10px;
+  border-radius: 10px;
+  background: rgba(0,0,0,.28);
+  color: #fff;
+  font-size: .75rem;
+  font-weight: 800;
+  line-height: 1.5;
+}
+html.app-mode[data-app-tab="prayer"] .prayer-hero-tag[hidden] { display: none; }
+.prayer-fast { display: none; }
+html.app-mode[data-app-tab="prayer"] #prayerHero:not([hidden]) + .prayer-fast:not([hidden]) {
+  display: flex;
+  gap: 8px;
+  margin: -8px 0 8px;
+}
+html.app-mode[data-app-tab="prayer"] .prayer-fast > div {
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  text-align: center;
+}
+html.app-mode[data-app-tab="prayer"] .prayer-fast em {
+  display: block;
+  font-style: normal;
+  font-size: .75rem;
+  font-weight: 700;
+  color: var(--text-2);
+}
+html.app-mode[data-app-tab="prayer"] .prayer-fast span {
+  display: block;
+  margin-top: 2px;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text);
+}
+html.app-mode[data-app-tab="prayer"] .prayer-fast .lt-ampm {
+  display: inline;
+  font-size: .72em;
+  font-weight: 700;
+  margin-inline-start: .18em;
+  opacity: .82;
+}
+html.app-mode[data-app-tab="prayer"] .prayer-fast > div.is-on {
+  border-color: #C9A36A;
+  background: color-mix(in srgb, #C9A36A 14%, transparent);
+}
+html.app-mode[data-app-tab="prayer"] .prayer-fast > div.is-on span { color: #a8772a; }
+html[data-theme="dark"].app-mode[data-app-tab="prayer"] .prayer-fast > div.is-on span { color: #f0c987; }
+.cp-qibla { display: none; }
+html.app-mode[data-app-tab="prayer"] .cp-clock-mid { position: relative; }
+html.app-mode[data-app-tab="prayer"]:not(.cp-search-open) .cp-qibla {
+  position: absolute;
+  top: -2px;
+  inset-inline-end: 0;
+  z-index: 2;
+  height: 31px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 11px 0 9px;
+  border-radius: 16px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--brand);
+  font-size: .75rem;
+  font-weight: 800;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+html.app-mode[data-app-tab="prayer"] .cp-qibla svg { width: 17px; height: 17px; flex: none; }
 @media (prefers-reduced-motion: reduce) {
   html.app-mode[data-app-tab="prayer"] .prayer-hero:not([hidden])::before,
   html.app-mode[data-app-tab="prayer"] .prayer-hero:not([hidden])::after {

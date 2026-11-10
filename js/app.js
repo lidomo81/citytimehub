@@ -21,6 +21,7 @@
       localEyebrow: "Your local time", homeEyebrow: "Your city", save: "My favorite city", saved: "Favorite ✓",
       inHM: (h, m) => h ? `in ${h}h ${m}m` : `in ${m}m`, tomorrow: "tomorrow",
       heroRemain: name => `Time remaining until ${name}`,
+      iftar: "Iftar", imsak: "Imsak", ramadanDay: d => `Ramadan ${d}`, am: "AM", pm: "PM",
       arcNext: (name, h, m, whenLabel) => {
         const when = whenLabel ? `<span class="sun-arc-when">${whenLabel}</span>` : "";
         const eta = h
@@ -80,6 +81,7 @@
       localEyebrow: "وقتك المحلي", homeEyebrow: "مدينتك", save: "مدينتي المفضلة", saved: "مفضلة ✓",
       inHM: (h, m) => h ? `بعد ${h} س ${m} د` : `بعد ${m} د`, tomorrow: "غدًا",
       heroRemain: name => `المتبقي إلى ${name}`,
+      iftar: "الإفطار", imsak: "الإمساك", ramadanDay: d => `${d} رمضان`, am: "ص", pm: "م",
       arcNext: (name, h, m, whenLabel) => {
         const when = whenLabel ? `<span class="sun-arc-when">${whenLabel}</span>` : "";
         const eta = h
@@ -1671,6 +1673,9 @@
       prayerState = { city, timings: {} };
       PRAYERS.forEach(p => prayerState.timings[p] = clean(t[p]));
       if (t.Sunrise) prayerState.timings.Sunrise = clean(t.Sunrise);
+      // Kept beside timings, not inside: timings is what the app and widgets receive.
+      prayerState.imsak = t.Imsak ? clean(t.Imsak) : "";
+      prayerState.hijri = h && h.month ? { day: +h.day, month: +h.month.number, days: +h.month.days || 0 } : null;
       grid.innerHTML = PRAYERS.map((p, i) => `
         <article class="prayer-card${p === next ? " is-next" : ""}" data-p="${p}">
           <div class="prayer-name">${T.prayers[i]}</div>
@@ -1809,16 +1814,120 @@
       hero.hidden = true;
       return;
     }
-    const name = T.prayers[n.idx] + (n.tomorrow ? " " + T.tomorrow : "");
     const pad = x => String(x).padStart(2, "0");
     const skyKey = PRAYERS[n.idx] || "Dhuhr";
     applySkyPhoto(hero, skyKey);
     guardSkyPhoto(hero);
-    $("#prayerHeroName").textContent = T.prayers[n.idx];
-    $("#prayerHeroCount").textContent = `${pad(n.h)}:${pad(n.m)}`;
+    const fast = ramadanState();
+    const r = fast && fast.target;
+    const label = r ? T[r.kind] : T.prayers[n.idx];
+    const name = r ? label : T.prayers[n.idx] + (n.tomorrow ? " " + T.tomorrow : "");
+    $("#prayerHeroName").textContent = label;
+    $("#prayerHeroCount").textContent = r ? `${pad(r.h)}:${pad(r.m)}` : `${pad(n.h)}:${pad(n.m)}`;
     $("#prayerHeroCap").textContent = T.heroRemain(name);
-    paintHeroBar(hero, n);
+    paintHeroTag(hero, r ? T.ramadanDay(r.day) : "");
+    paintHeroBar(hero, r ? r.pct : heroElapsedPct(n));
     hero.hidden = false;
+    paintFastTimes(hero, fast);
+  }
+
+  /** Today's Hijri date from the prayer data; the phone's Umm al-Qura calendar
+   *  only while that data is missing (offline, before the first answer). */
+  function hijriToday() {
+    if (prayerState.hijri) return prayerState.hijri;
+    try {
+      const fmt = new Intl.DateTimeFormat("en-u-ca-islamic-umalqura-nu-latn", {
+        timeZone: prayerState.city.tz || undefined, day: "numeric", month: "numeric"
+      });
+      const read = (d) => {
+        const p = fmt.formatToParts(d);
+        const g = k => +((p.find(x => x.type === k) || {}).value || 0);
+        return { day: g("day"), month: g("month") };
+      };
+      const now = read(new Date());
+      const next = read(new Date(Date.now() + 86400000));
+      if (!now.day || !now.month || !next.month) return null;
+      return { day: now.day, month: now.month, days: 0, next };
+    } catch (e) { return null; }
+  }
+
+  /** Ramadan only: what the hero counts to, and the Imsak/Iftar pair under it.
+   *  Fajr to Maghrib counts to Iftar, Isha to Imsak counts to Imsak; the rest
+   *  of the day (and every other month) returns the normal next prayer. */
+  function ramadanState() {
+    if (!prayerState || !prayerState.city || !prayerState.timings) return null;
+    const hj = hijriToday();
+    if (!hj) return null;
+    const t = prayerState.timings;
+    const fajr = parseHM(t.Fajr), mag = parseHM(t.Maghrib), isha = parseHM(t.Isha);
+    let ims = parseHM(prayerState.imsak || "");
+    if (isNaN(ims)) ims = fajr - 10;
+    if ([fajr, mag, isha, ims].some(isNaN) || !(ims >= 0 && ims < fajr && fajr < mag && mag < isha)) return null;
+    const fastToday = hj.month === 9;
+    const fastTomorrow = hj.next
+      ? hj.next.month === 9
+      : hj.days > 0 && (hj.month === 9 ? hj.day < hj.days : hj.month === 8 && hj.day >= hj.days);
+    const tomorrowDay = hj.next ? hj.next.day : (hj.month === 9 ? hj.day + 1 : 1);
+    const off = offsetHours(prayerState.city.tz) * 3600000;
+    const d = new Date(Date.now() + off);
+    const nowSec = d.getUTCHours() * 3600 + d.getUTCMinutes() * 60 + d.getUTCSeconds();
+    const now = nowSec / 60;
+    let target = null;
+    if (fastToday && now < ims) target = { kind: "imsak", at: ims, from: isha - 1440, day: hj.day };
+    else if (fastToday && now >= fajr && now < mag) target = { kind: "iftar", at: mag, from: fajr, day: hj.day };
+    else if (fastTomorrow && now >= isha) target = { kind: "imsak", at: ims + 1440, from: isha, day: tomorrowDay };
+    if (!target && !(fastToday && now < isha)) return null;
+    if (target) {
+      const diff = Math.max(0, target.at * 60 - nowSec);
+      target.h = Math.floor(diff / 3600);
+      target.m = Math.floor((diff % 3600) / 60);
+      const total = target.at - target.from;
+      target.pct = total > 0 ? Math.max(0, Math.min(100, Math.round((now - target.from) / total * 100))) : null;
+    }
+    return { target, imsak: ims, iftar: mag };
+  }
+
+  function paintHeroTag(hero, text) {
+    let tag = hero.querySelector(".prayer-hero-tag");
+    if (!text) { if (tag) tag.hidden = true; return; }
+    if (!tag) {
+      tag = document.createElement("span");
+      tag.className = "prayer-hero-tag";
+      hero.insertBefore(tag, $("#prayerHeroName"));
+    }
+    if (tag.textContent !== text) tag.textContent = text;
+    tag.hidden = false;
+  }
+
+  /** Follows the app's own 12/24h choice, the same flags its clock uses. */
+  function fastTimeHTML(min) {
+    const h = Math.floor(min / 60) % 24, m = String(min % 60).padStart(2, "0");
+    const f = window.__cthTimeFmt;
+    if (f === "12" || (f === "auto" && window.__cthDevice12)) {
+      return `${h % 12 || 12}:${m}<span class="lt-ampm">${h < 12 ? T.am : T.pm}</span>`;
+    }
+    return `${String(h).padStart(2, "0")}:${m}`;
+  }
+
+  function paintFastTimes(hero, fast) {
+    let box = document.getElementById("prayerFast");
+    if (!fast) { if (box) box.hidden = true; return; }
+    if (!box) {
+      box = document.createElement("div");
+      box.id = "prayerFast";
+      box.className = "prayer-fast";
+      box.innerHTML = `<div data-k="imsak"><em></em><span class="mono" dir="ltr"></span></div><div data-k="iftar"><em></em><span class="mono" dir="ltr"></span></div>`;
+      hero.insertAdjacentElement("afterend", box);
+    }
+    box.querySelectorAll("[data-k]").forEach((cell) => {
+      const k = cell.dataset.k;
+      cell.querySelector("em").textContent = T[k];
+      const html = fastTimeHTML(fast[k]);
+      const span = cell.querySelector("span");
+      if (span.innerHTML !== html) span.innerHTML = html;
+      cell.classList.toggle("is-on", !!fast.target && fast.target.kind === k);
+    });
+    box.hidden = false;
   }
 
   /** Same elapsed share the countdown ring used. Presentation only. */
@@ -1837,7 +1946,7 @@
     return Math.round((1 - rem / total) * 100);
   }
 
-  function paintHeroBar(hero, n) {
+  function paintHeroBar(hero, pct) {
     let bar = hero.querySelector(".prayer-hero-bar");
     if (!bar) {
       bar = document.createElement("div");
@@ -1847,7 +1956,6 @@
       bar.appendChild(fill);
       hero.appendChild(bar);
     }
-    const pct = heroElapsedPct(n);
     if (pct == null) { bar.hidden = true; return; }
     bar.hidden = false;
     bar.firstChild.style.width = pct + "%";
