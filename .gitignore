@@ -7,3 +7,8 @@
 .DS_Store
 Thumbs.db
 .claude/launch.json
+
+# Local secrets
+.env
+.env.*
+!.env.example
